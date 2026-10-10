@@ -1,0 +1,9 @@
+[S3] curl project, CURLOPT_RESUME_FROM API docs
+URL: https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html
+Observed via read-only HTTPS fetch during investigation window (see source-map.json anchors).
+Excerpt (facts observed on the page):
+- Name: CURLOPT_RESUME_FROM - offset to resume transfer from.
+- Synopsis: curl_easy_setopt(handle, CURLOPT_RESUME_FROM, long from).
+- Description: offset in bytes to start from; 0 disables resume; FTP -1 resumes from end of target; affects all supported protocols; default 0, not used.
+- Notes: beyond-2GB transfers use CURLOPT_RESUME_FROM_LARGE; HTTP POST/PUT uploads cannot be resumed (CURLE_BAD_FUNCTION_ARGUMENT).
+Use: single-stream client resume implementation lead for approach A.

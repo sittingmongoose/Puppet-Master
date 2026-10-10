@@ -1,0 +1,66 @@
+{
+  "method_id": "A8-SCW-6-v1",
+  "status": "READY_TO_TEST_WITH_SETUP_BOUNDARY_LIMITATION",
+  "frozen_at_utc": "2026-10-10T03:55:41.746479+00:00",
+  "proposal_type": "original operational prompt protocol; not empirically validated",
+  "owner_directory": "ER12_RUNTIME/methods/A8",
+  "test_dispatch_owner": "root",
+  "investigator_delta": "empty",
+  "critic_delta": "critic_prompt_delta.txt",
+  "reviser_delta": "reviser_prompt_delta.txt",
+  "input_reference": {
+    "path": "ER12_RUNTIME",
+    "sha256": "a405068df1385307372f7b04613b5e441fa22a0f513bcf5db52560d75fd09c7a"
+  },
+  "handoff_input": {
+    "path": "ER12_RUNTIME/packet/ER12_T3_EXECUTE_HANDOFF.md",
+    "intended_section": "A8",
+    "excerpt_path": "handoff_A8_excerpt.md",
+    "scope_deviation": "Initial sed requested first 240 lines rather than A8 only; unrelated handoff exposure occurred. No linked history/case artifacts were opened; neighboring content not used in mechanism selection."
+  },
+  "no_scored_answers": true,
+  "no_delegation_or_other_arm_contact": true,
+  "no_canon_or_repository_writes": true,
+  "files": {
+    "critic_prompt_delta.txt": {
+      "bytes": 3398,
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d"
+    },
+    "failure_modes.md": {
+      "bytes": 2772,
+      "sha256": "e0ca4a5fec823b580994cc59f80d6472f13d9dd3663b121f293ef920e4767690"
+    },
+    "handoff_A8_excerpt.md": {
+      "bytes": 882,
+      "sha256": "0c9aa369aec64f0709cf78768b962ac457e6f9b88dd4ef1f96bd94ceb21a2d5a"
+    },
+    "mechanism_comparison.md": {
+      "bytes": 2759,
+      "sha256": "9550f7febbb92645aed2c4b670a96659e8bed31bdce6fd8c434db930224e2d7d"
+    },
+    "method.md": {
+      "bytes": 6816,
+      "sha256": "707ccbcb7bbf51b2adf2e7971a7faba0bb940309488a55a9a562ea678deedbdb"
+    },
+    "native_goal_active_receipt.json": {
+      "bytes": 1304,
+      "sha256": "897af239481c15ed3e7d22c8c6720cdcf4bac761c6a55084549f45b236e0ecf0"
+    },
+    "observable_outcomes.md": {
+      "bytes": 4466,
+      "sha256": "0837fa107fbcf0d30353fef2deb19b971aed3b690eabac8fb4fa23a0534dae7d"
+    },
+    "prompt_delta.md": {
+      "bytes": 1291,
+      "sha256": "c7b4d971d131c7f391c14340c709baf556553197f0766d352b554044781478bc"
+    },
+    "reviser_prompt_delta.txt": {
+      "bytes": 1715,
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087"
+    },
+    "sources_conditions.md": {
+      "bytes": 4137,
+      "sha256": "56955d4d41e1b2c94a02ebe8524eef0231c2bff49aab129cd1f1763f23e16cdc"
+    }
+  }
+}

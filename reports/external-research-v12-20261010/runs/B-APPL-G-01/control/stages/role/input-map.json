@@ -1,0 +1,10 @@
+{
+  "common_assignment": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+  "fixture": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+  "corpus": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus",
+  "allowed_write_root": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
+  "deadline_utc": "2026-10-10T04:09:50.551496+00:00",
+  "whole_arm_seconds": 900,
+  "writing_reserve_s": 300,
+  "role_scope": "Applicability/exception verification"
+}

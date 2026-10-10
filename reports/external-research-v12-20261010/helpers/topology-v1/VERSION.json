@@ -1,0 +1,40 @@
+{
+  "version": "topology-v1",
+  "baseline": "../er11",
+  "baseline_sha256": {
+    "prepare.py": "ae736bfb6748175284d2abbcc7f851f031593612b0de160d72df91dd11ae70a7",
+    "reveal.py": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+    "bootstrap.js": "f8b21ce31ca521880adc9a362dda04bdaa5f5a4285d3a9d0b019f855e2623595"
+  },
+  "files": {
+    "README.md": {
+      "sha256": "3abfe7ebe0c21aa19f0dc3d82515d52645ca1a83d85e11aef1b4ecfe145c1d50",
+      "bytes": 12026
+    },
+    "bootstrap.js": {
+      "sha256": "c9657e6c3cec0d4d7efe6de94eba1cd842bf3c9edf2d6586fd5d737aa6ae5b9d",
+      "bytes": 7821
+    },
+    "config.A2.example.json": {
+      "sha256": "b3a4b9b74f2f236eb53294271fff76f6a9575d99fe71cfafb32864819c6459d8",
+      "bytes": 761
+    },
+    "config.A7.example.json": {
+      "sha256": "937fbde4dd2876ded0372b5f90ac77fbfee779af8612184f53d4569ed5283165",
+      "bytes": 764
+    },
+    "prepare.py": {
+      "sha256": "3cf320737c60b45de8c524fea0484f78a688bf720a0f60b9becc5e2873f8dbf0",
+      "bytes": 36497
+    },
+    "test_mechanics.py": {
+      "sha256": "e4d4a2e543443ff00b7affcc116c8da242c5590f87a4e2945d4a9cba45b926b9",
+      "bytes": 15428
+    },
+    "version.diff": {
+      "sha256": "f6465fb734d502e37479aca6c0c967e0def4f1012088d7022f358870abdc5969",
+      "bytes": 63036
+    }
+  },
+  "no_science_or_live_transport_claim": true
+}

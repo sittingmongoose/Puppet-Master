@@ -1,0 +1,8 @@
+[S2] IETF RFC 9530, Digest Fields, February 2024
+URL: https://www.rfc-editor.org/rfc/rfc9530.html
+Observed via read-only HTTPS fetch during investigation window (see source-map.json anchors).
+Excerpt (facts observed on the page):
+- Abstract: defines HTTP fields for integrity digests; Content-Digest for message content integrity; Repr-Digest for representation integrity; Want-Content-Digest / Want-Repr-Digest express sender interest/preferences.
+- States: obsoletes RFC 3230 and the Digest and Want-Digest HTTP fields.
+- Authors: R. Polli (Team Digitale, Italian Government), L. Pardue (Cloudflare); Category Standards Track.
+Use: integrity-field semantics for approaches A/C; historical lead (3230 -> 9530).

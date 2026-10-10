@@ -1,0 +1,12 @@
+{
+  "run_id": "ER12-A8-01-SCW6",
+  "method": "A8-SCW-6-v1",
+  "dispatch_owner": "root",
+  "runtime_root": "ER12_RUNTIME/runs/ER12-A8-01-SCW6",
+  "brief_path": "ER12_RUNTIME/cases-rest/A8-01/brief.md",
+  "plan_path": "ER12_RUNTIME/cases-rest/A8-01/plan.md",
+  "whole_deadline_utc": "ROOT_SET_ONCE_TO_ABSOLUTE_UTC_WITHIN_60_MINUTES_BEFORE_PREPARATION",
+  "stage_budgets_s": {"investigator": 1800, "critic": 720, "reviser": 1080},
+  "provider": {"providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}},
+  "runtime_mode": "full-access"
+}

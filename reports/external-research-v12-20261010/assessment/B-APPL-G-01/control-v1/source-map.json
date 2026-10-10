@@ -1,0 +1,569 @@
+{
+  "schema": "er12-independent-assessment-source-map-v1",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "arm": "control",
+  "assessment_version": "control-v1",
+  "root": "ER12_RUNTIME",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "artifacts": [
+    {
+      "path": "assessment/RUBRIC-v1.md",
+      "absolute_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "line_count": 12,
+      "coverage": "COMPLETE_TEXT_READ",
+      "use": "governing rubric"
+    },
+    {
+      "path": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "absolute_path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "bytes": 3108,
+      "line_count": 25,
+      "coverage": "COMPLETE_TEXT_READ",
+      "fixture_hash_match": true,
+      "use": "frozen substantive input"
+    },
+    {
+      "path": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "absolute_path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "bytes": 1065,
+      "line_count": 19,
+      "coverage": "COMPLETE_TEXT_READ",
+      "fixture_hash_match": true,
+      "use": "frozen substantive input"
+    },
+    {
+      "path": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "absolute_path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "bytes": 963,
+      "line_count": 19,
+      "coverage": "COMPLETE_TEXT_READ",
+      "fixture_hash_match": true,
+      "use": "frozen substantive input"
+    },
+    {
+      "path": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "absolute_path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "bytes": 1305,
+      "line_count": 27,
+      "coverage": "COMPLETE_TEXT_READ",
+      "fixture_hash_match": true,
+      "use": "frozen substantive input"
+    },
+    {
+      "path": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "absolute_path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "sha256": "3769783a77959a4303e88ce4f120a94850484d97827327d7bd097a08b823d6b9",
+      "bytes": 1664,
+      "line_count": 54,
+      "coverage": "COMPLETE_TEXT_READ",
+      "use": "frozen substantive input"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "sha256": "a3b1a4181f9665cf693a0bf931121fb512ef04f2915190170b39b38da01b49b4",
+      "bytes": 1798,
+      "line_count": 3,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "sha256": "876d3c2d3f1166603f53c9ec63f1d11574d36cef7caa9baea7268e4e1cdbda9e",
+      "bytes": 4067,
+      "line_count": 66,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "sha256": "8e47864f5d5b0f12c59319779b351189e69e24ca4b58a962540ce0f3480a9218",
+      "bytes": 2007,
+      "line_count": 46,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "sha256": "8893a4f2a0bf2a06ebba2ac7b7bdfe33ff2313a8dcc316ba0590ef7b74f5f687",
+      "bytes": 606,
+      "line_count": 10,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/request.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "sha256": "16ff49a3669d478fdbca6230a73078d1ffba5749db815d26a8e5068252a7886b",
+      "bytes": 813,
+      "line_count": 20,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "sha256": "0ac15bfdebfcff042f7042f97e22845e2849f25ec3dcd37a7a6b1853458f22bf",
+      "bytes": 3517,
+      "line_count": 66,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "candidate science"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "sha256": "e2bdce18faa81511c750678fecbdaa3ecfb09f09a2254ef3d29f989c9bc46bf7",
+      "bytes": 2236,
+      "line_count": 25,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "candidate science"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "sha256": "365c20d60b162a00752cfc79476e78234e1c9c50a93ab336e887c00cf863be16",
+      "bytes": 3115,
+      "line_count": 18,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "sha256": "286d34a390c9e8b19b09004b5e4b7b7f6766b7fc4ba527d9833154b7792c9e1b",
+      "bytes": 2626,
+      "line_count": 61,
+      "coverage": "COMPLETE_TEXT_READ",
+      "use": "same-arm delivery/protocol metadata"
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+      "absolute_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "sha256": "92f8edc209c9a2d2fe427ab8f34991e04af6f28b44e52c55a80647492402b1b5",
+      "bytes": 5136,
+      "line_count": 23,
+      "coverage": "COMPLETE_TEXT_READ",
+      "terminal_freeze_hash_and_size_match": true,
+      "use": "candidate science"
+    }
+  ],
+  "primary_sources": [
+    {
+      "source_id": "P1",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "version": "Live Redis command documentation, independently checked history for target OSS 7.2",
+      "locators": [
+        {
+          "section": "Description before Required arguments",
+          "web_lines": "785-793"
+        },
+        {
+          "section": "Optional arguments, GT/NX",
+          "web_lines": "803-821"
+        },
+        {
+          "section": "Examples, SET/TTL",
+          "web_lines": "832-849"
+        },
+        {
+          "section": "Details / Refreshing expires",
+          "web_lines": "1890-1892"
+        },
+        {
+          "section": "How Redis expires keys; replication link/AOF",
+          "web_lines": "1929-1939"
+        },
+        {
+          "section": "Return information; History",
+          "web_lines": "1953-1967"
+        }
+      ],
+      "claims": [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "independent_evidence_summary": "The page distinguishes in-place mutation from replacement; GT rejects finite deadlines on persistent keys; non-positive expiry is deletion. GT history is 7.0.0. Passive/active expiry and replication semantics supply no service p99 measurement.",
+      "method": "web open/find",
+      "retrieved_at_utc": "2026-10-10T04:01:18Z/2026-10-10T04:02:12Z"
+    },
+    {
+      "source_id": "P2",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "version": "Live Redis command documentation; KEEPTTL introduced 6.0.0, applicable to 7.2",
+      "locators": [
+        {
+          "section": "Description",
+          "web_lines": "795-799"
+        },
+        {
+          "section": "Optional arguments / KEEPTTL",
+          "web_lines": "805-852"
+        },
+        {
+          "section": "History",
+          "web_lines": "1607-1613"
+        }
+      ],
+      "claims": [
+        2,
+        3
+      ],
+      "independent_evidence_summary": "Ordinary successful SET replaces the value and drops its prior TTL; KEEPTTL preserves it. Later 8.4 conditions are outside the assessed command forms.",
+      "method": "web open/find",
+      "retrieved_at_utc": "2026-10-10T04:01:18Z/2026-10-10T04:02:12Z"
+    },
+    {
+      "source_id": "P3",
+      "url": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/",
+      "version": "Live primary Redis documentation; relevant 7.2 event implementation separately checked",
+      "locators": [
+        {
+          "section": "Introduction / Pub/Sub loss",
+          "web_lines": "75-82"
+        },
+        {
+          "section": "Type of events and Configuration",
+          "web_lines": "83-127"
+        },
+        {
+          "section": "Events generated by different commands",
+          "web_lines": "128-134"
+        },
+        {
+          "section": "Timing of expired events",
+          "web_lines": "202-210"
+        }
+      ],
+      "claims": [
+        5,
+        6
+      ],
+      "independent_evidence_summary": "Notification delivery requires configuration and subscribers. E selects keyevent channels, g generic events, x expiry events. Del differs from expired; expiry-event delivery has no TTL-zero timing guarantee. Disconnection loses messages. The command list describes negative timeouts; zero is explicit in P1 and I1.",
+      "method": "web open/find",
+      "retrieved_at_utc": "2026-10-10T04:01:18Z/2026-10-10T04:02:12Z"
+    },
+    {
+      "source_id": "I1",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c",
+      "version": "Redis upstream release tag 7.2.0; representative target-series implementation, not a service build attestation",
+      "locators": [
+        {
+          "symbol": "expireGenericCommand",
+          "line_start": 549,
+          "line_end": 661,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L549"
+        },
+        {
+          "symbol": "GT infinite-TTL branch",
+          "line_start": 605,
+          "line_end": 613,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L605"
+        },
+        {
+          "symbol": "already-expired deletion notification",
+          "line_start": 629,
+          "line_end": 641,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L629"
+        },
+        {
+          "symbol": "expireCommand and ttlGenericCommand",
+          "line_start": 666,
+          "line_end": 707,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L666"
+        }
+      ],
+      "claims": [
+        4,
+        5
+      ],
+      "independent_evidence_summary": "GT returns zero when there is no existing expiry. An already-due explicit timeout deletes and generates del. EXPIRE uses seconds; PTTL uses a millisecond deadline minus a millisecond command-time snapshot.",
+      "method": "public HTTPS retrieval; static text inspection only",
+      "retrieved_at_utc": "2026-10-10T04:02:11.496350+00:00",
+      "retrieved_full_response_sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65"
+    },
+    {
+      "source_id": "I2",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_string.c",
+      "version": "Redis upstream release tag 7.2.0",
+      "locators": [
+        {
+          "symbol": "setGenericCommand",
+          "line_start": 84,
+          "line_end": 129,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L84"
+        },
+        {
+          "symbol": "KEEPTTL parsing and expiration option exclusion",
+          "line_start": 232,
+          "line_end": 247,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L232"
+        }
+      ],
+      "claims": [
+        2,
+        3
+      ],
+      "independent_evidence_summary": "Unmet NX/XX returns before replacement. SET selects SETKEY_KEEPTTL for KEEPTTL; supplied expiration is assigned afterward. KEEPTTL parsing excludes explicit expiration options.",
+      "method": "public HTTPS retrieval; static text inspection only",
+      "retrieved_at_utc": "2026-10-10T04:02:11.614696+00:00",
+      "retrieved_full_response_sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f"
+    },
+    {
+      "source_id": "I3",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/db.c",
+      "version": "Redis upstream release tag 7.2.0",
+      "locators": [
+        {
+          "symbol": "setKey",
+          "line_start": 295,
+          "line_end": 315,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L295"
+        },
+        {
+          "symbol": "deleteExpiredKeyAndPropagate",
+          "line_start": 1679,
+          "line_end": 1689,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1679"
+        }
+      ],
+      "claims": [
+        2,
+        3,
+        5
+      ],
+      "independent_evidence_summary": "setKey removes the expiry unless SETKEY_KEEPTTL is selected. Ordinary expiration deletion generates expired, distinct from the explicit due-timeout branch in I1.",
+      "method": "public HTTPS retrieval; static text inspection only",
+      "retrieved_at_utc": "2026-10-10T04:02:11.740871+00:00",
+      "retrieved_full_response_sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6"
+    },
+    {
+      "source_id": "I4",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_hash.c",
+      "version": "Redis upstream release tag 7.2.0",
+      "locators": [
+        {
+          "symbol": "hsetCommand",
+          "line_start": 606,
+          "line_end": 633,
+          "navigation_url": "https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L606"
+        }
+      ],
+      "claims": [
+        1
+      ],
+      "independent_evidence_summary": "HSET obtains the hash object and updates fields in place; it does not replace the key through setKey or assign a new expiry. This corroborates P1.",
+      "method": "public HTTPS retrieval; static text inspection only",
+      "retrieved_at_utc": "2026-10-10T04:02:11.861296+00:00",
+      "retrieved_full_response_sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6"
+    }
+  ],
+  "claim_evidence": [
+    {
+      "claim_id": 1,
+      "candidate_disposition": "SUPPORTED_BOUNDED",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 7
+      },
+      "primary_source_ids": [
+        "P1",
+        "I4"
+      ],
+      "operation": "Successful HSET field update on an existing, unexpired hash key",
+      "target": "Redis OSS 7.2",
+      "conditions_exceptions": "Existing key-level deadline is preserved, not refreshed; no existing TTL remains persistent. Replacement/recreation is outside this operation.",
+      "corrected_wording_assessment": "Appropriately bounded; no material correction needed.",
+      "limitations": [
+        "L1"
+      ]
+    },
+    {
+      "claim_id": 2,
+      "candidate_disposition": "FALSE",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 9
+      },
+      "primary_source_ids": [
+        "P1",
+        "P2",
+        "I2",
+        "I3"
+      ],
+      "operation": "Successful plain SET replacement without expiration option or KEEPTTL",
+      "target": "Redis OSS 7.2",
+      "conditions_exceptions": "Existing TTL is removed. Explicit expiration sets a deadline; KEEPTTL retains it. Unmet NX/XX does not replace. Successful replacement, rather than a mere syntactically valid command, governs the conclusion.",
+      "corrected_wording_assessment": "The replacement/persistent correction and conditional-command distinction are supported.",
+      "limitations": []
+    },
+    {
+      "claim_id": 3,
+      "candidate_disposition": "SUPPORTED_FOR_PRIMARY_COMMAND_WITH_SCOPE_LIMITS",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 11
+      },
+      "primary_source_ids": [
+        "P2",
+        "I2",
+        "I3"
+      ],
+      "operation": "Successful SET key value KEEPTTL on the executing primary",
+      "target": "Redis OSS 7.2; option since 6.0.0",
+      "conditions_exceptions": "Keeps an existing key deadline while value changes; does not attach a timeout to a persistent key. Does not establish replication durability or post-promotion service behavior.",
+      "corrected_wording_assessment": "Scope and remaining deployment uncertainty are appropriate.",
+      "limitations": []
+    },
+    {
+      "claim_id": 4,
+      "candidate_disposition": "FALSE",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 13
+      },
+      "primary_source_ids": [
+        "P1",
+        "I1"
+      ],
+      "operation": "EXPIRE key seconds GT, finite positive seconds on a persistent existing key",
+      "target": "Redis OSS 7.2; GT since 7.0.0",
+      "conditions_exceptions": "Persistent is infinite for GT, so condition skips with reply 0. GT extends a volatile key only for a strictly later deadline. Unconditional positive EXPIRE or NX can add a timeout to a persistent key.",
+      "corrected_wording_assessment": "Infinity/deadline correction and bounded alternatives are supported.",
+      "limitations": []
+    },
+    {
+      "claim_id": 5,
+      "candidate_disposition": "FALSE",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 15
+      },
+      "primary_source_ids": [
+        "P1",
+        "P3",
+        "I1",
+        "I3"
+      ],
+      "operation": "Successful unconditional EXPIRE key 0 on an existing key versus ordinary expiry deletion",
+      "target": "Redis OSS 7.2; event observation depends on notify-keyspace-events configuration",
+      "conditions_exceptions": "Zero causes logical deletion and del; ordinary expiration deletion generates expired. Default notifications are disabled. Configured subscribers can still lose Pub/Sub messages on disconnect. Immediate deletion is not a physical-memory cleanup latency claim.",
+      "corrected_wording_assessment": "Event distinction is correct. P3 alone describes negative timeouts; the zero boundary is independently supported by P1 and 7.2.0 code.",
+      "limitations": []
+    },
+    {
+      "claim_id": 6,
+      "candidate_disposition": "NOT_ESTABLISHED",
+      "review_judgment": "CORRECT",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 17
+      },
+      "primary_source_ids": [
+        "P1",
+        "P3"
+      ],
+      "operation": "Service p99 expiry-to-cleanup latency under replica failover",
+      "target": "Redis OSS 7.2 service; no endpoint, benchmark, durability/retry/failover trace or cleanup definition supplied",
+      "conditions_exceptions": "Command availability and expiration precision are not evidence of a service p99 under failover. Background/passive expiry and notification delay distinguish deadline from observation. The candidate does not claim the target is impossible.",
+      "corrected_wording_assessment": "Unverified <25 ms p99 is the supported disposition; actual defined service measurements would resolve it.",
+      "limitations": []
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR",
+      "axis": "citation_locator",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 7
+      },
+      "primary_source_ids": [
+        "P1"
+      ],
+      "finding": "The candidate attributes the HSET-preservation passage to Refreshing expires. The passage is in the opening Description; Refreshing expires concerns calling EXPIRE again.",
+      "materiality": "Correct URL and command semantics are preserved; the supporting passage is readily navigable. This is a locator defect, not an unsupported decision."
+    },
+    {
+      "id": "L2",
+      "severity": "MINOR",
+      "axis": "prospective_check_precision",
+      "candidate_evidence": {
+        "path": "runs/B-APPL-G-01/control/stages/role/verification.md",
+        "line": 21
+      },
+      "primary_source_ids": [
+        "I1"
+      ],
+      "finding": "The proposed PTTL check says decreases without specifying elapsed sampling time. Separate samples within the same millisecond can legitimately be equal. Positive/decreasing PTTL is also a coarse check of deadline preservation, rather than an exact deadline-equality oracle.",
+      "materiality": "This is a brief prospective check with no executable harness or claimed result; it still discriminates dropped TTL from retained TTL. No execution requirement or new architecture is imposed. It is not a material source error or omission."
+    }
+  ],
+  "native_protocol_timing_evidence": [
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "locator": "status/latestTerminalStatus/hasPendingChildRuns/latestTerminalSummary",
+      "supports": "Observed T3 completion and self-reported native result only; not a native receipt."
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "locator": "frozen_at/T3_terminal/files",
+      "supports": "Host-captured terminal freeze and exact inspected science identity."
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "locator": "prepared_at_utc/deadline_utc/requested_route/protocol",
+      "supports": "Requested route and configured time boundary, not observed actual native occupancy."
+    },
+    {
+      "path": "runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "locator": "retrieval/sources/checks/unresolved",
+      "supports": "Candidate-authored provenance and proposed/executed distinction; retrieval trace not independently established."
+    }
+  ],
+  "coverage_limits": [
+    "All assigned frozen input/science bytes were read; only the same-arm operational metadata was additionally inspected.",
+    "Live documentation is version-qualified by history and representative 7.2.0 release-tag static implementation. No actual service build or runtime behavior is certified.",
+    "Source files were retrieved into memory and inspected, not executed or retained as raw captures; hashes identify full HTTPS response bytes.",
+    "Web line numbers are retrieval-specific; section names and direct URLs are the durable locators.",
+    "No deployment, performance or failover test ran.",
+    "No other arm, assessment or campaign history was inspected.",
+    "Native/protocol/time unknowns are separate from the semantic source judgment."
+  ],
+  "reviewer_native": {
+    "tool": "functions.exec -> tools.create_goal",
+    "threadId": "01a123f8-a8cf-7f90-8136-f173a2a33f29",
+    "createdAt": 1791604877,
+    "created_at_utc": "2026-10-10T04:01:17+00:00",
+    "creation_observed_status": "active",
+    "status_when_review_saved": "active",
+    "completion_at_save": "PENDING; complete only after required artifacts are saved and verified",
+    "goal_count_created": 1,
+    "budget_seconds": 1500
+  }
+}

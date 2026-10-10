@@ -1,0 +1,16 @@
+{
+  "synthetic_only": true,
+  "actual_case_or_inference": false,
+  "tests_run": 1,
+  "failures": 0,
+  "errors": 0,
+  "ok": true,
+  "checks": [
+    "investigator prompt byte-for-byte unchanged",
+    "critic/reviser exact additions only",
+    "R0 deadlines/budgets unchanged",
+    "delta hashes bound to retry freeze",
+    "original exact one-shot reveal reused",
+    "stable stage request id on retry"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "engineering_only": true,
+  "native_goals_created_by_implementation_worker": 1,
+  "native_objective_characters": 1130,
+  "root_only_dispatch": true,
+  "actual_case_answers": false,
+  "nested_delegation": false,
+  "A2_A7": "ER12_RUNTIME/helpers/topology-v1/README.md",
+  "A8": "ER12_RUNTIME/helpers/er12-A8-v1/README.md",
+  "route_conditions": {
+    "native_goal_wait_exposed": false,
+    "bounded_kernel_wait_tested": true,
+    "actual_original_run_steer_tested": false,
+    "A2_live_transport_unverified": true,
+    "no_fresh_goal_substitution": true
+  },
+  "additional_scope": "Exact frozen A8 critic/reviser deltas in separate R0 overlay; same engineering Goal",
+  "versions": {
+    "topology-v1": {
+      "path": "ER12_RUNTIME/helpers/topology-v1/VERSION.json",
+      "sha256": "a7e4f6c7ea5c14c79c92c4ccae9aea2acb14693af2a592eb9aee1e7d433fca97"
+    },
+    "er12-A8-v1": {
+      "path": "ER12_RUNTIME/helpers/er12-A8-v1/VERSION.json",
+      "sha256": "06b845c4a4ab180a76dd9388f1fce84031168bff5abe3e44b09b5ed3c7000adb"
+    }
+  },
+  "verification": {
+    "topology-v1": {
+      "path": "ER12_RUNTIME/helpers/topology-v1/evidence/mechanical-verification.json",
+      "sha256": "88b2123127e54c15503b0117680c8998df7589e38eb73f0ba6f19ee023c819d6",
+      "result": {
+        "version": "topology-v1",
+        "synthetic_only": true,
+        "actual_native_goal_or_steering_proof": false,
+        "tests_run": 9,
+        "failures": 0,
+        "errors": 0,
+        "ok": true
+      }
+    },
+    "er12-A8-v1": {
+      "path": "ER12_RUNTIME/helpers/er12-A8-v1/evidence/mechanical-verification.json",
+      "sha256": "918ce253770992e82c0c457e6ee14071e2429f40f632857283b03557edb082ba",
+      "result": {
+        "synthetic_only": true,
+        "actual_case_or_inference": false,
+        "tests_run": 1,
+        "failures": 0,
+        "errors": 0,
+        "ok": true,
+        "checks": [
+          "investigator prompt byte-for-byte unchanged",
+          "critic/reviser exact additions only",
+          "R0 deadlines/budgets unchanged",
+          "delta hashes bound to retry freeze",
+          "original exact one-shot reveal reused",
+          "stable stage request id on retry"
+        ]
+      }
+    }
+  }
+}

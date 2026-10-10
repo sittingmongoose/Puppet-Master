@@ -1,0 +1,20 @@
+{
+  "requested_at_utc": "2026-10-10T03:54:50.551496+00:00",
+  "args": {
+    "clientRequestId": "er12-B-APPL-G-01-control-role-v1",
+    "title": "ER12 B-APPL-G-01 control role",
+    "role": "research",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "task": "Execute exactly ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+  }
+}

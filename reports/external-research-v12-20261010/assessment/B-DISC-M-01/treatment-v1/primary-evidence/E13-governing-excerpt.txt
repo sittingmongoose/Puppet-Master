@@ -1,0 +1,240 @@
+Source: https://tus.io/faq
+Original normalized text SHA256: ee302b08868c047c70d4136bf86743a3646d930a14fc5ca7c68d51b887b9a1e9
+Original line numbers retained; gaps are omitted; original full response remains private.
+
+1: FAQ | tus.io
+2: We stand with the brave people of Ukraine. Stop the war. Find out
+3: how you can help
+4: .
+5: Home
+6: FAQ
+7: Support
+8: Blog
+9: Demo
+10: Protocol
+11: Implementations
+12: GitHub
+13: FAQ
+14: Here are some Frequently Asked Questions and their answers. This document is
+15: still a work in progress and is being re-written as we speak. If you have any
+16: questions or topics you would like to see covered, let us know!
+17: Table of Contents
+18: What is tus?
+19: When should I use tus?
+20: How do I install tus and get started?
+21: How does tus work?
+22: How do I integrate tus into my application?
+23: How do I scale tus?
+24: How can I deal with bad HTTP proxies?
+25: How are pause/resume handled? When should I delete partial uploads?
+26: How can I get the file name or file type for an upload?
+27: Why is the protocol using custom headers?
+28: Why are you not using the “X-” prefix for your headers?
+29: What does “tus” even mean?
+30: What is tus?
+31: tus is a project aiming to make resumable file uploads easily usable and widely
+32: available. The most interesting parts of this project are the
+33: protocol specification and the many freely
+34: available client and server implementations.
+35: When we say “resumable file uploads”, we refer to the ability that uploads can
+36: be interrupted at any time and afterward be resumed from the state where the
+37: failure began. This interruption can be accidentally (e.g., a connection drop or
+38: a server crash) or voluntarily if the user decides to pause the upload. In
+39: traditional uploading implementations, your progress would be lost in such a
+40: situation, but tus enables you to recover from these interruptions and continue
+41: where the upload was stopped.
+42: On a more technical note, the tus protocol is built upon HTTP/HTTPS to make it
+43: available on every platform including browsers, desktop software, and mobile
+44: applications. Furthermore, it also allows us to build upon the massive ecosystem
+45: and best practices that HTTP provides.
+46: When should I use tus?
+47: If you are unsure whether tus is a good fit for your use case, here is a list of
+48: criteria. If one of these points applies to you, you could likely benefit from
+49: tus:
+50: You operate on partly unreliable networks where a connection can get easily
+51: dropped or a connection may not be available at all for some time, e.g., when
+52: using mobile data.
+53: You handle large files and want to avoid having to reupload parts of it, just
+54: because the upload got interrupted (Note: “large” is a relative word. A 10MB
+55: file can be large if you have an uplink speed of 100KB/s).
+56: You want to provide your users with the ability to pause an upload and resume
+57: it later (maybe even after a few days).
+58: You do not want to rely on proprietary upload solutions but instead, prefer to
+59: build upon free and open source projects.
+60: Having that said, there are also a few situations where you might not want to
+61: use tus. This is mainly in scenarios where you handle many very small files (a
+62: few KBs) on a slow network and where the overhead of additional HTTP requests
+63: would significantly impact the performance. If you want us to assist you in your
+64: decision-making, contact us and we are happy to give you some
+65: advice.
+66: How do I install tus and get started?
+67: You’ll need a:
+68: server implementation (you can read how to
+69: get started with tusd, which is
+70: the most mature option), and a:
+71: client implementation (such as the bare-bones
+72: tus-js-client for
+73: browsers and Node.js, or if you need a rich UI,
+74: Uppy.
+75: Tus is a low-level building block and there’s no one right way to do deploy
+76: resumable file uploads with it. Still, to get started quickly for the majority
+77: of use cases, we recommend using tusd in combination with Uppy. The ecosystem is
+78: rich, however, and you’ll know it if one of our community-maintained
+79: client/server implementations in Ruby, Python,
+80: Elixir, etc., are a better fit for your platform.
+81: Finally, if you don’t care for self-hosting tus servers,
+82: Transloadit offers a tus-based upload handling
+83: service that can export to the storage of your choice (and can optionally encode
+84: or resize files passing through). The setup steps are then to create an account
+85: and add an Uppy HTML tag to your website, or check out
+86: non-browser client integrations.
+87: How does tus work?
+88: This section covers the more low-level details of how tus performs an upload. If
+89: you are using one of our open-source implementations, you
+90: don’t have to worry about these details but they may still be helpful to ease
+91: debugging and troubleshooting.
+92: A tus upload is broken down into different HTTP requests, where each one has a
+93: different purpose:
+94: At first, the client sends a POST request to the server to initiate the
+95: upload. This upload creation request tells the server basic information
+96: about the upload, such as its size or additional metadata. If the server
+97: accepts this upload creation request, it will return a successful response
+98: with the Location header set to the upload URL. The upload URL is used to
+99: uniquely identify and reference the newly-created upload resource.
+100: Once the upload has been created, the client can start to transmit the actual
+101: upload content by sending a PATCH request to the upload URL, as returned in
+102: the previous POST request. Ideally, this PATCH request should contain as
+103: much upload content as possible to minimize the upload duration. The PATCH
+104: request must also contain the Upload-Offset header, which tells the server
+105: at which byte offset the server should write the uploaded data. If the PATCH
+106: request successfully transfers the entirety of the upload content, then your
+107: upload is done!
+108: If the PATCH request got interrupted or failed for another reason, the
+109: client can attempt to resume the upload. To resume, the client must know how
+110: much data the server has received. This information is obtained by sending a
+111: HEAD request to the upload URL and inspecting the returned Upload-Offset
+112: header. Once the client knows the upload offset, it can send another PATCH
+113: request until the upload is completely done.
+114: Optionally, if the client wants to delete an upload because it won’t be needed
+115: anymore, a DELETE request can be sent to the upload URL. After this, the
+116: upload can be cleaned up by the server, and resuming the upload is not
+117: possible anymore.
+118: If you want to see these requests in action, you can head over to our
+119: demo where the actual HTTP requests are shown on the page!
+120: How do I integrate tus into my application?
+121: If you want to add tus to your application, you need a server and client
+122: component. For a quick start, we recommend having a look at our list of
+123: open-source implementations. The exact setup steps vary for
+124: each implementation, but the basic scheme is as follows:
+125: The tus server is usually deployed alongside your main application server in its
+126: process. A proxy is then used to route the requests to either the tus server or
+127: your application server. The tus server usually stores the uploads on disk, but
+128: some servers (such as our reference implementation
+129: tusd) are also capable of storing the data
+130: directly on different cloud providers, such as AWS S3 or Google Cloud Storage.
+131: Once you have a tus server set up, you can integrate the tus client into your
+132: client application. We offer tus clients for a variety of environments,
+133: including browsers, Android, iOS, Java and Node.js. If you want to add
+134: application-specific pieces of information to your upload, such as the current
+135: user’s ID, you can add them as key-value-pairs to the upload’s metadata. This
+136: metadata is then also available to the tus server for custom processing.
+137: Finally, most tus servers offer a way to subscribe to specific events, such as
+138: if a new upload is created or finished. For example,
+139: tusd has a
+140: hook system that can be
+141: used to execute custom scripts or send HTTP requests if a specific event occurs.
+142: These can be used to move the completed uploads to another location and provide
+143: them with your application for further processing. It’s also possible to access
+144: the upload’s metadata set by the tus client in your client application inside
+145: these hooks.
+146: How do I scale tus?
+147: The tus protocol has been designed with scaling in mind to handle increasing
+148: numbers of connections and uploads. While the exact details vary for different
+149: server implementations, these are the basic concepts:
+150: If multiple tus servers have a shared storage system (a network disk or cloud
+151: storage), they can be grouped together and placed behind a load balancer. You
+152: only need to ensure that there is no parallel access to a single upload resource
+153: from multiple tus servers. The implementations can achieve this in two ways:
+154: If your application ensures that an upload is always accessed by only one
+155: client, you can enable sticky sessions for your load balancer. In this case,
+156: the HTTP requests for the client will always be routed to the same tus server
+157: that can handle the concurrency correctly.
+158: Alternatively, you can use a distributed lock (e.g., etcd or Redis) to ensure
+159: exclusive access to an upload resource. The lock must then be held as long as
+160: a server wants to retrieve or modify an upload resource.
+161: Let’s look at an example to see why this complex setup may be necessary. In our
+162: scenario, we have a single tus client and two tus servers, A and B, which are
+163: positioned behind a load balancer.
+164: The client connects to server A through the load balancer and starts to
+165: upload data using a PATCH request.
+166: After some time, the connection between the client and server A is
+167: interrupted. The important detail here is that the client can know very
+168: quickly that the connection has been dropped while the server is unaware of
+169: this situation. The server is therefore still waiting for more upload data to
+170: be written to the upload resource.
+171: The client now wants to resume the upload, but connects to server B through
+172: the load balancer. If no locking were to be in place, server B and server A
+173: may write data to the same upload resource simultaneously leading to corrupt
+174: data.
+175: This can be prevented if either sticky sessions were enabled, so the client
+176: would have connected to server A again, or if a shared locking mechanism between
+177: the servers would be required.
+178: How can I deal with bad HTTP proxies?
+179: If you are dealing with HTTP proxies that strip/modify HTTP headers or can’t
+180: handle PATCH requests properly, you should consider using HTTPS. This will
+181: make it impossible for proxies to modify your requests and lets you use the
+182: X-HTTP-Method-Override header, which allows you to take advantage of POST
+183: requests.
+184: If that is not an option for you, please reach out to us. We are open to
+185: defining a compatibility protocol extension.
+186: How are pause/resume handled? When should I delete partial uploads?
+187: The tus protocol is built upon the principles of simple pausing and resuming. To
+188: pause an upload, you are allowed to end the current open request. The server
+189: will store the uploaded data as long as no violations against other constraints
+190: (e.g., checksums) or internal errors occur. Once you are ready to resume an
+191: upload, send a HEAD request to the corresponding upload URL to obtain the
+192: available offset. After receiving a valid response, you can upload more data
+193: using PATCH requests. You should keep in mind that the server may delete an
+194: unfinished upload if it is not continued for a long period (see
+195: Expiration extension).
+196: Before deleting an outstanding upload, the server should give the client enough
+197: time to resolve potential networking issues. Since this duration depends heavily
+198: on the underlying application model, the protocol does not contain a specific
+199: number, but we recommend one week for a general use case.
+200: How can I get the file name or file type for an upload?
+201: The tus protocol does not have a direct mechanism to obtain the type or filename
+202: of an upload as the specification does not have the principle of a disk-based
+203: file, allowing you to upload arbitrary data using tus. However, the desired
+204: functionality can be achieved by utilizing metadata. A client can attach the
+205: file’s name and type to an upload when it’s being created by setting the
+206: Upload-Metadata header. On the other side, the server can read these values
+207: and determine the name and type of the upload.
+208: Why is the protocol using custom headers?
+209: We have carefully investigated the use of existing headers such as Range and
+210: Content-Range, but unfortunately, they are defined in a way that makes them
+211: unsuitable for resumable file uploads.
+212: We also considered using existing PATCH payload formats such as
+213: multipart/byteranges,
+214: but unfortunately, the XHR2
+215: FormData interface
+216: does not support custom headers for multipart parts, and the
+217: send() method does not
+218: allow streaming arbitrary data without loading all of it into memory.
+219: That being said, custom headers also allowed us to greatly simplify the client
+220: and server implementations, so we’re quite happy with them.
+221: Why are you not using the “X-” prefix for your headers?
+222: The “X-” prefix for headers has been deprecated, see
+223: RFC 6648.
+224: What does “tus” even mean?
+225: Historically it stood for Transloadit Upload Server, later
+226: repurposed to The Upload Server. But really, it’s just known now as tus. Often
+227: written in the lower casing as an homage to unix ancestry, and (when it was
+228: still an abbreviation) to desperately avoid yelling TUS in all caps. We used to
+229: insist on lowercasing, but have gotten more pragmatic from our encounters with
+230: journalists, who insist on it being Tus in their articles, and there’s not much
+231: we can do about it. So now we just say: write it however you feel like that day
+232: 😄
+233: Do you have a comment? Let us know in the  forum or on
+234: Twitter
+235: .
+236: tus.io is created and maintained by

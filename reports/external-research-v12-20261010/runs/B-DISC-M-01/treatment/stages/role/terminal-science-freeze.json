@@ -1,0 +1,85 @@
+{
+  "frozen_at": "2026-10-10T04:00:05.730529+00:00",
+  "T3_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "sha256": "7a5dd086b465fd6b9e214d01c2d66fbea2373aa36fe08f7161a4d1731736f36d",
+      "bytes": 1806,
+      "mtime_ns": 1791604490548779281
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "sha256": "7075e90b31da4c8751aac381989e6aef8b3185693320099a2284a241ce3de346",
+      "bytes": 4098,
+      "mtime_ns": 1791604495431258451
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "sha256": "c928e282fdfcebb0733c16a89498f7dda3f8dafe771cdc876695acdd2baee59e",
+      "bytes": 1315,
+      "mtime_ns": 1791604490549238196
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "sha256": "da94ad2b10fe000ebeb641da44103608e4a41cf59ef7f2c9e87ab09e4745d2e8",
+      "bytes": 793,
+      "mtime_ns": 1791604490548912453
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "sha256": "487802e58404a83f3d7039dfae6c45b537518490b1651d9a4382b4c5d2c0fe3e",
+      "bytes": 6632,
+      "mtime_ns": 1791604665650516309
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "sha256": "fc2d280f66f527e7bfe267ef1861f6df11d40fecc1e86ea8e4dbdd7dd329679d",
+      "bytes": 511,
+      "mtime_ns": 1791604490548675662
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "sha256": "04edd4b6e262b0eaacf7b20230f8f148e02d7fa90ff852f07d37f81728a229ea",
+      "bytes": 4078,
+      "mtime_ns": 1791604805730103975
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "sha256": "26e55fcd3a1bf0001d9ca088d1267089cb78ba7ef4280f7c07a03285d63cf618",
+      "bytes": 4246,
+      "mtime_ns": 1791604691089682677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "sha256": "c88a2af924234477f7155b40ff8444868a92376b15d3a631fac92a0dc6f76fb6",
+      "bytes": 705,
+      "mtime_ns": 1791604709895805667
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "sha256": "9d29f5396776dbb5c675332b81bbb94672ee423c7750d1a75defd9f26a1d3d79",
+      "bytes": 723,
+      "mtime_ns": 1791604705743778513
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "sha256": "4eba83507c82476028c3c0ecd090fd851114447deab9fd8c42c07b9cf3da61d1",
+      "bytes": 712,
+      "mtime_ns": 1791604700004740981
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "sha256": "a7227855b5d450cd6b76b852c1a5cef7f858c6a681b5d504dd07a88043da5891",
+      "bytes": 808,
+      "mtime_ns": 1791604695794713448
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "sha256": "bb2838774c36d334c0c199ac245f17c6a4693092945de3c3f4a7163522c15382",
+      "bytes": 734,
+      "mtime_ns": 1791604715980845462
+    }
+  ]
+}

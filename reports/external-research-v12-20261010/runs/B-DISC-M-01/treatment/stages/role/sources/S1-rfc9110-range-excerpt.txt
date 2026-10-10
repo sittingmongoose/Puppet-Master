@@ -1,0 +1,8 @@
+[S1] IETF RFC 9110, HTTP Semantics, June 2022 (STD 97)
+URL: https://www.rfc-editor.org/rfc/rfc9110.html
+Observed via read-only HTTPS fetch during investigation window (see source-map.json anchors).
+Excerpt (facts observed on the page):
+- Front matter lists: Obsoletes RFCs including 7230, 7231, 7232, 7233, 7235; Category Standards Track; Authors Fielding/Nottingham/Reschke (eds.).
+- Table of Contents includes conditional-request and Range Request sections (If-Match, If-None-Match, If-Modified-Since, If-Unmodified-Since, If-Range, Range, Content-Range).
+- Supporting search results corroborate If-Range semantics: exact-match validator against ETag/Last-Modified preserves range behavior; mismatch causes full response.
+Use: resume/validator semantics for approaches A/C; historical lead (7233 -> 9110).

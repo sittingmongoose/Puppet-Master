@@ -1,0 +1,36 @@
+{
+  "version": "er12-A8-v1",
+  "baseline": "../er11",
+  "baseline_sha256": {
+    "prepare.py": "ae736bfb6748175284d2abbcc7f851f031593612b0de160d72df91dd11ae70a7",
+    "reveal.py": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+    "bootstrap.js": "f8b21ce31ca521880adc9a362dda04bdaa5f5a4285d3a9d0b019f855e2623595"
+  },
+  "files": {
+    "README.md": {
+      "sha256": "d6277ecd3c0b9201b520e6aa9ecfe42d825a6939a0fda18567a05ba031747dcb",
+      "bytes": 3659
+    },
+    "bootstrap.js": {
+      "sha256": "e6f3e624e85528a82076b5c058f77f22009b65b8d4374e6966d2332d07540592",
+      "bytes": 4436
+    },
+    "config.A8.example.json": {
+      "sha256": "167ad0c7448d39116d6c9a1edecf8497bc715492b27af1ccfafb293043f02dc7",
+      "bytes": 718
+    },
+    "prepare.py": {
+      "sha256": "4871f28032fca5a6d33b0dc10e41cdfc6973ddcdf833ed641168a6eb314e5cdc",
+      "bytes": 3015
+    },
+    "test_mechanics.py": {
+      "sha256": "1eeea92eb1ddb4824565424d5f59698e9a589dbdbcd6245ddcf5235d31520eef",
+      "bytes": 4511
+    },
+    "version.diff": {
+      "sha256": "352023a6d6bc5e57c7e5f592c3592eb492138961faa1315de8cc67fd9e3ac3ee",
+      "bytes": 24368
+    }
+  },
+  "no_science_or_live_transport_claim": true
+}

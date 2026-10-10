@@ -1,0 +1,61 @@
+{
+  "frozen_at": "2026-10-10T04:01:00.207018+00:00",
+  "T3_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "sha256": "a3b1a4181f9665cf693a0bf931121fb512ef04f2915190170b39b38da01b49b4",
+      "bytes": 1798,
+      "mtime_ns": 1791604490552089066
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "sha256": "876d3c2d3f1166603f53c9ec63f1d11574d36cef7caa9baea7268e4e1cdbda9e",
+      "bytes": 4067,
+      "mtime_ns": 1791604498002675985
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "sha256": "8e47864f5d5b0f12c59319779b351189e69e24ca4b58a962540ce0f3480a9218",
+      "bytes": 2007,
+      "mtime_ns": 1791604490552650450
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "sha256": "16ff49a3669d478fdbca6230a73078d1ffba5749db815d26a8e5068252a7886b",
+      "bytes": 813,
+      "mtime_ns": 1791604490552224085
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "sha256": "8893a4f2a0bf2a06ebba2ac7b7bdfe33ff2313a8dcc316ba0590ef7b74f5f687",
+      "bytes": 606,
+      "mtime_ns": 1791604490551959066
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "sha256": "365c20d60b162a00752cfc79476e78234e1c9c50a93ab336e887c00cf863be16",
+      "bytes": 3115,
+      "mtime_ns": 1791604860206633714
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "sha256": "92f8edc209c9a2d2fe427ab8f34991e04af6f28b44e52c55a80647492402b1b5",
+      "bytes": 5136,
+      "mtime_ns": 1791604804621425149
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "sha256": "0ac15bfdebfcff042f7042f97e22845e2849f25ec3dcd37a7a6b1853458f22bf",
+      "bytes": 3517,
+      "mtime_ns": 1791604804627425188
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "sha256": "e2bdce18faa81511c750678fecbdaa3ecfb09f09a2254ef3d29f989c9bc46bf7",
+      "bytes": 2236,
+      "mtime_ns": 1791604804635425240
+    }
+  ]
+}

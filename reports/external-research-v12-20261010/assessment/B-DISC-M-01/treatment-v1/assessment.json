@@ -1,0 +1,1178 @@
+{
+  "schema": "er12-independent-bounded-role-assessment-v1",
+  "assessment_id": "B-DISC-M-01-treatment-v1",
+  "case_id": "ER12-B-DISC-M-01-FRESH",
+  "slot_id": "B-DISC-M-01",
+  "arm": "treatment",
+  "role": "Brief-only discovery",
+  "completed_review": true,
+  "authored_at": "2026-10-10T04:08:02.219615+00:00",
+  "source_judgment": "FAIL",
+  "source_judgment_reason": "Two material source/applicability findings remain: D lacks a substantiated receiver-persistent download mechanism, and A omits governing HTTP-date If-Range restrictions. Honest caution does not remove these gaps.",
+  "judgment_basis": "Independent semantic review against original exact assignment and retrieved governing primary text; artifact hashes/counts establish identity/presence only.",
+  "role_only": true,
+  "full_pipeline_qualification": false,
+  "control_comparison": null,
+  "comparative_win_claim": false,
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "bytes": 2834,
+      "sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "bytes": 1040,
+      "sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "bytes": 6632,
+      "sha256": "487802e58404a83f3d7039dfae6c45b537518490b1651d9a4382b4c5d2c0fe3e",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "bytes": 4246,
+      "sha256": "26e55fcd3a1bf0001d9ca088d1267089cb78ba7ef4280f7c07a03285d63cf618",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "bytes": 3840,
+      "sha256": "6991d89e25d5091082c1aeb5184808b447bb868d2c961548944c32345945704a",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "bytes": 808,
+      "sha256": "a7227855b5d450cd6b76b852c1a5cef7f858c6a681b5d504dd07a88043da5891",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "bytes": 712,
+      "sha256": "4eba83507c82476028c3c0ecd090fd851114447deab9fd8c42c07b9cf3da61d1",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "bytes": 723,
+      "sha256": "9d29f5396776dbb5c675332b81bbb94672ee423c7750d1a75defd9f26a1d3d79",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "bytes": 705,
+      "sha256": "c88a2af924234477f7155b40ff8444868a92376b15d3a631fac92a0dc6f76fb6",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "bytes": 734,
+      "sha256": "bb2838774c36d334c0c199ac245f17c6a4693092945de3c3f4a7163522c15382",
+      "inspection": "complete bytes read",
+      "terminal_freeze_hash_match": true
+    }
+  ],
+  "candidate_freeze_files_not_opened": [
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+    "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json"
+  ],
+  "word_counts": {
+    "method": "Python str.split over UTF-8 text",
+    "including_sources": 888,
+    "before_sources_heading": 803,
+    "required_min": 700,
+    "required_max": 1000
+  },
+  "axis_coverage": [
+    {
+      "axis": "original_obligations_and_negative_constraints",
+      "assessed": true,
+      "status": "PARTIAL",
+      "evidence": "888 whitespace-separated words including Sources; 803 before Sources; four labels, table, two leads, history lead, three probes and bounded next step present. Four meaningful evidence-backed download variants not fulfilled substantively because of F1.",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "axis": "unfamiliar_mechanism_diversity_and_tradeoffs",
+      "assessed": true,
+      "status": "PARTIAL",
+      "evidence": "A/B/C offer distinct recovery/identity variants; overlap is allowed by the brief. D does not investigate the direction/persistence condition. No automatic winner; qualitative cost estimates not measured. Prior familiarity is unknown.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "axis": "shortlist_implementation_and_history_leads",
+      "assessed": true,
+      "status": "PARTIAL",
+      "evidence": "All required lead slots exist; curl and aria2 are real leads and current/older standards are useful history leads. Four-item applicability shortfall is substantive, not a count failure.",
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "axis": "consequential_primary_source_conditions_and_applicability",
+      "assessed": true,
+      "status": "FAIL",
+      "evidence": "Governing primary text independently retrieved; F1 and F2 remain material. Conditions C01-C10 distinguish source operations from proposed composition.",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "axis": "missed_obligations_and_opportunity_coverage",
+      "assessed": true,
+      "status": "PARTIAL",
+      "evidence": "Range ignorance, identity replacement, URL expiry, piece repair and finalization are explored. The fourth applicable mechanism and date-validator boundary remain missing. Integrity-failure wording is an open question; a finished UI is not required.",
+      "finding_ids": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "axis": "proposed_versus_executed_validation_and_oracles",
+      "assessed": true,
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "Document retrieval and small word-count/presence observations are distinguished from unexecuted network/identity/crash proposals. The candidate reports no performed transfer validation. Three discriminating probes are present; L5 limits their breadth.",
+      "finding_ids": []
+    },
+    {
+      "axis": "wrong_corrections_rejections_and_plan_dispositions",
+      "assessed": false,
+      "status": "NOT_APPLICABLE",
+      "evidence": "No existing design, critique dispositions or plan edits assigned to this brief-only role."
+    },
+    {
+      "axis": "discovery_draft_critique_final_meaning_preservation",
+      "assessed": false,
+      "status": "NOT_APPLICABLE",
+      "evidence": "Only the frozen completed discovery role is assigned; no multi-stage preservation claim is graded."
+    },
+    {
+      "axis": "delivery",
+      "assessed": true,
+      "status": "DELIVERED",
+      "evidence": "Complete discovery, source map, all five source summaries and terminal science freeze read; frozen candidate science file hashes match."
+    },
+    {
+      "axis": "native_goal_telemetry",
+      "assessed": true,
+      "status": "UNKNOWN",
+      "evidence": "T3_terminal=completed is not native Goal activation/progress/completion telemetry. Candidate native Goal observations are null."
+    },
+    {
+      "axis": "method_protocol",
+      "assessed": true,
+      "status": "UNKNOWN",
+      "evidence": "Output text respects bounded role/no winner/no full-pipeline claim. Source-map negative-constraint assertions do not independently prove all runtime actions or page cap."
+    },
+    {
+      "axis": "timing",
+      "assessed": true,
+      "status": "UNKNOWN",
+      "evidence": "Freeze and reported clock anchors retained; no actual candidate launch/completion/occupancy/investigation ledger was inspected. No comparative latency or savings claim."
+    }
+  ],
+  "material_findings": [
+    {
+      "finding_id": "F1",
+      "severity": "material",
+      "kind": "unsupported applicability and missing required meaningful download variant",
+      "axes": [
+        "unfamiliar_mechanism_diversity_and_tradeoffs",
+        "consequential_primary_source_applicability",
+        "original_obligations"
+      ],
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:16",
+      "candidate_lines": [
+        16,
+        17,
+        26,
+        28
+      ],
+      "claim": "D presents a server-reported offset plus per-chunk checksums as a fourth resume-and-integrity download approach.",
+      "judgment": "The cited protocol establishes upload-receiver progress, not durable bytes at a download receiver. The adaptation lacks the consequential receiver-persistence/acknowledgment invariant and does not investigate it.",
+      "primary_evidence_ids": [
+        "E05",
+        "E13"
+      ],
+      "governing_sections": [
+        "tus 1.0.0 Core Protocol: HEAD and PATCH",
+        "tus 1.0.0 Checksum extension",
+        "tus FAQ: How does tus work?"
+      ],
+      "reasoning": "In a download, the source server can have sent a larger prefix than the desktop has durably saved. Restarting at that server cursor skips local bytes. A hypothetical 70 MB sent / 60 MB durable restart distinguishes the two; this is an analytical counterexample, not a performed experiment. Tus checksum handling validates incoming uploads on the server; it does not establish the desktop checksum/persistence behavior claimed by the adaptation.",
+      "materiality": "This removes substantive support for one of the required four useful, meaningfully different approaches and affects the central pause/restart safety boundary. Explicitly calling the analogy weakest fit is honest but does not supply the missing mechanism.",
+      "scope_guard": "No deployed download session service is required by the review. The finding concerns an uninvestigated protocol direction/persistence invariant, not absence of a nonexistent deployment. It does not deny that a custom download session could be designed.",
+      "observed_failed_transfer": null
+    },
+    {
+      "finding_id": "F2",
+      "severity": "material",
+      "kind": "omitted consequential source condition",
+      "axes": [
+        "consequential_primary_source_applicability",
+        "original_obligations"
+      ],
+      "candidate_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:8",
+      "candidate_lines": [
+        8,
+        23,
+        37
+      ],
+      "claim": "Persist ETag and Last-Modified and use the stored validator in If-Range; weak ETag is the identified strength boundary.",
+      "judgment": "The date-validator prerequisites are missing: HTTP-date If-Range is restricted to the absence of an entity tag and a date that qualifies as strong. A stored Last-Modified value alone does not meet that condition.",
+      "primary_evidence_ids": [
+        "E01"
+      ],
+      "governing_sections": [
+        "RFC 9110 13.1.5",
+        "RFC 9110 8.8.2.2"
+      ],
+      "reasoning": "The candidate names Last-Modified in resume state and proposes generic stored-validator reuse without carrying the governing restriction into either mechanism, boundaries or probes. Date availability/equality is not sufficient evidence of safe conditional byte continuation.",
+      "materiality": "This is a central applicability exception for the minimal Range variant under same-name replacement, rather than a cosmetic locator omission. A correct final manifest digest can still prevent promotion of mixed bytes; that downstream gate does not validate the stated If-Range operation.",
+      "scope_guard": "The finding does not claim a completed corrupt artifact was observed and does not demand a finished implementation. Mentioning weak ETag earns credit, but it does not cover the independently governing HTTP-date condition.",
+      "observed_failed_transfer": null
+    }
+  ],
+  "conditions_and_applicability": [
+    {
+      "condition_id": "C01",
+      "topic": "If-Range validator legality",
+      "status": "omitted materially",
+      "candidate_coverage": "Weak ETag boundary is mentioned; HTTP-date prerequisites are not.",
+      "finding_ids": [
+        "F2"
+      ],
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "condition_id": "C02",
+      "topic": "Range response applicability",
+      "status": "covered at discovery level with implementation detail unresolved",
+      "candidate_coverage": "Ignored Range/full 200, matching 206 and stale If-Range are recognized. Matching must include response range interpretation; 206 Content-Length is not necessarily artifact total. Accept-Ranges is advisory; offset-at-end/416 may require a local integrity check rather than restart inference.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "condition_id": "C03",
+      "topic": "Signed URL / validator scope",
+      "status": "partly covered; honest service unknown",
+      "candidate_coverage": "Fresh URL resolution is proposed; endpoint/lifetime unknown. A validator is not globally unique across distinct resources; same-byte identity through URL replacement must come from artifact metadata or a defined service contract. The brief does not require a particular service already to exist.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "condition_id": "C04",
+      "topic": "Digest subject and availability",
+      "status": "useful sources; detailed field/coding operation unresolved",
+      "candidate_coverage": "A explicitly proposes a manifest whole-file gate, so it is not credited as verifying the assembled artifact from a partial response Content-Digest. Content-Digest and Repr-Digest have different subjects; coding transformations matter. A digest preference request can be ignored. Metadata/hash service and acceptable algorithms remain unobserved.",
+      "evidence_ids": [
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "condition_id": "C05",
+      "topic": "Metalink fields, algorithm, piece geometry and trust",
+      "status": "mechanism supported; some boundaries omitted nonmaterially for this brief",
+      "candidate_coverage": "The proposed manifest contains piece and whole-file hashes; such fields are not mandatory in every Metalink. Piece ordering, octet length and final-piece exception govern verification. SHA-256 support is specified by RFC 5854; source metadata trust still matters.",
+      "evidence_ids": [
+        "E03"
+      ]
+    },
+    {
+      "condition_id": "C06",
+      "topic": "aria2 behavior versus proposed dual integrity gate",
+      "status": "lead supported, automatic equivalence not established",
+      "candidate_coverage": "aria2 1.37.0 documents realtime chunk checks by default, --check-integrity=false by default, and piece-hash precedence when both forms are present. The candidate proposes its own whole-file promotion gate; no claim of a tested default aria2 dual gate is credited.",
+      "evidence_ids": [
+        "E06"
+      ]
+    },
+    {
+      "condition_id": "C07",
+      "topic": "curl offset units/type/version/operation",
+      "status": "supported",
+      "candidate_coverage": "Byte offsets, long versus curl_off_t, zero default, beyond-2-GB note and -C - behavior are corroborated. FTP -1 and HTTP POST/PUT restrictions are source-specific; this brief is downloads. The resume option alone is not credited as an identity gate.",
+      "evidence_ids": [
+        "E04",
+        "E07",
+        "E11"
+      ]
+    },
+    {
+      "condition_id": "C08",
+      "topic": "tus direction and receiver durable offset",
+      "status": "materially unsupported download adaptation",
+      "candidate_coverage": "The candidate correctly labels uploads and optional extension/expiry limits, but does not establish a usable durable download offset. Server session ownership cannot substitute for evidence of locally persisted bytes.",
+      "finding_ids": [
+        "F1"
+      ],
+      "evidence_ids": [
+        "E05",
+        "E13"
+      ]
+    },
+    {
+      "condition_id": "C09",
+      "topic": "Finalization and crash oracle",
+      "status": "conditionally useful proposal; unexecuted",
+      "candidate_coverage": "Temporary destination, pre-publication whole-file check and rename are useful. Application kill and power-loss durability are different checks; fsync error handling/directory persistence and cross-platform semantics are not observations. The candidate explicitly leaves rename guarantees unknown.",
+      "evidence_ids": [
+        "E08",
+        "E12"
+      ]
+    },
+    {
+      "condition_id": "C10",
+      "topic": "Version history",
+      "status": "lead covered; prose imprecise",
+      "candidate_coverage": "RFC 9110 / 7233 and RFC 9530 / 3230 replacements are supported, as is a reason to revisit old examples. Not every historical change is a tightening.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E09",
+        "E10"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "limitation_id": "L1",
+      "material": false,
+      "category": "implementation/version provenance",
+      "description": "The curl and aria2 leads are real and inspectable, but the candidate does not pin an upstream revision or report source-code inspection. The assessor corroborated public project documentation only; repository-code inspection remains unknown.",
+      "evidence_ids": [
+        "E04",
+        "E06",
+        "E07",
+        "E11"
+      ]
+    },
+    {
+      "limitation_id": "L2",
+      "material": false,
+      "category": "comparison precision",
+      "description": "The statements that B pays off only for large files on flaky links and that C alone makes replacement explicit overstate the evidence. B has other possible concurrency/mirror benefits; the candidate table already gives replacement responses for A and B. No winner is declared, so these are comparison limitations rather than an independently material selection error.",
+      "candidate_lines": [
+        23,
+        24,
+        28
+      ],
+      "evidence_ids": [
+        "E03",
+        "E06"
+      ]
+    },
+    {
+      "limitation_id": "L3",
+      "material": false,
+      "category": "honest unresolved platform conditions",
+      "description": "Final publication is expressly a proposed composition. Atomic-rename support and crash recovery are left for investigation. POSIX rename and Linux fsync illustrate why namespace atomicity, cross-filesystem behavior and directory durability must be separated; no desktop/platform durability guarantee is demonstrated.",
+      "evidence_ids": [
+        "E08",
+        "E12"
+      ]
+    },
+    {
+      "limitation_id": "L4",
+      "material": false,
+      "category": "saved-source granularity and protocol observability",
+      "description": "Saved source files are short factual summaries, mostly abstracts/table-of-contents material; S1 explicitly cites supporting search results for If-Range. They do not demonstrate all consequential section reads or the complete candidate retrieval count. Independently retrieved governing text, not these summaries or matching hashes, grounds this source judgment.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E05"
+      ]
+    },
+    {
+      "limitation_id": "L5",
+      "material": false,
+      "category": "prospective oracle coverage",
+      "description": "The three named probes have meaningful observables, but they do not directly compare piece repair with whole-file retry, exercise D receiver-durable progress, or deliberately inject corruption to check integrity-failure behavior. They remain proposals, not observed successes. The D persistence gap is already material F1.",
+      "evidence_ids": [
+        "E05",
+        "E06"
+      ]
+    },
+    {
+      "limitation_id": "L6",
+      "material": false,
+      "category": "history precision",
+      "description": "The standards replacement dates and a useful historical comparison are supported. Exact-match language was already present in RFC 7233, and RFC 9110 relaxed a Last-Modified age rule, so hardened along the way is a loose historical summary rather than a precise version change.",
+      "evidence_ids": [
+        "E01",
+        "E09",
+        "E10"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "U1",
+      "candidate_approach": "A",
+      "mechanism": "Persist a partial prefix, resume conditionally by byte offset, and gate publication by whole-file verification.",
+      "usefulness": "Separates fewer transferred bytes from completed-artifact integrity.",
+      "status": "useful with material If-Range applicability gap F2",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E04"
+      ]
+    },
+    {
+      "id": "U2",
+      "candidate_approach": "B",
+      "mechanism": "Manifest piece hashes and mirrors permit locating and repairing only damaged segments.",
+      "usefulness": "A meaningfully different recovery granularity from one-prefix/whole-file retry.",
+      "status": "supported useful discovery",
+      "evidence_ids": [
+        "E03",
+        "E06"
+      ]
+    },
+    {
+      "id": "U3",
+      "candidate_approach": "C",
+      "mechanism": "Treat a human name as a pointer and retain immutable artifact identity independently of expiring transport URL.",
+      "usefulness": "A useful identity variant that can compose with A/B and explains replacement.",
+      "status": "supported as a client-design inference, contingent on a real metadata contract",
+      "evidence_ids": [
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "id": "U4",
+      "candidate_approach": "D",
+      "mechanism": "Upload receiver offset/checksum/expiry pattern suggested as a download session analogy.",
+      "usefulness": "It exposes a possible state-ownership question, but does not supply a fourth substantiated download mechanism.",
+      "status": "materially incomplete F1",
+      "evidence_ids": [
+        "E05",
+        "E13"
+      ]
+    }
+  ],
+  "implementation_leads": [
+    {
+      "candidate": "curl/libcurl, docs/libcurl/opts/CURLOPT_RESUME_FROM.md and curl resume logic",
+      "inspection": "Primary API and CLI docs independently corroborated; source-code tree not opened",
+      "evidence_ids": [
+        "E04",
+        "E07",
+        "E11"
+      ],
+      "required_slot": "present"
+    },
+    {
+      "candidate": "aria2 Metalink parser/piece picker repository lead",
+      "inspection": "aria2 1.37.0 official manual corroborates implementation functions; repository files not opened",
+      "evidence_ids": [
+        "E03",
+        "E06"
+      ],
+      "required_slot": "present"
+    }
+  ],
+  "historical_lead": {
+    "required_slot": "present",
+    "evidence_ids": [
+      "E01",
+      "E02",
+      "E09",
+      "E10"
+    ],
+    "judgment": "Supported useful current/older standards comparison; hardened wording has precision limitation L6."
+  },
+  "primary_sources": [
+    {
+      "source_id": "E01",
+      "title": "HTTP Semantics",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 9110, June 2022, STD 97",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "retrieved_at": "2026-10-10T04:01:25.784707+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "8.8.1: validator scope and strength",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.1",
+          "text_lines": [
+            2840,
+            2920
+          ]
+        },
+        {
+          "section": "8.8.2.2: Last-Modified strength",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.2.2",
+          "text_lines": [
+            2961,
+            2992
+          ]
+        },
+        {
+          "section": "13.1.5: If-Range",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.5",
+          "text_lines": [
+            5061,
+            5122
+          ]
+        },
+        {
+          "section": "14.2-14.4: Range, Accept-Ranges, Content-Range",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-14.2",
+          "text_lines": [
+            5370,
+            5526
+          ]
+        },
+        {
+          "section": "15.3.7: 206 and combination",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.3.7",
+          "text_lines": [
+            5833,
+            5982
+          ]
+        },
+        {
+          "section": "15.5.17: 416",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.17",
+          "text_lines": [
+            6401,
+            6430
+          ]
+        },
+        {
+          "section": "B.4: relaxed Last-Modified age rule",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#appendix-B.4",
+          "text_lines": [
+            8263,
+            8270
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.html",
+      "raw_sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "text_sha256": "8a25f00a28bb5857d445a0cd4c412710e27ddf6ef0a4918a00320a6bde2e4616"
+    },
+    {
+      "source_id": "E02",
+      "title": "Digest Fields",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 9530, February 2024",
+      "url": "https://www.rfc-editor.org/rfc/rfc9530.html",
+      "retrieved_at": "2026-10-10T04:01:25.786551+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "1.3: RFC 3230 migration",
+          "url": "https://www.rfc-editor.org/rfc/rfc9530.html#section-1.3"
+        },
+        {
+          "section": "2-3: content and representation digest",
+          "url": "https://www.rfc-editor.org/rfc/rfc9530.html#section-2"
+        },
+        {
+          "section": "4: optional preference fields",
+          "url": "https://www.rfc-editor.org/rfc/rfc9530.html#section-4"
+        },
+        {
+          "section": "5-6: algorithms, integrity and coding",
+          "url": "https://www.rfc-editor.org/rfc/rfc9530.html#section-5"
+        },
+        {
+          "section": "B.3: partial response with both digests",
+          "url": "https://www.rfc-editor.org/rfc/rfc9530.html#appendix-B.3"
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.html",
+      "raw_sha256": "abb5c7efc7be66748e70aa7aad7762ca7b53a42d12920bc8d37dbd0b1b1c6d6e",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "text_sha256": "a53590af063f496cd387b854703f534cade379dcf8c8005e20efc309a82dc8b4"
+    },
+    {
+      "source_id": "E03",
+      "title": "Metalink Download Description Format",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 5854, June 2010",
+      "url": "https://www.rfc-editor.org/rfc/rfc5854.html",
+      "retrieved_at": "2026-10-10T04:01:25.787070+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "1: mirrors, multi-source downloads and verification",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-1",
+          "text_lines": [
+            117,
+            143
+          ]
+        },
+        {
+          "section": "4.1.2: required versus optional metadata",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-4.1.2",
+          "text_lines": [
+            407,
+            427
+          ]
+        },
+        {
+          "section": "4.1.3: ordered pieces, algorithm and octet length",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-4.1.3",
+          "text_lines": [
+            445,
+            471
+          ]
+        },
+        {
+          "section": "4.2.4: whole-file and piece hashes",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-4.2.4",
+          "text_lines": [
+            522,
+            575
+          ]
+        },
+        {
+          "section": "4.2.14: size mismatch",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-4.2.14",
+          "text_lines": [
+            753,
+            760
+          ]
+        },
+        {
+          "section": "7 and 7.4: trusted metadata and algorithms",
+          "url": "https://www.rfc-editor.org/rfc/rfc5854.html#section-7.4",
+          "text_lines": [
+            922,
+            940
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.html",
+      "raw_sha256": "2cfb8c616b4c14af04f1ff8d3823aac8d0459c48921b76fc925a58e022b6415b",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "text_sha256": "e5c439f17d61b4bb5999ae88bf177a46ed10de4d7ed4c3bf9980c95277bde82e"
+    },
+    {
+      "source_id": "E04",
+      "title": "CURLOPT_RESUME_FROM",
+      "organization": "curl project",
+      "version": "Live API page retrieved 2026-10-10; option introduced in curl 7.1; Last-Modified 2026-09-06",
+      "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html",
+      "retrieved_at": "2026-10-10T04:01:25.787599+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Synopsis, Description, Default, Availability",
+          "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html",
+          "text_lines": [
+            40,
+            79
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.html",
+      "raw_sha256": "33b7985caf44116e4cc5180dc6ada3c21af85668c2e579d9d6f3f086e739f250",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "text_sha256": "9f67478ca2288b72a3328adda61ab22e66cec4b28d6e8b2937e638ee55b1b414"
+    },
+    {
+      "source_id": "E05",
+      "title": "Resumable upload protocol",
+      "organization": "tus community",
+      "version": "Protocol 1.0.0, dated 2016-03-25; live 1.0.x document retrieved 2026-10-10",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "retrieved_at": "2026-10-10T04:01:25.788204+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Abstract and Core Protocol",
+          "url": "https://tus.io/protocols/resumable-upload#core-protocol",
+          "text_lines": [
+            138,
+            204
+          ]
+        },
+        {
+          "section": "Checksum extension",
+          "url": "https://tus.io/protocols/resumable-upload#checksum",
+          "text_lines": [
+            376,
+            406
+          ]
+        },
+        {
+          "section": "Expiration extension",
+          "url": "https://tus.io/protocols/resumable-upload#expiration",
+          "text_lines": [
+            360,
+            375
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.html",
+      "raw_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "text_sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505"
+    },
+    {
+      "source_id": "E06",
+      "title": "aria2c manual",
+      "organization": "aria2 project",
+      "version": "aria2 1.37.0 documentation",
+      "url": "https://aria2.github.io/manual/en/html/aria2c.html",
+      "retrieved_at": "2026-10-10T04:01:25.789166+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Description: multi-source downloads and chunk validation",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#description",
+          "text_lines": [
+            140,
+            148
+          ]
+        },
+        {
+          "section": "--check-integrity",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-check-integrity",
+          "text_lines": [
+            188,
+            199
+          ]
+        },
+        {
+          "section": "--split",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-split"
+        },
+        {
+          "section": "--allow-piece-length-change",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-allow-piece-length-change",
+          "text_lines": [
+            956,
+            960
+          ]
+        },
+        {
+          "section": "--realtime-chunk-checksum",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-realtime-chunk-checksum",
+          "text_lines": [
+            1290,
+            1293
+          ]
+        },
+        {
+          "section": "Control file",
+          "url": "https://aria2.github.io/manual/en/html/aria2c.html#control-file",
+          "text_lines": [
+            1609,
+            1623
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.html",
+      "raw_sha256": "4f0c8f1b9ba11d872f066fc89506f468056c3bae0958f907ade4e8f99e6ba070",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "text_sha256": "091a71c4f89f0496aab292f0dd90cd793b3d5e159d33a128bc85d8abcb544e9d"
+    },
+    {
+      "source_id": "E07",
+      "title": "curl manual",
+      "organization": "curl project",
+      "version": "The retrieved page declares curl 8.23.0; live documentation, not a tested installed client",
+      "url": "https://curl.se/docs/manpage.html",
+      "retrieved_at": "2026-10-10T04:01:25.982022+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Version",
+          "url": "https://curl.se/docs/manpage.html",
+          "text_lines": [
+            440,
+            444
+          ]
+        },
+        {
+          "section": "-C, --continue-at",
+          "url": "https://curl.se/docs/manpage.html#--continue-at",
+          "text_lines": [
+            631,
+            641
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.html",
+      "raw_sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "text_sha256": "f5b96b60ac343f00852f1fa5ad39c375ac1806ff62e801dac0f32e0ab184d197"
+    },
+    {
+      "source_id": "E08",
+      "title": "rename / renameat",
+      "organization": "The Open Group / IEEE",
+      "version": "POSIX.1-2024, Base Specifications Issue 8",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "retrieved_at": "2026-10-10T04:01:26.056448+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Description, Errors (EXDEV), Rationale",
+          "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+          "text_lines": [
+            24,
+            38
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.html",
+      "raw_sha256": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "text_sha256": "49a7201a5d980e4489005c60247d3053fe8051b0c568ec6dc37f5ef80bd3f5bd"
+    },
+    {
+      "source_id": "E09",
+      "title": "HTTP/1.1 Range Requests",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 7233, June 2014, superseded by RFC 9110",
+      "url": "https://www.rfc-editor.org/rfc/rfc7233.html",
+      "retrieved_at": "2026-10-10T04:01:26.141959+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "3.2: If-Range",
+          "url": "https://www.rfc-editor.org/rfc/rfc7233.html#section-3.2",
+          "text_lines": [
+            289,
+            311
+          ]
+        },
+        {
+          "section": "Appendix B: changes from RFC 2616",
+          "url": "https://www.rfc-editor.org/rfc/rfc7233.html#appendix-B",
+          "text_lines": [
+            713,
+            721
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.html",
+      "raw_sha256": "036a32ef20444ee068aad423e66b01c1163cc6c783a87594066e98b4380df2a4",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "text_sha256": "37a4a3c88174f84bf7095697e054bde50ff755d3e94ec1aabddb9d7de85bfdf6"
+    },
+    {
+      "source_id": "E10",
+      "title": "HTTP/1.1",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 2616, June 1999, obsolete historical reference",
+      "url": "https://www.rfc-editor.org/rfc/rfc2616.html",
+      "retrieved_at": "2026-10-10T04:01:26.248623+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "14.27: If-Range",
+          "url": "https://www.rfc-editor.org/rfc/rfc2616.html#section-14.27",
+          "text_lines": [
+            5279,
+            5305
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.html",
+      "raw_sha256": "820d9510516c174d88b556b74c33bbb45686c87a1b8416afd77dd7b865c549db",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "text_sha256": "db828f1633b1aa1647b8dd2d357c0173720e94b6c76eee6aa64ab5244203cf21"
+    },
+    {
+      "source_id": "E11",
+      "title": "CURLOPT_RESUME_FROM_LARGE",
+      "organization": "curl project",
+      "version": "Live API page retrieved 2026-10-10; introduced in curl 7.11.0",
+      "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+      "retrieved_at": "2026-10-10T04:01:26.249436+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Synopsis, Description, Default, Availability",
+          "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+          "text_lines": [
+            43,
+            80
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.html",
+      "raw_sha256": "65bc526b6f32756f3d944b4d8ccd1a7db6483fb18b92b94e6a2fe5d14e2b7694",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "text_sha256": "e3293cfb9d3b62e886e1b59176cf5493f0e57631229bcffc963acc634ef1a94f"
+    },
+    {
+      "source_id": "E12",
+      "title": "fsync(2)",
+      "organization": "Linux man-pages project",
+      "version": "Linux man-pages 6.19; page date 2026-02-08; rendered from 2026-09-09 tarball",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html",
+      "retrieved_at": "2026-10-10T04:01:26.250095+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "Description and Errors",
+          "url": "https://man7.org/linux/man-pages/man2/fsync.2.html#DESCRIPTION",
+          "text_lines": [
+            26,
+            39
+          ]
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.html",
+      "raw_sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "text_sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c"
+    },
+    {
+      "source_id": "E13",
+      "title": "tus FAQ",
+      "organization": "tus community",
+      "version": "Live FAQ retrieved 2026-10-10; no fixed version declared",
+      "url": "https://tus.io/faq",
+      "retrieved_at": "2026-10-10T04:03:04.949877+00:00",
+      "status": 200,
+      "locators": [
+        {
+          "section": "How does tus work?",
+          "url": "https://tus.io/faq#how-does-tus-work"
+        },
+        {
+          "section": "How are pause/resume handled?",
+          "url": "https://tus.io/faq#how-are-pauseresume-handled-when-should-i-delete-partial-uploads"
+        }
+      ],
+      "raw_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.html",
+      "raw_sha256": "6e7b85972b581b80857a3f94067a1865869ad142d5324521b7a03e225b449dcb",
+      "text_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "text_sha256": "ee302b08868c047c70d4136bf86743a3646d930a14fc5ca7c68d51b887b9a1e9"
+    }
+  ],
+  "validation": {
+    "candidate_executed_self_report": [
+      "Five primary pages retrieved, one additional fetch 404; no executed origin transfer/corruption/crash validation reported."
+    ],
+    "candidate_observed_in_frozen_artifacts": [
+      "Five saved short primary-source summaries exist; discovery and source-map are frozen and present."
+    ],
+    "candidate_proposed": [
+      {
+        "name": "Range fidelity",
+        "observables": "HEAD metadata; initial range GET; stale If-Range yields 206 versus 200; support hint",
+        "oracle_limit": "Advice headers alone cannot establish future range correctness; response interpretation is needed."
+      },
+      {
+        "name": "Same-name replacement",
+        "observables": "50% local partial; replacement; append/restart/user explanation",
+        "oracle_limit": "Naive A is distinguishable from C; correctly implemented conditional A may also restart."
+      },
+      {
+        "name": "Crash finalization",
+        "observables": "Kill near last byte, verification and rename; visibility and next launch",
+        "oracle_limit": "Application termination does not by itself emulate storage/power failure; no run is recorded."
+      },
+      {
+        "name": "Bounded next matrix",
+        "observables": "One HEAD, three Range/If-Range variants, one digest-preference request and three local crash cases",
+        "oracle_limit": "Staging origin and harness unavailable/not supplied; remains a proposal."
+      }
+    ],
+    "assessor_executed": [
+      "Read complete permitted frozen input and science artifacts.",
+      "Independently fetched 13 primary pages via read-only HTTPS and read governing sections; retained bytes, text, timestamps and hashes.",
+      "Computed candidate word counts and verified frozen science hashes."
+    ],
+    "assessor_not_executed": [
+      "No candidate fixes, origin transfer harness, downloaded code execution, installation, account login, delegation, repository/GitHub write, canon/main/WorkNodes change or other-arm comparison."
+    ],
+    "candidate_transfer_test_result": null,
+    "candidate_crash_test_result": null,
+    "candidate_corruption_test_result": null,
+    "candidate_source_code_inspection": null
+  },
+  "delivery": {
+    "judgment": "DELIVERED",
+    "frozen_complete_role_artifacts_present": true,
+    "word_band_met": true,
+    "content_requirements_all_materially_satisfied": false,
+    "candidate_final_response": null,
+    "native_or_protocol_pass_implied": false
+  },
+  "native": {
+    "judgment": "UNKNOWN",
+    "candidate_goal_id": null,
+    "candidate_goal_activation_receipt": null,
+    "candidate_goal_progress": null,
+    "candidate_goal_completion_receipt": null,
+    "candidate_native_budget": null,
+    "t3_terminal_observation": "completed",
+    "pending_child_runs_observation": false,
+    "note": "The terminal capture reports T3 completion; it does not supply native Goal telemetry. The reviewer created a separate real native Goal for this exact assignment."
+  },
+  "protocol": {
+    "judgment": "UNKNOWN",
+    "output_scope_observation": "Bounded discovery, no automatic winner or full-pipeline claim, no canon/design repair in the inspected output.",
+    "self_report": "source-map.json asserts no other cases/assessor/canon/old answers, code execution, installs, logins, fixture writes, delegation or cross-arm contact; five successful plus one failed primary fetch.",
+    "verified_runtime_page_count": null,
+    "verified_runtime_page_cap_compliance": null,
+    "verified_runtime_no_assistance": null,
+    "verified_runtime_no_other_candidate_reads": null,
+    "verified_runtime_write_boundaries": null,
+    "unauthorized_assistance_observed": null,
+    "note": "No runtime transcript inspected. No protocol violation is inferred from missing telemetry; no full protocol PASS is inferred from self-report. Source diagnosis stays separate."
+  },
+  "timing": {
+    "candidate_whole_arm_limit_seconds": 900,
+    "candidate_investigation_max_seconds": 600,
+    "candidate_writing_reserve_seconds": 300,
+    "observed_terminal_freeze_at": "2026-10-10T04:00:05.730529+00:00",
+    "observed_candidate_discovery_mtime_ns": 1791604665650516309,
+    "self_reported_deadline_utc": "2026-10-10T04:09:50.548172+00:00",
+    "self_reported_investigation_anchor_utc": "2026-10-10T03:55:44Z",
+    "self_reported_first_draft_word_count_anchor_utc": "2026-10-10T03:57:27Z",
+    "candidate_start_utc": null,
+    "candidate_completion_utc": null,
+    "candidate_total_elapsed_seconds": null,
+    "candidate_investigation_seconds": null,
+    "candidate_writing_seconds": null,
+    "candidate_deadline_compliance": null,
+    "candidate_occupancy_seconds": null,
+    "candidate_inference_seconds": null,
+    "candidate_billing_savings": null,
+    "note": "An artifact freeze, file modification time and self-reported anchor are different measurements; none is relabeled as measured candidate occupancy. No paired assessment or early win is claimed.",
+    "review_started_utc": "2026-10-10T04:00:17Z",
+    "review_authored_utc": "2026-10-10T04:08:02.219615+00:00",
+    "review_limit_seconds": 1500
+  },
+  "unknown_observations": [
+    {
+      "observation": "candidate_native_goal_activation",
+      "value": null
+    },
+    {
+      "observation": "candidate_native_goal_progress",
+      "value": null
+    },
+    {
+      "observation": "candidate_native_goal_completion",
+      "value": null
+    },
+    {
+      "observation": "complete_candidate_runtime_actions",
+      "value": null
+    },
+    {
+      "observation": "candidate_actual_retrieval_count",
+      "value": null
+    },
+    {
+      "observation": "candidate_actual_investigation_elapsed",
+      "value": null
+    },
+    {
+      "observation": "candidate_actual_writing_elapsed",
+      "value": null
+    },
+    {
+      "observation": "candidate_actual_total_occupancy",
+      "value": null
+    },
+    {
+      "observation": "origin_range_validator_digest_support",
+      "value": null
+    },
+    {
+      "observation": "name_to_immutable_version_or_hash_api",
+      "value": null
+    },
+    {
+      "observation": "signed_url_reresolution_contract",
+      "value": null
+    },
+    {
+      "observation": "candidate_source_code_inspection",
+      "value": null
+    },
+    {
+      "observation": "candidate_transfer_or_crash_test_outcome",
+      "value": null
+    },
+    {
+      "observation": "download_session_receiver_durable_offset_contract",
+      "value": null
+    },
+    {
+      "observation": "desktop_os_and_filesystem_guarantees",
+      "value": null
+    },
+    {
+      "observation": "candidate_prior_familiarity",
+      "value": null
+    },
+    {
+      "observation": "control_arm_result",
+      "value": null
+    },
+    {
+      "observation": "paired_latency",
+      "value": null
+    },
+    {
+      "observation": "inference_or_billing_savings",
+      "value": null
+    }
+  ],
+  "reviewer_goal": {
+    "thread_id": "01a123f7-d29b-75d3-9b34-633eede437d2",
+    "activation_observed": true,
+    "objective": "Independent ER12 B-DISC-M-01 treatment-v1 bounded-role assessment with complete judgments saved before completion",
+    "completion_after_outputs": "required; completion receipt will be saved after all three outputs are verified"
+  },
+  "assessment_preservation": "Original treatment-v1 judgment is saved here. Later dispute disposition must be separate, not an overwrite.",
+  "outputs": {
+    "assessment_markdown": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+    "source_map_json": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/source-map.json",
+    "primary_evidence": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence"
+  }
+}

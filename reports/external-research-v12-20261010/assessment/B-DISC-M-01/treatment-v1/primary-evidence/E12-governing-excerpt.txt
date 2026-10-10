@@ -1,0 +1,18 @@
+Source: https://man7.org/linux/man-pages/man2/fsync.2.html
+Original normalized text SHA256: e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c
+Original line numbers retained; gaps are omitted; original full response remains private.
+
+26: DESCRIPTION          top
+27: fsync() transfers ("flushes") all modified in-core data of (i.e.,
+28: modified buffer cache pages for) the file referred to by the file
+29: descriptor fd to the disk device (or other permanent storage
+30: device) so that all changed information can be retrieved even if
+31: the system crashes or is rebooted.  This includes writing through
+32: or flushing a disk cache if present.  The call blocks until the
+33: device reports that the transfer has completed.
+34: As well as flushing the file data, fsync() also flushes the
+35: metadata information associated with the file (see inode(7)).
+36: Calling fsync() does not necessarily ensure that the entry in the
+37: directory containing the file has also reached disk.  For that an
+38: explicit fsync() on a file descriptor for the directory is also
+39: needed.

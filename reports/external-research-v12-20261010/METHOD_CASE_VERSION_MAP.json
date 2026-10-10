@@ -1,0 +1,910 @@
+{
+  "authority": "packet/EXPERIMENT_QUEUE.json and original frozen selected-arm requests; prospective map, no retroactive assignment",
+  "baseline_commit": "2ad4c32ce3e5fd3890095086823f472983d860e1",
+  "rows": [
+    {
+      "slot_id": "A1-01",
+      "track": "A",
+      "contrast_id": "A1",
+      "prospective_case_id": "ER12-A1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fixed 30/12/18",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A1-v1",
+        "description": "Three fresh Luna contexts; absolute phase boundaries at T0+30/T0+42/T0+60",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A1-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A1-02",
+      "track": "A",
+      "contrast_id": "A1",
+      "prospective_case_id": "ER12-A1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fixed 30/12/18",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A1-v1",
+        "description": "Three fresh Luna contexts; absolute phase boundaries at T0+30/T0+42/T0+60",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A1-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A2-01",
+      "track": "A",
+      "contrast_id": "A2",
+      "prospective_case_id": "ER12-A2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fresh reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A2-v1",
+        "description": "Retained investigator writes final after immutable fresh critic package",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A2-v1",
+      "helper_binding": "helpers/topology-v1"
+    },
+    {
+      "slot_id": "A2-02",
+      "track": "A",
+      "contrast_id": "A2",
+      "prospective_case_id": "ER12-A2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fresh reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A2-v1",
+        "description": "Retained investigator writes final after immutable fresh critic package",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A2-v1",
+      "helper_binding": "helpers/topology-v1"
+    },
+    {
+      "slot_id": "A3-01",
+      "track": "A",
+      "contrast_id": "A3",
+      "prospective_case_id": "ER12-A3-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary full critique",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A3-v1",
+        "description": "Targeted governing-document and released-exception check within existing review budget",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A3-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A3-02",
+      "track": "A",
+      "contrast_id": "A3",
+      "prospective_case_id": "ER12-A3-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary full critique",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A3-v1",
+        "description": "Targeted governing-document and released-exception check within existing review budget",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A3-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A4-01",
+      "track": "A",
+      "contrast_id": "A4",
+      "prospective_case_id": "ER12-A4-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary source checking",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A4-v1",
+        "description": "Bind consequential limits/defaults to exact subject/operation/version/domain/exception",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A4-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A4-02",
+      "track": "A",
+      "contrast_id": "A4",
+      "prospective_case_id": "ER12-A4-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary source checking",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A4-v1",
+        "description": "Bind consequential limits/defaults to exact subject/operation/version/domain/exception",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A4-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A5-01",
+      "track": "A",
+      "contrast_id": "A5",
+      "prospective_case_id": "ER12-A5-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary criticism disposition",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A5-v1",
+        "description": "Recheck consequential criticism before accepting a loss/restriction/new claim",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A5-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A5-02",
+      "track": "A",
+      "contrast_id": "A5",
+      "prospective_case_id": "ER12-A5-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary criticism disposition",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A5-v1",
+        "description": "Recheck consequential criticism before accepting a loss/restriction/new claim",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A5-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A6-01",
+      "track": "A",
+      "contrast_id": "A6",
+      "prospective_case_id": "ER12-A6-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary sequential source review",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A6-v1",
+        "description": "Group related verification questions by governing source and expand when necessary",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A6-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A6-02",
+      "track": "A",
+      "contrast_id": "A6",
+      "prospective_case_id": "ER12-A6-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary sequential source review",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A6-v1",
+        "description": "Group related verification questions by governing source and expand when necessary",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A6-v1",
+      "helper_binding": "helpers/er12-v1"
+    },
+    {
+      "slot_id": "A7-01",
+      "track": "A",
+      "contrast_id": "A7",
+      "prospective_case_id": "ER12-A7-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 researcher/critic/reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A7-v1",
+        "description": "Fresh researcher then fresh critic-finalizer at 30/30 maximum",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A7-v1",
+      "helper_binding": "helpers/topology-v1"
+    },
+    {
+      "slot_id": "A7-02",
+      "track": "A",
+      "contrast_id": "A7",
+      "prospective_case_id": "ER12-A7-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 researcher/critic/reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A7-v1",
+        "description": "Fresh researcher then fresh critic-finalizer at 30/30 maximum",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A7-v1",
+      "helper_binding": "helpers/topology-v1"
+    },
+    {
+      "slot_id": "A8-01",
+      "track": "A",
+      "contrast_id": "A8",
+      "prospective_case_id": "ER12-A8-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A8-v1",
+        "description": "Freeze one distinct approach from primary methodological research or labeled original design",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A8-v1",
+      "helper_binding": "helpers/er12-A8-v1",
+      "method_freeze": "methods/A8/freeze.json"
+    },
+    {
+      "slot_id": "A8-02",
+      "track": "A",
+      "contrast_id": "A8",
+      "prospective_case_id": "ER12-A8-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A8-v1",
+        "description": "Freeze one distinct approach from primary methodological research or labeled original design",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "A8-v1",
+      "helper_binding": "helpers/er12-A8-v1",
+      "method_freeze": "methods/A8/freeze.json"
+    },
+    {
+      "slot_id": "B-DISC-M-01",
+      "track": "B",
+      "contrast_id": "DISC-muse_code",
+      "prospective_case_id": "ER12-B-DISC-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": true,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-DISC-M-02",
+      "track": "B",
+      "contrast_id": "DISC-muse_code",
+      "prospective_case_id": "ER12-B-DISC-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-DISC-G-01",
+      "track": "B",
+      "contrast_id": "DISC-zcode",
+      "prospective_case_id": "ER12-B-DISC-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-DISC-G-02",
+      "track": "B",
+      "contrast_id": "DISC-zcode",
+      "prospective_case_id": "ER12-B-DISC-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-APPL-M-01",
+      "track": "B",
+      "contrast_id": "APPL-muse_code",
+      "prospective_case_id": "ER12-B-APPL-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-APPL-M-02",
+      "track": "B",
+      "contrast_id": "APPL-muse_code",
+      "prospective_case_id": "ER12-B-APPL-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-APPL-G-01",
+      "track": "B",
+      "contrast_id": "APPL-zcode",
+      "prospective_case_id": "ER12-B-APPL-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": true,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-APPL-G-02",
+      "track": "B",
+      "contrast_id": "APPL-zcode",
+      "prospective_case_id": "ER12-B-APPL-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-FINAL-M-01",
+      "track": "B",
+      "contrast_id": "FINAL-muse_code",
+      "prospective_case_id": "ER12-B-FINAL-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-FINAL-M-02",
+      "track": "B",
+      "contrast_id": "FINAL-muse_code",
+      "prospective_case_id": "ER12-B-FINAL-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-FINAL-G-01",
+      "track": "B",
+      "contrast_id": "FINAL-zcode",
+      "prospective_case_id": "ER12-B-FINAL-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "B-FINAL-G-02",
+      "track": "B",
+      "contrast_id": "FINAL-zcode",
+      "prospective_case_id": "ER12-B-FINAL-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "zcode",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "whole_arm_seconds": 900,
+      "occupied_arm_seconds": null,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "matched bounded role; frozen request role-v1 protocol",
+      "helper_binding": "original root-frozen wrappers/requests for selected arms; later helpers/role-v1 is not their execution launcher"
+    },
+    {
+      "slot_id": "C-R1-01",
+      "track": "C",
+      "contrast_id": "C-R1",
+      "prospective_case_id": "ER12-C-R1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R1",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "SELECTED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "C-R1-02",
+      "track": "C",
+      "contrast_id": "C-R1",
+      "prospective_case_id": "ER12-C-R1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R1",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "SELECTED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "C-R2-01",
+      "track": "C",
+      "contrast_id": "C-R2",
+      "prospective_case_id": "ER12-C-R2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R2",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "SELECTED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "C-R2-02",
+      "track": "C",
+      "contrast_id": "C-R2",
+      "prospective_case_id": "ER12-C-R2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R2",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "SELECTED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R1-01",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "prospective_case_id": "ER12-D-R1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R1-02",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "prospective_case_id": "ER12-D-R1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R1-03",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "prospective_case_id": "ER12-D-R1-03-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R1-04",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "prospective_case_id": "ER12-D-R1-04-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R1",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R2-01",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "prospective_case_id": "ER12-D-R2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R2-02",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "prospective_case_id": "ER12-D-R2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R2-03",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "prospective_case_id": "ER12-D-R2-03-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    },
+    {
+      "slot_id": "D-R2-04",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "prospective_case_id": "ER12-D-R2-04-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "whole_arm_seconds": 3600,
+      "occupied_arm_seconds": 5400,
+      "allocation_status": "prospective original allocation; not a result",
+      "frozen_case_bundled": false,
+      "method_version": "LOCKED-R2",
+      "helper_binding": "selection/lock prospective; no inferred recipe version or case freeze"
+    }
+  ],
+  "selection_freeze": "methods/SELECTION_FREEZE.json",
+  "selection_rules": "methods/SELECTION-v1.md"
+}

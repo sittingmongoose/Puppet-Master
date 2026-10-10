@@ -1,0 +1,2890 @@
+{
+  "schema": "er12-portable-dependency-graph-v1",
+  "nodes": [
+    {
+      "id": "INCIDENTS_AND_LIMITATIONS.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "LAUNCH.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "METHOD_CASE_VERSION_MAP.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "PORTABLE_INPUT_MAP.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "PRIVACY_SCAN.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "README.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "SANITIZATION.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "SANITIZATION_MANIFEST.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "SHA256SUMS",
+      "kind": "public_file"
+    },
+    {
+      "id": "STAGING_FILES.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-APPL-G-01/control-v1/PUBLICATION_STATUS.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-APPL-G-01/control-v1/assessment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/PUBLICATION_STATUS.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/assessment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13-governing-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/reviewer-goal-receipt.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/RUBRIC-v1.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "assessment/RUBRIC_FREEZE.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-DISC-M-01/assignment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "frozen-inputs/B-DISC-M-01/fixture.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er11/bootstrap.js",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er11/config.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er11/prepare.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er11/reveal.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/README.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/VERSION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/bootstrap.js",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/config.A8.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/evidence/mechanical-verification.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/prepare.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/test_mechanics.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-A8-v1/version.diff",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-screen-v1/VERSION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/bootstrap.js",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.A1.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.A3.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.A4.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.A5.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.A6.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.R0.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/config.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/prepare.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/er12-v1/reveal.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/role-v1/CHECKS.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/role-v1/VERSION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/role-v1/VERSION_NOTE.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/role-v1/check-role.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/role-v1/prepare-role.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/README.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/VERSION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/bootstrap.js",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/config.A2.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/config.A7.example.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/evidence/READY.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/evidence/mechanical-verification.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/prepare.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/test_mechanics.py",
+      "kind": "public_file"
+    },
+    {
+      "id": "helpers/topology-v1/version.diff",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/BRANCH_BASE_ALIGNMENT.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/ER12_V1.diff",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/PUBLIC_IDENTITY.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/READY_VERSION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/REQUEST_PREPARATION.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "mechanics/SOURCE_MANIFEST.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/critic_prompt_delta.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/failure_modes.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/freeze.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/handoff_A8_excerpt.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/mechanism_comparison.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/method.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/native_goal_active_receipt.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/observable_outcomes.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/prompt_delta.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/reviser_prompt_delta.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/A8/sources_conditions.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/SELECTION-v1.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "methods/SELECTION_FREEZE.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "packet/ER12_T3_EXECUTE_HANDOFF.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "packet/EXPERIMENT_QUEUE.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "packet/PACKET_VALIDATION.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "packet/README.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "packet/START_PROMPT.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "provenance/selected-checkpoint.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/request.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-APPL-G-01/control/stages/role/verification.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "kind": "public_file"
+    },
+    {
+      "id": "validation/PUBLICATION_CHECKS.json",
+      "kind": "public_file"
+    }
+  ],
+  "literal_runtime_reference_edges": [
+    {
+      "from": "LAUNCH.md",
+      "to": "ER12_RUNTIME/helpers/er12-v1/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/...",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/repository",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "PORTABLE_INPUT_MAP.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION.md",
+      "to": "ER12_RUNTIME/mechanics/publication-cohort1/root-checkpoint.snapshot.json.",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION.md",
+      "to": "ER12_RUNTIME/repository",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC_FREEZE.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/bootstrap.js",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/config.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/reveal.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-screen-v1/VERSION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/bootstrap.js",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.A1.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.A3.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.A4.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.A5.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.A6.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.R0.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/config.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er12-v1/reveal.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/CHECKS.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/VERSION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/VERSION_NOTE.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/check-role.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/prepare-role.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/ER12_V1.diff",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/PUBLIC_IDENTITY.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/READY_VERSION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/REQUEST_PREPARATION.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/SOURCE_MANIFEST.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/packet/ER12_T3_EXECUTE_HANDOFF.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/packet/EXPERIMENT_QUEUE.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/packet/PACKET_VALIDATION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/packet/README.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/packet/START_PROMPT.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "SANITIZATION_MANIFEST.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-APPL-G-01/control-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:16",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:8",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/EXCERPT_MAP.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/reviewer-goal-receipt.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/reviewer-goal-receipt.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/reviewer-goal-receipt.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.html",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:16",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md:8",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/README.md",
+      "to": "ER12_RUNTIME/config.A8.runtime.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/README.md",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1/config.A8.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/README.md",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/bootstrap.js",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/config.A8.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A8-01/brief.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/config.A8.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A8-01/plan.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/config.A8.example.json",
+      "to": "ER12_RUNTIME/runs/ER12-A8-01-SCW6",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-A8-v1/version.diff",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/er12-v1/bootstrap.js",
+      "to": "ER12_RUNTIME/helpers/er12-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/helpers/er12-screen-v1/prepare.py",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/CHECKS.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/VERSION_NOTE.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/check-role.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/helpers/role-v1/prepare-role.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/mechanics/B-FIRST-REQUESTS.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/freeze.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/request.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/freeze.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/request.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/role-v1/VERSION.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/README.md",
+      "to": "ER12_RUNTIME/config.A2.runtime.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/README.md",
+      "to": "ER12_RUNTIME/helpers/topology-v1/config.A2.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/README.md",
+      "to": "ER12_RUNTIME/helpers/topology-v1/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/bootstrap.js",
+      "to": "ER12_RUNTIME/helpers/topology-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A2.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A2-01/brief.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A2.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A2-01/plan.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A2.example.json",
+      "to": "ER12_RUNTIME/runs/ER12-A2-01-RETAINED",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A7.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A7-01/brief.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A7.example.json",
+      "to": "ER12_RUNTIME/cases-rest/A7-01/plan.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/config.A7.example.json",
+      "to": "ER12_RUNTIME/runs/ER12-A7-01-CRITIC-FINALIZER",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1/README.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1/VERSION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/er12-A8-v1/evidence/mechanical-verification.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/topology-v1/README.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/topology-v1/VERSION.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/evidence/READY.json",
+      "to": "ER12_RUNTIME/helpers/topology-v1/evidence/mechanical-verification.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "helpers/topology-v1/version.diff",
+      "to": "ER12_RUNTIME/helpers/topology-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/ER12_V1.diff",
+      "to": "ER12_RUNTIME/helpers/er12-v1",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/REQUEST_PREPARATION.md",
+      "to": "ER12_RUNTIME/helpers/er12-v1/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/OBSERVED_REFERENCE.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/README.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/REFERENCE_WORKFLOW.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/assignment.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/bootstrap.js",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/config.example.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/dispatch-request.json",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/prepare.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/helpers/er11/reveal.py",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/CLEANUP.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "mechanics/SOURCE_MANIFEST.json",
+      "to": "ER12_RUNTIME/mechanics/MEASUREMENT_CLARIFICATION.md",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "methods/A8/freeze.json",
+      "to": "ER12_RUNTIME/methods/A8",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "methods/A8/freeze.json",
+      "to": "ER12_RUNTIME/packet/ER12_T3_EXECUTE_HANDOFF.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "methods/A8/native_goal_active_receipt.json",
+      "to": "ER12_RUNTIME/methods/A8",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "methods/A8/sources_conditions.md",
+      "to": "ER12_RUNTIME/helpers/er11/REFERENCE_WORKFLOW.md.",
+      "availability": "original_private_or_unbundled_locator",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "methods/A8/sources_conditions.md",
+      "to": "ER12_RUNTIME/packet/ER12_T3_EXECUTE_HANDOFF.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/assessment.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/assessment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "provenance/selected-checkpoint.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role.",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/request.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/status.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-APPL-G-01/control/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role.",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role",
+      "availability": "included_directory",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "to": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "runs/B-DISC-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    },
+    {
+      "from": "validation/PUBLICATION_CHECKS.json",
+      "to": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "availability": "included",
+      "original_hashes": "Original-byte meaning; consult sanitation manifest for public bytes"
+    }
+  ],
+  "notes": [
+    "Textual literal locator extraction; not a claim of executable dependency closure.",
+    "Role-v1 original other-arm exact-hash wrapper is intentionally unbundled.",
+    "Treatment source-map full raw response paths are private; EXCERPT_MAP gives public substitutes.",
+    "Control independently fetched raw response bodies are unavailable; only authored summaries/locators and original response hashes were retained.",
+    "No future C/D case contents inspected."
+  ]
+}

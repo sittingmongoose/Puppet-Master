@@ -1,0 +1,46 @@
+# ER12 B-APPL-G-01/control — independent applicability review v1
+
+**Source judgment: PASS_WITH_LIMITATIONS.** All six dispositions and consequential corrections are supported for the bounded Redis Open Source 7.2 role. No material error, material omission or unsupported consequential claim remains. The limitations below are minor. This is a role assessment, with no full-pipeline, provider-ranking or speed conclusion.
+
+The complete original assignment, fixture, both corpus passages and index, rubric, final verification, source map, saved source evidence and terminal freeze were read. Same-arm assignment/dispatch/status/freeze metadata was also read. The nine files listed by the terminal freeze match their recorded hashes and sizes; original fixture-listed input hashes match. These checks establish artifact identity, not semantic correctness. The final contains 705 whitespace-delimited words within the 900-word limit. Exact paths, SHA-256 values, coverage and navigable source locators are in `source-map.json`.
+
+## Six-claim source assessment
+
+1. **Correct acceptance, bounded.** The final limits HSET to an existing hash and its key-level deadline, preserving persistence when no TTL exists and distinguishing replacement/recreation. The supporting passage is in EXPIRE's opening description. Redis 7.2.0's HSET implementation updates the hash object in place. [EXPIRE](https://redis.io/docs/latest/commands/expire/), [7.2.0 HSET](https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L606).
+
+2. **Correct rejection and correction.** Plain successful SET removes the old TTL; new expiration options and KEEPTTL are separate cases. The final appropriately excludes an unmet NX/XX condition from successful replacement. The 7.2.0 implementation returns before replacement on an unmet condition, and the database setter removes expiry unless the retention flag is set. [SET](https://redis.io/docs/latest/commands/set/), [7.2.0 SET](https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L84), [database setter](https://github.com/redis/redis/blob/7.2.0/src/db.c#L295).
+
+3. **Correct acceptance with uncertainty.** KEEPTTL is available since 6.0.0 and therefore in 7.2. Retention concerns the existing deadline, with the countdown continuing; it adds no timeout to a persistent key. The final correctly leaves durability, replication, retries and promotion behavior unresolved. It makes no unreported service guarantee. [SET, Optional arguments and History](https://redis.io/docs/latest/commands/set/), [7.2.0 retention flag](https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L108).
+
+4. **Correct rejection and bounded alternatives.** For GT a persistent key has infinite TTL, so a finite duration fails the condition with reply 0. GT exists since 7.0.0. Unconditional positive EXPIRE and NX are valid alternatives to attach a timeout; the existing finite deadline must be strictly earlier for GT to extend it. [EXPIRE, Optional arguments / Return information / History](https://redis.io/docs/latest/commands/expire/), [7.2.0 GT branch](https://github.com/redis/redis/blob/7.2.0/src/expire.c#L605).
+
+5. **Correct rejection and event/configuration distinction.** Zero-timeout EXPIRE deletes the existing key and generates `del`; ordinary expiration deletion generates `expired`. The final preserves default-disabled notifications and disconnection loss. The notification command list says negative timeout; the zero boundary is explicit in EXPIRE and the 7.2.0 code. Immediate logical deletion is not a physical-memory cleanup timing guarantee. [EXPIRE](https://redis.io/docs/latest/commands/expire/), [notifications](https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/), [explicit deletion branch](https://github.com/redis/redis/blob/7.2.0/src/expire.c#L629), [ordinary expiry deletion](https://github.com/redis/redis/blob/7.2.0/src/db.c#L1679).
+
+6. **Correct unproved disposition.** Passive/background expiration and delayed event observation establish no service p99 under failover. The final does not mistake deadline precision for measured cleanup performance or claim the target is impossible. It keeps the cleanup endpoint, actual build/configuration, workload and failover trace open, and identifies actual service measurements as the resolving evidence. [Timing of expired events](https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/), [EXPIRE, How Redis expires keys and replication link](https://redis.io/docs/latest/commands/expire/).
+
+## Coverage and acceptance checks
+
+All original role obligations are covered: six independent dispositions, applicable version/operation/conditions, citations, supported bounded corrections, consequential exceptions, explicit uncertainty and two final concrete checks. Scope remains one primary with replicas and string/hash session storage. No new architecture is designed.
+
+The role supplies useful mechanism findings: GT's infinite persistent TTL, KEEPTTL history, event distinctions, notification loss and background expiry. Its local EXPIRE/NX alternatives are meaningful. There is no assigned requirement for whole-system opportunity exploration, additional architecture alternatives, plan units or critique dispositions. The discovery/draft/critique preservation axes of a full pipeline are not applicable. Within this one stage, final prose, source map and source evidence preserve the same supported meaning and limits.
+
+Both acceptance checks are explicitly **proposed, not executed**. Check 1 covers HSET, plain SET, KEEPTTL and GT using positive TTLs and persistent/volatile controls; its command outcomes are discriminating. Check 2's `Exg` enables keyevent channels, generic events and expired events, with subscription before commands. Event semantics and a separate service p99 measurement are kept distinct. No endpoint or benchmark was supplied, so absent execution is not a role failure. [Notification configuration](https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/).
+
+## Minor source/coverage limitations
+
+- **L1 — locator:** `verification.md:7` attributes the HSET passage to “Refreshing expires.” It is in the opening description; the named subsection discusses reapplying EXPIRE. The URL and semantic claim are correct and independently supported. This does not leave a consequential claim unsupported. [EXPIRE](https://redis.io/docs/latest/commands/expire/).
+- **L2 — prospective check precision:** `verification.md:21` says PTTL decreases without specifying elapsed sampling time. Millisecond-resolution samples can legitimately be equal; positive/decreasing TTL alone is a coarse deadline-retention oracle. This is a brief prospective check with no claimed execution or executable harness, and still distinguishes dropped TTL from retention. It is a minor specification limit, not a material source error. [7.2.0 TTL calculation](https://github.com/redis/redis/blob/7.2.0/src/expire.c#L686).
+
+The live pages are not archived 7.2 manuals. Relevant option history was independently read, and 7.2.0 upstream source was statically inspected as target-series corroboration. That corroboration is reviewer evidence, not a claim that the candidate used release-tag source or that a service build was tested. The candidate's two failed retrieval leads are disclosed and not relied upon; their failures were not independently reproduced.
+
+## Delivery, native, protocol and time — separate from source grade
+
+**Delivery:** complete frozen output; T3 status and terminal freeze say completed with no pending child runs. The source map records no executed service checks, matching the final.
+
+**Native: UNKNOWN independently.** The T3 summary reports an actual native Goal completed after artifact saving, with 299 seconds elapsed. No candidate activation/completion receipt or full tool trace is in the assigned frozen bundle. Exact Goal count, native fields and save-before-native-completion ordering cannot be independently certified. T3 completion is a different observation.
+
+**Protocol: partly observed; remaining compliance UNKNOWN.** The documented source map lists two supplied command pages and three additional primary URLs, within the eight-additional-page allowance. Actual retrieval count and all prohibited-action compliance require a full trace. No unauthorized assistance is observed in the assigned artifacts. This review made no candidate edits/feedback, delegation, account actions, GitHub/canon/main/WorkNodes changes, service probes or downloaded-code execution, and read no other arm, evaluations or campaign history.
+
+**Time:** preparation at 03:54:50.551496 UTC to terminal freeze capture at 04:01:00.207018 UTC is 369.655522 seconds, before the 04:09:50.551496 deadline. This is a host capture interval, not exact native occupancy. Investigation duration, writing-reserve compliance and the self-reported 299 seconds remain unverified. No comparative speed, inference savings or billing conclusion follows.
+
+This reviewer created exactly one actual native Goal at 04:01:17 UTC. The complete review and its companion JSON files are saved and verified while that Goal remains active; completion is a subsequent native action. Later dispute dispositions must preserve this original assessment separately.

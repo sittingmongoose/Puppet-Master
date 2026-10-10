@@ -1,0 +1,8 @@
+[S5] tus community, Resumable Upload Protocol 1.0.x
+URL: https://tus.io/protocols/resumable-upload
+Observed via read-only HTTPS fetch during investigation window (see source-map.json anchors).
+Excerpt (facts observed on the page):
+- About this version: Version 1.0.0 (SemVer), Date 2016-03-25; status: ready for general adoption; breaking changes reserved for 2.0.0.
+- Contents: Core Protocol plus extensions Creation, Creation With Upload, Expiration, Checksum, Termination, Concatenation.
+- Core semantics center on server-tracked upload offset with checksum/expiration extensions.
+Use: server-offset session pattern for approach D. Caution recorded in discovery.md: upload-oriented; download adaptation is analogy and weakest fit.

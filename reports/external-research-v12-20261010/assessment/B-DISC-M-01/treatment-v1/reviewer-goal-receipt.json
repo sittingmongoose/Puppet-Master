@@ -1,0 +1,57 @@
+{
+  "schema": "er12-reviewer-native-goal-receipt-v1",
+  "assessment_id": "B-DISC-M-01-treatment-v1",
+  "reviewer_thread_id": "01a123f7-d29b-75d3-9b34-633eede437d2",
+  "scope": "Reviewer Goal only; no candidate native telemetry inferred.",
+  "full_judgments_saved_before_completion": true,
+  "pre_completion_observed_utc": "2026-10-10 04:09:05 UTC",
+  "active_goal_observation": {
+    "goal": {
+      "threadId": "01a123f7-d29b-75d3-9b34-633eede437d2",
+      "objective": "Act as the independent ER12 review sub-agent for completed bounded-role arm B-DISC-M-01 treatment-v1. Read RUBRIC-v1.md, the exact frozen assignment and fixture, and the complete frozen candidate discovery.md, source-map.json, sources/, and terminal-science-freeze.json under ER12_RUNTIME. Assess the declared brief-discovery subset fully, independently retrieve governing primary evidence, report source judgments separately from native/protocol/delivery/timing with unknowns null, and save complete assessment.md, assessment.json, and source-map.json under assessment/B-DISC-M-01/treatment-v1 before completing this Goal. No candidate fixes, delegation, accounts, GitHub, canon, main, WorkNodes changes, other candidates, campaign results/history, feedback, or early win claim. Allow up to 25 minutes including authored review; finish early when complete.",
+      "status": "active",
+      "tokensUsed": 154908,
+      "timeUsedSeconds": 503,
+      "createdAt": 1791604817,
+      "updatedAt": 1791605320
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "required_outputs_verified": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.md",
+      "sha256": "b430e58de3599befdcf891b6d6583e7cc75522fd2d878eb09fd2df552a08a656"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "sha256": "359e517684aaaac1d067aeeb9b9e7e37d749eea4e7d2590cb7f76252bf8d8547"
+    }
+  ],
+  "verification": {
+    "json_parse": "pass",
+    "frozen_candidate_hashes": "unchanged",
+    "primary_evidence_hashes": "pass",
+    "citation_fragments": "pass",
+    "unknown_observations": "null",
+    "assessor_primary_page_count": 13
+  },
+  "completion_observation": {
+    "goal": {
+      "threadId": "01a123f7-d29b-75d3-9b34-633eede437d2",
+      "objective": "Act as the independent ER12 review sub-agent for completed bounded-role arm B-DISC-M-01 treatment-v1. Read RUBRIC-v1.md, the exact frozen assignment and fixture, and the complete frozen candidate discovery.md, source-map.json, sources/, and terminal-science-freeze.json under ER12_RUNTIME. Assess the declared brief-discovery subset fully, independently retrieve governing primary evidence, report source judgments separately from native/protocol/delivery/timing with unknowns null, and save complete assessment.md, assessment.json, and source-map.json under assessment/B-DISC-M-01/treatment-v1 before completing this Goal. No candidate fixes, delegation, accounts, GitHub, canon, main, WorkNodes changes, other candidates, campaign results/history, feedback, or early win claim. Allow up to 25 minutes including authored review; finish early when complete.",
+      "status": "complete",
+      "tokensUsed": 158409,
+      "timeUsedSeconds": 528,
+      "createdAt": 1791604817,
+      "updatedAt": 1791605345
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "post_completion_observed_utc": "2026-10-10 04:09:18 UTC"
+}

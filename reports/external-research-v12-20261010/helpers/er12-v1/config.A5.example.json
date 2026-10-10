@@ -1,0 +1,25 @@
+{
+  "run_id": "replace-with-a-unique-run-id",
+  "runtime_root": "ER12_RUNTIME",
+  "brief_path": "/absolute/caller/path/to/brief.md",
+  "plan_path": "/absolute/caller/path/to/frozen-plan.md",
+  "whole_deadline_utc": "REPLACE_WITH_ABSOLUTE_UTC_DEADLINE",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "A5",
+  "stage_prompt_deltas": {
+    "reviser": "Keep three stages. Have the finalizer specifically challenge criticism that removes a supported capability, alters a mandatory plan clause, creates a categorical limitation, or introduces a new consequential claim. Recheck the cited primary evidence and relevant exceptions, then accept/amend/reject the criticism with a short evidence-backed reason. Spend less effort restating already-supported prose; deliver the entire final, not just a patch list."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "run_id": "replace-with-a-unique-run-id",
+  "runtime_root": "ER12_RUNTIME",
+  "brief_path": "/absolute/caller/path/to/brief.md",
+  "plan_path": "/absolute/caller/path/to/frozen-plan.md",
+  "whole_deadline_utc": "REPLACE_WITH_ABSOLUTE_UTC_DEADLINE",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "A4",
+  "stage_prompt_deltas": {
+    "investigator": "Before relying on a consequential bound/default/formula, check the exact subject, operation, release, units/type/domain, and exceptions it governs. Use a compact in-context claim/source comparison, not a new global ledger. For code-derived behavior, read the governing definition/caller or perform a permitted discriminating check where useful.",
+    "critic": "Before relying on a consequential bound/default/formula, check the exact subject, operation, release, units/type/domain, and exceptions it governs. Use a compact in-context claim/source comparison, not a new global ledger. For code-derived behavior, read the governing definition/caller or perform a permitted discriminating check where useful.",
+    "reviser": "Before relying on a consequential bound/default/formula, check the exact subject, operation, release, units/type/domain, and exceptions it governs. Use a compact in-context claim/source comparison, not a new global ledger. For code-derived behavior, read the governing definition/caller or perform a permitted discriminating check where useful."
+  }
+}

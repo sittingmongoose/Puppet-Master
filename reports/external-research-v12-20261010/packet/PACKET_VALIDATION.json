@@ -1,0 +1,28 @@
+{
+  "scope": "Mechanical handoff/queue/file verification only; no native execution or scientific validation.",
+  "source_basis": "User instructions, prior ER11 review, pinned ER11 reference documentation, and repository working rules read through GitHub.",
+  "new_native_calls": 0,
+  "live_t3_mutations": 0,
+  "github_writes": 0,
+  "cleanup_operations": 0,
+  "start_prompt_characters": 3322,
+  "start_prompt_below_4000": true,
+  "comparison_slots": 40,
+  "unique_slots": 40,
+  "logical_arms": 80,
+  "unique_arms": 80,
+  "track_counts": {
+    "A": 16,
+    "B": 12,
+    "C": 4,
+    "D": 8
+  },
+  "full_pipeline_arms": 56,
+  "bounded_role_arms": 24,
+  "muse_concurrency_cap": 5,
+  "glm_concurrency_cap": 3,
+  "historical_campaign_not_reopened": true,
+  "outcome_counts_are_prospective_not_results": true,
+  "new_methods_are_hypotheses_not_verified_fixes": true,
+  "fresh_extraction_hash_verification": "performed during packet build; all hashed members matched"
+}

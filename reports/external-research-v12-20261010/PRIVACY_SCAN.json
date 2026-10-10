@@ -1,0 +1,21 @@
+{
+  "schema": "er12.publication-privacy-scan.v2",
+  "executed_at_utc": "2026-10-10T04:14:48.456106+00:00",
+  "status": "PASS",
+  "scope": "Every final public file, including this scan, staging list and checksum list; scan performed after serialization. Checksum excludes itself.",
+  "checks": [
+    "Private route/email absent; verified public no-reply only",
+    "Absolute personal machine/runtime prefixes absent",
+    "Secret-like tokens absent",
+    "No raw transcript/cache/profile/nested-repo/synthetic runtime scratch",
+    "Every JSON parses and every Python AST parses",
+    "All copied mappings and final checksum entries match",
+    "Explicit staging list exactly equals final public file inventory"
+  ],
+  "findings": [],
+  "scanned_files": 132,
+  "JSON_parse_checks": 62,
+  "Python_AST_parse_checks": 10,
+  "checksum_entries": 131,
+  "sanitation_mapping_checks": 116
+}

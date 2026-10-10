@@ -1,0 +1,524 @@
+Source: https://www.rfc-editor.org/rfc/rfc9110.html
+Original normalized text SHA256: 8a25f00a28bb5857d445a0cd4c412710e27ddf6ef0a4918a00320a6bde2e4616
+Original line numbers retained; gaps are omitted; original full response remains private.
+
+2840: (Section 8.8.2) and opaque entity tags
+2841: (Section 8.8.3).
+2842: Additional metadata that reflects resource state
+2843: has been defined by various extensions of HTTP, such as Web Distributed
+2844: Authoring and Versioning [WEBDAV], that are beyond the
+2845: scope of this specification.¶
+2846: 8.8.1. Weak versus Strong
+2847: Validators come in two flavors: strong or weak.  Weak validators are easy
+2848: to generate but are far less useful for comparisons.  Strong validators
+2849: are ideal for comparisons but can be very difficult (and occasionally
+2850: impossible) to generate efficiently.  Rather than impose that all forms
+2851: of resource adhere to the same strength of validator, HTTP exposes the
+2852: type of validator in use and imposes restrictions on when weak validators
+2853: can be used as preconditions.¶
+2854: A "strong validator" is representation metadata that changes value whenever
+2855: a change occurs to the representation data that would be observable in the
+2856: content of a 200 (OK) response to GET.¶
+2857: A strong validator might change for reasons other than a change to the
+2858: representation data, such as when a
+2859: semantically significant part of the representation metadata is changed
+2860: (e.g., Content-Type), but it is in the best interests of the
+2861: origin server to only change the value when it is necessary to invalidate
+2862: the stored responses held by remote caches and authoring tools.¶
+2863: Cache entries might persist for arbitrarily long periods, regardless
+2864: of expiration times.  Thus, a cache might attempt to validate an
+2865: entry using a validator that it obtained in the distant past.
+2866: A strong validator is unique across all versions of all
+2867: representations associated with a particular resource over time.
+2868: However, there is no implication of uniqueness across representations
+2869: of different resources (i.e., the same strong validator might be
+2870: in use for representations of multiple resources at the same time
+2871: and does not imply that those representations are equivalent).¶
+2872: There are a variety of strong validators used in practice.  The best are
+2873: based on strict revision control, wherein each change to a representation
+2874: always results in a unique node name and revision identifier being assigned
+2875: before the representation is made accessible to GET.
+2876: A collision-resistant hash
+2877: function applied to the representation data is also sufficient if the data
+2878: is available prior to the response header fields being sent and the digest
+2879: does not need to be recalculated every time a validation request is
+2880: received.  However, if a resource has distinct representations that differ
+2881: only in their metadata, such as might occur with content negotiation over
+2882: media types that happen to share the same data format, then the origin
+2883: server needs to incorporate additional information in the validator to
+2884: distinguish those representations.¶
+2885: In contrast, a "weak validator" is representation metadata
+2886: that might not change for every change to the representation data. This
+2887: weakness might be due to limitations in how the value is calculated
+2888: (e.g., clock resolution), an inability to ensure uniqueness for all
+2889: possible representations of the resource, or a desire of the resource
+2890: owner to group representations by some self-determined set of
+2891: equivalency rather than unique sequences of data.¶
+2892: An origin server SHOULD change a weak entity tag whenever it
+2893: considers prior representations to be unacceptable as a substitute for
+2894: the current representation. In other words, a weak entity tag ought to
+2895: change whenever the origin server wants caches to invalidate old
+2896: responses.¶
+2897: For example, the representation of a weather report that changes in
+2898: content every second, based on dynamic measurements, might be grouped
+2899: into sets of equivalent representations (from the origin server's
+2900: perspective) with the same weak validator in order to allow cached
+2901: representations to be valid for a reasonable period of time (perhaps
+2902: adjusted dynamically based on server load or weather quality).
+2903: Likewise, a representation's modification time, if defined with only
+2904: one-second resolution, might be a weak validator if it is possible
+2905: for the representation to be modified twice during a single second and
+2906: retrieved between those modifications.¶
+2907: Likewise, a validator is weak if it is shared by two or more
+2908: representations of a given resource at the same time, unless those
+2909: representations have identical representation data. For example, if the
+2910: origin server sends the same validator for a representation with a gzip
+2911: content coding applied as it does for a representation with no content
+2912: coding, then that validator is weak. However, two simultaneous
+2913: representations might share the same strong validator if they differ only
+2914: in the representation metadata, such as when two different media types are
+2915: available for the same representation data.¶
+2916: Strong validators are usable for all conditional requests, including cache
+2917: validation, partial content ranges, and "lost update" avoidance.
+2918: Weak validators are only usable when the client does not require exact
+2919: equality with previously obtained representation data, such as when
+2920: validating a cache entry or limiting a web traversal to recent changes.¶
+2961: 8.8.2.2. Comparison
+2962: A Last-Modified time, when used as a validator in a request, is
+2963: implicitly weak unless it is possible to deduce that it is strong,
+2964: using the following rules:¶
+2965: The validator is being compared by an origin server to the
+2966: actual current validator for the representation and,¶
+2967: That origin server reliably knows that the associated representation did
+2968: not change twice during the second covered by the presented
+2969: validator;¶
+2970: or¶
+2971: The validator is about to be used by a client in an
+2972: If-Modified-Since,
+2973: If-Unmodified-Since, or If-Range header
+2974: field, because the client has a cache entry for the associated
+2975: representation, and¶
+2976: That cache entry includes a Date value which is
+2977: at least one second after the Last-Modified value and
+2978: the client has reason to believe that they were generated by the
+2979: same clock or that there is enough difference between the Last-Modified
+2980: and Date values to make clock synchronization issues unlikely;¶
+2981: or¶
+2982: The validator is being compared by an intermediate cache to the
+2983: validator stored in its cache entry for the representation, and¶
+2984: That cache entry includes a Date value which is
+2985: at least one second after the Last-Modified value and
+2986: the cache has reason to believe that they were generated by the
+2987: same clock or that there is enough difference between the Last-Modified
+2988: and Date values to make clock synchronization issues unlikely.¶
+2989: This method relies on the fact that if two different responses were
+2990: sent by the origin server during the same second, but both had the
+2991: same Last-Modified time, then at least one of those responses would
+2992: have a Date value equal to its Last-Modified time.¶
+5061: 13.1.5. If-Range
+5062: The "If-Range" header field provides a special conditional request
+5063: mechanism that is similar to the If-Match and
+5064: If-Unmodified-Since header fields but that instructs the
+5065: recipient to ignore the Range header field if the validator
+5066: doesn't match, resulting in transfer of the new selected representation
+5067: instead of a 412 (Precondition Failed) response.¶
+5068: If a client has a partial copy of a representation and wishes
+5069: to have an up-to-date copy of the entire representation, it could use the
+5070: Range header field with a conditional GET (using
+5071: either or both of If-Unmodified-Since and
+5072: If-Match.) However, if the precondition fails because the
+5073: representation has been modified, the client would then have to make a
+5074: second request to obtain the entire current representation.¶
+5075: The "If-Range" header field allows a client to "short-circuit" the second
+5076: request. Informally, its meaning is as follows: if the representation is unchanged,
+5077: send me the part(s) that I am requesting in Range; otherwise, send me the
+5078: entire representation.¶
+5079: If-Range = entity-tag / HTTP-date
+5080: ¶
+5081: A valid entity-tag can be distinguished from a valid
+5082: HTTP-date by examining the first three characters for a
+5083: DQUOTE.¶
+5084: A client MUST NOT generate an If-Range header field in a request that
+5085: does not contain a Range header field.
+5086: A server MUST ignore an If-Range header field received in a request that
+5087: does not contain a Range header field.
+5088: An origin server MUST ignore an If-Range header field received in a
+5089: request for a target resource that does not support Range requests.¶
+5090: A client MUST NOT generate an If-Range header field containing an
+5091: entity tag that is marked as weak.
+5092: A client MUST NOT generate an If-Range header field containing an
+5093: HTTP-date unless the client has no entity tag for
+5094: the corresponding representation and the date is a strong validator
+5095: in the sense defined by Section 8.8.2.2.¶
+5096: A server that receives an If-Range header field on a Range request MUST
+5097: evaluate the condition per Section 13.2 prior to
+5098: performing the method.¶
+5099: To evaluate a received If-Range header field containing an
+5100: HTTP-date:¶
+5101: If the HTTP-date validator provided is not a
+5102: strong validator in the sense defined by
+5103: Section 8.8.2.2, the condition is false.¶
+5104: If the HTTP-date validator provided exactly matches
+5105: the Last-Modified field value for the selected
+5106: representation, the condition is true.¶
+5107: Otherwise, the condition is false.¶
+5108: To evaluate a received If-Range header field containing an
+5109: entity-tag:¶
+5110: If the entity-tag validator provided exactly matches
+5111: the ETag field value for the selected representation
+5112: using the strong comparison function
+5113: (Section 8.8.3.2), the condition is true.¶
+5114: Otherwise, the condition is false.¶
+5115: A recipient of an If-Range header field MUST ignore the
+5116: Range header field if the If-Range condition
+5117: evaluates to false. Otherwise, the recipient SHOULD process the
+5118: Range header field as requested.¶
+5119: Note that the If-Range comparison is by exact match, including when the
+5120: validator is an HTTP-date, and so it
+5121: differs from the "earlier than or equal to" comparison used when evaluating
+5122: an If-Unmodified-Since conditional.¶
+5370: support efficient recovery from partially failed transfers and partial
+5371: retrieval of large representations.¶
+5372: A server MUST ignore a Range header field received with a request method
+5373: that is unrecognized or for which range handling is not defined. For this
+5374: specification, GET is the only method for which range handling
+5375: is defined.¶
+5376: An origin server MUST ignore a Range header field that contains a range
+5377: unit it does not understand. A proxy MAY discard a Range header
+5378: field that contains a range unit it does not understand.¶
+5379: A server that supports range requests MAY ignore or reject a
+5380: Range header field that contains an invalid
+5381: ranges-specifier (Section 14.1.1),
+5382: a ranges-specifier with more than two overlapping ranges,
+5383: or a set of many small ranges that are not listed in ascending order,
+5384: since these are indications of either a broken client or a deliberate
+5385: denial-of-service attack (Section 17.15).
+5386: A client SHOULD NOT request multiple ranges that are inherently less
+5387: efficient to process and transfer than a single range that encompasses the
+5388: same data.¶
+5389: A server that supports range requests MAY ignore a Range
+5390: header field when the selected representation has no content
+5391: (i.e., the selected representation's data is of zero length).¶
+5392: A client that is requesting multiple ranges SHOULD list those ranges in
+5393: ascending order (the order in which they would typically be received in a
+5394: complete representation) unless there is a specific need to request a later
+5395: part earlier. For example, a user agent processing a large representation
+5396: with an internal catalog of parts might need to request later parts first,
+5397: particularly if the representation consists of pages stored in reverse
+5398: order and the user agent wishes to transfer one page at a time.¶
+5399: The Range header field is evaluated after evaluating the precondition header
+5400: fields defined in Section 13.1, and only if the result in absence
+5401: of the Range header field would be a 200 (OK) response. In
+5402: other words, Range is ignored when a conditional GET would result in a
+5403: 304 (Not Modified) response.¶
+5404: The If-Range header field (Section 13.1.5) can be used as
+5405: a precondition to applying the Range header field.¶
+5406: If all of the preconditions are true, the server supports the Range header
+5407: field for the target resource, the received Range field-value contains a
+5408: valid ranges-specifier with a range-unit
+5409: supported for that target resource, and that
+5410: ranges-specifier is satisfiable with respect
+5411: to the selected representation,
+5412: the server SHOULD send a 206 (Partial Content) response
+5413: with content containing one or more partial representations
+5414: that correspond to the satisfiable range-spec(s) requested.¶
+5415: The above does not imply that a server will send all requested ranges.
+5416: In some cases, it may only be possible (or efficient) to send a portion of
+5417: the requested ranges first, while expecting the client to re-request the
+5418: remaining portions later if they are still desired
+5419: (see Section 15.3.7).¶
+5420: If all of the preconditions are true, the server supports the Range header
+5421: field for the target resource, the received Range field-value contains a
+5422: valid ranges-specifier, and either the
+5423: range-unit is not supported for that target resource or
+5424: the ranges-specifier is unsatisfiable with respect to
+5425: the selected representation, the server SHOULD send a
+5426: 416 (Range Not Satisfiable) response.¶
+5427: 14.3. Accept-Ranges
+5428: The "Accept-Ranges" field in a response indicates whether an upstream
+5429: server supports range requests for the target resource.¶
+5430: Accept-Ranges     = acceptable-ranges
+5431: acceptable-ranges = 1#range-unit
+5432: ¶
+5433: For example, a server that supports
+5434: byte-range requests (Section 14.1.2) can send the field¶
+5435: Accept-Ranges: bytes
+5436: ¶
+5437: to indicate that it supports byte range requests for that target resource,
+5438: thereby encouraging its use by the client for future partial requests on
+5439: the same request path.
+5440: Range units are defined in Section 14.1.¶
+5441: A client MAY generate range requests regardless of having received an
+5442: Accept-Ranges field. The information only provides advice for the sake of
+5443: improving performance and reducing unnecessary network transfers.¶
+5444: Conversely, a client MUST NOT assume that receiving an Accept-Ranges field
+5445: means that future range requests will return partial responses. The content might
+5446: change, the server might only support range requests at certain times or under
+5447: certain conditions, or a different intermediary might process the next request.¶
+5448: A server that does not support any kind of range request for the target
+5449: resource MAY send¶
+5450: Accept-Ranges: none
+5451: ¶
+5452: to advise the client not to attempt a range request on the same request path.
+5453: The range unit "none" is reserved for this purpose.¶
+5454: The Accept-Ranges field MAY be sent in a trailer section, but is preferred
+5455: to be sent as a header field because the information is particularly useful
+5456: for restarting large information transfers that have failed in mid-content
+5457: (before the trailer section is received).¶
+5458: 14.4. Content-Range
+5459: The "Content-Range" header field is sent in a single part
+5460: 206 (Partial Content) response to indicate the partial range
+5461: of the selected representation enclosed as the message content, sent in
+5462: each part of a multipart 206 response to indicate the range enclosed within
+5463: each body part (Section 14.6), and sent in 416 (Range Not Satisfiable)
+5464: responses to provide information about the selected representation.¶
+5465: Content-Range       = range-unit SP
+5466: ( range-resp / unsatisfied-range )
+5467: range-resp          = incl-range "/" ( complete-length / "*" )
+5468: incl-range          = first-pos "-" last-pos
+5469: unsatisfied-range   = "*/" complete-length
+5470: complete-length     = 1*DIGIT
+5471: ¶
+5472: If a 206 (Partial Content) response contains a
+5473: Content-Range header field with a range unit
+5474: (Section 14.1) that the recipient does not understand, the
+5475: recipient MUST NOT attempt to recombine it with a stored representation.
+5476: A proxy that receives such a message SHOULD forward it downstream.¶
+5477: Content-Range might also be sent as a request modifier to request a
+5478: partial PUT, as described in Section 14.5, based on private
+5479: agreements between client and origin server.
+5480: A server MUST ignore a Content-Range header field received in a request
+5481: with a method for which Content-Range support is not defined.¶
+5482: For byte ranges, a sender SHOULD indicate the complete length of the
+5483: representation from which the range has been extracted, unless the complete
+5484: length is unknown or difficult to determine. An asterisk character ("*") in
+5485: place of the complete-length indicates that the representation length was
+5486: unknown when the header field was generated.¶
+5487: The following example illustrates when the complete length of the selected
+5488: representation is known by the sender to be 1234 bytes:¶
+5489: Content-Range: bytes 42-1233/1234
+5490: ¶
+5491: and this second example illustrates when the complete length is unknown:¶
+5492: Content-Range: bytes 42-1233/*
+5493: ¶
+5494: A Content-Range field value is invalid if it contains a
+5495: range-resp that has a last-pos
+5496: value less than its first-pos value, or a
+5497: complete-length value less than or equal to its
+5498: last-pos value. The recipient of an invalid
+5499: Content-Range
+5500: MUST NOT attempt to recombine the received
+5501: content with a stored representation.¶
+5502: A server generating a 416 (Range Not Satisfiable) response
+5503: to a byte-range request SHOULD send a Content-Range header field with an
+5504: unsatisfied-range value, as in the following example:¶
+5505: Content-Range: bytes */1234
+5506: ¶
+5507: The complete-length in a 416 response indicates the current length of the
+5508: selected representation.¶
+5509: The Content-Range header field has no meaning for status codes that do
+5510: not explicitly describe its semantic. For this specification, only the
+5511: 206 (Partial Content) and
+5512: 416 (Range Not Satisfiable) status codes describe a meaning
+5513: for Content-Range.¶
+5514: The following are examples of Content-Range values in which the
+5515: selected representation contains a total of 1234 bytes:¶
+5516: The first 500 bytes:¶
+5517: Content-Range: bytes 0-499/1234
+5518: ¶
+5519: The second 500 bytes:¶
+5520: Content-Range: bytes 500-999/1234
+5521: ¶
+5522: All except for the first 500 bytes:¶
+5523: Content-Range: bytes 500-1233/1234
+5524: ¶
+5525: The last 500 bytes:¶
+5526: Content-Range: bytes 734-1233/1234
+5833: reset for the next entry so that the user can easily initiate another
+5834: input action.¶
+5835: Since the 205 status code implies that no additional content will be
+5836: provided, a server MUST NOT generate content in a 205 response.¶
+5837: 15.3.7. 206 Partial Content
+5838: The 206 (Partial Content) status code indicates that the
+5839: server is successfully fulfilling a range request for the target resource
+5840: by transferring one or more parts of the
+5841: selected representation.¶
+5842: A server that supports range requests (Section 14) will
+5843: usually attempt to satisfy all of the requested ranges, since sending
+5844: less data will likely result in another client request for the remainder.
+5845: However, a server might want to send only a subset of the data requested
+5846: for reasons of its own, such as temporary unavailability, cache efficiency,
+5847: load balancing, etc. Since a 206 response is self-descriptive, the client
+5848: can still understand a response that only partially satisfies its range
+5849: request.¶
+5850: A client MUST inspect a 206 response's Content-Type and
+5851: Content-Range field(s) to determine what parts are enclosed
+5852: and whether additional requests are needed.¶
+5853: A server that generates a 206 response MUST generate the following
+5854: header fields, in addition to those required in the subsections below,
+5855: if the field would
+5856: have been sent in a 200 (OK) response to the same request:
+5857: Date, Cache-Control, ETag,
+5858: Expires, Content-Location, and
+5859: Vary.¶
+5860: A Content-Length header field present in a 206 response
+5861: indicates the number of octets in the content of this message, which is
+5862: usually not the complete length of the selected representation.
+5863: Each Content-Range header field includes information about the
+5864: selected representation's complete length.¶
+5865: A sender that generates a 206 response to a request with an If-Range
+5866: header field SHOULD NOT generate other representation header
+5867: fields beyond those required because the client
+5868: already has a prior response containing those header fields.
+5869: Otherwise, a sender MUST generate all of the representation header
+5870: fields that would have been sent in a 200 (OK) response
+5871: to the same request.¶
+5872: A 206 response is heuristically cacheable; i.e., unless otherwise indicated by
+5873: explicit cache controls (see Section 4.2.2 of [CACHING]).¶
+5874: 15.3.7.1. Single Part
+5875: If a single part is being transferred, the server generating the 206
+5876: response MUST generate a Content-Range header field,
+5877: describing what range of the selected representation is enclosed, and a
+5878: content consisting of the range. For example:¶
+5879: HTTP/1.1 206 Partial Content
+5880: Date: Wed, 15 Nov 1995 06:25:24 GMT
+5881: Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
+5882: Content-Range: bytes 21010-47021/47022
+5883: Content-Length: 26012
+5884: Content-Type: image/gif
+5885: ... 26012 bytes of partial image data ...
+5886: ¶
+5887: 15.3.7.2. Multiple Parts
+5888: If multiple parts are being transferred, the server generating the 206
+5889: response MUST generate "multipart/byteranges" content, as defined
+5890: in Section 14.6, and a
+5891: Content-Type header field containing the
+5892: "multipart/byteranges" media type and its required boundary parameter.
+5893: To avoid confusion with single-part responses, a server MUST NOT generate
+5894: a Content-Range header field in the HTTP header section of a
+5895: multiple part response (this field will be sent in each part instead).¶
+5896: Within the header area of each body part in the multipart content, the
+5897: server MUST generate a Content-Range header field
+5898: corresponding to the range being enclosed in that body part.
+5899: If the selected representation would have had a Content-Type
+5900: header field in a 200 (OK) response, the server SHOULD
+5901: generate that same Content-Type header field in the header area of
+5902: each body part. For example:¶
+5903: HTTP/1.1 206 Partial Content
+5904: Date: Wed, 15 Nov 1995 06:25:24 GMT
+5905: Last-Modified: Wed, 15 Nov 1995 04:58:08 GMT
+5906: Content-Length: 1741
+5907: Content-Type: multipart/byteranges; boundary=THIS_STRING_SEPARATES
+5908: --THIS_STRING_SEPARATES
+5909: Content-Type: application/pdf
+5910: Content-Range: bytes 500-999/8000
+5911: ...the first range...
+5912: --THIS_STRING_SEPARATES
+5913: Content-Type: application/pdf
+5914: Content-Range: bytes 7000-7999/8000
+5915: ...the second range
+5916: --THIS_STRING_SEPARATES--
+5917: ¶
+5918: When multiple ranges are requested, a server MAY coalesce any of the
+5919: ranges that overlap, or that are separated by a gap that is smaller than the
+5920: overhead of sending multiple parts, regardless of the order in which the
+5921: corresponding range-spec appeared in the received Range
+5922: header field. Since the typical overhead between each part of a
+5923: "multipart/byteranges" is around 80 bytes, depending on the selected
+5924: representation's media type and the chosen boundary parameter length, it
+5925: can be less efficient to transfer many small disjoint parts than it is to
+5926: transfer the entire selected representation.¶
+5927: A server MUST NOT generate a multipart response to a request for a single
+5928: range, since a client that does not request multiple parts might not
+5929: support multipart responses. However, a server MAY generate a
+5930: "multipart/byteranges" response with only a single body part if multiple
+5931: ranges were requested and only one range was found to be satisfiable or
+5932: only one range remained after coalescing.
+5933: A client that cannot process a "multipart/byteranges" response MUST NOT
+5934: generate a request that asks for multiple ranges.¶
+5935: A server that generates a multipart response SHOULD send
+5936: the parts in the same order that the corresponding range-spec appeared
+5937: in the received Range header field, excluding those ranges
+5938: that were deemed unsatisfiable or that were coalesced into other ranges.
+5939: A client that receives a multipart response MUST inspect the
+5940: Content-Range header field present in each body part in
+5941: order to determine which range is contained in that body part; a client
+5942: cannot rely on receiving the same ranges that it requested, nor the same
+5943: order that it requested.¶
+5944: 15.3.7.3. Combining Parts
+5945: A response might transfer only a subrange of a representation if the
+5946: connection closed prematurely or if the request used one or more Range
+5947: specifications.  After several such transfers, a client might have
+5948: received several ranges of the same representation.  These ranges can only
+5949: be safely combined if they all have in common the same strong validator
+5950: (Section 8.8.1).¶
+5951: A client that has received multiple partial responses to GET requests on a
+5952: target resource MAY combine those responses into a larger continuous
+5953: range if they share the same strong validator.¶
+5954: If the most recent response is an incomplete 200 (OK)
+5955: response, then the header fields of that response are used for any
+5956: combined response and replace those of the matching stored responses.¶
+5957: If the most recent response is a 206 (Partial Content)
+5958: response and at least one of the matching stored responses is a
+5959: 200 (OK), then the combined response header fields consist
+5960: of the most recent 200 response's header fields. If all of the matching
+5961: stored responses are 206 responses, then the stored response with the most
+5962: recent header fields is used as the source of header fields for the
+5963: combined response, except that the client MUST use other header fields
+5964: provided in the new response, aside from Content-Range, to
+5965: replace all instances of the corresponding header fields in the stored
+5966: response.¶
+5967: The combined response content consists of the union of partial content
+5968: ranges within the new response and all of the matching stored responses.
+5969: If the union consists of the entire range of the representation, then the
+5970: client MUST process the combined response as if it were a complete
+5971: 200 (OK) response, including a Content-Length
+5972: header field that reflects the complete length.
+5973: Otherwise, the client MUST process the set of continuous ranges as one of
+5974: the following:
+5975: an incomplete 200 (OK) response if the combined response is
+5976: a prefix of the representation,
+5977: a single 206 (Partial Content) response containing
+5978: "multipart/byteranges" content, or
+5979: multiple 206 (Partial Content) responses, each with one
+5980: continuous range that is indicated by a Content-Range header
+5981: field.¶
+5982: 15.4. Redirection 3xx
+6401: 15.5.17. 416 Range Not Satisfiable
+6402: The 416 (Range Not Satisfiable) status code indicates that
+6403: the set of ranges in the request's Range header field
+6404: (Section 14.2) has been rejected either because none of
+6405: the requested ranges are satisfiable or because the client has requested
+6406: an excessive number of small or overlapping ranges (a potential denial of
+6407: service attack).¶
+6408: Each range unit defines what is required for its own range sets to be
+6409: satisfiable. For example, Section 14.1.2 defines what makes
+6410: a bytes range set satisfiable.¶
+6411: A server that generates a 416 response to a byte-range request SHOULD
+6412: generate a Content-Range header field
+6413: specifying the current length of the selected representation
+6414: (Section 14.4).¶
+6415: For example:¶
+6416: HTTP/1.1 416 Range Not Satisfiable
+6417: Date: Fri, 20 Jan 2012 15:41:54 GMT
+6418: Content-Range: bytes */47022
+6419: ¶
+6420: Note: Because servers are free to ignore Range, many
+6421: implementations will respond with the entire selected representation
+6422: in a 200 (OK) response. That is partly because
+6423: most clients are prepared to receive a 200 (OK) to
+6424: complete the task (albeit less efficiently) and partly because clients
+6425: might not stop making an invalid range request until they have received
+6426: a complete representation. Thus, clients cannot depend on receiving a
+6427: 416 (Range Not Satisfiable) response even when it is most
+6428: appropriate.¶
+6429: 15.5.18. 417 Expectation Failed
+6430: The 417 (Expectation Failed) status code indicates that the
+8263: B.4. Changes from RFC 7232
+8264: Previous revisions of HTTP imposed an arbitrary 60-second limit on the
+8265: determination of whether Last-Modified was a strong validator to guard
+8266: against the possibility that the Date and Last-Modified values are
+8267: generated from different clocks or at somewhat different times during the
+8268: preparation of the response. This specification has relaxed that to allow
+8269: reasonable discretion.
+8270: (Section 8.8.2.2)¶

@@ -1,0 +1,54 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-APPL-G-01",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "role": "Applicability/exception verification",
+  "title": "Redis session timeout applicability",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "zcode",
+    "model": "GLM 5.3 Flash Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:53:27.345330+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b"
+    },
+    {
+      "path": "corpus/S1.md",
+      "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335"
+    },
+    {
+      "path": "corpus/S2.md",
+      "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d"
+    },
+    {
+      "path": "corpus/index.json",
+      "sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd"
+    }
+  ],
+  "input_sha256": "8daf0263a65652debf8839231da0de4d5da0557916195e7d9c1da88edc2abd93",
+  "no_assessor_answers": true,
+  "source_versions": [
+    [
+      "S1",
+      "Live command reference; assess Redis Open Source 7.2; later additions require applicability check"
+    ],
+    [
+      "S2",
+      "Live command reference; KEEPTTL history since 6.0.0; target Redis Open Source 7.2"
+    ]
+  ]
+}

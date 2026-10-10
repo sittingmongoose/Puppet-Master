@@ -1,0 +1,8 @@
+[S4] IETF RFC 5854, Metalink Download Description Format, June 2010
+URL: https://www.rfc-editor.org/rfc/rfc5854.html
+Observed via read-only HTTPS fetch during investigation window (see source-map.json anchors).
+Excerpt (facts observed on the page):
+- Abstract: XML-based download description format describing download locations (mirrors), cryptographic hashes, and other information; clients use it to reliably transfer files.
+- Authors: A. Bryan, T. Tsujikawa, N. McNab, P. Poeml (MirrorBrain); Category Standards Track.
+- Contents: Metalink Documents; metalink:file / metalink:pieces elements; metadata elements.
+Use: segmented/manifest mechanism for approach B; aria2 implementation lead (Tsujikawa).

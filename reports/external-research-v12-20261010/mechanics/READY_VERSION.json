@@ -1,0 +1,101 @@
+{
+  "schema": "er12.helper_ready.v1",
+  "version": "er12-v1",
+  "frozen_at_utc": "2026-10-10T03:54:22.159629+00:00",
+  "status": "READY_FROZEN_NO_FURTHER_EDITS",
+  "root_dispatch_only": true,
+  "source_commit": "2ad4c32ce3e5fd3890095086823f472983d860e1",
+  "verification": {
+    "python_syntax": "PASS",
+    "javascript_module_syntax": "PASS",
+    "R0_substantive_prompts_exact_after_label_and_helper_path_adaptation": "PASS",
+    "R0_budgets_unchanged": "PASS",
+    "reveal_byte_identical": "PASS",
+    "A1_absolute_offsets_and_whole_deadline_clamp": "PASS",
+    "candidate_dispatch": "NOT_PERFORMED",
+    "role_mode": "NOT_IMPLEMENTED"
+  },
+  "files": [
+    {
+      "path": "helpers/er12-v1/OBSERVED_REFERENCE.json",
+      "sha256": "8b4cd277d188b2c03e38b74e719ca526a2c0942f9137485ccdd6e2d52d5bb628",
+      "bytes": 7210
+    },
+    {
+      "path": "helpers/er12-v1/README.md",
+      "sha256": "d2ef4eb1e309bed70c28b0b2128af0808a7c74c08ef3dc6f592ea5ee4043335f",
+      "bytes": 4736
+    },
+    {
+      "path": "helpers/er12-v1/REFERENCE_WORKFLOW.md",
+      "sha256": "a405068df1385307372f7b04613b5e441fa22a0f513bcf5db52560d75fd09c7a",
+      "bytes": 13763
+    },
+    {
+      "path": "helpers/er12-v1/assignment.md",
+      "sha256": "44d53780384013982abee6755b0086615c60f6579e638c45bb674931dbbfebc0",
+      "bytes": 2429
+    },
+    {
+      "path": "helpers/er12-v1/bootstrap.js",
+      "sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "bytes": 4356
+    },
+    {
+      "path": "helpers/er12-v1/config.A1.example.json",
+      "sha256": "896a7a16bd0348f44931b9ca11f3ec8ebb8dfadeff784494c4eec622e2883a8e",
+      "bytes": 642
+    },
+    {
+      "path": "helpers/er12-v1/config.A3.example.json",
+      "sha256": "abbffd3284a549bea595469d6616b8312e0b7539f4f211492359aa8a0800cee3",
+      "bytes": 1621
+    },
+    {
+      "path": "helpers/er12-v1/config.A4.example.json",
+      "sha256": "fd994e69414589c60daeba084d23bc847a08c2f69a6edad09030bc4642198b7b",
+      "bytes": 1737
+    },
+    {
+      "path": "helpers/er12-v1/config.A5.example.json",
+      "sha256": "d048ff26100c962278e164b241c8e7c0e615a1099aab79547bd22b1423fb14ef",
+      "bytes": 1115
+    },
+    {
+      "path": "helpers/er12-v1/config.A6.example.json",
+      "sha256": "f4ddc2c63dd5819eee41f13a659269eaf61abcc467de91b7d02b04b33b3a8353",
+      "bytes": 1896
+    },
+    {
+      "path": "helpers/er12-v1/config.R0.example.json",
+      "sha256": "b65dd23b49591aace720e113112cc9d1133b36b29a6f765f12dd2584f9c713a7",
+      "bytes": 642
+    },
+    {
+      "path": "helpers/er12-v1/config.example.json",
+      "sha256": "d60a3683a38f72662d614c3e27f1d0cda8a574b38a2672adb7caeb8220747e44",
+      "bytes": 592
+    },
+    {
+      "path": "helpers/er12-v1/dispatch-request.json",
+      "sha256": "7d0cdae794dac52572170bd236052d703089a92b1f265aaf0a4be76caf8477ae",
+      "bytes": 2737
+    },
+    {
+      "path": "helpers/er12-v1/prepare.py",
+      "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "bytes": 23575
+    },
+    {
+      "path": "helpers/er12-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    }
+  ],
+  "exact_diff": "mechanics/ER12_V1.diff",
+  "limitations": [
+    "Role-mode 15-minute requests are not supported by this helper.",
+    "Muse/zcode requests are not accepted by the unchanged Luna-only route validation.",
+    "Operational configs, requests and full diff require route sanitization before publication."
+  ]
+}

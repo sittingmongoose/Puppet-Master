@@ -1,0 +1,13 @@
+{
+  "run_id": "ER12-A7-01-CRITIC-FINALIZER",
+  "topology": "A7",
+  "dispatch_owner": "root",
+  "runtime_root": "ER12_RUNTIME/runs/ER12-A7-01-CRITIC-FINALIZER",
+  "brief_path": "ER12_RUNTIME/cases-rest/A7-01/brief.md",
+  "plan_path": "ER12_RUNTIME/cases-rest/A7-01/plan.md",
+  "whole_deadline_utc": "ROOT_SET_ONCE_TO_ABSOLUTE_UTC_WITHIN_60_MINUTES_BEFORE_PREPARATION",
+  "phase_budgets_s": [1800, 1800],
+  "stage_budgets_s": {"investigator": 1800, "critic-finalizer": 1800},
+  "provider": {"providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}},
+  "runtime_mode": "full-access"
+}

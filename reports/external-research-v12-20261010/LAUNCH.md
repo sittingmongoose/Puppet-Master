@@ -1,0 +1,15 @@
+# Portable launch notes (instructions only; no dispatch performed)
+
+Set ER12_RUNTIME to a caller-owned absolute directory outside canon, and restore the selected relative input layout from PORTABLE_INPUT_MAP.json. Resolve AUTHORIZED_CODEX_PROVIDER_ID locally from the already authorized root route. These substitutions change bytes: keep original hashes as provenance and record materialized hashes separately. Existing selected run deadlines are historical and expired; never replay them as new starts or reset their clocks.
+
+For a **fresh R0 pipeline**, use the existing helpers/er12-v1/config.R0.example.json, prepare.py, reveal.py and bootstrap.js. Make caller-owned copies, materialize route/path placeholders, provide a fresh frozen brief/plan, unique run ID, dedicated runtime root and prospectively fixed whole UTC deadline. Keep 1800/720/1080 budgets. At intended start:
+
+```bash
+python3 "$ER12_RUNTIME/helpers/er12-v1/prepare.py" prepare --config "$ER12_CONFIG" --stage investigator
+```
+
+Preparation starts the clock. Inspect the complete request and frozen input map. In a root-owned copy of existing bootstrap.js, set RECIPE_DIR, CONFIG and STAGE, then use supported T3 functions code mode (not Node). Root checks the live catalog and capacity and retains exact clientRequestId and returned IDs. Critic/reviser follow sequentially only after their actual predecessor T3 completion, zero pending runs and complete outputs. Capture actual native Goal receipts independently, save authored science before completion, and retain all failures. This publication task executed none of these operations.
+
+For **bounded roles**, inspect the original selected assignment.md, input-map.json, freeze.json and request.json. They are the actual frozen configurations of the published executions, not new requests. The pipeline helper does not implement role mode. Later helpers/role-v1/prepare-role.py is an existing preparation/recording utility, not a dispatcher; it requires the original exact-hash control wrapper dependency excluded from this two-arm bundle. Use it only in the authorized private baseline layout where that dependency already exists, with its documented prepare --slot --arm --fixture --runtime-root --started-at-utc arguments. Do not patch the guard to make a sanitized public copy appear replayable. Preserve one 900-second origin including setup/queue/delivery and the 300-second writing reserve. Root performs any future supported dispatch separately. No new runner or cross-provider route qualification is supplied here.
+
+Stable topology-v1 and er12-A8-v1 are provided for inspection with VERSION.json, version.diff, frozen example configs, bootstrap.js, prepare.py, README.md and recorded mechanical checks. See their complete docs and methods/A8/freeze.json; no helper was executed here. SELECTION-v1 and SELECTION_FREEZE are prospective selection authority, not a historical-score pass or permission to inspect future cases. Resolve the dependency graph before any separately authorized fresh execution. Root owns publication and readback; no additional user approval is requested.

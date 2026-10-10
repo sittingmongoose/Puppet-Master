@@ -1,0 +1,31 @@
+Source: https://www.rfc-editor.org/rfc/rfc2616.html
+Original normalized text SHA256: db828f1633b1aa1647b8dd2d357c0173720e94b6c76eee6aa64ab5244203cf21
+Original line numbers retained; gaps are omitted; original full response remains private.
+
+5279: 14.27 If-Range
+5280: If a client has a partial copy of an entity in its cache, and wishes
+5281: to have an up-to-date copy of the entire entity in its cache, it
+5282: could use the Range request-header with a conditional GET (using
+5283: either or both of If-Unmodified-Since and If-Match.) However, if the
+5284: condition fails because the entity has been modified, the client
+5285: would then have to make a second request to obtain the entire current
+5286: entity-body.
+5287: The If-Range header allows a client to "short-circuit" the second
+5288: request. Informally, its meaning is `if the entity is unchanged, send
+5289: me the part(s) that I am missing; otherwise, send me the entire new
+5290: entity'.
+5291: If-Range = "If-Range" ":" ( entity-tag | HTTP-date )
+5292: Fielding, et al.            Standards Track                   [Page 133]
+5293: RFC 2616                        HTTP/1.1                       June 1999
+5294: If the client has no entity tag for an entity, but does have a Last-
+5295: Modified date, it MAY use that date in an If-Range header. (The
+5296: server can distinguish between a valid HTTP-date and any form of
+5297: entity-tag by examining no more than two characters.) The If-Range
+5298: header SHOULD only be used together with a Range header, and MUST be
+5299: ignored if the request does not include a Range header, or if the
+5300: server does not support the sub-range operation.
+5301: If the entity tag given in the If-Range header matches the current
+5302: entity tag for the entity, then the server SHOULD provide the
+5303: specified sub-range of the entity using a 206 (Partial content)
+5304: response. If the entity tag does not match, then the server SHOULD
+5305: return the entire entity using a 200 (OK) response.

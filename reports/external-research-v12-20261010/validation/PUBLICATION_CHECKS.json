@@ -1,0 +1,151 @@
+{
+  "executed_at_utc": "2026-10-10T04:14:48.456106+00:00",
+  "status": "PASS",
+  "terminal_original_integrity": [
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/dispatch.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/status.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/source-map.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/sources/redis-primary-evidence.md",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/dispatch.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/status.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/source-map.json",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S4-rfc5854-metalink-excerpt.txt",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S3-curl-resume-excerpt.txt",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S2-rfc9530-digest-excerpt.txt",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S1-rfc9110-range-excerpt.txt",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    },
+    {
+      "source_locator": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/sources/S5-tus-protocol-excerpt.txt",
+      "original_sha256_match": true,
+      "original_bytes_match": true
+    }
+  ],
+  "mapped_original_public_files": 116,
+  "selected_terminal_assessments_checked": 2,
+  "counts": {
+    "planned_comparison_slots": 40,
+    "planned_logical_arms": 80,
+    "current_root_checkpoint_logical_arms": 24,
+    "candidate_stage_tasks": 30,
+    "T3_completed_candidate_stage_tasks": 13,
+    "T3_completed_bounded_role_deliveries": 7,
+    "T3_completed_nonrole_stage_deliveries": 6,
+    "completed_full_pipelines": 0,
+    "included_bounded_role_deliveries": 2,
+    "included_fully_terminal_independent_judgments": 2,
+    "root_checkpoint_terminal_assessments": 2
+  },
+  "executed": [
+    "Read-only original terminal science hash/size checks",
+    "Two completed latestTerminalStatus and zero pending child runs verified from one finite checkpoint",
+    "Original judgments verified and copied with sanitation only",
+    "Copied original/public SHA mappings verified",
+    "Independent evidence line-range extraction verified from original normalized text hashes",
+    "Complete bundle JSON and Python AST parse",
+    "Full-file final privacy and explicit inventory/checksum verification"
+  ],
+  "not_executed": [
+    "New helper/runtime or science tests",
+    "New primary source retrieval or account lookup",
+    "Commit/push/readback owned by root"
+  ],
+  "root_review_requests_present": 0,
+  "source_grades": [
+    "PASS_WITH_LIMITATIONS",
+    "FAIL"
+  ],
+  "scientific_or_runtime_qualification_from_mechanical_checks": false
+}
