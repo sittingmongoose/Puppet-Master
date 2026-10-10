@@ -274,7 +274,7 @@ Kinds join through `plus` (section 3). Built order:
 | 50 | Plan or document... | | |
 | 60 | Artifact... | | |
 | 70 | Output, Problems, Ports, Debug Console | | one row with a submenu |
-| hairline | Split right (Ctrl+\\), Split down (Ctrl+K Ctrl+\\), Reopen closed tab (Ctrl+Shift+T) | | |
+| hairline | Split right (Ctrl+\\), Split down (Ctrl+Shift+\\), Reopen closed tab (Ctrl+Shift+T; Alt+Shift+T in a browser) | | |
 
 A type-to-filter field heads the menu ("Open anything: kinds, files, URLs"). The empty-panel launcher shows the same
 rows as full-width list rows (no tiles, no pills), then Recent.
