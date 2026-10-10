@@ -9,8 +9,9 @@
      kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of the set). Tabs, text
      surfaces (inputs, editors, terminals) and resize dividers are never targets, and nothing inside
      [data-pm-hover-exempt] (the home redesign's terminal input and text surfaces) is a target or hovers one.
-   Kinds: every target gets data-pmh-kind="card|row|tile|icon" the first time the engine meets it (one attribute
-     write per element for its lifetime), so CSS and tokens can differ per kind.
+   Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
+     idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
+     per kind and no hover frame writes it; a frame stamps only a target that appeared since.
    CSS contract (written only on the hovered target and its lit neighbours, only on a visible change)
      class .pmh-on    the hovered target              class .pmh-near  a neighbour inside the bleed (i > 0)
      class .pmh-out   for --pmh-out-ms after the pointer left the target, then removed
@@ -40,11 +41,18 @@
      pointer-following field; the hovered target gets --pmh-i: 1 and its classes at once.
    Software-rendered (O55.motion.softwareRendered(), asked off the main thread): html[data-pmh-soft], so CSS can drop
      its expensive layers and turn the field off (tokens are re-read).
-   Cost rules: one hook on window.PM7_PMOVE (no pointermove listener of its own, canon F3-446); rects are read when the
-     scope is built (on enter), after scroll, resize or a DOM change inside the scope, never per frame otherwise; every
-     frame reads first, then writes; the rAF loop stops as soon as no spring, travel or pointer change is pending, so a
-     pointer resting on a card stops it once the spring has settled, and nothing runs at idle.
-   Test API: window.PMH = { sel, kinds, state(), retoken(), stats(), resolve(el), kindOf(el) }. ?pmh=off leaves the
+   Cost rules: one hook on window.PM7_PMOVE (no pointermove listener of its own, canon F3-446); rects (with each
+     proxy target's radius, clipping ancestors and visible part) are read after a frame, when style and layout are
+     clean, and an enter inside a scope whose rects are known reads nothing at all, so its :hover restyle and the
+     engine's writes share the frame's one recalc; a target never measured (a new scope) gets its classes in its first
+     frame and its light, plate, magnet and reticle one frame later, once the read after that frame has measured it; a
+     frame reads rects itself only after a scroll around the scope, a resize, an element added or removed inside the
+     scope, a gesture rest or a look change (a known box may have moved); every
+     frame reads first, then writes; the proxies are made at idle and keep their layers; the rAF loop stops as soon as no
+     spring, travel or pointer change is pending, so a pointer resting on a card stops it once the spring has settled,
+     and nothing runs at idle.
+   Test API: window.PMH = { sel, kinds, state(), retoken(), stats(), resolve(el), kindOf(el) }; stats().enters counts
+     how enters met their rects (cached = read nothing in the frame). ?pmh=off leaves the
      engine out (for A/B measurements). */
 (function () {
   'use strict';
@@ -99,7 +107,7 @@
     ];
 
     var T = {}, probe = null, tokensDirty = true, tokenFrame = 0;
-    var stats = { frames: 0, rects: 0, writes: 0, scopes: 0, tokenReads: 0, lastFrameMs: 0, maxFrameMs: 0, errors: 0, slow: [], totalMs: 0, hist: { lt1: 0, lt2: 0, lt4: 0, lt8: 0, ge8: 0 } };
+    var stats = { frames: 0, rects: 0, writes: 0, scopes: 0, tokenReads: 0, lastFrameMs: 0, maxFrameMs: 0, errors: 0, slow: [], totalMs: 0, enters: { cached: 0, deferred: 0, noRect: 0, old: 0, dirty: 0 }, hist: { lt1: 0, lt2: 0, lt4: 0, lt8: 0, ge8: 0 } };
     var phase = { tokens: false, scope: false, rects: 0 };   /* what the current frame did, for stats.slow */
     var raf = window.requestAnimationFrame.bind(window);
     var M = window.O55 && window.O55.motion;
@@ -136,10 +144,10 @@
       }
       kindQueue.length = 0;
     }
-    function valid(el) {
+    function valid(el, exemptChecked) {
       var v = el.getAttribute('data-pmh');
       if (v === 'off' || v === 'none') return false;
-      if (el.matches(BOUNDARY) || el.closest(EXEMPT)) return false;
+      if (el.matches(BOUNDARY) || (!exemptChecked && el.closest(EXEMPT))) return false;
       if (el.classList.contains('pmu-card') &&
           (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
       return true;
@@ -148,7 +156,7 @@
       if (start && start.closest && start.closest(EXEMPT)) return null;   /* the pointer is on an exempt surface */
       var t = start && start.closest ? start.closest(SEL) : null, best = null;
       while (t) {
-        if (valid(t)) best = t;
+        if (valid(t, true)) best = t;   /* start is not inside an exempt subtree, so no ancestor of it is */
         var p = t.parentElement;
         t = p ? p.closest(SEL) : null;
       }
@@ -161,7 +169,7 @@
       var s = ST.get(el);
       if (!s) {
         s = { el: el, kind: kindOf(el), nomag: el.matches(NOMAG), x: 0, y: 0, vx: 0, vy: 0, wx: 0, wy: 0, acc: 0,
-          fi: 0, fx: NaN, fy: NaN, near: false, mv: false, outTimer: 0, radius: null, clippers: null, box: null };
+          fi: 0, fx: NaN, fy: NaN, near: false, mv: false, outTimer: 0, radius: null, clippers: null, vis: null, box: null };
         ST.set(el, s);
       }
       return s;
@@ -171,7 +179,7 @@
     var px = 0, py = 0, have = false, buttons = 0, hit = null, want = null, moved = false;
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
-    var running = false, lastT = 0, wasRest = false, visCache = null;
+    var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
 
     function gestureRest() {
       var b = document.body;
@@ -196,25 +204,33 @@
     }
 
     /* ---- scope: the targets the field may light, with cached rects ---- */
-    var scopeEl = null, scopeMode = '', cands = [], scopeDirty = true, rectsDirty = true, rectsAt = 0, mo = null;
+    /* rectsDirty: the scope's rects must be read; geomDirty: boxes may have moved since they were read (scroll, resize,
+       elements added or removed in the scope, a gesture, a look change), so a known rect may be wrong */
+    var scopeEl = null, scopeScan = null, scopeMode = '', cands = [], scopeDirty = true, rectsDirty = true, geomDirty = false, rectsAt = 0, mo = null;
     var CAP = 160;
-    function outermostIn(list) {
-      var out = [];
+    /* The outermost valid targets of a querySelectorAll list (document order): a match inside the last kept target is
+       nested and belongs to it. No target sits above the container (in hover mode the container is above the resolved,
+       outermost target; in gap mode the pointer's element resolved to none), so the whole parent chain of every match
+       is never walked again (it was a closest(SEL) per level per candidate, 2-6 ms per scope). The exempt walk runs once
+       per container, not once per candidate. */
+    function outermostIn(list, c) {
+      var out = [], outer = null, ex = !(c && (c.closest(EXEMPT) || c.querySelector(EXEMPT)));
       for (var i = 0; i < list.length && out.length < CAP; i++) {
-        var el = list[i], p = el.parentElement;
-        if (p && resolve(p)) continue;   /* nested: the outer box owns it */
-        if (valid(el)) out.push(el);
+        var el = list[i];
+        if (outer && outer.contains(el)) continue;   /* nested: the outer box owns it */
+        if (valid(el, ex)) { out.push(el); outer = el; }
       }
       return out;
     }
+    function hasEl(list) { for (var i = 0; i < list.length; i++) if (list[i].nodeType === 1) return true; return false; }
     function buildScope(anchor, gap) {
-      var c, found;
-      if (gap) { c = anchor; found = c && c.querySelectorAll ? outermostIn(c.querySelectorAll(SEL)) : []; }
+      var c, found, scan = null;
+      if (gap) { c = anchor; scan = c; found = c && c.querySelectorAll ? outermostIn(c.querySelectorAll(SEL), c) : []; }
       else {
         /* climb from the hovered box until its neighbours are in view (at most four levels, never to <body>) */
         c = anchor.parentElement; found = [anchor];
         for (var lv = 0; c && c !== document.body && lv < 4; lv++) {
-          found = outermostIn(c.querySelectorAll(SEL));
+          found = outermostIn(c.querySelectorAll(SEL), c); scan = c;
           if (found.length >= 4) break;
           var up = c.parentElement;
           if (!up || up === document.body || up === root) break;
@@ -230,25 +246,81 @@
         scopeEl = c;
         if (mo) mo.disconnect();
         if (c && typeof MutationObserver === 'function') {
-          mo = mo || new MutationObserver(function () { scopeDirty = rectsDirty = true; if (proxyShown()) start(); });
+          /* only elements added or removed count: a live widget that rewrites its text (the dashboard's counters, a
+             few times a second) cannot add a target, and a box its new text moves is caught by the read after the
+             next frame */
+          mo = mo || new MutationObserver(function (ms) {
+            for (var i = 0; i < ms.length; i++) {
+              if (hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) { scopeDirty = rectsDirty = geomDirty = true; if (proxyShown()) start(); return; }
+            }
+          });
           mo.observe(c, { childList: true, subtree: true });
         }
       }
-      scopeMode = gap ? 'gap' : 'hover';
+      scopeMode = gap ? 'gap' : 'hover'; scopeScan = scan;
       scopeDirty = false; rectsDirty = true;
+      for (var j = 0; j < cands.length; j++) if (!cands[j].el.hasAttribute('data-pmh-kind')) { stampSoon(); break; }
     }
+    /* the translate a box shows on top of its rest position: the magnet's (written by this engine), else a hover form's
+       own (Retro's raise on .pmh-on / .pmh-out), read from the computed style only for those two states */
+    function shiftOf(el, s) {
+      if (s && (s.wx || s.wy)) return [s.wx, s.wy];
+      if (!el.classList.contains('pmh-on') && !el.classList.contains('pmh-out')) return null;
+      var tr = getComputedStyle(el).translate;
+      if (!tr || tr === 'none') return null;
+      var p = tr.split(' '), x = parseFloat(p[0]) || 0, y = parseFloat(p[1]) || 0;
+      return x || y ? [x, y] : null;
+    }
+    /* returns whether any rest rect moved by half a pixel or more */
     function readRects() {
+      var changed = false;
       for (var i = 0; i < cands.length; i++) {
-        var c = cands[i], r = c.el.getBoundingClientRect(), s = ST.get(c.el);
+        var c = cands[i], r = c.el.getBoundingClientRect(), s = ST.get(c.el), d = shiftOf(c.el, s), dx = d ? d[0] : 0, dy = d ? d[1] : 0;
         stats.rects++;
-        /* the rest rect: the rendered rect less the translate this engine wrote */
-        c.l = r.left - (s ? s.wx : 0); c.t = r.top - (s ? s.wy : 0); c.w = r.width; c.h = r.height;
+        /* the rest rect: the rendered rect less the translate on top of it */
+        var l = r.left - dx, t = r.top - dy;
+        if (Math.abs(l - c.l) >= 0.5 || Math.abs(t - c.t) >= 0.5 || Math.abs(r.width - c.w) >= 0.5 || Math.abs(r.height - c.h) >= 0.5) changed = true;
+        c.l = l; c.t = t; c.w = r.width; c.h = r.height;
         if (s && s.box) {   /* the proxies' box (an activity icon's .symbol) */
           var b = s.box.getBoundingClientRect(); stats.rects++;
-          s.boxR = { l: b.left - s.wx, t: b.top - s.wy, w: b.width, h: b.height };
+          s.boxR = { l: b.left - dx, t: b.top - dy, w: b.width, h: b.height };
         }
       }
-      rectsDirty = false; rectsAt = performance.now();
+      rectsDirty = geomDirty = false; rectsAt = performance.now();
+      return changed;
+    }
+    /* What a frame would otherwise read on enter (rects, the target's radius, its clipping ancestors and their rects) is
+       read after the frame instead, when style and layout are clean and a read costs no recalc: from a message posted in
+       the frame, which runs after its rendering. Then the next enter inside this scope reads nothing, so its :hover
+       restyle and the engine's class writes share one recalc instead of a forced one plus another. If a rect or the
+       visible part moved, the next frame applies it. */
+    var post = typeof MessageChannel === 'function' ? new MessageChannel() : null, postWanted = false;
+    function afterFrameSoon() {
+      if (postWanted) return;
+      postWanted = true;
+      if (post) post.port2.postMessage(0); else setTimeout(afterFrame, 0);
+    }
+    function afterFrame() {
+      postWanted = false;
+      if (!cands.length || gestureRest()) return;
+      var changed = readRects(), memo = new Map();
+      for (var i = 0; i < cands.length; i++) {
+        var s = st(cands[i].el);
+        if (proxyWanted(s.kind)) { prefetch(s); s.vis = visibleRect(s, memo); }
+      }
+      if (hover && hover.isConnected) {
+        var hs = ST.get(hover), v = hs && hs.vis;
+        if (v && (!visCache || v.l !== visCache.l || v.t !== visCache.t || v.r !== visCache.r || v.b !== visCache.b)) { visCache = v; changed = true; }
+      }
+      if (changed && (hover || lit.size)) { moved = true; start(); }
+    }
+    if (post) post.port1.onmessage = afterFrame;
+    /* what the proxies need of a target, read once: its box, radius and clipping ancestors */
+    function prefetch(s) {
+      if (s.kind === 'icon' && s.box === null) s.box = s.el.matches('.activity-bar .icon') ? s.el.querySelector('.symbol') || false : false;
+      if (!proxyWanted(s.kind)) return;
+      if (s.radius === null) s.radius = getComputedStyle(s.box || s.el).borderRadius || '';
+      if (!s.clippers) s.clippers = clippersOf(s.el);
     }
     function candOf(el) { for (var i = 0; i < cands.length; i++) if (cands[i].el === el) return cands[i]; return null; }
 
@@ -282,12 +354,13 @@
     }
     function tk(kind) { return T[kind] || T.card; }
     function retokenNextFrame() {
-      tokensDirty = true;
+      tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
       if (tokenFrame) return;
       tokenFrame = raf(function retokenFrame() {
         tokenFrame = 0;
         if (tokensDirty) readTokens();
         if (isReduced()) snapMagnets();
+        stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
       });
     }
@@ -328,23 +401,47 @@
       if (next && !next.isConnected) next = null;
       var enter = next !== hover;
       if (next) {
-        if (enter || scopeDirty || scopeMode !== 'hover' || !candOf(next)) buildScope(next, false);
-      } else if (have && !rest && hit && hit.isConnected && (scopeDirty || scopeMode !== 'gap' || scopeEl !== hit) && !calm) {
-        buildScope(hit, true);
+        if (enter || scopeDirty || scopeMode !== 'hover' || !candOf(next)) {
+          /* the scope already holds the target (the gap scope of its container, or a neighbour's scope): keep it */
+          if (!scopeDirty && candOf(next) && scopeEl && scopeEl.contains(next)) scopeMode = 'hover';
+          else buildScope(next, false);
+        }
+      } else if (have && !rest && hit && hit.isConnected && (scopeDirty || scopeMode !== 'gap' || scopeScan !== hit) && !calm) {
+        if (!scopeDirty && scopeScan === hit) scopeMode = 'gap';   /* the gap of the container the hover scope scanned: the same list */
+        else if (!scopeDirty && scopeScan && scopeScan.contains(hit) && cands.length < CAP) {
+          /* a gap inside the scanned container (the grid between two cards): its targets are the list's own subset, with
+             their rects (the scope element and its observer stay) */
+          cands = cands.filter(function (c) { return hit.contains(c.el); });
+          scopeScan = hit; scopeMode = 'gap';
+        } else buildScope(hit, true);
       }
+      var cached = false, defer = false;
       if (next && enter) {
-        var ns = st(next);
-        if (ns.kind === 'icon' && ns.box === null) ns.box = next.matches('.activity-bar .icon') ? next.querySelector('.symbol') || false : false;
-        if (ns.radius === null) ns.radius = getComputedStyle(ns.box || next).borderRadius || '';
-        if (proxyWanted(ns.kind) && !ns.clippers) ns.clippers = clippersOf(next);
-        rectsDirty = true;
+        var ns = st(next), nc = candOf(next);
+        /* rects read within the last five seconds (and again after every frame that runs) are used as they are: an
+           enter reads nothing, and the read after this frame corrects a box that moved without a scroll, resize or DOM
+           change in the scope (each of those marks the rects dirty, and a dirty rect is read in the frame as before) */
+        cached = !rectsDirty && !!nc && nc.w > 0 && now - rectsAt < 5000 && (ns.kind !== 'icon' || ns.box !== null) &&
+          (!proxyWanted(ns.kind) || (ns.radius !== null && !!ns.clippers && !!ns.vis));
+        /* a target never measured (a new scope) while nothing moved: this frame writes its classes only and the read after
+           the frame measures it, so this frame's :hover restyle is not forced early and then repeated; the light, plate,
+           magnet and reticle start on the next frame. A box that may have moved (geomDirty) is read here, as before. */
+        if (!cached) {
+          defer = !geomDirty && (!nc || !nc.w);
+          if (!defer) { prefetch(ns); rectsDirty = true; }
+        }
+        /* test API: how enters met their rects (cached = read nothing in the frame) */
+        stats.enters[cached ? 'cached' : defer ? 'deferred' : !nc || !nc.w ? 'noRect' : now - rectsAt >= 5000 ? 'old' : 'dirty']++;
       }
-      var reread = rectsDirty || (wasMoved && now - rectsAt > 1000);
+      var reread = rectsDirty && !defer;
       if (reread) readRects();
       var hc = next ? candOf(next) : null;
+      if (hc && !hc.w) hc = null;   /* not measured yet: no magnet, light or proxy until it is */
       /* the visible part (clipping ancestors' rects) is read with the rects, never on its own in a frame */
-      if (!next || !hc || !proxyWanted(st(next).kind)) visCache = null;
-      else if (reread || enter || !visCache) visCache = visibleRect(st(next));
+      var nst = next ? st(next) : null;
+      if (!next || !hc || !proxyWanted(nst.kind)) visCache = null;
+      else if (reread || !nst.vis) visCache = nst.vis = visibleRect(nst);
+      else if (enter || !visCache) visCache = nst.vis;
       var vis = visCache;
 
       /* WRITE ----------------------------------------------------------- */
@@ -360,12 +457,13 @@
       glowUpdate(hc, vis);
       var travelling = frameUpdate(hc, vis, dt, reduced, now);
 
+      if (cached || defer || reread || enter || (wasMoved && now - rectsAt > 1000)) afterFrameSoon();
       if (springs.size || travelling || moved) raf(tick); else running = false;
     }
 
     function inHoldBand(el) {
       var s = ST.get(el), h = s ? tk(s.kind).hold : 0, c = h > 0 ? candOf(el) : null;
-      if (!c) return false;
+      if (!c || !c.w) return false;
       return px >= c.l - h && px <= c.l + c.w + h && py >= c.t - h && py <= c.t + c.h + h &&
         !(px > c.l + h && px < c.l + c.w - h && py > c.t + h && py < c.t + c.h - h);
     }
@@ -512,20 +610,26 @@
     var frameEl = null, FR = { on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
     function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
     function proxyShown() { return !!(glowCur >= 0 || FR.on); }
+    var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
     function clippersOf(el) {
       var out = [];
       for (var a = el.parentElement; a && a !== document.body && a !== root; a = a.parentElement) {
-        var cs = getComputedStyle(a);
-        if (/(hidden|auto|scroll|clip)/.test(cs.overflowX + cs.overflowY)) out.push(a);
-        if (cs.position === 'fixed') break;
+        var m = clipMemo.get(a);
+        if (m === undefined) {
+          var cs = getComputedStyle(a), clips = /(hidden|auto|scroll|clip)/.test(cs.overflowX + cs.overflowY), fx = cs.position === 'fixed';
+          m = (clips ? 1 : 0) + (fx ? 2 : 0); clipMemo.set(a, m);
+        }
+        if (m & 1) out.push(a);
+        if (m & 2) break;
       }
       return out;
     }
-    function visibleRect(s) {
+    function visibleRect(s, memo) {
       var v = { l: -1e9, t: -1e9, r: 1e9, b: 1e9 };
       var list = s.clippers || [];
       for (var i = 0; i < list.length; i++) {
-        var r = list[i].getBoundingClientRect(); stats.rects++;
+        var r = memo && memo.get(list[i]);
+        if (!r) { r = list[i].getBoundingClientRect(); stats.rects++; if (memo) memo.set(list[i], r); }
         if (r.left > v.l) v.l = r.left; if (r.top > v.t) v.t = r.top;
         if (r.right < v.r) v.r = r.right; if (r.bottom < v.b) v.b = r.bottom;
       }
@@ -560,9 +664,9 @@
       if (glowEl || !document.body) return glowEl;
       glowEl = document.createElement('div');
       glowEl.id = 'pmh-glow'; glowEl.setAttribute('aria-hidden', 'true');
-      glowEl.setAttribute('data-pmh-family', family());
+      glowEl.setAttribute('data-pmh-family', family()); glowEl.setAttribute('data-pmh-kind', 'card');
       for (var i = 0; i < 2; i++) {
-        var l = document.createElement('i'); glowEl.appendChild(l);
+        var l = document.createElement('i'); l.setAttribute('data-pmh-kind', 'card'); glowEl.appendChild(l);
         GL.push({ el: l, host: null, on: false, memo: {} });
       }
       document.body.appendChild(glowEl);
@@ -591,7 +695,7 @@
       if (frameEl || !document.body) return frameEl;
       frameEl = document.createElement('div');
       frameEl.id = 'pmh-frame'; frameEl.setAttribute('aria-hidden', 'true');
-      frameEl.setAttribute('data-pmh-family', family());
+      frameEl.setAttribute('data-pmh-family', family()); frameEl.setAttribute('data-pmh-kind', 'card');
       for (var i = 0; i < 4; i++) frameEl.appendChild(document.createElement('i'));
       document.body.appendChild(frameEl);
       return frameEl;
@@ -663,13 +767,18 @@
       if (hover) { springs.add(st(hover)); start(); }
     }, { capture: true, passive: true });
     document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; }, { capture: true, passive: true });
-    window.addEventListener('scroll', function () {
+    window.addEventListener('scroll', function (e) {
+      /* only a scroller around the scope moves its boxes (the demo chat stream scrolls on its own all the time) */
+      var t = e.target;
+      if (scopeEl && t && t !== document && t !== root && t !== document.body && !(t.contains && t.contains(scopeEl))) return;
+      rectsDirty = geomDirty = true;   /* also with nothing lit: the cached rects of the scope are stale now */
       if (!hover && !lit.size && !proxyShown()) return;
-      rectsDirty = true; moved = true; start();
+      moved = true; start();
     }, { capture: true, passive: true });
     window.addEventListener('resize', function () {
-      scopeDirty = rectsDirty = true;
-      if (hover) { var s = ST.get(hover); if (s) s.clippers = null; }
+      scopeDirty = rectsDirty = geomDirty = true;
+      clipMemo = new WeakMap();
+      cands.forEach(function (c) { var s = ST.get(c.el); if (s) s.clippers = null; });
       if (hover || lit.size) { moved = true; start(); }
     }, { passive: true });
     if (typeof MutationObserver === 'function') {
@@ -681,13 +790,50 @@
       }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment'] });
       if (document.body) {
         new MutationObserver(function () {
-          if (gestureRest() !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
+          var r = gestureRest();
+          if (r !== bodyRest) { bodyRest = r; rectsDirty = geomDirty = true; }   /* a resize or drag gesture moves boxes */
+          if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
         }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
       }
     }
     if (reduceMq) {
       var mqChange = function () { retokenNextFrame(); };
       if (reduceMq.addEventListener) reduceMq.addEventListener('change', mqChange); else if (reduceMq.addListener) reduceMq.addListener(mqChange);
+    }
+
+    /* Ahead of time, at idle: every outermost target gets its data-pmh-kind (and the kind cache its value), a few per idle
+       callback so the restyle a kind attribute brings (the per-kind pseudo-element appears) is spread over idle frames
+       instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
+       exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
+       DOM). */
+    var stampTimer = 0, stampList = null, stampAt = 0, stampOuter = null;
+    function stampSoon(ms) {
+      if (stampTimer || stampList) return;
+      stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
+    }
+    function stampRun(dl) {
+      if (!document.body) return;
+      if (!stampList) {
+        if (tokensDirty) readTokens();
+        var g = false, f = false;
+        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+        if (g) ensureGlow();
+        if (f) ensureFrame();
+        stampList = document.querySelectorAll(SEL); stampAt = 0; stampOuter = null;
+      }
+      var n = 0, t0 = performance.now();
+      while (stampAt < stampList.length) {
+        var el = stampList[stampAt++];
+        if (stampOuter && stampOuter.contains(el)) continue;
+        if (!el.isConnected || !valid(el)) continue;
+        stampOuter = el;
+        if (el.hasAttribute('data-pmh-kind')) continue;
+        var kd = kindOf(el);
+        el.setAttribute('data-pmh-kind', kd); stats.writes++; stats.stamped = (stats.stamped || 0) + 1;
+        if (++n >= 12 || performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2)) break;
+      }
+      for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
+      if (stampAt < stampList.length) idle(stampRun); else stampList = null;
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -700,6 +846,7 @@
       } catch (_) {}
     }
     var idle = window.requestIdleCallback ? function (fn) { window.requestIdleCallback(fn, { timeout: 1500 }); } : function (fn) { setTimeout(fn, 0); };
+    stampSoon(1200);
     setTimeout(function () { idle(askSoft); }, 2500);
     setTimeout(function () { idle(askSoft); }, 6500);
 
@@ -714,7 +861,7 @@
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
-      stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
+      stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
         return {

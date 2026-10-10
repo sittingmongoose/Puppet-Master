@@ -61,9 +61,13 @@
 #pmh-frame {
   position: fixed; left: 0; top: 0; width: 0; height: 0;
   z-index: 96; pointer-events: none; opacity: 0;
+  /* promoted once and kept (as the glow layers are): its opacity cut and its corners' stepped translate are
+     compositor animations, which otherwise create a layer at each lock and drop it at each release, two whole-page
+     layerizations per hover */
+  will-change: opacity;
 }
 #pmh-frame.pmh-frame-on { opacity: 1; }
-#pmh-frame > i { position: absolute; display: block; }
+#pmh-frame > i { position: absolute; display: block; will-change: transform; }
 
 /* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
 [data-motion="reduced"] :is(#pmh-glow > i, #pmh-frame) { transition: none; }
@@ -328,7 +332,9 @@ html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on:not(.pmu-card)::after {
   background: none !important; box-shadow: none !important; -webkit-mask: none !important; mask: none !important;
   opacity: 1; transition: none; animation: pmh-r-hold 33ms step-end;
 }
-@keyframes pmh-r-hold { from, to { opacity: 0; } }
+/* the hold is a visibility step, not an opacity one: an opacity animation is run on the compositor, so it would make a
+   layer for the rule at every hover and drop it 33 ms later; hidden and transparent draw the same nothing */
+@keyframes pmh-r-hold { from, to { visibility: hidden; } }
 /* the card's own hover tools (close, size, drag and resize grips) cut in with the raise instead of a cubic fade */
 html[data-theme^="retro"] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
 /* rows (none renders in this build): the rail's row hover, a fill only, 3 steps in and 2 out; rows never rise */
@@ -382,6 +388,7 @@ html[data-o55-nier][data-theme] :is([data-pmh-kind="tile"], [data-pmh-kind="row"
 #pmh-frame[data-pmh-family="nier"]::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .6); opacity: 0; transition: opacity 0s;
+  will-change: opacity;   /* kept promoted: see #pmh-frame */
 }
 #pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 1; transition: opacity 0s linear 90ms; }
 /* the four corners: an 8 x 8 box drawing an L of two 1 px ink lines, 3 px outside the card; --pmh-n-o is the open offset */
