@@ -15,7 +15,10 @@
    D10 round two (Jared, 2026-10-10): widget sources (PMU.boards.sources, P3); Start from and the user's saved presets
    (board.sets, board.startFrom, PMU.boards.presets, P4); dashboard keys per project (board.setProject,
    PMU.boards.forgetKey, P5); live beats and Play the next hour on dashboards (PMU.boards.live, PMU.boards.hour, P12); a
-   new dash-<n> starts empty (P13). The Usage board takes none of these paths. */
+   new dash-<n> starts empty (P13). The Usage board takes none of these paths. Then (2026-10-10): the pick-up draws its
+   first held frame in the threshold's own frame (beginGesture, prep, setOpFlags, the pressed plate's warm layer), a
+   dashboard lights a beat's lead in its own layer and tells its kind ('beat'), and Start from and a project change
+   forget the board's size picks. */
 (function () {
   /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
      boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
@@ -407,6 +410,9 @@
     /* live beats (D10 P12): the share keys a dashboard has not patched yet (hidden or held), the cards of a patch still
        running in slices, and what it did (liveStats) */
     var liveKeys = null, liveQ = null, liveRaf = 0, liveStat = { beats: 0, patched: 0, held: null, last: null };
+    /* the lead light (D10 round two): the kept beats' lead keys (newest first), the lead's rect read before a patch
+       writes, how many beats a patch carries, and the board's own light layer */
+    var liveLead = null, liveLeadRect = null, liveMerged = 0, flyEl = null;
 
     function emit(evt, detail) { (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } }); }
     function say(text) {
@@ -1084,14 +1090,15 @@
       if (hosted && (bo.entrance === 'none' || current.mounted) && !opts.instant) opts = Object.assign({}, opts, { instant: true });
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }   /* the new room renders with the current view anyway */
       if (!boardEl || !scroll) return;
-      if (gesture) endGesture(gesture, 'cancel', true);
+      /* a gesture cut short by a mount takes its flags with it now, before the board element may become the ghost */
+      if (gesture) { endGesture(gesture, 'cancel', true); opCancel(); opSync(); }
       if (PMU.menu && (!hosted || menuOwned())) PMU.menu.close();
       /* a room change reads no layout (PERF-3 rule 12): the board width is the last one measured while the scroll's
          ResizeObserver has seen no change since; anything else measures */
       var W = opts.transition && current.mounted && current.cls && view.w && Math.abs(view.w - (current.wSeen || -1)) < 0.5 ? current.cls.W : boardWidth();
       if (W <= 0) { current.pending = true; current.room = room; return; }
       current.pending = false;
-      if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; }   /* the mount renders the latest readings */
+      if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; liveLead = null; liveMerged = 0; }   /* the mount renders the latest readings */
       flushGravity();
       var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
       var roomChanged = current.room !== room;
@@ -1398,19 +1405,49 @@
        holder's handle while its gesture runs, so the document listeners act on it */
     function claimGesture() { if (ACTIVE && ACTIVE !== inner) ACTIVE.drop(); ACTIVE = inner; }
     function releaseGesture() { if (!gesture && ACTIVE === inner) ACTIVE = null; }
-    /* body flags for a gesture: pmu-pointer-op (no text selection), pm7u-pointer-op (the PM8 magnet stands down) and the
-       app's drag convention pm-resizing (the magnet loop idles and PM_EDGE defers its band geometry; flushed by
-       PM_DRAGEND on release, exactly as the Home dashboard drags do) */
-    function setOpFlags(on, op) {
+    /* the page's flags for a gesture: pmu-pointer-op (no text selection) and pm7u-pointer-op (the PM8 magnet stands
+       down) on the body, the app's drag convention pm-resizing on the body (the magnet loop idles, PM_EDGE defers its band
+       geometry, the side panels' observers defer their refits, Home hides the hover tags and stills the chat's
+       transition; PM_DRAGEND flushes them on release, exactly as the Home dashboard drags do) and the board's own data-op
+       (its rules restyle every plate's head, tools and resize handles).
+       Pick-up profile (P1000, 2026-10-10): pmu-pointer-op and pm7u-pointer-op are read by no style rule; a body class
+       change restyles only the body and the side panels' views (a class-attribute rule), about 1 ms. pm-resizing costs
+       2-3 ms to set where Home reads it and 13-19 ms to clear (#pm-hover-tag-root leaves and re-enters layout); data-op
+       costs 233-252 elements of style on Overview (12-18 ms to set, 11-13 ms to clear), and a selection read forced it
+       into the pick-up's task. The body flags are set in the gesture's first task, as before: the magnet's loop stands
+       down from the lift frame on (it costs about 10 ms a frame while it runs) and PM_EDGE and the observers defer from
+       the first frame. pm-resizing is cleared, and data-op set and cleared, in idle time (opSync): data-op in the idle
+       period after prep's frame, both after the drop in the one after the release, forced there so no frame pays for
+       them; PM_DRAGEND runs when pm-resizing is cleared, a frame or two after the drop, which defers the flush for the
+       magnet, PM_EDGE and the observers by as long and changes nothing they read in between (the drop's settle is a
+       transform). What data-op changes waits as long: the lifted plate's tools fade, the other plates stop answering
+       hover and their handles stop taking the pointer (the gesture holds the pointer meanwhile); the resizing plate's own
+       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with the board that added it
+       (resizingMine), never with the attribute. */
+    var opOn = false, opT = 0, resizingMine = false;
+    function setOpFlags(on) {
       var cl = document.body.classList;
       cl.toggle('pmu-pointer-op', on); cl.toggle('pm7u-pointer-op', on);
-      var mine = boardEl.hasAttribute('data-op');
-      if (on && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); boardEl._pmuResizingFlag = true; }
-      if (on) boardEl.setAttribute('data-op', op); else boardEl.removeAttribute('data-op');
-      if (!on && mine && boardEl._pmuResizingFlag) {
-        boardEl._pmuResizingFlag = false; cl.remove('pm-resizing');
-        try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {}
-      }
+      opOn = !!on;
+      if (on && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; }
+      if (!on) opLater();   /* on: prep asks for it, after the frame that follows the lift */
+    }
+    function opLater() {
+      if (opT || dead) return;
+      opT = window.requestIdleCallback ? requestIdleCallback(opSync, { timeout: 120 }) : setTimeout(opSync, 32);
+    }
+    function opCancel() { if (!opT) return; if (window.requestIdleCallback && window.cancelIdleCallback) cancelIdleCallback(opT); else clearTimeout(opT); opT = 0; }
+    /* pm-resizing and data-op take the state the gesture has now (a gesture that ended before its idle period sets
+       nothing; a new one on this board keeps them) */
+    function opSync() {
+      opT = 0;
+      if (!boardEl) return;
+      var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
+      if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; wrote = true; }
+      else if (!live && resizingMine) { resizingMine = false; cl.remove('pm-resizing'); ended = wrote = true; }
+      if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
+      if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
+      if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
     }
     function sizeLabel(id, r) {
       var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id, api);
@@ -1441,6 +1478,9 @@
       else if (g.py > r.bottom - SCROLL_BAND) v = 3 + 11 * Math.min(1, (g.py - (r.bottom - SCROLL_BAND)) / SCROLL_BAND);
       /* never scroll a move past the row under the other cards: the landing cannot go lower than that */
       if (v > 0 && g.type === 'move' && g.target && g.target.y >= g.maxY) v = 0;
+      /* a pane already at its top has nowhere to go: no read and no write (the pair forced a layout in every frame of a
+         carry that began near the top edge) */
+      if (v < 0 && view.top <= 0) v = 0;
       if (v) { var before = scroll.scrollTop; scroll.scrollTop = Math.max(0, before + v); if (scroll.scrollTop !== before) g.dirty = true; }
     }
     function loop(g) {
@@ -1492,6 +1532,7 @@
        resolver and then the post-gesture gravity on the candidate layout, and the peers slide there live, so the release
        only settles the active card */
     function previewTo(g, rect) {
+      prep(g, true);   /* the board is whole and the preview elements exist before anything slides */
       /* back on its own slot the release changes nothing, so the preview is the snapshot itself */
       g.preview = sameRect(rect, g.me) ? g.snapshot : gravity(resolve(g.snapshot, g.id, rect), g.id, g.me, g.snapshot, current.cls.tracks);
       g.previewFinal = true;
@@ -1520,9 +1561,17 @@
       }
       if (!sameRect(r, g.target)) { g.target = r; previewTo(g, r); }
     }
+    /* the pick-up (Jared, 2026-10-10: the press must feel instant). The threshold's task does only what the first held
+       frame shows: the claim, the snapshot and its rects (pure: no layout), the body flags and the plate's own lift or
+       resize mark, and the carry's first frame runs in that same frame. The two reads come before any write, so they
+       flush only what the pointer itself changed (the selection's clear, last before, forced the board's whole data-op
+       restyle into this task: 16 ms of its 20 on the P1000). The rest follows in prep, in the next frame: a build still
+       streaming, a pending gravity, the preview elements, the landing or the outline; the board's data-op in idle time
+       (setOpFlags). Anything that needs them first (a new slot, a key, the release) runs prep itself, so the carry, its
+       previews, peers, auto-scroll, keyboard pick-up, Escape and the drop behave as before. */
     function beginGesture(g) {
-      completeStream();
-      flushGravity();
+      if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
+      g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
       sheenOff();
       claimGesture();
       gesture = g;
@@ -1539,21 +1588,18 @@
       g.cards = cardsNow();
       var gp = px(g.me);
       g.cardL = gp.l; g.cardT = gp.t; g.cardW = gp.w; g.cardH = gp.h;
-      g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
-      ensurePreviews();
-      setOpFlags(true, g.type);
+      /* a drop's float-up still pending: this plate takes its floated place now (it moves from there), the rest in prep */
+      if (gravityMap && gravityMap[g.id]) place(g.card, gravityMap[g.id]);
+      setOpFlags(true);
       if (g.card._pmuSlide) { g.card._pmuSlide.cancel(); g.card._pmuSlide = null; }
       if (g.card._pmuSettle) { g.card._pmuSettle.cancel(); g.card._pmuSettle = null; }
       g.card.removeAttribute('data-settling');
-      if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
       if (g.type === 'move') {
         g.card.setAttribute('data-lifted', '');
         g.card.setAttribute('aria-grabbed', 'true');
         g.liftAt = performance.now();
-        glide(landing, g.target, 'landing');
       } else {
         g.card.setAttribute('data-resizing', g.edge);
-        showOutline(g, g.target);
       }
       if (g.kb) {
         if (g.type === 'move') g.card.style.transform = 'scale(' + liftScale() + ')';
@@ -1561,14 +1607,43 @@
       } else {
         g.raf = requestAnimationFrame(function () { loop(g); });
       }
+      /* two frames: a rAF asked for in the input's own frame runs in that frame (input is dispatched at its start) */
+      g.prepRaf = requestAnimationFrame(function () { g.prepRaf = requestAnimationFrame(function () { g.prepRaf = 0; if (gesture === g && !g.done) prep(g, true); }); });
       return true;
     }
+    /* the frame after the lift: the room's build finished and a pending gravity placed (every plate at its rect before
+       anything slides), the preview elements made, and the landing (a move) or the outline (a resize) shown on the slot.
+       Once per gesture; show false (a release that came first) skips the preview. */
+    function prep(g, show) {
+      if (g.prepped) return;
+      g.prepped = true;
+      if (g.prepRaf) { cancelAnimationFrame(g.prepRaf); g.prepRaf = 0; }
+      var whole = !streaming && !lateHeld && !refreshQ && !pendingOld;
+      completeStream();
+      flushGravity();
+      if (!whole) g.cards = cardsNow();
+      ensurePreviews();
+      opLater();   /* the board's data-op, in the idle period after this frame */
+      if (show === false) return;
+      if (g.type === 'move') glide(landing, g.target, 'landing'); else showOutline(g, g.target);
+    }
+    /* a press on a head (or the grip) pre-warms its plate: the plate takes its own compositor layer as it is pressed, so
+       its raster (and in a fresh browser the GPU's first programs for it) is under way before the 4 px threshold, and the
+       lift has nothing new to raster but its shadow. The lift took that layer anyway, so text shows the same once the
+       plate lifts; a press that ends without a drag gives the layer back. P1000, Basic Dark, Overview, the pre-warm alone
+       on the old pick-up: threshold to the first lifted frame on screen 102 -> 57-61 ms on a second drag, 470-810 ->
+       150-340 ms on a first one (with the rest of the pick-up: about 110 -> 23 ms, 811 -> 24 ms). Glass plates have a
+       layer already (their backdrop). */
+    function warm(g) { g.warm = true; g.card.style.willChange = 'transform'; }
+    function unwarm(g) { if (!g.warm) return; g.warm = false; g.card.style.willChange = ''; }
     function cardTitle(id) { var d = PMU.widgets.get(id) || {}; try { return typeof d.title === 'function' ? d.title({ id: id, room: current.room, state: st }) : (d.title || id); } catch (e) { return id; } }
     /* release: commit (one command) or settle / glide back */
     function endGesture(g, how, instant) {
       if (!g || g.done) return;
+      prep(g, false);   /* a release before the frame after the lift: the board is made whole first, nothing is shown */
       g.done = true;
       cancelAnimationFrame(g.raf);
+      unwarm(g);
       if (gesture === g) gesture = null;
       releaseGesture();
       window.removeEventListener('pointermove', g.onMove, true);
@@ -1624,7 +1699,7 @@
         if (how === 'rejected') PMU.shell.toast(t('board.rejected'));
         if (how !== 'drop') { say(t('board.cancelled', { name: cardTitle(g.id) })); emit('cancel', { op: g.type, id: g.id, reason: how }); }
       }
-      if (g.kb && card.isConnected) card.focus({ preventScroll: true });
+      if (g.kb && !g.api && card.isConnected) card.focus({ preventScroll: true });
       if (!g.kb && g.started) suppressClick();
     }
     /* the drop (WOW-SPEC 3.11): the card settles from the pointer into its slot on a physical spring (k 520 c 38, about
@@ -1795,6 +1870,7 @@
       var ctl = event.target.closest('button, a, input, select, textarea, label, [role="button"], [data-nodrag], .pmu-headtools');
       if (ctl && !ctl.classList.contains('pmu-grip')) return;
       g.type = 'move';
+      warm(g);
       attach(g);
     }
     function attach(g) {
@@ -1804,6 +1880,7 @@
       window.addEventListener('blur', g.onBlur);
     }
     function detach(g) {
+      unwarm(g);
       window.removeEventListener('pointermove', g.onMove, true);
       window.removeEventListener('pointerup', g.onUp, true);
       window.removeEventListener('pointercancel', g.onCancel, true);
@@ -1955,7 +2032,9 @@
       var card = cardOf(id);
       var snap = snapshotNow(), me = snap.filter(function (r) { return r.id === id; })[0];
       if (!me) return null;
-      var g = { id: id, card: card, type: type, kb: true, started: true, source: source || 'api', snapshot: snap, me: me, target: rect };
+      /* api: a commit nobody's key or pointer made (the preset hold, the tour, a reload's fit, PM7_USAGE) leaves keyboard
+         focus where it is; only the card's own size menu, a person's choice on that card, hands focus back to it */
+      var g = { id: id, card: card, type: type, kb: true, api: source !== 'size_menu', started: true, source: source || 'api', snapshot: snap, me: me, target: rect };
       if (sameRect(rect, me)) return null;
       g.preview = gravity(resolve(snap, id, rect), id, me, snap, current.cls.tracks);
       g.previewFinal = true;
@@ -2254,7 +2333,7 @@
       var fresh = !current.mounted;
       if (fresh || current.pending || sizeDirty) { sizeDirty = false; readView(); onWidth(); }
       if (!fresh && current.mounted && (dirty || seenEpoch !== EPOCH)) {
-        dirty = false; seenEpoch = EPOCH; liveKeys = null;
+        dirty = false; seenEpoch = EPOCH; liveKeys = null; liveLead = null; liveMerged = 0;
         if (PMU.settings && PMU.settings.invalidate) PMU.settings.invalidate('page');
         if (PMU.roster && PMU.roster.invalidate) PMU.roster.invalidate();
         refresh('page', { sliced: true });
@@ -2270,7 +2349,7 @@
     }
     inner.touch = function (reason) {
       if (!hosted || dead) return;
-      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; liveKeys = null; refresh(reason || 'data', { sliced: true }); } else dirty = true;
+      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; liveKeys = null; liveLead = null; liveMerged = 0; refresh(reason || 'data', { sliced: true }); } else dirty = true;
     };
     /* ---- live beats (D10 P12): a beat's share keys reach every dashboard (PMU.boards.live.beat, from the live film). A
        shown one patches the cards they match, as the Usage page's beat does (15-film.js flush): in slices of about 6 ms, in
@@ -2293,11 +2372,17 @@
       if (!liveKeys || dead || !shownFlag || !current.mounted || current.pending) return false;
       liveStat.held = liveHeld();
       if (liveStat.held) return false;
-      var keys = Object.keys(liveKeys); liveKeys = null;
+      var keys = Object.keys(liveKeys), lead = liveLead || [], merged = liveMerged; liveKeys = null; liveLead = null; liveMerged = 0;
       var hit = cardsNow().filter(function (c) { return liveHit(c, keys); });
       var order = readingOrder(hit.filter(inView)).concat(readingOrder(hit.filter(function (c) { return !inView(c); })));
       liveStat.beats++;
       liveStat.last = { at: Math.round(performance.now()), shares: keys.length, cards: order.map(function (c) { return c.getAttribute('data-widget'); }) };
+      /* the lead's place is read before anything is written (one read, clean layout); its light comes with the first
+         slice */
+      liveLeadRect = order.length ? leadRect(order, lead) : null;
+      liveStat.last.lead = liveLeadRect ? liveLeadRect.id : null;
+      /* the kind's Live mark pulses on it (the Usage page's indicator pulses on every beat; PMU.live.pulse draws it) */
+      emit('beat', { at: liveStat.last.at, cards: liveStat.last.cards.slice(), shares: keys.length, beats: Math.max(1, merged), lead: liveStat.last.lead, reduced: reduced() });
       if (!order.length) return true;
       /* a patch still running takes the new cards at its end (each reads the latest readings when its turn comes) */
       if (liveQ) { order.forEach(function (c) { if (liveQ.indexOf(c) < 0) liveQ.push(c); }); return true; }
@@ -2315,13 +2400,50 @@
           if (c.isConnected) { try { PMU.cards.update(c, 'live'); liveStat.patched++; } catch (error) { console.error('[pm-usage] live patch', error); } }
         }
       });
+      if (liveLeadRect) { var lr = liveLeadRect; liveLeadRect = null; liveLight(lr); }
       if (q.length && liveQ === q) liveRaf = requestAnimationFrame(liveStep); else if (liveQ === q) liveQ = null;
     }
+    /* the board's own light layer: in its scroll pane, above the plates (05-film.css .pmu-flight, z-index 45), so the
+       light scrolls with its reading and the pane clips it; made at the first light (the Usage page's #pmuFlight lives in
+       #pmuApp, which Home hides) */
+    function flyLayer() {
+      if (!scroll) return null;
+      if (!flyEl || flyEl.parentNode !== scroll) { flyEl = document.createElement('div'); flyEl.className = 'pmu-flight'; flyEl.setAttribute('aria-hidden', 'true'); scroll.appendChild(flyEl); }
+      return flyEl;
+    }
+    /* the lead (15-film.js lead): the first lead key a patched card in view shows, lit in the nearest reading host it
+       sits in (PMU.live.LEAD_HOST: a KPI cell, a row, a column), measured from the board's light layer */
+    function leadRect(cards, keys) {
+      var layer = keys.length && PMU.film && PMU.film.lightAt ? flyLayer() : null;
+      if (!layer) return null;
+      var host = PMU.live && PMU.live.LEAD_HOST, seen = {}, o = null;
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i]; if (seen[k]) continue; seen[k] = true;
+        for (var j = 0; j < cards.length; j++) {
+          if (!inView(cards[j])) continue;
+          var el = cards[j].querySelector('[data-share="' + cssq(k) + '"], [data-share-v="' + cssq(k) + '"]');
+          if (!el) continue;
+          var at = (host && el.closest(host)) || el; if (!cards[j].contains(at)) at = el;
+          var r = at.getBoundingClientRect(); o = o || layer.getBoundingClientRect();
+          if (r.width > 0 && r.height > 0) return { x: r.left - o.left, y: r.top - o.top, w: r.width, h: r.height, id: cards[j].getAttribute('data-widget') };
+        }
+      }
+      return null;
+    }
+    /* the light in the look's own voice (PMU.film.lightAt: the flash, with a GPU the sweep or Glass's glint); under
+       Reduce Motion its calm version (one slow opacity rise and fall of the flash tint) */
+    function liveLight(r) {
+      var layer = flyLayer(); if (!layer || !shownFlag) return;
+      try { PMU.film.lightAt(r, { layer: layer, calm: true }); } catch (error) { console.error('[pm-usage] live light', error); }
+    }
     if (hosted) {
-      inner.live = function (keys) {
+      inner.live = function (keys, lead) {
         if (dead) return;
         liveKeys = liveKeys || {};
         keys.forEach(function (k) { liveKeys[k] = true; });
+        /* the newest beat's lead first, as the Usage page orders the leads it keeps */
+        if (lead && lead.length) liveLead = lead.concat(liveLead || []).slice(0, 24);
+        liveMerged++;
         liveTry();
       };
       inner.liveTry = liveTry;
@@ -2446,6 +2568,9 @@
       if (loaded) flushNow();
       perProject = true; projectId = pid; storeKey = boardKey(boardId, pid); api.STORE_KEY = storeKey;
       adoptKey(boardId, pid);
+      /* the session's size picks were the old project's: none may apply to the new project's panels (the write above
+         took their preset ids) */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
       reread();
       emit('change', { op: 'project', project: pid });
       return true;
@@ -2493,6 +2618,8 @@
       /* every widget of the set is held at the set's preset, or at none (a hold left from before the set would resize it) */
       var held = {}; Object.keys(st.layout[room]).forEach(function (cn) { st.layout[room][cn].forEach(function (r) { held[r.id] = true; }); });
       if (PMU.cards && PMU.cards.holdStored) Object.keys(held).forEach(function (id) { PMU.cards.holdStored(id, (set.presets || {})[id] || null, null, api); });
+      /* and no size picked before the set (this session's picks, every widget of the board's) applies to it */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
       persist();
       if (current.mounted && shownFlag) { reconcile(layoutFor(room), { dur: 'morph', ease: 'settle' }); refresh('reset'); scheduleHold(400); }
       else if (current.mounted) mount(room, { instant: true });   /* hidden: it mounts at its show */
@@ -2528,6 +2655,7 @@
       if (gesture) endGesture(gesture, 'cancel', true);
       if (ACTIVE === inner) ACTIVE = null;
       if (savePending) { clearTimeout(saveTimer); writeNow(); }
+      opCancel(); opSync();   /* the flags it holds go with it, now */
       dead = true; shownFlag = false;
       clearTimeout(saveTimer); clearTimeout(holdT); clearTimeout(gravityT); clearTimeout(filmEndT); clearTimeout(roTimer);
       saveTimer = holdT = gravityT = filmEndT = roTimer = 0; gravityMap = null;
@@ -2536,7 +2664,7 @@
       sheenOff();
       buildToken++; streaming = null; lateHeld = null;
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
-      liveStop(); liveKeys = null;
+      liveStop(); liveKeys = null; liveLead = null;
       if (ro) { ro.disconnect(); ro = null; }
       if (scroll) {
         scroll.removeEventListener('scroll', onScrollView, { passive: true });
@@ -2704,14 +2832,15 @@
       return true;
     },
     /* live beats on dashboards (D10 P12), for the live film (15-film.js): wanted() while a shown dashboard holds a Usage
-       widget; beat(keys) hands a beat's share keys to every dashboard; flush() lets a dashboard whose hold ended patch;
-       hit(card, keys) is the match both use. on() / set(on): the viewer's Live choice (the Usage page's, one for the page). */
+       widget; beat(keys, lead) hands a beat's share keys and its lead keys (the lead light) to every dashboard; flush()
+       lets a dashboard whose hold ended patch; hit(card, keys) is the match both use. on() / set(on): the viewer's Live choice (the Usage page's, one for the page). */
     live: {
       wanted: function () { return ORDER.some(function (h) { return !!h.liveWanted && h.liveWanted(); }); },
-      beat: function (keys) {
+      beat: function (keys, lead) {
         var list = [].concat(keys || []).filter(function (k) { return typeof k === 'string' && k; });
         if (!list.length) return;
-        ORDER.slice().forEach(function (h) { try { if (h.live) h.live(list); } catch (error) { console.error('[pm-usage] boards.live', error); } });
+        var leads = [].concat(lead || []).filter(function (k) { return typeof k === 'string' && k; });
+        ORDER.slice().forEach(function (h) { try { if (h.live) h.live(list, leads); } catch (error) { console.error('[pm-usage] boards.live', error); } });
       },
       flush: function () { ORDER.slice().forEach(function (h) { try { if (h.liveTry) h.liveTry(); } catch (error) { console.error('[pm-usage] boards.live', error); } }); },
       hit: function (card, keys) { return !!card && !!liveHit(card, [].concat(keys || [])); },

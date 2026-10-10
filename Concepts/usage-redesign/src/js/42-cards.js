@@ -953,7 +953,16 @@
     /* the preset id a card is held at but not yet seen at the board's class (another room): kept as it is by a save */
     heldId: function (id, b) { return inBoard(b, function () { var k = bk(id); return typeof held[k] === 'string' ? held[k] : null; }); },
     /* the preset a card was set to at a board class, while its size there is still w x h */
-    pickedId: function (id, cls, w, h, b) { return inBoard(b, function () { var k = bk(id), pk = picked[k] && picked[k][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }); }
+    pickedId: function (id, cls, w, h, b) { return inBoard(b, function () { var k = bk(id), pk = picked[k] && picked[k][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }); },
+    /* a board's picks forgotten (40-board.js startFrom and setProject, D10 round two): the presets its panels were set
+       to in this session, at every class, for these widget ids (null: every widget of the board). A dashboard that
+       starts from a set or changes project takes its sizes from the set or the new project's records (holdStored), so a
+       pick made before can never apply to a panel that happens to have the old pick's size. Returns how many it forgot. */
+    forgetPicks: function (ids, b) { return inBoard(b, function () {
+      var n = 0, mine = bk(''), keys = ids == null ? Object.keys(picked).filter(function (k) { return mine ? k.indexOf(mine) === 0 : k.indexOf('|') < 0; }) : [].concat(ids).map(bk);
+      keys.forEach(function (k) { if (picked[k]) { delete picked[k]; n++; } });
+      return n;
+    }); }
   };
 
   /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----

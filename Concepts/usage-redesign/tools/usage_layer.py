@@ -241,12 +241,14 @@ def filter_css(css: str, stats: dict, keep_ctx_only: bool = False) -> str:
 
 HOST_ANCHOR = '#panel-usage'
 HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
-# The census of the rewrite: 2,625 anchors at a501fc00f6 and the 6 of the hosted rules D10 6.4 appends. A Usage CSS
-# edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
-# them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
+# The census of the rewrite: 2,625 anchors at a501fc00f6 and the 6 of the hosted rules D10 6.4 appends, plus 1 from the
+# pick-up polish (2026-10-10, 20-board.css): the resizing plate's lift no longer waits for the board's data-op, and the
+# plate under the pointer keeps the z-index auto the data-op hover rule gave it (a hosted board's resize behaves the same
+# way, which is meant). A Usage CSS edit that adds or removes an anchored rule moves 'rewritten': look at what the new
+# rules style (a hosted board gets them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2631, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2632, 'compound': 1}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
