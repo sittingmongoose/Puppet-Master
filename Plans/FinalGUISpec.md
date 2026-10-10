@@ -44161,6 +44161,7 @@ canonical_text: >-
   popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
   After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
+  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -44217,6 +44218,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
   - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
   - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
 owner_hints:

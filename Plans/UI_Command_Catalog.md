@@ -15470,6 +15470,12 @@ The chat is fixed on the right, from the title bar to the status bar; it is neve
 
 Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table).
 
+Amended 2026-10-10 (lead ruling L9): the History pin is the typed local action below.
+
+| Action id | Arguments | Effect | Producers and keys |
+|---|---|---|---|
+| `ui.chat_column.pin_history` | `history_pinned` | Writes the v2 record's chat column `history_pinned`, committed with the `chat_column_changed` change | The History list's pin |
+
 Retired chat rows: the chat grab (`home.chat.grab`), dragging the chat into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner resize (`home.drop_target.*`, `home.resizer.floating_corner`), and UCC-144's Pop Out into the in-canvas float layer. `home.chat.pop_out` stays as the Pop out producer of `cmd.panel.undock` with `chat`, into a window; `home.resizer.chat` stays as the width producer of `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`; `home.chat.activity_toggle` stays `cmd.panel.switch` with `chat`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/UI_Command_Catalog.md#UCC-138, ContractName:Plans/Commands_System.md#CS-061
@@ -15492,6 +15498,7 @@ canonical_text: >-
   it into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner
   resize, and UCC-144's Pop Out into the in-canvas float layer retire. Folding the chat to its narrow edge strip and
   opening it from there dispatch nothing and are never saved.
+  ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, committed with the chat_column_changed change.
 gui_related: true
 gui_classification_reason: "Owns the chat column's visible commands and retires the chat docking and floating controls."
 split_recommended: false
@@ -15522,6 +15529,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D3)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys, Chat; concept lineage only)"
 preserved_exact_tokens:
+  - "ui.chat_column.pin_history"
+  - "history_pinned"
+  - "chat_column_changed"
   - "cmd.panel.switch"
   - "cmd.panel.undock"
   - "cmd.panel.redock"
@@ -15534,6 +15544,7 @@ negative_constraints:
   - "Do not dispatch cmd.panel.undock for a home panel, tab or dashboard."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned with chat_column_changed."
   - "Retired 2026-10-09 (DL-180): the chat grab, the dock drop targets, the in-canvas float and its corner resize, and UCC-144's Pop Out generalization to editor panels, Chat and Dashboard."
 owner_hints:
   - Plans/UI_Command_Catalog.md
