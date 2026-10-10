@@ -612,12 +612,17 @@ function undoStart(rec, u) {
 
 /* ---- presets (P4): the user's saved boards, one store for every project and every dashboard (PMU.boards.presets,
    widget_presets:v1). Saved from the Board menu; renamed and deleted from Start from's Your presets. ---- */
-function uniquePresetName(base) {
+/* a name another preset (or dashboard) already has gets ' 2', ' 3' ... so two never read alike in a list; the suffix
+   always fits the 80-character limit */
+function uniqueAmong(base, names) {
   var taken = {};
-  presetList().forEach(function (p) { taken[String(p.name).toLowerCase()] = true; });
+  names.forEach(function (n) { if (n) taken[String(n).toLowerCase()] = true; });
   if (!taken[base.toLowerCase()]) return base;
-  for (var i = 2; i < 100; i++) if (!taken[(base + ' ' + i).toLowerCase()]) return base + ' ' + i;
+  for (var i = 2; i < 100; i++) { var c = base.slice(0, 80 - (' ' + i).length) + ' ' + i; if (!taken[c.toLowerCase()]) return c; }
   return base;
+}
+function uniquePresetName(base, except) {
+  return uniqueAmong(base, presetList().filter(function (p) { return p.id !== except; }).map(function (p) { return p.name; }));
 }
 function promptAt(rec, o) {
   var anchor = boardBtn(rec);
@@ -626,8 +631,9 @@ function promptAt(rec, o) {
 }
 function savePreset(rec) {
   if (!rec.b || !PMU.boards.presets) return;
-  promptAt(rec, { title: 'Save as preset', value: uniquePresetName(nameOf(rec)), ok: 'Save', done: function (v) {
+  promptAt(rec, { title: 'Save as preset', value: uniquePresetName(nameOf(rec)), ok: 'Save', maxLength: 80, done: function (v) {
     var p = null;
+    if (cleanName(v)) v = uniquePresetName(cleanName(v));
     try { p = PMU.boards.presets.save(rec.b, v); } catch (err) { logError('dashboard preset save failed', err); }
     var t = p ? 'Saved ' + p.name + ' as a preset. It is in Start from on every dashboard.' : 'This dashboard could not be saved as a preset.';
     rec.api.announce(t);
@@ -657,7 +663,8 @@ function presetSpec(rec, p) {
   ] };
 }
 function renamePreset(rec, p) {
-  promptAt(rec, { title: 'Rename preset', value: p.name, ok: 'Rename', done: function (v) {
+  promptAt(rec, { title: 'Rename preset', value: p.name, ok: 'Rename', maxLength: 80, done: function (v) {
+    if (cleanName(v)) v = uniquePresetName(cleanName(v), p.id);
     if (!cleanName(v)) { rec.api.announce('A preset needs a name. ' + p.name + ' keeps its name.'); if (PMW.toast) PMW.toast('A preset needs a name. ' + p.name + ' keeps its name.'); return; }
     var r = null;
     try { r = PMU.boards.presets.rename(p.id, v); } catch (err) { logError('dashboard preset rename failed', err); }
@@ -755,7 +762,7 @@ function tabUserLabel(rec) {
   return (t && t.userLabel) || null;
 }
 function renameDash(rec) {
-  promptAt(rec, { title: 'Rename dashboard', value: nameOf(rec), ok: 'Rename', done: function (v) { applyName(rec, v); } });
+  promptAt(rec, { title: 'Rename dashboard', value: nameOf(rec), ok: 'Rename', maxLength: 80, done: function (v) { applyName(rec, v); } });
 }
 /* the board's name, its tab and every list that shows it, in one step; an empty name goes back to "Dashboard n". The
    tab takes it through the rename command (cmd.panel_tab.rename, with its receipt), so the strip, the reopen list and
@@ -763,6 +770,8 @@ function renameDash(rec) {
 function applyName(rec, v) {
   if (!dashNumber(rec.board)) return false;
   var name = cleanName(v);
+  // never the name of a built-in board or of another of this project's dashboards
+  if (name) name = uniqueAmong(name, FIXED_IDS.map(function (b) { return FIXED[b].label; }).concat(customBoards().filter(function (b) { return b !== rec.board; }).map(labelOf)));
   setName(rec.board, name);
   var now = labelOf(rec.board), want = name && name !== defaultLabel(rec.board) ? now : null;
   rec.api.update({ label: now });

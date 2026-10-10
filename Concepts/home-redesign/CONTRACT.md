@@ -178,7 +178,8 @@ board lives in the board's own store, written by the engine.
   the reopen list, this project's keys, the unscoped `widget_layout:v1:dash-<n>` keys not adopted yet, the names and
   the live boards. It starts empty (P13). A custom dashboard has a name, kept per project in
   `pm.home.dashboards:v1:<project>` = `{ schema_id: 'pm.home.dashboards.v1', names: { 'dash-<n>': name } }` (trimmed,
-  80 characters at most; "Dashboard n" is the default and is not stored). Rename dashboard... sets it and renames the
+  80 characters at most, never the name of a built-in board or another of this project's dashboards (' 2' is added);
+  "Dashboard n" is the default and is not stored). Rename dashboard... sets it and renames the
   tab with `cmd.panel_tab.rename`; a rename of the tab sets it too, and clearing that rename clears it. The name shows on the
   tab, in the header facts, in the Board menu's dashboards, in the "+" menu's 'Your dashboards' row (the
   custom dashboards are `plus.sub()` entries with `group: 'dash'`, one submenu row under Dashboard, so the inline links
