@@ -12,17 +12,11 @@
    own range and scope (Board menu), no "Start from" (Reset only), the plain entrance on its first show and none under
    Reduced Motion; Details on a card opens it in Usage. Live readings stay on the Usage page.
 
-   Two boards are not on the engine:
-   - agents (dashboard:agents) is drawn here: one card per agent at work, opening its transcript.
-   - current (dashboard:current, "Home (current)") keeps the page's own Home widgets until the Orchestrator redesign. The
-     page's #dashboardView (the Main, Metrics and Monitoring grids inside #pm6DashScroll, the catalog #pm6DashCatalog
-     and the Add widget button #pm6DashAddBtn) is one node other code holds references to (PM7_DASH_WIDGETS, the widget
-     drag and size popover, the tour's widget_action step, the live demo updates), so it is never cloned: it is MOVED
-     into the Home (current) tab, which points it at Main, Metrics or Monitoring (its Board menu) by clicking the page's
-     hidden internal tab, and it parks back in #panel-dashboard when the tab closes. #pm6DashAddBtn is adopted into that
-     tab's header row as its { id: 'add', el } action (restyled as a header button: no pill, D22). Where the page's
-     container rules give 3 columns (a 700-1060 px grid) and every visible widget is an even width, the third column
-     would stand empty, so the tab sets 4 columns (or 2 when a column would be under 200 px); see fitColumns.
+   One board is not on the engine: agents (dashboard:agents) is drawn here: one card per agent at work, opening
+   its transcript.
+
+   D10 round two (P1): the page's own Home widgets (#dashboardView) are no longer used by any tab. The node stays
+   parked and hidden in #panel-dashboard; this kind never moves it.
 
    Without the Usage engine (PMU.boards missing: the Usage boot failed) a grid dashboard shows a quiet note instead. */
 
@@ -53,10 +47,9 @@ var FIXED = {
   home: { label: 'Home', sub: 'Usage widgets at a glance' },
   metrics: { label: 'Metrics', sub: 'Quota, budget and token trends' },
   monitoring: { label: 'Monitoring', sub: 'Tool health, alerts and probes' },
-  agents: { label: 'Agents', sub: 'Every agent at work and what it is doing' },
-  current: { label: 'Home (current)', sub: 'Run progress, lanes, results and metrics' }
+  agents: { label: 'Agents', sub: 'Every agent at work and what it is doing' }
 };
-var FIXED_ORDER = ['home', 'metrics', 'monitoring', 'agents', 'current'];
+var FIXED_IDS = ['home', 'metrics', 'monitoring', 'agents'];
 var ENGINE_ID = /^(home|metrics|monitoring|dash-[1-9][0-9]{0,3})$/;
 var DASH_TAB = /^dashboard:dash-([1-9][0-9]{0,3})$/;
 var DASH_KEY = /^widget_layout:v1:dash-([1-9][0-9]{0,3})$/;
@@ -64,7 +57,7 @@ var KEY_PREFIX = 'widget_layout:v1:';
 var NEW_SUB = 'An empty board for widgets you pick';
 
 function isEngineId(b) { return typeof b === 'string' && ENGINE_ID.test(b); }
-function allowed(b) { return isEngineId(b) || b === 'agents' || b === 'current'; }
+function isBoard(b) { return isEngineId(b) || b === 'agents'; }
 function dashNumber(b) { var m = /^dash-([1-9][0-9]{0,3})$/.exec(b || ''); return m ? +m[1] : 0; }
 /* the board a tab shows: its id names it for life (dashboard:<board>), else its state */
 function boardOf(id, st) {
@@ -99,302 +92,9 @@ function engineRecs() { return recList().filter(function (r) { return !r.gone &&
 function visible(rec) { return !!rec && !rec.gone && rec.api.isVisible(); }
 function repaintAll() { recList().forEach(function (r) { if (!r.gone && r.paintLeft) r.paintLeft(); }); }
 
-/* ==================================================================================================================
-   Home (current): the page's own widgets (#dashboardView), adopted
-   ================================================================================================================== */
-var LEGACY = {
-  main: { label: 'Main', grid: 'dashGridMain', internal: 'Main' },
-  metrics: { label: 'Metrics', grid: 'dashGridMetrics', internal: 'Metrics' },
-  monitoring: { label: 'Monitoring', grid: 'dashGridMonitoring', internal: 'Monitoring' }
-};
-var LEGACY_ORDER = ['main', 'metrics', 'monitoring'];
-var INTERNAL_TO_SUB = { Main: 'main', Metrics: 'metrics', Monitoring: 'monitoring' };
-
-function node() { return byId('dashboardView'); }
-/* kept by reference: while a header row hands it over (the row that let go drops it before the holder adopts it) the
-   button is briefly out of the document, where getElementById cannot find it */
-var addEl = null;
-function addBtn() { var b = byId('pm6DashAddBtn'); if (b) addEl = b; return addEl; }
-function gridCards(grid) {
-  if (!grid) return [];
-  return Array.prototype.filter.call(grid.children, function (c) {
-    return c.classList && c.classList.contains('pm6-dash-card') && !c.classList.contains('pm6-dash-placeholder') &&
-      !c.classList.contains('pm7-dash-move-placeholder') && !c.classList.contains('pm7-dash-resize-placeholder');
-  });
-}
-function cardKey(card) { return card.getAttribute('data-widget-id') || card.getAttribute('data-widget-kind') || ''; }
-function cardSize(card) {
-  return { w: parseInt(card.style.getPropertyValue('--dw'), 10) || 1, h: parseInt(card.style.getPropertyValue('--dh'), 10) || 1 };
-}
-
-/* The starting widgets of each internal board, read once from the page's markup before PM7_DASH_WIDGETS restores a
-   saved layout (this file runs at the end of <body>, before DOMContentLoaded): "Reset widgets of this board" returns
-   to it. */
-var DEFAULTS = {};
-(function snapshotDefaults() {
-  LEGACY_ORDER.forEach(function (s) {
-    DEFAULTS[s] = gridCards(byId(LEGACY[s].grid)).map(function (c) {
-      return { key: cardKey(c), size: cardSize(c), clone: c.cloneNode(true) };
-    });
-  });
-})();
-
-/* which internal board the page shows now (its hidden Main / Metrics / Monitoring strip) */
-function internalTabs() { var n = node(); return n ? Array.prototype.slice.call(n.querySelectorAll('.dashboard-tabs .tab')) : []; }
-function internalBoard() {
-  var t = internalTabs().filter(function (x) { return x.classList.contains('active'); })[0];
-  return t ? INTERNAL_TO_SUB[t.textContent.trim()] || null : null;
-}
-
-var owner = null;       // the Home (current) rec whose stage holds the node (one tab per id: at most one)
-var expected = null;    // the internal board this file last pointed the node at
-var stashed = null;     // the Add widget button's own attributes while it sits in a header row
-
-function selectSub(sub) {
-  var want = LEGACY[sub] && LEGACY[sub].internal;
-  if (!want) return;
-  expected = sub;
-  if (internalBoard() === sub) return;
-  var tab = internalTabs().filter(function (t) { return t.textContent.trim() === want; })[0];
-  if (tab) { tab.click(); return; }
-  // no internal strip: toggle the grids the way the page does
-  LEGACY_ORDER.forEach(function (s) {
-    var g = byId(LEGACY[s].grid);
-    if (g) g.style.display = s === sub ? 'contents' : 'none';
-  });
-}
-
-/* the page's Add widget button: dressed as a header button while the Home (current) row holds it, adopted as that
-   row's { id: 'add', el } action */
-function dressAddButton() {
-  var btn = addBtn();
-  if (!btn || stashed) return btn;
-  stashed = { title: btn.getAttribute('title'), parent: btn.parentNode, next: btn.nextSibling };
-  btn.removeAttribute('title');
-  btn.classList.add('pmw-hbtn', 'pmw-dash-add');
-  btn.setAttribute('data-id', 'add');
-  btn.setAttribute('data-pm-hover-label', 'Add widget');
-  btn.setAttribute('data-pm-hover-detail', 'Pick one from the widget catalog');
-  btn.setAttribute('data-pmh', 'icon');
-  btn.setAttribute('aria-label', 'Add widget');
-  var spans = btn.querySelectorAll(':scope > span');
-  if (spans.length) spans[spans.length - 1].classList.add('pmw-hbtn-label');
-  if (!btn.querySelector('.pmw-dash-addico')) btn.insertBefore(PMW.icon('plus', { size: 14, cls: 'pmw-dash-addico' }), btn.firstChild);
-  return btn;
-}
-function homeAddButton() {
-  var btn = addBtn();
-  if (!btn || !stashed) return;
-  btn.classList.remove('pmw-hbtn', 'pmw-dash-add');
-  ['data-id', 'data-pm-hover-label', 'data-pm-hover-detail', 'data-pmh', 'aria-label'].forEach(function (a) { btn.removeAttribute(a); });
-  if (stashed.title) btn.setAttribute('title', stashed.title);
-  var ico = btn.querySelector('.pmw-dash-addico');
-  if (ico) ico.remove();
-  var lab = btn.querySelector('.pmw-hbtn-label');
-  if (lab) lab.classList.remove('pmw-hbtn-label');
-  var actions = node() && node().querySelector('.pm6-dash-actions');
-  var parent = actions || stashed.parent;
-  if (parent) parent.insertBefore(btn, stashed.next && stashed.next.parentNode === parent ? stashed.next : null);
-  stashed = null;
-}
-function syncCurrentRow(rec) { if (rec && !rec.gone && rec.row) rec.row.set({ actions: rowActions(rec) }); }
-
-function claim(rec) {
-  var n = node();
-  if (!n || !rec || rec.gone || rec.type !== 'current') return;
-  if (n.parentNode !== rec.stage) rec.stage.appendChild(n);
-  owner = rec;
-  if (rec.row) dressAddButton();
-  syncCurrentRow(rec);
-  selectSub(rec.sub);
-  rec.paintLeft();
-  watchColumns(rec);
-}
-function park(rec) {
-  var n = node(), page = byId('panel-dashboard');
-  if (owner !== rec) return;
-  owner = null;
-  watchColumns(null);
-  syncCurrentRow(rec);
-  homeAddButton();
-  // close the catalog if it was open in the tab that let go
-  var cat = byId('pm6DashCatalog');
-  if (cat && !cat.hidden) cat.hidden = true;
-  if (n && page && n.parentNode !== page) page.appendChild(n);
-}
-
-/* the page switched its internal board on its own (a widget was added to Main): the Home (current) tab follows, so its
-   header never names another board than the one it shows */
-function watchInternal() {
-  var n = node();
-  var strip = n && n.querySelector('.dashboard-tabs');
-  if (!strip || typeof MutationObserver !== 'function') return;
-  new MutationObserver(function () {
-    var now = internalBoard();
-    if (!now || now === expected) return;
-    expected = now;
-    recList().forEach(function (r) {
-      if (r.gone || r.type !== 'current') return;
-      r.sub = now;
-      r.paintLeft();
-      if (r.api.saveSoon) r.api.saveSoon();
-    });
-  }).observe(strip, { attributes: true, subtree: true, attributeFilter: ['class'] });
-}
-/* widget counts for the Home (current) header */
-function countFor(sub) { return LEGACY[sub] ? gridCards(byId(LEGACY[sub].grid)).length : 0; }
-function watchGrids() {
-  if (typeof MutationObserver !== 'function') return;
-  var mo = new MutationObserver(function () { recList().forEach(function (r) { if (r.type === 'current' && r.paintLeft) r.paintLeft(); }); });
-  LEGACY_ORDER.forEach(function (s) { var g = byId(LEGACY[s].grid); if (g) mo.observe(g, { childList: true }); });
-}
-
-/* back to the starting widgets: widgets added from the catalog go through their own Remove (so the catalog can add
-   them again), removed starting widgets come back, order and sizes return to the start */
-function resetLegacy(sub) {
-  var grid = LEGACY[sub] && byId(LEGACY[sub].grid);
-  var defs = DEFAULTS[sub];
-  if (!grid || !defs) return false;
-  var keys = defs.map(function (d) { return d.key; });
-  var have = {};
-  gridCards(grid).forEach(function (c) {
-    var k = cardKey(c);
-    if (keys.indexOf(k) < 0) {
-      var rm = c.querySelector('[data-pm6-dash="remove"]');
-      if (rm) rm.click(); else c.remove();
-    } else have[k] = c;
-  });
-  defs.forEach(function (d) {
-    var c = have[d.key] || d.clone.cloneNode(true);
-    c.style.setProperty('--dw', d.size.w);
-    c.style.setProperty('--dh', d.size.h);
-    grid.appendChild(c);
-  });
-  try {
-    if (window.PM7_SHELL_ADJUSTMENTS && PM7_SHELL_ADJUSTMENTS.syncDashCard) gridCards(grid).forEach(function (c) { PM7_SHELL_ADJUSTMENTS.syncDashCard(c); });
-  } catch (_) {}
-  setTimeout(function () { try { if (window.PM7_DASH_WIDGETS && PM7_DASH_WIDGETS.persist) PM7_DASH_WIDGETS.persist(); } catch (_) {} }, 240);
-  var what = LEGACY[sub].label + ' board is back to its starting widgets.';
-  PMW.announce(what);
-  if (PMW.toast) PMW.toast(what);
-  return true;
-}
-function openCatalog(rec) {
-  if (owner !== rec) claim(rec);
-  var b = addBtn();
-  if (b) b.click();
-}
-
-/* ---- columns of the adopted grid (interim, until the old widgets retire) ----
-   The page's container rules give the grid 2 columns under 700 px, 3 from 700 and 4 from 1060. Main and Monitoring
-   widgets are all two columns wide, so in the 3-column range (the Focus layout, a maximized panel) a third column stood
-   empty. While the tab holds the grid and the page would give 3: 3 stays only when some visible widget has an odd width
-   (Metrics: 2 + 1 + 1 tiles), else 4 when each column gets at least 200 px, else 2. Outside that range the page's rules
-   decide. The count goes on #pm6DashGrid as an !important inline style, plus data-pmw-dash-cols for the card spans
-   in 62-kind-dashboard.css; it is recomputed on the holder's resize, on claim, and when the visible board's widgets are
-   added, removed or resized (never mid-drag or mid-resize: the end of the gesture recomputes). */
-var COLS_MIN = 700, COLS_MAX = 1060, COL_MIN_W = 200;
-var colWatch = { mo: null, sub: null, raf: 0 };
-function dashGrid() { return byId('pm6DashGrid'); }
-function wantColumns() {
-  var g = dashGrid();
-  if (!g || !owner || owner.gone || !owner.stage.contains(g)) return 0;
-  var w = g.getBoundingClientRect().width;
-  if (!w) return -1;   // not laid out (hidden): keep what it has
-  if (w < COLS_MIN || w >= COLS_MAX) return 0;
-  var cards = gridCards(byId(LEGACY[owner.sub].grid));
-  if (cards.some(function (c) { return cardSize(c).w % 2 === 1; })) return 3;
-  var gap = parseFloat(getComputedStyle(g).columnGap) || 8;
-  return (w - 3 * gap) / 4 >= COL_MIN_W ? 4 : 2;
-}
-function busyGrid() {
-  var root = doc.documentElement.classList;
-  if (root.contains('pm7-dash-resizing') || root.contains('pm7-dash-moving')) return true;
-  var g = dashGrid();
-  return !!(g && g.querySelector('.pm6-is-resizing, .pm6-is-dragging'));
-}
-function setColumns(n) {
-  var g = dashGrid();
-  if (!g) return;
-  var now = g.getAttribute('data-pmw-dash-cols');
-  if (String(n || '') === (now || '')) return;
-  if (n) {
-    g.style.setProperty('grid-template-columns', 'repeat(' + n + ', minmax(0, 1fr))', 'important');
-    g.setAttribute('data-pmw-dash-cols', String(n));
-  } else {
-    g.style.removeProperty('grid-template-columns');
-    g.removeAttribute('data-pmw-dash-cols');
-  }
-}
-function fitColumns() {
-  colWatch.raf = 0;
-  if (busyGrid()) return;
-  var n = wantColumns();
-  if (n >= 0) setColumns(n);
-}
-function fitColumnsSoon() {
-  if (!colWatch.raf) colWatch.raf = requestAnimationFrame(fitColumns);
-}
-/* watch the visible internal board's cards (their own style and class only: the grid's style is this file's) */
-function watchColumns(rec) {
-  var sub = rec && LEGACY[rec.sub] ? rec.sub : null;
-  if (sub !== colWatch.sub) {
-    if (colWatch.mo) colWatch.mo.disconnect();
-    colWatch.sub = sub;
-    colWatch.mo = null;
-    var host = sub && byId(LEGACY[sub].grid);
-    if (host && typeof MutationObserver === 'function') {
-      var mo = colWatch.mo = new MutationObserver(function (list) {
-        var hit = false;
-        list.forEach(function (m) {
-          if (m.type === 'childList') { hit = true; m.addedNodes.forEach(function (c) { if (c.nodeType === 1) mo.observe(c, { attributes: true, attributeFilter: ['style', 'class'] }); }); }
-          else if (m.target.parentNode === host) hit = true;
-        });
-        if (hit) fitColumnsSoon();
-      });
-      mo.observe(host, { childList: true });
-      gridCards(host).forEach(function (c) { mo.observe(c, { attributes: true, attributeFilter: ['style', 'class'] }); });
-    }
-  }
-  if (!sub) { if (colWatch.raf) { cancelAnimationFrame(colWatch.raf); colWatch.raf = 0; } setColumns(0); return; }
-  fitColumnsSoon();
-}
-
-/* plain words: the page's demo widgets write internal field names into their text (the Budget card's
-   "effective_account: jared@main", the custom metric's "query: planunits_built · refresh 30s", which its live updates
-   write again, and the catalog's Budget donuts "effective_account_id"). Text under #dashboardView is reworded as it
-   appears, so no tab shows a key. */
-var PLAIN = [
-  [/ · query: [a-z_]+/g, ''],
-  [/\brefresh (\d+)s\b/g, 'refreshed every $1 s'],
-  [/ cycle · effective_account: /g, ' this cycle · account '],
-  [/cost attributed to effective_account_id · /g, 'cost charged to account ']
-];
-function plainText(t) {
-  var v = t.nodeValue, w = v;
-  if (!w || w.indexOf('_') < 0 && w.indexOf('refresh ') < 0) return;
-  PLAIN.forEach(function (p) { w = w.replace(p[0], p[1]); });
-  if (w !== v) t.nodeValue = w;
-}
-function plainWords(root) {
-  if (!root) return;
-  if (root.nodeType === 3) { plainText(root); return; }
-  if (root.nodeType !== 1) return;
-  var walk = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT), t;
-  while ((t = walk.nextNode())) plainText(t);
-}
-function watchWords() {
-  var n = node();
-  if (!n) return;
-  plainWords(n);
-  if (typeof MutationObserver !== 'function') return;
-  new MutationObserver(function (list) {
-    list.forEach(function (m) {
-      if (m.type === 'characterData') plainText(m.target);
-      else m.addedNodes.forEach(plainWords);
-    });
-  }).observe(n, { childList: true, characterData: true, subtree: true });
-}
+/* D10 round two (P1): the adopted node is gone. The page's own Home widgets (#dashboardView) stay parked and
+   hidden in #panel-dashboard; no tab moves them, seats their button, follows their boards, counts, resets, refits or
+   rewords them. What served only that adoption was removed with it. */
 
 /* ==================================================================================================================
    Agents (drawn here, outside the engine)
@@ -671,7 +371,7 @@ function deleteDash(rec) {
   rec.deleting = true;
   PMW.closeTab(id, { quiet: true }).then(function (ok) {
     if (!ok) { rec.deleting = false; return; }
-    if (rec.gone) dropKey(rec.board);
+    if (rec.gone) forget(rec.board);
     var l = PMW.state && PMW.state.layout;
     if (l && l.closed) {
       var kept = l.closed.filter(function (c) { return !(c && c.tab && c.tab.id === id); });
@@ -680,7 +380,9 @@ function deleteDash(rec) {
     PMW.announce(name + ' deleted');
   });
 }
-function dropKey(board) {
+/* forget: the ONE place that knows a board's store keys (its layout and its quarantine copy). Delete dashboard and
+   the closed-list drop (P6) both go through it. */
+function forget(board) {
   try { localStorage.removeItem(KEY_PREFIX + board); localStorage.removeItem(KEY_PREFIX + board + ':quarantine'); } catch (_) {}
 }
 
@@ -706,7 +408,7 @@ function openBoard(rec, b) {
   rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b) });
 }
 function boardRows(rec) {
-  var rows = FIXED_ORDER.map(function (b) {
+  var rows = FIXED_IDS.map(function (b) {
     return { id: 'board-' + b, label: FIXED[b].label, sub: FIXED[b].sub, checked: rec.board === b, run: function () { openBoard(rec, b); } };
   });
   var dash = [];
@@ -746,28 +448,12 @@ function boardMenu(rec) {
       } });
     }
     sections.push({ label: 'This dashboard', rows: rows });
-  } else if (rec.type === 'current') {
-    sections.push({ label: 'This board', rows: LEGACY_ORDER.map(function (s) {
-      return { id: 'sub-' + s, label: LEGACY[s].label, checked: rec.sub === s, run: function () { setSub(rec, s); } };
-    }) });
-    sections.push({ label: 'Widgets', rows: [
-      { id: 'catalog', label: 'Add widget...', icon: 'plus', run: function () { openCatalog(rec); } },
-      { id: 'reset', label: 'Reset widgets of this board', icon: 'reopen', sub: 'Starting widgets, order and sizes', run: function () { resetLegacy(rec.sub); } }
-    ] });
   } else if (rec.type === 'agents') {
     sections.push({ label: 'Show', rows: FILTERS.map(function (f) {
       return { id: 'filter-' + f.id, label: f.label, checked: (rec.filter || 'all') === f.id, run: function () { setFilter(rec, f.id); } };
     }) });
   }
   return { id: 'dash-board-menu', title: nameOf(rec), width: 320, align: 'end', className: 'pmw-dash-menu', sections: sections };
-}
-function setSub(rec, s) {
-  if (!LEGACY[s]) return;
-  rec.sub = s;
-  if (owner === rec) { selectSub(s); watchColumns(rec); } else claim(rec);
-  rec.paintLeft();
-  if (rec.api.saveSoon) rec.api.saveSoon();
-  rec.api.announce('Showing the ' + LEGACY[s].label + ' board.');
 }
 function maxAction(rec) {
   var on = rec.api.isMaximized();
@@ -784,11 +470,6 @@ function rowActions(rec) {
   if (rec.type === 'engine' && rec.b) {
     actions.push({ id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick one of the Usage widgets', run: function (e, button) { addPicker(rec, button); } });
     actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Boards, range, scope, tidy, reset', menu: function () { return boardMenu(rec); } });
-  } else if (rec.type === 'current') {
-    var page = owner === rec && stashed ? addBtn() : null;
-    actions.push(page ? { id: 'add', el: page }
-      : { id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick one from the widget catalog', run: function () { openCatalog(rec); } });
-    actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Boards, Main, Metrics, Monitoring, reset widgets', menu: function () { return boardMenu(rec); } });
   } else if (rec.type === 'agents') {
     actions.push({ id: 'board', label: 'Show', icon: 'eye', detail: 'Filter the agents, switch boards', menu: function () { return boardMenu(rec); } });
   } else {
@@ -809,10 +490,6 @@ function factsFor(rec) {
     left.push({ id: 'count', text: n + (n === 1 ? ' widget' : ' widgets'), dim: true });
     var st = rec.b.state || {};
     left.push({ id: 'view', text: rangeLabel(st.range) + (st.scope && st.scope !== 'all' ? ' · ' + scopeLabel(st.scope) : ''), dim: true });
-  } else if (rec.type === 'current') {
-    n = countFor(rec.sub);
-    left.push({ id: 'sub', text: LEGACY[rec.sub] ? LEGACY[rec.sub].label : 'Main', dim: true });
-    left.push({ id: 'count', text: n + (n === 1 ? ' widget' : ' widgets'), dim: true });
   } else if (rec.type === 'agents') {
     left.push({ id: 'count', text: agentSummary(), dim: true });
     if (rec.filter && rec.filter !== 'all') {
@@ -844,7 +521,6 @@ function buildRow(rec) {
    ================================================================================================================== */
 function typeOf(board) {
   if (board === 'agents') return 'agents';
-  if (board === 'current') return 'current';
   if (isEngineId(board)) return engineReady() ? 'engine' : 'fallback';
   return 'refused';
 }
@@ -861,17 +537,22 @@ PM_HOME.registerKind('dashboard', {
   idFor: function (spec) {
     var b = spec && spec.board;
     if (b == null || b === '' || b === 'new') return mintId();
-    return 'dashboard:' + (allowed(b) ? b : 'home');
+    return 'dashboard:' + (isBoard(b) ? b : 'home');
   },
-  canonical: function (id) { return id === 'dashboard:new' ? mintId() : null; },
-  labelFor: function (id, st) { var b = boardOf(id, st); return allowed(b) ? labelOf(b) : 'Dashboard'; },
+  /* dashboard:current (D10 round two P1: the old Home widgets left Home) opens the Home board instead of a broken tab */
+  canonical: function (id) {
+    if (id === 'dashboard:new') return mintId();
+    if (id === 'dashboard:current') return 'dashboard:home';
+    return null;
+  },
+  labelFor: function (id, st) { var b = boardOf(id, st); return isBoard(b) ? labelOf(b) : 'Dashboard'; },
   iconFor: function () { return 'dashboard'; },
   plus: {
     order: 40,
     label: 'Dashboard',
-    subMax: 6,
+    subMax: 5,
     sub: function () {
-      return FIXED_ORDER.map(function (b) { return { id: b, label: FIXED[b].label, detail: FIXED[b].sub, icon: 'dashboard' }; })
+      return FIXED_IDS.map(function (b) { return { id: b, label: FIXED[b].label, detail: FIXED[b].sub, icon: 'dashboard' }; })
         .concat([{ id: 'new', label: 'New dashboard', detail: NEW_SUB, icon: 'plus' }]);
     },
     spec: function (sub) {
@@ -881,9 +562,8 @@ PM_HOME.registerKind('dashboard', {
     }
   },
   mount: function (host, st, api) {
-    var board = boardOf(api.id, st), type = allowed(board) ? typeOf(board) : 'refused';
+    var board = boardOf(api.id, st), type = isBoard(board) ? typeOf(board) : 'refused';
     var rec = { id: api.id, api: api, board: board, type: type, filter: (st && st.filter) || 'all', host: host, gone: false, shown: false, b: null, offs: [] };
-    if (type === 'current') rec.sub = st && LEGACY[st.sub] ? st.sub : 'main';
     recs[api.id] = rec;
     var stage = rec.stage = h('div', { class: 'pmw-dash-stage', 'data-board': board, 'data-kind': type });
     var wrap = h('div', { class: 'pmw-dash', 'data-board': board }, [null, stage]);
@@ -900,13 +580,11 @@ PM_HOME.registerKind('dashboard', {
       serialize: function () {
         var o = { board: board };
         if (type === 'agents' && rec.filter !== 'all') o.filter = rec.filter;
-        if (type === 'current' && rec.sub) o.sub = rec.sub;
         return o;
       },
       onShow: function () {
         rec.shown = true;
         if (rec.b) { if (pageActive()) rec.b.show(); }
-        else if (type === 'current') claim(rec);
         // the clock runs only while Home is the page in front (a render pass in the page-out animation can still call
         // onShow); its own flag, so the host's onShow on return starts it
         else if (type === 'agents') { if (pageActive() && !rec.clockOn) { rec.clockOn = true; clockStart(); } rec.tickAgents(); }
@@ -921,16 +599,13 @@ PM_HOME.registerKind('dashboard', {
       onResize: function (size) {
         refreshMax(rec);
         if (rec.b) rec.b.hostResize(size);
-        else if (owner === rec) fitColumnsSoon();
       },
       onLook: function (look) { if (rec.b) rec.b.relook(look); },
       wantsKey: function () { return !!(rec.b && rec.b.gesture()); },
-      /* an open of this tab: { widget } scrolls an engine board to that card, { sub } points Home (current) at Main,
-         Metrics or Monitoring */
+      /* an open of this tab: { widget } scrolls an engine board to that card */
       reveal: function (fields) {
         if (!fields) return;
         if (rec.b && typeof fields.widget === 'string') rec.b.reveal(fields.widget);
-        else if (type === 'current' && LEGACY[fields.sub] && fields.sub !== rec.sub) setSub(rec, fields.sub);
       },
       unmount: function () {
         if (type === 'agents' && rec.clockOn) { rec.clockOn = false; clockStop(); }
@@ -938,8 +613,7 @@ PM_HOME.registerKind('dashboard', {
         delete recs[api.id];
         rec.offs.splice(0).forEach(function (off) { try { off(); } catch (_) {} });
         if (rec.b) { try { rec.b.destroy(); } catch (err) { try { console.error('[pm-home] dashboard board destroy failed', err); } catch (_) {} } }
-        if (rec.deleting) dropKey(board);
-        if (owner === rec) park(rec);
+        if (rec.deleting) forget(board);
       }
     };
     /* keyboard focus on an engine board: its first card in reading order, else Add widget (the other tabs take the
@@ -953,19 +627,17 @@ PM_HOME.registerKind('dashboard', {
   }
 });
 
-PM_HOME.catalog.add('dashboard', FIXED_ORDER.map(function (b) {
-  return { id: 'dashboard:' + b, label: FIXED[b].label, sub: FIXED[b].sub, icon: 'dashboard', keywords: 'dashboard board widgets ' + b + (b === 'current' ? ' main' : ''),
+PM_HOME.catalog.add('dashboard', FIXED_IDS.map(function (b) {
+  return { id: 'dashboard:' + b, label: FIXED[b].label, sub: FIXED[b].sub, icon: 'dashboard', keywords: 'dashboard board widgets ' + b,
     spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label } };
 }).concat([{ id: 'dashboard:new', label: 'New dashboard', sub: NEW_SUB, icon: 'dashboard', keywords: 'dashboard board widgets new empty',
   spec: { kind: 'dashboard', board: 'new' } }]));
 
 /* ---- engine hooks for the tour and checks ---- */
-function reveal(board, o) {
+function reveal(board) {
   if (board === 'new') return PM_HOME.open({ kind: 'dashboard', board: 'new' });
-  if (!allowed(board)) board = 'home';
-  var spec = { kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board) };
-  if (board === 'current' && o && LEGACY[o.sub]) spec.sub = o.sub;
-  return PM_HOME.open(spec);
+  if (!isBoard(board)) board = 'home';
+  return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board) });
 }
 /* the stored dashboards: every key of an engine board id, plus the live boards' (a board not written yet reads null) */
 function storedBoards() {
@@ -983,32 +655,34 @@ function readKey(board) {
   try { var v = localStorage.getItem(KEY_PREFIX + board); return v == null ? null : JSON.parse(v); } catch (_) { return null; }
 }
 PMW.dashboard = {
-  /* show a board's tab (open it when it is not open); 'new' makes a new dashboard; reveal('current', { sub: 'metrics' })
-     also points Home (current) at one of its boards */
+  /* show a board's tab (open it when it is not open); 'new' makes a new dashboard */
   reveal: reveal,
-  /* back to the starting widgets: an engine board's reset (cmd.widget.reset_layout), or one of Home (current)'s boards */
-  reset: function (board, sub) {
+  /* back to the starting widgets: an engine board's reset (cmd.widget.reset_layout) */
+  reset: function (board) {
     var r = recList().filter(function (x) { return x.board === board && !x.gone; })[0];
     if (r && r.b) return resetEngine(r);
-    if (board === 'current') return resetLegacy(LEGACY[sub] ? sub : (r && r.sub) || 'main');
     return false;
   },
-  /* the boards on screen now (the Home (current) tab counts while it holds the page's widgets) */
+  /* the boards on screen now */
   holder: function () {
-    return recList().filter(function (r) { return visible(r) && (r.b || (r.type === 'current' && owner === r)); }).map(function (r) { return r.board; });
+    return recList().filter(function (r) { return visible(r) && r.b; }).map(function (r) { return r.board; });
   },
   boards: function () {
-    var out = FIXED_ORDER.slice();
+    var out = FIXED_IDS.slice();
     try { PM_HOME.tabs().forEach(function (t) { if (DASH_TAB.test(t.tabId)) out.push(boardOf(t.tabId)); }); } catch (_) {}
     return out;
   },
   /* the engine board of a dashboard tab that is mounted, else null */
   board: function (id) { var r = engineRecs().filter(function (x) { return x.board === id; })[0]; return r ? r.b : null; },
-  /* every engine dashboard's store, written now: { <board id>: envelope | null } (the tour's snapshot, D10 4.8) */
-  snapshot: function () {
+  /* forget a board's stores (its layout and its quarantine copy): the ONE place that knows the keys */
+  forget: forget,
+  /* every engine dashboard's store, written now: { <board id>: envelope | null } (the tour's snapshot, D10 4.8).
+     With an id list, only those boards (a named layout's boards, P6). */
+  snapshot: function (ids) {
     engineRecs().forEach(function (r) { try { r.b.flush(); } catch (_) {} });
+    var list = Array.isArray(ids) ? ids.filter(isEngineId) : storedBoards();
     var out = {};
-    storedBoards().forEach(function (id) { out[id] = readKey(id); });
+    list.forEach(function (id) { out[id] = readKey(id); });
     return out;
   },
   /* the stores written back (null removes one) and every mounted board read again */
@@ -1030,10 +704,23 @@ PMW.dashboard = {
   }
 };
 
-/* the page's own route to a dashboard sub-board (PM_PAGES.go('dashboard', 'Metrics')) reveals that board's tab */
+/* P6: a dashboard that leaves the reopen list is forgotten (its stores go with it), unless it is open as a tab.
+   Only made dashboards (dash-<n>) are forgotten; the fixed boards keep their stores. */
+function onClosedDropped(ev) {
+  var ids = ev && ev.ids;
+  if (!Array.isArray(ids) || !ids.length) return;
+  var open = {};
+  try { PM_HOME.tabs().forEach(function (t) { open[t.tabId] = true; }); } catch (_) {}
+  ids.forEach(function (id) {
+    if (typeof id !== 'string' || !DASH_TAB.test(id) || open[id]) return;
+    forget(boardOf(id));
+  });
+}
+
+/* the page's own route to a dashboard board (PM_PAGES.go('dashboard', 'Metrics')) reveals that board's tab */
 function routeSubtabs() {
   if (!window.PM_PAGES || typeof PM_PAGES.registerSubtab !== 'function') return;
-  var map = { main: 'home', home: 'home', metrics: 'metrics', monitoring: 'monitoring', agents: 'agents', current: 'current' };
+  var map = { main: 'home', home: 'home', metrics: 'metrics', monitoring: 'monitoring', agents: 'agents' };
   PM_PAGES.registerSubtab('dashboard', function (label) { reveal(map[String(label || 'main').toLowerCase()] || 'home'); });
 }
 
@@ -1046,9 +733,10 @@ function pageActive() { var p = byId('panel-dashboard'); return !p || p.classLis
 function install() {
   // ?home=current keeps today's Home: the page's own dashboard code runs as published
   if (doc.documentElement.getAttribute('data-pmw-home') !== 'on') return;
-  if (!expected) expected = internalBoard();
-  watchInternal(); watchGrids(); watchWords(); routeSubtabs();
+  routeSubtabs();
   // a rename (a layout commit) shows in the header facts
   PM_HOME.on('layout', repaintAll);
+  // a closed dashboard that leaves the reopen list is forgotten (P6)
+  PM_HOME.on('closed-dropped', onClosedDropped);
 }
 if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', install); else install();

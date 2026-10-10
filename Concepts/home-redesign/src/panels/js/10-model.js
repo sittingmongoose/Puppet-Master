@@ -119,7 +119,12 @@ model.removeTab = function (l, tabId, opts) {
     // the reopen stack keeps a copy without the live-only marks: a reopened tab is a fresh mount, and its kind
     // pushes dirty, busy, exit code and agent again if they still hold
     l.closed.push({ tab: model.stripLive(model.clone(rec)), panelId: p.id, index: i });
-    if (l.closed.length > CLOSED_MAX) l.closed.splice(0, l.closed.length - CLOSED_MAX);
+    if (l.closed.length > CLOSED_MAX) {
+      var dropped = l.closed.splice(0, l.closed.length - CLOSED_MAX).map(function (c) { return c && c.tab && c.tab.id; }).filter(Boolean);
+      if (dropped.length && typeof bus !== 'undefined' && bus && bus.emit) {
+        try { bus.emit('closed-dropped', { ids: dropped }); } catch (_) {}
+      }
+    }
   }
   if (p.active === tabId) {
     // VS Code and Chrome: activate the most recently used remaining tab of this panel, else the neighbour

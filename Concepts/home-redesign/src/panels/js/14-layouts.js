@@ -195,5 +195,12 @@ PMW.saveNamed = function (name, layout) {
   })(tree);
   if (!marked) (function first(n) { if (n.slot) { n.rest = true; return; } first(n.kids[0]); })(tree);
   all[name] = { label: name, tree: tree, saved: true };
+  try {
+    if (PMW.dashboard && typeof PMW.dashboard.snapshot === 'function') {
+      var bids = Object.keys(layout.tabs || {}).filter(function (id) { return id.indexOf('dashboard:') === 0; })
+        .map(function (id) { return id.slice('dashboard:'.length); });
+      if (bids.length) all[name].boards = PMW.dashboard.snapshot(bids);
+    }
+  } catch (_) {}
   return store.set(SAVED_KEY, all);
 };
