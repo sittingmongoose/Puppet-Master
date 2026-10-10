@@ -15137,7 +15137,7 @@ The terminal is now an ordinary tab kind with one session per tab (`Plans/Sectio
 | `cmd.terminal.kill_session` | Kill Terminal Session | Forced end of the session; the tab stays and shows the Session ended row | `domain_action` | unchanged |
 | `cmd.terminal.clear_scrollback` | Clear scrollback | Empties the lines above the screen and keeps the screen and the session; the saved copy empties at the next save (`Plans/storage-plan.md#SP-332`). Its catalog row was missing although the 2026-07-17 rows called it covered; this is the row | `domain_action` | none |
 
-`cmd.terminal.remote_compatibility_setup`, `cmd.terminal.insert_command`, `cmd.terminal.open_retained_output`, `cmd.terminal.environment_provenance`, `cmd.terminal.input_protection.enable` and `cmd.terminal.input_protection.disable` stay DL-035's six candidates exactly as UCC-160 registers them (`candidate_not_registered` until admitted).
+`cmd.terminal.remote_compatibility_setup`, `cmd.terminal.insert_command`, `cmd.terminal.open_retained_output`, `cmd.terminal.environment_provenance`, `cmd.terminal.input_protection.enable` and `cmd.terminal.input_protection.disable` stay DL-035's six candidates exactly as UCC-160 registers them (`candidate_not_registered` until admitted). The command mark's Open output in an editor tab is `ui.terminal.mark.open_output`, which dispatches `cmd.panel_tab.open` with an editor buffer spec and works while the candidate is unregistered; `cmd.terminal.open_retained_output` stays the candidate for opening a retained output subject with its source identity and completeness labels (SMPFS-163), and when admitted it resolves through the same opening module as an editor buffer, never through a second opener.
 
 #### New terminal command rows
 
