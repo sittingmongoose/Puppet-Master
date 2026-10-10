@@ -2,11 +2,15 @@
    exposes the agent API the chat and the demos use.
    - Driving: "<agent> is driving this terminal", the step, and Take over, Interrupt, Stop.
    - Paused: after a take-over (a button or any keystroke): Hand back, Stop.
-   - Permission: an agent asks to type into a terminal a human opened: Allow once, Always allow here, Deny.
+   - Permission: an agent asks to type into a terminal a human opened: Allow once, Deny. An approval covers one exact
+     command (the terminal canon's approval contract); "Always allow here" is a standing grant, so it stays behind
+     T.flags.alwaysAllowHere, off, until Plans rules on it against Permissions_System.
    - Secret input: a password prompt is open; only the human can answer it; the agent waits.
    Commands are attributed to whoever typed them (gutter marks). Agent-opened terminals land as background tabs (D8). */
 (function () {
   var SQ = '<svg class="pmt-agent-sq" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9"/><path d="M6.5 8h3"/></svg>';
+  T.flags = T.flags || {};
+  if (T.flags.alwaysAllowHere === undefined) T.flags.alwaysAllowHere = false;
   var LOCK = '<svg class="pmt-agent-sq" viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7.5" width="9" height="6"/><path d="M5.5 7.5V5.5a2.5 2.5 0 0 1 5 0v2"/></svg>';
 
   function Controller(view) {
@@ -45,7 +49,7 @@
       acts = [['handback', 'Hand back'], ['stop', 'Stop ' + nm]];
     } else if (st.mode === 'permission') {
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> wants to type in this terminal' + (st.cmd ? ': <code>' + T.util.esc(st.cmd) + '</code>' : '') + '</span>';
-      acts = [['allow', 'Allow once'], ['always', 'Always allow here'], ['deny', 'Deny']];
+      acts = [['allow', 'Allow once']].concat(T.flags.alwaysAllowHere ? [['always', 'Always allow here']] : [], [['deny', 'Deny']]);
     } else if (st.mode === 'secret') {
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
       acts = [['focus', 'Type it']];
@@ -65,7 +69,7 @@
     else if (a === 'interrupt') { s.interrupt(); v.announce('Sent interrupt'); }
     else if (a === 'stop') { this.stopAgent(st.agent); }
     else if (a === 'handback') { s.handBack(); }
-    else if (a === 'allow' || a === 'always') { if (st.resolve) st.resolve(a); this.set(st.prevState || null); }
+    else if (a === 'allow' || a === 'always') { if (st.resolve) st.resolve(a === 'always' && T.flags.alwaysAllowHere ? 'always' : 'allow'); this.set(st.prevState || null); }
     else if (a === 'deny') { if (st.resolve) st.resolve('deny'); this.set(st.prevState || null); }
     else if (a === 'focus') { v.focus(); }
   };
@@ -95,7 +99,7 @@
     if (e.reason === 'secret_input') this.view.announce(this.name(e.by) + ' cannot answer a password prompt');
   };
 
-  /* ask the human; resolves 'allow' | 'always' | 'deny' */
+  /* ask the human; resolves 'allow' | 'deny' ('always' only while the flag is on) */
   Controller.prototype.ask = function (agent, cmd) {
     var self = this;
     return new Promise(function (resolve) {

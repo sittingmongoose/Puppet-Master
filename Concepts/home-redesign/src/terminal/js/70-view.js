@@ -405,7 +405,7 @@
       if (c.empty && c.state === 'done') continue;
       var kind = c.state === 'running' ? 'run' : c.state === 'done' ? (c.exit === 0 ? 'ok' : c.exit === null ? 'idle' : 'fail') : 'idle';
       var agent = /^agent:/.test(c.by);
-      var label = (c.cmdline ? c.cmdline : 'Prompt') + (kind === 'fail' ? ', exit ' + c.exit : kind === 'ok' ? ', exit 0' : kind === 'run' ? ', running' : '') + (agent ? ', typed by ' + c.by.slice(6) : '');
+      var label = (c.cmdline ? c.cmdline : 'Prompt') + (kind === 'fail' ? ', exit ' + c.exit : kind === 'ok' ? ', exit 0' : kind === 'run' ? ', running' : c.indeterminate ? ', ended with the earlier session' : '') + (agent ? ', typed by ' + c.by.slice(6) : '');
       this._gutterCmds.push(c);
       html.push('<button type="button" class="pmt-mark pmt-mark-' + kind + (agent ? ' pmt-mark-agent' : '') + '" data-pmt-cmd="' + c.id + '" style="top:' + (py + (abs - top) * m.cellH) + 'px;height:' + m.cellH + 'px" aria-label="' + T.util.esc(label) + '" data-pm-hover-label="' + T.util.esc(label) + '">' + (agent ? SVG.agent : SVG[kind]) + '</button>');
     }
@@ -800,7 +800,7 @@
       var line = buf.lines[i];
       if (line.mark && line.mark.kind === 'prompt' && line.mark.cmd && !line.mark.cmd.empty) {
         var c = line.mark.cmd;
-        html.push('<h3 tabindex="-1">' + T.util.esc(c.cmdline || line.text()) + ' <span>' + (c.state === 'running' ? 'running' : c.exit === 0 ? 'exit 0' : c.exit === null ? '' : 'exit ' + c.exit + ', failed') + '</span></h3>');
+        html.push('<h3 tabindex="-1">' + T.util.esc(c.cmdline || line.text()) + ' <span>' + (c.state === 'running' ? 'running' : c.exit === 0 ? 'exit 0' : c.indeterminate ? 'ended with the earlier session' : c.exit === null ? '' : 'exit ' + c.exit + ', failed') + '</span></h3>');
         continue;
       }
       var t = line.text();

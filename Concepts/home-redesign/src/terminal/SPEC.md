@@ -16,7 +16,7 @@ given and labelled "target". Section numbers are stable; later installments add 
 | No bottom bar | Nothing below the screen. |
 | No internal ids | Session ids, nonces and tab ids never appear as text. |
 | Session ended | An inline row: "Session ended" (with "with exit code N" when non-zero), Restart, Close tab. The screen dims to 72 % opacity. Enter in the ended terminal restarts it. |
-| Restored after reload | A restored tab gets a new session and says so ("This terminal was restored. Its earlier session ended when the page reloaded; this is a new session."). Never a fake live PTY (F3-226, F3-228). |
+| Restored after reload | A restored tab (after a reload, or a closed tab reopened) gets its saved scrollback back above a new session and says so ("This terminal was restored with its scrollback. Its earlier session ended when the page reloaded; this is a new session."); section 7 has the saved-scrollback rules. Never a fake live PTY (F3-226, F3-228). |
 | Closing a running terminal | `canClose` shows an inline row: "Close this terminal? <process> is still running and will be stopped." Close terminal / Keep it open. |
 | Notices | Inline rows above the screen, never modals: 30 px minimum height, 12 px text, 24 px text buttons, no side stripes. Warning tone is a tinted surface. |
 | Gutter | 20 px wide (18 px when the body is under 400 px wide), one glyph per prompt line, never a stripe. Glyph 12 px; hit target 20 x 24 px. |
@@ -82,8 +82,9 @@ font is needed. Files and SHA-256 in `fonts/SOURCE.md`.
 
 | Sixtyfour Raster | Retro option: Sixtyfour baked at SCAN 45, BLED 40 | OFL-1.1 | `pmt-sixtyfour-raster-latin.woff2` | 3,068 | none |
 
-The terminal's own faces total 84,572 bytes before base64. Retro's terminal default is VT323 while Jared settles F3-426
-(IBM Plex Mono as Retro's whole face) against D17. Default sizes and line heights per face (CSS px): JetBrains Mono 13 / 1.30,
+The terminal's own faces total 84,572 bytes before base64. Retro's terminal default is VT323: settled (D17a). Sixtyfour,
+Sixtyfour Raster and Departure Mono are Retro options and JetBrains Mono stays selectable; Retro's interface and its code
+text outside the editor and terminal stay IBM Plex Mono. Default sizes and line heights per face (CSS px): JetBrains Mono 13 / 1.30,
 Atkinson 13 / 1.35, VT323 19 / 1.05, Departure Mono 13.75 / 1.20, Sixtyfour 10 / 1.45, system monospace 13 / 1.30.
 
 ## 5. Colour schemes (D15)
@@ -176,9 +177,27 @@ Composition per renderer: paint order is default background, images with z below
 images with negative z, text and drawn glyphs, decorations, selection and cursor, images with z of 0 or more.
 Unicode-placeholder images are drawn in their cells at the under-text tier. Images anchor to the cell they were placed
 on: they scroll with it, follow it when the grid reflows, clip to the tab, and go when the screen is cleared or their
-lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. Images never enter
-saved scrollback or backups. While an image decodes or a file is read, later output waits, so text after an image
-always lands after it.
+lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
+decodes or a file is read, later output waits, so text after an image always lands after it.
+
+Saved scrollback (canon from the Plans thread, 2026-10-09): images persist with the terminal's saved scrollback within the
+scrollback storage quota; when the quota evicts one, its cells show a short text placeholder naming the image; a
+restored terminal's scrollback looks as it did. Saved images follow the saved scrollback's own storage and backup rules.
+What the concept does (`js/38-saved.js`), with its numbers:
+
+| Rule | Value |
+|---|---|
+| What is saved | The main screen's retained lines (at most the 10,000-line scrollback plus the screen), their styles and links, command records with `by`, and every image placement anchored in them (kitty, sixel, iTerm2, relative placements, Unicode-placeholder images). Never saved: the alternate screen, the command line being typed, selections, find highlights (`transient_only`). |
+| Storage quota | 64 MiB stored per terminal, text and images together; images are stored as PNG, one record per frame, written once and reused by later saves |
+| Eviction | Text is bounded by the scrollback limit and never gives way to images. Images that do not fit are dropped oldest first (highest in the scrollback); a frame that cannot be read back is treated the same |
+| Placeholder | A dashed hairline box in the image's cells with `[<name> <W>×<H> · not kept]`; the name is the file name (kitty file transfer, iTerm2 `name=`) or `kitty image` / `sixel image` / `inline image`. Unicode-placeholder runs show the label in their first cell. The accessible buffer reads the same label |
+| Restore | A tab with no live session (after a reload, or a closed tab reopened) loads its saved copy before its new session starts: the lines, marks and images as they were, then a dim rule `── Restored <time> · the earlier session ended ──`, then the new prompt. Notice: "This terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page reloaded; this is a new session." A command still running when the page went away comes back ended and indeterminate ("ended with the earlier session"), never as done |
+| Restored placeholder ids | Placeholder cells on restored lines resolve only to restored images, so a program in the new session that reuses an image id never paints into the old scrollback |
+| Write cadence | 1.5 s after output settles, at most every 5 s while it streams, and when the page hides; an unchanged terminal is not written again |
+| Clear scrollback | Empties the saved copy at the next save |
+| Closing the tab | The saved copy is kept while the tab can be reopened (the panels' reopen stack holds 20) and for at most 7 days, then deleted |
+| Load budget | 5 s; past it the tab starts without its scrollback and says so |
+| Per project | Saved copies are keyed by project and terminal, like the layout |
 
 Per renderer:
 - Skia (desktop): one draw per placement per frame, clipped to the rows being painted, in the tier order above; GPU
@@ -192,7 +211,7 @@ Per renderer:
   changed; a change to any image redraws the visible rows.
 
 Accessible buffer and agent reads: an image is described as `[image W×H px]` (with ", animated"); a Unicode-placeholder
-run as `[image]`. Image animation pauses under Reduced Motion and while the terminal is hidden.
+run as `[image]`; an image saved scrollback could not keep by its placeholder label. Image animation pauses under Reduced Motion and while the terminal is hidden.
 
 ## 8. Agents (D18)
 
@@ -200,7 +219,7 @@ run as `[image]`. Image animation pauses under Reduced Motion and while the term
 |---|---|---|
 | Driving | "<agent> is driving this terminal · step N of M · <label>" | Take over, Interrupt, Stop |
 | Paused (after a take-over) | "You took over. <agent> is paused and has been told." | Hand back, Stop <agent> |
-| Permission | "<agent> wants to type in this terminal: `<command>`" | Allow once, Always allow here, Deny |
+| Permission | "<agent> wants to type in this terminal: `<command>`" | Allow once, Deny. "Always allow here" is pending a Plans ruling against Permissions_System (an approval covers one exact command); the concept keeps it behind a flag that is off |
 | Secret input | "Password needed. Only you can answer this prompt; <agent> is waiting." | Type it (focuses the terminal) |
 
 Rules the session enforces: one writer at a time; any human keystroke in an agent-driven terminal takes over at once

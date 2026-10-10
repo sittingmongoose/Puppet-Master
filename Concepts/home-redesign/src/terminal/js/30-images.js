@@ -167,6 +167,7 @@
     if (first === 'proc' || first === 'sys' || (first === 'dev' && real.indexOf('/dev/shm/') !== 0)) return Promise.reject(ERR.EBADF);
     var st = vfs.stat(real);
     if (!st || st.type !== 'file') return Promise.reject(ERR.EBADF);
+    if (t === 'f') ctl._name = real.replace(/^.*\//, '').replace(/[\x00-\x1f\x7f]/g, '').slice(0, 120);
     return Promise.resolve(vfs.readBytes(real)).then(function (b) {
       if (!b) throw ERR.EBADF;
       var out = slice(b instanceof Uint8Array ? b : new Uint8Array(b));
@@ -253,7 +254,7 @@
       if (!self._makeRoom(B, bytes)) { self._reply(ctl, ERR.ENOSPC); return; }
       if (id && B.images.has(id)) self._removeImage(B, B.images.get(id));
       var image = { id: id || self._freeId(B, true), clientId: id, number: ctl.I || 0, w: img.w, h: img.h, frames: [{ canvas: img.canvas, gap: 0 }],
-        current: 0, anim: { state: 1, loops: 1, played: 0 }, bytes: bytes, transient: !!(ctl.N & 1), lastUsed: Date.now(), gen: 1, source: 'kitty', name: '' };
+        current: 0, anim: { state: 1, loops: 1, played: 0 }, bytes: bytes, transient: !!(ctl.N & 1), lastUsed: Date.now(), gen: 1, source: 'kitty', name: ctl._name || '' };
       B.images.set(image.id, image); B.bytes += bytes;
       self._reply(ctl, 'OK');
       if (a === 'T') self._place(image, ctl, anchor, bufKey);
@@ -397,6 +398,7 @@
       var a = this._anchorAbs(pl, buf);
       if (a < 0 || abs < a || abs >= a + pl.rows) continue;
       var col = this._anchorCol(pl);
+      if (pl.image.ghost) { this._drawGhost(ctx, col * W, y0 - (abs - a) * H, pl.cols * W, pl.rows * H, pl.image, view, true); continue; }
       var x = col * W + pl.offX * dpr, y = y0 - (abs - a) * H + pl.offY * dpr;
       var dw, dh;
       if (pl.stretch) { dw = pl.cols * W; dh = pl.rows * H; }
@@ -418,6 +420,45 @@
       }
     }
   };
+  /* an image the saved scrollback could not keep: a hairline box in its cells with a short label naming it */
+  Store.prototype._drawGhost = function (ctx, x, y, w, h, im, view, box) {
+    var m = view.metrics, th = view.theme, dpr = m.dpr || 1, lw = Math.max(1, Math.round(dpr)), fg = C.toHex(th.fg);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    if (box) {
+      ctx.globalAlpha = 0.45; ctx.strokeStyle = fg; ctx.lineWidth = lw; ctx.setLineDash([3 * lw, 3 * lw]);
+      ctx.strokeRect(x + lw / 2, y + lw / 2, w - lw, h - lw);
+    }
+    ctx.globalAlpha = 0.75; ctx.fillStyle = fg; ctx.font = m.font; ctx.textBaseline = 'alphabetic';
+    var pad = box ? Math.round(3 * dpr) : 0;
+    var maxRows = box ? Math.max(1, Math.floor(h / m.devH)) : 1;
+    var rows = wrapLabel(ctx, T.Saved ? T.Saved.label(im) : '[image]', w - 2 * pad, maxRows);
+    if (rows.cut && T.Saved) rows = wrapLabel(ctx, T.Saved.label(im, true), w - 2 * pad, maxRows);   /* without the size */
+    for (var k = 0; k < rows.length; k++) ctx.fillText(rows[k], x + pad, y + m.baseline + k * m.devH);
+    ctx.restore();
+  };
+  /* the label in as many rows as the box has, words kept whole where they fit, the last row ellipsized */
+  function wrapLabel(ctx, text, maxW, maxRows) {
+    var fits = function (t) { return ctx.measureText(t).width <= maxW; };
+    var out = [], cur = '', words = text.split(' ');
+    for (var i = 0; i < words.length; i++) {
+      var next = cur ? cur + ' ' + words[i] : words[i];
+      if (fits(next)) { cur = next; continue; }
+      if (cur) { out.push(cur); cur = ''; }
+      var wd = words[i];
+      while (!fits(wd) && wd.length > 1) { var n = wd.length - 1; while (n > 1 && !fits(wd.slice(0, n))) n--; out.push(wd.slice(0, n)); wd = wd.slice(n); }
+      cur = wd;
+    }
+    if (cur) out.push(cur);
+    if (out.length > maxRows) {
+      out = out.slice(0, maxRows);
+      var last = out[maxRows - 1];
+      while (last.length > 1 && !fits(last + '…')) last = last.slice(0, -1);
+      out[maxRows - 1] = last + '…';
+      out.cut = true;
+    }
+    return out;
+  }
   Store.prototype._repaintCell = function (ctx, abs, x, y0, view) {
     var m = view.metrics, line = this.term.buf.lineAtAbs(abs); if (!line) return;
     var th = view.theme, st = this.term.styles.get(line.st[x]);
@@ -469,7 +510,7 @@
   };
   Store.prototype.drawPlaceholder = function (ctx, line, x, px, py, W, H, style, view) {
     var cell = this._placeholderRuns(line).get(x); if (!cell) return;
-    var B = this.cur(), im = B.images.get(cell.id);
+    var B = this.cur(), im = line.restored ? (B.phAlias ? B.phAlias.get(cell.id) : null) : B.images.get(cell.id);
     if (!im) return;
     var vp = null;
     for (var i = 0; i < B.placements.length; i++) {
@@ -480,6 +521,7 @@
     var cols = vp.cols, rows = vp.rows;
     var r = cell.row - 1, c = cell.col - 1;
     if (r >= rows || c >= cols) return;
+    if (im.ghost) { if (r === 0 && c === 0) this._drawGhost(ctx, px, py, cols * W, H, im, view, false); return; }
     var boxW = cols * W, boxH = rows * H, sc = Math.min(boxW / im.w, boxH / im.h);
     var dw = im.w * sc, dh = im.h * sc, ox = (boxW - dw) / 2, oy = (boxH - dh) / 2;
     /* this cell's slice of the fitted image */
@@ -699,6 +741,7 @@
     var B = this.bufs.primary, out = [];
     B.placements.forEach(function (p) {
       if (p.line !== line || p.virtual) return;
+      if (p.image.ghost) { out.push(T.Saved ? T.Saved.label(p.image) : '[image]'); return; }
       out.push('[image ' + p.image.w + '×' + p.image.h + ' px' + (p.image.frames.length > 1 ? ', animated' : '') + ']');
     });
     var runs = line.cp.indexOf ? null : null; void runs;

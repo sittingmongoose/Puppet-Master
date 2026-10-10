@@ -29,6 +29,7 @@ src/terminal/
         31-kitty-diacritics.js  T.KITTY_DIACRITICS (row/column diacritics table)
         32-sixel.js       T.Sixel: decode (DCS q) and encode (for the simulated img2sixel)
         34-iterm.js       OSC 1337 File= (single and multipart) into the same store
+        38-saved.js       saved scrollback: text, marks and images to IndexedDB, restore into a new session (T.Saved)
         40-schemes.js     scheme helpers (palette expansion, light/dark pairs, per-look defaults)
         41-schemes-data.js T.SCHEMES (generated from schemes/*.json)
         42-appearance.js  T.Appearance: layered model, resolution, contrast floor, settings registration

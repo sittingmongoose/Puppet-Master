@@ -253,6 +253,7 @@
       do {
         var nl = new Line(cols), startOff = off;
         if (!produced.length) { nl.id = group[0].id; nl.mark = group[0].mark; }
+        if (group[0].restored) nl.restored = true;
         var x = 0;
         while (x < cols && off < len) {
           var gi = Math.floor(off / oldCols), gx = off % oldCols, src = group[gi];
