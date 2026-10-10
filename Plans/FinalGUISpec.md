@@ -44522,7 +44522,7 @@ canonical_text: >-
   F3-644 owns the face, and DL-161, F3-426 and F3-430 own general code text elsewhere). It uses the shared header row
   only where it needs one (F3-635). Its settings (scheme choice, font size, minimap, sticky scroll, diff layout, word wrap) are
   SSYS-050's. This amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope.
-  The editor's ⋮ menu opens F3-642's shared Appearance popover. Its own scheme choice defaults to "Follow look",
+  The editor's ⋮ menu opens F3-642's shared Appearance popover, which offers the editor only scheme, font and size. Its own scheme choice defaults to "Follow look",
   using the per-look syntax colours above, and can select any scheme from the same code colour-scheme catalog.
   Retro's editor syntax stays monochrome: brightness and weight in dark, the black and red ribbon in light.
   Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
@@ -44531,7 +44531,8 @@ canonical_text: >-
   Selecting a catalog scheme writes all 17 syntax colours and the editor's background, gutter, text, caret,
   selection, line numbers, current line, find hits, minimap ink and diff tints. Under a scheme, syntax
   tokens, text, secondary and dim text, line numbers and diff signs keep at least 4.5:1 contrast, and the
-  find-hit ring keeps 3:1. The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
+  find-hit ring keeps 3:1. These floors are the editor's own and still apply when it draws, over the colours a
+  catalog or imported scheme authors (F3-642). The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
   the font and size.
   Editor measurements: line height is round(font size × line-height multiplier), 20 px at 13 px × 1.55;
   character width is measured, 7.8 px for JetBrains Mono at 13 px. The line-number gutter is max(3 digits,
@@ -44585,6 +44586,7 @@ acceptance_criteria:
   - "The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the same Appearance popover component from its ⋮ menu."
   - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
   - "Every scheme supplies 17 syntax tokens, paints all listed editor surfaces and meets the 4.5:1 text and diff-sign floor and 3:1 find-hit ring floor; Appearance... shows the scheme or Follow look, font and size."
+  - "The Appearance popover opened from the editor offers only scheme, font and size, and the editor's 4.5:1 floor for syntax tokens holds when it draws any catalog or imported scheme."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44607,6 +44609,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
   - "sticky scroll"
   - "find and replace"
@@ -44620,6 +44623,7 @@ compatibility_only_notes:
   - "The width at which the diff turns inline was a concept number still to come (wave 2); retired 2026-10-10 (R35, panels NUMBERS 6026fa8432): the canonical text now gives side by side at 900 px and inline below 852 px."
   - "The concept saves an untitled buffer's text, up to 12,000 characters, in its tab state (panels NUMBERS 6026fa8432, editor saved state); that is concept lineage only: lead ruling L25 (2026-10-10) keeps buffer text out of the Home record (SP-330)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The editor's Appearance popover offers only scheme, font and size, and the editor's 4.5:1 syntax-token floor still applies when it draws over a scheme's authored colours."
   - "Amended 2026-10-10 (R35 review, SP-330): A buffer's tab state keeps title, language and edit or read-only state only; its text stays out of the Home record and the concept's 12,000-character text state is lineage (lead ruling L25: SP-330 does not admit buffer text)."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
@@ -45157,10 +45161,14 @@ canonical_text: >-
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
   These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
-  D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each surface's
+  D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17
+  editor syntax colours are authored to 4.5:1 for text and 3:1 for comments against the scheme's background (7:1
+  throughout on PM High Contrast Light and Dark), and an imported scheme takes its editor syntax colours from its
+  ANSI 16 by a fixed map. Each surface's
   scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
   per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
-  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
+  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); opened from the editor, it offers only
+  scheme, font and size; no surface keeps a scheme
   list or popover of its own (DR-068).
   "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
   changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
@@ -45211,6 +45219,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
   - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
+  - "Every catalog scheme's 17 editor syntax colours meet 4.5:1 for text and 3:1 for comments against its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come from its ANSI 16 by the fixed map, and the popover opened from the editor offers only scheme, font and size."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -45232,6 +45241,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -45249,6 +45259,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for text and 3:1 for comments (7:1 on PM High Contrast), an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
