@@ -45561,7 +45561,9 @@ canonical_text: >-
   terminal or asks to, an inline row above the screen (F3-640's notice row) shows one of four states. Driving: "<agent>
   is driving this terminal · step N of M · <label>", with Take over, Interrupt and Stop. Paused, after a take-over:
   "You took over. <agent> is paused and has been told.", with Hand back and Stop <agent>. Permission: "<agent> wants
-  to type in this terminal: `<command>`", with Allow once, Allow in this terminal and Deny. Secret input: "Password
+  to type in this terminal: `<command>`", with Allow once, Allow in this terminal and Deny; Allow once's hover tag
+  reads "<agent> types this one command" and Allow in this terminal's reads "<agent> may type here until its run
+  ends or you take over. Each command still needs its own approval." Secret input: "Password
   needed. Only you can answer this prompt; <agent> is waiting.", with Type it, which focuses the terminal. The person
   can always type: any keystroke in a terminal an agent is driving takes over at once, the row turns to Paused and
   the agent is told, and the agent's next write is refused as `preempted`. Take over does the same from the row
@@ -45572,13 +45574,13 @@ canonical_text: >-
   that agent in that terminal session only; it is held in memory and never stored, and it ends when the terminal
   closes, when the person takes over (a keystroke, Take over or Stop) or when that agent's run ends. Hand back returns
   the terminal to the agent, and in a terminal the person opened it grants Allow in this terminal again for the rest
-  of that run. The grant decides who may type, never what may run: every command the agent types still passes the
+  of that run. While Allow in this terminal lasts, the agent keeps the Driving row between commands. The grant decides who may type, never what may run: every command the agent types still passes the
   Tools policy engine with its own approval of that exact invocation (SMPFS-024, PS-041). The concept's label "Always
   allow here" is not used, because Always in PS-041's approval choices means a stored rule that outlives the session
   (lead ruling of 2026-10-10 in DL-181). Deny refuses the write. Allow once and Allow in this terminal dispatch
   `cmd.terminal.allow_agent_input` with their scope (CV-362). More, Agent input lists Ask each time and then one row
-  per agent holding Allow in this terminal, and choosing an agent's row revokes its grant
-  (`cmd.terminal.revoke_agent_input`); UCC-201 records these commands. Password and secret prompts always go to the
+  per agent holding Allow in this terminal, each reading "Allowed in this terminal: <agent>" with Revoke, which revokes
+  that agent's grant (`cmd.terminal.revoke_agent_input`); UCC-201 records these commands. Password and secret prompts always go to the
   person: while one is open the cursor is a padlock and every agent input is refused as `secret_input`. Each command records who typed it (`by`): a
   command an agent typed shows the agent's square mark in the gutter, and the command-mark menu says "<agent> typed
   this" or "You typed this" (F3-641). A terminal an agent is driving shows the 7 px square agent mark on its tab, and
@@ -45598,6 +45600,7 @@ acceptance_criteria:
   - "An agent's write into a terminal a person opened waits for the Permission row; Allow once lets exactly one command through and then returns the row, mark and lease."
   - "Allow in this terminal is never stored and ends when the terminal closes, the person takes over or that agent's run ends; every command under it still asks for its own approval."
   - "No control in the terminal is labelled Always allow here."
+  - "Hovering Allow once shows \"<agent> types this one command\" and hovering Allow in this terminal shows \"<agent> may type here until its run ends or you take over. Each command still needs its own approval.\"; while the grant lasts the Driving row stays between commands, and More, Agent input lists \"Allowed in this terminal: <agent>\" with Revoke."
   - "While a secret prompt is open the cursor is a padlock and agent input is refused as `secret_input`."
   - "Agent-typed commands carry the square mark in the gutter, the mark menu names who typed each command, and an agent-driven tab shows the square agent mark."
   - "A terminal an agent opens lands in the background with the hollow square and never takes focus."
@@ -45621,6 +45624,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-181 (the lead ruling of 2026-10-10 on Allow in this terminal)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D8, D18)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 8 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
   - "is driving this terminal · step N of M · <label>"
   - "You took over. <agent> is paused and has been told."
@@ -45640,7 +45644,8 @@ negative_constraints:
   - "Do not label the grant Always allow here."
 compatibility_only_notes:
   - "The concept keeps its third permission action behind a flag that is off; canon shows Allow in this terminal."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the Allow once and Allow in this terminal hover tags, keeps the Driving row between commands while the grant lasts, and names the Agent input row \"Allowed in this terminal: <agent>\" with Revoke."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md

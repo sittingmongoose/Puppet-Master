@@ -12691,7 +12691,8 @@ canonical_text: >-
   or when that agent's run ends; Hand back after a take-over grants it again for the rest of that run. Deny
   refuses the write and the agent is told. A grant decides who may type, never what may run: every command an
   agent types still passes the Tools policy engine with its own approval over that exact invocation (SMPFS-024,
-  `Plans/Tools.md#T-007`, `Plans/Tools.md#T-171`, `Plans/Permissions_System.md#PS-041`, `#PS-129`, `#PS-130`).
+  `Plans/Tools.md#T-007`, `Plans/Tools.md#T-171`, `Plans/Permissions_System.md#PS-041`, `#PS-129`, `#PS-130`), and no wording in the permission row, its
+  hover tags or the Agent input menu suggests that commands are pre-approved.
   While a program reads a password or another secret with echo off, the terminal refuses all agent input as
   `secret_input`, the cursor becomes a padlock, and the row says "Password needed. Only you can answer this
   prompt; <agent> is waiting." with Type it, which focuses the terminal. While an agent drives, the row says
@@ -12733,6 +12734,7 @@ acceptance_criteria:
 - "An agent write into a human-opened terminal without a grant writes nothing to the session; Allow once admits exactly one command, after which the driving row, the agent's mark and the writer lease return to the human; Deny writes nothing and the agent is told."
 - "Allow in this terminal is never written to storage, settings, the layout record or a permission rule, and it ends when the terminal closes, the human takes over (keystroke, Take over or Stop), the human revokes it from the Agent input menu or the agent's run ends; Hand back restores it for that run only."
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
+- "No text in the permission row, its hover tags or the Agent input menu says or implies that commands are pre-approved."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
 - "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
 - "Agent reads return rendered text with a read state, never raw bytes or image data."
@@ -12760,6 +12762,7 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D18)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 2 and 8; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (Appendix C, gaps G2 to G8)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-182"
 - "preempted"
@@ -12789,6 +12792,7 @@ negative_constraints:
 compatibility_only_notes:
 - "The concept's \"Always allow here\" label is lineage only; the product label is Allow in this terminal."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): States that no wording in the permission row, its hover tags or the Agent input menu suggests commands are pre-approved."
 - "Closes 2026-10-09 (DL-181) the terminal audit's gaps on takeover, agent writes into a human's terminal, attribution and agent-tab placement (G2, G5 to G8); the field shapes are CV-362's."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
