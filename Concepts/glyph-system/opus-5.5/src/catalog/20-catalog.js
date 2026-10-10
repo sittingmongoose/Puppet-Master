@@ -136,7 +136,7 @@
       '<div class="pmg-cards">' + (cards.length ? cards.map(function (c) {
         return '<article class="pmg-panel pmg-card" id="card-' + esc(c.id) + '"><div class="pmg-card-head"><span class="pmg-card-id">' + esc(c.id) + '</span><h3>' + esc(c.title) + '</h3></div><p>' + esc(c.question) + '</p>' +
           '<div class="pmg-options">' + c.options.map(function (o) {
-            return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div><div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div><p>' + esc(o.detail) + '</p></div>';
+            return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div>' + ((o.demo || []).length ? '<div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div>' : '') + '<p>' + esc(o.detail) + '</p></div>';
           }).join('') + '</div>' + answerRow(c) + '</article>';
       }).join('') + composeBlock() : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
     wireAnswers(el, cards);

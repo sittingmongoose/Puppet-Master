@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="f991788769f1">
+<meta name="pmg-build" content="0464664d3b74">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -2700,7 +2700,7 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
       '<div class="pmg-cards">' + (cards.length ? cards.map(function (c) {
         return '<article class="pmg-panel pmg-card" id="card-' + esc(c.id) + '"><div class="pmg-card-head"><span class="pmg-card-id">' + esc(c.id) + '</span><h3>' + esc(c.title) + '</h3></div><p>' + esc(c.question) + '</p>' +
           '<div class="pmg-options">' + c.options.map(function (o) {
-            return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div><div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div><p>' + esc(o.detail) + '</p></div>';
+            return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div>' + ((o.demo || []).length ? '<div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div>' : '') + '<p>' + esc(o.detail) + '</p></div>';
           }).join('') + '</div>' + answerRow(c) + '</article>';
       }).join('') + composeBlock() : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
     wireAnswers(el, cards);
