@@ -91,7 +91,7 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 | What | Value |
 |---|---|
 | Default width | clamp(400, 0.26667 x window + 88, 640): 480 at 1470, 600 at 1920, 640 from 2070 |
-| Drag range | 400-760 (never so wide that the centre drops below 600) |
+| Drag range | 400-760, and never so wide that the centre drops below 960 (where the ladder starts easing the chat back) |
 | Pop out | the only way to move it; in the browser concept it floats at 440 x min(720, window - 140) with Dock back |
 | Ladder (on C, the centre width) | C < 960: the rail side panel eases to 240, then folds to its icon bar below 760 (opens as an overlay), then the chat eases toward 400; C < 600: one panel column with a panel switcher ("2/3") in the strip; C < 480: the chat folds to a 32 px strip unless "Keep the chat open in narrow windows" is on |
 | Hysteresis | 48 px per step; nothing is ever saved |
@@ -100,20 +100,22 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 ## Keyboard (CONTRACT section 9)
 
 PM7 owns Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords. In a browser, Ctrl+T, Ctrl+W,
-Ctrl+Shift+T and Ctrl+Tab belong to the browser: the concept (and the web client) answers Alt+T, Alt+W, Alt+Shift+T
-and Alt+\` instead. Full table: CONTRACT section 9 and `js/42-keyboard.js` (`PMW.KEYS`).
+Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp belong to the browser: the concept (and the web client) answers Alt+T, Alt+W,
+Alt+Shift+T, Alt+\` and Alt+PgDn/PgUp instead. On a Mac the Alt stand-ins never fire from a text field (Option types
+there). F6 cycles rail, panels and chat from any of them. Full table: CONTRACT section 9 and `js/42-keyboard.js`
+(`PMW.KEYS`).
 
 ## Commands and keys
 
 | Kind | Ids |
 |---|---|
 | Tab commands | cmd.panel_tab.open / close / move / keep / pin / unpin / rename / reopen_closed |
-| Layout commands | cmd.workspace_layout.split / move_surface / resize_surface / set_collapsed / close_panel / lock / apply_named / save_named / reset |
+| Layout commands | cmd.workspace_layout.split / move_surface / resize_surface / set_collapsed / close_panel / lock / apply_named / save_named / reset / restore (restore pending the Plans thread) |
 | View actions (no receipt, no event) | ui.panel_tab.activate, ui.workspace_layout.maximize, ui.workspace_layout.focus_panel |
 | Chat | cmd.panel.switch (show/hide), cmd.panel.undock / cmd.panel.redock (pop out / dock back), cmd.workspace_layout.resize_surface with { surface: 'chat', width } |
 | Aliases | cmd.editor.close_tab -> cmd.panel_tab.close; cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview, cmd.terminal.open -> cmd.panel_tab.open |
 | Event | workspace.layout_changed per structural commit; plus the page's pm:command-dispatch (cancelable: a cancel rolls back) and pm:dispatch-receipt |
-| Storage (concept) | pm.home.panels:v1:<project> (layout), pm.home.panels:quarantine:v1:<project>, pm.home.panels.saved:v1 (named layouts), pm.home.settings:v1 (settings model), pm.home.recent:v1, pm.home.chat:v1 (chat visibility) |
+| Storage (concept) | pm.home.panels:v1:<project> (layout), pm.home.panels:quarantine:v1:<project> (the newest set-aside record plus an `earlier` list of up to 2), pm.home.panels.saved:v1 (named layouts), pm.home.settings:v1 (settings model), pm.home.recent:v1, pm.home.chat:v1 (chat visibility) |
 | Settings keys | panels.layout.named, panels.tabs.preview, panels.tabs.sizing, panels.tabs.closeOnLeft, panels.plus.default, panels.files.revealIfOpen, panels.empty.closePanel, editor.font.family, editor.font.size, editor.lineHeight, editor.minimap, editor.stickyScroll, editor.diff.layout, editor.wordWrap, chat.width, chat.history, chat.pinOpen (the terminal registers terminal.*) |
 | Serialize cap | 16 KB of state per tab |
 | Z ladder | panel content 0-10; strip and dividers 20; #pmw-overlay 2147481800 (menus, "+N" list, drag chip and landing preview inside it: above the page's status bar 2147481700, below the demo pill 2147482600 and the hover tags and tour 2147483000) |
