@@ -27414,7 +27414,7 @@ The conversion table:
 | Geometry | The top row holds the non-terminal surfaces in host order (`dock_left`, `home_main` by slot index, `dock_right`, `dock_top`, then floating ones); the bottom row holds the terminal sections; the column is 0.6 over 0.4, the Home layout's proportions, because v1 stores the bottom dock's thickness in pixels without the window height. A row's shares are its surfaces' `flex_weight` normalized to sum to 1, and the row uses equal shares when every weight is 0 or any normalized share would be at or below 0.02. A row with one panel is that panel; with no terminal sections the top row is the root. |
 | Collapsed, focus and recent order | A collapsed v1 surface stays collapsed. The surface with the highest `last_focus_seq` becomes the focused panel; the recent-tab order is each surface's active tab, newest `last_focus_seq` first. |
 | Ids | A converted panel keeps its v1 surface instance id as its panel id; splits get new ids. |
-| `layout:v1` Home part | The same table: `layout:v1` gives geometry only (centre splits and terminal section split ratios become row shares); tabs come from the editor and terminal records; detached-window geometry is dropped and the surface docks. |
+| `layout:v1` Home part | The same table: `layout:v1` gives geometry only (centre splits and terminal section split ratios become row shares); tabs come from the editor and terminal records; a detached Home surface's geometry is dropped and the surface docks. `layout:v1` keeps its other part, side-panel dock state and the popped-out chat window's geometry (`Plans/FinalGUISpec.md#F3-217`); only its Home part is conversion input. |
 
 **An unreadable source.** When the v1 record (or the `layout:v1` blob) fails its schema, its identity is ambiguous or its conversion breaks an invariant, the conversion writes the default Home layout with stamp `default_after_unreadable_source`, keeps the old record unchanged where it was, and Home shows a notice that the saved layout could not be read and the old one is kept (`Plans/FinalGUISpec.md#F3-630` owns its words). The editor's and the terminal's own records are untouched, so their tabs can still be opened.
 
@@ -27518,17 +27518,16 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Final
 
 ### Terminal appearance storage (SP-331)
 
-The terminal's appearance is one model resolved field by field: the look's defaults ("Follow theme"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. The three stored layers live in three places:
+The terminal's appearance is one model resolved field by field: the look's defaults ("Follow theme"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. The stored layers live here:
 
 | Layer | Where it is stored | Written by |
 |---|---|---|
-| App default | Settings rows (`Plans/Settings_System.md#SSYS-051`), in Settings custody (`scd.settings.durable.v1`) | Settings > Terminal, and the Appearance popover's "All terminals" |
-| Project default | The Project's Settings (`pm.project_settings_snapshot.v1` under the same custody) | Settings only |
+| App default and project default | The Settings rows of `Plans/Settings_System.md#SSYS-051`, held like every Settings value in the open Project's settings snapshot (`pm.project_settings_snapshot.v1`, Settings custody `scd.settings.durable.v1`). Until an app-wide Settings store is admitted (the open question `Plans/Settings_System.md#SSYS-028` records), the two levels are one stored value per row over the row's bundled default (SSYS-051). | Settings > Terminal, and the Appearance popover's "All terminals", only through Settings transactions |
 | This terminal | The terminal tab's serialized state in the v2 Home record (SP-330), inside its 16 KB | The Appearance popover's "This terminal" |
 
 A layer stores only the fields the user set there; an unset field is absent and falls through to the layer below, never a copy of it. The field list is `#F3-642`'s. Every field applies live; nothing stored carries a restart flag. A terminal tab moved to another panel keeps its override, because the override is part of the tab; a terminal reopened from the closed-tab stack keeps it too. An imported scheme (`#F3-642` lists the formats) is stored as its parsed colour table in Settings custody, never as the imported file.
 
-**Background images.** A custom background image is never stored inline in a settings row or in a tab's state. It follows SP-222's uploaded-asset pattern: the image bytes are stored once by content hash with a manifest (content hash, media type, byte size, scope), and the layer stores only the asset reference. Dim and blur are fields of the layer, applied when the terminal draws; no second, pre-blurred copy is stored. An asset no layer references any more is deleted. Backup follows the layer: an image the app or project default references is backed up with Settings; an image only a tab override references follows the Home record, which is resettable UI state and is not backed up, and when it is missing the tab falls through to the next layer's background. The assets' physical family is registered with Settings custody, whose physical registration is still pending in `Plans/storage_value_registry.json` (`physical_family_registration_pending`).
+**Background images.** A custom background image is never stored inline in a settings row or in a tab's state. It follows SP-222's uploaded-asset pattern: the image bytes are stored once by content hash with a manifest (content hash, media type, byte size, scope), and the layer stores only the asset reference. Dim and blur are fields of the layer; the blur is baked once into the image when the terminal draws it, never a backdrop blur (`#F3-642`), and no pre-blurred copy is stored. An asset no layer references any more is deleted. Backup follows the layer: an image the app or project default references is backed up with Settings; an image only a tab override references follows the Home record, which is resettable UI state and is not backed up, and when it is missing the tab falls through to the next layer's background. The assets' physical family is registered with Settings custody, whose physical registration is still pending in `Plans/storage_value_registry.json` (`physical_family_registration_pending`).
 
 This replaces SP-122's global `terminal_font.v1:global` and `terminal_color.v1:global` and fills SP-127's "per-tab overrides, font and color references".
 
@@ -27541,10 +27540,11 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
   The terminal's appearance resolves field by field from the look's defaults, which are never stored, then three
-  stored layers (DL-183, F3-642, DR-068): the app default in Settings rows (SSYS-051, Settings custody
-  scd.settings.durable.v1), the project default in the Project's Settings (pm.project_settings_snapshot.v1,
-  written only by Settings), and the per-tab override inside the terminal tab's serialized state in the v2 Home
-  record (SP-330), within its 16 KB. A layer stores only the fields set there; an unset field falls through. Every
+  stored layers (DL-183, F3-642, DR-068): the app default and the project default in the Settings rows of SSYS-051,
+  held like every Settings value in the open Project's settings snapshot (pm.project_settings_snapshot.v1, Settings
+  custody scd.settings.durable.v1) and written only through Settings transactions, one stored value per row until an
+  app-wide Settings store is admitted (SSYS-028); and the per-tab override inside the terminal tab's serialized state
+  in the v2 Home record (SP-330), within its 16 KB. A layer stores only the fields set there; an unset field falls through. Every
   field applies live and nothing stored carries a restart flag. An imported scheme is stored as its parsed colour
   table, never the file. A custom background image is stored once by content hash with a manifest under SP-222's
   uploaded-asset pattern and referenced by the layer; dim and blur are fields applied when drawing; an unreferenced
@@ -27554,10 +27554,10 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
-depends_on: [DL-183, F3-642, DR-068, SSYS-051, SP-330, SP-222, SP-127]
+depends_on: [DL-183, F3-642, DR-068, SSYS-051, SSYS-028, SP-330, SP-222, SP-127]
 unblocks: []
 acceptance_criteria:
-  - "The app default, the project default and the tab override are each stored in exactly one place, and the look's defaults are not stored."
+  - "The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot, the tab override only in the tab's state, and the look's defaults are not stored."
   - "A layer holds only the fields set in it; clearing a field removes it so the layer below shows through."
   - "Moving, collapsing or reopening a terminal tab keeps its override; only Settings writes the project layer."
   - "No appearance value is stored with a restart flag."
