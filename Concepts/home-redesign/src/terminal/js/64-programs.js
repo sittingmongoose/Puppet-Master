@@ -1960,6 +1960,37 @@
   };
   P.neofetch = P.fastfetch;
 
+  /* systemctl: enough for the agent demo (restart needs root, so it runs under sudo) */
+  var UNITS = { tastebook: { desc: 'Tastebook API (axum)', pid: 48211, active: true, since: 'Fri 2026-10-09 18:42:07 UTC' },
+    postgresql: { desc: 'PostgreSQL RDBMS', pid: 1187, active: true, since: 'Thu 2026-10-08 09:14:52 UTC' } };
+  P.systemctl = {
+    summary: 'control the system service manager (status, start, stop, restart)',
+    complete: function (args) { return args.length <= 1 ? ['status', 'start', 'stop', 'restart', 'is-active'] : Object.keys(UNITS); },
+    run: async function (ctx) {
+      var verb = ctx.argv[1], name = String(ctx.argv[2] || '').replace(/\.service$/, ''), u = UNITS[name];
+      var root = ctx.env.USER === 'root' || ctx.env.SUDO_USER;
+      if (!verb) { ctx.out('systemctl: missing verb\n'); return 1; }
+      if (!u) { ctx.out('Unit ' + (name || '(none)') + '.service could not be found.\n'); return verb === 'status' ? 4 : 5; }
+      if (verb === 'is-active') { ctx.out((u.active ? 'active' : 'inactive') + '\n'); return u.active ? 0 : 3; }
+      if (verb === 'status') {
+        var dot = u.active ? sgr('1;32') + '\u25cf' + sgr('0') : '\u25cb';
+        ctx.out(dot + ' ' + name + '.service - ' + u.desc + '\n' +
+          '     Loaded: loaded (/etc/systemd/system/' + name + '.service; enabled; preset: enabled)\n' +
+          '     Active: ' + (u.active ? sgr('1;32') + 'active (running)' + sgr('0') + ' since ' + u.since : 'inactive (dead)') + '\n' +
+          (u.active ? '   Main PID: ' + u.pid + ' (' + name + ')\n      Tasks: 9 (limit: 18977)\n     Memory: 41.6M\n' : ''));
+        return u.active ? 0 : 3;
+      }
+      if (verb === 'start' || verb === 'stop' || verb === 'restart') {
+        if (!root) { ctx.out('Failed to ' + verb + ' ' + name + '.service: Access denied\nSee system logs and \'systemctl status ' + name + '.service\' for details.\n'); return 1; }
+        await ctx.sleep(verb === 'restart' ? 900 : 500);
+        u.active = verb !== 'stop';
+        if (u.active) { u.pid = 48211 + Math.floor(Math.random() * 400); u.since = new Date().toUTCString().replace('GMT', 'UTC'); }
+        return 0;
+      }
+      ctx.out('Unknown command verb ' + verb + '.\n'); return 1;
+    }
+  };
+
   P.bell = {
     summary: 'ring the terminal bell (BEL); bell N rings N times',
     run: async function (ctx) {
