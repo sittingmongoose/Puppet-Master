@@ -54,6 +54,7 @@
   --d-pend: var(--accent-blue);
   --d-idle: var(--text-muted);
   --d-conflict: var(--accent-magenta, var(--graph-failed));
+  --d-orange: var(--accent-orange, var(--d-warn));   /* orphaned (Source), errored (Testing) */
   /* motion: Basic is crisp */
   --d-t1: 120ms;
   --d-t2: 200ms;
@@ -96,6 +97,11 @@
    take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
 [data-rail-skin="d"][data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
 [data-rail-skin="d"][data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
+/* Glass light's failure red (#C0566B) read 1.6:1 where its translucent shelves sit over the backdrop's mid tones
+   (measured rgb 146,164,175 and 182,145,127 behind the words) and 3.9:1 on its pale plates. Half way to black it reads
+   3.9:1 to 4.3:1 over the darkest backdrop and 9.9:1 on the plates, and stays a red; a full 4.5:1 there needs a colour
+   too close to the body text to read as a failure */
+[data-rail-skin="d"][data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 50%, #000); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 [data-rail-skin="d"][data-o55-nier="on"] {
@@ -106,7 +112,10 @@
   --d-ctl-bg: transparent;
   --d-ctl-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42);
   --d-on-accent: var(--o55-nier-on-ink, var(--surface));
+  /* states are ink, as everywhere else in NieR (the palette's gold running and olive warning tones read as a second
+     accent): the glyph's shape tells them apart; only a failure (and a conflict) keeps NieR's red */
   --d-ok: var(--o55-nier-ink); --d-live: var(--o55-nier-ink); --d-idle: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55);
+  --d-run: var(--o55-nier-ink); --d-warn: var(--o55-nier-ink); --d-orange: var(--o55-nier-ink);
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }
@@ -319,10 +328,12 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
-   change shows or hides them in one step */
+   change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
+   item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
+   descenders and accents of Poppins and PM NieR Sans, which a 12 px box cut off */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > span, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-full {
   display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
-  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1; transition-property: none !important;
+  max-width: 120px; padding: 3px 0 !important; margin-top: -3px; margin-bottom: -3px; margin-left: 5px; opacity: 1; transition-property: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-abbr { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
@@ -574,8 +585,11 @@
   display: inline-flex !important; align-items: center; gap: 4px; flex: none; max-width: 100% !important; min-width: 0;
   padding: 0 !important; margin: 0; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
   font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
-  color: var(--d-text-2) !important; white-space: nowrap; overflow: visible !important; text-overflow: clip !important; min-height: 0 !important;
+  white-space: nowrap; overflow: visible !important; text-overflow: clip !important; min-height: 0 !important;
 }
+/* a word with no state is quiet; the state colours below win over it (the list above weighs 1-3-0, so its colour beat
+   every [data-d-st] rule and each state word was grey) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :where(.pm-chip, .sh-pill, .pm7-post-state, .pm-chipbtn.d-tag) { color: var(--d-text-2) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-abbr { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-full { display: inline !important; overflow: visible !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="ok"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="live"] { color: var(--d-ok) !important; }
@@ -585,7 +599,7 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="pending"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="info"] { color: var(--d-pend) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="idle"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="unknown"] { color: var(--d-idle) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="conflict"] { color: var(--d-conflict) !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--accent-orange, var(--d-warn)) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--d-orange) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="current"] { color: var(--accent-primary) !important; }
 /* the glyph: its shape is the state, its colour follows the word */
 [data-rail-skin="d"] .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
@@ -673,6 +687,9 @@
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input:focus-within { border-color: color-mix(in srgb, var(--accent-primary) 60%, transparent) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 18%, transparent) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input { font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
+/* the field is the box: Glass paints every input with its own darker fill (an !important shell rule), which showed as a
+   second box inside it */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input::placeholder { color: var(--d-text-3); opacity: 1; }
 
 /* menu triggers that live in the content (branch, Docker context, worktree owner): a full-width field, text left */
@@ -697,10 +714,8 @@
 [data-rail-skin="d"] #panel-docker .sh-ctx .d-ctxpath { font: 400 var(--d-fs-small)/1.3 var(--mono-font); color: var(--d-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select { font-family: var(--body-font) !important; font-size: var(--d-fs-meta) !important; min-height: 28px; padding: 4px 10px !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-k { color: var(--d-text-3); }
-/* PMR.menu (portalled to <body>): its items are buttons, which take the browser's form font (Arial) unless told, so
-   they take the rail's face like everything else in it. The plate is as wide as its longest item up to 360 px
-   (10-skin widenMenu); past that an item's words wrap instead of losing their end. */
-[data-rail-skin="d"] .pmr-menu :is(.pmr-mi, .pmr-menu-search input) { font-family: var(--body-font); }
+/* PMR.menu (portalled to <body>): its items take the theme's face from src/css/10-menu.css. The plate is as wide as its
+   longest item up to 360 px (10-skin widenMenu); past that an item's words wrap instead of losing their end. */
 [data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modelname { white-space: normal; overflow-wrap: break-word; text-overflow: clip; }
 [data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modeleffort { flex: 0 1 auto; white-space: normal; text-overflow: clip; text-align: right; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-v { color: var(--d-text); font-weight: 600; }
@@ -846,12 +861,14 @@
 [data-rail-skin="d"] #panel-source[data-scm-engine="jj"] > .pm-segtab { display: none !important; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name { gap: 6px; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-ds { align-self: center; }
-/* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the name */
+/* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the
+   name; the chevron sits on the branch's line. An owner that does not fit beside the state word takes a line of its own
+   (data-d-owner, 20-fit stackRows) instead of being cut. */
 [data-rail-skin="d"] #panel-source .sh-wt-h {
   display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr) auto; column-gap: var(--d-gap); row-gap: 1px;
   grid-template-areas: "chev branch branch ds" "chev pill owner owner"; align-items: center;
 }
-[data-rail-skin="d"] #panel-source .sh-wt-h > .chev { grid-area: chev; }
+[data-rail-skin="d"] #panel-source .sh-wt-h > .chev { grid-area: chev; grid-row: 1; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-branch { grid-area: branch; min-width: 0; color: var(--d-text) !important; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-ds { grid-area: ds; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-pill { grid-area: pill; font-size: var(--d-fs-meta) !important; }
@@ -942,8 +959,12 @@
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name > .sh-nm-txt { grid-area: name; min-width: 0; }
 [data-rail-skin="d"] #panel-source [data-pane="changes"] .sh-chg-h .sh-name > .sh-nm-txt { padding-right: 14px; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name > .pm-gs { position: absolute; top: 6px; right: var(--d-pad); order: 0; justify-content: flex-end !important; }
-[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-accchev { grid-area: chev; margin-right: var(--d-gap); }
-[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-dot { grid-area: glyph; margin-right: var(--d-gap); }
+/* the chevron and the status glyph sit on the name's line, as in the Jujutsu rows (centred on a two-line row they sat
+   4 to 9 px below it) */
+[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-accchev { grid-area: chev; grid-row: 1; margin-right: var(--d-gap); }
+[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-dot { grid-area: glyph; grid-row: 1; margin-right: var(--d-gap); }
+/* a branch's or a stash's facts (a stash's are its message) wrap rather than lose their end */
+[data-rail-skin="d"] #panel-source [data-pane="branches"] .sh-chg-h .sh-meta { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-main { display: contents !important; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name { grid-area: name; min-width: 0; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-meta { grid-area: meta; min-width: 0; }
@@ -957,12 +978,11 @@
 [data-rail-skin="d"] #panel-source .pm7-scm-context-row > .pm7-post-state { grid-area: state; margin-top: 0; }
 
 [data-rail-skin="d"] #panel-source .sh-wt-h[data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill owner ds"; }
-/* a shelf head with a summary keeps its whole label while the summary sits beside it. 20-fit stackHeads allows 1 px of
-   overflow before it stacks, and a label that may shrink turned that 1 px into an ellipsis (Friendly, 280 px:
-   "Branches & sta…", 106.6 px of text in a 106 px box). Unshrunk, up to 1 px runs into the head's end padding and
-   anything more overflows the head, which stackHeads sees and stacks. A stacked head's label may shrink again, and a
-   label alone in its head (Graph, Current change: no summary, so never stacked) keeps shrinking. */
-[data-rail-skin="d"] #panel-source .sh-shelf > .sh-head:not([data-d-stack]) > .sh-hlabel:not(:last-child) { flex-shrink: 0; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] { grid-template-areas: "chev branch branch ds" "chev pill pill pill" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner][data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill . ds" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-pill { justify-self: start; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner::before { content: none; }
 
 /* both Source strips fit by one rule (15-jj.js jjStripMode, DECISION [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts)4.4): inactive tabs down to 24 px (the 15 px icon
    and 4.5 px a side), the active tab 6 px a side and 5 px before its label */
@@ -1281,7 +1301,6 @@
 /* the query: input, the facts line, then the match options and the scope */
 [data-rail-skin="d"] #panel-search .sh-shelf > .sh-body > .pm-input { margin: 0 !important; }
 /* the field is the D box; Glass paints every input, which would show as a second, darker box inside it */
-[data-rail-skin="d"] #panel-search .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] #panel-search .sh-body > .pm-input + .pm-input { margin-top: 6px !important; }
 [data-rail-skin="d"] #panel-search .sh-stats {
   display: block !important; margin: 6px 0 0 !important; padding: 0 var(--d-pad) !important;
@@ -1438,11 +1457,6 @@
 [data-rail-skin="d"][data-o55-nier="on"] #panel-search #shIgnoreToggle.on::after { background: var(--o55-nier-on-ink); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-search :is(.sh-hit, .sh-rr) em { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .16) !important; }
 [data-rail-skin="d"][data-theme^="retro"] #panel-search .sh-flags > .sh-flag { box-shadow: 1px 1px 0 var(--d-ctl-line) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-search :is(.sh-hlabel, .sh-title) { text-transform: uppercase !important; letter-spacing: .14em !important; }
-
-/* reduced motion: nothing here moves (the shared rule names the first three panels only) */
-[data-rail-skin="d"][data-motion="reduced"] #panel-search *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-search * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #panel-search * { transition: none !important; animation: none !important; } }
 
 /* ---- 75. Debug & Run (#panel-run) and the bottom Debug tab (#bottomDebugHost) --------------------------------------
    Fixed shelf order (F3-485): launch row, Session, Variables & watch, Call stack, Breakpoints. The launch row is a
@@ -1541,9 +1555,6 @@
 [data-rail-skin="d"] #panel-run .sh-af-acts { flex-direction: row !important; flex-wrap: wrap; justify-content: flex-start !important; gap: 6px !important; margin-top: 8px !important; }
 [data-rail-skin="d"] #panel-run .sh-af-acts > .pm-btn { flex: 1 1 auto; }
 
-/* text fields (add form, breakpoint condition): the field is the D box; Glass paints every input, which would show as
-   a second, darker box inside it */
-[data-rail-skin="d"] #panel-run .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
 /* ---- shelf heads: the trail box opens up, so label, summary and actions are one row; a summary that does not fit
    moves under the label (data-d-stack, set by 52-run.js) ---- */
@@ -1733,7 +1744,8 @@
 }
 [data-rail-skin="d"] #panel-run .sh-bpx input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-run .sh-bpx input:checked { border-color: var(--o55-nier-ink) !important; background: var(--o55-nier-ink) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-run :is(.sh-hlabel, .sh-title, .sh-glabel) { text-transform: uppercase !important; letter-spacing: .14em !important; }
+/* NieR headers: the group labels take the shared label capitals (90-themes covers the shelf labels and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-run .sh-glabel { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- the bottom Debug tab ---- */
 [data-rail-skin="d"] #bottomDebugHost { font-family: var(--body-font); color: var(--d-text); }
@@ -1821,10 +1833,6 @@
 [data-rail-skin="d"] #bottomDebugHost[data-rd-state="term"] .rd-console { order: 2; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 [data-rail-skin="d"] #bottomDebugHost[data-rd-state="term"] .rd-termnote { order: 3; padding: 4px 12px 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
 
-/* reduced motion: nothing here moves */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-run, #bottomDebugHost) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; } }
-
 /* ---- 13. Actions & pipelines (#panel-git, lane E) --------------------------------------------------------------------
    Same geometry as Files / Source / Docker. The automation service is a field under the header; runs are flat rows in
    their shelf (name on line 1, run number · ref · age and the state word on line 2, the failure line under it); jobs
@@ -1844,9 +1852,6 @@
 }
 [data-rail-skin="d"] #panel-git .pm7-automation-select.d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
-/* the menus this panel opens (service, dispatch ref and inputs) set their items in the rail's face: the item is a
-   <button>, which takes the browser's default font unless told otherwise (the shared menu stylesheet does not yet) */
-[data-rail-skin="d"] .pmr-menu:is([data-pmr-menu="d-e-service"], [data-pmr-menu^="d-shDisp"]) .pmr-mi { font-family: inherit; }
 [data-rail-skin="d"] #panel-git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 [data-rail-skin="d"] #panel-git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }
 [data-rail-skin="d"] #panel-git .pm7-automation-fact { display: contents !important; }
@@ -1973,12 +1978,6 @@
 [data-rail-skin="d"] #panel-git .sh-kv > .sh-v.sh-mono:not(.d-wrap) { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal; }
 
 /* ---- settings: grouped facts, secret names with their state ---- */
-/* a head whose label the shared fit leaves cut by under a pixel stacks its summary the same way (lane attribute, JS) */
-[data-rail-skin="d"] #panel-git .sh-shelf > .sh-head[data-d-e-stack] { flex-wrap: wrap; row-gap: 1px; padding-top: 7px !important; padding-bottom: 8px !important; }
-[data-rail-skin="d"] #panel-git .sh-head[data-d-e-stack] > .sh-hcount {
-  order: 9; flex: 1 1 100%; margin-left: var(--d-e-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere;
-  color: var(--d-text-2) !important; text-align: left;
-}
 [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st] { display: inline-flex !important; align-items: center; gap: 4px; }
 [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="live"], [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="ok"] { color: var(--d-ok) !important; }
 [data-rail-skin="d"] #panel-git .sh-grp {
@@ -2041,26 +2040,14 @@
   white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="ok"], [data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="live"] { color: var(--d-ok) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="run"] { color: var(--d-run) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="conflict"] { color: var(--d-conflict) !important; }
 
 /* ---- families and modes ---- */
 [data-rail-skin="d"][data-theme^="retro"] #panel-git .sh-log { box-shadow: 2px 2px 0 color-mix(in srgb, var(--d-fail) 30%, transparent); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-git .sh-log { background: transparent !important; border-color: var(--d-line-2); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-git .pm7-post-card { background: transparent !important; border-color: var(--d-line-2) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-hlabel, .sh-title, .pm7-post-card-title, .sh-dfk, .sh-grp) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-[data-rail-skin="d"][data-motion="reduced"] #panel-git *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-git * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] #panel-git * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the panel's own group labels take the shared label capitals (90-themes covers shelf labels, card
+   titles and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-dfk, .sh-grp) { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- 14. Runtime artifacts (#panel-artifacts, lane E) ----------------------------------------------------------------
    Each receipt card keeps its coloured box (today's structure) and is drawn like a shelf: the box is the only box, its
@@ -2084,8 +2071,6 @@
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
-/* the sort menu's items in the rail's face (see the same rule for the Actions menus in section 13) */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-shArtSort"] .pmr-mi { font-family: inherit; }
 
 /* ---- the card: a shelf-like box ---- */
 [data-rail-skin="d"] #panel-artifacts .sh-card {
@@ -2242,22 +2227,10 @@
   grid-area: meta; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="ok"], [data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="live"] { color: var(--d-ok) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
 
 /* ---- families and modes ---- */
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-artifacts :is(.sh-hlabel, .sh-title, .sh-sortlab) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-[data-rail-skin="d"][data-motion="reduced"] #panel-artifacts *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-artifacts * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] #panel-artifacts * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the sort label takes the shared label capitals (90-themes covers shelf labels and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-artifacts .sh-sortlab { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- 78. Testing (lane F), and the run rows Testing and Agents share ---------------------------------------------------
    A run row is flat in its shelf like every D row (no card inside a card, no coloured border on the live run): its hover
@@ -2311,7 +2284,7 @@
 [data-rail-skin="d"] #panel-testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
 [data-rail-skin="d"] #panel-testing :is([data-d-st="fail"], [data-d-st="blocked"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
 [data-rail-skin="d"] #panel-testing :is([data-d-st="idle"], [data-d-st="unknown"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
-[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 [data-rail-skin="d"] #panel-testing .pm-chip[data-d-st], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
    Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
@@ -2408,19 +2381,6 @@
   mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
 }
 
-/* ---- NieR: headers in capitals -------------------------------------------------------------------------------------- */
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-testing, #panel-agents) :is(.sh-hlabel, .sh-title, .pm-sumcard-h) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-
-/* ---- reduced motion: nothing in these panels moves ------------------------------------------------------------------- */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-testing, #panel-agents) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-testing, #panel-agents) * {
-  transition: none !important; animation: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] :is(#panel-testing, #panel-agents) * { transition: none !important; animation: none !important; }
-}
-
 /* ---- 79. Agents (lane F) --------------------------------------------------------------------------------------------
    The subagent rows are run rows (78-testing). The waiting / elapsed line joins the row head as its quiet last line. The
    needs-input question is a warm tint, not a bordered card. Lane capacity and queued work are sections of their shelf
@@ -2504,7 +2464,8 @@
 [data-rail-skin="d"] { --d-Rbar: 7px; }
 [data-rail-skin="d"][data-theme^="friendly"] { --d-Rbar: 10px; }
 [data-rail-skin="d"][data-theme^="glass"] { --d-Rbar: 10px; }
-[data-rail-skin="d"][data-theme^="retro"], [data-rail-skin="d"][data-o55-nier="on"] { --d-Rbar: 0px; }
+/* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
+[data-rail-skin="d"][data-theme^="retro"], [data-rail-skin="d"][data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 [data-rail-skin="d"] #activityBar { position: relative; }
 [data-rail-skin="d"] #activityBar > .d-abind {
   position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;
@@ -2613,13 +2574,10 @@
 }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) .symbol { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) { color: var(--o55-nier-on-ink) !important; }
-/* the menu: the bar's own icon drawings at the menu's icon size; its rows are buttons, which do not inherit the font,
-   so they take the theme's face from the plate (IBM Plex Mono in Retro, PM NieR Sans in NieR) like its heading */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi { font-family: inherit !important; }
+/* the menu: the bar's own icon drawings at the menu's icon size (its rows take the theme's face from src/css/10-menu.css) */
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi-ico svg { width: 15px; height: 15px; }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-empty { max-width: 220px; padding: 10px 10px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
-/* its heading is a sentence, not a capitals micro label */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-glabel { text-transform: none !important; letter-spacing: 0 !important; font: 500 12px/1.3 var(--body-font) !important; color: var(--text-muted) !important; }
+/* (its heading is the chat picker's group label, capitals like every PMR.menu group label) */
 
 /* ---- 11. Family accents ----------------------------------------------------------------------------------------------
    The geometry and the type are shared; each family keeps one signature. Basic is flat and crisp. Friendly lifts its
@@ -2694,14 +2652,15 @@
   background-repeat: no-repeat !important;
 }
 
-/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-files,#panel-source,#panel-docker) *,
+/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------------
+   Every rail panel (#sidePanelSlot holds exactly the nine), the bottom Debug tab D also skins, and the activity bar. */
+[data-rail-skin="d"][data-motion="reduced"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#sidePanelSlot, #bottomDebugHost) *,
 [data-rail-skin="d"][data-motion="reduced"] #activityBar *, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
 [data-rail-skin="d"][data-motion="reduced"] .d-gl::after, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
+  [data-rail-skin="d"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
   [data-rail-skin="d"] .d-gl::after { display: none !important; }
   [data-rail-skin="d"] .d-gl .d-spin { animation: none !important; }
 }

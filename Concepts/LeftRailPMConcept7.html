@@ -29443,6 +29443,10 @@ html[data-motion="reduced"], html[data-reduced-motion="1"] { --pmr-t-fast: 0ms; 
 .pmr-menu-sep { height: 1px; margin: 4px 6px; background: var(--border-light, var(--border)); }
 .pmr-menu-empty { padding: 10px 8px; font-size: 12px; color: var(--text-muted); }
 .pmr-menu .pmr-mi { min-height: 32px; line-height: 1.3; }
+/* items are buttons, which take the browser's form face (Arial) unless told: they take the theme's face, as the plate
+   does (Inter, Poppins, IBM Plex Mono in Retro, PM NieR Sans in NieR). The shell's own chat pickers still fall back in
+   Basic, Retro and NieR; that is the shell's to fix. */
+.pmr-menu .pmr-mi, .pmr-menu .pmr-menu-search input { font-family: var(--pmr-font); }
 .pmr-menu .pmr-mi:focus { outline: none; }
 .pmr-menu .pmr-mi:focus-visible { background: color-mix(in srgb, var(--text-primary) 8%, transparent); box-shadow: inset 0 0 0 1px var(--accent-primary); }
 .pmr-menu .pmr-mi-ico { flex: none; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); }
@@ -29579,6 +29583,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   --d-pend: var(--accent-blue);
   --d-idle: var(--text-muted);
   --d-conflict: var(--accent-magenta, var(--graph-failed));
+  --d-orange: var(--accent-orange, var(--d-warn));   /* orphaned (Source), errored (Testing) */
   /* motion: Basic is crisp */
   --d-t1: 120ms;
   --d-t2: 200ms;
@@ -29621,6 +29626,11 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
    take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
 [data-rail-skin="d"][data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
 [data-rail-skin="d"][data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
+/* Glass light's failure red (#C0566B) read 1.6:1 where its translucent shelves sit over the backdrop's mid tones
+   (measured rgb 146,164,175 and 182,145,127 behind the words) and 3.9:1 on its pale plates. Half way to black it reads
+   3.9:1 to 4.3:1 over the darkest backdrop and 9.9:1 on the plates, and stays a red; a full 4.5:1 there needs a colour
+   too close to the body text to read as a failure */
+[data-rail-skin="d"][data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 50%, #000); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 [data-rail-skin="d"][data-o55-nier="on"] {
@@ -29631,7 +29641,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   --d-ctl-bg: transparent;
   --d-ctl-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42);
   --d-on-accent: var(--o55-nier-on-ink, var(--surface));
+  /* states are ink, as everywhere else in NieR (the palette's gold running and olive warning tones read as a second
+     accent): the glyph's shape tells them apart; only a failure (and a conflict) keeps NieR's red */
   --d-ok: var(--o55-nier-ink); --d-live: var(--o55-nier-ink); --d-idle: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55);
+  --d-run: var(--o55-nier-ink); --d-warn: var(--o55-nier-ink); --d-orange: var(--o55-nier-ink);
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }
@@ -29844,10 +29857,12 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
-   change shows or hides them in one step */
+   change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
+   item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
+   descenders and accents of Poppins and PM NieR Sans, which a 12 px box cut off */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > span, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-full {
   display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
-  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1; transition-property: none !important;
+  max-width: 120px; padding: 3px 0 !important; margin-top: -3px; margin-bottom: -3px; margin-left: 5px; opacity: 1; transition-property: none !important;
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item > .eq-abbr { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
@@ -30099,8 +30114,11 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   display: inline-flex !important; align-items: center; gap: 4px; flex: none; max-width: 100% !important; min-width: 0;
   padding: 0 !important; margin: 0; border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
   font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
-  color: var(--d-text-2) !important; white-space: nowrap; overflow: visible !important; text-overflow: clip !important; min-height: 0 !important;
+  white-space: nowrap; overflow: visible !important; text-overflow: clip !important; min-height: 0 !important;
 }
+/* a word with no state is quiet; the state colours below win over it (the list above weighs 1-3-0, so its colour beat
+   every [data-d-st] rule and each state word was grey) */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :where(.pm-chip, .sh-pill, .pm7-post-state, .pm-chipbtn.d-tag) { color: var(--d-text-2) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-abbr { display: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.pm-chip, .sh-pill, .pm7-post-state) .chip-full { display: inline !important; overflow: visible !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="ok"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="live"] { color: var(--d-ok) !important; }
@@ -30110,7 +30128,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="pending"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="info"] { color: var(--d-pend) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="idle"], [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="unknown"] { color: var(--d-idle) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="conflict"] { color: var(--d-conflict) !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--accent-orange, var(--d-warn)) !important; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--d-orange) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="current"] { color: var(--accent-primary) !important; }
 /* the glyph: its shape is the state, its colour follows the word */
 [data-rail-skin="d"] .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
@@ -30198,6 +30216,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input:focus-within { border-color: color-mix(in srgb, var(--accent-primary) 60%, transparent) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 18%, transparent) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input { font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
+/* the field is the box: Glass paints every input with its own darker fill (an !important shell rule), which showed as a
+   second box inside it */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-input input::placeholder { color: var(--d-text-3); opacity: 1; }
 
 /* menu triggers that live in the content (branch, Docker context, worktree owner): a full-width field, text left */
@@ -30222,10 +30243,8 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-docker .sh-ctx .d-ctxpath { font: 400 var(--d-fs-small)/1.3 var(--mono-font); color: var(--d-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select { font-family: var(--body-font) !important; font-size: var(--d-fs-meta) !important; min-height: 28px; padding: 4px 10px !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-k { color: var(--d-text-3); }
-/* PMR.menu (portalled to <body>): its items are buttons, which take the browser's form font (Arial) unless told, so
-   they take the rail's face like everything else in it. The plate is as wide as its longest item up to 360 px
-   (10-skin widenMenu); past that an item's words wrap instead of losing their end. */
-[data-rail-skin="d"] .pmr-menu :is(.pmr-mi, .pmr-menu-search input) { font-family: var(--body-font); }
+/* PMR.menu (portalled to <body>): its items take the theme's face from src/css/10-menu.css. The plate is as wide as its
+   longest item up to 360 px (10-skin widenMenu); past that an item's words wrap instead of losing their end. */
 [data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modelname { white-space: normal; overflow-wrap: break-word; text-overflow: clip; }
 [data-rail-skin="d"] .pmr-menu .pmr-mi .pm6-chat-modeleffort { flex: 0 1 auto; white-space: normal; text-overflow: clip; text-align: right; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-v { color: var(--d-text); font-weight: 600; }
@@ -30371,12 +30390,14 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source[data-scm-engine="jj"] > .pm-segtab { display: none !important; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name { gap: 6px; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-ds { align-self: center; }
-/* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the name */
+/* worktrees: branch and diff on the first line, the state word and the owner on the second; no capsule crushes the
+   name; the chevron sits on the branch's line. An owner that does not fit beside the state word takes a line of its own
+   (data-d-owner, 20-fit stackRows) instead of being cut. */
 [data-rail-skin="d"] #panel-source .sh-wt-h {
   display: grid !important; grid-template-columns: 10px auto minmax(0, 1fr) auto; column-gap: var(--d-gap); row-gap: 1px;
   grid-template-areas: "chev branch branch ds" "chev pill owner owner"; align-items: center;
 }
-[data-rail-skin="d"] #panel-source .sh-wt-h > .chev { grid-area: chev; }
+[data-rail-skin="d"] #panel-source .sh-wt-h > .chev { grid-area: chev; grid-row: 1; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-branch { grid-area: branch; min-width: 0; color: var(--d-text) !important; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-ds { grid-area: ds; }
 [data-rail-skin="d"] #panel-source .sh-wt-h > .sh-pill { grid-area: pill; font-size: var(--d-fs-meta) !important; }
@@ -30467,8 +30488,12 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name > .sh-nm-txt { grid-area: name; min-width: 0; }
 [data-rail-skin="d"] #panel-source [data-pane="changes"] .sh-chg-h .sh-name > .sh-nm-txt { padding-right: 14px; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name > .pm-gs { position: absolute; top: 6px; right: var(--d-pad); order: 0; justify-content: flex-end !important; }
-[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-accchev { grid-area: chev; margin-right: var(--d-gap); }
-[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-dot { grid-area: glyph; margin-right: var(--d-gap); }
+/* the chevron and the status glyph sit on the name's line, as in the Jujutsu rows (centred on a two-line row they sat
+   4 to 9 px below it) */
+[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-accchev { grid-area: chev; grid-row: 1; margin-right: var(--d-gap); }
+[data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-dot { grid-area: glyph; grid-row: 1; margin-right: var(--d-gap); }
+/* a branch's or a stash's facts (a stash's are its message) wrap rather than lose their end */
+[data-rail-skin="d"] #panel-source [data-pane="branches"] .sh-chg-h .sh-meta { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h > .sh-main { display: contents !important; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-name { grid-area: name; min-width: 0; }
 [data-rail-skin="d"] #panel-source .sh-scroll [data-pane] .sh-chg-h .sh-meta { grid-area: meta; min-width: 0; }
@@ -30482,12 +30507,11 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .pm7-scm-context-row > .pm7-post-state { grid-area: state; margin-top: 0; }
 
 [data-rail-skin="d"] #panel-source .sh-wt-h[data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill owner ds"; }
-/* a shelf head with a summary keeps its whole label while the summary sits beside it. 20-fit stackHeads allows 1 px of
-   overflow before it stacks, and a label that may shrink turned that 1 px into an ellipsis (Friendly, 280 px:
-   "Branches & sta…", 106.6 px of text in a 106 px box). Unshrunk, up to 1 px runs into the head's end padding and
-   anything more overflows the head, which stackHeads sees and stacks. A stacked head's label may shrink again, and a
-   label alone in its head (Graph, Current change: no summary, so never stacked) keeps shrinking. */
-[data-rail-skin="d"] #panel-source .sh-shelf > .sh-head:not([data-d-stack]) > .sh-hlabel:not(:last-child) { flex-shrink: 0; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] { grid-template-areas: "chev branch branch ds" "chev pill pill pill" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner][data-d-stack] { grid-template-areas: "chev branch branch branch" "chev pill . ds" "chev owner owner owner"; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-pill { justify-self: start; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+[data-rail-skin="d"] #panel-source .sh-wt-h[data-d-owner] > .sh-owner::before { content: none; }
 
 /* both Source strips fit by one rule (15-jj.js jjStripMode, DECISION [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts)4.4): inactive tabs down to 24 px (the 15 px icon
    and 4.5 px a side), the active tab 6 px a side and 5 px before its label */
@@ -30806,7 +30830,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 /* the query: input, the facts line, then the match options and the scope */
 [data-rail-skin="d"] #panel-search .sh-shelf > .sh-body > .pm-input { margin: 0 !important; }
 /* the field is the D box; Glass paints every input, which would show as a second, darker box inside it */
-[data-rail-skin="d"] #panel-search .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 [data-rail-skin="d"] #panel-search .sh-body > .pm-input + .pm-input { margin-top: 6px !important; }
 [data-rail-skin="d"] #panel-search .sh-stats {
   display: block !important; margin: 6px 0 0 !important; padding: 0 var(--d-pad) !important;
@@ -30963,11 +30986,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] #panel-search #shIgnoreToggle.on::after { background: var(--o55-nier-on-ink); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-search :is(.sh-hit, .sh-rr) em { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .16) !important; }
 [data-rail-skin="d"][data-theme^="retro"] #panel-search .sh-flags > .sh-flag { box-shadow: 1px 1px 0 var(--d-ctl-line) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-search :is(.sh-hlabel, .sh-title) { text-transform: uppercase !important; letter-spacing: .14em !important; }
-
-/* reduced motion: nothing here moves (the shared rule names the first three panels only) */
-[data-rail-skin="d"][data-motion="reduced"] #panel-search *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-search * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #panel-search * { transition: none !important; animation: none !important; } }
 
 /* ---- 75. Debug & Run (#panel-run) and the bottom Debug tab (#bottomDebugHost) --------------------------------------
    Fixed shelf order (F3-485): launch row, Session, Variables & watch, Call stack, Breakpoints. The launch row is a
@@ -31066,9 +31084,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-run .sh-af-acts { flex-direction: row !important; flex-wrap: wrap; justify-content: flex-start !important; gap: 6px !important; margin-top: 8px !important; }
 [data-rail-skin="d"] #panel-run .sh-af-acts > .pm-btn { flex: 1 1 auto; }
 
-/* text fields (add form, breakpoint condition): the field is the D box; Glass paints every input, which would show as
-   a second, darker box inside it */
-[data-rail-skin="d"] #panel-run .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
 /* ---- shelf heads: the trail box opens up, so label, summary and actions are one row; a summary that does not fit
    moves under the label (data-d-stack, set by 52-run.js) ---- */
@@ -31258,7 +31273,8 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"] #panel-run .sh-bpx input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-run .sh-bpx input:checked { border-color: var(--o55-nier-ink) !important; background: var(--o55-nier-ink) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-run :is(.sh-hlabel, .sh-title, .sh-glabel) { text-transform: uppercase !important; letter-spacing: .14em !important; }
+/* NieR headers: the group labels take the shared label capitals (90-themes covers the shelf labels and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-run .sh-glabel { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- the bottom Debug tab ---- */
 [data-rail-skin="d"] #bottomDebugHost { font-family: var(--body-font); color: var(--d-text); }
@@ -31346,10 +31362,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #bottomDebugHost[data-rd-state="term"] .rd-console { order: 2; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 [data-rail-skin="d"] #bottomDebugHost[data-rd-state="term"] .rd-termnote { order: 3; padding: 4px 12px 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
 
-/* reduced motion: nothing here moves */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-run, #bottomDebugHost) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; } }
-
 /* ---- 13. Actions & pipelines (#panel-git, lane E) --------------------------------------------------------------------
    Same geometry as Files / Source / Docker. The automation service is a field under the header; runs are flat rows in
    their shelf (name on line 1, run number · ref · age and the state word on line 2, the failure line under it); jobs
@@ -31369,9 +31381,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"] #panel-git .pm7-automation-select.d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
-/* the menus this panel opens (service, dispatch ref and inputs) set their items in the rail's face: the item is a
-   <button>, which takes the browser's default font unless told otherwise (the shared menu stylesheet does not yet) */
-[data-rail-skin="d"] .pmr-menu:is([data-pmr-menu="d-e-service"], [data-pmr-menu^="d-shDisp"]) .pmr-mi { font-family: inherit; }
 [data-rail-skin="d"] #panel-git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 [data-rail-skin="d"] #panel-git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }
 [data-rail-skin="d"] #panel-git .pm7-automation-fact { display: contents !important; }
@@ -31498,12 +31507,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-git .sh-kv > .sh-v.sh-mono:not(.d-wrap) { white-space: nowrap !important; overflow: hidden !important; overflow-wrap: normal; }
 
 /* ---- settings: grouped facts, secret names with their state ---- */
-/* a head whose label the shared fit leaves cut by under a pixel stacks its summary the same way (lane attribute, JS) */
-[data-rail-skin="d"] #panel-git .sh-shelf > .sh-head[data-d-e-stack] { flex-wrap: wrap; row-gap: 1px; padding-top: 7px !important; padding-bottom: 8px !important; }
-[data-rail-skin="d"] #panel-git .sh-head[data-d-e-stack] > .sh-hcount {
-  order: 9; flex: 1 1 100%; margin-left: var(--d-e-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere;
-  color: var(--d-text-2) !important; text-align: left;
-}
 [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st] { display: inline-flex !important; align-items: center; gap: 4px; }
 [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="live"], [data-rail-skin="d"] #panel-git .sh-head > .sh-hcount[data-d-st="ok"] { color: var(--d-ok) !important; }
 [data-rail-skin="d"] #panel-git .sh-grp {
@@ -31566,26 +31569,14 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="ok"], [data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="live"] { color: var(--d-ok) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="run"] { color: var(--d-run) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state):is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
-[data-rail-skin="d"] #panel-git :is(.pm-chip, .pm7-post-state)[data-d-st="conflict"] { color: var(--d-conflict) !important; }
 
 /* ---- families and modes ---- */
 [data-rail-skin="d"][data-theme^="retro"] #panel-git .sh-log { box-shadow: 2px 2px 0 color-mix(in srgb, var(--d-fail) 30%, transparent); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-git .sh-log { background: transparent !important; border-color: var(--d-line-2); }
 [data-rail-skin="d"][data-o55-nier="on"] #panel-git .pm7-post-card { background: transparent !important; border-color: var(--d-line-2) !important; }
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-hlabel, .sh-title, .pm7-post-card-title, .sh-dfk, .sh-grp) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-[data-rail-skin="d"][data-motion="reduced"] #panel-git *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-git * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] #panel-git * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the panel's own group labels take the shared label capitals (90-themes covers shelf labels, card
+   titles and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-git :is(.sh-dfk, .sh-grp) { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- 14. Runtime artifacts (#panel-artifacts, lane E) ----------------------------------------------------------------
    Each receipt card keeps its coloured box (today's structure) and is drawn like a shelf: the box is the only box, its
@@ -31609,8 +31600,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
 [data-rail-skin="d"] #panel-artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
-/* the sort menu's items in the rail's face (see the same rule for the Actions menus in section 13) */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-shArtSort"] .pmr-mi { font-family: inherit; }
 
 /* ---- the card: a shelf-like box ---- */
 [data-rail-skin="d"] #panel-artifacts .sh-card {
@@ -31767,22 +31756,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   grid-area: meta; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
 }
 
-/* ---- state words take their state colour (glyph and word) ---- */
-[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="ok"], [data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="live"] { color: var(--d-ok) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip[data-d-st="run"] { color: var(--d-run) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { color: var(--d-warn) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="fail"], [data-d-st="blocked"]) { color: var(--d-fail) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="pending"], [data-d-st="info"]) { color: var(--d-pend) !important; }
-[data-rail-skin="d"] #panel-artifacts .pm-chip:is([data-d-st="idle"], [data-d-st="unknown"]) { color: var(--d-idle) !important; }
 
 /* ---- families and modes ---- */
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-artifacts :is(.sh-hlabel, .sh-title, .sh-sortlab) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-[data-rail-skin="d"][data-motion="reduced"] #panel-artifacts *, [data-rail-skin="d"][data-reduced-motion="1"] #panel-artifacts * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] #panel-artifacts * { transition: none !important; animation: none !important; }
-}
+/* NieR headers: the sort label takes the shared label capitals (90-themes covers shelf labels and the title) */
+[data-rail-skin="d"][data-o55-nier-parts~="headers"] #panel-artifacts .sh-sortlab { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- 78. Testing (lane F), and the run rows Testing and Agents share ---------------------------------------------------
    A run row is flat in its shelf like every D row (no card inside a card, no coloured border on the live run): its hover
@@ -31836,7 +31813,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-testing :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="warn"], [data-d-st="stale"], [data-d-st="dirty"]) { --lf-st: var(--d-warn); }
 [data-rail-skin="d"] #panel-testing :is([data-d-st="fail"], [data-d-st="blocked"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="fail"], [data-d-st="blocked"]) { --lf-st: var(--d-fail); }
 [data-rail-skin="d"] #panel-testing :is([data-d-st="idle"], [data-d-st="unknown"]), [data-rail-skin="d"] #panel-agents :is([data-d-st="idle"], [data-d-st="unknown"]) { --lf-st: var(--d-idle); }
-[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--accent-orange, var(--d-fail)); color: var(--lf-st) !important; }
+[data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 [data-rail-skin="d"] #panel-testing .pm-chip[data-d-st], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
    Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
@@ -31933,19 +31910,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   mask-image: linear-gradient(180deg, transparent 0, transparent calc(var(--pm6-shrun-banner-h, 42px) - 6px), #000 calc(var(--pm6-shrun-banner-h, 42px) + 6px));
 }
 
-/* ---- NieR: headers in capitals -------------------------------------------------------------------------------------- */
-[data-rail-skin="d"][data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(#panel-testing, #panel-agents) :is(.sh-hlabel, .sh-title, .pm-sumcard-h) {
-  text-transform: uppercase !important; letter-spacing: .14em !important;
-}
-
-/* ---- reduced motion: nothing in these panels moves ------------------------------------------------------------------- */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-testing, #panel-agents) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-testing, #panel-agents) * {
-  transition: none !important; animation: none !important;
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] :is(#panel-testing, #panel-agents) * { transition: none !important; animation: none !important; }
-}
-
 /* ---- 79. Agents (lane F) --------------------------------------------------------------------------------------------
    The subagent rows are run rows (78-testing). The waiting / elapsed line joins the row head as its quiet last line. The
    needs-input question is a warm tint, not a bordered card. Lane capacity and queued work are sections of their shelf
@@ -32029,7 +31993,8 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] { --d-Rbar: 7px; }
 [data-rail-skin="d"][data-theme^="friendly"] { --d-Rbar: 10px; }
 [data-rail-skin="d"][data-theme^="glass"] { --d-Rbar: 10px; }
-[data-rail-skin="d"][data-theme^="retro"], [data-rail-skin="d"][data-o55-nier="on"] { --d-Rbar: 0px; }
+/* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
+[data-rail-skin="d"][data-theme^="retro"], [data-rail-skin="d"][data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 [data-rail-skin="d"] #activityBar { position: relative; }
 [data-rail-skin="d"] #activityBar > .d-abind {
   position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;
@@ -32138,13 +32103,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) .symbol { background: var(--o55-nier-ink) !important; box-shadow: none !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > #abMoreBtn:is(.is-menu-open, .pm-ab-drop-hot) { color: var(--o55-nier-on-ink) !important; }
-/* the menu: the bar's own icon drawings at the menu's icon size; its rows are buttons, which do not inherit the font,
-   so they take the theme's face from the plate (IBM Plex Mono in Retro, PM NieR Sans in NieR) like its heading */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi { font-family: inherit !important; }
+/* the menu: the bar's own icon drawings at the menu's icon size (its rows take the theme's face from src/css/10-menu.css) */
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-mi-ico svg { width: 15px; height: 15px; }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-empty { max-width: 220px; padding: 10px 10px; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
-/* its heading is a sentence, not a capitals micro label */
-[data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-ab-more"] .pmr-menu-glabel { text-transform: none !important; letter-spacing: 0 !important; font: 500 12px/1.3 var(--body-font) !important; color: var(--text-muted) !important; }
+/* (its heading is the chat picker's group label, capitals like every PMR.menu group label) */
 
 /* ---- 11. Family accents ----------------------------------------------------------------------------------------------
    The geometry and the type are shared; each family keeps one signature. Basic is flat and crisp. Friendly lifts its
@@ -32219,14 +32181,15 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   background-repeat: no-repeat !important;
 }
 
-/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------- */
-[data-rail-skin="d"][data-motion="reduced"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#panel-files,#panel-source,#panel-docker) *,
+/* ---- 12. Reduced motion: nothing in the skin moves --------------------------------------------------------------------
+   Every rail panel (#sidePanelSlot holds exactly the nine), the bottom Debug tab D also skins, and the activity bar. */
+[data-rail-skin="d"][data-motion="reduced"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"][data-reduced-motion="1"] :is(#sidePanelSlot, #bottomDebugHost) *,
 [data-rail-skin="d"][data-motion="reduced"] #activityBar *, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
 [data-rail-skin="d"][data-motion="reduced"] .d-gl::after, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  [data-rail-skin="d"] :is(#panel-files,#panel-source,#panel-docker) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
+  [data-rail-skin="d"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
   [data-rail-skin="d"] .d-gl::after { display: none !important; }
   [data-rail-skin="d"] .d-gl .d-spin { animation: none !important; }
 }
@@ -120151,7 +120114,9 @@ function openSub(entry, b, it, keyboard) {
   openMenu(sub, b, { side: true, parent: entry, menus: entry.opts.menus, onPick: entry.opts.onPick, keyboard });
 }
 
-/* outside pointer, window resize and scroll outside the menu close every open menu */
+/* outside pointer, window resize and a scroll that moves a menu's trigger close every open menu. Only the page's own
+   scroll or a scroller that holds a trigger moves one: an unrelated scroller (the chat's message stream settles about
+   2 s after load or a theme switch) leaves the menus open, as a scroll inside a menu does. */
 document.addEventListener('pointerdown', ev => {
   if (!MENU_STACK.length) return;
   if (MENU_STACK.some(e => e.el.contains(ev.target))) return;
@@ -120161,7 +120126,10 @@ document.addEventListener('pointerdown', ev => {
 window.addEventListener('resize', () => { if (MENU_STACK.length) closeAll(); });
 document.addEventListener('scroll', ev => {
   if (!MENU_STACK.length) return;
-  if (ev.target && ev.target.nodeType === 1 && MENU_STACK.some(e => e.el.contains(ev.target))) return;
+  const t = ev.target;
+  if (t && t.nodeType === 1 && MENU_STACK.some(e => e.el.contains(t))) return;
+  const page = !t || t.nodeType !== 1 || t === document.scrollingElement || t === document.documentElement || t === document.body;
+  if (!page && !MENU_STACK.some(e => t.contains(e.anchor) || (e.opts.origin && t.contains(e.opts.origin)))) return;
   closeAll();
 }, true);
 document.addEventListener('keydown', ev => {
@@ -120210,7 +120178,8 @@ PMR.menu = {
     let pin = document.getElementById('pmr-menu-pin');
     if (!pin) { pin = PMR.h('span#pmr-menu-pin', { 'aria-hidden': 'true' }); document.body.appendChild(pin); }
     pin.style.cssText = `position:fixed;left:${Math.round(x)}px;top:${Math.round(y)}px;width:1px;height:1px;pointer-events:none;`;
-    return openMenu(def, pin, Object.assign({ width: 248 }, opts));
+    /* origin: what was under the point, so a scroll of its list closes the menu as it closes a trigger's */
+    return openMenu(def, pin, Object.assign({ width: 248, origin: document.elementFromPoint(x, y) }, opts));
   },
 };
 /* ---- js/30-host.js ---- */
@@ -120527,9 +120496,17 @@ const WORDS = {
   'Open in Panel': 'Open in panel',
   'vm not running — start colima · Retry': 'VM not running — start colima · Retry',
 };
-/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value */
+/* ages and elapsed times the shell writes as "4m", "2h", "1d", "12s ago", "up 3h", "1m 48s" are spelled out the way the
+   Jujutsu rows write them ("4 minutes", "2 hours ago", "1 minute 48 seconds"); a decimal measurement keeps its unit
+   symbol ("3.4s", "84.6s"), and a hash that starts with a digit ("3d9be21") is not an age */
+const AGE_UNIT = { s: 'second', m: 'minute', h: 'hour', d: 'day', w: 'week' };
+const AGE_RX = /(^|[\s(·—–])(\d+)([smhdw])(?=$|[\s),;·—–])/g;
+const ageWords = (m, pre, n, u) => pre + n + ' ' + AGE_UNIT[u] + (n === '1' ? '' : 's');
+/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value (10-skin
+   applyWords; text in code, kbd and pre is left as written) */
 const PHRASES = [
   [/^(\s*)Watching (\d+) · /, '$1Watching $2 folders · '],
+  [AGE_RX, ageWords],
 ];
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };
@@ -120665,9 +120642,10 @@ function applyWords(root) {
   }
   const walker2 = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let n = walker2.nextNode(); n; n = walker2.nextNode()) {
-    for (const [rx, rep] of PHRASES) {
-      if (rx.test(n.nodeValue)) { const orig = n.nodeValue; n.nodeValue = orig.replace(rx, rep); remember(() => { n.nodeValue = orig; }); }
-    }
+    if (n.parentElement && n.parentElement.closest('code, kbd, pre, samp')) continue;
+    let v = n.nodeValue;
+    for (const [rx, rep] of PHRASES) { rx.lastIndex = 0; if (rx.test(v)) { rx.lastIndex = 0; v = v.replace(rx, rep); } }
+    if (v !== n.nodeValue) { const orig = n.nodeValue; n.nodeValue = v; remember(() => { n.nodeValue = orig; }); }
   }
   hits.forEach(n => {
     const el = n.parentElement, t = n.nodeValue.trim(), lead = (n.nodeValue.match(/^\s*/) || [''])[0];
@@ -121008,7 +120986,7 @@ function observePanels() {
    - Every control carries data-command-id = data-demo-action plus a data-demo-arg; every dropdown opens PMR.menu.
    The example data continues today's cards (tastebook, current change nkmwqzvw) and lives here, in concept D only. */
 
-const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', ink: null, view: null, reasons: [], registered: false };
+const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', view: null, reasons: [], registered: false };
 const JJ_TABS = [
   { id: 'changes', label: 'Changes', icon: 'diff', git: 'changes' },
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
@@ -121553,7 +121531,6 @@ function jjWireFold(card) {
 /* ---------- the strip ---------- */
 function jjBuildStrip() {
   const strip = jh('div', { class: 'pm-segtab d-jj-strip', role: 'tablist', 'aria-label': 'Jujutsu views', style: '--cat:var(--cat-blue)' },
-    jh('span.pm-segtab-ink', { 'aria-hidden': 'true' }),
     JJ_TABS.map(t => {
       const b = jh('button', { type: 'button', class: 'pm-segtab-item', role: 'tab', id: 'd-jj-tab-' + t.id, 'data-jj-tab': t.id, 'aria-controls': 'd-jj-pane-' + t.id, 'aria-selected': 'false', tabindex: '-1' },
         jjIco(t.icon), jh('span', { text: t.label }));
@@ -121575,65 +121552,34 @@ function jjBuildStrip() {
   });
   return strip;
 }
-/* Keyboard focus follows the selection once the strip has settled. NieR's target brackets (19-nier-parts retFocus)
-   measure their target once, on focusin; focusing at once framed the 24 px icon slot the tab was still growing from.
-   Waits for the strip's own finite animations and transitions (the label's width, whatever motion a family adds),
-   not for the ink; capped, and cancelled by the next key. Focus stays on the old tab meanwhile, so keys keep working. */
+/* Keyboard focus follows the selection at once. The strip runs on D's tab engine (31-tabs.js: one ink, one move per
+   change), which refits it in jjSelect's own task: the chosen tab shows its label in one step, so its box is final
+   before focus moves and NieR's target brackets (19-nier-parts retFocus, measured once on focusin) frame exactly that
+   box. (While the strip still grew its label by a transition, focus waited for it and the brackets stayed on the
+   previous tab meanwhile.) */
 function jjFocusSettled(strip, id) {
-  const tok = JJ.focusTok = (JJ.focusTok || 0) + 1;
-  const go = () => {
-    if (tok !== JJ.focusTok || JJ.strip !== strip || JJ.tab !== id || !strip.contains(document.activeElement)) return;
-    const b = strip.querySelector('[data-jj-tab="' + id + '"]');
-    if (b && document.activeElement !== b) b.focus({ preventScroll: true });
-  };
-  if (reduced() || typeof strip.getAnimations !== 'function') { go(); return; }
-  /* two frames: jjSelect's own frame has refit the strip and started the ink and the label transitions by then */
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    if (tok !== JJ.focusTok) return;
-    const running = strip.getAnimations({ subtree: true }).filter(a => {
-      const t = a.effect && a.effect.target;
-      if (!t || a.playState === 'finished' || (t.closest && t.closest('.pm-segtab-ink'))) return false;
-      const end = a.effect.getComputedTiming().endTime;
-      return Number.isFinite(end);
-    });
-    if (!running.length) { go(); return; }
-    let done = false;
-    const fin = () => { if (!done) { done = true; go(); } };
-    Promise.all(running.map(a => a.finished.catch(() => null))).then(fin);
-    setTimeout(fin, 1200);
-  }));
+  if (JJ.strip !== strip || JJ.tab !== id || !strip.contains(document.activeElement)) return;
+  const b = strip.querySelector('[data-jj-tab="' + id + '"]');
+  if (b && document.activeElement !== b) b.focus({ preventScroll: true });
 }
-/* the fit rule for both Source strips (DECISION §4.4): decided by the longest label, so the mode never flips on a click */
-function jjStripMode(st) {
-  const items = Array.from(st.querySelectorAll(':scope > .pm-segtab-item'));
-  if (!items.length || !st.offsetWidth) return null;
-  const cs = getComputedStyle(st);
-  const room = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  const longest = Math.max(...items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; }));
-  const ICON = 15, GAP = 5, PAD = 12, INACTIVE = 24, n = items.length;
-  if (longest + ICON + GAP + PAD <= room / n) return 'full';
-  if (n > 1 && longest + ICON + GAP + PAD + (n - 1) * INACTIVE <= room) return 'active';
-  return 'icons';
-}
-function jjFit(st) {
-  const mode = st && jjStripMode(st);
-  if (mode && st.getAttribute('data-d-tabs') !== mode) st.setAttribute('data-d-tabs', mode);
-}
+/* the strip's mode: both Source strips decide by their longest label (20-fit tabMode, DECISION §4.4), so the mode never
+   flips on a click; fitTabs also rests the ink on the chosen tab */
+function jjFit(st) { if (st) fitTabs(st); }
 /* a folder on line 2 keeps both ends (D's middle truncation, 20-fit midFit): web/…/recipe/editor */
 function jjFitDirs(root) { if (root) root.querySelectorAll('.d-jdir').forEach(el => { if (el.offsetParent) midFit(el); }); }
-function jjInk(animate) {
-  const st = JJ.strip;
-  if (!st || !st.offsetWidth) return;
-  if (!JJ.ink && window.PM6_LIQUID_INK) {
-    JJ.ink = window.PM6_LIQUID_INK.attach({ strip: st, ink: st.querySelector('.pm-segtab-ink'), axis: 'h', getActive: () => st.querySelector('.pm-segtab-item.active') });
-  }
-  if (JJ.ink) JJ.ink.resync(!!animate);
-}
+/* a tab change moves like every other strip's (31-tabs.js playTabs): the strip is snapped before the change (on a
+   click by the shared capture listener, on a key here), refit in this task, and the ink, the icons and the new pane
+   move together on the next frame */
 function jjSelect(id, o) {
   if (!JJ.strip || !JJ.panes[id]) return;
+  const st = JJ.strip;
   const was = JJ_TABS.findIndex(t => t.id === JJ.tab), now = JJ_TABS.findIndex(t => t.id === id);
+  const animate = !!(o && o.animate) && was !== now;
+  const next = st.querySelector('[data-jj-tab="' + id + '"]');
+  const from = animate ? (st._dFrom || (st.offsetWidth && next ? snapStrip(st, next) : null)) : null;
+  delete st._dFrom;
   JJ.tab = id;
-  JJ.strip.querySelectorAll('[data-jj-tab]').forEach(b => {
+  st.querySelectorAll('[data-jj-tab]').forEach(b => {
     const on = b.getAttribute('data-jj-tab') === id;
     b.classList.toggle('active', on);
     b.setAttribute('aria-selected', String(on));
@@ -121641,13 +121587,14 @@ function jjSelect(id, o) {
   });
   Object.keys(JJ.panes).forEach(k => { JJ.panes[k].hidden = k !== id; });
   if (JJ.scroll) JJ.scroll.scrollTop = 0;
-  jjFit(JJ.strip);
+  if (!st.offsetWidth) return;
+  jjFit(st);
   const pane = JJ.panes[id];
-  if (!JJ.strip.offsetWidth) return;
+  if (animate) { playTabs(st, from, now > was ? 1 : -1, () => pane, jjFitDirs); return; }
   requestAnimationFrame(() => {
-    jjInk(o && o.animate && was !== now);
+    if (!D.on) return;
+    placeInk(st, true);
     stackHeads(pane); stackRows(pane); midFitAll(pane); jjFitDirs(pane);
-    if (o && o.animate && was !== now) enterPane(pane, now > was ? 1 : -1);
   });
 }
 
@@ -121672,7 +121619,9 @@ function jjBuild(panel) {
   inject(view, strip, view.firstChild);
   inject(view, scroll, strip.nextSibling);
   inject(view, foot, scroll.nextSibling);
-  JJ.strip = strip; JJ.scroll = scroll; JJ.ink = null;
+  JJ.strip = strip; JJ.scroll = scroll;
+  /* D's tab engine: the ink, the brackets hook and the resize watch every strip has (31-tabs.js) */
+  wireStrip(strip);
   jjWireFold(foot.querySelector('.pm7-post-card'));
   /* the content hairline under the strip once something has scrolled under it */
   scroll.addEventListener('scroll', () => strip.classList.toggle('d-jj-scrolled', scroll.scrollTop > 2), { passive: true });
@@ -121724,20 +121673,13 @@ function jjWatch(panel) {
   D.observers.push(mo);
   /* the strip refits and its ink snaps whenever its box changes (shown, resized, theme, text size) */
   if (window.ResizeObserver) {
-    const ro = new ResizeObserver(() => { if (!D.on) return; jjFit(JJ.strip); jjInk(false); jjFitDirs(JJ.panes[JJ.tab]); });
+    const ro = new ResizeObserver(() => { if (!D.on) return; jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); });
     ro.observe(JJ.strip);
     D.observers.push(ro);
   }
-  const mo2 = new MutationObserver(() => { if (D.on) requestAnimationFrame(() => { jjFit(JJ.strip); jjInk(false); jjFitDirs(JJ.panes[JJ.tab]); }); });
+  const mo2 = new MutationObserver(() => { if (D.on) requestAnimationFrame(() => { jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); }); });
   mo2.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'style'] });
   D.observers.push(mo2);
-  /* Git's strip follows the same longest-label rule: correct the mode right after D's fitTabs writes it */
-  const gitStrip = panel.querySelector(':scope > .pm-segtab');
-  if (gitStrip) {
-    const mo3 = new MutationObserver(() => { if (D.on && gitStrip.hasAttribute('data-d-tabs')) jjFit(gitStrip); });
-    mo3.observe(gitStrip, { attributes: true, attributeFilter: ['data-d-tabs'] });
-    D.observers.push(mo3);
-  }
 }
 /* toast handlers only where the shell has none (its toastReg pattern), and the reasons the guard reads */
 function jjRegister() {
@@ -121752,12 +121694,12 @@ function jjRegister() {
 
 panelHook('panel-source', {
   apply(panel) { jjBuild(panel); },
-  show(panel) { if (JJ.strip) { jjFit(JJ.strip); jjInk(false); } },
+  show(panel) { if (JJ.strip) jjFit(JJ.strip); },
   unmount() {
     const R = window.PM_DEMO && window.PM_DEMO.guard && window.PM_DEMO.guard.reasons;
     if (R) JJ.reasons.forEach(k => { delete R[k]; });
     JJ.reasons = [];
-    Object.assign(JJ, { strip: null, scroll: null, panes: {}, ink: null, view: null, engine: null });
+    Object.assign(JJ, { strip: null, scroll: null, panes: {}, view: null, engine: null });
   },
 });
 /* ---- concepts/d/20-fit.js ---- */
@@ -121768,19 +121710,29 @@ panelHook('panel-source', {
    - The Git / Jujutsu switch: a thumb that sits exactly on the pressed button. */
 
 function labelOf(item) { return item.querySelector(':scope > .eq-full') || item.querySelector(':scope > span:not(.eq-abbr)'); }
+/* the strip's mode. Source Control's two strips (Git and Jujutsu, side by side in one panel) decide by their longest
+   label with 24 px inactive tabs (DECISION §4.4, 71-source), so their mode never flips on a click; the other strips
+   decide by the chosen tab's label. */
+function tabMode(st, items) {
+  const cs = getComputedStyle(st);
+  const avail = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const w = items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; });
+  const n = items.length, each = avail / n;
+  if (st.closest('#panel-source')) {
+    const longest = Math.max(...w), ICON = 15, GAP = 5, PAD = 12, INACTIVE = 24;
+    if (longest + ICON + GAP + PAD <= each) return 'full';
+    return n > 1 && longest + ICON + GAP + PAD + (n - 1) * INACTIVE <= avail ? 'active' : 'icons';
+  }
+  const ICON = 15, GAP = 6, PAD = 16, PAD_ACTIVE = 24, MIN_ICON = 30;
+  const act = Math.max(0, items.findIndex(it => it.classList.contains('active')));
+  if (Math.max(...w) + ICON + GAP + PAD <= each) return 'full';
+  return n > 1 && w[act] + ICON + GAP + PAD_ACTIVE + (n - 1) * MIN_ICON <= avail ? 'active' : 'icons';
+}
 function fitTabs(st) {
   if (!st.offsetWidth) return;
   const items = Array.from(st.querySelectorAll(':scope > .pm-segtab-item'));
   if (!items.length) return;
-  const cs = getComputedStyle(st);
-  const avail = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  const ICON = 15, GAP = 6, PAD = 16, PAD_ACTIVE = 24, MIN_ICON = 30;
-  const w = items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; });
-  const each = avail / items.length;
-  const act = Math.max(0, items.findIndex(it => it.classList.contains('active')));
-  let mode = 'icons';
-  if (Math.max(...w) + ICON + GAP + PAD <= each) mode = 'full';
-  else if (items.length > 1 && w[act] + ICON + GAP + PAD_ACTIVE + (items.length - 1) * MIN_ICON <= avail) mode = 'active';
+  const mode = tabMode(st, items);
   if (st.getAttribute('data-d-tabs') !== mode) st.setAttribute('data-d-tabs', mode);
   items.forEach(it => {
     const l = labelOf(it);
@@ -121791,19 +121743,44 @@ function fitTabs(st) {
   placeInk(st);
 }
 
+/* does anything in a head run past its content box? To the sub-pixel, on each child's margin box (a mini button's
+   negative end margin reaches into the padding by design), freed of any entrance scale: scrollWidth is whole pixels,
+   and a head 0.4 px too full cut its label with an ellipsis that was never stacked */
+function headOver(h) {
+  if (h.scrollWidth > h.clientWidth + 1) return true;
+  const cs = getComputedStyle(h), box = h.getBoundingClientRect();
+  const k = h.offsetWidth ? box.width / h.offsetWidth : 1;
+  const end = box.right - ((parseFloat(cs.paddingRight) || 0) + (parseFloat(cs.borderRightWidth) || 0)) * k;
+  return Array.from(h.children).some(c => {
+    const ccs = getComputedStyle(c);
+    if (ccs.position === 'absolute' || ccs.position === 'fixed' || ccs.display === 'none') return false;
+    const r = c.getBoundingClientRect();
+    return r.width > 0 && r.right + (parseFloat(ccs.marginRight) || 0) * k > end + 0.05 * k;
+  });
+}
+/* the head's style attribute goes back as it was: --d-stack-x is written inline and clearFit removes the property,
+   which would leave style="" on a head that had no style attribute (undo runs after clearFit) */
+function stackStyle(h) {
+  if (h._dStackStyle) return;
+  h._dStackStyle = true;
+  const had = h.hasAttribute('style');
+  remember(() => { delete h._dStackStyle; if (!had && h.getAttribute('style') === '') h.removeAttribute('style'); });
+}
+/* the key holds what changes the head's line: its width, its words, and whether its shelf is open (some heads show
+   their actions only while open) */
 function stackHeads(root, force) {
   const heads = Array.from(root.querySelectorAll('.sh-shelf > .sh-head'));
   const widths = heads.map(h => h.offsetWidth);
   heads.forEach((h, i) => {
     const c = h.querySelector(':scope > .sh-hcount, :scope > .sh-htrail > .sh-hcount'), l = h.querySelector(':scope > .sh-hlabel');
     if (!c || !l || !widths[i]) return;
-    const key = widths[i] + '|' + c.textContent;
+    const key = widths[i] + '|' + l.textContent + '|' + c.textContent + '|' + h.parentElement.classList.contains('open');
     if (!force && h._dStackKey === key) return;
     h._dStackKey = key;
     h.removeAttribute('data-d-stack');
-    const over = overflows(l) || h.scrollWidth > h.clientWidth + 1;
-    if (over) {
+    if (overflows(l) || headOver(h)) {
       h.setAttribute('data-d-stack', '');
+      stackStyle(h);
       const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
       h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
     }
@@ -121815,11 +121792,11 @@ function stackHeads(root, force) {
   sums.forEach((h, i) => {
     const c = h.querySelector(':scope > .c');
     if (!c || !sumW[i]) return;
-    const key = sumW[i] + '|' + c.textContent;
+    const key = sumW[i] + '|' + h.textContent;
     if (!force && h._dStackKey === key) return;
     h._dStackKey = key;
     h.removeAttribute('data-d-stack');
-    if (h.scrollWidth > h.clientWidth + 1) h.setAttribute('data-d-stack', '');
+    if (headOver(h)) h.setAttribute('data-d-stack', '');
   });
 }
 
@@ -121844,28 +121821,38 @@ function wireThumb(panel) {
   remember(() => { delete sw._dThumb; });
 }
 
+/* every fit cache on the panels' elements: the shared keys and any _d…Key a panel's own file keeps */
+const FIT_KEY = /^_d\w*Key$/;
 function clearFitCache() {
-  panelEls().forEach(p => p.querySelectorAll('*').forEach(el => { delete el._dFitKey; delete el._dStackKey; delete el._dStackW; }));
+  panelEls().forEach(p => p.querySelectorAll('*').forEach(el => {
+    Object.keys(el).forEach(k => { if (FIT_KEY.test(k)) delete el[k]; });
+    delete el._dStackW;
+  }));
 }
 /* the fitting state is recomputed, not remembered: clearing it is the undo */
 function clearFit() {
   clearFitCache();
   document.querySelectorAll('[data-d-tabs]').forEach(el => el.removeAttribute('data-d-tabs'));
   document.querySelectorAll('[data-d-stack]').forEach(el => el.removeAttribute('data-d-stack'));
+  document.querySelectorAll('[data-d-owner]').forEach(el => el.removeAttribute('data-d-owner'));
   document.querySelectorAll('.sh-head[style*="--d-stack-x"]').forEach(el => el.style.removeProperty('--d-stack-x'));
   document.querySelectorAll('[data-d-hov]').forEach(el => { el.removeAttribute('data-d-hov'); el.removeAttribute('data-pm-hover-label'); el.removeAttribute('data-pm-hover-detail'); });
 }
 /* a registry row whose state and account do not fit on one line puts the account on a third line */
 function stackRows(root) {
-  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
+  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it; the owner sits
+     beside the state word when it fits there whole, else on a line of its own under it (a column beside the diff
+     broke "lane-b worker · run #47" into three lines) */
   root.querySelectorAll('.sh-wt-h').forEach(h => {
-    const b = h.querySelector(':scope > .sh-branch');
+    const b = h.querySelector(':scope > .sh-branch'), ow = h.querySelector(':scope > .sh-owner');
     const w = h.offsetWidth;
     if (!b || !w || h._dStackW === w) return;
     h._dStackW = w;
     if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
     h.removeAttribute('data-d-stack');
+    h.removeAttribute('data-d-owner');
     if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
+    if (ow && ow.offsetParent && overflows(ow)) h.setAttribute('data-d-owner', '');
   });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');
@@ -122129,10 +122116,15 @@ const reduced = () => PMR.motion.reduced();
 const fam = () => (PMR.motion.nier() ? 'nier' : PMR.motion.family());
 const spec = () => FAM_MOTION[fam()] || FAM_MOTION.basic;
 
+/* NieR's wipe is drawn with a mask, a hard edge sliding across a box twice as wide, not with a clip-path: a clip also
+   clips hit testing, so a click on a tab or a row still wiping in (on the VM up to 0.7 s after a panel opened, the
+   shell's fit pass delaying the entrance) fell through to the list behind it. A mask hides the same pixels and leaves
+   every element clickable. dx < 0: the ink comes in from the right. */
+const WIPE_IN = 'linear-gradient(90deg, #000 50%, transparent 50%)', WIPE_IN_R = 'linear-gradient(90deg, transparent 50%, #000 50%)';
 function enterFrames(f, dx, dy) {
   if (f.wipe) {
-    const from = dx < 0 ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)';
-    return [{ clipPath: from }, { clipPath: 'inset(0 0 0 0)' }];
+    const m = dx < 0 ? WIPE_IN_R : WIPE_IN, at = dx < 0 ? ['0% 0%', '100% 0%'] : ['100% 0%', '0% 0%'];
+    return at.map(p => ({ maskImage: m, maskSize: '200% 100%', maskRepeat: 'no-repeat', maskPosition: p }));
   }
   const a = { opacity: 0, transform: 'translate(' + dx + 'px, ' + dy + 'px)' + (f.scale ? ' scale(' + f.scale + ')' : '') };
   const b = { opacity: 1, transform: 'none' };
@@ -122283,15 +122275,18 @@ function deal(list, o) {
   }
 }
 
-/* the panel comes in: its chrome settles first, the content deals in right behind it */
+/* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
 function enterPanel(panel) {
   if (reduced() || !panel) return;
-  const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
+  const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
   cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .6), durK: .8, anims });
   const jj = panel.querySelector(':scope > .pm7-scm-jj-view');
-  const list = (jj && visible(jj)) ? Array.from(jj.children).map(el => ({ el })) : dealList(activePane(panel));
+  const sc = panel.querySelector(':scope > .sh-scroll');
+  const content = activePane(panel) || (sc && !sc.querySelector(':scope > [data-pane]') ? sc : null);
+  const list = (jj && visible(jj)) ? Array.from(jj.children).filter(visible).map(el => ({ el })) : dealList(content);
   const foot = panel.querySelector(':scope > .pm7-scm-git-footer');
   if (visible(foot)) list.push({ el: foot });
   deal(list, { delay: Math.round(f.step * 1.5), anims });
@@ -122376,7 +122371,9 @@ function onClickMotion(ev) {
     const item = head.closest('[data-acc]');
     requestAnimationFrame(() => {
       if (!item) return;
-      if (item.classList.contains('open')) { revealBody(item); stackHeads(item); midFitAll(item); revealInView(item); }
+      /* the head is re-measured either way: its key holds the open state (a head may show its actions only while open) */
+      stackHeads(item);
+      if (item.classList.contains('open')) { revealBody(item); midFitAll(item); revealInView(item); }
     });
   }
 }
@@ -122395,8 +122392,9 @@ function onEngine(ev) {
 }
 /* ---- concepts/d/31-tabs.js ---- */
 /* Tab strips: one ink per strip and one move per tab change, per family. Generic over the shell's .pm-segtab, so every
-   strip of the nine panels moves the same way (Files, Search, Source Control, Actions & pipelines, Docker, Runtime
-   artifacts). 22-tabs.src.css has the looks.
+   strip of the nine panels moves the same way (Files, Search, Source Control's Git and Jujutsu strips, Actions &
+   pipelines, Docker, Runtime artifacts), and Arrow keys, Home and End choose along every strip. 22-tabs.src.css has
+   the looks.
    The ink (span.pm-segtab-ink.d-ink) is the skin's own and always sits exactly on the chosen tab's box; the shell's
    spring ink is hidden under the skin. A change works like this: a capture listener reads the strip as it looks before
    the shell switches the tab (the ink's box, every icon and label); the shell switches; the strip is refitted at once
@@ -122477,22 +122475,26 @@ function fitViewOnly(ev) {
   requestAnimationFrame(() => requestAnimationFrame(() => { if (id === fitViewSeq) slot.removeAttribute('data-d-fitview'); }));
 }
 
-/* capture phase: the strip as it looks now, before the shell switches the tab (mid-move too: rects include the running
-   animations, so a second click starts from exactly what is on screen) */
-function onTabCapture(ev) {
-  if (!D.on) return;
-  fitViewOnly(ev);
-  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item[data-tab]');
-  if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
-  const st = tab.parentElement;
-  if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
+/* the strip as it looks now, before its tab changes (mid-move too: rects include the running animations, so a second
+   click starts from exactly what is on screen). tab: the tab about to be chosen */
+function snapStrip(st, tab) {
   const ink = st.querySelector(':scope > .d-ink');
   const kids = new Map();
   tabItems(st).forEach(it => Array.from(it.children).forEach(k => { if (k.getClientRects().length) kids.set(k, stripBox(st, k).x); }));
   const moving = !!ink && ink.getAnimations().some(a => a.id === 'd-tab' && a.playState === 'running');
   /* fg: the chosen tab's colour as it was (hovered or not), which Retro holds until the ink lands on it */
-  st._dFrom = { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids,
+  return { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids,
     fg: getComputedStyle(tab).color };
+}
+/* capture phase: snap the strip before the shell (or Jujutsu's strip, 15-jj.js) switches the tab */
+function onTabCapture(ev) {
+  if (!D.on) return;
+  fitViewOnly(ev);
+  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item:is([data-tab], [data-jj-tab])');
+  if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
+  const st = tab.parentElement;
+  if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
+  st._dFrom = snapStrip(st, tab);
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -122506,23 +122508,45 @@ function tabChanged(tab) {
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
   if (now === was) return;
-  const dir = now > was ? 1 : -1;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  /* one frame callback makes every animation of the change, and startTogether starts them all on the next frame: the
-     ink, the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame */
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+}
+/* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
+   the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
+   view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
+function playTabs(st, from, dir, paneOf, after) {
   requestAnimationFrame(() => {
     if (!D.on) return;
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
-    const pane = activePane(panel);
-    if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); enterPane(pane, dir, anims); }
+    const pane = paneOf();
+    if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
     if (ret && fam() === 'nier' && !reduced()) ret.querySelectorAll(':scope > i').forEach(i => i.getAnimations().forEach(a => anims.push(a)));
     startTogether(anims);
   });
+}
+
+/* Arrow keys, Home and End move along a strip and choose the tab they land on, as every other tab list in the app
+   does (Settings' section tabs, the editor tabs, Jujutsu's strip). The shell's rail strips had no keys; under D the
+   key clicks the tab (the shell switches it, the move above plays) and focus follows at once: the strip refits in that
+   same click, so the target brackets lock onto the tab's final box. Jujutsu's strip keeps its own handler (15-jj.js). */
+function onTabKey(ev) {
+  if (!D.on || ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(ev.key)) return;
+  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item[data-tab]');
+  if (!tab || !inPanels(tab)) return;
+  const st = tab.parentElement;
+  if (!st || !st.classList.contains('pm-segtab')) return;
+  const items = tabItems(st).filter(it => it.getClientRects().length && !it.disabled), i = items.indexOf(tab), n = items.length;
+  if (i < 0 || n < 2) return;
+  const k = ev.key, next = items[k === 'Home' ? 0 : k === 'End' ? n - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + n) % n];
+  if (!next || next === tab) return;
+  ev.preventDefault();
+  next.click();
+  next.focus({ preventScroll: true });
 }
 
 function moveTabs(st, from, dir, anims) {
@@ -122603,21 +122627,23 @@ function liquidFrames(a, b) {
   ];
 }
 
-/* the strips of a panel: their ink, a resize watch, the brackets hook; the capture listener once for all panels */
+/* a strip: its ink, a resize watch, the brackets hook (Jujutsu's strip is wired the same way by 15-jj.js) */
+function wireStrip(st) {
+  inkOf(st);
+  tabItems(st).forEach(it => addClass(it, 'pmr-lock'));
+  if (!st._dTabsRO && window.ResizeObserver) {
+    const ro = new ResizeObserver(() => { if (D.on) placeInk(st); });
+    ro.observe(st);
+    D.observers.push(ro);
+    st._dTabsRO = ro;
+    remember(() => { delete st._dTabsRO; delete st._dFrom; });
+  }
+  placeInk(st);
+}
+/* the strips of a panel; the capture and key listeners once for all panels */
 function wireTabs(panel) {
-  panel.querySelectorAll(':scope > .pm-segtab').forEach(st => {
-    inkOf(st);
-    tabItems(st).forEach(it => addClass(it, 'pmr-lock'));
-    if (!st._dTabsRO && window.ResizeObserver) {
-      const ro = new ResizeObserver(() => { if (D.on) placeInk(st); });
-      ro.observe(st);
-      D.observers.push(ro);
-      st._dTabsRO = ro;
-      remember(() => { delete st._dTabsRO; delete st._dFrom; });
-    }
-    placeInk(st);
-  });
-  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); }
+  panel.querySelectorAll(':scope > .pm-segtab').forEach(wireStrip);
+  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey); }
 }
 PANEL_IDS.forEach(id => panelHook(id, {
   apply(panel) { wireTabs(panel); },
@@ -122935,16 +122961,6 @@ function dsrOver(el) {
   rg.selectNodeContents(el);
   return rg.getBoundingClientRect().width > room + .05;
 }
-/* clearFit removes the skin's --d-stack-x from a shelf head and leaves style="" behind: a head that had no style
-   attribute before the skin gets it removed again on undo (it runs after clearFit), so "Current" is byte-identical */
-function dsrStyleGuard(panel) {
-  panel.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
-    if (h._dStyleGuard) return;
-    h._dStyleGuard = true;
-    const had = h.hasAttribute('style');
-    remember(() => { delete h._dStyleGuard; if (!had && h.getAttribute('style') === '') h.removeAttribute('style'); });
-  });
-}
 /* two-part rows (expression and value, frame and location): side by side when both fit, else the second part moves
    under the first. Widths are read first (one layout), keyed so a pass with nothing changed does no work. */
 function dsrStackPairs(root, specs) {
@@ -123056,7 +123072,6 @@ function srchApply(panel, animate) {
     remember(() => { fp.textContent = orig; delete fp._dPath; dir.remove(); });
   });
   panel.querySelectorAll(SRCH_ROWS).forEach(el => addClass(el, 'pmr-cur'));
-  dsrStyleGuard(panel);
   dsrWire();
   srchFit(panel);
 }
@@ -123315,33 +123330,11 @@ function rdpCfgField(trig) {
   if (c.textContent !== ct) c.textContent = ct;
 }
 
-/* shelf heads: label, summary and actions on one line when they fit; else the summary moves under the label. The
-   actions only show while the shelf is open, so the open state is part of the key (the shared stackHeads keys on width
-   and text only and would keep a fit measured while the shelf was closed); the theme is too, since it changes fonts. */
-function rdpStackHeads(panel) {
-  dsrStyleGuard(panel);
-  const heads = Array.from(panel.querySelectorAll('.sh-shelf > .sh-head'));
-  const ws = heads.map(h => h.offsetWidth);
-  const root = document.documentElement, look = root.getAttribute('data-theme') + (root.getAttribute('data-o55-nier') || '');
-  heads.forEach((h, i) => {
-    const tr = h.querySelector(':scope > .sh-htrail'), l = h.querySelector(':scope > .sh-hlabel');
-    const c = (tr || h).querySelector(':scope > .sh-hcount');
-    if (!c || !l || !ws[i]) return;
-    const key = ws[i] + '|' + c.textContent + '|' + h.parentNode.classList.contains('open') + '|' + look;
-    if (h._dRunStackKey === key) return;
-    h._dRunStackKey = key;
-    h._dStackKey = ws[i] + '|' + c.textContent;            // the shared stackHeads' key: it leaves this head to us
-    h.removeAttribute('data-d-stack');
-    if (dsrOver(l) || h.scrollWidth > h.clientWidth + 1) {
-      h.setAttribute('data-d-stack', '');
-      const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
-      h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
-    }
-  });
-}
+/* shelf heads: label, summary and actions on one line when they fit, else the summary moves under the label: the shared
+   stackHeads (20-fit.js), whose key holds the open state (the actions only show while a shelf is open) */
 function rdpFit(panel) {
   if (!panel || !panel.offsetWidth) return;
-  rdpStackHeads(panel);
+  stackHeads(panel);
   /* a session whose state line and adapter tag do not fit on one line puts the tag on a third line */
   panel.querySelectorAll('.sh-sess').forEach(row => {
     const line = row.querySelector('.d-sessst'), chip = row.querySelector(':scope > .sh-chip');
@@ -123480,17 +123473,9 @@ function rdhWire(host) {
 
 panelHook('panel-run', {
   apply(panel, animate) { rdpApply(panel, animate); },
-  show(panel, info) {
-    rdpFit(panel);
-    /* the panel has no tabs: its launch row and shelves deal in under the header (enterPanel deals tab panes) */
-    if (info && (info.reason === 'switch' || info.reason === 'concept')) {
-      const sc = panel.querySelector(':scope > .sh-scroll');
-      if (sc) deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
-    }
-  },
-  /* clearFit has dropped every data-d-stack; this file's own head key must go too, or the next mount finds it still
-     matching and leaves a stacked head unstacked (D -> Current -> D) */
-  unmount(panel) { dsrWired = false; rdhState = null; panel.querySelectorAll('.sh-head').forEach(h => { delete h._dRunStackKey; }); },
+  /* the panel has no tabs: the shared entrance (30-motion.js enterPanel) deals its scroller's list in */
+  show(panel) { rdpFit(panel); },
+  unmount() { dsrWired = false; rdhState = null; },
 });
 /* ---- concepts/d/53-git.js ---- */
 /* Lane E (2026-10-09): Actions & pipelines (#panel-git, panel id repository_automation) in the Polish design.
@@ -123505,9 +123490,7 @@ panelHook('panel-run', {
      a ring, queued the turning ring) instead of the shell's colour-only dots, which applyDots reads as "live";
    - a disabled dispatch keeps its reason inline (FinalGUISpec disabled-control model);
    - ids and paths that do not fit keep both ends (RELEASE_…_PASSPHRASE, src/…/mixed_fractions.rs);
-   - a run whose facts would wrap beside its state word puts the state under them; a shelf head cut by under a pixel
-     stacks its summary too (the shared stackHeads tolerates 1 px);
-   - the automation plate under the header joins the panel's entrance cascade between the header and the tabs;
+   - a run whose facts would wrap beside its state word puts the state under them;
    - the provider view rises in when the service changes.
    Every DOM change goes through remember() / setAttr() / addClass() / inject() / setOwnText(), so "Current" is
    byte-identical after a switch. LANE_E is shared with 54-artifacts.js (the files share the wrapper scope). */
@@ -123527,12 +123510,14 @@ const LANE_E = (() => {
     for (let n = w.nextNode(); n; n = w.nextNode()) {
       const p = n.parentElement;
       if (!p || p.closest('.pm6-tb-menu')) continue;
-      const t = n.nodeValue.trim();
-      if (t && (Object.prototype.hasOwnProperty.call(map, t) || t.indexOf(' -> ') >= 0 || t.indexOf(' · ') >= 0 || (keep && p.closest(keep)))) hits.push(n);
+      /* matched with plain spaces: the shared applyDetail (10-skin) has already glued each " · " in a fact value to the
+         word before it with a no-break space, so "4 success · 2 failed · 1 running" missed its entry */
+      const t = n.nodeValue.trim(), k = t.replace(/\u00A0/g, ' ');
+      if (t && (Object.prototype.hasOwnProperty.call(map, k) || t.indexOf(' -> ') >= 0 || t.indexOf(' · ') >= 0 || (keep && p.closest(keep)))) hits.push(n);
     }
     hits.forEach(n => {
-      const orig = n.nodeValue, t = orig.trim();
-      let v = Object.prototype.hasOwnProperty.call(map, t) ? orig.replace(t, map[t]) : orig;
+      const orig = n.nodeValue, t = orig.trim(), k = t.replace(/\u00A0/g, ' ');
+      let v = Object.prototype.hasOwnProperty.call(map, k) ? orig.replace(t, map[k]) : orig;
       v = v.replace(/ -> /g, ' → ').replace(/ · /g, '\u00A0· ');
       if (keep && n.parentElement.closest(keep)) {
         v = v.replace(/\S+/g, w => (w.length <= KEEP_MAX ? w.replace(/([0-9A-Za-z])-(?=[0-9A-Za-z])/g, '$1-\u2060') : w))
@@ -123553,27 +123538,6 @@ const LANE_E = (() => {
     const r = document.createRange();
     r.selectNodeContents(el);
     return r.getBoundingClientRect().width > room + .05;
-  }
-  /* a shelf head whose label is cut by less than the 1 px the shared stackHeads (20-fit.js) tolerates stacks too. It
-     carries the lane's own attribute, so the shared pass, which re-measures with its tolerance, never undoes it; the
-     inline offset restores the head's style attribute exactly on a concept switch */
-  function stackTight(root) {
-    root.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
-      const l = h.querySelector(':scope > .sh-hlabel'), c = h.querySelector(':scope > .sh-hcount');
-      if (!l || !c || !h.offsetWidth) return;
-      const key = h.offsetWidth + '|' + l.textContent + '|' + c.textContent + '|' + getComputedStyle(l).font + '|' + h.hasAttribute('data-d-stack');
-      if (h._dETight === key) return;
-      h._dETight = key;
-      h.removeAttribute('data-d-e-stack');
-      if (h.hasAttribute('data-d-stack') || !(inkOver(l) || h.scrollWidth > h.clientWidth)) return;
-      if (!h.hasAttribute('data-d-e-sx')) {
-        const had = h.getAttribute('style');
-        h.setAttribute('data-d-e-sx', '');
-        remember(() => { h.removeAttribute('data-d-e-stack'); h.removeAttribute('data-d-e-sx'); delete h._dETight; if (had == null) h.removeAttribute('style'); else h.setAttribute('style', had); });
-      }
-      h.setAttribute('data-d-e-stack', '');
-      h.style.setProperty('--d-e-stack-x', Math.max(0, l.offsetLeft - (parseFloat(getComputedStyle(h).paddingLeft) || 0)) + 'px');
-    });
   }
   /* a lane glyph as a direct child of host (default: first), its state written on it so it takes the state colour */
   function mark(host, st, before) {
@@ -123613,7 +123577,7 @@ const LANE_E = (() => {
       el._dEFit = el.clientWidth + '|' + getComputedStyle(el).font + '|' + (el._dFull != null ? el._dFull : el.textContent);
     });
   }
-  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dETight; delete el._dEStack; }); }
+  function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dEStack; }); }
   /* refit on rail width, theme, NieR and text size changes (the shared watcher refits only its own selectors) */
   function watch(panel, refit) {
     if (panel._dEWatch) return;
@@ -123642,19 +123606,7 @@ const LANE_E = (() => {
   }
   /* the panel's rows take the NieR cursor (ink bar + square cursor) like the shared rows do */
   function cursor(panel, sel) { panel.querySelectorAll(sel).forEach(el => addClass(el, 'pmr-cur')); }
-  /* the panel comes in: the shared entrance (30-motion.js enterPanel) cascades the header, Source's context plate and
-     the tabs; a lane panel's own plate under the header joins that cascade in its place, with the same timing, so the
-     middle of the panel never stands still before its title. The header keeps the animation enterPanel gave it (the
-     same frame); the plate takes the second step and the tabs, restarted by cascade(), the third. */
-  function chromeIn(panel, plateSel) {
-    const plate = panel.querySelector(':scope > ' + plateSel);
-    if (reduced() || !visible(plate)) return;
-    const head = panel.querySelector(':scope > .sh-banner');
-    const rest = [plate, panel.querySelector(':scope > .pm-segtab')].filter(visible);
-    const f = spec(), step = Math.round(f.step * .6);
-    cascade(rest, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step, delay: visible(head) ? step : 0, durK: .8 });
-  }
-  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver, stackTight, chromeIn };
+  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver };
 })();
 
 (() => {
@@ -123769,7 +123721,7 @@ const LANE_E = (() => {
     });
   }
 
-  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); LANE_E.stackTight(panel); stackRuns(panel, force); }
+  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); stackRuns(panel, force); }
 
   function onClick(ev) {
     if (!D.on) return;
@@ -123795,10 +123747,7 @@ const LANE_E = (() => {
         remember(() => { delete panel._dEClick; });
       }
     },
-    show(panel, info) {
-      if (info && (info.reason === 'switch' || info.reason === 'concept')) LANE_E.chromeIn(panel, '.pm7-automation-context');
-      fit(panel, false);
-    },
+    show(panel) { fit(panel, false); },
     unmount(panel) { LANE_E.clearMid(panel); },
   });
 })();
@@ -123914,10 +123863,7 @@ const LANE_E = (() => {
         remember(() => { delete panel._dEClick; tabIdx = -1; });
       }
     },
-    show(panel, info) {
-      stackCards(panel, false);
-      if (info && (info.reason === 'switch' || info.reason === 'concept')) dealCards(panel, { delay: Math.round(spec().step * 1.5) });
-    },
+    show(panel) { stackCards(panel, false); },
   });
 })();
 /* ---- concepts/d/55-testing.js ---- */
@@ -124135,13 +124081,6 @@ const LF_RUN = (() => {
     });
   }
 
-  /* the panel came in: its shelves and rows deal in behind the header (the shared entrance only knows tabbed panes) */
-  function enter(panel, info) {
-    if (!info || (info.reason !== 'switch' && info.reason !== 'concept')) return;
-    const sc = panel.querySelector(':scope > .sh-scroll');
-    if (!sc) return;
-    deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
-  }
 
   /* the shell fits its chips and counts to their room (PMPillFit writes data-fit), and does so again while D is on,
      where a chip in the facts line has room. Leaving D puts back the fit Current measured before D, not one measured in
@@ -124154,7 +124093,6 @@ const LF_RUN = (() => {
 
   return {
     apply(panel, animate) { fits(panel); rows(panel, animate); chips(panel, animate); texts(panel); stacks(panel); heads(panel); phrases(panel); },
-    enter,
   };
 })();
 
@@ -124193,7 +124131,6 @@ panelHook('panel-testing', {
     lfTestingBanner(panel);
     lfResults(panel);
   },
-  show(panel, info) { LF_RUN.enter(panel, info); },
 });
 /* ---- concepts/d/56-agents.js ---- */
 /* Agents (lane F). The subagent rows are run rows (LF_RUN in 55-testing.js): one glyph, the status word leading the
@@ -124220,7 +124157,6 @@ panelHook('panel-agents', {
     LF_RUN.apply(panel, animate);
     lfAgentSummaries(panel);
   },
-  show(panel, info) { LF_RUN.enter(panel, info); },
 });
 /* ---- concepts/d/90-register.js ---- */
 /* Concept D: register with the host as a skin. mount() applies the skin to the shell's nine rail panels and returns

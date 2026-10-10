@@ -55,7 +55,6 @@
 /* the query: input, the facts line, then the match options and the scope */
 §@search .sh-shelf > .sh-body > .pm-input { margin: 0 !important; }
 /* the field is the D box; Glass paints every input, which would show as a second, darker box inside it */
-§@search .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 §@search .sh-body > .pm-input + .pm-input { margin-top: 6px !important; }
 §@search .sh-stats {
   display: block !important; margin: 6px 0 0 !important; padding: 0 var(--d-pad) !important;
@@ -212,8 +211,4 @@
 §{nier}@search #shIgnoreToggle.on::after { background: var(--o55-nier-on-ink); }
 §{nier}@search :is(.sh-hit, .sh-rr) em { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .16) !important; }
 §{retro}@search .sh-flags > .sh-flag { box-shadow: 1px 1px 0 var(--d-ctl-line) !important; }
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-search :is(.sh-hlabel, .sh-title) { text-transform: uppercase !important; letter-spacing: .14em !important; }
 
-/* reduced motion: nothing here moves (the shared rule names the first three panels only) */
-§R[data-motion="reduced"] #panel-search *, §R[data-reduced-motion="1"] #panel-search * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { §R #panel-search * { transition: none !important; animation: none !important; } }

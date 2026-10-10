@@ -87,16 +87,6 @@ function dsrOver(el) {
   rg.selectNodeContents(el);
   return rg.getBoundingClientRect().width > room + .05;
 }
-/* clearFit removes the skin's --d-stack-x from a shelf head and leaves style="" behind: a head that had no style
-   attribute before the skin gets it removed again on undo (it runs after clearFit), so "Current" is byte-identical */
-function dsrStyleGuard(panel) {
-  panel.querySelectorAll('.sh-shelf > .sh-head').forEach(h => {
-    if (h._dStyleGuard) return;
-    h._dStyleGuard = true;
-    const had = h.hasAttribute('style');
-    remember(() => { delete h._dStyleGuard; if (!had && h.getAttribute('style') === '') h.removeAttribute('style'); });
-  });
-}
 /* two-part rows (expression and value, frame and location): side by side when both fit, else the second part moves
    under the first. Widths are read first (one layout), keyed so a pass with nothing changed does no work. */
 function dsrStackPairs(root, specs) {
@@ -208,7 +198,6 @@ function srchApply(panel, animate) {
     remember(() => { fp.textContent = orig; delete fp._dPath; dir.remove(); });
   });
   panel.querySelectorAll(SRCH_ROWS).forEach(el => addClass(el, 'pmr-cur'));
-  dsrStyleGuard(panel);
   dsrWire();
   srchFit(panel);
 }

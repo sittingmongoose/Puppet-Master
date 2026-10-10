@@ -11,7 +11,7 @@
    - Every control carries data-command-id = data-demo-action plus a data-demo-arg; every dropdown opens PMR.menu.
    The example data continues today's cards (tastebook, current change nkmwqzvw) and lives here, in concept D only. */
 
-const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', ink: null, view: null, reasons: [], registered: false };
+const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', view: null, reasons: [], registered: false };
 const JJ_TABS = [
   { id: 'changes', label: 'Changes', icon: 'diff', git: 'changes' },
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
@@ -556,7 +556,6 @@ function jjWireFold(card) {
 /* ---------- the strip ---------- */
 function jjBuildStrip() {
   const strip = jh('div', { class: 'pm-segtab d-jj-strip', role: 'tablist', 'aria-label': 'Jujutsu views', style: '--cat:var(--cat-blue)' },
-    jh('span.pm-segtab-ink', { 'aria-hidden': 'true' }),
     JJ_TABS.map(t => {
       const b = jh('button', { type: 'button', class: 'pm-segtab-item', role: 'tab', id: 'd-jj-tab-' + t.id, 'data-jj-tab': t.id, 'aria-controls': 'd-jj-pane-' + t.id, 'aria-selected': 'false', tabindex: '-1' },
         jjIco(t.icon), jh('span', { text: t.label }));
@@ -578,65 +577,34 @@ function jjBuildStrip() {
   });
   return strip;
 }
-/* Keyboard focus follows the selection once the strip has settled. NieR's target brackets (19-nier-parts retFocus)
-   measure their target once, on focusin; focusing at once framed the 24 px icon slot the tab was still growing from.
-   Waits for the strip's own finite animations and transitions (the label's width, whatever motion a family adds),
-   not for the ink; capped, and cancelled by the next key. Focus stays on the old tab meanwhile, so keys keep working. */
+/* Keyboard focus follows the selection at once. The strip runs on D's tab engine (31-tabs.js: one ink, one move per
+   change), which refits it in jjSelect's own task: the chosen tab shows its label in one step, so its box is final
+   before focus moves and NieR's target brackets (19-nier-parts retFocus, measured once on focusin) frame exactly that
+   box. (While the strip still grew its label by a transition, focus waited for it and the brackets stayed on the
+   previous tab meanwhile.) */
 function jjFocusSettled(strip, id) {
-  const tok = JJ.focusTok = (JJ.focusTok || 0) + 1;
-  const go = () => {
-    if (tok !== JJ.focusTok || JJ.strip !== strip || JJ.tab !== id || !strip.contains(document.activeElement)) return;
-    const b = strip.querySelector('[data-jj-tab="' + id + '"]');
-    if (b && document.activeElement !== b) b.focus({ preventScroll: true });
-  };
-  if (reduced() || typeof strip.getAnimations !== 'function') { go(); return; }
-  /* two frames: jjSelect's own frame has refit the strip and started the ink and the label transitions by then */
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    if (tok !== JJ.focusTok) return;
-    const running = strip.getAnimations({ subtree: true }).filter(a => {
-      const t = a.effect && a.effect.target;
-      if (!t || a.playState === 'finished' || (t.closest && t.closest('.pm-segtab-ink'))) return false;
-      const end = a.effect.getComputedTiming().endTime;
-      return Number.isFinite(end);
-    });
-    if (!running.length) { go(); return; }
-    let done = false;
-    const fin = () => { if (!done) { done = true; go(); } };
-    Promise.all(running.map(a => a.finished.catch(() => null))).then(fin);
-    setTimeout(fin, 1200);
-  }));
+  if (JJ.strip !== strip || JJ.tab !== id || !strip.contains(document.activeElement)) return;
+  const b = strip.querySelector('[data-jj-tab="' + id + '"]');
+  if (b && document.activeElement !== b) b.focus({ preventScroll: true });
 }
-/* the fit rule for both Source strips (DECISION §4.4): decided by the longest label, so the mode never flips on a click */
-function jjStripMode(st) {
-  const items = Array.from(st.querySelectorAll(':scope > .pm-segtab-item'));
-  if (!items.length || !st.offsetWidth) return null;
-  const cs = getComputedStyle(st);
-  const room = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  const longest = Math.max(...items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; }));
-  const ICON = 15, GAP = 5, PAD = 12, INACTIVE = 24, n = items.length;
-  if (longest + ICON + GAP + PAD <= room / n) return 'full';
-  if (n > 1 && longest + ICON + GAP + PAD + (n - 1) * INACTIVE <= room) return 'active';
-  return 'icons';
-}
-function jjFit(st) {
-  const mode = st && jjStripMode(st);
-  if (mode && st.getAttribute('data-d-tabs') !== mode) st.setAttribute('data-d-tabs', mode);
-}
+/* the strip's mode: both Source strips decide by their longest label (20-fit tabMode, DECISION §4.4), so the mode never
+   flips on a click; fitTabs also rests the ink on the chosen tab */
+function jjFit(st) { if (st) fitTabs(st); }
 /* a folder on line 2 keeps both ends (D's middle truncation, 20-fit midFit): web/…/recipe/editor */
 function jjFitDirs(root) { if (root) root.querySelectorAll('.d-jdir').forEach(el => { if (el.offsetParent) midFit(el); }); }
-function jjInk(animate) {
-  const st = JJ.strip;
-  if (!st || !st.offsetWidth) return;
-  if (!JJ.ink && window.PM6_LIQUID_INK) {
-    JJ.ink = window.PM6_LIQUID_INK.attach({ strip: st, ink: st.querySelector('.pm-segtab-ink'), axis: 'h', getActive: () => st.querySelector('.pm-segtab-item.active') });
-  }
-  if (JJ.ink) JJ.ink.resync(!!animate);
-}
+/* a tab change moves like every other strip's (31-tabs.js playTabs): the strip is snapped before the change (on a
+   click by the shared capture listener, on a key here), refit in this task, and the ink, the icons and the new pane
+   move together on the next frame */
 function jjSelect(id, o) {
   if (!JJ.strip || !JJ.panes[id]) return;
+  const st = JJ.strip;
   const was = JJ_TABS.findIndex(t => t.id === JJ.tab), now = JJ_TABS.findIndex(t => t.id === id);
+  const animate = !!(o && o.animate) && was !== now;
+  const next = st.querySelector('[data-jj-tab="' + id + '"]');
+  const from = animate ? (st._dFrom || (st.offsetWidth && next ? snapStrip(st, next) : null)) : null;
+  delete st._dFrom;
   JJ.tab = id;
-  JJ.strip.querySelectorAll('[data-jj-tab]').forEach(b => {
+  st.querySelectorAll('[data-jj-tab]').forEach(b => {
     const on = b.getAttribute('data-jj-tab') === id;
     b.classList.toggle('active', on);
     b.setAttribute('aria-selected', String(on));
@@ -644,13 +612,14 @@ function jjSelect(id, o) {
   });
   Object.keys(JJ.panes).forEach(k => { JJ.panes[k].hidden = k !== id; });
   if (JJ.scroll) JJ.scroll.scrollTop = 0;
-  jjFit(JJ.strip);
+  if (!st.offsetWidth) return;
+  jjFit(st);
   const pane = JJ.panes[id];
-  if (!JJ.strip.offsetWidth) return;
+  if (animate) { playTabs(st, from, now > was ? 1 : -1, () => pane, jjFitDirs); return; }
   requestAnimationFrame(() => {
-    jjInk(o && o.animate && was !== now);
+    if (!D.on) return;
+    placeInk(st, true);
     stackHeads(pane); stackRows(pane); midFitAll(pane); jjFitDirs(pane);
-    if (o && o.animate && was !== now) enterPane(pane, now > was ? 1 : -1);
   });
 }
 
@@ -675,7 +644,9 @@ function jjBuild(panel) {
   inject(view, strip, view.firstChild);
   inject(view, scroll, strip.nextSibling);
   inject(view, foot, scroll.nextSibling);
-  JJ.strip = strip; JJ.scroll = scroll; JJ.ink = null;
+  JJ.strip = strip; JJ.scroll = scroll;
+  /* D's tab engine: the ink, the brackets hook and the resize watch every strip has (31-tabs.js) */
+  wireStrip(strip);
   jjWireFold(foot.querySelector('.pm7-post-card'));
   /* the content hairline under the strip once something has scrolled under it */
   scroll.addEventListener('scroll', () => strip.classList.toggle('d-jj-scrolled', scroll.scrollTop > 2), { passive: true });
@@ -727,20 +698,13 @@ function jjWatch(panel) {
   D.observers.push(mo);
   /* the strip refits and its ink snaps whenever its box changes (shown, resized, theme, text size) */
   if (window.ResizeObserver) {
-    const ro = new ResizeObserver(() => { if (!D.on) return; jjFit(JJ.strip); jjInk(false); jjFitDirs(JJ.panes[JJ.tab]); });
+    const ro = new ResizeObserver(() => { if (!D.on) return; jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); });
     ro.observe(JJ.strip);
     D.observers.push(ro);
   }
-  const mo2 = new MutationObserver(() => { if (D.on) requestAnimationFrame(() => { jjFit(JJ.strip); jjInk(false); jjFitDirs(JJ.panes[JJ.tab]); }); });
+  const mo2 = new MutationObserver(() => { if (D.on) requestAnimationFrame(() => { jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); }); });
   mo2.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'style'] });
   D.observers.push(mo2);
-  /* Git's strip follows the same longest-label rule: correct the mode right after D's fitTabs writes it */
-  const gitStrip = panel.querySelector(':scope > .pm-segtab');
-  if (gitStrip) {
-    const mo3 = new MutationObserver(() => { if (D.on && gitStrip.hasAttribute('data-d-tabs')) jjFit(gitStrip); });
-    mo3.observe(gitStrip, { attributes: true, attributeFilter: ['data-d-tabs'] });
-    D.observers.push(mo3);
-  }
 }
 /* toast handlers only where the shell has none (its toastReg pattern), and the reasons the guard reads */
 function jjRegister() {
@@ -755,11 +719,11 @@ function jjRegister() {
 
 panelHook('panel-source', {
   apply(panel) { jjBuild(panel); },
-  show(panel) { if (JJ.strip) { jjFit(JJ.strip); jjInk(false); } },
+  show(panel) { if (JJ.strip) jjFit(JJ.strip); },
   unmount() {
     const R = window.PM_DEMO && window.PM_DEMO.guard && window.PM_DEMO.guard.reasons;
     if (R) JJ.reasons.forEach(k => { delete R[k]; });
     JJ.reasons = [];
-    Object.assign(JJ, { strip: null, scroll: null, panes: {}, ink: null, view: null, engine: null });
+    Object.assign(JJ, { strip: null, scroll: null, panes: {}, view: null, engine: null });
   },
 });

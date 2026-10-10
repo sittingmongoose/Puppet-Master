@@ -33,9 +33,10 @@ function applyWords(root) {
   }
   const walker2 = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let n = walker2.nextNode(); n; n = walker2.nextNode()) {
-    for (const [rx, rep] of PHRASES) {
-      if (rx.test(n.nodeValue)) { const orig = n.nodeValue; n.nodeValue = orig.replace(rx, rep); remember(() => { n.nodeValue = orig; }); }
-    }
+    if (n.parentElement && n.parentElement.closest('code, kbd, pre, samp')) continue;
+    let v = n.nodeValue;
+    for (const [rx, rep] of PHRASES) { rx.lastIndex = 0; if (rx.test(v)) { rx.lastIndex = 0; v = v.replace(rx, rep); } }
+    if (v !== n.nodeValue) { const orig = n.nodeValue; n.nodeValue = v; remember(() => { n.nodeValue = orig; }); }
   }
   hits.forEach(n => {
     const el = n.parentElement, t = n.nodeValue.trim(), lead = (n.nodeValue.match(/^\s*/) || [''])[0];

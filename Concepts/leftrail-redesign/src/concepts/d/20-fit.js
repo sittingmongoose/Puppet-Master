@@ -5,19 +5,29 @@
    - The Git / Jujutsu switch: a thumb that sits exactly on the pressed button. */
 
 function labelOf(item) { return item.querySelector(':scope > .eq-full') || item.querySelector(':scope > span:not(.eq-abbr)'); }
+/* the strip's mode. Source Control's two strips (Git and Jujutsu, side by side in one panel) decide by their longest
+   label with 24 px inactive tabs (DECISION §4.4, 71-source), so their mode never flips on a click; the other strips
+   decide by the chosen tab's label. */
+function tabMode(st, items) {
+  const cs = getComputedStyle(st);
+  const avail = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const w = items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; });
+  const n = items.length, each = avail / n;
+  if (st.closest('#panel-source')) {
+    const longest = Math.max(...w), ICON = 15, GAP = 5, PAD = 12, INACTIVE = 24;
+    if (longest + ICON + GAP + PAD <= each) return 'full';
+    return n > 1 && longest + ICON + GAP + PAD + (n - 1) * INACTIVE <= avail ? 'active' : 'icons';
+  }
+  const ICON = 15, GAP = 6, PAD = 16, PAD_ACTIVE = 24, MIN_ICON = 30;
+  const act = Math.max(0, items.findIndex(it => it.classList.contains('active')));
+  if (Math.max(...w) + ICON + GAP + PAD <= each) return 'full';
+  return n > 1 && w[act] + ICON + GAP + PAD_ACTIVE + (n - 1) * MIN_ICON <= avail ? 'active' : 'icons';
+}
 function fitTabs(st) {
   if (!st.offsetWidth) return;
   const items = Array.from(st.querySelectorAll(':scope > .pm-segtab-item'));
   if (!items.length) return;
-  const cs = getComputedStyle(st);
-  const avail = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  const ICON = 15, GAP = 6, PAD = 16, PAD_ACTIVE = 24, MIN_ICON = 30;
-  const w = items.map(it => { const l = labelOf(it); return l ? Math.ceil(l.scrollWidth) : 0; });
-  const each = avail / items.length;
-  const act = Math.max(0, items.findIndex(it => it.classList.contains('active')));
-  let mode = 'icons';
-  if (Math.max(...w) + ICON + GAP + PAD <= each) mode = 'full';
-  else if (items.length > 1 && w[act] + ICON + GAP + PAD_ACTIVE + (items.length - 1) * MIN_ICON <= avail) mode = 'active';
+  const mode = tabMode(st, items);
   if (st.getAttribute('data-d-tabs') !== mode) st.setAttribute('data-d-tabs', mode);
   items.forEach(it => {
     const l = labelOf(it);
@@ -28,19 +38,44 @@ function fitTabs(st) {
   placeInk(st);
 }
 
+/* does anything in a head run past its content box? To the sub-pixel, on each child's margin box (a mini button's
+   negative end margin reaches into the padding by design), freed of any entrance scale: scrollWidth is whole pixels,
+   and a head 0.4 px too full cut its label with an ellipsis that was never stacked */
+function headOver(h) {
+  if (h.scrollWidth > h.clientWidth + 1) return true;
+  const cs = getComputedStyle(h), box = h.getBoundingClientRect();
+  const k = h.offsetWidth ? box.width / h.offsetWidth : 1;
+  const end = box.right - ((parseFloat(cs.paddingRight) || 0) + (parseFloat(cs.borderRightWidth) || 0)) * k;
+  return Array.from(h.children).some(c => {
+    const ccs = getComputedStyle(c);
+    if (ccs.position === 'absolute' || ccs.position === 'fixed' || ccs.display === 'none') return false;
+    const r = c.getBoundingClientRect();
+    return r.width > 0 && r.right + (parseFloat(ccs.marginRight) || 0) * k > end + 0.05 * k;
+  });
+}
+/* the head's style attribute goes back as it was: --d-stack-x is written inline and clearFit removes the property,
+   which would leave style="" on a head that had no style attribute (undo runs after clearFit) */
+function stackStyle(h) {
+  if (h._dStackStyle) return;
+  h._dStackStyle = true;
+  const had = h.hasAttribute('style');
+  remember(() => { delete h._dStackStyle; if (!had && h.getAttribute('style') === '') h.removeAttribute('style'); });
+}
+/* the key holds what changes the head's line: its width, its words, and whether its shelf is open (some heads show
+   their actions only while open) */
 function stackHeads(root, force) {
   const heads = Array.from(root.querySelectorAll('.sh-shelf > .sh-head'));
   const widths = heads.map(h => h.offsetWidth);
   heads.forEach((h, i) => {
     const c = h.querySelector(':scope > .sh-hcount, :scope > .sh-htrail > .sh-hcount'), l = h.querySelector(':scope > .sh-hlabel');
     if (!c || !l || !widths[i]) return;
-    const key = widths[i] + '|' + c.textContent;
+    const key = widths[i] + '|' + l.textContent + '|' + c.textContent + '|' + h.parentElement.classList.contains('open');
     if (!force && h._dStackKey === key) return;
     h._dStackKey = key;
     h.removeAttribute('data-d-stack');
-    const over = overflows(l) || h.scrollWidth > h.clientWidth + 1;
-    if (over) {
+    if (overflows(l) || headOver(h)) {
       h.setAttribute('data-d-stack', '');
+      stackStyle(h);
       const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
       h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
     }
@@ -52,11 +87,11 @@ function stackHeads(root, force) {
   sums.forEach((h, i) => {
     const c = h.querySelector(':scope > .c');
     if (!c || !sumW[i]) return;
-    const key = sumW[i] + '|' + c.textContent;
+    const key = sumW[i] + '|' + h.textContent;
     if (!force && h._dStackKey === key) return;
     h._dStackKey = key;
     h.removeAttribute('data-d-stack');
-    if (h.scrollWidth > h.clientWidth + 1) h.setAttribute('data-d-stack', '');
+    if (headOver(h)) h.setAttribute('data-d-stack', '');
   });
 }
 
@@ -81,28 +116,38 @@ function wireThumb(panel) {
   remember(() => { delete sw._dThumb; });
 }
 
+/* every fit cache on the panels' elements: the shared keys and any _d…Key a panel's own file keeps */
+const FIT_KEY = /^_d\w*Key$/;
 function clearFitCache() {
-  panelEls().forEach(p => p.querySelectorAll('*').forEach(el => { delete el._dFitKey; delete el._dStackKey; delete el._dStackW; }));
+  panelEls().forEach(p => p.querySelectorAll('*').forEach(el => {
+    Object.keys(el).forEach(k => { if (FIT_KEY.test(k)) delete el[k]; });
+    delete el._dStackW;
+  }));
 }
 /* the fitting state is recomputed, not remembered: clearing it is the undo */
 function clearFit() {
   clearFitCache();
   document.querySelectorAll('[data-d-tabs]').forEach(el => el.removeAttribute('data-d-tabs'));
   document.querySelectorAll('[data-d-stack]').forEach(el => el.removeAttribute('data-d-stack'));
+  document.querySelectorAll('[data-d-owner]').forEach(el => el.removeAttribute('data-d-owner'));
   document.querySelectorAll('.sh-head[style*="--d-stack-x"]').forEach(el => el.style.removeProperty('--d-stack-x'));
   document.querySelectorAll('[data-d-hov]').forEach(el => { el.removeAttribute('data-d-hov'); el.removeAttribute('data-pm-hover-label'); el.removeAttribute('data-pm-hover-detail'); });
 }
 /* a registry row whose state and account do not fit on one line puts the account on a third line */
 function stackRows(root) {
-  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it */
+  /* worktrees: the diff sits beside the branch when the whole branch name fits there, else under it; the owner sits
+     beside the state word when it fits there whole, else on a line of its own under it (a column beside the diff
+     broke "lane-b worker · run #47" into three lines) */
   root.querySelectorAll('.sh-wt-h').forEach(h => {
-    const b = h.querySelector(':scope > .sh-branch');
+    const b = h.querySelector(':scope > .sh-branch'), ow = h.querySelector(':scope > .sh-owner');
     const w = h.offsetWidth;
     if (!b || !w || h._dStackW === w) return;
     h._dStackW = w;
     if (b._dFull != null && b.textContent !== b._dFull) b.textContent = b._dFull;
     h.removeAttribute('data-d-stack');
+    h.removeAttribute('data-d-owner');
     if (b.scrollWidth > b.clientWidth) h.setAttribute('data-d-stack', '');
+    if (ow && ow.offsetParent && overflows(ow)) h.setAttribute('data-d-owner', '');
   });
   root.querySelectorAll('[data-pane="registries"] .sh-ctr-h').forEach(h => {
     const m = h.querySelector('.sh-meta');

@@ -103,33 +103,11 @@ function rdpCfgField(trig) {
   if (c.textContent !== ct) c.textContent = ct;
 }
 
-/* shelf heads: label, summary and actions on one line when they fit; else the summary moves under the label. The
-   actions only show while the shelf is open, so the open state is part of the key (the shared stackHeads keys on width
-   and text only and would keep a fit measured while the shelf was closed); the theme is too, since it changes fonts. */
-function rdpStackHeads(panel) {
-  dsrStyleGuard(panel);
-  const heads = Array.from(panel.querySelectorAll('.sh-shelf > .sh-head'));
-  const ws = heads.map(h => h.offsetWidth);
-  const root = document.documentElement, look = root.getAttribute('data-theme') + (root.getAttribute('data-o55-nier') || '');
-  heads.forEach((h, i) => {
-    const tr = h.querySelector(':scope > .sh-htrail'), l = h.querySelector(':scope > .sh-hlabel');
-    const c = (tr || h).querySelector(':scope > .sh-hcount');
-    if (!c || !l || !ws[i]) return;
-    const key = ws[i] + '|' + c.textContent + '|' + h.parentNode.classList.contains('open') + '|' + look;
-    if (h._dRunStackKey === key) return;
-    h._dRunStackKey = key;
-    h._dStackKey = ws[i] + '|' + c.textContent;            // the shared stackHeads' key: it leaves this head to us
-    h.removeAttribute('data-d-stack');
-    if (dsrOver(l) || h.scrollWidth > h.clientWidth + 1) {
-      h.setAttribute('data-d-stack', '');
-      const pad = parseFloat(getComputedStyle(h).paddingLeft) || 0;
-      h.style.setProperty('--d-stack-x', Math.max(0, l.offsetLeft - pad) + 'px');
-    }
-  });
-}
+/* shelf heads: label, summary and actions on one line when they fit, else the summary moves under the label: the shared
+   stackHeads (20-fit.js), whose key holds the open state (the actions only show while a shelf is open) */
 function rdpFit(panel) {
   if (!panel || !panel.offsetWidth) return;
-  rdpStackHeads(panel);
+  stackHeads(panel);
   /* a session whose state line and adapter tag do not fit on one line puts the tag on a third line */
   panel.querySelectorAll('.sh-sess').forEach(row => {
     const line = row.querySelector('.d-sessst'), chip = row.querySelector(':scope > .sh-chip');
@@ -268,15 +246,7 @@ function rdhWire(host) {
 
 panelHook('panel-run', {
   apply(panel, animate) { rdpApply(panel, animate); },
-  show(panel, info) {
-    rdpFit(panel);
-    /* the panel has no tabs: its launch row and shelves deal in under the header (enterPanel deals tab panes) */
-    if (info && (info.reason === 'switch' || info.reason === 'concept')) {
-      const sc = panel.querySelector(':scope > .sh-scroll');
-      if (sc) deal(dealList(sc), { delay: Math.round(spec().step * 1.5) });
-    }
-  },
-  /* clearFit has dropped every data-d-stack; this file's own head key must go too, or the next mount finds it still
-     matching and leaves a stacked head unstacked (D -> Current -> D) */
-  unmount(panel) { dsrWired = false; rdhState = null; panel.querySelectorAll('.sh-head').forEach(h => { delete h._dRunStackKey; }); },
+  /* the panel has no tabs: the shared entrance (30-motion.js enterPanel) deals its scroller's list in */
+  show(panel) { rdpFit(panel); },
+  unmount() { dsrWired = false; rdhState = null; },
 });

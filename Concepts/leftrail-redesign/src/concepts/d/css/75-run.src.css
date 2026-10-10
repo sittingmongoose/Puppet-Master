@@ -95,9 +95,6 @@
 §@run .sh-af-acts { flex-direction: row !important; flex-wrap: wrap; justify-content: flex-start !important; gap: 6px !important; margin-top: 8px !important; }
 §@run .sh-af-acts > .pm-btn { flex: 1 1 auto; }
 
-/* text fields (add form, breakpoint condition): the field is the D box; Glass paints every input, which would show as
-   a second, darker box inside it */
-§@run .pm-input input { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
 /* ---- shelf heads: the trail box opens up, so label, summary and actions are one row; a summary that does not fit
    moves under the label (data-d-stack, set by 52-run.js) ---- */
@@ -287,7 +284,8 @@
 }
 §@run .sh-bpx input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 §{nier}@run .sh-bpx input:checked { border-color: var(--o55-nier-ink) !important; background: var(--o55-nier-ink) !important; }
-§R[data-o55-nier="on"][data-o55-nier-parts~="headers"] #panel-run :is(.sh-hlabel, .sh-title, .sh-glabel) { text-transform: uppercase !important; letter-spacing: .14em !important; }
+/* NieR headers: the group labels take the shared label capitals (90-themes covers the shelf labels and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-run .sh-glabel { text-transform: uppercase !important; letter-spacing: .07em !important; }
 
 /* ---- the bottom Debug tab ---- */
 §@#bottomDebugHost { font-family: var(--body-font); color: var(--d-text); }
@@ -375,6 +373,3 @@
 §@#bottomDebugHost[data-rd-state="term"] .rd-console { order: 2; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 §@#bottomDebugHost[data-rd-state="term"] .rd-termnote { order: 3; padding: 4px 12px 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
 
-/* reduced motion: nothing here moves */
-§R[data-motion="reduced"] :is(#panel-run, #bottomDebugHost) *, §R[data-reduced-motion="1"] :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; }
-@media (prefers-reduced-motion: reduce) { §R :is(#panel-run, #bottomDebugHost) * { transition: none !important; animation: none !important; } }

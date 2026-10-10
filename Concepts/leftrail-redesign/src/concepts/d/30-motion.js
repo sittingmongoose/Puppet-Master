@@ -21,10 +21,15 @@ const reduced = () => PMR.motion.reduced();
 const fam = () => (PMR.motion.nier() ? 'nier' : PMR.motion.family());
 const spec = () => FAM_MOTION[fam()] || FAM_MOTION.basic;
 
+/* NieR's wipe is drawn with a mask, a hard edge sliding across a box twice as wide, not with a clip-path: a clip also
+   clips hit testing, so a click on a tab or a row still wiping in (on the VM up to 0.7 s after a panel opened, the
+   shell's fit pass delaying the entrance) fell through to the list behind it. A mask hides the same pixels and leaves
+   every element clickable. dx < 0: the ink comes in from the right. */
+const WIPE_IN = 'linear-gradient(90deg, #000 50%, transparent 50%)', WIPE_IN_R = 'linear-gradient(90deg, transparent 50%, #000 50%)';
 function enterFrames(f, dx, dy) {
   if (f.wipe) {
-    const from = dx < 0 ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)';
-    return [{ clipPath: from }, { clipPath: 'inset(0 0 0 0)' }];
+    const m = dx < 0 ? WIPE_IN_R : WIPE_IN, at = dx < 0 ? ['0% 0%', '100% 0%'] : ['100% 0%', '0% 0%'];
+    return at.map(p => ({ maskImage: m, maskSize: '200% 100%', maskRepeat: 'no-repeat', maskPosition: p }));
   }
   const a = { opacity: 0, transform: 'translate(' + dx + 'px, ' + dy + 'px)' + (f.scale ? ' scale(' + f.scale + ')' : '') };
   const b = { opacity: 1, transform: 'none' };
@@ -175,15 +180,18 @@ function deal(list, o) {
   }
 }
 
-/* the panel comes in: its chrome settles first, the content deals in right behind it */
+/* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
 function enterPanel(panel) {
   if (reduced() || !panel) return;
-  const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
+  const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
   cascade(chrome, { dy: f.wipe ? 0 : Math.max(2, Math.round(f.dy / 2)), step: Math.round(f.step * .6), durK: .8, anims });
   const jj = panel.querySelector(':scope > .pm7-scm-jj-view');
-  const list = (jj && visible(jj)) ? Array.from(jj.children).map(el => ({ el })) : dealList(activePane(panel));
+  const sc = panel.querySelector(':scope > .sh-scroll');
+  const content = activePane(panel) || (sc && !sc.querySelector(':scope > [data-pane]') ? sc : null);
+  const list = (jj && visible(jj)) ? Array.from(jj.children).filter(visible).map(el => ({ el })) : dealList(content);
   const foot = panel.querySelector(':scope > .pm7-scm-git-footer');
   if (visible(foot)) list.push({ el: foot });
   deal(list, { delay: Math.round(f.step * 1.5), anims });
@@ -268,7 +276,9 @@ function onClickMotion(ev) {
     const item = head.closest('[data-acc]');
     requestAnimationFrame(() => {
       if (!item) return;
-      if (item.classList.contains('open')) { revealBody(item); stackHeads(item); midFitAll(item); revealInView(item); }
+      /* the head is re-measured either way: its key holds the open state (a head may show its actions only while open) */
+      stackHeads(item);
+      if (item.classList.contains('open')) { revealBody(item); midFitAll(item); revealInView(item); }
     });
   }
 }

@@ -82,9 +82,17 @@ const WORDS = {
   'Open in Panel': 'Open in panel',
   'vm not running — start colima · Retry': 'VM not running — start colima · Retry',
 };
-/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value */
+/* ages and elapsed times the shell writes as "4m", "2h", "1d", "12s ago", "up 3h", "1m 48s" are spelled out the way the
+   Jujutsu rows write them ("4 minutes", "2 hours ago", "1 minute 48 seconds"); a decimal measurement keeps its unit
+   symbol ("3.4s", "84.6s"), and a hash that starts with a digit ("3d9be21") is not an age */
+const AGE_UNIT = { s: 'second', m: 'minute', h: 'hour', d: 'day', w: 'week' };
+const AGE_RX = /(^|[\s(·—–])(\d+)([smhdw])(?=$|[\s),;·—–])/g;
+const ageWords = (m, pre, n, u) => pre + n + ' ' + AGE_UNIT[u] + (n === '1' ? '' : 's');
+/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value (10-skin
+   applyWords; text in code, kbd and pre is left as written) */
 const PHRASES = [
   [/^(\s*)Watching (\d+) · /, '$1Watching $2 folders · '],
+  [AGE_RX, ageWords],
 ];
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };

@@ -22,5 +22,4 @@ panelHook('panel-agents', {
     LF_RUN.apply(panel, animate);
     lfAgentSummaries(panel);
   },
-  show(panel, info) { LF_RUN.enter(panel, info); },
 });

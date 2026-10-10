@@ -4,7 +4,8 @@
 §R { --d-Rbar: 7px; }
 §R[data-theme^="friendly"] { --d-Rbar: 10px; }
 §R[data-theme^="glass"] { --d-Rbar: 10px; }
-§R[data-theme^="retro"], §R[data-o55-nier="on"] { --d-Rbar: 0px; }
+/* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
+§R[data-theme^="retro"], §R[data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 §B { position: relative; }
 §B > .d-abind {
   position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;

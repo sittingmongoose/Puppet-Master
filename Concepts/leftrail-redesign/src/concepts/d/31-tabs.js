@@ -1,6 +1,7 @@
 /* Tab strips: one ink per strip and one move per tab change, per family. Generic over the shell's .pm-segtab, so every
-   strip of the nine panels moves the same way (Files, Search, Source Control, Actions & pipelines, Docker, Runtime
-   artifacts). 22-tabs.src.css has the looks.
+   strip of the nine panels moves the same way (Files, Search, Source Control's Git and Jujutsu strips, Actions &
+   pipelines, Docker, Runtime artifacts), and Arrow keys, Home and End choose along every strip. 22-tabs.src.css has
+   the looks.
    The ink (span.pm-segtab-ink.d-ink) is the skin's own and always sits exactly on the chosen tab's box; the shell's
    spring ink is hidden under the skin. A change works like this: a capture listener reads the strip as it looks before
    the shell switches the tab (the ink's box, every icon and label); the shell switches; the strip is refitted at once
@@ -81,22 +82,26 @@ function fitViewOnly(ev) {
   requestAnimationFrame(() => requestAnimationFrame(() => { if (id === fitViewSeq) slot.removeAttribute('data-d-fitview'); }));
 }
 
-/* capture phase: the strip as it looks now, before the shell switches the tab (mid-move too: rects include the running
-   animations, so a second click starts from exactly what is on screen) */
-function onTabCapture(ev) {
-  if (!D.on) return;
-  fitViewOnly(ev);
-  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item[data-tab]');
-  if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
-  const st = tab.parentElement;
-  if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
+/* the strip as it looks now, before its tab changes (mid-move too: rects include the running animations, so a second
+   click starts from exactly what is on screen). tab: the tab about to be chosen */
+function snapStrip(st, tab) {
   const ink = st.querySelector(':scope > .d-ink');
   const kids = new Map();
   tabItems(st).forEach(it => Array.from(it.children).forEach(k => { if (k.getClientRects().length) kids.set(k, stripBox(st, k).x); }));
   const moving = !!ink && ink.getAnimations().some(a => a.id === 'd-tab' && a.playState === 'running');
   /* fg: the chosen tab's colour as it was (hovered or not), which Retro holds until the ink lands on it */
-  st._dFrom = { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids,
+  return { ink: ink && ink._dBox ? stripBox(st, ink) : null, at: tabItems(st).findIndex(it => it.classList.contains('active')), moving, kids,
     fg: getComputedStyle(tab).color };
+}
+/* capture phase: snap the strip before the shell (or Jujutsu's strip, 15-jj.js) switches the tab */
+function onTabCapture(ev) {
+  if (!D.on) return;
+  fitViewOnly(ev);
+  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item:is([data-tab], [data-jj-tab])');
+  if (!tab || !inPanels(tab) || tab.classList.contains('active')) return;
+  const st = tab.parentElement;
+  if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
+  st._dFrom = snapStrip(st, tab);
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -110,23 +115,45 @@ function tabChanged(tab) {
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
   if (now === was) return;
-  const dir = now > was ? 1 : -1;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  /* one frame callback makes every animation of the change, and startTogether starts them all on the next frame: the
-     ink, the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame */
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+}
+/* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
+   the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
+   view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
+function playTabs(st, from, dir, paneOf, after) {
   requestAnimationFrame(() => {
     if (!D.on) return;
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
-    const pane = activePane(panel);
-    if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); enterPane(pane, dir, anims); }
+    const pane = paneOf();
+    if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
     if (ret && fam() === 'nier' && !reduced()) ret.querySelectorAll(':scope > i').forEach(i => i.getAnimations().forEach(a => anims.push(a)));
     startTogether(anims);
   });
+}
+
+/* Arrow keys, Home and End move along a strip and choose the tab they land on, as every other tab list in the app
+   does (Settings' section tabs, the editor tabs, Jujutsu's strip). The shell's rail strips had no keys; under D the
+   key clicks the tab (the shell switches it, the move above plays) and focus follows at once: the strip refits in that
+   same click, so the target brackets lock onto the tab's final box. Jujutsu's strip keeps its own handler (15-jj.js). */
+function onTabKey(ev) {
+  if (!D.on || ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(ev.key)) return;
+  const tab = ev.target && ev.target.closest && ev.target.closest('.pm-segtab-item[data-tab]');
+  if (!tab || !inPanels(tab)) return;
+  const st = tab.parentElement;
+  if (!st || !st.classList.contains('pm-segtab')) return;
+  const items = tabItems(st).filter(it => it.getClientRects().length && !it.disabled), i = items.indexOf(tab), n = items.length;
+  if (i < 0 || n < 2) return;
+  const k = ev.key, next = items[k === 'Home' ? 0 : k === 'End' ? n - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + n) % n];
+  if (!next || next === tab) return;
+  ev.preventDefault();
+  next.click();
+  next.focus({ preventScroll: true });
 }
 
 function moveTabs(st, from, dir, anims) {
@@ -207,21 +234,23 @@ function liquidFrames(a, b) {
   ];
 }
 
-/* the strips of a panel: their ink, a resize watch, the brackets hook; the capture listener once for all panels */
+/* a strip: its ink, a resize watch, the brackets hook (Jujutsu's strip is wired the same way by 15-jj.js) */
+function wireStrip(st) {
+  inkOf(st);
+  tabItems(st).forEach(it => addClass(it, 'pmr-lock'));
+  if (!st._dTabsRO && window.ResizeObserver) {
+    const ro = new ResizeObserver(() => { if (D.on) placeInk(st); });
+    ro.observe(st);
+    D.observers.push(ro);
+    st._dTabsRO = ro;
+    remember(() => { delete st._dTabsRO; delete st._dFrom; });
+  }
+  placeInk(st);
+}
+/* the strips of a panel; the capture and key listeners once for all panels */
 function wireTabs(panel) {
-  panel.querySelectorAll(':scope > .pm-segtab').forEach(st => {
-    inkOf(st);
-    tabItems(st).forEach(it => addClass(it, 'pmr-lock'));
-    if (!st._dTabsRO && window.ResizeObserver) {
-      const ro = new ResizeObserver(() => { if (D.on) placeInk(st); });
-      ro.observe(st);
-      D.observers.push(ro);
-      st._dTabsRO = ro;
-      remember(() => { delete st._dTabsRO; delete st._dFrom; });
-    }
-    placeInk(st);
-  });
-  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); }
+  panel.querySelectorAll(':scope > .pm-segtab').forEach(wireStrip);
+  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey); }
 }
 PANEL_IDS.forEach(id => panelHook(id, {
   apply(panel) { wireTabs(panel); },
