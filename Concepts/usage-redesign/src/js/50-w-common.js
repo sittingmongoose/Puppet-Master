@@ -1222,7 +1222,10 @@
          (Overview at 1440: "Claude allowance pressure" wrapped to three lines beside a 60 px "now" column) */
       var stack = !extra && vw > 0 && nameW < 150 && hasSub && rows.some(function (r) { return !r.day && valText(r); });
       if (stack) nameW = bw - (anyLead ? lw + 10 : 0);
-      if (extra) { noteW = Math.round((nameW - 10) / 2.6); nameW = nameW - 10 - noteW; }
+      /* the note column keeps its longest word whole (lane c-presets: "independen / t state" in the 396 px Glass card) */
+      var noteWord = 0;
+      if (extra) rows.forEach(function (r) { if (r.note && !r.day) String(r.note).split(/\s+/).forEach(function (wd) { noteWord = Math.max(noteWord, tw(wd, 12, 400) * 1.1 + 2); }); });
+      if (extra) { noteW = Math.round(Math.min(Math.max((nameW - 10) / 2.6, noteWord), (nameW - 10) / 2)); nameW = nameW - 10 - noteW; }
       /* two-line rows (name over its second line) when the card has the width; each row's height follows its wrapped
          text (LOOK-REVIEW-2 1 and 6: rows printed over each other when a wrapped second line overran a fixed pitch) */
       var two = hasSub && (C.w(ctx, 'm') || (C.w(ctx, 's') && rows.length * 44 + (m.foot ? 34 : 0) <= ctx.tier.bh));

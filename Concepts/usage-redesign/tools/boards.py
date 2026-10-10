@@ -111,7 +111,7 @@ KINDS = {
         P('full', 'Full width', 'full', 12, "The board's width, finer buckets", frm='M')]),
     'columns': (4, None, 4, 16, [
         P('compact', 'Compact', 5, 6, 'Labelled bars, a few buckets'),
-        P('standard', 'Standard', 8, 8, 'Labelled bars with the caption'),
+        P('standard', 'Standard', 8, 9, 'Labelled bars with the caption'),
         P('wide', 'Wide', WIDE(), 10, 'More buckets, caption, legend and facts'),
         P('full', 'Full width', 'full', 10, 'Every bucket across the board', frm='M')]),
     'budget': (5, None, 5, 16, [

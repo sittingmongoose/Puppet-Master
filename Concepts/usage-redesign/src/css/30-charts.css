@@ -435,6 +435,11 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 /* ---------- sharebars: token breakdown (A1 7.5) ---------- */
 #panel-usage .pmu-c-sharebars { display: flex; flex-direction: column; justify-content: center; gap: 12px; min-width: 0; height: 100%; }
 #panel-usage .pmu-tbrow { display: grid; grid-template-columns: 104px minmax(80px, 1fr) 150px; gap: 14px; align-items: center; }
+/* (lane c-presets) one name column for every row, as wide as the longest name where the card has the room (104 px cut
+   "Cache write" in the 557 px Wide preset): the rows share the chart's columns as a subgrid */
+#panel-usage .pmu-c-sharebars:not([data-narrow="1"]) { display: grid; grid-template-columns: minmax(104px, max-content) minmax(80px, 1fr) 150px; align-content: center; column-gap: 14px; row-gap: 12px; }
+#panel-usage .pmu-c-sharebars:not([data-narrow="1"]) > .pmu-tbrow { grid-column: 1 / -1; grid-template-columns: subgrid; }
+#panel-usage .pmu-c-sharebars:not([data-narrow="1"]) > .pmu-tbrow.is-unknown > .pmu-tbstate { grid-column: 2 / -1; }
 #panel-usage .pmu-tbname { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 560; white-space: nowrap; min-width: 0; overflow: hidden; }
 #panel-usage .pmu-tbbars { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 #panel-usage .pmu-tb { position: relative; display: block; height: 7px; border-radius: 4px; background: var(--pmu-card-3); }
@@ -547,6 +552,11 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 /* ---------- range bars: tool latency (A1 7.11) ---------- */
 #panel-usage .pmu-c-rangebars { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 #panel-usage .pmu-raxis, #panel-usage .pmu-rrow { display: grid; grid-template-columns: minmax(70px, 30%) minmax(60px, 1fr) auto; gap: 10px; align-items: center; }
+/* (lane c-presets) the axis and the rows share one column set (a subgrid): the name column takes the longest tool name
+   where the card has the room ("run_shell_command" was cut at 30 % of the 368 px Standard card), the values column the
+   widest pair, so every track starts and ends at the same x */
+#panel-usage .pmu-c-rangebars { display: grid; grid-template-columns: minmax(70px, max-content) minmax(60px, 1fr) auto; column-gap: 10px; row-gap: 2px; align-content: start; }
+#panel-usage .pmu-c-rangebars > :is(.pmu-raxis, .pmu-rrow) { grid-column: 1 / -1; grid-template-columns: subgrid; }
 #panel-usage .pmu-raxis { height: 18px; }
 #panel-usage .pmu-raxis-t { position: relative; height: 16px; }
 #panel-usage .pmu-raxis-t i { position: absolute; top: 0; transform: translateX(-50%); font-style: normal; font-family: var(--pmu-mono); font-size: 11px; font-stretch: 87.5%; color: var(--pmu-ink-3); }
