@@ -89,8 +89,8 @@ files; every `unicode-range` is Google's for that slice. Gelasio stays Latin onl
 | `OFL-Nunito.txt` | https://github.com/google/fonts/blob/main/ofl/nunito/OFL.txt | `580df76c95a1ec5a` |
 | `OFL-Gelasio.txt` | https://github.com/google/fonts/blob/main/ofl/gelasio/OFL.txt | `b393cb01867c919b` |
 
-5.6 Pro embeds 39 of these files: Inter upright, Poppins 400-700 and IBM Plex Mono 400-700, each with its Latin file
-and slices. They must stay byte-identical to what 5.6 Pro embeds, so both concepts render the same face
+5.6 Pro embeds 39 of these files (Inter upright, Poppins 400-700 and IBM Plex Mono 400-700, each with its Latin file
+and slices) and the six JetBrains Mono files below. They must stay byte-identical to what 5.6 Pro embeds, so both concepts render the same face
 (Plans/DRY_Rules.md DR-050). 5.6 Pro's NieR faces (`nier-fonts.js`) are generated from `src/settings/nier/fonts` in the
 order of `13-nier.css` by its `nier_palette_56.py`. `tools/build.py --check` decodes every face 5.6 Pro embeds and fails if one is missing here
 byte for byte. If 5.6 Pro changes its faces, decode them again into this folder and update this table.
@@ -113,6 +113,16 @@ slices, 2,599,644 bytes) is not embedded. Licences: `src/settings/nier/fonts/OFL
 | `jetbrains-mono-latin-ext-var.woff2` | Google Fonts css2 `JetBrains Mono:wght@100..800`, latin-ext (2.211) | `79bfdab9ba467e26` |
 | `mplus1-vietnamese-var.woff2` | Google Fonts css2 `M PLUS 1:wght@100..900`, vietnamese (1.100) | `d04e0dfea99a126c` |
 | `mplus1-latin-ext-var.woff2` | Google Fonts css2 `M PLUS 1:wght@100..900`, latin-ext (1.100) | `18ddfd35cd0156af` |
+
+## The code face: JetBrains Mono
+
+Code text in Basic, Glass and Friendly is JetBrains Mono (DL-161 amended 2026-10-09, after the home redesign's D17),
+declared in `src/css/01-webfonts.css` under the family name `'JetBrains Mono'` with exactly NieR Mode's PM NieR Mono files
+above (`jetbrains-mono-latin-var.woff2` and its five slices in `src/settings/nier/fonts`). `settings_layer.inline_fonts`
+finds them there, so the repository keeps one copy of the bytes. Licence check, 2026-10-09:
+`src/settings/nier/fonts/OFL-JetBrainsMono.txt` reads "Copyright 2020 The JetBrains Mono Project Authors
+(https://github.com/JetBrains/JetBrainsMono)" and names no Reserved Font Name, so a subset may keep the original family
+name (OFL 1.1 condition 3 applies only to reserved names). 5.6 Pro embeds the same six files in `styles.css`.
 
 ## PM Symbols (`pm-symbols-sans.woff2`, `pm-symbols-mono.woff2`)
 

@@ -134,9 +134,13 @@ def inline_fonts(css: str, font_dir: Path = FONT_DIR) -> str:
     import base64
 
     def data_uri(m: re.Match) -> str:
+        # The page's 'JetBrains Mono' code face (DL-161, D17) reuses NieR Mode's files, so a name missing from font_dir
+        # is looked up in nier/fonts: one copy of the bytes in the repository for both families.
         path = font_dir / m.group(1)
         if not path.is_file():
-            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)}')
+            path = FONT_DIR / m.group(1)
+        if not path.is_file():
+            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)} or {FONT_DIR.relative_to(PKG)}')
         return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")'
     return FONT_URL.sub(data_uri, css)
 
@@ -153,7 +157,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
     if not all(p.is_file() for p in PRO56_FONT_CSS):
         print('NOTE: 5.6 Pro is not checked out here; the shared-font check (DR-050) was skipped', file=sys.stderr)
         return []
-    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in font_dir.glob('*.woff2')}
+    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in [*font_dir.glob('*.woff2'), *FONT_DIR.glob('*.woff2')]}
     problems = []
     for css in PRO56_FONT_CSS:
         for m in re.finditer(r'@font-face\s*\{([^}]*)\}', css.read_text(encoding='utf-8')):
@@ -171,7 +175,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
 
 # Text faces that carry PM Symbols (src/css/03-symbols.css). Nunito and Georgia are left out on purpose: Nunito only
 # stands behind Poppins, and Georgia sets one "i".
-SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'PM NieR Sans', 'PM NieR Mono'}
+SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'JetBrains Mono', 'PM NieR Sans', 'PM NieR Mono'}
 
 
 def _font_faces(css: str) -> list[tuple[str, str, str, str, str]]:
