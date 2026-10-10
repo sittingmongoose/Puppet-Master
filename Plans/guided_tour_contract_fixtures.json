@@ -32,7 +32,7 @@
         ],
         "scenes": [
           {"id": "chat_teacher", "purpose": "Open real Assistant Chat, select Teacher, send the supplied local question, and see the same answer in simple words as one extra, simpler reply."},
-          {"id": "workspace", "purpose": "Learn page and panel navigation, move or dock Chat, and perform a real widget action through its mounted owner."},
+          {"id": "workspace", "purpose": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and perform a real widget action through its mounted owner."},
           {"id": "planning_wizard", "purpose": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}
         ],
         "continuity": "The story moves from Assistant Chat and Teacher to workspace practice and finishes at the real Planning Wizard.",
@@ -80,14 +80,14 @@
         "owner_observations": [
           {
             "owner_ref": "owner:workspace_layout",
-            "action_id": "cmd.workspace_layout.move_surface",
-            "target_ref": "surface:chat:1",
+            "action_id": "cmd.panel_tab.open",
+            "target_ref": "panel:home:1",
             "scene": "workspace",
             "mode": "manual",
-            "success_predicate_ref": "predicate:workspace:chat-moved",
+            "success_predicate_ref": "predicate:workspace:tab-opened-from-plus",
             "status": "applied",
             "mounted_owner_result_observed": true,
-            "observation_ref": "observation:workspace:chat-moved:1",
+            "observation_ref": "observation:workspace:tab-opened-from-plus:1",
             "evidence_scope": "contract_fixture_only",
             "production_receipt_claim": false
           }
@@ -122,7 +122,7 @@
         "heading_focus": {"target": "guided_tour.workspace.heading", "element": "h2", "tabindex": -1, "focus_exemption": "programmatic-focus-landmark", "automatic_action": false, "pm_hover_tag_opened": false},
         "low_resource_profile": false,
         "workspace_squeezed": false,
-        "completed_predicate_refs": ["predicate:chat:teacher-selected", "predicate:chat:answer-streamed", "predicate:chat:same-answer-eli5", "predicate:workspace:chat-moved"],
+        "completed_predicate_refs": ["predicate:chat:teacher-selected", "predicate:chat:answer-streamed", "predicate:chat:same-answer-eli5", "predicate:workspace:tab-opened-from-plus"],
         "evidence_scope": "contract_fixture_only",
         "production_receipt_claim": false,
         "revision": 4,
@@ -143,7 +143,7 @@
         "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
         "step": "planning_wizard",
         "step_id": "tour-step:planning:access-answer",
-        "completed_predicate_refs": ["predicate:chat:same-answer-eli5", "predicate:workspace:chat-moved", "predicate:workspace:widget-action"],
+        "completed_predicate_refs": ["predicate:chat:same-answer-eli5", "predicate:workspace:tab-opened-from-plus", "predicate:workspace:file-opened-from-rail", "predicate:workspace:tab-split-by-drag", "predicate:workspace:widget-action"],
         "layout_owner_snapshot_ref": "layout_owner_snapshot:tour:1",
         "chat_owner_snapshot_ref": "chat_owner_snapshot:tour:1",
         "effective_explanation_mode": "eli5",
@@ -408,13 +408,12 @@
         "storyboard_revision": "newbie-first-chat-workspace-planning-2026-09-04",
         "step": "workspace",
         "orientation": {"page_navigation_explained": true, "panel_purpose_explained": true, "mounted_application_visible": true},
-        "chat_layout_action": "practice:workspace:chat-move:1",
         "open_from_plus_action": "practice:workspace:open-from-plus:1",
         "open_file_from_rail_action": "practice:workspace:open-file-from-rail:1",
         "split_by_drag_action": "practice:workspace:split-by-drag:1",
         "widget_action": "practice:workspace:widget-add:1",
         "layout_reversible": true,
-        "completed_predicate_refs": ["predicate:workspace:chat-moved", "predicate:workspace:widget-added"]
+        "completed_predicate_refs": ["predicate:workspace:tab-opened-from-plus", "predicate:workspace:file-opened-from-rail", "predicate:workspace:tab-split-by-drag", "predicate:workspace:widget-added"]
       }
     },
     {

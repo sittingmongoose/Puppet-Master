@@ -242,7 +242,7 @@
           "type": "array",
           "prefixItems": [
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "chat_teacher"}, "purpose": {"const": "Open real Assistant Chat, select Teacher, send the supplied local question, and see the same answer in simple words as one extra, simpler reply."}}},
-            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "workspace"}, "purpose": {"const": "Learn page and panel navigation, move or dock Chat, and perform a real widget action through its mounted owner."}}},
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "workspace"}, "purpose": {"const": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and perform a real widget action through its mounted owner."}}},
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "planning_wizard"}, "purpose": {"const": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}}}
           ],
           "items": false,
@@ -543,7 +543,7 @@
         "split_by_drag_action": {"$ref": "#/$defs/safe_ref"},
         "widget_action": {"$ref": "#/$defs/safe_ref"},
         "layout_reversible": {"const": true},
-        "completed_predicate_refs": {"type": "array", "prefixItems": [{"$ref": "#/$defs/predicate_ref"}, {"$ref": "#/$defs/predicate_ref"}], "items": false, "minItems": 2, "maxItems": 2}
+        "completed_predicate_refs": {"type": "array", "prefixItems": [{"$ref": "#/$defs/predicate_ref"}, {"$ref": "#/$defs/predicate_ref"}, {"$ref": "#/$defs/predicate_ref"}, {"$ref": "#/$defs/predicate_ref"}], "items": false, "minItems": 4, "maxItems": 4}
       }
     },
     "guided_tour_planning_progression": {
