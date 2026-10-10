@@ -1,0 +1,58 @@
+{
+  "family": "Rosé Pine",
+  "slug": "rose-pine",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-rose-pine.txt",
+  "copyright": "Copyright (c) Rosé Pine",
+  "homepage": "https://github.com/rose-pine/rose-pine-theme",
+  "schemes": [
+    {
+      "id": "rose-pine-dawn",
+      "name": "Rosé Pine Dawn",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/rose-pine/ghostty/d8b4ec06e0cde80fb2bfbf59021ff0a332c77388/dist/rose-pine-dawn",
+      "sourceSha256": "4b9d68bc9f5ed906c0aa723b380317841bd1953d22146423689174cfe7f032bf",
+      "colors": {
+        "background": "#faf4ed",
+        "foreground": "#575279",
+        "cursor": "#575279",
+        "cursorText": "#faf4ed",
+        "selectionBackground": "#dfdad9",
+        "selectionForeground": "#575279",
+        "ansi": ["#f2e9e1", "#b4637a", "#286983", "#ea9d34", "#56949f", "#907aa9", "#d7827e", "#575279", "#9893a5", "#b4637a", "#286983", "#ea9d34", "#56949f", "#907aa9", "#d7827e", "#575279"]
+      }
+    },
+    {
+      "id": "rose-pine-moon",
+      "name": "Rosé Pine Moon",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/rose-pine/ghostty/d8b4ec06e0cde80fb2bfbf59021ff0a332c77388/dist/rose-pine-moon",
+      "sourceSha256": "09969baac980a7e1bbaed18b681aee0cb8063579ebced9e330ccc4ae5ee04419",
+      "colors": {
+        "background": "#232136",
+        "foreground": "#e0def4",
+        "cursor": "#e0def4",
+        "cursorText": "#232136",
+        "selectionBackground": "#44415a",
+        "selectionForeground": "#e0def4",
+        "ansi": ["#393552", "#eb6f92", "#3e8fb0", "#f6c177", "#9ccfd8", "#c4a7e7", "#ea9a97", "#e0def4", "#6e6a86", "#eb6f92", "#3e8fb0", "#f6c177", "#9ccfd8", "#c4a7e7", "#ea9a97", "#e0def4"]
+      }
+    },
+    {
+      "id": "rose-pine-main",
+      "name": "Rosé Pine Main",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/rose-pine/ghostty/d8b4ec06e0cde80fb2bfbf59021ff0a332c77388/dist/rose-pine",
+      "sourceSha256": "23075d6407b3e9f0dd2a7f9d67555deedc2e31805ddde34a03d6a66725f86197",
+      "colors": {
+        "background": "#191724",
+        "foreground": "#e0def4",
+        "cursor": "#e0def4",
+        "cursorText": "#191724",
+        "selectionBackground": "#403d52",
+        "selectionForeground": "#e0def4",
+        "ansi": ["#26233a", "#eb6f92", "#31748f", "#f6c177", "#9ccfd8", "#c4a7e7", "#ebbcba", "#e0def4", "#6e6a86", "#eb6f92", "#31748f", "#f6c177", "#9ccfd8", "#c4a7e7", "#ebbcba", "#e0def4"]
+      }
+    }
+  ]
+}

@@ -142,6 +142,33 @@ under 400 draw at 400 in Latin; the upright slices and the italic run the full 1
 | `jetbrains-mono-latin-ext-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, latin-ext (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-Cw2nSHrV.woff2) | `60652c78382d7e50` |
 | `jetbrains-mono-latin-100-800-italic.woff2` | Google Fonts css2 `JetBrains Mono:ital,wght@1,100..800`, latin (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbX2o-flEEny0FZhsfKu5WU4xD-CwOnSA.woff2) | `a8afa085e9ca5e53` |
 
+## The terminal's faces (home redesign D17), from 2026-10-10
+
+VT323, Sixtyfour, Sixtyfour Raster, Atkinson Hyperlegible Mono and Departure Mono came into this folder from the home
+redesign terminal package (`Concepts/home-redesign/src/terminal/fonts`, branch `concept/home-terminal-20261009`, now
+removed there), so the page embeds them once through this pipeline. The Latin files are the terminal thread's bytes
+(same SHA-256); the latin-ext and Vietnamese slices were fetched 2026-10-10 from the same font versions, with Google's
+unicode-range for each slice. Sixtyfour's math and symbols slices are left out (they are not scripts, and the terminal
+draws box drawing, blocks and braille itself); Sixtyfour Raster is a static instance of the Latin file only. Licences:
+`OFL-VT323.txt`, `OFL-Sixtyfour.txt`, `OFL-AtkinsonHyperlegibleMono.txt` (google/fonts `ofl/<family>/OFL.txt`) and
+`LICENSE-DepartureMono.txt` (the LICENSE in the v1.500 release zip; SIL OFL 1.1, Copyright 2022-2024 Helena Zhang).
+Metrics (fontTools): VT323 advance 0.400 em; Sixtyfour 1.000 em; Atkinson Hyperlegible Mono 0.632 em; Departure Mono
+0.636 em; every ASCII glyph shares one advance in each face.
+
+| File | Source | SHA-256 (first 16) |
+|---|---|---|
+| `vt323-vietnamese-400-normal.woff2` | Google Fonts css2 `VT323`, vietnamese (gstatic v18: https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) | `84b335a53b55c33f` |
+| `vt323-latin-ext-400-normal.woff2` | Google Fonts css2 `VT323`, latin-ext (gstatic v18: https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) | `4435f062ebe744d0` |
+| `vt323-latin-400-normal.woff2` | Google Fonts css2 `VT323`, latin (gstatic v18: https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2); fetched 2026-10-09 by the terminal thread as `pmt-vt323-latin-400.woff2` | `8ddbebcc10481541` |
+| `sixtyfour-latin-ext-var-normal.woff2` | Google Fonts css2 `Sixtyfour:BLED,SCAN@0..100,-53..100`, latin-ext (gstatic v3: https://fonts.gstatic.com/s/sixtyfour/v3/OD5BuMCT1numDm3nakXHpUC5PL4.woff2) | `048d9130dfac5115` |
+| `sixtyfour-latin-var-normal.woff2` | Google Fonts css2 `Sixtyfour:BLED,SCAN@0..100,-53..100`, latin (gstatic v3: https://fonts.gstatic.com/s/sixtyfour/v3/OD5BuMCT1numDm3nakXHq0C5.woff2); was `pmt-sixtyfour-latin-var.woff2` | `df188df1d5e123c7` |
+| `sixtyfour-raster-latin-400-normal.woff2` | Derived from `sixtyfour-latin-var-normal.woff2` with fontTools `varLib.instancer` at SCAN 45, BLED 40, family renamed "Sixtyfour Raster" (OFL permits modified versions; Sixtyfour declares no Reserved Font Name); was `pmt-sixtyfour-raster-latin.woff2` | `fd79502c568a9e67` |
+| `atkinson-hyperlegible-mono-latin-ext-200-800-normal.woff2` | Google Fonts css2 `Atkinson Hyperlegible Mono:ital,wght@0,200..800;1,200..800`, latin-ext, normal (gstatic v8: https://fonts.gstatic.com/s/atkinsonhyperlegiblemono/v8/tss4AoFBci4C4gvhPXrt3wjT1MqSzhA4t7IIcncBiwKjhFyRHQ.woff2) | `3fa1fa7e990377c8` |
+| `atkinson-hyperlegible-mono-latin-200-800-normal.woff2` | Same request, latin, normal (gstatic v8: https://fonts.gstatic.com/s/atkinsonhyperlegiblemono/v8/tss4AoFBci4C4gvhPXrt3wjT1MqSzhA4t7IIcncBiwKthFw.woff2); was `pmt-atkinson-hyperlegible-mono-latin-var.woff2` | `2706b1ee4f452e74` |
+| `atkinson-hyperlegible-mono-latin-ext-200-800-italic.woff2` | Same request, latin-ext, italic (gstatic v8: https://fonts.gstatic.com/s/atkinsonhyperlegiblemono/v8/tss6AoFBci4C4gvhPXrt3wjT1MqSzhA4t7IIcncBiwKotFCJGR0i.woff2) | `05c9dc1f015daa3e` |
+| `atkinson-hyperlegible-mono-latin-200-800-italic.woff2` | Same request, latin, italic (gstatic v8: https://fonts.gstatic.com/s/atkinsonhyperlegiblemono/v8/tss6AoFBci4C4gvhPXrt3wjT1MqSzhA4t7IIcncBiwKotF6JGQ.woff2); was `pmt-atkinson-hyperlegible-mono-latin-var-italic.woff2` | `13db24b4da3f549a` |
+| `departure-mono-400-normal.woff2` | https://github.com/rektdeckard/departure-mono/releases/download/v1.500/DepartureMono-1.500.zip, member `DepartureMono-1.500/DepartureMono-Regular.woff2` (the whole font, 1186 glyphs; no slices); was `pmt-departure-mono-400.woff2` | `5b4fed1daa90708a` |
+
 ## PM Symbols (`pm-symbols-sans.woff2`, `pm-symbols-mono.woff2`)
 
 The 21 symbol characters the page uses that no text face above carries (arrows, check and cross marks, triangles,

@@ -1,0 +1,642 @@
+{
+ "solarized-dark.itermcolors": {
+  "ok": true,
+  "format": "iterm2",
+  "name": "solarized-dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#073642",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "solarized-light-p3.itermcolors": {
+  "ok": true,
+  "format": "iterm2",
+  "name": "solarized-light-p3",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#657b83",
+   "cursor": "#586e75",
+   "cursorText": "#fdf6e3",
+   "selectionBackground": "#eee8d5",
+   "selectionForeground": "#586e75",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": [
+   "Display P3"
+  ]
+ },
+ "solarized-dark.json": {
+  "ok": true,
+  "format": "windows-terminal",
+  "name": "Solarized Dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": null,
+   "selectionBackground": "#073642",
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "settings.json": {
+  "ok": true,
+  "format": "windows-terminal",
+  "name": "Solarized Light",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#657b83",
+   "cursor": "#586e75",
+   "cursorText": null,
+   "selectionBackground": "#eee8d5",
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": [
+   "3 schemes",
+   "Solarized Dark",
+   "Plain <b>Unicode</b> \u2603"
+  ]
+ },
+ "solarized-dark.conf": {
+  "ok": true,
+  "format": "kitty",
+  "name": "Solarized Dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#073642",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "solarized-light.conf": {
+  "ok": true,
+  "format": "kitty",
+  "name": "Solarized Light",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#657b83",
+   "cursor": "#586e75",
+   "cursorText": "#fdf6e3",
+   "selectionBackground": "#eee8d5",
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "ghostty-solarized-dark": {
+  "ok": true,
+  "format": "ghostty",
+  "name": "ghostty-solarized-dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#073642",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "alacritty-solarized-dark.toml": {
+  "ok": true,
+  "format": "alacritty",
+  "name": "alacritty-solarized-dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#073642",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "alacritty-solarized-light.yml": {
+  "ok": true,
+  "format": "alacritty",
+  "name": "alacritty-solarized-light",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#657b83",
+   "cursor": "#586e75",
+   "cursorText": "#fdf6e3",
+   "selectionBackground": "#eee8d5",
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "base16-solarized-dark.yaml": {
+  "ok": true,
+  "format": "base16",
+  "name": "Solarized Dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#93a1a1",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#586e75",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#002b36",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#6c71c4",
+    "#2aa198",
+    "#93a1a1",
+    "#657b83",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#6c71c4",
+    "#2aa198",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "base16-solarized-light.yaml": {
+  "ok": true,
+  "format": "base16",
+  "name": "Solarized Light",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#586e75",
+   "cursor": "#586e75",
+   "cursorText": "#fdf6e3",
+   "selectionBackground": "#93a1a1",
+   "selectionForeground": "#586e75",
+   "ansi": [
+    "#fdf6e3",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#6c71c4",
+    "#2aa198",
+    "#586e75",
+    "#839496",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#6c71c4",
+    "#2aa198",
+    "#002b36"
+   ]
+  },
+  "warnings": []
+ },
+ "base24-solarized-dark.yaml": {
+  "ok": true,
+  "format": "base24",
+  "name": "Solarized Dark 24",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#93a1a1",
+   "cursor": "#93a1a1",
+   "cursorText": "#002b36",
+   "selectionBackground": "#586e75",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#002b36",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#6c71c4",
+    "#2aa198",
+    "#93a1a1",
+    "#657b83",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "solarized-dark.Xresources": {
+  "ok": true,
+  "format": "xresources",
+  "name": "solarized-dark",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": "#93a1a1",
+   "cursorText": null,
+   "selectionBackground": "#073642",
+   "selectionForeground": "#93a1a1",
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "solarized-light.Xresources": {
+  "ok": true,
+  "format": "xresources",
+  "name": "solarized-light",
+  "appearance": "light",
+  "colors": {
+   "background": "#fdf6e3",
+   "foreground": "#657b83",
+   "cursor": "#586e75",
+   "cursorText": null,
+   "selectionBackground": null,
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": []
+ },
+ "edge-kitty-missing-brights.conf": {
+  "ok": true,
+  "format": "kitty",
+  "name": "edge-kitty-missing-brights",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": null,
+   "cursorText": null,
+   "selectionBackground": null,
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#b58900",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5"
+   ]
+  },
+  "warnings": [
+   "8, 9, 10, 11, 12, 13, 14, 15 were missing"
+  ]
+ },
+ "edge-ghostty-missing-palette": {
+  "ok": true,
+  "format": "ghostty",
+  "name": "edge-ghostty-missing-palette",
+  "appearance": "dark",
+  "colors": {
+   "background": "#002b36",
+   "foreground": "#839496",
+   "cursor": null,
+   "cursorText": null,
+   "selectionBackground": null,
+   "selectionForeground": null,
+   "ansi": [
+    "#073642",
+    "#dc322f",
+    "#859900",
+    "#cdcd00",
+    "#268bd2",
+    "#d33682",
+    "#2aa198",
+    "#eee8d5",
+    "#002b36",
+    "#cb4b16",
+    "#586e75",
+    "#657b83",
+    "#839496",
+    "#6c71c4",
+    "#93a1a1",
+    "#fdf6e3"
+   ]
+  },
+  "warnings": [
+   "ANSI colours 3 were missing"
+  ]
+ },
+ "edge-wt-short-hex.json": {
+  "ok": true,
+  "format": "windows-terminal",
+  "name": "Short Hex",
+  "appearance": "dark",
+  "colors": {
+   "background": "#000000",
+   "foreground": "#ffffff",
+   "cursor": "#ff8800",
+   "cursorText": null,
+   "selectionBackground": null,
+   "selectionForeground": null,
+   "ansi": [
+    "#000000",
+    "#cc0000",
+    "#00cc00",
+    "#cccc00",
+    "#0000cc",
+    "#cc00cc",
+    "#00cccc",
+    "#cccccc",
+    "#666666",
+    "#ff0000",
+    "#00ff00",
+    "#ffff00",
+    "#0000ff",
+    "#ff00ff",
+    "#00ffff",
+    "#ffffff"
+   ]
+  },
+  "warnings": []
+ },
+ "edge-x11-colour-syntax.Xresources": {
+  "ok": true,
+  "format": "xresources",
+  "name": "edge-x11-colour-syntax",
+  "appearance": "dark",
+  "colors": {
+   "background": "#102030",
+   "foreground": "#ffffff",
+   "cursor": "#fecb98",
+   "cursorText": null,
+   "selectionBackground": null,
+   "selectionForeground": null,
+   "ansi": [
+    "#000000",
+    "#cc0000",
+    "#00cc00",
+    "#cccc00",
+    "#0000cc",
+    "#c000c0",
+    "#00cccc",
+    "#cccccc",
+    "#666666",
+    "#f00000",
+    "#00ff00",
+    "#ffff00",
+    "#00ff00",
+    "#ff00ff",
+    "#00ffff",
+    "#ffffff"
+   ]
+  },
+  "warnings": []
+ },
+ "malformed-truncated.itermcolors": {
+  "ok": false,
+  "code": "syntax"
+ },
+ "malformed-unclosed-tag.itermcolors": {
+  "ok": false,
+  "code": "syntax"
+ },
+ "malformed-binary.itermcolors": {
+  "ok": false,
+  "code": "binary"
+ },
+ "malformed-bad.json": {
+  "ok": false,
+  "code": "syntax"
+ },
+ "malformed-invalid-colours.json": {
+  "ok": false,
+  "code": "required"
+ },
+ "malformed-unterminated.toml": {
+  "ok": false,
+  "code": "syntax"
+ },
+ "malformed-no-colours.txt": {
+  "ok": false,
+  "code": "format"
+ },
+ "malformed-comments-only.conf": {
+  "ok": false,
+  "code": "nocolours"
+ },
+ "malformed-tab-indent.yaml": {
+  "ok": false,
+  "code": "syntax"
+ }
+}

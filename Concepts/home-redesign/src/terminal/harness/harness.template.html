@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!-- Terminal harness page template. build_harness.py fills the two markers below and writes terminal-harness.html, a
+     self-contained page (styles, fonts and scripts inlined; nothing loads from the network). The stub kind between the
+     PMX:STUB markers is removed from the output unless the build runs with stub enabled. -->
+<html lang="en" data-theme="friendly-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Puppet Master terminal harness</title>
+<style id="pm-home-css">
+/*PMX:CSS*/
+</style>
+</head>
+<body>
+<div id="pmx-sky" aria-hidden="true"></div>
+<div class="pmx-bar" id="pmx-bar" role="group" aria-label="Harness controls">
+  <span class="pmx-title">Terminal harness</span>
+  <div class="pmx-group" role="group" aria-label="Look">
+    <span class="pmx-group-label">Look</span>
+    <button type="button" class="pmx-btn" data-pmx-look="friendly" aria-pressed="false">Friendly</button>
+    <button type="button" class="pmx-btn" data-pmx-look="glass" aria-pressed="false">Glass</button>
+    <button type="button" class="pmx-btn" data-pmx-look="retro" aria-pressed="false">Retro</button>
+    <button type="button" class="pmx-btn" data-pmx-look="basic" aria-pressed="false">Basic</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Mode">
+    <button type="button" class="pmx-btn" data-pmx-mode="light" aria-pressed="false">Light</button>
+    <button type="button" class="pmx-btn" data-pmx-mode="dark" aria-pressed="false">Dark</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Modes">
+    <button type="button" class="pmx-btn" data-pmx-toggle="nier" aria-pressed="false">NieR</button>
+    <button type="button" class="pmx-btn" data-pmx-toggle="reduced" aria-pressed="false">Reduced Motion</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Panel body width">
+    <span class="pmx-group-label">W</span>
+    <button type="button" class="pmx-btn" data-pmx-w="320" aria-pressed="false">320</button>
+    <button type="button" class="pmx-btn" data-pmx-w="480" aria-pressed="false">480</button>
+    <button type="button" class="pmx-btn" data-pmx-w="720" aria-pressed="false">720</button>
+    <button type="button" class="pmx-btn" data-pmx-w="1000" aria-pressed="false">1000</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Panel body height">
+    <span class="pmx-group-label">H</span>
+    <button type="button" class="pmx-btn" data-pmx-h="120" aria-pressed="false">120</button>
+    <button type="button" class="pmx-btn" data-pmx-h="240" aria-pressed="false">240</button>
+    <button type="button" class="pmx-btn" data-pmx-h="480" aria-pressed="false">480</button>
+    <button type="button" class="pmx-btn" data-pmx-fill aria-pressed="false">Fill</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Layout">
+    <span class="pmx-group-label">Layout</span>
+    <button type="button" class="pmx-btn" data-pmx-layout="one" aria-pressed="false">One</button>
+    <button type="button" class="pmx-btn" data-pmx-layout="two" aria-pressed="false">Two</button>
+    <button type="button" class="pmx-btn" data-pmx-layout="grid" aria-pressed="false">2x2</button>
+  </div>
+  <div class="pmx-group" role="group" aria-label="Harness">
+    <button type="button" class="pmx-btn" data-pmx-demos aria-haspopup="menu" aria-expanded="false">Demo</button>
+    <button type="button" class="pmx-btn" data-pmx-reset>Reset layout</button>
+  </div>
+  <div class="pmx-status">
+    <span>Body <b id="pmx-size">-</b></span>
+    <span class="pmx-said" id="pmx-said" aria-hidden="true"></span>
+  </div>
+</div>
+<main class="pmx-shell">
+  <div id="pm-home-centre"></div>
+</main>
+<div id="pmw-overlay"></div>
+
+<!-- PMX:STUB:START -->
+<script type="text/plain" id="pmx-stub-src">
+/* Harness-only stub kind: exercises every host call a tab kind can make, so the host can be tested before (and
+   without) the terminal. Built in with build_harness.py --stub. */
+(function () {
+  var PH = window.PM_HOME;
+  if (!PH || !PH.registerKind) return;
+  var seq = 0;
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  PH.registerKind('stub', {
+    label: 'Stub', group: 'Stubs', icon: 'box', prefixes: ['stub:'], min: { w: 240, h: 100 },
+    idFor: function () { return 'stub:' + Date.now().toString(36) + '-' + (++seq); },
+    plus: {
+      order: 90,
+      sub: function () { return [{ id: 'plain', label: 'Plain', detail: 'gives every shortcut back' }, { id: 'keep', label: 'Keeps keys', detail: 'wantsKey keeps Ctrl+W and Ctrl+K' }]; },
+      spec: function (subId) { return { kind: 'stub', keep: subId === 'keep' }; }
+    },
+    mount: function (host, state, api) {
+      var log = [], marks = { exitCode: null, agent: null, dirty: false, busy: false };
+      var root = el('div', 'pmx-stub');
+      var started = Date.now();
+      var row = api.headerRow({
+        left: [
+          { id: 'cwd', text: '~/tastebook/api', mono: true, title: 'Folder' },
+          { id: 'branch', text: 'main', icon: 'branch', title: 'Branch' },
+          { id: 'run', text: 'cargo test --workspace', detail: '0:00', icon: 'clock', title: 'Running' }
+        ],
+        actions: [
+          { id: 'find', label: 'Find', icon: 'search', shortcut: 'Ctrl+F', run: function () { api.announce('Find opened (stub).'); } },
+          { id: 'split', label: 'Split', icon: 'split', run: function () { api.split('auto', { kind: 'stub', keep: !!state.keep }); } },
+          { id: 'max', label: 'Maximize', icon: 'maximize', shortcut: 'Ctrl+K M', run: function () { api.toggleMaximize(); paintMax(); } },
+          { id: 'more', label: 'More', icon: 'more', menu: function () {
+            return [
+              { id: 'copy', label: 'Copy output', icon: 'copy', shortcut: 'Ctrl+Shift+C', run: function () { note('menu: copy'); } },
+              { id: 'open', label: 'Open output in editor', icon: 'file', detail: '214 lines', run: openBuffer },
+              { id: 'wrap', label: 'Wrap long lines', checked: !!state.wrap, run: function () { state.wrap = !state.wrap; note('menu: wrap ' + state.wrap); } },
+              { id: 'appearance', label: 'Appearance', icon: 'box', sub: [
+                { id: 'follow', label: 'Follow theme', checked: true, run: function () { note('menu: follow theme'); } },
+                { id: 'scheme', label: 'Scheme', sub: function () { return ['Catppuccin', 'Tokyo Night', 'One Half'].map(function (s) { return { id: s, label: s, run: function () { note('menu: scheme ' + s); } }; }); } },
+                '-',
+                { id: 'reset', label: 'Reset to defaults', run: function () { note('menu: reset'); } }
+              ] },
+              { id: 'restart', label: 'Restart session', disabled: true, detail: 'nothing to restart' },
+              '-',
+              { id: 'kill', label: 'Kill process', icon: 'close', danger: true, run: function () { note('menu: kill'); } }
+            ];
+          } }
+        ]
+      });
+      root.appendChild(row.el);
+      var body = el('div', 'pmx-stub-body'); body.tabIndex = 0; body.setAttribute('aria-label', 'Stub tab body');
+      var facts = el('pre', 'pmx-stub-facts');
+      body.appendChild(facts);
+      function btn(label, fn) { var b = el('button', 'pmx-btn', label); b.type = 'button'; b.addEventListener('click', fn); return b; }
+      function rowOf(list) { var r = el('div', 'pmx-stub-row'); list.forEach(function (b) { r.appendChild(b); }); body.appendChild(r); }
+      rowOf([
+        btn('Exit 1', function () { marks.exitCode = marks.exitCode ? null : 1; api.update({ exitCode: marks.exitCode, label: marks.exitCode ? 'cargo test' : 'zsh' }); }),
+        btn('Agent mark', function () { marks.agent = marks.agent ? null : 'Builder'; api.update({ agent: marks.agent }); }),
+        btn('Attention', function () { api.update({ attention: true }); }),
+        btn('Dirty', function () { marks.dirty = !marks.dirty; api.update({ dirty: marks.dirty }); }),
+        btn('Busy', function () { marks.busy = !marks.busy; api.update({ busy: marks.busy }); }),
+        btn('Long label', function () { api.update({ label: 'cargo test --workspace -- --nocapture  ~/tastebook/api', title: 'cargo test --workspace -- --nocapture in ~/tastebook/api' }); })
+      ]);
+      rowOf([
+        btn('Open src/media/import.rs:128:14', function () { api.open({ path: 'src/media/import.rs', line: 128, col: 14 }); }),
+        btn('Open buffer', openBuffer),
+        btn('Agent opens a stub', function () { api.open({ kind: 'stub', by: 'agent:Builder' }); }),
+        btn('Announce', function () { api.announce('The stub says hello.'); })
+      ]);
+      rowOf([
+        btn('Split right', function () { api.split('right', { kind: 'stub' }); }),
+        btn('Split down', function () { api.split('down', { kind: 'stub' }); }),
+        btn('Close', function () { api.close(); }),
+        btn('Toggle setting', function () { api.settings.set('panels.tabs.preview', !api.settings.get('panels.tabs.preview')); })
+      ]);
+      var logEl = el('pre', 'pmx-stub-log');
+      body.appendChild(logEl);
+      root.appendChild(body);
+      host.appendChild(root);
+      function openBuffer() {
+        var lines = []; for (var i = 1; i <= 40; i++) lines.push('test media::import::case_' + i + ' ... ok');
+        api.open({ kind: 'editor', text: lines.join('\n'), title: 'cargo test output' });
+      }
+      function paintMax() { var m = api.isMaximized(); row.setAction('max', { label: m ? 'Restore' : 'Maximize', icon: m ? 'restore' : 'maximize' }); }
+      function note(s) { log.unshift(new Date().toISOString().slice(11, 19) + '  ' + s); log.length = Math.min(log.length, 12); logEl.textContent = log.join('\n'); paintFacts(); }
+      function paintFacts() {
+        var sz = api.size(), lk = api.look();
+        facts.textContent = 'size     ' + sz.w + ' x ' + sz.h + '\n' +
+          'visible  ' + api.isVisible() + '    focused ' + api.isFocused() + '    maximized ' + api.isMaximized() + '\n' +
+          'look     ' + lk.family + '-' + lk.mode + (lk.nier ? ' + NieR' : '') + (lk.reduced ? ' + reduced motion' : '') + '\n' +
+          'keys     ' + (state.keep ? 'keeps Ctrl+W and Ctrl+K' : 'gives every shortcut back');
+      }
+      var tick = setInterval(function () {
+        if (!api.isVisible()) return;
+        var s = Math.floor((Date.now() - started) / 1000);
+        row.set({ left: [
+          { id: 'cwd', text: '~/tastebook/api', mono: true, title: 'Folder' },
+          { id: 'branch', text: 'main', icon: 'branch', title: 'Branch' },
+          { id: 'run', text: 'cargo test --workspace', detail: Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'), icon: 'clock', title: 'Running' }
+        ] });
+      }, 1000);
+      api.on('look', function (l) { note('look event ' + l.family + '-' + l.mode); });
+      api.on('settings', function (k, v) { note('settings ' + k + ' = ' + JSON.stringify(v)); });
+      api.update({ label: 'zsh', title: 'zsh in ~/tastebook/api' });
+      paintFacts();
+      return {
+        unmount: function () { clearInterval(tick); },
+        serialize: function () { return { keep: !!state.keep, wrap: !!state.wrap }; },
+        onResize: function (s) { note('onResize ' + s.w + ' x ' + s.h + (s.final ? ' final' : '')); },
+        onShow: function () { note('onShow'); },
+        onHide: function () { note('onHide'); },
+        onFocus: function () { note('onFocus'); },
+        onBlur: function () { note('onBlur'); },
+        onLook: function (l) { note('onLook ' + l.family); },
+        wantsKey: function (e) {
+          var keep = !!state.keep && (e.ctrlKey || e.metaKey) && !e.shiftKey && (e.key === 'w' || e.key === 'k');
+          note('wantsKey ' + (e.ctrlKey ? 'Ctrl+' : '') + (e.shiftKey ? 'Shift+' : '') + e.key + ' -> ' + keep);
+          return keep;
+        },
+        canClose: function () {
+          if (!marks.dirty) return true;
+          return Promise.resolve(window.confirm('This stub is dirty. Close it anyway?'));
+        },
+        focus: function () { body.focus({ preventScroll: true }); }
+      };
+    }
+  });
+  window.PMT_HARNESS_DEMOS = window.PMT_HARNESS_DEMOS || [];
+  window.PMT_HARNESS_DEMOS.push(
+    { label: 'Agent opens a stub in the background', run: function (H) { H.open({ kind: 'stub', by: 'agent:Builder' }); } },
+    { label: 'Open a file at a line', detail: 'src/router.rs:42:5', run: function (H) { H.open({ path: 'src/router.rs', line: 42, col: 5 }); } }
+  );
+})();
+</script>
+<!-- PMX:STUB:END -->
+
+<script id="pm-home-js">
+/*PMX:JS*/
+</script>
+</body>
+</html>
