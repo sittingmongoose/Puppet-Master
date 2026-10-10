@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32651-L33316
+Source lines: L32669-L33336
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -579,6 +579,7 @@ canonical_text: >-
   the sidebar builder.
   Amended 2026-10-09 (DL-184): the 3 px inset left accent bar on the selected thread and the left accent bar on active
   collapsed rows are retired; selection is the tinted fill, the hairline ring and the bolder title (F3-648).
+  PMConcept7's Chats rail retires when the 5.6 Pro chat is ported (ACD-444), not now.
 gui_related: true
 gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
 split_recommended: false
@@ -618,6 +619,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L12): The Chats rail stays until the 5.6 Pro chat port (ACD-444)."
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
 - "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:

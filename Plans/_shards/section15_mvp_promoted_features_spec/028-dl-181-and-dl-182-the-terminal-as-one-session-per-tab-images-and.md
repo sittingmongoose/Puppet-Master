@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L12362-L12991
 
-Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
+Source SHA256: `4cc5a7fe8548cb91049b01ecf42590cf828a52fb5f9e9f4d7778583fb43e9c59`
 
 ---
 
@@ -66,20 +66,17 @@ canonical_text: >-
   its session, after the tab first says what is still running ("Close this terminal? <process> is still running
   and will be stopped."). When a session ends by itself the tab stays and shows an inline "Session ended" row (with
   the exit code when it is not zero), Restart and Close tab, and its screen dims (the rows and the 72 % dim are
-  `Plans/FinalGUISpec.md#F3-640`'s); Restart starts a new session in the same tab. Reopen
-  closed tab on a terminal opens a new session in the same folder and profile. After Puppet Master restarts, a
+  `Plans/FinalGUISpec.md#F3-640`'s); Restart starts a new session in the same tab. Reopen closed tab opens a new session in the same folder and profile. After Puppet Master restarts, a
   terminal tab never pretends to be the old session (F3-226, F3-228): a session verified live is reattached
   (`restored_live`, SMPFS-063, SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181,
-  `Plans/storage-plan.md#SP-332`) before a new session starts in the same folder and profile, draws the dim rule
+  `Plans/storage-plan.md#SP-332`) before a new local session starts in the same folder and profile, draws the dim rule
   `── Restored <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
   terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page
   reloaded; this is a new session." The part in parentheses appears only when images were not kept; a reopened tab's
-  notice says it was reopened and that the earlier session ended when the tab closed; a tab whose saved copy did
-  not load within SP-332's load budget starts without its scrollback and says so. The restore outcome of SMPFS-063
+  notice says it was reopened and that the earlier session ended when the tab closed; a local terminal tab whose saved copy did not load within SP-332's load budget starts without its scrollback and says so. The restore outcome of SMPFS-063
   is recorded for the earlier session: `restored_live` only for a verified reattach; `restored_exited` when that
   session had already ended before the restart, `restored_disconnected` when it was still running and did not
-  survive, and `restored_without_history` when its saved scrollback did not load. In those three cases the restored
-  scrollback is the review part, the new session below it is live with its own `terminal_session_id`, and the tab
+  survive, and `restored_without_history` when its saved scrollback did not load. For local profiles in those three cases the restored scrollback is the review part, the new session below it is live with its own `terminal_session_id`, and the tab
   is never left review-only; Restart and rerun stay the actions for a session that ends while the tab is open. A
   command still running when the
   earlier session ended comes back ended and indeterminate ("ended with the earlier session"), never done, through
@@ -88,6 +85,7 @@ canonical_text: >-
   hosts) replace it. No AI feature lives in the terminal surface: no explain, fix, suggest, ask or completion
   action. Explaining commands is the Teacher persona's job in the chat (`Plans/Personas.md` section 11.8), and
   `code.terminal.explanations` retires.
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Owns the terminal's session and tab model that every visible terminal surface presents.
 split_recommended: false
@@ -108,8 +106,8 @@ acceptance_criteria:
 - "Split from a terminal opens a new panel with a new session in the same folder and shell profile; no terminal tab ever holds two sessions."
 - "Closing a tab whose session runs a process shows the inline close row first, and closing ends the session; Reopen closed tab opens a new session in the same folder and profile."
 - "An ended session keeps its tab with the Session ended row; Restart starts a new session in that tab and the tab id does not change."
-- "After a restart, a tab whose session did not survive loads its saved scrollback, draws the dim rule, shows the notice and starts a new session; it is never shown as the earlier live session, and a command that was running comes back ended and indeterminate."
-- "The earlier session's restore outcome is restored_live only for a verified reattach, and otherwise restored_exited, restored_disconnected or restored_without_history; in each of those three the tab has a new live session below the restored scrollback and is never left review-only."
+- "After a restart, a local terminal tab whose session did not survive loads its saved scrollback, draws the dim rule, shows the notice and starts a new session; it is never shown as the earlier live session, and a command that was running comes back ended and indeterminate."
+- "The earlier session's restore outcome is restored_live only for a verified reattach, and otherwise restored_exited, restored_disconnected or restored_without_history; for local profiles in each of those three the tab has a new live session below the restored scrollback and is never left review-only."
 - "No active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the editor terminal stack, the Quadrant layout, the pane layout families or the four-section and four-pane caps."
 - "The terminal surface offers no AI action and no broadcast input; code.terminal.tab-role and code.terminal.explanations are retired."
 validation_surfaces:
@@ -157,6 +155,8 @@ compatibility_only_notes:
 - "Section 1.6's section, tab-pane grid, layout-family and bottom-default rules, SMPFS-138 and SMPFS-170 remain only as lineage."
 - "terminal_section_id, terminal_workgroup_id and terminal_pane_id survive only as read-only migration inputs (Plans/storage-plan.md#SP-332)."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore waits for Reconnect / Close tab and never reconnects by itself."
+- "Amended 2026-10-10 (lead ruling L14, scope): L14 covers restore only; a session verified live is reattached whatever its profile (reattaching a live session reconnects to no remote host, SSYS-050), and Reopen closed tab, a user action, opens a new session in the same folder and profile with no Reconnect / Close tab prompt."
 - "Supersedes 2026-10-09 (DL-181): section 1.6's four-section, one-to-four-pane, quadrant, layout-family and bottom-default rules, SMPFS-138, the Pane Layout Family Transform and SMPFS-170's producer."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -203,8 +203,7 @@ canonical_text: >-
   were placed on: they scroll with it, follow it when the grid reflows, clip to the tab, and go when the screen is
   cleared or their lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image out of those
   cells. While an image decodes or a file is read, later output waits, so text after an image always lands after
-  it. Under tmux, kitty images pass through as Unicode placeholders, which tmux carries as text. Reduced Motion and
-  a hidden terminal pause animation. How images draw in a tab is `Plans/FinalGUISpec.md#F3-645`; the Leptos web
+  it. Under tmux, kitty images pass through as Unicode placeholders, which tmux carries as text. Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses. How images draw in a tab is `Plans/FinalGUISpec.md#F3-645`; the Leptos web
   client (DL-139) receives images as a separate image-store update beside its row updates and keeps SMPFS-072's
   fixed-row rule. Saved scrollback (the planning thread's rule of 2026-10-09, which replaces the concept SPEC's
   "never enter saved scrollback" sentence): images persist with the terminal's saved scrollback within its storage
@@ -244,7 +243,7 @@ acceptance_criteria:
 - "Every error reply is one of the fixed strings and never echoes program data."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
-- "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; animation pauses under Reduced Motion and while the terminal is hidden."
+- "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -302,6 +301,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

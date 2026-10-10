@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L276-L1387
+Source lines: L276-L1397
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -73,6 +73,8 @@ chat messages stay with their domain owners (tab identity versus domain identity
 F3-635). The paragraphs above remain lineage.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
+
+Amended 2026-10-10 (lead ruling L13): A lost pointer capture now cancels a move (DR-066); the earlier no-cancel rule below is retired.
 
 Surface movement and resize use a committed layout plus a local draft layout. Pointer
 offset, lift, placeholder, neighbor reflow, edge-zone detection, cancellation, and
@@ -785,6 +787,9 @@ canonical_text: >-
   panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
   the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
   follow F3-636's ladder.
+  Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel, as DR-066's cancel set says: it commits
+  nothing and restores the exact earlier layout. The 2026-08-12 rule that loss of pointer capture alone is not a
+  cancellation vector is retired.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -792,7 +797,7 @@ depends_on: [F3-501, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
 - Pickup retains pointer offset and shows landing placeholder, neighbor reflow, and narrow theme-aware edge previews.
-- Escape, pointercancel, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event; loss of pointer capture alone is not a cancellation vector.
+- "Escape, pointercancel, blur, a lost pointer capture, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event (amended 2026-10-10, lead ruling L13; DR-066)."
 - Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
@@ -829,6 +834,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-15 (wave 8): the wave-7 scroll-lock rationale is retired. Three claims go with it — that overflow-x clip beside overflow-y auto forbids programmatic scrollLeft (it computes to hidden per CSS Overflow 3 §3.1, the hosts stayed scroll containers and scrollLeft still moved 12 px, and Safari ≤ 15 drops the declaration entirely); that the host-level `scrollbar-color: var(--border-light) transparent` declaration suppressed gutters (it defeated the scrollbar opt-in list's transparent idle ink and produced an always-visible thumb, and it never applied at all on the Safari builds where the 10 px webkit bars were actually stealing space); and that the tab silhouette contributed the residual horizontal overflow (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). The overflow is removed at its three measured sources instead — empty-dock padding, zero-extent frost bands, and the pairless last home_main divider — with a both-axes clip belt and ID-anchored zero-width host scrollbars, and the sub-1320 px home_main overflow-x auto is a documented reachability exception, not a leak."
 - "Amended 2026-10-09 (DL-180): the gesture transaction now moves panels and tabs; the five hosts, host caps and host_full, per-kind fair-share minimums, host clamp bands, floating surfaces, the cross_basis_px track and the below-1320 px overflow-x exception are retired."
 - "Amended 2026-10-09 (DL-180): four more acceptance criteria are rewritten for panels and the split tree; their fair-share host projection, per-dock latch bands, fair-share minimum degradation, floating corner handle, empty dock and column-dock track handle wording is lineage only."
+- "Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel (DR-066); the criterion 'loss of pointer capture alone is not a cancellation vector' and the 2026-08-12 retirement recorded above are reversed and are lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -855,6 +861,8 @@ canonical_text: >-
   not decided here and stays an open question for the lead. No other Home surface floats or opens a window: panels and
   tabs move only inside the split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2
   Home layout record keeps (SP-330).
+  Amended 2026-10-10 (lead ruling L6): Pop out is desktop only. The web client offers no Pop out; the chat stays in its
+  column (F3-637). This settles the open question above.
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
@@ -868,6 +876,7 @@ acceptance_criteria:
 - "The chat never floats in-canvas: no Home surface has an in-window or in-page float, no full-viewport scrim covers the title bar, and no re-render yields a second chat surface (amended 2026-10-09, DL-180; the in-canvas chat pop-out is lineage)."
 - A reload never restores a floating surface; each persisted floating surface demotes to its last_docked_host and the demotion persists with a storage.boot_demote_floating receipt.
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
+- "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
@@ -890,6 +899,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: the PM6 base full-screen chat overlay (.pm6-chat-overlay fixed panel plus viewport scrim) is retired in PM7 via a T20-anchored guard on the base applyLayout; its scrim CSS remains dead code in the base for census stability but no code path can show it."
 - "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
 - "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
+- "Amended 2026-10-10 (lead ruling L6): The open question on a web Pop out is settled: the web client offers no Pop out and the chat stays in its column (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2387-L15090
+Source lines: L2387-L15092
 
-Source SHA256: `168d473174b407835e6656fbd5c861626b4ec1eee31622b63d06b63c0c6f3ca0`
+Source SHA256: `71029e417fd0d5082ac84d84db1fdf9925bc6435f7a8a6ce843cc8f350052af2`
 
 ---
 
@@ -5687,7 +5687,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional tab_id (SP-332).
+  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional panel_tab_id (SP-332).
 gui_related: true
 gui_classification_reason: This unit preserves terminal GUI layout/focus fields and backend attempt/dev-session minima.
 split_recommended: true
@@ -5742,6 +5742,7 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L1): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): terminal layout and focus minima move to the v2 Home record (SP-330, SP-332)."
 owner_hints:
 - Plans/storage-plan.md
@@ -7159,7 +7160,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
+  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional panel_tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal panes, session bindings, labels, layout style, and restore flow.
 split_recommended: false
@@ -7210,6 +7211,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L1): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): the section/tab/pane/session split becomes tab/session."
 owner_hints:
 - Plans/storage-plan.md

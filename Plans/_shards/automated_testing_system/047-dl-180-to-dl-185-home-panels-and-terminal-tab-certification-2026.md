@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5906-L6227
+Source lines: L5906-L6251
 
-Source SHA256: `14c48908f1df9c8a95c6beb438dc36ef8cb16c6208b697c422e5c7a09ab3a988`
+Source SHA256: `9c1eff0f1d4391ead6976ab9c2719c483b827764fd1eb77a596843dcae7bad10`
 
 ---
 
@@ -52,13 +52,13 @@ canonical_text: >-
   without taking focus (F3-634); the narrow ladder at the panels concept's seven measured window widths, 1920, 1680,
   1470, 1440, 1280, 1024 and 900 px, each matching F3-636's rail, chat and centre widths with the default rail and chat,
   its 48 px hysteresis, and none of its states ever saved (F3-636); the chat column's default width, its drag range, the
-  600 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
+  960 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
   tabs and their boards (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions,
   applying one keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved
   layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
   hover tag showing the key that works where the app runs (F3-635); the tab kinds: each of F3-635's fifteen kinds
   registered once with its id prefixes and content minimum (terminal 320 x 120 px, browser 360 x 200, dashboard 320 x
-  120, run 360 x 200, every other kind 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
+  120, run 360 x 200, plan/document/artifact/transcript/context 280 x 160, editor/record/tools 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
   only when it is first shown, and each tab body sized by its own box, never the window (F3-635); the shared header row,
   30 px tall with 24 px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with
   hover tags below it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+"
@@ -111,6 +111,8 @@ acceptance_criteria:
   - "The visual matrix holds every combination of the eight look variants and NieR Mode, the four named layouts and the seven widths, each with zero console and page errors."
   - "No result from the panels concept or its harness is reported as native certification."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "In every look and in NieR, text and state colours (dim text, accent, ok, warn, bad and inactive tabs) mixed from the page's own colours reach 4.5:1 while the Settings accent flows through, and primary buttons choose black or white ink from fill luminance with at least 4.5:1 contrast."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -126,6 +128,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D22, D23)"
@@ -148,6 +152,10 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Matches the 960 px chat-drag centre floor in the wrapped certification prose."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
   - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-639, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065 and DR-067 own the behaviour."
@@ -192,13 +200,16 @@ canonical_text: >-
   the tab. Appearance (F3-642, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
   Plans/DRY_Rules.md#DR-068): each field resolves this tab, then the project default, then the app default, then the
   look's default, an unset field falling through; every field applies live from the Appearance popover and from
-  Settings and none shows a restart badge; the popover writes This terminal or All terminals and only Settings writes
-  the project default; each look's Follow theme scheme in light and dark; the minimum-contrast floor at 4.5:1 by
+  Settings and none shows a restart badge; the popover writes This terminal or All terminals, All terminals is enabled
+  and writes the project default through the same Settings transaction Settings uses, its hover tag says in this
+  project, and no surface writes an app-wide value; each look's Follow look scheme in light and dark; the minimum-contrast floor at 4.5:1 by
   default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
   alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
   cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
-  animates; an idle terminal draws no ambient frames; battery saver turns motion off; where no GPU draws the
-  terminal only the static scanlines and glow are drawn and the popover names what it could not draw; Reduced Motion
+  animates; every effect stops within 10 s of the last output or keystroke, after which no effects frames run
+  until the next output or keystroke; an effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware;
+  battery saver turns motion off; where no GPU draws the terminal the effects layer stays off, zero effects frames
+  run, plain static scanlines and glow paint and the popover names what it could not draw; Reduced Motion
   stops every moving part and keeps the static looks; Retro dark shows scanlines and phosphor glow by default, and Full
   CRT and flicker are off by default in every look; flicker defaults to 0.02 and never exceeds 0.03 of relative
   luminance; degauss is a one-shot action; NieR's terminal touches follow their installed parts. Faces (F3-644): the
@@ -274,6 +285,8 @@ acceptance_criteria:
   - "Agent reads return rendered text with a read state and never raw bytes or images; the accessible buffer reads images as `[image W×H px]`, `[image]` or the placeholder label."
   - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -290,6 +303,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-182"
   - "Plans/Decision_Log.md#DL-183"
@@ -297,6 +313,10 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
 preserved_exact_tokens:
+  - "10 s"
+  - "P1000-class"
+  - "DPR 2"
+  - "2 ms"
   - "EBADF:Failed to read image file"
   - "EFBIG"
   - "ETOODEEP"
@@ -319,9 +339,13 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
+  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
 owner_boundary_notes:
-  - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look, GPU frame times and performance budgets arrive in a later terminal SPEC installment and join this matrix then."
+  - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md

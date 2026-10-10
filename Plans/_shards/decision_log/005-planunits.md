@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L3878-L13192
 
-Source SHA256: `7f4e2ea8893dd53c1abd9e6f97d6a75789ee51c90601be92b4995af5d659b74b`
+Source SHA256: `2185e72a51de91f409c0806599ad83c0f8a7c428e08fe6ae48e6e032448921ea`
 
 ---
 
@@ -9202,7 +9202,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md, SHA-256 71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2 (concept lineage only)"
 preserved_exact_tokens:
   - "DL-183"
-  - "Follow theme"
+  - "Follow look"
   - "JetBrains Mono"
   - "VT323"
   - "Sixtyfour"

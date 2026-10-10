@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37348-L38058
+Source lines: L37368-L38081
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -93,6 +93,9 @@ invariants.
   (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
   placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
+
+Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
+
 - **Strict Elimination of Left-Edge Accent Stripes (APR-034):** Decorative left-edge vertical
   accent bars, colored side stripes, inset accent borders, and pseudo-element stripes are strictly
   prohibited across all Assistant and Settings surfaces (including gray or muted substitutes).

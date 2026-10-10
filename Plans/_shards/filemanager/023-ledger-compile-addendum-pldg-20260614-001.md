@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4308-L4351
+Source lines: L4308-L4352
 
-Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
+Source SHA256: `1f8b8735ac479cc2ef429cfb5eb5f2be86b8612ae35c291df95db6029ac3af6a`
 
 ---
 
@@ -21,7 +21,7 @@ canonical_text: >-
   FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
   Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
   terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
-  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder (F-090).
+  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder reveals the last-focused terminal tab whose folder is that folder, else opens a new terminal tab there; on a file it uses the file's folder in the same way (F-090).
 gui_related: true
 gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
 depends_on: [F-002, F-009, F-010, DL-180]
@@ -46,6 +46,7 @@ source_lineage:
   - source_ref:chat:next-gui-filemanager-cluster
 preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L11): Open in Terminal reveals the last-focused terminal tab in the target folder, else opens one there."
   - 'Amended 2026-10-09 (DL-180): FileManager no longer owns where editor, terminal, browser and preview tabs are placed; F3-634 does.'
 negative_constraints:
   - Do not make FileManager the browser behavior SSOT.

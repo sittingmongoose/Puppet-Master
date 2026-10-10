@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5454-L5989
+Source lines: L5454-L6002
 
-Source SHA256: `3c0e5c94343cffc51ae2cd06c8693bdd23d6862e22a03ad99cc4778ba99ec40d`
+Source SHA256: `14e584667d9592e8f7833f33b2a3f06e9d1a17aec57de57dcf2a12d978cd1c95`
 
 ---
 
@@ -77,8 +77,10 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | "+" > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.plus_menu.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.plus_menu.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Artifact... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject` with the artifact subject, `where: panel` | `home.plus_menu.artifact_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Output, Problems, Ports, Debug Console > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, `where: tab` | `home.plus_menu.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Output, Problems, Ports, Debug Console > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, `where: panel` | `home.plus_menu.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Output, Problems, Ports, Debug Console > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: tab` | `home.plus_menu.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Output channel picker > switch channel | `ui.output.select_channel` with `channel`, view state of `output` | none | typed local action, no receipt, no event |
+| Output channel picker > Open in new tab | `cmd.panel_tab.open` with `output:<channel>` | same `cmd.panel_tab.open` wiring (UCC-200) | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Output, Problems, Ports, Debug Console > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: panel` | `home.plus_menu.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Problems: the row's body | `cmd.panel_tab.open` with `{ kind: problems }`, `where: tab` | `home.plus_menu.problems` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.plus_menu.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.plus_menu.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -101,8 +103,8 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Empty-panel launcher > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.launcher.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.launcher.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Artifact... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject` with the artifact subject, `where: panel` | `home.launcher.artifact_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, `where: tab` | `home.launcher.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, `where: panel` | `home.launcher.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Output: the row's body | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: tab` | `home.launcher.output` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Output: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: output }`, tab id `output`, `where: panel` | `home.launcher.output_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Problems: the row's body | `cmd.panel_tab.open` with `{ kind: problems }`, `where: tab` | `home.launcher.problems` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.launcher.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.launcher.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -158,7 +160,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | The popped-out chat window > Dock back (return) | `cmd.panel.redock` with `chat` | `home.chat.dock_back` | `panel.redocked` |
 | Home options menu > Dock the chat back | `cmd.panel.redock` with `chat` | `home.more_options.chat_dock_back` | `panel.redocked` |
 | Home options menu > Keep the chat open in narrow windows | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over its SSYS-050 row | none | the existing `catalog.settings_transaction_preview` and `catalog.settings_transaction_apply` rows; receipt, no event |
-| The History list's pin (5.6 Pro History flyout) | id pending: no command or local action id is settled yet; its value is History pinned in the Home record's chat column (`Plans/storage-plan.md#SP-330`); ACD-500 owns the control | none | no row until the id is ruled (UIW-040's pending exception) |
+| The History list's pin (5.6 Pro History flyout) | `ui.chat_column.pin_history` with `history_pinned` | none | typed local action (view state); the v2 chat column's `history_pinned` is saved as view state in the v2 record's chat column, with no `workspace.layout_changed` event, revision advance or receipt, like `ui.workspace_layout.maximize` |
 | The chat's 32 px edge strip in a narrow window: opening the chat from it | nothing: a narrow-ladder state, never saved (F3-636) | none | none |
 
 **The narrow switcher** (`Plans/FinalGUISpec.md#F3-636`)
@@ -213,8 +215,10 @@ canonical_text: >-
   that only reveals a tab emits nothing; cmd.panel.switch is receipt only; cmd.panel.undock and cmd.panel.redock emit
   panel.undocked and panel.redocked for the chat only. ui.panel_tab.activate, ui.workspace_layout.maximize and
   ui.workspace_layout.focus_panel are typed local actions with no entry. Fifty-one home.* entries of the fixed-zone
-  model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. The History list's pin
-  has no row until its id is ruled (UIW-040's pending exception).
+  model retire and are recorded in the reconciliation file; five are rebuilt on the v2 model. ui.chat_column.pin_history is a typed local action (view state); its value is the v2 record's chat column history_pinned, saved as view state in the v2 record's chat column, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. It has no production entry, like the other typed local actions.
+  Output opens or reveals `output`. The channel picker switches its channel with `ui.output.select_channel`, a
+  typed local action with no production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open`
+  with `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
@@ -227,6 +231,7 @@ acceptance_criteria:
   - "No production entry names editor_panel_1 to editor_panel_4, a dock host, the floating host, a terminal section, a workgroup, Collapse Bottom Terminal or a chat grab."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and the key entries say so."
   - "All rows sharing a command name one handler."
+  - "Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry, and Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -243,12 +248,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9 and 13; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; the \"+\" menu, Commands and keys; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2 items 2, 7 and 10)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
+  - "ui.output.select_channel"
   - "cmd.panel_tab.open"
   - "cmd.panel_tab.close"
   - "cmd.panel_tab.move"
@@ -270,6 +280,9 @@ negative_constraints:
 compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (lead ruling L9): The History pin is wired as ui.chat_column.pin_history with no production entry."
+  - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): The History pin is saved as view state with no workspace.layout_changed event; it is no longer committed with chat_column_changed (CV-361 binds chat_column_changed to a width drag only)."
   - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
 owner_hints:
   - Plans/Wiring_Matrix.md

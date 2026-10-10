@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L2192-L2294
+Source lines: L2192-L2297
 
-Source SHA256: `7592380acec3c58e3976b234f50cd8a742128a97dc0ec99b220d8d0ee4813f39`
+Source SHA256: `47e105502ac9df7030488cc9fc36bbebe5c728c1b90020c4ff36532b8216f49b`
 
 ---
 
@@ -27,7 +27,7 @@ canonical_text: >-
   or panel tab where it could be confused, is one tab in a panel's strip, with an opaque, stable id whose prefix names
   its kind; it is separate from the domain object it shows and lives in exactly one panel (F3-635). A tab kind is one
   of the fifteen kinds of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript,
-  context, record, output, problems, ports and debug_console. A tool kind is one of output, problems, ports and
+  context, record, output (one tab; its channel switches inside it), problems, ports and debug_console. A tool kind is one of output, problems, ports and
   debug_console, the runtime views that used to sit in the bottom zone; a tools panel is a panel that holds only tool
   kinds and terminals, where those kinds land beside the terminals (F3-634). A workspace tab is still a project tab,
   the tab that switches projects (workspace_tab_id, F3-038); where older text says editor/workspace tab for the place
@@ -55,6 +55,7 @@ acceptance_criteria:
 - Each word defined here has one meaning, and an owner document that uses it in another sense qualifies it (panel tab, side panel, workspace tab, web page).
 - No active unit uses terminal section, workgroup, sub-tab, quadrant, terminal pane or the bottom panel as a place for current product behaviour; they appear only in lineage, migration or retirement text.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- "Output in the tab-kind and tool-kind lists means one tab with its channel switched inside it; split-off channel identity follows F3-635."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -68,6 +69,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D5-D11)
@@ -102,6 +104,7 @@ negative_constraints:
 compatibility_only_notes:
 - Terminal section, workgroup, sub-tab, quadrant and terminal pane stay readable in superseded units and in the old records that are read-only migration inputs (SP-330, SP-332).
 stale_retired_dispositions:
+- "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 - 'Retired 2026-10-09 (DL-180, DL-181): terminal section, workgroup, sub-tab, quadrant, terminal pane, the four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place.'
 owner_boundary_notes:
 - Glossary owns the words; the panel model is FinalGUISpec F3-630 to F3-639, the terminal tab F3-640 and SMPFS-180, the dashboard boards WS-030, and the layout record SP-330.

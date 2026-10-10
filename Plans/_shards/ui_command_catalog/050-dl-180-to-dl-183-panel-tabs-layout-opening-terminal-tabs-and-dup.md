@@ -2,26 +2,26 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14820-L15544
+Source lines: L14820-L15574
 
-Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
+Source SHA256: `e06b726c613b704ef92ba46949ad92d2256f2cd7df8debdc516cccb94f9b60b7`
 
 ---
 
 ## DL-180 to DL-183 — Panel Tabs, Layout, Opening, Terminal Tabs And Duplicate Ids (2026-10-09)
 
-Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) replaces Home's four fixed editor panels, its singleton dashboard, its movable chat and its docked terminal sections with one universal panel system, and rebuilds the terminal as one session per tab. Jared called the commands for this "hyper critical", so this addendum gives every control the redesign adds exactly one command row or one typed local action, and leaves no action with two ids. It adds UCC-200 (panel tabs, layout, the "+" menu, the "+N" list, panel and tab menus, the open routes and the dashboard tab), UCC-201 (terminal commands re-scoped to one session per tab), UCC-202 (four duplicate pairs settled) and UCC-203 (the chat column's commands and the retired chat docking rows). It supersedes UCC-144 whole: its four editor panels, Panel 1 through Panel 4 routing, singleton Dashboard, chat grab and in-canvas float, terminal workgroup move and Collapse Bottom Terminal all retire, while its leaf semantics (a menu opens view-locally and each leaf dispatches exactly one command, with revision, idempotency, a typed `no_change` and disabled reasons) carry forward into UCC-200. It amends UCC-013, UCC-019, UCC-025, UCC-036, UCC-060, UCC-061, UCC-063, UCC-066, UCC-067, UCC-068, UCC-108, UCC-115, UCC-135, UCC-138, UCC-147, UCC-156 and UCC-158 in place, and the core terminal and browser tables of section 2.6A and the 2026-07-17 terminal rule-4.2 rows with dated notes. It does not edit UCC-176 to UCC-188. Central registration, the reserved prefixes and the view-state ruling are `Plans/Commands_System.md#CS-100`; the alias and retired-id register is `Plans/Commands_System.md#CS-101`.
+Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `Plans/Decision_Log.md#DL-183`) replaces Home's four fixed editor panels, its singleton dashboard, its movable chat and its docked terminal sections with one universal panel system, and rebuilds the terminal as one session per tab. Jared called the commands for this "hyper critical", so this addendum gives every control the redesign adds exactly one command row or one typed local action, and leaves no action with two ids. It adds UCC-200 (panel tabs, layout, the "+" menu, the "+N" list, panel and tab menus, the open routes and the dashboard tab), UCC-201 (terminal commands re-scoped to one session per tab), UCC-202 (four duplicate pairs settled) and UCC-203 (the chat column's commands and the retired chat docking rows). It supersedes UCC-144 whole: its four editor panels, Panel 1 through Panel 4 routing, singleton Dashboard, chat grab and in-canvas float, terminal workgroup move and Collapse Bottom Terminal all retire, while its leaf semantics (a menu opens view-locally and each leaf dispatches exactly one command, with revision, idempotency, a typed `no_change` and disabled reasons) carry forward into UCC-200. It amends UCC-013, UCC-019, UCC-025, UCC-036, UCC-060, UCC-061, UCC-063, UCC-066, UCC-067, UCC-068, UCC-108, UCC-115, UCC-135, UCC-138, UCC-147, UCC-156 and UCC-158 in place, and the core terminal and browser tables of section 2.6A and the 2026-07-17 terminal rule-4.2 rows with dated notes. It does not edit UCC-176 to UCC-188. Central registration, the reserved prefixes and the view-state ruling are `Plans/Commands_System.md#CS-100`; the alias and retired-id register is `Plans/Commands_System.md#CS-101`.
 
 Every row below that commits a structural change (an open that adds a tab, close, move, keep, pin, unpin, rename, split, move a panel, resize, collapse, close a panel, lock, apply, save or restore a layout) emits the one existing event `workspace.layout_changed`, with the v2 payload that names the change (`Plans/Contracts_V0.md#CV-361`); an open that only reveals an existing tab emits nothing, and no new event family is added. Typed local actions (`ui.panel_tab.*`, `ui.workspace_layout.*`, `ui.terminal.*`) are view state: no catalog command, no receipt, no event (`Plans/Commands_System.md#CS-100`). Opening a menu, the "+" menu, the "+N" list or a picker, hovering, and dragging dispatch nothing; a changed release commits once; a cancelled or unchanged release dispatches nothing; a failed commit rolls back and emits nothing.
 
-Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*` row also carries `project_id`, `workspace_tab_id`, `expected_layout_revision` and `idempotency_key`, as UCC-144's rows did. A panel tab is named by `panel_tab_id` (opaque and stable, its prefix naming its kind, `Plans/FinalGUISpec.md#F3-635`), never by route `tab_id`, which stays page-tab focus (UCC-013), and never by `workspace_tab_id`, which stays the project tab. A home panel is named by `panel_id`, which is not the rail's `cmd.panel.switch` vocabulary (CS-061). Availability classes are the Cozy Shelves legend (`always`, `selection`, `live_subject`, `record_only`, `capability`); disabled reasons come only from the closed set (`unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, `permission_required`), with the owner's detail in the typed response: `narrow_centre` (the centre is in its one-column narrow state, `Plans/FinalGUISpec.md#F3-636`), `no_room` (the fit rule offers no split, `#F3-630`), `only_panel`, `only_tab`, `no_closed_tab`. The visible wording of each reason is FinalGUISpec's. Keys are listed native first, then the web client's stand-in where the browser owns the native chord (`Plans/FinalGUISpec.md#F3-630`, DL-180).
+Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*` row also carries `project_id`, `workspace_tab_id`, `expected_layout_revision` and `idempotency_key`, as UCC-144's rows did. A panel tab is named by `panel_tab_id` (opaque and stable, its prefix naming its kind, `Plans/FinalGUISpec.md#F3-635`), never by route `tab_id`, which stays page-tab focus (UCC-013), and never by `workspace_tab_id`, which stays the project tab. A home panel is named by `panel_id`, which is not the rail's `cmd.panel.switch` vocabulary (CS-061). Availability classes are the Cozy Shelves legend (`always`, `selection`, `live_subject`, `record_only`, `capability`); disabled reasons come only from the closed set (`unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, `permission_required`), with the owner's detail in the typed response: `narrow_centre` (the centre is in its one-column narrow state, `Plans/FinalGUISpec.md#F3-636`), `no_room` (the fit rule offers no split, `Plans/FinalGUISpec.md#F3-630`), `only_panel`, `only_tab`, `no_closed_tab`. The visible wording of each reason is FinalGUISpec's. Keys are listed native first, then the web client's stand-in where the browser owns the native chord (`Plans/FinalGUISpec.md#F3-630`, DL-180).
 
 ### Panel tab commands
 
 | command_id | Label | Arguments | Availability and disabled reasons | command_kind | Event | Keys |
 |---|---|---|---|---|---|---|
-| `cmd.panel_tab.open` | Open tab | An open spec: `kind`, `panel_tab_id?`, the kind's own fields (a buffer's `text` and `title`; a terminal's `profile` and `cwd`; a browser's `url`; a dashboard's `board_id`), and the placement fields `where`, `mode`, `by`, `background` whose contract is `Plans/Contracts_V0.md#CV-360` | `always`; `unsupported` for an unknown kind. In the narrow centre a new panel is not created: the tab opens in the next panel of the switcher and the announcement says so (`#F3-636`) | `shell_view` | `workspace.layout_changed` when a tab is added; nothing when an existing tab is only revealed | Ctrl+T new tab of the panel's usual kind (web client Alt+T); Ctrl+Shift+\` new terminal; Ctrl+Shift+B new browser |
-| `cmd.panel_tab.close` | Close tab | `panel_tab_ids` (one or more, all from one panel). Close others and Close to the right resolve the set when dispatched and leave pinned tabs out | `selection`. Each kind's close check answers first (a dirty buffer, a running terminal: confirmation class `two_step`, inline, `#F3-635`); a tab whose check declines stays open and the rest close in the same commit. Closing a panel's last tab follows `#F3-630`'s panel lifecycle | `shell_view` | `workspace.layout_changed` | Ctrl+W (web client Alt+W); Delete on a focused tab; middle click |
+| `cmd.panel_tab.open` | Open tab | An open spec: `kind`, `panel_tab_id?`, the kind's own fields (a buffer's `text` and `title`; a terminal's `profile` and `cwd`; a browser's `url`; a dashboard's `board_id`), and the placement fields `where`, `mode`, `by`, `background` whose contract is `Plans/Contracts_V0.md#CV-360` | `always`; `unsupported` for an unknown kind. In the narrow centre a new panel is not created: the tab opens in the next panel of the switcher and the announcement says so (`Plans/FinalGUISpec.md#F3-636`) | `shell_view` | `workspace.layout_changed` when a tab is added; nothing when an existing tab is only revealed | Ctrl+T new tab of the panel's usual kind (web client Alt+T); Ctrl+Shift+\` new terminal; Ctrl+Shift+B new browser |
+| `cmd.panel_tab.close` | Close tab | `panel_tab_ids` (one or more, all from one panel). Close others and Close to the right resolve the set when dispatched and leave pinned tabs out | `selection`. Each kind's close check answers first (a dirty buffer, a running terminal: confirmation class `two_step`, inline, `Plans/FinalGUISpec.md#F3-635`); a tab whose check declines stays open and the rest close in the same commit. Closing a panel's last tab follows `Plans/FinalGUISpec.md#F3-630`'s panel lifecycle | `shell_view` | `workspace.layout_changed` | Ctrl+W (web client Alt+W); Delete on a focused tab; middle click |
 | `cmd.panel_tab.rename` | Rename tab | `panel_tab_id`, `label` (an empty label restores the kind's own label) | `selection` | `shell_view` | `workspace.layout_changed` | none (tab menu Rename...) |
 | `cmd.panel_tab.move` | Move tab | `panel_tab_id`, then either `panel_id` and `index` (reorder, move to another panel, drop on "+N") or `split: { panel_id, edge }` (drop on a panel edge, Move to new panel, Split right or down with this tab) | `selection`; `blocked_state_required` with `narrow_centre` or `no_room` for a split, `only_tab` for Move to new panel on a panel's only tab. Moving a preview tab also keeps it, in the same commit | `shell_view` | `workspace.layout_changed` | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn move left or right; Alt+Shift+arrows move to the panel in that direction (a split that way when there is none and it fits) |
 | `cmd.panel_tab.keep` | Keep open | `panel_tab_id` | `selection`; a tab that is already kept returns `no_change` | `shell_view` | `workspace.layout_changed` | none (double click on a preview tab; tab menu Keep open; the first edit in a preview tab) |
@@ -37,9 +37,9 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.move_surface` | Move panel | `panel_id`, `target: { panel_id, edge }` with `edge` one of `left`, `right`, `top`, `bottom` or `center` (`center` moves the panel's tabs into the target panel as tabs), or `target: { centre_edge }` for the centre's outer edge | `blocked_state_required` with `only_panel` | `shell_view` | `workspace.layout_changed` | Enter on a panel grip opens Move panel |
 | `cmd.workspace_layout.resize_surface` | Resize | `split_id` and `sizes` (proportions), or `{ surface: chat, width }` for the chat column (UCC-203) | `always` | `shell_view` | `workspace.layout_changed` | Tab to a divider, then arrows 8 px, Shift+arrows 48 px, Home or End to a neighbour's minimum, Enter evens; each changed key press is one commit, like one release |
 | `cmd.workspace_layout.set_collapsed` | Collapse to tabs / Expand | `panel_id`, `collapsed` | `blocked_state_required` with `only_panel`. A panel dragged below half its minimum commits `collapsed: true` on release | `shell_view` | `workspace.layout_changed` | none |
-| `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
-| `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
 
@@ -50,8 +50,9 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | Action id | Arguments | Effect | Producers and keys |
 |---|---|---|---|
 | `ui.panel_tab.activate` | `panel_tab_id`, `focus?` | Makes the tab its panel's active tab, pulls it out of "+N" when it was hidden there, and updates the recent-tab order; written with the layout's view state, never a receipt or event | A click on a tab; a row chosen in the "+N" list, the every-tab list or the recent-tab list; Ctrl+Tab / Ctrl+Shift+Tab (web client Alt+\` / Alt+Shift+\`); Ctrl+PgDn / Ctrl+PgUp; Alt+1..8 and Alt+9 for the last tab; the arrow keys, Home, End, Enter and Space in a focused strip |
-| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
+| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
 | `ui.workspace_layout.focus_panel` | `panel_id`, or `direction` | Moves focus to a panel | Alt+arrows; Alt+Shift+1..9; a panel chosen in the narrow panel switcher |
+| `ui.output.select_channel` | `channel` | Switches the channel shown in `output`; channel is view state, never part of its tab id, with no receipt or event | Output channel picker; channel opened from elsewhere follows F3-634 |
 
 ### Aliases and the open routes that keep their ids
 
@@ -98,10 +99,10 @@ The "+" opens the menu and never creates a tab by itself; opening the menu, typi
 | Terminal | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile | each shell profile and SSH host: the same with its `profile` |
 | Browser | `cmd.panel_tab.open` with `{ kind: browser }`, a blank browser | each recent address: `cmd.browser.open_workspace_preview` |
 | File... | opens Quick Open (view-local); Enter there dispatches `cmd.file.open` with `mode: keep` | each of the three recent files: `cmd.file.open` with `mode: keep` |
-| Dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new dashboard tab on a new, empty board (the dashboard kind makes the board, `Plans/Widget_System.md#WS-030`) | each board: `cmd.panel_tab.open` with its `board_id` (revealed when already open) |
+| Dashboard | `cmd.panel_tab.open` opens or reveals `dashboard:home` | each sub-row opens or reveals one of the other starting boards by its `board_id`; no board is created, renamed or deleted in wave 1 |
 | Plan or document... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` | none |
 | Artifact... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` with the artifact subject | none |
-| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Problems and Ports reveal their one tab) |
+| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Output opens or reveals `output`; Problems and Ports reveal their one tab) |
 | Split right | `cmd.workspace_layout.split` with `direction: right` | none |
 | Split down | `cmd.workspace_layout.split` with `direction: down` | none |
 | Reopen closed tab | `cmd.panel_tab.reopen_closed` | none |
@@ -178,7 +179,7 @@ A click on a tab is `ui.panel_tab.activate`; a double click on a preview tab is 
 | Move tab left / right | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn | same | `cmd.panel_tab.move` |
 | Focus the panel in a direction / panel N | Alt+arrows / Alt+Shift+1..9 | same | `ui.workspace_layout.focus_panel` |
 | Move the tab to the panel in a direction | Alt+Shift+arrows | same | `cmd.panel_tab.move` |
-| Cycle regions: rail, panels, chat | F6 / Shift+F6 | same | keyboard focus movement owned by FinalGUISpec's keyboard rules; no action id |
+| Cycle regions: rail, panels, chat composer | F6 / Shift+F6 | same | keyboard focus movement owned by FinalGUISpec's keyboard rules; no action id |
 | Split right / down | Ctrl+\\ / Ctrl+Shift+\\ | same | `cmd.workspace_layout.split` |
 | Maximize / restore | Shift+Escape (Escape restores while focus is in a strip) | same | `ui.workspace_layout.maximize` |
 | Resize | Tab to a divider, then the divider keys | same | `cmd.workspace_layout.resize_surface` |
@@ -188,7 +189,9 @@ The shell keeps Ctrl+1..9 (pages) and Ctrl+K (the command palette), so the panel
 
 ### The dashboard tab
 
-A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens a new tab on a new, empty board. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
+Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards; wave 1 creates, renames and deletes no board.
+
+A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens or reveals `dashboard:home`, while its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
 
 ### Home producer dispositions (for the wiring owner)
 
@@ -223,7 +226,7 @@ canonical_text: >-
   panel_id. Every committed structural change emits the one existing event workspace.layout_changed with its v2
   payload (CV-361); an open that only reveals an existing tab emits nothing, and a failed commit rolls back and emits
   nothing. View state is typed local actions with no receipt and no event: ui.panel_tab.activate,
-  ui.workspace_layout.maximize and ui.workspace_layout.focus_panel. Opening the "+" menu, the "+N" list, the
+  ui.workspace_layout.maximize, ui.workspace_layout.focus_panel and ui.output.select_channel. Opening the "+" menu, the "+N" list, the
   every-tab and recent-tab lists, a panel menu, a tab menu, a picker or a prompt, hovering and dragging dispatch
   nothing, and each leaf dispatches exactly one command or typed local action as this addendum's tables map it,
   with a typed no_change for an already-done target and a disabled reason from the closed set otherwise. A "+" row's
@@ -235,11 +238,13 @@ canonical_text: >-
   dispatched directly only for a new terminal, a blank browser, a dashboard tab, an editor buffer and the tool tabs.
   cmd.editor.close_tab is an alias of cmd.panel_tab.close. cmd.editor.open_panel, cmd.editor.close_panel and the
   never-registered cmd.artifacts.open_panel retire, and target_editor_panel_id, target_editor_group_id and
-  target_group never select a home panel. A dashboard tab opens with cmd.panel_tab.open and a board_id (no board_id
-  makes a new, empty board); widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
+  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1; widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
   workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
   in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
   This unit supersedes UCC-144.
+  Output opens or reveals `output`; its channel picker switches the channel with `ui.output.select_channel`, a
+  view action with no command, receipt or event. "Open in new tab" dispatches `cmd.panel_tab.open` with
+  `output:<channel>` and shows only that channel. Other channel opens follow F3-634.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false
@@ -254,6 +259,8 @@ acceptance_criteria:
   - "No row or route selects a home panel through target_editor_panel_id, target_editor_group_id or target_group, and cmd.file.open_with keeps exactly its five values."
   - "A dashboard tab's widget commands are cmd.widget.* addressed by board_id and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and every label shows the key that works where the app runs."
+  - "The channel picker switches output with ui.output.select_channel as view state, with no command, receipt or event; Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
+  - "F6 and Shift+F6 cycle the rail, panels and chat composer from every region, as Plans/FinalGUISpec.md#F3-635 requires."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -271,11 +278,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D1, D2, D5 to D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys; concept lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
+  - "ui.output.select_channel"
   - "cmd.panel_tab.open"
   - "cmd.panel_tab.close"
   - "cmd.panel_tab.rename"
@@ -308,6 +321,9 @@ compatibility_only_notes:
   - "cmd.editor.close_tab is recorded alias metadata of cmd.panel_tab.close with no handler of its own."
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the chat composer in the F6 region cycle table."
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (lead ruling L10): The Dashboard row opens or reveals dashboard:home and its sub-rows the other starting boards, without board creation, rename or deletion."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
 owner_hints:
@@ -320,7 +336,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Final
 
 ### Terminal commands for one session per tab
 
-The terminal is now an ordinary tab kind with one session per tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, `Plans/Decision_Log.md#DL-181`). Moving, collapsing, maximizing or hiding a terminal tab never touches its session; a terminal is moved, closed, renamed and pinned by the `cmd.panel_tab.*` commands like every tab, and Split makes a new panel. So every command that addressed a section, a workgroup, a sub-tab, a pane or the editor's terminal stack retires, and the commands that act on the session keep their ids. The terminal's row texts and menus are `Plans/FinalGUISpec.md#F3-640` and `#F3-646`; its engine is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`; the agent rules are `#SMPFS-182`. No terminal command emits `workspace.layout_changed` unless it adds, closes or moves a tab, and none adds an event family.
+The terminal is now an ordinary tab kind with one session per tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, `Plans/Decision_Log.md#DL-181`). Moving, collapsing, maximizing or hiding a terminal tab never touches its session; a terminal is moved, closed, renamed and pinned by the `cmd.panel_tab.*` commands like every tab, and Split makes a new panel. So every command that addressed a section, a workgroup, a sub-tab, a pane or the editor's terminal stack retires, and the commands that act on the session keep their ids. The terminal's row texts and menus are `Plans/FinalGUISpec.md#F3-640` and `Plans/FinalGUISpec.md#F3-646`; its engine is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183`; the agent rules are `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`. No terminal command emits `workspace.layout_changed` unless it adds, closes or moves a tab, and none adds an event family.
 
 #### Kept terminal commands, with what changes
 
@@ -351,7 +367,7 @@ The terminal is now an ordinary tab kind with one session per tab (`Plans/Sectio
 | `cmd.terminal.revoke_agent_input` | Revoke (Agent input, one row per allowed agent) | `terminal_session_id`, `agent` | `selection`: the agent holds a grant here | `domain_action` | `none` | `SMPFS-182` | null | none; CV-362 fields |
 | `cmd.terminal.clear` | Clear | `terminal_session_id` | `always`. Erases the screen and the scrollback and redraws the prompt; the session and its program are untouched; the saved copy empties at the next save | `domain_action` | `none` | `SMPFS-183` | null | none |
 | `cmd.terminal.send_signal` | Send signal: Terminate, Kill | `terminal_session_id`, `signal` (`SIGTERM` or `SIGKILL`) | `live_subject`: a foreground job runs; Kill is confirmation class `none` with a danger tone. SIGINT is `cmd.terminal.interrupt`, never this command | `domain_action` | `none` | `SMPFS-183` | null | none |
-| `cmd.terminal.appearance.set` | Appearance (This terminal) | `panel_tab_id`, `fields` (the appearance fields of `Plans/FinalGUISpec.md#F3-642`; an unset field falls through to the next layer) | `always`; applies live, never a restart. Writes the tab's own layer, kept in the terminal tab's serialized state (`Plans/storage-plan.md#SP-331`). "All terminals" is not this command: it composes `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the rows of `Plans/Settings_System.md#SSYS-051`; only Settings writes the project layer | `shell_view` | `none` | `F3-642` | null | none (not a structural change) |
+| `cmd.terminal.appearance.set` | Appearance (This terminal) | `panel_tab_id`, `fields` (the appearance fields of `Plans/FinalGUISpec.md#F3-642`; an unset field falls through to the next layer) | `always`; applies live, never a restart. Writes the tab's own layer, kept in the terminal tab's serialized state (`Plans/storage-plan.md#SP-331`). "All terminals" is not this command: it composes `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the rows of `Plans/Settings_System.md#SSYS-051`; only the Settings transaction writes the project layer | `shell_view` | `none` | `F3-642` | null | none (not a structural change) |
 | `cmd.terminal.appearance.import_scheme` | Import scheme... | `file_ref` (one iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, or Xresources file, at most 256 KB) | `always`; parsed, never evaluated; a failure returns a fixed message that never echoes the file. Adds the scheme to the user's schemes (`SP-331`); choosing it is then `cmd.terminal.appearance.set` or the Settings pair | `domain_action` | `none` | `F3-642` | null | none |
 
 #### Typed local actions of the terminal (no receipt, no event)
@@ -554,6 +570,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Retired 2026-10-09 (DL-181): the section, workgroup, sub-tab, pane, detach and editor-terminal-stack ids and the five Home terminal producers, each with the replacement in this addendum's retired-id table."
   - "Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, replacing UCC-115's bottom panel."
+  - "Amended 2026-10-10 (lead ruling L16): the popover's All terminals is enabled and writes the project layer through the Settings transaction, so the cmd.terminal.appearance.set row says only the Settings transaction writes the project layer (it said only Settings)."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
@@ -659,7 +676,13 @@ The chat is fixed on the right, from the title bar to the status bar; it is neve
 | `cmd.panel.redock` | Dock the chat back | `panel_id: chat`, `window_id`, `target_host` (the chat column), `expected_layout_revision`, `idempotency_key` | `selection`: the chat is popped out | `shell_view` | `panel.redocked` |
 | `cmd.workspace_layout.resize_surface` | Resize the chat | `{ surface: chat, width }`, one commit on release, within the drag range F3-637 sets | `always` | `shell_view` | `workspace.layout_changed` |
 
-Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table).
+Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`Plans/FinalGUISpec.md#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table).
+
+Amended 2026-10-10 (lead ruling L9): the History pin is the typed local action below.
+
+| Action id | Arguments | Effect | Producers and keys |
+|---|---|---|---|
+| `ui.chat_column.pin_history` | `history_pinned` | Saves the v2 record's chat column `history_pinned` as view state with no `workspace.layout_changed` event, like `ui.workspace_layout.maximize` | The History list's pin |
 
 Retired chat rows: the chat grab (`home.chat.grab`), dragging the chat into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner resize (`home.drop_target.*`, `home.resizer.floating_corner`), and UCC-144's Pop Out into the in-canvas float layer. `home.chat.pop_out` stays as the Pop out producer of `cmd.panel.undock` with `chat`, into a window; `home.resizer.chat` stays as the width producer of `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`; `home.chat.activity_toggle` stays `cmd.panel.switch` with `chat`.
 
@@ -683,6 +706,7 @@ canonical_text: >-
   it into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner
   resize, and UCC-144's Pop Out into the in-canvas float layer retire. Folding the chat to its narrow edge strip and
   opening it from there dispatch nothing and are never saved.
+  ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
 gui_related: true
 gui_classification_reason: "Owns the chat column's visible commands and retires the chat docking and floating controls."
 split_recommended: false
@@ -709,10 +733,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D3)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys, Chat; concept lineage only)"
 preserved_exact_tokens:
+  - "ui.chat_column.pin_history"
+  - "history_pinned"
+  - "workspace.layout_changed"
   - "cmd.panel.switch"
   - "cmd.panel.undock"
   - "cmd.panel.redock"
@@ -725,6 +753,8 @@ negative_constraints:
   - "Do not dispatch cmd.panel.undock for a home panel, tab or dashboard."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
+  - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned as view state without a workspace.layout_changed event."
   - "Retired 2026-10-09 (DL-180): the chat grab, the dock drop targets, the in-canvas float and its corner resize, and UCC-144's Pop Out generalization to editor panels, Chat and Dashboard."
 owner_hints:
   - Plans/UI_Command_Catalog.md

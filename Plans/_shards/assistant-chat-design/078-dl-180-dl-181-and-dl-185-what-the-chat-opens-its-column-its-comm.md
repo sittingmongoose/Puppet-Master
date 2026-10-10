@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27370-L27719
+Source lines: L27370-L27721
 
-Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
+Source SHA256: `6f2d9606bc3bf1588c9eeae93a990485dff0e5e590c57bc1d4ff4b7f6cfcedac`
 
 ---
 
@@ -59,7 +59,7 @@ canonical_text: >-
   and Plans/FinalGUISpec.md#F3-636's panel switcher. The chat is never a tab. Return to chat retires for Home: no tab
   ever covers the chat, and when the chat has folded to its narrow edge strip that strip opens it again (F3-636). The
   chat column is F3-637's: fixed on the right from the title bar to the status bar, never a tab, never in the split
-  tree and never moved inside the window; Pop out is its only way to move and Dock back returns it to its column
+  tree and never moved inside the window; Pop out in the desktop app is its only way to move and Dock back returns it to its column; the web client offers no Pop out and the chat stays in its column (F3-637)
   (Plans/UI_Command_Catalog.md#UCC-203). Showing and hiding the chat are F3-637's (cmd.panel.switch with chat,
   UCC-203). Its default width, drag range, the limit that keeps the centre wide enough,
   how it eases and folds in narrow windows, and the setting Keep the chat open in narrow windows are F3-637's and
@@ -164,6 +164,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The 5.6 Pro chat's editor pane, its tab strip and its Return to chat control are concept lineage; the tab ids the concept uses are not canon names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only and the web chat stays in its column (F3-637)."
   - "Superseded 2026-10-09 (DL-180): the left editor/document tab system and Return to chat of ACD-455 and v3 item 15 for Home, the beside-the-chat placement of ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat's Goal tab."
   - "Superseded 2026-10-09 (DL-185): the 5.6 Pro chat's inline Shell box, by the compact command card."
 owner_hints:
@@ -208,7 +209,7 @@ canonical_text: >-
   which stays lab only (ACD-474). Keys: keys the chat answers without a modifier act only while focus is inside the
   chat, and Escape closes the innermost open thing and stops there (F3-635, F3-568). Start: the ported chat opens no
   tab at start; the home layout is the layout record's (SP-330). Pop out keeps the chat's History and Activity Detail
-  with it (F3-637); what the web client offers for Pop out is F3-637's and UCC-203's. This adds the port's
+  with it (F3-637); the web client offers no Pop out and the chat stays in its column (F3-637, UCC-203). This adds the port's
   requirements to the binding-by-reference of the 5.6 Pro concept and supersedes nothing else.
 gui_related: true
 gui_classification_reason: Lists what the 5.6 Pro chat's colours, names, sizing, layers, hover tags, bans, demo controls and keys must meet when it moves into PMConcept7.
@@ -255,7 +256,8 @@ negative_constraints:
   - "Do not carry a pill, a coloured side stripe or a chat-only demo panel into PMConcept7."
 compatibility_only_notes:
   - "The 5.6 Pro chat's class names, element ids, theme attribute and storage keys are concept lineage and never canon names."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L6): The web client offers no Pop out (F3-637)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

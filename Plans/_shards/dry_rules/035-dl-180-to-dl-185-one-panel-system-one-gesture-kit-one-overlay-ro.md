@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3196-L3682
+Source lines: L3196-L3694
 
-Source SHA256: `11109edad77de99e5435ec7d13cd33654af0587b6a16f26eba546597831321c0`
+Source SHA256: `5813ca0d824299ccb0b877dd8b474068fb8bd33062717a797be4b2d3db660b0c`
 
 ---
 
@@ -99,8 +99,7 @@ canonical_text: >-
   held item following the pointer one to one, the landing preview, target hysteresis and dwell, edge auto-scroll, the
   settle on drop and the glide back on cancel, a keyboard path for every pointer move, and polite announcements of
   where the item would land and where it landed. Its transaction is one rule for both layouts: the preview is local and dispatches nothing, writes nothing
-  and emits no event; a changed release commits exactly one owner command; an unchanged or invalid release, Escape, a
-  pointer cancel or the window losing focus commits nothing and restores the exact earlier picture; and a failed
+  and emits no event; a changed release commits exactly one owner command; an unchanged or invalid release, Escape, a pointer cancel, a lost pointer capture or the window losing focus commits nothing and restores the exact earlier picture; and a failed
   commit rolls back (UIW-012, CS-068). The pointer rules are F3-HOME-002's and F3-503's, which F3-630 applies to
   panels and tabs; the Usage board uses the same kit under WS-019. Each layout supplies only its own target model, its
   keys and its numbers: the split tree resolves strips, panel edges and the "+N" list with F3-630's
@@ -152,6 +151,8 @@ negative_constraints:
   - "Do not build a second gesture controller, preview transaction or keyboard move path for panels or for widgets."
   - "Do not lay out panels on the widget grid or widgets in the split tree."
   - "Do not write widget layout into the Home record or panel layout into a widget board."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L13): Lost pointer capture cancels a gesture and restores the earlier picture without a commit."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
@@ -232,11 +233,12 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field falling
-  through: the look's defaults ("Follow theme": the current look's scheme, face and effects), then the app default
+  through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the app default
   (Settings > Terminal), then the project default, then the per-tab override, each later layer winning (F3-642). The
   Appearance popover in the terminal's More menu, Settings > Terminal and the per-look defaults read and write this
-  one model: the popover writes This terminal (the tab's override) or All terminals (the app default), only Settings
-  writes the project default, and the look layer reads the current look from its one store (SSYS-010, DR-056) and
+  one model: the popover writes This terminal (the tab's override) or All terminals (the project default, written
+  through the same Settings transaction Settings uses over SSYS-051's rows, F3-642), no surface writes an app-wide value
+  until q-035 admits an app-wide store (SSYS-002), and the look layer reads the current look from its one store (SSYS-010, DR-056) and
   keeps no copy. The fields are F3-642's, the storage SP-331's (the app default in Settings rows, the project default
   in the Project's Settings, the override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the
   existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer
@@ -246,6 +248,9 @@ canonical_text: >-
   DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices:
   DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the terminal's
   chrome takes the theme's token roles.
+  One code colour-scheme catalog and one Appearance popover serve the editor and the terminal (F3-642, F3-639).
+  Each curated scheme carries the terminal palette and editor syntax colours. Each surface has its own scheme
+  choice, defaulting to "Follow look"; neither surface keeps its own scheme list or popover.
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -256,6 +261,7 @@ acceptance_criteria:
   - "No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries an appearance of its own."
   - "Every terminal appearance field applies live and no terminal setting shows a restart badge."
   - "Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes the accent role."
+  - "The editor and terminal read one catalog and use one Appearance popover component; neither has its own scheme list or popover."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -272,12 +278,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15, D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3, Appendix 7, E.3.4 and E.5 (worklist)"
 preserved_exact_tokens:
-  - "Follow theme"
+  - "Follow look"
   - "This terminal"
   - "All terminals"
   - "Settings > Terminal"
@@ -286,7 +294,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not keep a second terminal theme, scheme, font, background or effects store."
   - "Do not mark a terminal appearance setting as needing a restart."
-  - "Do not let the popover write the project default."
+  - "Do not let the popover or any other surface write an app-wide terminal appearance value until q-035 admits an app-wide store."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
+  - "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project default through the Settings transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default; no surface writes an app-wide value until q-035."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

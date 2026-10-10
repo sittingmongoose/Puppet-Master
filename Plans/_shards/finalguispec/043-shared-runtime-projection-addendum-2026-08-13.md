@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5560-L26988
+Source lines: L5574-L27006
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -4543,7 +4543,7 @@ canonical_text: >-
   Terminal theme selection supports preview before apply, fast switching, search, contrast
   readability signals, instant apply/revert, and semantic terminal palettes rather than raw
   ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
-  DR-068): "Follow theme" picks a scheme per look, 34 curated schemes ship with their licences in place of the
+  DR-068): "Follow look" picks a scheme per look, 34 curated schemes ship with their licences in place of the
   earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
   dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
   unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
@@ -4572,6 +4572,7 @@ node_compile_hint:
   mode: terminal_theme_ownership_and_semantic_catalog
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
 - "Plans/Decision_Log.md#DL-183"
 preserved_exact_tokens:
@@ -4589,10 +4590,12 @@ negative_constraints:
 - "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project layer through the Settings transaction instead of the app default, and no surface writes an app-wide value until q-035."
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
 - "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or the app default through the same model, and only Settings writes the project layer."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -12539,11 +12542,11 @@ canonical_text: >-
   `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
   restart. Since DL-181 the terminal workspace state it restores is the Home layout record's terminal tabs (SP-330),
   terminal sections and panes being migration inputs only (SP-332). For a terminal tab whose session did not
-  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and
-  the tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
+  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and a local terminal tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
   running comes back ended and indeterminate, never done, and is never run again. A terminal tab whose profile is
   itself a privileged attachment (`docker exec/attach`, `kubectl exec`, `kubectl port-forward`) starts no new session
   by itself: it restores as an `interrupted_session` with Reconnect / Start new session, as above.
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal/dev-session recovery and privileged attach semantics.
@@ -12555,7 +12558,7 @@ acceptance_criteria:
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "After a restart a terminal tab whose session ended shows the restored notice and a new session, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
+- "After a restart a local terminal tab whose session ended shows the restored notice and a new session; an SSH-host tab asks Reconnect / Close tab first, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -12590,6 +12593,7 @@ negative_constraints:
 - "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L14): An SSH-host terminal tab, like a privileged attachment, waits for a user choice instead of reconnecting on restore."
 - "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:

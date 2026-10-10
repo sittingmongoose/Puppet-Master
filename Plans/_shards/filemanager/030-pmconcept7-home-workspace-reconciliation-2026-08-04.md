@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4957-L5052
+Source lines: L4958-L5053
 
-Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
+Source SHA256: `1f8b8735ac479cc2ef429cfb5eb5f2be86b8612ae35c291df95db6029ac3af6a`
 
 ---
 
@@ -13,9 +13,9 @@ Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28
 Superseded 2026-10-09 (DL-180): Home is one universal panel system (`Plans/FinalGUISpec.md#F3-630`). The four stable
 editor panel identities, the Open in Panel submenu with Panel 1 to Panel 4, `target_editor_panel_id` routing and the
 floating editor panels below are retired; the file tree opens files by F-090 through the opening module of
-`#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
+`Plans/FinalGUISpec.md#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
 reveals, never a placeholder, and closing a panel or a tab never silently discards a shared buffer, its dirty state,
-undo history or save authority: a dirty editor tab asks first (`#F3-635`).
+undo history or save authority: a dirty editor tab asks first (`Plans/FinalGUISpec.md#F3-635`).
 
 Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
 through the canonical open path so the buffer is added to the panel's open-tab model, the

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4281-L4301
+Source lines: L4293-L4315
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -27,5 +27,7 @@ These decisions are final and must not be revisited during implementation:
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
+
+Amended 2026-10-10 (Addendum 2 D28, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2716-L2799
+Source lines: L2716-L2817
 
-Source SHA256: `5cc71ee452e04f71c3ac06746d55294a1b47168317343bdce32f4644d74cb395`
+Source SHA256: `d9bb319478a72b955fb98a9312216c4e9917879338ecb172cf0aa94c6c95dfb4`
 
 ---
 
@@ -37,6 +37,19 @@ canonical_text: >-
   another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with
   the notice; the restore stays quiet (DL-153). Back puts the panels back as they were when the step began;
   Skip and Finish restore the captured v2 layout.
+  Every saved tour position is stamped with its step id and the signature of the step order under which it
+  was saved.
+  The workspace chapter has 4 action steps rather than 2, within the 20-step tour rather than 18. Show Me
+  aims the split drop 34 px inside the documents panel's right edge or 30 px above its bottom, clear of the
+  centre's 12 px root-edge band, and proceeds only when a split target is ready. In the source's 1920 × 1080
+  Home layout with the rail open and chat about 600 px, the documents panel is 511 × 598 px against a 280 ×
+  120 px editor minimum, so only Split down fits and the copy names it. The widget action waits at most 1500
+  ms for Add widget after revealing dashboard:home; the file step waits at most 900 ms for a file row. The
+  source's 6-minute estimate is a publish census measurement to confirm, not a completion deadline. The plus
+  step completes only after the menu is used and a tab is opened or a new tab id appears; the file step
+  requires an editor tab created since the step began; the drag step requires an applied cmd.panel_tab.move
+  with a split and increased panel count, with the menu alternative above retained. Back and Skip/Finish use
+  their respective restore paths.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -50,6 +63,7 @@ acceptance_criteria:
   - widget_action stays, first shows the Home dashboard tab, and runs cmd.widget.add addressed to a dashboard board.
   - A saved position naming a retired step resumes at the first step of that step's chapter (move_or_dock_chat resumes at workspace_orientation); finished ids of retired steps are dropped; a position saved under another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with the notice; the restore stays quiet (DL-153).
   - Back puts the panels back as they were when the step began, and Skip and Finish restore the captured v2 layout.
+  - "Every saved position carries its step id and step-order signature, and resumes by the saved-id and retired-step rules above."
 validation_surfaces:
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
@@ -66,6 +80,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - Plans/Decision_Log.md#DL-180
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js (SHA-256 433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9; concept lineage only)"
 preserved_exact_tokens:
@@ -85,6 +100,9 @@ negative_constraints:
   - Do not ask the learner to move or dock the chat.
   - Do not start a saved position fresh while its chapter still exists.
   - Do not keep the demonstrated layout without an explicit Keep selection.
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds workspace action census, split demonstration geometry and bounded reveal waits."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature."
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json

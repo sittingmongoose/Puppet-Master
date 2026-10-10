@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44594-L45310
+Source lines: L44884-L45633
 
-Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
+Source SHA256: `907fdfbf906dc90c024bfb5504b6ff7ffb51f6abb41c5cab7229e6934a412e15`
 
 ---
 
@@ -44,13 +44,14 @@ canonical_text: >-
   "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
   with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
   before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
-  above the new prompt, starts a new session in the same folder and shell profile, never presents itself as the old
+  above the new prompt, starts a new session in the same folder and shell profile (at once for a local profile; a tab
+  whose profile is an SSH host asks first, Reconnect / Close tab, as below), never presents itself as the old
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
   ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
   back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
-  loaded within its load budget (SP-332), the tab starts without it and says so. The gutter is 20 px wide (18 px
+  loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
   when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
   a stripe (F3-641). The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor
   minimap's language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
@@ -91,6 +92,7 @@ canonical_text: >-
   same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
   the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
   tint only, and the screen is never a hover target (DR-059, F3-465).
+  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -102,7 +104,7 @@ acceptance_criteria:
   - "The header row is F3-635's shared row with the folder, branch and, while a command runs, the command cut at 48 characters and its `m:ss` time on the left, and Find, Split, Maximize or Restore, and More on the right."
   - "At body widths of 399 and 400 px the gutter is 18 and 20 px and the scrollbar 10 and 14 px wide; below 150 px of body height the header row and the sticky command header are hidden."
   - "An ended session shows \"Session ended\" with Restart and Close tab and dims the screen to 72 %; closing a running terminal asks \"Close this terminal? <process> is still running and will be stopped.\" inline."
-  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile, and a command that was running reads \"ended with the earlier session\"."
+  - "A restored or reopened terminal shows its saved scrollback, the dim rule and the restored notice above a new local session in the same folder and profile; an SSH-host tab asks Reconnect / Close tab before reconnecting, and a command that was running reads \"ended with the earlier session\"."
   - "The More, context and command-mark menus show exactly the items above in that order, and every menu opens in the one overlay root."
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
@@ -152,6 +154,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
+  - "Amended 2026-10-10 (lead ruling L14, review): The general restore sentence names the SSH-host exception in place, so only a local-profile tab starts its new session at once."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -259,10 +263,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written only from
-  Settings, in the Project's settings) under this tab's override; a field left unset falls through to the layer
+  ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
   below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
-  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow theme"
+  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow look"
   resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
   70 % (light) and 74 % (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of
   its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's
@@ -275,6 +278,12 @@ canonical_text: >-
   (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
+  These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
+  D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each surface's
+  scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
+  per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
+  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
+  list or popover of its own (DR-068).
   "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
   changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
   background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
@@ -282,27 +291,31 @@ canonical_text: >-
   neighbours, and a selection uses the scheme's selection text colour. Import reads iTerm2 `.itermcolors`, Windows
   Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and
   its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
-  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow theme,
-  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow theme, JetBrains Mono,
+  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow look,
+  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow look, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644);
   font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
-  shape (Follow theme, block, bar or underline); cursor blink (on); cursor trail (Follow theme, off, soft, glow,
-  phosphor or trace); background (Follow theme, theme surface, solid colour, gradient or image) with its colour, its
+  shape (Follow look, block, bar or underline); cursor blink (on); cursor trail (Follow look, off, soft, glow,
+  phosphor or trace); background (Follow look, theme surface, solid colour, gradient or image) with its colour, its
   gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image), image dim (0.45) and image
   blur (0 px, baked once into the image and never a backdrop blur); opacity (Glass); padding (8 px across, the
-  vertical padding 60 % of it); effects (Follow theme, off or custom) with the effect fields of F3-643; inactive
-  dimming; smooth scrolling; bell (Follow theme, visual or off); sticky header (on); copy on select (off); and
+  vertical padding 60 % of it); effects (Follow look, off or custom) with the effect fields of F3-643; inactive
+  dimming; smooth scrolling; bell (Follow look, visual or off); sticky header (on); copy on select (off); and
   Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width
   round((advance + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device
   pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
   painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Appearance
   popover (More, Appearance...) previews every change live on the terminal and writes either This terminal (the
-  tab's override) or All terminals (the app default, through the Settings transaction over SSYS-051's rows); it
-  commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
-  (SSYS-051) and is the only writer of the project layer. The app and project layers are Settings values and the
+  tab's override) or All terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
+  (SSYS-051) and writes the project layer through that same Settings transaction. The app and project layers are Settings values and the
   tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
   There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
   or font store exists (DR-068).
+  The Retro scheme choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the
+  Retro editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red
+  ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
+  no copy (F3-639, F3-647).
+  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -310,14 +323,16 @@ depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
 unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every field resolves tab override, then project default, then app default, then the look's default, and an unset field falls through."
-  - "Each look's Follow theme scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
+  - "Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
   - "Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes collection and Modus are not bundled."
   - "The minimum-contrast floor defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness, and leaves block, powerline and sextant glyphs alone."
   - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
   - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
   - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
-  - "The popover writes This terminal or All terminals, and only Settings writes the project default."
+  - "The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
+  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -334,11 +349,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
 preserved_exact_tokens:
-  - "Follow theme"
+  - "Follow look"
   - "Switch with light and dark"
   - "Thirty-four schemes"
   - "4.5:1"
@@ -354,6 +371,11 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -373,8 +395,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
   pass runs only after the screen repainted or while something is still animating. Only the focused, visible
-  terminal animates; ambient motion stops when the terminal is idle; motion is off on battery saver; and where no GPU
-  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain (a static
+  terminal animates; every effect goes idle within 10 s of the last output or keystroke; motion is off on battery
+  saver; and where no GPU draws the terminal (on the desktop, the Skia CPU raster of F3-582), the effects layer
+  stays off, no effects frames run, and plain static fallbacks paint (a static
   scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
   what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
   scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
@@ -386,7 +409,7 @@ canonical_text: >-
   default in Retro dark and off by default elsewhere. Full CRT is off by default in every look, and the user turns it
   on. Flicker is off by default in every look; its amount defaults to 0.02 and is capped at 0.03 of relative
   luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so flicker can never be a flash. The effect
-  fields (F3-642) default to: effects Follow theme; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
+  fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
   0.08; burn-in on within Full CRT; noise 0.035; flicker off; flicker amount 0.02, capped at 0.03. NieR Mode's
   terminal has a parchment texture under the text and ink focus brackets, and no glow. By the NieR rule for new
   surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while NieR Mode is on and each touch only
@@ -395,6 +418,7 @@ canonical_text: >-
   stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than 340x256 px
   reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
   states at once. Motion voices belong to the theme family (DR-043).
+  An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -402,13 +426,14 @@ depends_on: [DL-183, F3-642, F3-431, F3-582, DR-043, DL-152, DR-056]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns motion off."
-  - "Where no GPU draws the terminal, only the static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
+  - "Where no GPU draws the terminal, the effects layer stays off with zero effects frames, plain static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
   - "Under Reduced Motion no part of the terminal moves, and the static looks stay."
   - "A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT and flicker are off by default in every look."
   - "The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance."
   - "Degauss is a one-shot action in Retro, not a setting, and stops at its end."
   - "With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses its opacity more than once a second."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -422,12 +447,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
 preserved_exact_tokens:
+  - "10 s"
+  - "P1000-class"
+  - "DPR 2"
+  - "2 ms"
   - "Full CRT"
   - "WCAG 2.3.1"
   - "0.02"
@@ -440,8 +471,10 @@ negative_constraints:
   - "Do not turn on Full CRT or flicker by default in any look, or let flicker exceed 0.03 of relative luminance."
   - "Do not add a NieR part, or give NieR's terminal look a glow, filter or blur."
 compatibility_only_notes:
-  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its performance measurements are lineage only until a later terminal installment settles them."
-stale_retired_dispositions: []
+  - "The concept's per-look effect parameters, its GPU frame times, its battery-saver threshold and its measured performance are lineage only; R34 adopts the 2 ms CPU budget at DPR 2 on P1000-class hardware and the 10 s idle deadline as canon."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
+  - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -554,8 +587,7 @@ canonical_text: >-
   that cell, follows it when the grid reflows, clips to the tab, and goes when the screen is cleared or its lines
   leave the scrollback. Text written over a sixel or iTerm2 image cuts the image out of those cells. While an image
   decodes or a file is read, later output waits, so text after an image always lands after it. Animation plays no
-  faster than SMPFS-181's fastest frame; it pauses while the terminal is hidden and under Reduced Motion, where an
-  animated image holds its first frame. The desktop draws the tiers through Skia (F3-582) and the web client draws
+  faster than SMPFS-181's fastest frame; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses. The desktop draws the tiers through Skia (F3-582) and the web client draws
   the same tiers over its text rows, positioned by row, so images scroll and clip with the rows (F3-583). Images
   persist with the terminal's saved scrollback inside its storage quota (SP-332), the separate terminal scrollback
   cap F3-416 asks for, so a restored terminal's
@@ -580,7 +612,7 @@ acceptance_criteria:
   - "Images draw in the paint order above, and Unicode-placeholder images draw in their cells under the text."
   - "An image scrolls, reflows and clips with its anchor cell, and text written over a sixel or iTerm2 image cuts it out of those cells."
   - "Output after an image never paints before the image is decoded."
-  - "An animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion."
+  - "Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "A restored terminal shows its saved images where they were; an image the quota dropped shows the dashed placeholder with its name and size, and the restore notice counts it."
   - "The accessible buffer and agent reads show `[image W×H px]`, `[image]` or the placeholder label, and never image data."
   - "A refused image is not drawn, and the program's error reply is one of SMPFS-181's fixed strings."
@@ -618,6 +650,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's image store, renderer layers and demo images are lineage only."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
   - "Replaces F3-544's sentence that no image protocol is approved (DL-182)."
 owner_hints:
   - Plans/FinalGUISpec.md
