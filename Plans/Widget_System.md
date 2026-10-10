@@ -1233,25 +1233,44 @@ status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
   Widget sizing is a kind-aware semantic contract rather than arbitrary empty geometry. Each widget kind
-  exposes only supported curated shapes equivalent to Strip, Compact, Standard, Expanded, and Maximum or
-  tall variants where that kind can use them. Increasing a widget's supported size must increase useful
+  exposes only supported curated shapes, named Strip, Compact, Standard, and Expanded, or Wide, Full width,
+  Panel, Ladder, and Band where the shape is the point; Maximum and Tall are retired names, because they promised
+  more than the size showed. Increasing a widget's supported size must increase useful
   information density: wide instruments and summaries use balanced internal columns; lists, accounts,
   providers, ledgers, and event cards reveal more complete rows; charts spend the extra area on plot and
   legible facts; context and authority cards reveal additional source, route, confidence, history, forecast,
   reset, or settlement facts. A compact tier mounts complete content groups only, so the next tier never
   peeks, clips, or appears as a partial row, bar, label, legend, or footer.
   Size presets (rethought 2026-10-09, Plans/Decision_Log.md#DL-176) are the named sizes a widget kind offers in
-  its card menu's size picker. The Usage board measures its own width and lays cards on 12 tracks below 820 px,
-  20 tracks from 820 px, 24 tracks from 1100 px, and 30 tracks from 1460 px of board width, with 24 px of hysteresis
-  at each step, so widgets can be much narrower than before; a preset is a width in tracks and a height in rows
-  taken from the kind's curated shapes. A kind offers a preset only when that size shows a complete content tier
-  that makes sense on its own for that kind: a preset never makes a card so small that it shows fragments, a chart
-  without readable axes or values, a list cut mid-row, or numbers without the label that explains them. Each
-  successive preset of a kind adds a named content step. In the picker each preset row reads its name, one plain
-  line saying what the card shows at that size, and its width x height in tracks and rows; hovering or focusing a row
-  previews that size on the card with the same live outline and peer preview as a pointer resize (WS-019) and
-  dispatches nothing; choosing it commits one resize. A preset wider than the current board's track count stays
-  listed, disabled, with the reason (wider than this board's columns). The per-kind preset table is kept once, in
+  its card menu's size picker. The Usage board measures its own width and lays cards on 12 tracks below 880 px,
+  20 tracks from 880 px, 24 tracks from 1100 px, and 30 tracks from 1460 px of board width; a board keeps its
+  class until its width falls 24 px below that class's threshold (a 20-track board holds down to 856 px), so a
+  20-track board never runs under a pitch of about 43 px and widgets can be much narrower than before. Each kind
+  offers two or three presets (the board-wide hero kinds two, the group heading one), and each preset is one complete
+  content tier that adds a named content step over the kind's preset before it. A preset resolves to pixels: its
+  width is authored in tracks at the nominal 47 px pitch, per board class where a class should offer a wider card,
+  and the board resolves it at the live pitch to the same card width on every board, never more than 2 % narrower
+  and never wider than the board, except that a board-wide preset takes the class's whole track count (12, 20, 24, or
+  30). Its height follows one of three rules: a fixed number of rows, for content that stretches into its card
+  (charts, rings, tiles); fit N, the smallest height that shows N complete items of the kind (accounts, rows,
+  resets, models, families), which shows every item and says so when the kind has fewer; or fit all, the smallest
+  height at which the kind folds nothing. A fit height is measured by rendering the real kind at the preset's pixel
+  width in the current look, range, scope, and configuration, is capped at the kind's maximum height, and uses the
+  table's fallback rows until a measure exists. A preset that would only repeat another at a board class, or whose
+  form needs more card width than the board gives, is not offered there, and two presets that come to the same size
+  on the current board are one row, kept by the larger tier. Every kind's smallest preset shows its complete tier,
+  in every look, on any board down to 400 px wide. A preset never makes a card so small that it shows fragments, a
+  chart without readable axes or values, a list cut mid-row, or numbers without the label that explains them. Facts a
+  preset cannot show stay reachable: the head's "+N" count and an "N more" line each with its hover list, and
+  Details. The card head's size tool opens the size picker, and the card menu's Size row drills into the same picker.
+  The picker shows a preview stage and then one row per preset: a footprint glyph drawn to one scale for every row
+  (the card's share of the board's width, and its height), the preset's name, one plain line saying what the card
+  shows at that size, and its width x height in tracks and rows, the current preset checked; every row shows without
+  the menu scrolling. The stage holds a faithful miniature, the real card rendered by its own kind in the current look
+  at the preset's pixel size and scaled over a faint track grid, captioned with the name, width x height, pixel size,
+  and what the miniature actually shows (every row, "6 of 9 rows, 3 in Details", every fact). Hovering a row, focusing
+  it, or moving with the arrow keys previews that preset in the stage and dispatches nothing; choosing a preset
+  commits one resize through the board's own resize path (WS-019). The per-kind preset table is kept once, in
   the curated-size matrix this unit validates against, and the size picker, keyboard resize, pointer snapping, and
   saved layouts read that one table.
 gui_related: true
@@ -1265,8 +1284,10 @@ acceptance_criteria:
   - Taller list, account, provider, ledger, and event cards reveal additional complete records without routine internal body scrolling.
   - Compact cards expose only complete groups; no lower-tier fragment, clipped label, partial row, hidden value, or peeking footer is visible.
   - The Free usage card and every named Usage width-coverage card earn each supported default and larger size with additional useful content.
-  - Every size preset of every Usage widget kind, in every room that hosts that kind, at each of the 12, 20, 24, and 30 track counts where it fits, renders a complete tier that reads sensibly on its own; a preset that shows a fragment, an unreadable chart, a cut row, or a value without its label is removed from the kind's preset set rather than kept.
-  - The size picker lists each preset with its name, one plain line of what it shows, and its width x height; hover or focus on a row previews the size without dispatch, choosing it commits exactly one resize, and a preset wider than the board is disabled with its reason.
+  - Every size preset of every Usage widget kind, in every room that hosts that kind, at each of the 12, 20, 24, and 30 track counts where it is offered, renders a complete tier that reads sensibly on its own, and every kind's smallest preset does so in every look on boards 400, 550, and 700 px wide; a preset that shows a fragment, an unreadable chart, a cut row, or a value without its label is removed from the kind's preset set rather than kept.
+  - The board takes 12 tracks below 880 px, 20 from 880 px, 24 from 1100 px, and 30 from 1460 px, holding each class until its width falls 24 px below that class's threshold; a preset resolves to the same pixel width on every board (never more than 2 % narrower, never wider than the board) except that a board-wide preset takes the class's track count.
+  - Each preset's height is fixed rows, fit N (the smallest height showing N complete items, or every item when there are fewer), or fit all (the smallest height that folds nothing), measured from the real kind at the preset's pixel width in the current look, range, scope, and configuration and capped at the kind's maximum height; folded facts stay reachable through the head's "+N" count, an "N more" line with its hover list, and Details.
+  - The size picker opens from the card head's size tool and from the card menu's Size row, shows a preview stage and one row per offered preset with a footprint glyph, its name, one plain line of what it shows, and its width x height, every row visible without scrolling; hover, focus, or arrow keys preview the preset in the stage as the real card at that pixel size without dispatch, choosing it commits exactly one resize, a preset not offered at the board's class or width is absent, and two presets of the same size on the board show as one row.
   - The size picker, keyboard resize, pointer snapping, and saved-layout restore read one per-kind preset table; no surface keeps its own preset list.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1292,6 +1313,8 @@ source_lineage:
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
   - "Concepts/usage-redesign/src/js/42-cards.js (Usage redesign card menu and size picker; source-lineage-only)"
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board track ladder; source-lineage-only)"
+  - "Concepts/usage-redesign/tools/boards.py (the per-kind preset table as built, branch concept/usage-pm7-c-presets-20261009 at 21ca626731; source-lineage-only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/c-presets-REPORT.md, SHA-256 505de34e60acd8d9efce08e5ec392f58c574db75cbadf5846a34c42424567a3e (preset rules, per-kind table, GPU-tested table at 1440, 1920, 400, 550, and 700 px boards, the 880 px class threshold)"
   - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - Strip
@@ -1307,6 +1330,7 @@ negative_constraints:
   - Do not reveal fragments of a lower content tier.
   - Do not treat static source inspection or an in-progress audit as executable acceptance evidence.
   - Do not offer a size preset whose content tier is a fragment or does not make sense on its own, and do not keep a second preset list outside the one per-kind table.
+  - Do not name a preset Maximum or Tall, and do not drop a fact a preset cannot show instead of folding it behind a reachable count, list, or Details.
 owner_hints:
   - Plans/Widget_System.md
   - Plans/usage-feature.md
@@ -1565,9 +1589,15 @@ canonical_text: >-
   the Home surface record, and a Home surface operation cannot write a widget-layout record.
   `preset_id` names the widget kind's size preset (WS-017) whenever the settled geometry equals one of that kind's
   presets, whether the size came from the size picker or from a pointer or keyboard resize, and is null for any size
-  in between; a "custom size" label is presentation only and is never stored as a `preset_id`. Choosing a preset in
-  the size picker dispatches one `cmd.widget.resize` carrying that preset's geometry, and the settled record stores
-  its `preset_id` together with the `semantic_tier_id` of the content tier the size shows. On restore, a saved
+  in between; a "custom size" label is presentation only and is never stored as a `preset_id`. A `preset_id` is the
+  preset's stable id in the kind's preset table (`compact`, `standard`, `expanded`, `wide`, `full`, `strip`,
+  `panel`, `ladder`, or `band`), never its display name. Choosing a preset in
+  the size picker dispatches one `cmd.widget.resize` carrying that preset's geometry and `preset_id`, and the settled
+  record stores the `preset_id` together with the `semantic_tier_id` of the content tier the size shows. A chosen
+  preset survives reload and look change: the card restores with its stored `preset_id`, and when a look change moves
+  the board's pitch or a fit preset's measured height, the card keeps that `preset_id` and takes the preset's newly
+  resolved geometry instead of becoming a custom size; a keyboard resize that lands on a preset stores it the same
+  way. On restore, a saved
   `preset_id` that the kind's current preset table no longer lists maps to the current preset with the same geometry,
   or else to null with the geometry snapped by WS-018; a stored `preset_id` never brings back a retired preset. When
   the default boards or a kind's preset table change, `default_set_version` changes, and a saved Usage layout from an
@@ -1583,6 +1613,7 @@ acceptance_criteria:
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
   - Migration rejects, quarantines, or deterministically maps unsupported old geometry before it can override corrected current defaults.
   - "A settled size equal to one of the kind's presets stores that preset_id whatever path produced it, any other size stores null, a size-picker choice commits one cmd.widget.resize with the preset's geometry, a retired saved preset_id restores to the same-geometry preset or to null with snapped geometry, and a default_set_version change resets saved Usage geometry once while keeping visibility and configuration."
+  - "A stored preset_id is the preset's table id, never its display name; a chosen preset, including one a keyboard resize landed on, keeps its preset_id after a reload and after a look change that moves the pitch or a fit height, re-resolving to that preset's current geometry rather than to a custom size."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -1604,6 +1635,8 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/42-cards.js and 40-board.js (preset ids, the chosen preset kept over reload; branch concept/usage-pm7-c-presets-20261009; source-lineage-only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/c-presets-REPORT.md, SHA-256 505de34e60acd8d9efce08e5ec392f58c574db75cbadf5846a34c42424567a3e (fix cycles 1 and 2: preset names kept over reload, keyboard resize, and look change)"
   - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - widget_layout:v1:usage
@@ -1617,7 +1650,7 @@ negative_constraints:
   - Do not create a second Widget layout store or a PM7-only persistence namespace.
   - Do not serialize transient interaction state.
   - Do not admit preview rectangles, pointers, ghosts, placeholders, animation, or drafts into UsageWidgetLayoutRecord.
-  - Do not store a presentation label such as custom as a preset_id, or restore a preset the kind no longer offers.
+  - Do not store a presentation label such as custom, or a preset's display name, as a preset_id, or restore a preset the kind no longer offers.
 owner_hints:
   - Plans/Widget_System.md
   - Plans/storage-plan.md

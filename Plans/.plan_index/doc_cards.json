@@ -2058,7 +2058,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "75d510a1180d336b8b110f58b73eff1231cf2c483bae2f99e2d9d7915d54e1ea",
+      "sha256": "2acd5a026c0e2e1beb416957a1cae7f8e7d68597a833bac126e86efd20ac803c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -20159,7 +20159,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 1624,
+      "line_count": 1657,
       "path": "Plans/Widget_System.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -20198,7 +20198,7 @@
         "widget_preview_leaks_or_multi_commit",
         "widget_system_drift"
       ],
-      "sha256": "4974e4870abfffa35eff95edb4b28bd3c8a5270731eb55cf8184d03be9b3189b",
+      "sha256": "73c6ac554268198107e493b64d61f0ec2e6ab522e5db4e3ce8575bc1672c9e53",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -20707,7 +20707,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T11:24:45Z",
+  "generated_at_utc": "2026-10-10T14:26:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
