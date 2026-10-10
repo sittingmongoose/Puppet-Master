@@ -4943,8 +4943,8 @@ Superseded 2026-10-09 (DL-180): Home is one universal panel system (`Plans/Final
 editor panel identities, the Open in Panel submenu with Panel 1 to Panel 4, `target_editor_panel_id` routing and the
 floating editor panels below are retired; the file tree opens files by F-090 through the opening module of
 `#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
-reveals, never a placeholder, and closing a panel or a tab never discards a shared buffer, its dirty state, undo
-history or save authority (the editor tab asks first, `#F3-635`).
+reveals, never a placeholder, and closing a panel or a tab never silently discards a shared buffer, its dirty state,
+undo history or save authority: a dirty editor tab asks first (`#F3-635`).
 
 Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
 through the canonical open path so the buffer is added to the panel's open-tab model, the
