@@ -1562,7 +1562,7 @@
   {
    "id": "general.interaction.dashboard-widgets",
    "label": "Dashboard Widgets",
-   "desc": "Choose widgets for the Home dashboard: opens that dashboard tab's own widget picker where the tab is. Every dashboard tab keeps its own widgets and layout; this row stores none of them.",
+   "desc": "Choose widgets for the Home dashboard: opens that dashboard tab's own widget picker where the tab is. Every dashboard tab keeps its own widgets and layout; this row is a route only: its stored list is unused and nothing reads it.",
    "type": "list",
    "default": [
     "Default widget set"
@@ -6746,7 +6746,7 @@
   {
    "id": "code.terminal.font-family",
    "label": "Terminal Font",
-   "desc": "The terminal's typeface. Follow theme uses JetBrains Mono in every look except Retro, which uses VT323. Departure Mono, Sixtyfour and Sixtyfour Raster are Retro-style faces, and Atkinson Hyperlegible Mono is made for easy reading. Every face is built in; applies at once.",
+   "desc": "The terminal's typeface. Follow theme uses JetBrains Mono in every look except Retro, which uses VT323. Departure Mono, Sixtyfour and Sixtyfour Raster are Retro-style faces, and Atkinson Hyperlegible Mono is made for easy reading. Every face other than System monospace, which uses the computer's own monospace face, is built in; applies at once.",
    "type": "select",
    "options": [
     "Follow theme",
@@ -6994,7 +6994,7 @@
   {
    "id": "code.terminal.search",
    "label": "Search in Terminal",
-   "desc": "Lets you search old terminal output (Ctrl+F), tuned to stay fast even on very long transcripts. (Superseded by Find, which every terminal always has, DL-181)",
+   "desc": "Find is in every terminal: Ctrl+Shift+F (Cmd+F on a Mac), or Find in the terminal's header row or right-click menu, opens its bar, with match case, whole word and regular expressions, every match marked in the text and on the scrollbar (F3-641). Find is always there, so this switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -7041,7 +7041,7 @@
   {
    "id": "code.terminal.layout-restore",
    "label": "Terminals When Reopening a Project",
-   "desc": "Restore Last Layout brings back the terminal tabs of each workspace's saved layout, each as a new session in the same folder and shell profile with its saved scrollback. Start Fresh leaves them closed. A session that is still running always comes back in its tab. Panels and other tabs follow Remember Window Layout.",
+   "desc": "Restore Last Layout brings back the terminal tabs of each workspace's saved layout, each as a new session in the same folder and shell profile with its saved scrollback (none when Saved Terminal Output is Session Only). Start Fresh leaves them closed. A session that is still running always comes back in its tab. Panels and other tabs follow Remember Window Layout.",
    "type": "select",
    "options": [
     "Restore Last Layout",
@@ -7063,31 +7063,25 @@
   },
   {
    "id": "code.terminal.transcript-retention",
-   "label": "Keep Terminal History For",
-   "desc": "How long past terminal output is saved. Longer history helps debugging but uses more disk; docs disagreed, so session-only is kept.",
+   "label": "Saved Terminal Output",
+   "desc": "Keep Saved Scrollback keeps each terminal tab's past output, its images included, so a restored or reopened terminal shows it again: on this computer only, never in backups, exports or sync, within 64 MiB per terminal tab, and for a closed tab only while it can be reopened and at most 7 days (SP-332). Session Only saves none, so a restored or reopened terminal starts without its earlier output. Was Keep Terminal History For, whose 24 Hours, 7 Days, 30 Days and Forever choices the saved scrollback rule replaces.",
    "type": "select",
    "options": [
-    "Session Only",
-    "24 Hours",
-    "7 Days",
-    "30 Days",
-    "Forever"
+    "Keep Saved Scrollback",
+    "Session Only"
    ],
-   "default": "Session Only",
+   "default": "Keep Saved Scrollback",
    "scope": [
     "global",
     "project"
    ],
    "tier": "advanced",
-   "recommended": "7 Days",
    "search": [
     "transcript retention",
     "scrollback history",
+    "keep terminal history",
     "logs",
     "10000 rows"
-   ],
-   "badges": [
-    "adjudication"
    ],
    "related_features": [
     "editor",
@@ -7352,7 +7346,7 @@
   {
    "id": "code.terminal.min-contrast",
    "label": "Minimum Text Contrast",
-   "desc": "Keeps terminal text readable against its background by making only the text lighter or darker, never changing its hue. Box, block and powerline characters are left as they are.",
+   "desc": "Keeps terminal text readable against its background by making only the text lighter or darker, never changing its hue. Block, powerline and sextant characters are left as they are.",
    "type": "select",
    "options": [
     "Off",
