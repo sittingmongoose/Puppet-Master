@@ -3083,7 +3083,7 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 - Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
 - When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
 - Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
-- high-volume terminal output uses ring-buffer backed `/virtualized` projections so 4-split terminal panes keep layout ratios stable while the live core remains off the UI thread.
+- high-volume terminal output uses ring-buffer backed `/virtualized` projections so the panels holding terminal tabs keep their proportions stable while the live core remains off the UI thread. Amended 2026-10-09 (DL-181): each terminal tab holds one session, several terminals show at once only as several panels, and the earlier 4-split terminal panes retire (F3-194).
 
 ---
 
@@ -3894,7 +3894,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 
 | Retired Rust/Iced-Lineage View | New Slint Location | Notes |
 |-------------------|-------------------|-------|
-| `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid, 4-split terminal |
+| `dashboard.rs` | `views/dashboard.slint` (Home group) | Add rearrangeable card grid. Retired 2026-10-09 (DL-181): the "4-split terminal" this note named; terminals are tabs in the home panels, one session each (F3-640) |
 | `projects.rs` | `views/projects.slint` (Home group) | Minimal changes |
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
@@ -3976,7 +3976,7 @@ cargo check
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
 | **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
-| **4-split terminal performance** | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). |
+| **4-split terminal performance** (amended 2026-10-09, DL-181: now the performance of many visible terminal tabs, one session per tab) | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). Since DL-181 each terminal tab holds one session with one PTY and one bounded ring buffer, several terminals show at once only as several panels, a hidden terminal tab stops its animation work, and there is no four-pane grid to budget for (F3-245). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
@@ -4081,7 +4081,7 @@ These decisions are final and must not be revisited during implementation:
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
-12. **Bottom runtime zone includes the classical debugger surface** -- Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute
+12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
@@ -15784,19 +15784,22 @@ canonical_text: >-
   Bounded terminal transcript or plain-log projections may use visible `VecModel`/`ListView`
   row windows; rapid output is throttled to max 30fps, rows are batched within 33ms, ring
   buffers stay in Rust, and high-volume output uses ring-buffer-backed `/virtualized`
-  projections so 4-split terminal panes keep layout ratios stable.
+  projections so the panels holding terminal tabs keep their proportions stable. Each terminal tab holds one
+  session (SMPFS-180); several terminals show at once only as several panels, as in the Terminals 2x2 layout
+  (F3-630), and the earlier 4-split terminal panes retire (DL-181).
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal projection update bounds while preserving the live-core
   boundary.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Four terminal tabs streaming high-volume output in four panels keep their panel proportions and stay within the 30fps and 33ms bounds."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -15810,6 +15813,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0128"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "VecModel"
 - "ListView"
@@ -15822,7 +15826,8 @@ preserved_exact_tokens:
 - "4-split terminal panes"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): one session per terminal tab; the 4-split terminal panes this unit protected retire, and the rule now keeps the panels holding terminal tabs stable."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -18661,18 +18666,23 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `4-split terminal performance` risk is mitigated as follows: Terminal panes use native
   screen/buffer state, diff painting, off-UI-thread PTY/buffer processing, bounded ring
-  buffers, one PTY per pane, bounded transcript projections, and max 30fps throttling.
+  buffers, one PTY per pane, bounded transcript projections, and max 30fps throttling. Since DL-181 the risk is
+  the performance of many visible terminal tabs: each terminal tab holds one session with one PTY and one bounded
+  ring buffer (SMPFS-180), several terminals show at once only as several panels (F3-630), a hidden terminal tab
+  stops its animation work (F3-635, F3-643), and there is no four-pane grid to budget for. The performance targets
+  for DL-035's own engine are Section 15's to set.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SMPFS-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Each visible terminal tab owns exactly one session and one PTY, and a hidden terminal tab draws no animation frames."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -18686,6 +18696,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- "Plans/Decision_Log.md#DL-181"
 preserved_exact_tokens:
 - "4-split terminal performance"
 - "native screen/buffer state"
@@ -18697,7 +18708,8 @@ preserved_exact_tokens:
 - "max 30fps"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the four-split risk becomes the risk of many visible terminal tabs, one session and one PTY per tab, with the same mitigations."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
