@@ -215,6 +215,8 @@ Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring 
 GATE-010 extracts command IDs from the catalog, applies the exclusions, and verifies each remaining command has a corresponding production entry.
 Research-session and web-tool wiring entries must use the canonical command identities from `Plans/UI_Command_Catalog.md` and tool payload owners from `Plans/Tools.md`; stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.
 Terminal command-catalog coverage is not satisfied by `cmd.dev.start_session` and `cmd.dev.stop_session` alone; terminal action coverage includes reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, and focus-session wiring rows with matching acceptance checks.
+
+Amended 2026-10-09 (DL-181): terminal action coverage is now the one-session-per-tab set (WM-091): open, reveal, show, rerun, focus, clear, clear_scrollback, restart_replace, terminate_session, kill_session and the agent commands each keep wiring rows with matching acceptance checks; Split is `cmd.workspace_layout.split` with a terminal spec and Close is `cmd.panel_tab.close`. Detach, reattach and focus-session have no row: `cmd.terminal.detach`, `cmd.terminal.detach_section` and `cmd.terminal.reattach_section` are retired and `cmd.terminal.focus_session` is an alias of `cmd.terminal.focus` (`Plans/Commands_System.md#CS-101`). The sentence above stays for lineage.
 When route/subject-aware matrix cells are backfilled, the old work-item ledger `w-20260316-160450` lines 748-941 may be used only as source-lineage evidence for per-cell justification; it does not replace generated JSON entries, and each incorporated detail must land in explicit `ui_element_id`, `ui_command_id`, handler, event, acceptance-check, and evidence fields.
 
 ### 4.2.1 One element, one command enforcement
@@ -378,7 +380,7 @@ Each row MUST identify:
 ### Minimum required rows
 The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
 
-Amended 2026-10-09 (DL-180, DL-181): a terminal is one tab kind with one session per tab in the universal panels (`Plans/UI_Command_Catalog.md#UCC-201`, WM-091). Terminal sections, workgroups, sub-tabs, panes inside a tab, the editor terminal stack and detached sections are retired, and so are the rows below that name them; they stay for lineage, marked "(retired 2026-10-09, WM-091)". Fourteen of those ids existed only in this table, and none is promoted: a new terminal is `cmd.panel_tab.open` with a terminal spec; a terminal tab is activated with `ui.panel_tab.activate`, reordered or moved with `cmd.panel_tab.move`, renamed with `cmd.panel_tab.rename`, pinned with `cmd.panel_tab.pin` and closed with `cmd.panel_tab.close`; Split and Add Pane become `cmd.workspace_layout.split` with a terminal spec (`Plans/UI_Command_Catalog.md#UCC-200`). `cmd.terminal.detach`, `cmd.terminal.close_pane` and `cmd.terminal.reattach_section` retire with no replacement, because no tab pops out. `cmd.terminal.restart_session` is a retired spelling of `cmd.terminal.restart_replace` and `cmd.terminal.focus_session` an alias of `cmd.terminal.focus` (`Plans/UI_Command_Catalog.md#UCC-202`). The terminal toolbar is now the tab's header row and More menu (`Plans/FinalGUISpec.md#F3-640`); WM-091's tables give the wiring row of every control in it.
+Amended 2026-10-09 (DL-180, DL-181): a terminal is one tab kind with one session per tab in the universal panels (`Plans/UI_Command_Catalog.md#UCC-201`, WM-091). Terminal sections, workgroups, sub-tabs, panes inside a tab, the editor terminal stack and detached sections are retired, and so are the rows below that name them; they stay for lineage, marked "(retired 2026-10-09, WM-091)". Fourteen of those ids existed only in this table, and none is promoted: a new terminal is `cmd.panel_tab.open` with a terminal spec; a terminal tab is activated with `ui.panel_tab.activate`, reordered or moved with `cmd.panel_tab.move`, renamed with `cmd.panel_tab.rename`, pinned with `cmd.panel_tab.pin` and closed with `cmd.panel_tab.close`; Split and Add Pane become `cmd.workspace_layout.split` with a terminal spec (`Plans/UI_Command_Catalog.md#UCC-200`). `cmd.terminal.detach`, `cmd.terminal.detach_section` and `cmd.terminal.reattach_section` retire with no replacement, because no tab pops out; `cmd.terminal.close_pane` and `cmd.terminal.close_tab` become `cmd.panel_tab.close` (`Plans/Commands_System.md#CS-101`). `cmd.terminal.restart_session` is a retired spelling of `cmd.terminal.restart_replace` and `cmd.terminal.focus_session` an alias of `cmd.terminal.focus` (`Plans/UI_Command_Catalog.md#UCC-202`). The terminal toolbar is now the tab's header row and More menu (`Plans/FinalGUISpec.md#F3-640`); WM-091's tables give the wiring row of every control in it.
 
 | UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
 |---|---|---|---|---|
@@ -1017,6 +1019,7 @@ depends_on:
 - PNC-001
 - WM-004
 - WM-007
+- DL-181
 unblocks: []
 acceptance_criteria:
 - WM-008 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -1065,9 +1068,11 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes:
+- 'The `detach`, `reattach` and `focus-session` tokens above are kept for lineage only: since DL-181 they name retired or alias ids with no wiring row (`Plans/Commands_System.md#CS-101`).'
 - 'Old work-item ledger `w-20260316-160450` lines 748-941 may be source-lineage evidence only and does not replace generated JSON entries.'
 stale_retired_dispositions:
 - 'Stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.'
+- 'Amended 2026-10-09 (DL-181): terminal coverage is the one-session-per-tab set of WM-091; detach, reattach and focus-session are retired or alias ids with no row (CS-101).'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/UI_Command_Catalog.md'
