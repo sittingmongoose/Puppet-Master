@@ -88,7 +88,7 @@ frames.button = function (b) {
   if (b.menu) el.setAttribute('aria-haspopup', 'menu');
   el.addEventListener('click', function (e) {
     if (el.getAttribute('aria-disabled') === 'true') return;
-    if (b.menu) { PMW.menu.open(el, Array.isArray(b.menu) ? { id: 'act-menu', rows: b.menu, width: 260 } : (typeof b.menu === 'function' ? b.menu() : b.menu)); return; }
+    if (b.menu) { PMW.menu.open(el, menuSpecOf(typeof b.menu === 'function' ? b.menu() : b.menu, null, { id: 'act-menu', width: 260 })); return; }
     if (b.run) b.run(e, el);
   });
   return el;

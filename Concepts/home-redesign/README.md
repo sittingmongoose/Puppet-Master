@@ -25,6 +25,26 @@ Concepts/home-redesign/
   opus-5.5-hub/               the Concept Hub registration
 ```
 
+## Tab kinds (D9)
+
+| File | Kinds | Ids |
+|---|---|---|
+| `kinds/00-fallbacks.js` | stand-ins for kinds another thread owns (the terminal until `src/terminal/` is present) | `terminal:` |
+| `kinds/10-editor.js` | Editor (D21): file and changes views, find, sticky scroll, the minimap scrollbar, Ctrl+P | `file:`, `buffer:` |
+| `kinds/20-browser.js` | Browser with docked DevTools and captures | `browser:`, `link:` |
+| `kinds/22-tools.js` | Output, Problems, Ports, Debug Console | `output:`, `problems`, `ports`, `debug-console:` |
+| `kinds/30-dashboard.js` | Dashboard (D10 step one: the page's widgets in dashboard tabs) | `dashboard:` |
+| `kinds/40-plan.js` | Plan viewer and Deep Plan discovery | `plan:`, `plan-query`, `deep-discovery:` |
+| `kinds/42-document.js` | Documents: rules, notes, revert, debug, lens, wonderer | `teach:`, `memory:`, `revert:`, `debug:`, `lens-*:`, `wonder*:`, `doc:` |
+| `kinds/44-artifact.js` | Artifact viewer, every subtype | `artifact:`, `artifact-revision:`, the chat's bare ids |
+| `kinds/46-run.js` | Run views: crew, review, chat room, brainstorm, evidence | `collab-run:`, `crew-work:`, `review:`, `room:`, `brainstorm:`, `*-evidence:` |
+| `kinds/48-transcript.js` | Agent transcript (read-only live feed) | `thread-` |
+| `kinds/50-context.js` | Context detail | `context:` |
+| `kinds/52-record.js` | Records: search, MCP calls, the database inspector, work records | `search:`, `mcp:`, `app:`, `work-record:` |
+| `kinds/95-standin-chat.js` | the stand-in chat over `#chatPanel` (a scripted conversation that opens every kind) | |
+
+The tour's workspace chapter (D25) is `js/52-tour.js`; it moves into the onboarding tour sources at publish.
+
 ## Commands (from the repository root)
 
 ```

@@ -32,8 +32,9 @@ html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: no
 html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
 
 /* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
-/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]); the rail's concept D adds its own
-   overlay styling on the same attribute */
+/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]). This layer only places the overlay
+   (position, width, stacking, dismiss); the rail's concept D gives it its look per family (plate, hairline, shadow,
+   entrance; 37de861164), so nothing here paints it */
 html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="eased"]:not(.hidden) { max-width: 240px !important; }
 html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > .left-panel { position: relative; z-index: 30; }
 html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="overlay"] { display: none !important; }
@@ -47,16 +48,18 @@ html[data-pmw-home="on"] .main-area[data-pmw-rail-peek] #sidePanelSlot[data-pm-r
   width: 280px !important;
   max-width: none !important;
   z-index: 31;
-  box-shadow: 18px 0 40px -12px rgba(0, 0, 0, .45);
 }
 
 /* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip */
 html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"] #chatPanel.chat-panel > * { visibility: hidden; }
 html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel {
+  /* the page's chat owner sets inset: auto !important (body.pm7-chat-global-owner), which left the peek at its static
+     place on the left; this selector is more specific, so each side is important here too */
   position: absolute !important;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: auto !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
   width: 400px !important;
   flex: none !important;
   z-index: 60 !important;
@@ -84,9 +87,10 @@ html[data-pmw-home="on"] .main-area { position: relative; }
 html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatResizer { display: none !important; }
 html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
   position: fixed !important;
-  right: 24px;
-  bottom: 48px;
-  top: auto;
+  left: auto !important;   /* over the page's inset: auto !important, as for the peek above */
+  right: 24px !important;
+  bottom: 48px !important;
+  top: auto !important;
   height: min(720px, calc(100vh - 140px)) !important;
   width: 440px !important;
   flex: none !important;

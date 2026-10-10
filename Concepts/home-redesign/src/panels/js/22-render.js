@@ -318,31 +318,57 @@ function makeApi(entry) {
   return api;
 }
 
-/* api.menu(items, anchor, o): CONTRACT section 4's item shape { id, label, detail, icon, shortcut, disabled, checked,
-   danger, sub, run } ('-' a hairline) mapped onto PMW.menu rows (detail -> sub, shortcut -> right, sub -> submenu),
-   opened with PMW.menu.open(anchor, spec). The anchor is an element, or a point ({ x, y } or a mouse event) for a
-   context menu. o may carry title, search, width, align and onClose. A second call on the same anchor closes it. */
+/* api.menu(items, anchor, o): CONTRACT section 4's item shape { id, label, detail, icon, shortcut, disabled, reason,
+   checked, danger, sub, run } ('-' a hairline) mapped onto PMW.menu rows (detail -> sub, shortcut -> right, sub ->
+   submenu), opened with PMW.menu.open(anchor, spec). The anchor is an element, or a point ({ x, y } or a mouse event)
+   for a context menu. o may carry title, search, width, align and onClose. A second call on the same anchor closes it.
+   The same mapping serves a header-row action's `menu` and PMW.frames.button's `menu`, and it lets PMW.menu's own row
+   names through (a string `sub` is the detail line, `right`, `submenu`, `alt`, `links`, `close`), so a kind may write
+   either shape, an item list or a whole menu spec. */
 function kindRows(items, entry) {
-  return (items || []).map(function (it) {
+  if (!Array.isArray(items)) return [];
+  return items.map(function (it) {
     if (!it || it === '-') return '-';
-    var r = { id: it.id, label: it.label == null ? '' : String(it.label), sub: it.detail || null, icon: it.icon || null,
-      right: it.shortcut || null, disabled: !!it.disabled, danger: !!it.danger, keywords: it.keywords || null };
+    if (typeof it !== 'object') return it;
+    var r = Object.assign({}, it);
+    r.label = it.label == null ? '' : String(it.label);
+    var nested = it.sub && typeof it.sub !== 'string' ? it.sub : null;   // the contract's submenu
+    if (nested) r.sub = it.detail != null ? it.detail : null;
+    else if (r.sub == null && it.detail != null) r.sub = it.detail;
+    if (r.right == null && it.shortcut) r.right = it.shortcut;
+    delete r.detail; delete r.shortcut;
     if (it.checked != null) r.checked = !!it.checked;
-    if (it.disabled && it.reason) r.reason = it.reason;
-    if (it.sub) {
-      var sub = it.sub;
+    nested = nested || it.submenu || null;
+    if (nested) {
       r.submenu = function () {
-        var v = typeof sub === 'function' ? sub() : sub;
-        return Array.isArray(v) ? { id: 'kind-sub:' + entry.id + ':' + (it.id || ''), title: r.label, rows: kindRows(v, entry) } : v;
+        var v = typeof nested === 'function' ? nested() : nested;
+        return menuSpecOf(v, entry, { id: 'kind-sub:' + (entry ? entry.id : 'menu') + ':' + (it.id || ''), title: r.label });
       };
+      delete r.run;
     } else if (typeof it.run === 'function') {
       r.run = function (info) {
-        try { return it.run(info); } catch (err) { try { console.error('[pm-home] a ' + entry.kind + ' menu row failed', err); } catch (_) {} }
+        try { return it.run(info); } catch (err) { try { console.error('[pm-home] a ' + (entry ? entry.kind : 'panel') + ' menu row failed', err); } catch (_) {} }
       };
     }
     return r;
   });
 }
+/* an item list or a menu spec, with every row list mapped; dflt fills what a bare list does not say */
+function menuSpecOf(v, entry, dflt) {
+  if (!v) return null;
+  if (Array.isArray(v)) return Object.assign({}, dflt, { rows: kindRows(v, entry) });
+  if (typeof v !== 'object') return null;
+  var spec = Object.assign({}, v);
+  if (!spec.id && dflt && dflt.id) spec.id = dflt.id;
+  function mapSections(ss) {
+    return Array.isArray(ss) ? ss.map(function (sec) { return sec && Array.isArray(sec.rows) ? Object.assign({}, sec, { rows: kindRows(sec.rows, entry) }) : sec; }) : ss;
+  }
+  if (Array.isArray(spec.rows)) spec.rows = kindRows(spec.rows, entry);
+  if (typeof spec.sections === 'function') { var sf = spec.sections; spec.sections = function () { return mapSections(sf.apply(this, arguments)); }; }
+  else if (spec.sections) spec.sections = mapSections(spec.sections);
+  return spec;
+}
+PMW.menuSpecOf = menuSpecOf;
 var kindMenuSeq = 0;
 function kindMenu(entry, items, anchor, o) {
   o = o || {};
@@ -353,7 +379,8 @@ function kindMenu(entry, items, anchor, o) {
     el = null;
   }
   // an element-anchored menu toggles on its anchor; a point (context) menu always opens fresh where it was asked for
-  var spec = { id: 'kind-menu:' + entry.id + (el ? '' : ':' + (++kindMenuSeq)), rows: kindRows(items, entry) };
+  var spec = menuSpecOf(items, entry, {}) || { rows: [] };
+  if (!spec.id || !el) spec.id = 'kind-menu:' + entry.id + (el ? '' : ':' + (++kindMenuSeq));
   if (o.width) spec.width = o.width;
   if (o.title) spec.title = o.title;
   if (o.search) spec.search = o.search;

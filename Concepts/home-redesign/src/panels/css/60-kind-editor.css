@@ -1,0 +1,346 @@
+/* The Editor tab kind (src/panels/kinds/10-editor.js; D21). Everything sizes against the tab body (@container
+   pmw-body). Colours are --pmw-ed-* tokens per look: Basic is One Half, Friendly Catppuccin, Glass Tokyo Night, Retro
+   Phosphor (dark) and Paper Teletype (light), NieR the ink tokens; every syntax colour is at least 4.5:1 on its
+   surface (research digest 04, section 8.5). Code is JetBrains Mono through --pm-font-code in every look, Retro
+   included (D17a). No pills, no side stripes: a changed line is a tinted row plus a sign glyph. */
+
+/* ---- tokens (Basic dark, One Half Dark, is the base) ---- */
+.pmw-ed {
+  --pmw-ed-bg: var(--pmw-surface);
+  --pmw-ed-gutbg: var(--pmw-ed-bg);
+  --pmw-ed-plate: color-mix(in srgb, var(--pmw-ed-bg) 72%, transparent);
+  --pmw-ed-fg: #dcdfe4;
+  --pmw-ed-ln: color-mix(in srgb, var(--pmw-ed-fg) 42%, transparent);
+  --pmw-ed-ln-cur: var(--pmw-ed-fg);
+  --pmw-ed-line: color-mix(in srgb, var(--pmw-ed-fg) 5%, transparent);
+  --pmw-ed-sel: color-mix(in srgb, var(--pmw-accent) 32%, transparent);
+  --pmw-ed-sel-blur: color-mix(in srgb, var(--pmw-ed-fg) 13%, transparent);
+  --pmw-ed-caret: var(--pmw-accent);
+  --pmw-ed-hit: color-mix(in srgb, #e5c07b 26%, transparent);
+  --pmw-ed-hit-cur: color-mix(in srgb, #e5c07b 52%, transparent);
+  --pmw-ed-hit-ring: #e5c07b;
+  --pmw-ed-hit-mark: #e5c07b;
+  --pmw-ed-caret-mark: color-mix(in srgb, var(--pmw-ed-fg) 55%, transparent);
+  --pmw-ed-focus-bg: color-mix(in srgb, var(--pmw-accent) 16%, transparent);
+  --pmw-ed-mm-ink: var(--pmw-ed-fg);
+  --pmw-ed-mm-alpha: .26;
+  --pmw-ed-add-fg: #98c379; --pmw-ed-mod-fg: #61afef; --pmw-ed-del-fg: #e36f78; --pmw-ed-conf-fg: #d19a66;
+  --pmw-ed-add-bg: color-mix(in srgb, var(--pmw-ed-add-fg) 12%, transparent);
+  --pmw-ed-mod-bg: color-mix(in srgb, var(--pmw-ed-mod-fg) 10%, transparent);
+  --pmw-ed-del-bg: color-mix(in srgb, var(--pmw-ed-del-fg) 12%, transparent);
+  --pmw-ed-conf-bg: color-mix(in srgb, var(--pmw-ed-conf-fg) 15%, transparent);
+  --pmw-ed-wadd: color-mix(in srgb, var(--pmw-ed-add-fg) 30%, transparent);
+  --pmw-ed-wdel: color-mix(in srgb, var(--pmw-ed-del-fg) 30%, transparent);
+  --pmw-ed-s-kw: #c678dd; --pmw-ed-s-str: #98c379; --pmw-ed-s-com: #8c93a1; --pmw-ed-s-fn: #61afef; --pmw-ed-s-ty: #e5c07b;
+  --pmw-ed-s-num: #d19a66; --pmw-ed-s-op: #56b6c2; --pmw-ed-s-pun: #abb2bf; --pmw-ed-s-prop: #e36f78; --pmw-ed-s-attr: #d19a66;
+  --pmw-ed-s-mac: #61afef; --pmw-ed-s-tag: #e36f78; --pmw-ed-s-esc: #56b6c2; --pmw-ed-s-head: #e36f78; --pmw-ed-s-link: #61afef;
+  --pmw-ed-s-var: #e36f78; --pmw-ed-s-code: #56b6c2;
+}
+html[data-theme="basic-light"] .pmw-ed {
+  --pmw-ed-fg: #383a42;
+  --pmw-ed-hit: color-mix(in srgb, #c18401 22%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #c18401 42%, transparent);
+  --pmw-ed-hit-ring: #906100; --pmw-ed-hit-mark: #c18401;
+  --pmw-ed-mm-alpha: .32;
+  --pmw-ed-add-fg: #257927; --pmw-ed-mod-fg: #0070a7; --pmw-ed-del-fg: #c4372e; --pmw-ed-conf-fg: #906100;
+  --pmw-ed-add-bg: color-mix(in srgb, var(--pmw-ed-add-fg) 10%, transparent);
+  --pmw-ed-mod-bg: color-mix(in srgb, var(--pmw-ed-mod-fg) 8%, transparent);
+  --pmw-ed-del-bg: color-mix(in srgb, var(--pmw-ed-del-fg) 9%, transparent);
+  --pmw-ed-conf-bg: color-mix(in srgb, var(--pmw-ed-conf-fg) 12%, transparent);
+  --pmw-ed-wadd: color-mix(in srgb, var(--pmw-ed-add-fg) 22%, transparent);
+  --pmw-ed-wdel: color-mix(in srgb, var(--pmw-ed-del-fg) 20%, transparent);
+  --pmw-ed-s-kw: #a626a4; --pmw-ed-s-str: #257927; --pmw-ed-s-com: #696a6f; --pmw-ed-s-fn: #0070a7; --pmw-ed-s-ty: #975d00;
+  --pmw-ed-s-num: #906100; --pmw-ed-s-op: #00748f; --pmw-ed-s-pun: #383a42; --pmw-ed-s-prop: #c4372e; --pmw-ed-s-attr: #906100;
+  --pmw-ed-s-mac: #0070a7; --pmw-ed-s-tag: #c4372e; --pmw-ed-s-esc: #00748f; --pmw-ed-s-head: #c4372e; --pmw-ed-s-link: #0070a7;
+  --pmw-ed-s-var: #c4372e; --pmw-ed-s-code: #00748f;
+}
+html[data-theme="friendly-dark"] .pmw-ed {
+  --pmw-ed-fg: #cdd6f4;
+  --pmw-ed-hit: color-mix(in srgb, #f9e2af 24%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #f9e2af 48%, transparent);
+  --pmw-ed-hit-ring: #f9e2af; --pmw-ed-hit-mark: #f9e2af;
+  --pmw-ed-add-fg: #a6e3a1; --pmw-ed-mod-fg: #89b4fa; --pmw-ed-del-fg: #f38ba8; --pmw-ed-conf-fg: #fab387;
+  --pmw-ed-add-bg: rgba(166, 227, 161, .10); --pmw-ed-mod-bg: rgba(137, 180, 250, .09);
+  --pmw-ed-del-bg: rgba(243, 139, 168, .10); --pmw-ed-conf-bg: rgba(250, 179, 135, .12);
+  --pmw-ed-wadd: rgba(166, 227, 161, .24); --pmw-ed-wdel: rgba(243, 139, 168, .24);
+  --pmw-ed-s-kw: #cba6f7; --pmw-ed-s-str: #a6e3a1; --pmw-ed-s-com: #959bb4; --pmw-ed-s-fn: #89b4fa; --pmw-ed-s-ty: #f9e2af;
+  --pmw-ed-s-num: #fab387; --pmw-ed-s-op: #89dceb; --pmw-ed-s-pun: #a6adc8; --pmw-ed-s-prop: #b4befe; --pmw-ed-s-attr: #f9e2af;
+  --pmw-ed-s-mac: #94e2d5; --pmw-ed-s-tag: #89b4fa; --pmw-ed-s-esc: #f5c2e7; --pmw-ed-s-head: #f38ba8; --pmw-ed-s-link: #89b4fa;
+  --pmw-ed-s-var: #eba0ac; --pmw-ed-s-code: #f5c2e7;
+}
+html[data-theme="friendly-light"] .pmw-ed {
+  --pmw-ed-fg: #4c4f69;
+  --pmw-ed-hit: color-mix(in srgb, #df8e1d 22%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #df8e1d 40%, transparent);
+  --pmw-ed-hit-ring: #a75a00; --pmw-ed-hit-mark: #df8e1d;
+  --pmw-ed-mm-alpha: .32;
+  --pmw-ed-add-fg: #187f00; --pmw-ed-mod-fg: #1b63f1; --pmw-ed-del-fg: #d20f39; --pmw-ed-conf-fg: #cd3400;
+  --pmw-ed-add-bg: rgba(64, 160, 43, .10); --pmw-ed-mod-bg: rgba(30, 102, 245, .07);
+  --pmw-ed-del-bg: rgba(210, 15, 57, .08); --pmw-ed-conf-bg: rgba(254, 100, 11, .09);
+  --pmw-ed-wadd: rgba(64, 160, 43, .22); --pmw-ed-wdel: rgba(210, 15, 57, .18);
+  --pmw-ed-s-kw: #8839ef; --pmw-ed-s-str: #187f00; --pmw-ed-s-com: #696c7f; --pmw-ed-s-fn: #1b63f1; --pmw-ed-s-ty: #a75a00;
+  --pmw-ed-s-num: #cd3400; --pmw-ed-s-op: #0073b0; --pmw-ed-s-pun: #5c5f77; --pmw-ed-s-prop: #5363d5; --pmw-ed-s-attr: #a75a00;
+  --pmw-ed-s-mac: #007a81; --pmw-ed-s-tag: #1b63f1; --pmw-ed-s-esc: #b24297; --pmw-ed-s-head: #d20f39; --pmw-ed-s-link: #1b63f1;
+  --pmw-ed-s-var: #cf2c40; --pmw-ed-s-code: #b24297;
+}
+/* Glass: the reading plate under code is kept at least about 82 % opaque over the wallpaper, and nothing here adds a
+   blur (the closed blur budget): the header plate is a denser tint instead */
+html[data-theme^="glass"] .pmw-ed { --pmw-ed-plate: color-mix(in srgb, var(--pmw-ed-gutbg) 90%, transparent); }
+html[data-theme="glass-dark"] .pmw-ed {
+  --pmw-ed-bg: rgba(12, 9, 22, .42);
+  --pmw-ed-gutbg: rgba(16, 12, 28, .95);
+  --pmw-ed-fg: #c0caf5;
+  --pmw-ed-hit: color-mix(in srgb, #e0af68 26%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #e0af68 50%, transparent);
+  --pmw-ed-hit-ring: #e0af68; --pmw-ed-hit-mark: #e0af68;
+  --pmw-ed-add-fg: #9ece6a; --pmw-ed-mod-fg: #7aa2f7; --pmw-ed-del-fg: #f7768e; --pmw-ed-conf-fg: #ff9e64;
+  --pmw-ed-s-kw: #bb9af7; --pmw-ed-s-str: #9ece6a; --pmw-ed-s-com: #848ebb; --pmw-ed-s-fn: #7aa2f7; --pmw-ed-s-ty: #2ac3de;
+  --pmw-ed-s-num: #ff9e64; --pmw-ed-s-op: #89ddff; --pmw-ed-s-pun: #9abdf5; --pmw-ed-s-prop: #73daca; --pmw-ed-s-attr: #bb9af7;
+  --pmw-ed-s-mac: #7dcfff; --pmw-ed-s-tag: #f7768e; --pmw-ed-s-esc: #b4f9f8; --pmw-ed-s-head: #7aa2f7; --pmw-ed-s-link: #73daca;
+  --pmw-ed-s-var: #e0af68; --pmw-ed-s-code: #b4f9f8;
+}
+html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-bg: rgba(238, 242, 242, .70);
+  --pmw-ed-gutbg: rgba(240, 243, 243, .96);
+  --pmw-ed-fg: #343b58;
+  --pmw-ed-hit: color-mix(in srgb, #8f5e15 20%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #8f5e15 36%, transparent);
+  --pmw-ed-hit-ring: #8f5e15; --pmw-ed-hit-mark: #b8811f;
+  --pmw-ed-mm-alpha: .34;
+  --pmw-ed-add-fg: #506c30; --pmw-ed-mod-fg: #0761ca; --pmw-ed-del-fg: #ca0045; --pmw-ed-conf-fg: #a14d00;
+  --pmw-ed-add-bg: color-mix(in srgb, var(--pmw-ed-add-fg) 11%, transparent);
+  --pmw-ed-mod-bg: color-mix(in srgb, var(--pmw-ed-mod-fg) 8%, transparent);
+  --pmw-ed-del-bg: color-mix(in srgb, var(--pmw-ed-del-fg) 9%, transparent);
+  --pmw-ed-s-kw: #823ad7; --pmw-ed-s-str: #506c30; --pmw-ed-s-com: #5c6389; --pmw-ed-s-fn: #0761ca; --pmw-ed-s-ty: #006e80;
+  --pmw-ed-s-num: #a14d00; --pmw-ed-s-op: #006a83; --pmw-ed-s-pun: #52629e; --pmw-ed-s-prop: #356d65; --pmw-ed-s-attr: #823ad7;
+  --pmw-ed-s-mac: #006d92; --pmw-ed-s-tag: #ca0045; --pmw-ed-s-esc: #2e5857; --pmw-ed-s-head: #0761ca; --pmw-ed-s-link: #356d65;
+  --pmw-ed-s-var: #7e5f31; --pmw-ed-s-code: #2e5857;
+}
+/* Retro: monochrome phosphor (dark) and paper teletype (light) like the terminal's default schemes (D15); the diff
+   keeps its own colours so added and removed lines still read apart; selection is reverse video */
+html[data-theme^="retro"] .pmw-ed {
+  --pmw-ed-sizer-bg: var(--pmw-ed-bg); --pmw-ed-sel-z: auto; --pmw-ed-sel-blend: difference; --pmw-ed-caret-blend: difference;
+  --pmw-ed-caret-w: var(--pmw-ed-cw, 8px); --pmw-ed-r1: 0px; --pmw-ed-r2: 0px; --pmw-ed-r3: 0px; --pmw-ed-r5: 0px; --pmw-ed-ring-style: dashed;
+  --pmw-ed-kw-weight: 650; --pmw-ed-tag-weight: 650;
+  --pmw-ed-sg-ink: var(--pmw-ed-bg); --pmw-ed-sg-fill-add: var(--pmw-ed-add-fg); --pmw-ed-sg-fill-mod: var(--pmw-ed-mod-fg);
+  --pmw-ed-sg-fill-del: var(--pmw-ed-del-fg); --pmw-ed-sg-fill-conf: var(--pmw-ed-conf-fg);
+}
+html[data-theme="retro-dark"] .pmw-ed {
+  --pmw-ed-com-style: normal;
+  --pmw-ed-fg: #7ee36b;
+  --pmw-ed-ln: #4e9a3e; --pmw-ed-ln-cur: #c8ffb0;
+  --pmw-ed-line: rgba(126, 227, 107, .06);
+  --pmw-ed-sel: #7ee36b; --pmw-ed-sel-blur: #4e9a3e;
+  --pmw-ed-caret: #7ee36b;
+  --pmw-ed-hit: rgba(216, 185, 60, .22); --pmw-ed-hit-cur: rgba(216, 185, 60, .40); --pmw-ed-hit-ring: #d8b93c; --pmw-ed-hit-mark: #d8b93c;
+  --pmw-ed-focus-bg: rgba(126, 227, 107, .14);
+  --pmw-ed-mm-alpha: .34;
+  --pmw-ed-add-fg: #86c46a; --pmw-ed-mod-fg: #9db4d0; --pmw-ed-del-fg: #e9853f; --pmw-ed-conf-fg: #d8b93c;
+  --pmw-ed-s-kw: #c8ffb0; --pmw-ed-s-str: #a3f08f; --pmw-ed-s-com: #4e9a3e; --pmw-ed-s-fn: #b1f59c; --pmw-ed-s-ty: #9fe88a;
+  --pmw-ed-s-num: #d8ffc8; --pmw-ed-s-op: #7ee36b; --pmw-ed-s-pun: #5fb34e; --pmw-ed-s-prop: #8fe97b; --pmw-ed-s-attr: #8fe97b;
+  --pmw-ed-s-mac: #b1f59c; --pmw-ed-s-tag: #b1f59c; --pmw-ed-s-esc: #d8ffc8; --pmw-ed-s-head: #d8ffc8; --pmw-ed-s-link: #a3f08f;
+  --pmw-ed-s-var: #d8ffc8; --pmw-ed-s-code: #a3f08f;
+}
+html[data-theme="retro-light"] .pmw-ed {
+  --pmw-ed-fg: #1a1a1a;
+  --pmw-ed-ln: #8a8478; --pmw-ed-ln-cur: #1a1a1a;
+  --pmw-ed-line: rgba(26, 26, 26, .05);
+  --pmw-ed-sel: #ffffff; --pmw-ed-sel-blur: #b9b2a5;
+  --pmw-ed-caret: #ffffff;
+  --pmw-ed-hit: rgba(180, 90, 0, .16); --pmw-ed-hit-cur: rgba(180, 90, 0, .32); --pmw-ed-hit-ring: #1a1a1a; --pmw-ed-hit-mark: #b45a00;
+  --pmw-ed-focus-bg: rgba(0, 71, 171, .10);
+  --pmw-ed-mm-alpha: .36;
+  --pmw-ed-add-fg: #1f5f2f; --pmw-ed-mod-fg: #0047ab; --pmw-ed-del-fg: #a1281f; --pmw-ed-conf-fg: #b45a00;
+  --pmw-ed-s-kw: #1a1a1a; --pmw-ed-s-str: #a1281f; --pmw-ed-s-com: #5d574c; --pmw-ed-s-fn: #1a1a1a; --pmw-ed-s-ty: #3b3631;
+  --pmw-ed-s-num: #a1281f; --pmw-ed-s-op: #3b3631; --pmw-ed-s-pun: #5d574c; --pmw-ed-s-prop: #3b3631; --pmw-ed-s-attr: #a1281f;
+  --pmw-ed-s-mac: #3b3631; --pmw-ed-s-tag: #1a1a1a; --pmw-ed-s-esc: #a1281f; --pmw-ed-s-head: #1a1a1a; --pmw-ed-s-link: #a1281f;
+  --pmw-ed-s-var: #a1281f; --pmw-ed-s-code: #a1281f;
+}
+/* NieR: ink and parchment only (the NieR token tables), square, no glow, no blur */
+html[data-o55-nier="on"] .pmw-ed {
+  --pmw-ed-bg: var(--o55-nier-code-bg);
+  --pmw-ed-gutbg: var(--o55-nier-code-bg);
+  --pmw-ed-plate: color-mix(in srgb, var(--o55-nier-paper) 92%, transparent);
+  --pmw-ed-fg: var(--o55-nier-code-fg);
+  --pmw-ed-ln: rgba(var(--o55-nier-ink-rgb), .5); --pmw-ed-ln-cur: var(--o55-nier-ink);
+  --pmw-ed-line: rgba(var(--o55-nier-ink-rgb), .06);
+  --pmw-ed-sel: var(--o55-nier-term-selection); --pmw-ed-sel-blur: rgba(var(--o55-nier-ink-rgb), .12);
+  --pmw-ed-caret: var(--o55-nier-ink);
+  --pmw-ed-hit: rgba(var(--o55-nier-ink-rgb), .14); --pmw-ed-hit-cur: rgba(var(--o55-nier-ink-rgb), .28);
+  --pmw-ed-hit-ring: var(--o55-nier-ink); --pmw-ed-hit-mark: var(--o55-nier-ink);
+  --pmw-ed-caret-mark: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmw-ed-focus-bg: rgba(var(--o55-nier-ink-rgb), .12);
+  --pmw-ed-mm-ink: var(--o55-nier-ink); --pmw-ed-mm-alpha: .34;
+  --pmw-ed-add-fg: var(--o55-nier-ok); --pmw-ed-mod-fg: rgba(var(--o55-nier-ink-rgb), .72); --pmw-ed-del-fg: var(--o55-nier-error); --pmw-ed-conf-fg: var(--o55-nier-warn);
+  --pmw-ed-add-bg: var(--o55-nier-ok-surface);
+  --pmw-ed-mod-bg: rgba(var(--o55-nier-ink-rgb), .07);
+  --pmw-ed-del-bg: color-mix(in srgb, var(--o55-nier-error) 16%, transparent);
+  --pmw-ed-conf-bg: color-mix(in srgb, var(--o55-nier-warn) 20%, transparent);
+  --pmw-ed-wadd: color-mix(in srgb, var(--o55-nier-ok) 34%, transparent);
+  --pmw-ed-wdel: color-mix(in srgb, var(--o55-nier-error) 30%, transparent);
+  --pmw-ed-s-kw: var(--o55-nier-ink); --pmw-ed-s-str: var(--o55-nier-ok-text); --pmw-ed-s-com: rgba(var(--o55-nier-ink-rgb), .68);
+  --pmw-ed-s-fn: var(--o55-nier-ink); --pmw-ed-s-ty: var(--o55-nier-warn-text); --pmw-ed-s-num: var(--o55-nier-warn-text);
+  --pmw-ed-s-op: var(--o55-nier-ink); --pmw-ed-s-pun: rgba(var(--o55-nier-ink-rgb), .72); --pmw-ed-s-prop: var(--o55-nier-ink);
+  --pmw-ed-s-attr: var(--o55-nier-warn-text); --pmw-ed-s-mac: var(--o55-nier-ok-text); --pmw-ed-s-tag: var(--o55-nier-ink);
+  --pmw-ed-s-esc: var(--o55-nier-warn-text); --pmw-ed-s-head: var(--o55-nier-ink); --pmw-ed-s-link: var(--o55-nier-ink);
+  --pmw-ed-s-var: var(--o55-nier-error-text); --pmw-ed-s-code: var(--o55-nier-ok-text);
+  --pmw-ed-r1: 0px; --pmw-ed-r2: 0px; --pmw-ed-r3: 0px; --pmw-ed-r5: 0px; --pmw-ed-kw-weight: 650;
+  --pmw-ed-fold-hover-bg: var(--o55-nier-ink); --pmw-ed-fold-hover-fg: var(--o55-nier-on-ink);
+}
+
+/* ---- the frame ---- */
+.pmw-ed { position: absolute; inset: 0; overflow: hidden; background: var(--pmw-ed-bg); color: var(--pmw-ed-fg); font-family: var(--pm-font-ui); outline: none; }
+.pmw-ed-head {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 6;
+  background: var(--pmw-ed-plate);
+  -webkit-backdrop-filter: blur(11px) saturate(140%); backdrop-filter: blur(11px) saturate(140%);
+}
+html[data-theme^="glass"] .pmw-ed-head, html[data-o55-nier="on"] .pmw-ed-head { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.pmw-ed-head .pmw-hrow { background: transparent; }
+.pmw-ed-crumbs { display: flex; align-items: center; min-width: 0; gap: 1px; overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--pmw-text-2); }
+.pmw-ed-seg { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.pmw-ed-seg.is-file { flex: none; color: var(--pmw-text); font-weight: 600; }
+.pmw-ed-sep { flex: none; padding: 0 3px; color: var(--pmw-text-3); }
+.pmw-ed-sym { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; margin-left: 10px; color: var(--pmw-text-3); font-family: var(--pm-font-code); font-size: 11.5px; }
+.pmw-ed-sym[hidden] { display: none; }
+.pmw-ed-crumbs > .pmw-ed-fact { flex: none; margin-left: 12px; font-size: 11.5px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+.pmw-ed-fact .is-add { color: var(--pmw-ed-add-fg); }
+.pmw-ed-fact .is-del { color: var(--pmw-ed-del-fg); }
+.pmw-ed-dot { display: inline-block; width: 8px; }
+@container pmw-body (max-width: 519.98px) { .pmw-ed-sym, .pmw-ed-crumbs .pmw-ed-seg:not(.is-file), .pmw-ed-crumbs .pmw-ed-sep { display: none; } }
+
+/* ---- the scroller: one row per line, a sticky gutter, no native scrollbar (the track is the scrollbar) ---- */
+.pmw-ed-scroll {
+  position: absolute; top: 0; left: 0; bottom: 0; right: var(--pmw-ed-track, 22px);
+  overflow: auto; overscroll-behavior: contain; scrollbar-width: none; outline: none; cursor: text;
+  font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); line-height: var(--pmw-ed-lh, 20px);
+  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; letter-spacing: 0;
+  -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased;
+}
+.pmw-ed-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+/* the rows, tokens and overlays live in a shadow root (10-editor.js SHADOW_CSS): the page's ~12,000 rules never
+   match them, which keeps a scroll frame at about 1 ms instead of 70. They read the --pmw-ed-* tokens set here. */
+.pmw-ed.is-sbs .pmw-ed-scroll { overflow-x: hidden; }
+
+/* ---- the scroll track (the minimap scrollbar): below the header plate, never under it (J3) ---- */
+.pmw-ed-track { position: absolute; right: 0; top: var(--pmw-ed-head, 0px); bottom: 0; width: var(--pmw-ed-track, 22px); z-index: 4; touch-action: none; background: var(--pmw-ed-bg); }
+.pmw-ed-track::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--pmw-line); }
+.pmw-ed[data-special] .pmw-ed-track { display: none; }
+.pmw-ed-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.pmw-ed-thumb {
+  position: absolute; left: 1px; right: 0; top: 0; box-sizing: border-box; pointer-events: none; will-change: transform;
+  background: color-mix(in srgb, var(--pmw-ed-fg) 14%, transparent); border: 1px solid color-mix(in srgb, var(--pmw-ed-fg) 26%, transparent); border-radius: 3px;
+}
+.pmw-ed-thumb[hidden] { display: none; }
+.pmw-ed-track:hover .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-fg) 20%, transparent); }
+.pmw-ed-track.is-drag .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-fg) 28%, transparent); }
+html[data-theme^="retro"] .pmw-ed-thumb { border-radius: 0; border-color: var(--pmw-ed-add-fg); background: color-mix(in srgb, var(--pmw-ed-add-fg) 7%, transparent); }
+html[data-theme^="retro"] .pmw-ed-track:hover .pmw-ed-thumb, html[data-theme^="retro"] .pmw-ed-track.is-drag .pmw-ed-thumb { background: color-mix(in srgb, var(--pmw-ed-add-fg) 16%, transparent); }
+html[data-o55-nier="on"] .pmw-ed-thumb { border-radius: 0; border-color: var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .08); }
+html[data-o55-nier="on"] .pmw-ed-track:hover .pmw-ed-thumb, html[data-o55-nier="on"] .pmw-ed-track.is-drag .pmw-ed-thumb { background: rgba(var(--o55-nier-ink-rgb), .16); }
+.pmw-ed-probe { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* the horizontal thumb: thin, custom, only while the code overflows and the pointer is over it or it moves */
+.pmw-ed-hbar { position: absolute; left: var(--pmw-ed-gut, 54px); right: calc(var(--pmw-ed-track, 22px) + 4px); bottom: 2px; height: 8px; z-index: 4; opacity: 0; transition: opacity 160ms linear; touch-action: none; }
+.pmw-ed-hbar[hidden] { display: none; }
+.pmw-ed-hbar.is-hover, .pmw-ed-hbar.is-active, .pmw-ed-hbar.is-drag, .pmw-ed-hbar:hover { opacity: 1; }
+.pmw-ed-hthumb { position: absolute; left: 0; top: 1px; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-ed-fg) 24%, transparent); will-change: transform; }
+.pmw-ed-hbar:hover .pmw-ed-hthumb, .pmw-ed-hbar.is-drag .pmw-ed-hthumb { background: color-mix(in srgb, var(--pmw-ed-fg) 36%, transparent); }
+html[data-theme^="retro"] .pmw-ed-hthumb, html[data-o55-nier="on"] .pmw-ed-hthumb { border-radius: 0; }
+
+/* ---- sticky scroll ---- */
+.pmw-ed-sticky {
+  position: absolute; top: var(--pmw-ed-head, 0px); left: 0; right: var(--pmw-ed-track, 22px); z-index: 5; overflow: hidden;
+  background: var(--pmw-ed-gutbg); box-shadow: 0 1px 0 var(--pmw-line), 0 6px 10px -8px rgba(0, 0, 0, .45);
+  font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); line-height: var(--pmw-ed-lh, 20px);
+  font-variant-ligatures: none; white-space: pre; cursor: pointer;
+}
+.pmw-ed-sticky[hidden] { display: none; }
+html[data-theme$="-light"] .pmw-ed-sticky { box-shadow: 0 1px 0 var(--pmw-line), 0 6px 10px -8px rgba(21, 32, 43, .22); }
+html[data-o55-nier="on"] .pmw-ed-sticky, html[data-theme^="retro"] .pmw-ed-sticky { box-shadow: 0 1px 0 var(--pmw-line-2); }
+
+/* ---- find and replace ---- */
+.pmw-ed-find {
+  position: absolute; z-index: 7; top: calc(var(--pmw-ed-head, 0px) + 6px); right: calc(var(--pmw-ed-track, 22px) + 12px);
+  width: min(440px, calc(100% - var(--pmw-ed-track, 22px) - 24px)); box-sizing: border-box; padding: 4px;
+  border: 1px solid var(--pmw-pop-line); border-radius: var(--pmw-radius); background: var(--pmw-pop); box-shadow: var(--pmw-pop-shadow);
+  color: var(--pmw-text); font: 12px/1.3 var(--pm-font-ui);
+}
+.pmw-ed-find[hidden] { display: none; }
+@container pmw-body (max-width: 439.98px) {
+  .pmw-ed-find { left: 0; right: var(--pmw-ed-track, 22px); width: auto; top: var(--pmw-ed-head, 0px); border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+  .pmw-ed-fcount { min-width: 0; }
+}
+.pmw-ed-frow { display: flex; align-items: center; gap: 2px; min-height: 28px; }
+.pmw-ed-frow.is-rep { display: none; }
+.pmw-ed-find.is-replace .pmw-ed-frow.is-rep { display: flex; }
+.pmw-ed-ffield { flex: 1 1 auto; min-width: 40px; display: flex; }
+.pmw-ed-fin {
+  flex: 1 1 auto; min-width: 0; height: 24px; box-sizing: border-box; padding: 0 8px; margin: 0 2px;
+  border: 1px solid var(--pmw-line-2); border-radius: 5px; background: var(--pmw-ed-gutbg); color: var(--pmw-text);
+  font: 12px var(--pm-font-code); outline: none;
+}
+.pmw-ed-fin:focus { border-color: var(--pmw-focus); box-shadow: 0 0 0 1px var(--pmw-focus); }
+.pmw-ed-fin[aria-invalid="true"] { border-color: var(--pmw-bad); box-shadow: 0 0 0 1px var(--pmw-bad); }
+.pmw-ed-fin[readonly] { opacity: .6; }
+.pmw-ed-fb {
+  flex: none; width: 24px; height: 24px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 5px;
+  background: transparent; color: var(--pmw-text-2); cursor: pointer;
+}
+.pmw-ed-fb:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+.pmw-ed-fb:focus-visible, .pmw-ed-fbtn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
+.pmw-ed-fb .pmw-ico { width: 14px; height: 14px; }
+.pmw-ed-ftog[aria-pressed="true"] { background: color-mix(in srgb, var(--pmw-accent) 22%, transparent); color: var(--pmw-text); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
+.pmw-ed-fcount { flex: none; min-width: 66px; padding: 0 6px; text-align: center; font-size: 11.5px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pmw-ed-fcount.is-none { color: var(--pmw-bad); }
+.pmw-ed-fpad { flex: none; width: 24px; }
+.pmw-ed-fbtn {
+  flex: none; height: 24px; display: inline-flex; align-items: center; gap: 5px; padding: 0 9px; border: 1px solid var(--pmw-line-2); border-radius: 5px;
+  background: transparent; color: var(--pmw-text); font: 500 12px var(--pm-font-ui); cursor: pointer; white-space: nowrap;
+}
+.pmw-ed-fbtn:hover { background: var(--pmw-hover); }
+.pmw-ed-fbtn .pmw-ico { width: 13px; height: 13px; }
+.pmw-ed-find [aria-disabled="true"] { opacity: .45; cursor: default; }
+.pmw-ed-fnote { margin: 3px 6px 2px 30px; font-size: 11.5px; color: var(--pmw-text-2); }
+.pmw-ed-fnote[hidden] { display: none; }
+@container pmw-body (max-width: 339.98px) { .pmw-ed-ftog:not([aria-pressed="true"]) { display: none; } }
+html[data-theme^="retro"] .pmw-ed-find, html[data-theme^="retro"] .pmw-ed-fin, html[data-theme^="retro"] .pmw-ed-fb, html[data-theme^="retro"] .pmw-ed-fbtn,
+html[data-theme^="retro"] .pmw-ed-goto, html[data-theme^="retro"] .pmw-ed-gin { border-radius: 0; }
+html[data-theme^="retro"] .pmw-ed-ftog[aria-pressed="true"] { background: var(--pmw-text); color: var(--pmw-surface); box-shadow: none; }
+html[data-o55-nier="on"] .pmw-ed-find, html[data-o55-nier="on"] .pmw-ed-fin, html[data-o55-nier="on"] .pmw-ed-fb, html[data-o55-nier="on"] .pmw-ed-fbtn,
+html[data-o55-nier="on"] .pmw-ed-goto, html[data-o55-nier="on"] .pmw-ed-gin { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-ed-find, html[data-o55-nier="on"] .pmw-ed-goto { border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
+html[data-o55-nier="on"] .pmw-ed-ftog[aria-pressed="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmw-ed-fb:hover, html[data-o55-nier="on"] .pmw-ed-fbtn:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+
+/* ---- go to line ---- */
+.pmw-ed-goto {
+  position: absolute; z-index: 8; top: calc(var(--pmw-ed-head, 0px) + 8px); left: 50%; transform: translateX(-50%);
+  width: min(320px, calc(100% - 24px)); box-sizing: border-box; display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 4px 6px;
+  padding: 6px 8px; border: 1px solid var(--pmw-pop-line); border-radius: var(--pmw-radius); background: var(--pmw-pop); box-shadow: var(--pmw-pop-shadow);
+  color: var(--pmw-text); font: 12px var(--pm-font-ui);
+}
+.pmw-ed-gico { display: grid; place-items: center; color: var(--pmw-text-2); }
+.pmw-ed-gin {
+  height: 28px; box-sizing: border-box; padding: 0 8px; border: 1px solid var(--pmw-focus); border-radius: 5px; background: var(--pmw-ed-gutbg);
+  color: var(--pmw-text); font: 13px var(--pm-font-code); outline: none; box-shadow: 0 0 0 1px var(--pmw-focus);
+}
+.pmw-ed-ghint { grid-column: 2; margin: 0; font-size: 11.5px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
+
+/* ---- the reason view (binary file, not in this project) ---- */
+.pmw-ed-reason { position: absolute; left: 0; right: 0; bottom: 0; top: var(--pmw-ed-head, 0px); overflow: auto; display: grid; place-items: center; padding: 24px; }
+.pmw-ed-reason-col { max-width: 440px; text-align: center; font-size: 13px; line-height: 20px; color: var(--pmw-text-2); }
+.pmw-ed-reason-col h2 { margin: 10px 0 4px; font-size: 15px; font-weight: 650; color: var(--pmw-text); }
+.pmw-ed-reason-col p { margin: 4px 0 0; }
+.pmw-ed-reason-detail { font-family: var(--pm-font-code); font-size: 12px; color: var(--pmw-text-3); }
+.pmw-ed-reason-ico { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); color: var(--pmw-text-2); }
+html[data-o55-nier="on"] .pmw-ed-reason-ico { border-radius: 0; border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-ed-reason-col h2 { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+
+/* measuring and the clipboard helper */
+.pmw-ed-measure {
+  position: absolute; left: -9999px; top: 0; visibility: hidden; white-space: pre; pointer-events: none;
+  font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); font-variant-ligatures: none; letter-spacing: 0;
+}
+.pmw-ed-clip { position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
+
+/* NieR: paths stay in their own case even where the header row is uppercase */
+html[data-o55-nier="on"] .pmw-ed-crumbs .pmw-ed-seg, html[data-o55-nier="on"] .pmw-ed-sym { text-transform: none; letter-spacing: 0; }
+
+/* Reduced Motion: no reveal, no blink, no fades (the shadow rows read data-reduced on their host); everything works */
+html[data-motion="reduced"] .pmw-ed-hbar { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-ed-hbar { transition: none; } }
