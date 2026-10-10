@@ -283,9 +283,29 @@
     var s = STORE.get(PRESET_KEY, null);
     return s && typeof s === 'object' && Array.isArray(s.presets) ? s : { schema_id: 'pm.usage.widget_presets.v1', presets: [] };
   }
-  function presetById(id) { return presetStore().presets.filter(function (p) { return p && p.id === id; })[0] || null; }
-  function presetOut(p) { return { id: p.id, name: p.name, created: p.created, sourceBoard: p.source_board || null }; }
+  /* a stored preset is read as presets.save writes it, and only so: an entry without a string id is skipped, a name that
+     is not a string reads 'Saved preset', and its rows, preset ids and configuration refs keep only what has the saved
+     shape (a corrupt or older store, review 2026-10-10: one preset with { L: 'x' } made sets() throw, so Start from lost
+     every row, the board's own default and the rooms too, and a row whose size was not a number hung the page) */
+  function presetOk(p) { return !!p && typeof p === 'object' && typeof p.id === 'string' && !!p.id; }
+  function presetById(id) { return presetStore().presets.filter(function (p) { return presetOk(p) && p.id === id; })[0] || null; }
+  function presetLabel(p) { return presetName(typeof p.name === 'string' ? p.name : '') || 'Saved preset'; }
+  function presetOut(p) { return { id: p.id, name: presetLabel(p), created: typeof p.created === 'string' ? p.created : null, sourceBoard: typeof p.source_board === 'string' ? p.source_board : null }; }
   function presetName(name) { return String(name == null ? '' : name).replace(/\s+/g, ' ').trim().slice(0, 80); }
+  /* a preset's set (setRows): its rows per board class ([widget, x, y, w, h] in the grid's bounds: x 0-29, y 0-4000, w 1-30,
+     h 1-40; a row with a size that is not a number made firstFitInto loop for good, and the page hung on Start from), its
+     preset id per widget (strings) and its configuration refs per widget (lists of strings) */
+  function presetSet(p) {
+    var L = p.layout && typeof p.layout === 'object' ? p.layout : {}, rows = {}, pids = {}, cfgs = {};
+    var within = function (n, lo, hi) { return typeof n === 'number' && isFinite(n) && n >= lo && n <= hi; };
+    CLASSES.forEach(function (c) {
+      var list = (Array.isArray(L[c.name]) ? L[c.name] : []).filter(function (e) { return Array.isArray(e) && typeof e[0] === 'string' && e[0] && within(e[1], 0, 29) && within(e[2], 0, 4000) && within(e[3], 1, 30) && within(e[4], 1, 40); });
+      if (list.length) rows[c.name] = list.map(function (e) { return [e[0], Math.round(e[1]), Math.round(e[2]), Math.round(e[3]), Math.round(e[4])]; });
+    });
+    if (p.presets && typeof p.presets === 'object') Object.keys(p.presets).forEach(function (id) { if (typeof p.presets[id] === 'string' && p.presets[id]) pids[id] = p.presets[id]; });
+    if (p.configs && typeof p.configs === 'object') Object.keys(p.configs).forEach(function (id) { var v = p.configs[id]; if (Array.isArray(v)) cfgs[id] = v.filter(function (x) { return typeof x === 'string'; }); });
+    return { rows: rows, presets: pids, configs: cfgs };
+  }
 
   /* ---- board keys per project (D10 P5, dashboards only): widget_layout:v1:<project>:<board>; the Usage page keeps
      widget_layout:v1:usage. A board's unscoped key from before (widget_layout:v1:<board>) becomes the first project's that
@@ -624,7 +644,7 @@
       if (m[1] === 'room') return own(ROOM, m[2]) && PMU_BOARDS.rooms[m[2]] ? { rows: roomRows(m[2]), presets: {}, configs: {} } : null;
       if (m[1] === 'host') { var H = hostsTable(); return m[2] === 'dashboard' && H && H.dashboard ? { rows: H.dashboard, presets: rowPresets(H.dashboard, clsName), configs: {} } : null; }
       var p = presetById(m[2]);
-      return p ? { rows: p.layout || {}, presets: p.presets || {}, configs: p.configs || {} } : null;
+      return p ? presetSet(p) : null;
     }
     /* a set's rects at a board class: its own rows there, else projected (XL from L) as the Usage page does; the Accounts
        room's set takes the providers with accounts, as the Usage page's Accounts room does */
@@ -2587,7 +2607,7 @@
       push('default', 'Default widgets', 'default', widgetCount(count('default', ownSet())));
       Object.keys(ROOM).forEach(function (room) { if (PMU_BOARDS.rooms[room]) push('room:' + room, ROOM[room].label, 'room', 'Usage room · ' + widgetCount(count('room:' + room, roomRows(room)))); });
       var H = hostsTable(); if (H && H.dashboard) push('host:dashboard', 'Dashboard', 'host', widgetCount(count('host:dashboard', H.dashboard)));
-      presetStore().presets.forEach(function (p) { if (p && p.id) push('user:' + p.id, p.name, 'user', 'Saved preset · ' + widgetCount(count('user:' + p.id, p.layout))); });
+      presetStore().presets.forEach(function (p) { if (presetOk(p)) push('user:' + p.id, presetLabel(p), 'user', 'Saved preset · ' + widgetCount(count('user:' + p.id, presetSet(p).rows))); });
       return out;
     }
     /* startFrom(setId): the board's widgets become the set's at every board class (its rows, else projected as the Usage
@@ -2796,7 +2816,7 @@
     },
     /* the user's saved presets (D10 P4), shown in every dashboard's Start from; applied by board.startFrom('user:<id>') */
     presets: {
-      list: function () { return presetStore().presets.filter(function (p) { return p && p.id; }).map(presetOut); },
+      list: function () { return presetStore().presets.filter(presetOk).map(presetOut); },
       save: function (board, name) {
         var b = typeof board === 'string' ? (own(REG, board) ? REG[board].api : null) : board;
         var h = b && own(REG, b.id) && REG[b.id].api === b ? REG[b.id] : null, snap = h && h.snapshot ? h.snapshot() : null;
@@ -2810,7 +2830,7 @@
         return presetOut(p);
       },
       rename: function (id, name) {
-        var s = presetStore(), p = s.presets.filter(function (x) { return x && x.id === id; })[0], nm = presetName(name);
+        var s = presetStore(), p = s.presets.filter(function (x) { return presetOk(x) && x.id === id; })[0], nm = presetName(name);
         if (!p || !nm) return null;
         p.name = nm; STORE.set(PRESET_KEY, s);
         return presetOut(p);
