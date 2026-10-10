@@ -49,7 +49,8 @@ src/terminal/
   css/  00-fonts.css 10-view.css 20-overlays.css 30-looks.css 40-nier.css 50-fx.css 80-card.css (sorted, inlined)
   fonts/    woff2 + licence texts + SOURCE.md (DL-161 format)
   schemes/  <family>.json (raw, with source and licence) + LICENSE-<family>.txt + SOURCES.md
-  harness/  build_harness.py, mock-host.js, mock-host.css, harness.template.html, labs, notes/, fixtures/
+  harness/  build_harness.py, mock-host.js, mock-host.css, harness.template.html, demos.js, labs, notes/, fixtures/,
+            checks/ (node checks; the repository ignores every folder named tests/)
 ```
 
 ## 2. Assembly and code rules
@@ -163,7 +164,8 @@ ctx.by              'user' | 'agent:<name>'
 ctx.assets          T.Assets
 ctx.subshell(opts)  Promise<exitCode>: run an interactive shell inside this job (ssh uses it):
                     { host, user, vfs, remote: true, motd } ; it returns when that shell exits
-ctx.isatty          true (programs may still print plain output when they want)
+ctx.isatty          false when the output is piped or redirected
+ctx.stdin           null, or the text piped in from the previous command of a pipeline (grep, head, tail, wc, less)
 ```
 
 Builtins belong to the shell, not to `T.Programs`: `cd pwd echo printf export unset alias history clear exit true
@@ -216,7 +218,9 @@ and the no-GPU path keeps only the CSS fallbacks (static scanlines, a CSS glow) 
 
 `PMT.card(spec) -> HTMLElement`; `card.update(spec)`. `spec`: `{ command, cwd, status: 'running'|'ok'|'failed'|
 'interrupted'|'waiting', exitCode, elapsedMs, startedAt, lines: string[] (plain text, no escapes), totalLines,
-by: 'user'|'agent:<name>', onOpen, onRerun, onViewOutput, expanded }`.
+by: 'user'|'agent:<name>', onOpen, onRerun, onViewOutput, onToggle, expanded, failureLine }`. `failureLine` is
+computed by the terminal from its command log (`PMT.cardSpec(session, command)` builds a whole spec), or by the chat with
+`T.CommandCard.failureLineOf(lines)` as a fallback.
 
 ## 8. Public API (`window.PMT`, 90-kind.js)
 
