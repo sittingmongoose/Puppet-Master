@@ -1665,7 +1665,7 @@ Shell-first command continuity is /PTY-backed and preserves /env/session, workin
 Shell-first routing is /reaffirmed. Route shell-like or shell-native /CLI-native work to Terminal when it needs stdin, PTY, /TUI or TTY interaction, session continuity, visible /control, or may evolve into interactive behavior. Route non-interactive, short-lived, summary-oriented /build/test or structured /build/runtime-output and /results output to Output. Route diagnostics to Problems only when /line/code/location semantics exist, and route discovered endpoints to Ports. Inline previews, command cards, and chat summaries are audit/preview surfaces, never the canonical execution-surface for shell work; hiding infrastructure-like work is allowed only when terminal semantics are not needed.
 Assistant routing must distinguish terminal-oriented PTY work from `/non-PTY` output routing: Terminal is required for shell-native `/steps`, TTY, stdin, alternate-screen, shell editing, prompts, multi-command continuity, and `/profile/cwd/env` fidelity, while Output is appropriate only for non-interactive work with bounded `/progress/result` or `/results/structured` payloads and no expected live takeover.
 
-Terminal workspace behavior is now-explicit and /clarifying rather than a replacement of older shell-first assumptions. The model covers /tabs/panes, /focus/send-input/interrupt/resize/state APIs, /status/search/selection state, /overlay state, /persistence/diagnostics/labeling/docking settings, /cwd/shell disclosure, /Problems/Ports linked surfaces, tab-scoped overrides, /reuse/binding, and session-reveal semantics for Open in Terminal. The `/controller` split stays visible: Terminal owns live PTY lifecycle, Output owns derived structured process views, Problems owns diagnostics, Ports owns endpoint state, and chat owns only preview/reveal cards. Non-guarantees are explicit: chat does not guarantee full terminal transcript ownership after promotion, future-transport surfaces are sibling transports into the same terminal model, and MVP extensibility stays typed and automation-oriented for PM-owned /workflows.
+Terminal workspace behavior is now-explicit and /clarifying rather than a replacement of older shell-first assumptions. The model covers /tabs/panes, /focus/send-input/interrupt/resize/state APIs, /status/search/selection state, /overlay state, /persistence/diagnostics/labeling/docking settings (amended 2026-10-09, DL-181: the terminal has no workspace or docking of its own; tabs, placement and docking are the home panels', ACD-135), /cwd/shell disclosure, /Problems/Ports linked surfaces, tab-scoped overrides, /reuse/binding, and session-reveal semantics for Open in Terminal. The `/controller` split stays visible: Terminal owns live PTY lifecycle, Output owns derived structured process views, Problems owns diagnostics, Ports owns endpoint state, and chat owns only preview/reveal cards. Non-guarantees are explicit: chat does not guarantee full terminal transcript ownership after promotion, future-transport surfaces are sibling transports into the same terminal model, and MVP extensibility stays typed and automation-oriented for PM-owned /workflows.
 Terminal search is a first-class review tool in chat-consuming surfaces: search can target whole-transcript history within the current `/pane` and `/session`, show result count plus current-hit position, navigate next and `/previous`, keep stable highlights while output streams, jump between `/matching` command blocks when metadata exists, and restore prior live/review state predictably when search exits.
 
 Command-block confidence rules:
@@ -1700,10 +1700,10 @@ Transcript, alternate-screen, and reset semantics:
 - per-project Terminal settings distinguish live scrollback depth, persisted transcript retention, clear-on-close, and preserve-on-close behavior.
 
 Terminal labels and accessibility:
-- pane headers carry the primary label, runtime status chip, and lightweight context badges such as cwd/shell/remote/profile.
+- pane headers carry the primary label, runtime status chip, and lightweight context badges such as cwd/shell/remote/profile (amended 2026-10-09, DL-181, DL-184: the pane header is the terminal tab's header row, which shows the folder, the branch and, while a command runs, the command and its elapsed time as plain words, with no status chip; the state shows on the tab and in the tab's notice rows, `Plans/FinalGUISpec.md#F3-640`, ACD-139, ACD-141).
 - /shell/remote/profile and /shell/profile/remote/container context should prefer badges, subtitles, /tooltips, or details rather than noisy /tab/window titles.
 - labels are stable identity, badges are compact context or attention, subtitles and tooltips hold richer detail, and /sticky headers hold command-local review detail.
-- The display label for a Terminal tab or `/pane` is separate from derived suggestions and `/metadata`: user labels always win, derived context may update badges, and default labels such as Terminal or Terminal 2 come from stable workspace-oriented runtime context rather than volatile every-command changes. Suggested label sources include project/folder, `/cwd/context`, long-running task, `/profile/role`, and `/shell/remote/task` context, but they must not overwrite a user-facing label after rename.
+- The display label for a Terminal tab or `/pane` is separate from derived suggestions and `/metadata`: user labels always win, derived context may update badges, and default labels such as Terminal or Terminal 2 come from stable workspace-oriented runtime context rather than volatile every-command changes (amended 2026-10-09, DL-181: the default label is the running program and the folder, which replace the Terminal and Terminal 2 defaults, F3-640, ACD-141). Suggested label sources include project/folder, `/cwd/context`, long-running task, `/profile/role`, and `/shell/remote/task` context, but they must not overwrite a user-facing label after rename.
 - accessibility-name identifies the same stable object as the visible primary label; descriptions may add current status/context.
 - user-rename freezes only the primary label; runtime-state, context badges, and subtitles keep updating, and reset-to-auto restores derived labels.
 
@@ -1711,7 +1711,7 @@ Terminal diagnostics:
 - diagnostics use structured events and typed failure reasons instead of only freeform logs.
 - user-facing pane UI avoids /noisy internals and offers retry, restart pane, rerun command, reveal logs, or switch renderer mode when applicable.
 - minimum failure taxonomy includes failed_to_start_session, attach_failed, reconnect_failed, shell_integration_unavailable, shell_integration_degraded, transcript_persist_failed, transcript_unavailable, renderer_fallback_activated, renderer_error, clipboard_integration_failed, IME /input_pipeline_error, and unsupported_platform_capability.
-- pane-level diagnostics prefer inline banners/cards, status chips/badges, and drill-down /details; support exports and diagnostics surfaces share the same structured /source state.
+- pane-level diagnostics prefer inline banners/cards, status chips/badges, and drill-down /details; support exports and diagnostics surfaces share the same structured /source state (amended 2026-10-09, DL-181, DL-184: a terminal tab's diagnostics are its inline notice rows, never a chip, F3-640, ACD-142).
 
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
@@ -24878,7 +24878,7 @@ negative_constraints:
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage."
+  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569, ACD-480 and ACD-452."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -27451,7 +27451,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
-depends_on: [DL-180, DL-181, DL-185, F3-634, F3-635, F3-636, F3-637, F3-569, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
+depends_on: [DL-180, DL-181, DL-185, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
 unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
   - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
