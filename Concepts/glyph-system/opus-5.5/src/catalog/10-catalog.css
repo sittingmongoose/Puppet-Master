@@ -166,6 +166,19 @@ html[data-theme^="retro"] .pmg-option { border-radius: 0; }
 .pmg-option-demo { display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; }
 .pmg-option-demo > span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-secondary); }
 
+/* answers: plain text buttons with an underline for the choice (no pills), a quiet note field */
+.pmg-answer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding-top: 6px; border-top: 1px solid var(--border-light, var(--border)); }
+.pmg-note-in, .pmg-compose-out { flex: 1 1 320px; min-width: 0; font: 13px/1.45 var(--body-font, Inter, system-ui, sans-serif); color: var(--text-primary); background: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--radius-md, 6px); padding: 7px 10px; resize: vertical; }
+html[data-theme^="retro"] :is(.pmg-note-in, .pmg-compose-out) { border-radius: 0; font-family: var(--mono-font, monospace); }
+.pmg-note-in:focus-visible, .pmg-compose-out:focus-visible { outline: 2px solid var(--pmg-ink-working); outline-offset: 1px; }
+.pmg-compose { padding: 18px 22px; display: grid; gap: 12px; }
+.pmg-compose-head { display: flex; align-items: center; gap: 12px; }
+.pmg-compose-head h3 { font-size: 15px; margin-right: auto; }
+.pmg-compose-out { width: 100%; font-family: var(--mono-font, ui-monospace, monospace); font-size: 12.5px; }
+.pmg-btn-text { appearance: none; border: 1px solid var(--border); background: var(--surface-elevated); color: var(--text-primary); border-radius: var(--radius-md, 6px); padding: 6px 14px; cursor: pointer; font-size: 13px; }
+.pmg-btn-text:hover { border-color: var(--text-muted); }
+html[data-theme^="retro"] .pmg-btn-text { border-radius: 0; }
+
 /* ---------------------------------------------------------------- ink table */
 .pmg-inks { overflow-x: auto; }
 .pmg-inks table { border-collapse: collapse; width: 100%; font-size: 12.5px; font-variant-numeric: tabular-nums; }

@@ -137,8 +137,52 @@
         return '<article class="pmg-panel pmg-card" id="card-' + esc(c.id) + '"><div class="pmg-card-head"><span class="pmg-card-id">' + esc(c.id) + '</span><h3>' + esc(c.title) + '</h3></div><p>' + esc(c.question) + '</p>' +
           '<div class="pmg-options">' + c.options.map(function (o) {
             return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div><div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div><p>' + esc(o.detail) + '</p></div>';
-          }).join('') + '</div></article>';
-      }).join('') : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
+          }).join('') + '</div>' + answerRow(c) + '</article>';
+      }).join('') + composeBlock() : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
+    wireAnswers(el, cards);
+  }
+
+  /* answers: Jared picks an option (or asks), adds a note, and composes one text to paste into the thread */
+  var ANS_KEY = 'pmg.answers.v1';
+  function answers() { try { return JSON.parse(localStorage.getItem(ANS_KEY) || '{}'); } catch (e) { return {}; } }
+  function saveAnswers(a) { try { localStorage.setItem(ANS_KEY, JSON.stringify(a)); } catch (e) {} }
+  function answerRow(c) {
+    var a = answers()[c.id] || {};
+    var choices = c.options.map(function (o) { return { v: o.key, t: 'Choose ' + o.key }; }).concat([{ v: 'ask', t: 'Ask a question' }]);
+    return '<div class="pmg-answer" data-card="' + esc(c.id) + '"><span class="pmg-ctl-label">Your answer</span><div class="pmg-ctl" role="radiogroup" aria-label="Answer to ' + esc(c.id) + '">' +
+      choices.map(function (ch) { return '<button role="radio" data-v="' + esc(ch.v) + '" aria-checked="' + (a.choice === ch.v) + '">' + esc(ch.t) + '</button>'; }).join('') +
+      '</div><textarea class="pmg-note-in" rows="2" placeholder="Changes or a question (optional)">' + esc(a.note || '') + '</textarea></div>';
+  }
+  function composeBlock() {
+    return '<div class="pmg-panel pmg-compose"><div class="pmg-compose-head"><h3>Compose answers</h3><button class="pmg-btn-text" data-compose>Compose</button><button class="pmg-btn-text" data-copy>Copy</button></div>' +
+      '<textarea class="pmg-compose-out" rows="8" readonly placeholder="Choose an answer on each card, then Compose. Paste the text into the pm7-glyphs thread."></textarea></div>';
+  }
+  function compose(cards) {
+    var a = answers(), lines = ['pm7-glyphs catalog answers (' + (document.querySelector('meta[name=pmg-build]') || {}).content + ')'];
+    cards.forEach(function (c) {
+      var x = a[c.id] || {}, o = c.options.filter(function (k) { return k.key === x.choice; })[0];
+      lines.push(c.id + ' ' + c.title + ': ' + (o ? x.choice + '. ' + o.title : x.choice === 'ask' ? 'Question' : 'not answered') + (x.note ? ' | ' + x.note.replace(/\s+/g, ' ').trim() : ''));
+    });
+    return lines.join('\n');
+  }
+  function wireAnswers(el, cards) {
+    el.querySelectorAll('.pmg-answer').forEach(function (row) {
+      var id = row.getAttribute('data-card');
+      row.querySelectorAll('button[data-v]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var a = answers(); a[id] = a[id] || {}; a[id].choice = b.getAttribute('data-v'); saveAnswers(a);
+          row.querySelectorAll('button[data-v]').forEach(function (x) { x.setAttribute('aria-checked', String(x === b)); });
+        });
+      });
+      row.querySelector('textarea').addEventListener('input', function (e) { var a = answers(); a[id] = a[id] || {}; a[id].note = e.target.value; saveAnswers(a); });
+    });
+    var out = el.querySelector('.pmg-compose-out');
+    var cb = el.querySelector('[data-compose]'); if (cb) cb.addEventListener('click', function () { out.value = compose(cards); });
+    var cp = el.querySelector('[data-copy]'); if (cp) cp.addEventListener('click', function () {
+      if (!out.value) out.value = compose(cards);
+      out.select(); try { navigator.clipboard.writeText(out.value); } catch (e) { try { document.execCommand('copy'); } catch (e2) {} }
+      cp.textContent = 'Copied'; setTimeout(function () { cp.textContent = 'Copy'; }, 1400);
+    });
   }
 
   function renderInks(el) {

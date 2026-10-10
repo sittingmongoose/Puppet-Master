@@ -1,6 +1,48 @@
 {
  "cards": [
   {
+   "id": "GLY-0",
+   "title": "Make this the Puppet Master glyph set?",
+   "question": "The 5.6 Pro chat's neon glyphs become the default everywhere (your RAIL-4 answer), with one status vocabulary (one meaning per shape) and new glyphs in the same neon-sign language for what the chat never had. After your OK, workers roll it out one surface at a time, each with a GPU film; the Planning Wizard and the Orchestrator get the catalog but no adoption. The panels' tab kinds are still being drawn and follow as an addendum for the same review.",
+   "options": [
+    {
+     "key": "A",
+     "title": "Approve the set and the vocabulary; roll out",
+     "recommended": true,
+     "detail": "Rollout order: the left rail, Settings (with pm7-no-pills' status slots), Usage, chat in PMConcept7, panels and terminal (after they publish), toasts, onboarding. Each surface is reviewed against this catalog before the next starts.",
+     "demo": [
+      {
+       "status": "waiting",
+       "label": "Needs you"
+      },
+      {
+       "status": "working",
+       "label": "Working"
+      },
+      {
+       "glyph": "home",
+       "label": "Home"
+      },
+      {
+       "glyph": "bell",
+       "label": "Notifications"
+      },
+      {
+       "glyph": "agent-driving",
+       "tone": "working",
+       "label": "Agent typing"
+      }
+     ]
+    },
+    {
+     "key": "B",
+     "title": "Approve with changes",
+     "detail": "Name the glyphs or rules to change in the note; I redraw them and send the changed pages before any rollout.",
+     "demo": []
+    }
+   ]
+  },
+  {
    "id": "GLY-1",
    "title": "Does the triangle mean warning or failed?",
    "question": "Today the triangle means warning in the rail and Settings, and failed in the chat: the 5.6 Pro set draws failed as its warning triangle and has no warning status at all, while warning is the most common state in PMConcept7 (35 of 216 status rows). One shape can carry one meaning. Which way does Puppet Master go?",
@@ -59,6 +101,89 @@
        "label": "Skipped"
       }
      ]
+    }
+   ]
+  },
+  {
+   "id": "GLY-2",
+   "title": "Glyph inks: fitted per look, and changed is violet",
+   "question": "With PMConcept7's own colour tokens, glyphs fail your 3:1 rule in Friendly Light (attention 1.95:1, working 2.71) and Glass Light (every tone 2.1-2.6). And three looks give two tones one colour: Basic Light's magenta is red like blocked, Retro Dark's is the warning gold, NieR's is the rust. Glyphs need their own inks.",
+   "options": [
+    {
+     "key": "A",
+     "title": "Glyph inks per look, changed is violet everywhere",
+     "recommended": true,
+     "detail": "Each tone keeps its look's hue and moves only in lightness until it reads 3.1:1 on every field (the table in Glyph inks and contrast); a tone that already passed keeps PMConcept7's token exactly. Changed takes the violet that Friendly and Glass already use. Text colours do not change. NieR keeps its near-monochrome palette; its tones are told apart by shape.",
+     "demo": [
+      {
+       "status": "blocked",
+       "label": "Blocked"
+      },
+      {
+       "status": "waiting",
+       "label": "Attention"
+      },
+      {
+       "status": "working",
+       "label": "Working"
+      },
+      {
+       "status": "mixed",
+       "label": "Changed"
+      },
+      {
+       "status": "complete",
+       "label": "Done"
+      }
+     ]
+    },
+    {
+     "key": "B",
+     "title": "Use PMConcept7's tokens as they are",
+     "detail": "Glyphs match the page's accent colours exactly, but fail 3:1 in Friendly Light and Glass Light, and changed reads as blocked in Basic Light and as attention in Retro Dark.",
+     "demo": []
+    }
+   ]
+  },
+  {
+   "id": "GLY-3",
+   "title": "The rail's solid status badges become neon tube marks",
+   "question": "The left rail's concept D draws definite states as solid discs with the mark cut out (done, failed, blocked, info) and live states as a dot with a halo. The shared vocabulary draws every state as a neon tube. One drawing per state everywhere means the rail changes.",
+   "options": [
+    {
+     "key": "A",
+     "title": "The rail uses the shared tube marks",
+     "recommended": true,
+     "detail": "The rail reads like the chat, Settings and the terminal; the colour and the lit glow carry the same weight the solid fill did. Its position marker (current) stays a ring with a dot.",
+     "demo": [
+      {
+       "status": "complete",
+       "label": "Done"
+      },
+      {
+       "glyph": "st-failed-ring",
+       "tone": "blocked",
+       "label": "Failed"
+      },
+      {
+       "status": "blocked",
+       "label": "Blocked"
+      },
+      {
+       "status": "working",
+       "label": "Live"
+      },
+      {
+       "glyph": "ring-dot",
+       "label": "Current"
+      }
+     ]
+    },
+    {
+     "key": "B",
+     "title": "Keep the rail's solid badges as the rail's look",
+     "detail": "The rail keeps its denser badges at 12 px, but the same state then has two drawings in Puppet Master, which is what this work removes.",
+     "demo": []
     }
    ]
   }
