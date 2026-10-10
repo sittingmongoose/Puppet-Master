@@ -223,6 +223,9 @@ PILL_MARKUP = [
 JS_STRING = re.compile(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"")
 VIEWPORT_WIDTH_MEDIA = re.compile(r'@media[^{]*\((?:min|max)-width', re.I)
 OWN_PREFIX = {PANELS: ('pmw-',), TERMINAL: ('pmt-',)}
+# the terminal's simulated machine: strings here are program output and file contents, never PM chrome
+PROGRAM_OUTPUT_FILES = {'60-vfs.js', '64-programs.js', '66-assets.js'}
+PROGRAM_OUTPUT_MARK = '/* program output */'
 
 
 def blank_comments(code: str) -> str:
@@ -271,10 +274,18 @@ def lint() -> list[str]:
                         problems.append(f'pill class name in {rel}: {m.group(0)[:80]}')
             if re.search(r'\binnerWidth\b|\binnerHeight\b', code) and 'panels/js/44-narrow' not in rel:
                 problems.append(f'{rel} reads the window size (size against the panel instead)')
-            for m in JS_STRING.finditer(code):
-                s = m.group(0)[1:-1]
-                if ' ' in s and re.search(r'[A-Za-z]{3}', s) and build.BANNED_COPY.search(s):
-                    problems.append(f'banned copy word in {rel}: {s[:70]}')
+            # banned copy words apply to PM's own copy; the terminal's simulated machine (file contents and program
+            # output, which must read like the real programs) is exempt: whole files in PROGRAM_OUTPUT_FILES, and any
+            # line that carries the comment /* program output */
+            if p.name not in PROGRAM_OUTPUT_FILES or TERMINAL not in p.parents:
+                raw_lines = text.split('\n')
+                for m in JS_STRING.finditer(code):
+                    s = m.group(0)[1:-1]
+                    line_no = code.count('\n', 0, m.start())
+                    if PROGRAM_OUTPUT_MARK in (raw_lines[line_no] if line_no < len(raw_lines) else ''):
+                        continue
+                    if ' ' in s and re.search(r'[A-Za-z]{3}', s) and build.BANNED_COPY.search(s):
+                        problems.append(f'banned copy word in {rel}: {s[:70]}')
             scope = 'panels' if PANELS in p.parents and p.parent.name == 'js' else (
                 'terminal' if TERMINAL in p.parents and p.parent.name == 'js' else (
                     'kind ' + p.stem if PANELS in p.parents and p.parent.name == 'kinds' else None))
