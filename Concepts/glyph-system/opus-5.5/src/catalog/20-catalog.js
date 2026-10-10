@@ -132,13 +132,13 @@
         return '<span>' + g + esc(d.label) + '</span>';
       }).join('');
     };
-    el.innerHTML = head(sec, 'Open choices', 'Each card names the choice, shows every option in the current look, and gives a recommendation. Nothing here is adopted until Jared answers.') +
+    el.innerHTML = head(sec, 'Choices and answers', 'Each card names the choice, shows its options in the current look and gives a recommendation. An answered card shows the answer; the catalog follows it.') +
       '<div class="pmg-cards">' + (cards.length ? cards.map(function (c) {
         return '<article class="pmg-panel pmg-card" id="card-' + esc(c.id) + '"><div class="pmg-card-head"><span class="pmg-card-id">' + esc(c.id) + '</span><h3>' + esc(c.title) + '</h3></div><p>' + esc(c.question) + '</p>' +
           '<div class="pmg-options">' + c.options.map(function (o) {
             return '<div class="pmg-option' + (o.recommended ? ' pmg-rec' : '') + '"><div class="pmg-option-head">' + esc(o.key) + '. ' + esc(o.title) + (o.recommended ? '<span class="pmg-rec-word">Recommended</span>' : '') + '</div>' + ((o.demo || []).length ? '<div class="pmg-option-demo pmg-live">' + demo(o.demo) + '</div>' : '') + '<p>' + esc(o.detail) + '</p></div>';
-          }).join('') + '</div>' + answerRow(c) + '</article>';
-      }).join('') + composeBlock() : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
+          }).join('') + '</div>' + (c.answer ? answeredRow(c) : answerRow(c)) + '</article>';
+      }).join('') + (cards.some(function (c) { return !c.answer; }) ? composeBlock() : '') : '<p class="pmg-empty">No open decisions yet.</p>') + '</div>';
     wireAnswers(el, cards);
   }
 
@@ -146,6 +146,10 @@
   var ANS_KEY = 'pmg.answers.v1';
   function answers() { try { return JSON.parse(localStorage.getItem(ANS_KEY) || '{}'); } catch (e) { return {}; } }
   function saveAnswers(a) { try { localStorage.setItem(ANS_KEY, JSON.stringify(a)); } catch (e) {} }
+  function answeredRow(c) {
+    var a = c.answer, o = c.options.filter(function (k) { return k.key === a.choice; })[0];
+    return '<div class="pmg-answer pmg-answered">' + N.icon('check', 15, 'nx-r-status nx-t-done') + '<span>Answered <b>' + esc(a.choice) + (o ? '. ' + esc(o.title) : '') + '</b> by ' + esc(a.by) + ' on ' + esc(a.date) + (a.words ? ' ("' + esc(a.words) + '")' : '') + '. Recorded as ' + esc(a.record) + '.</span></div>';
+  }
   function answerRow(c) {
     var a = answers()[c.id] || {};
     var choices = c.options.map(function (o) { return { v: o.key, t: 'Choose ' + o.key }; }).concat([{ v: 'ask', t: 'Ask a question' }]);
@@ -166,7 +170,7 @@
     return lines.join('\n');
   }
   function wireAnswers(el, cards) {
-    el.querySelectorAll('.pmg-answer').forEach(function (row) {
+    el.querySelectorAll('.pmg-answer:not(.pmg-answered)').forEach(function (row) {
       var id = row.getAttribute('data-card');
       row.querySelectorAll('button[data-v]').forEach(function (b) {
         b.addEventListener('click', function () {

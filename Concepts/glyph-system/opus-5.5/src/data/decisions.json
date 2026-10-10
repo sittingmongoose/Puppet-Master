@@ -40,7 +40,14 @@
      "detail": "Name the glyphs or rules to change in the note; I redraw them and send the changed pages before any rollout.",
      "demo": []
     }
-   ]
+   ],
+   "answer": {
+    "choice": "A",
+    "by": "Jared",
+    "date": "2026-10-10",
+    "record": "D44 (DECISIONS-ADDENDUM-3.md, home-panels-terminal packet)",
+    "words": "i agree"
+   }
   },
   {
    "id": "GLY-1",
@@ -59,9 +66,8 @@
        "label": "Warning"
       },
       {
-       "glyph": "st-failed-ring",
-       "tone": "blocked",
-       "label": "Failed"
+       "label": "Failed",
+       "status": "failed"
       },
       {
        "status": "blocked",
@@ -82,27 +88,16 @@
      "key": "B",
      "title": "Triangle stays failed; warning gets a diamond",
      "detail": "Keeps the chat exactly as it is and changes the rail and Settings instead. The diamond is distinct, but people read a triangle as a warning first, so a failed run can look like a mere warning at a glance.",
-     "demo": [
-      {
-       "glyph": "st-warning-diamond",
-       "tone": "attention",
-       "label": "Warning"
-      },
-      {
-       "status": "failed",
-       "label": "Failed"
-      },
-      {
-       "status": "blocked",
-       "label": "Blocked"
-      },
-      {
-       "status": "skipped",
-       "label": "Skipped"
-      }
-     ]
+     "demo": []
     }
-   ]
+   ],
+   "answer": {
+    "choice": "A",
+    "by": "Jared",
+    "date": "2026-10-10",
+    "record": "D44 (DECISIONS-ADDENDUM-3.md, home-panels-terminal packet)",
+    "words": "i agree"
+   }
   },
   {
    "id": "GLY-2",
@@ -143,7 +138,14 @@
      "detail": "Glyphs match the page's accent colours exactly, but fail 3:1 in Friendly Light and Glass Light, and changed reads as blocked in Basic Light and as attention in Retro Dark.",
      "demo": []
     }
-   ]
+   ],
+   "answer": {
+    "choice": "A",
+    "by": "Jared",
+    "date": "2026-10-10",
+    "record": "D44 (DECISIONS-ADDENDUM-3.md, home-panels-terminal packet)",
+    "words": "i agree"
+   }
   },
   {
    "id": "GLY-3",
@@ -161,9 +163,8 @@
        "label": "Done"
       },
       {
-       "glyph": "st-failed-ring",
-       "tone": "blocked",
-       "label": "Failed"
+       "label": "Failed",
+       "status": "failed"
       },
       {
        "status": "blocked",
@@ -185,7 +186,14 @@
      "detail": "The rail keeps its denser badges at 12 px, but the same state then has two drawings in Puppet Master, which is what this work removes.",
      "demo": []
     }
-   ]
+   ],
+   "answer": {
+    "choice": "A",
+    "by": "Jared",
+    "date": "2026-10-10",
+    "record": "D44 (DECISIONS-ADDENDUM-3.md, home-panels-terminal packet)",
+    "words": "i agree"
+   }
   }
  ]
 }

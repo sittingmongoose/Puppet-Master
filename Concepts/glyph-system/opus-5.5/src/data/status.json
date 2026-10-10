@@ -28,7 +28,7 @@
    "glyph": "st-warning",
    "tone": "attention",
    "label": "warning",
-   "meaning": "Something needs care, but nothing has failed: degraded, low quota, setup incomplete. Its shape waits on GLY-1 (shown here as option A).",
+   "meaning": "Something needs care, but nothing has failed: degraded, low quota, setup incomplete. The triangle (GLY-1).",
    "example": "Quota at 92 % this week"
   },
   "offline": {
@@ -91,7 +91,7 @@
  "meaning": {
   "waiting": "Needs you: a question, a permission, a sign-in, a choice. Leads every list.",
   "blocked": "Cannot go on until something outside it changes (stalled, locked, no access).",
-  "failed": "Ended in an error. Its shape waits on GLY-1 (shown here as the chat draws it today).",
+  "failed": "Ended in an error. A ring with a cross (GLY-1); the triangle is warning's.",
   "recovering": "Retrying or taking a fallback route on its own.",
   "reviewing": "Checking or verifying work.",
   "working": "Running now.",
@@ -418,8 +418,6 @@
     "needs-setup",
     "needs-sign-in",
     "needs-signin",
-    "not set up",
-    "not-set-up",
     "problem",
     "restart",
     "setup"

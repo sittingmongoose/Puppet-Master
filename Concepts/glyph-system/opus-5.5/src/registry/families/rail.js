@@ -11,7 +11,7 @@
   var F = 'rail';
   function m(name, items, meaning) { G.map(name, { family: F, replaces: items, surfaces: ['left rail'], meaning: meaning }); }
   m('st-complete', ['d SOLID.ok (a solid disc with a cut-out tick)']);
-  m('st-failed', ['d SOLID.fail (a solid disc with a cut-out cross; becomes st-failed-ring if GLY-1 A)']);
+  m('st-failed', ['d SOLID.fail (a solid disc with a cut-out cross; the ringed cross, GLY-1)']);
   m('st-blocked', ['d SOLID.blocked (a solid disc with a cut-out bar)']);
   m('st-working', ['d G.live and G.run (a dot with a halo)']);
   m('st-idle', ['d G.idle (a ring)']);

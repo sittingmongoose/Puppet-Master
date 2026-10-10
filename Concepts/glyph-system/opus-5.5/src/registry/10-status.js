@@ -5,39 +5,33 @@
  * notice) and the file change marks. They are drawn here in the set's own grammar: the status ring is r 7.5 (working,
  * pending, skipped), marks inside it sit in the optical centre, strokes are the family's, and a status mark is static
  * unless its meaning is live (its wrapper carries any rhythm; neon-icons.css section 9).
- * A candidate for an open card is drawn only so the card can show it: nothing is adopted until Jared answers.
+ * Jared answered GLY-0..3 as recommended on 2026-10-10 (D44): the set, the vocabulary and these marks are adopted.
  */
 (function () {
   'use strict';
   var G = window.PMG; if (!G) return;
   var RING = '<circle cx="12" cy="12" r="7.5"/>';
 
-  /* GLY-1 option A: failed becomes a ring with a cross; the triangle is then warning's alone. PMConcept7 already draws
-     failure as a cross (the rail's fail, the tools and document error marks), so A changes the chat, not PM7. A ring
-     with an exclamation mark was the first sketch; it is the vertical twin of info's ring and i, and the two blurred
-     at 12 px. The cross is 5.4 units, inside the ring with the same clearance as skipped's slash, so the two read apart
-     by count (one stroke against two). */
-  G.def('st-failed-ring', {
-    family: 'status', role: 'status', act: 'none',
-    meaning: 'Failed: the run, step or command ended in an error.',
-    replaces: ['st-failed (the warning triangle) in the chat set', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)'],
-    note: 'GLY-1 option A. Static; the wrapper keeps the chat\'s irregular stutter, reserved for failed.',
-    parts: [RING, '<path d="m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4"/>']
+  /* failed: a ring with a cross (GLY-1, answered A by Jared 2026-10-10, D44). The triangle is warning's alone. PMConcept7
+     already drew failure as a cross (the rail's fail, the tools and document error marks), so only the chat's drawing
+     changes: PMG redraws the chat's own st-failed, so every surface that asks for status('failed') gets the ring. A
+     ring with an exclamation mark was the first sketch; it is the vertical twin of info's ring and i, and the two
+     blurred at 12 px. The cross is 5.4 units, with skipped's clearance, so the two read apart by count (one stroke
+     against two). Static; the wrapper keeps the chat's irregular stutter, reserved for failed. */
+  var FAILED = [RING, '<path d="m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4"/>'];
+  G.def('st-failed', {
+    family: 'status', role: 'status', act: 'none', redraw: 'GLY-1 A (Jared, 2026-10-10, D44): the triangle is warning; failed is a ringed cross',
+    meaning: 'Failed: the run, step or command ended in an error.', aliases: ['st-failed-ring'],
+    replaces: ['the chat set\'s st-failed (the warning triangle)', 'rail fail (a cross)', 'panels tools and document error marks (a circled cross)'],
+    parts: FAILED
   });
-  /* GLY-1 option A: warning is the chat's warning triangle, as a status mark (the same drawing as today's st-failed). */
+  /* warning: the chat set's warning triangle as a status mark (GLY-1 A). */
   G.def('st-warning', {
     family: 'status', role: 'status', act: 'none',
     meaning: 'Warning: something needs care, but nothing has failed (degraded, low quota, setup incomplete).',
     replaces: ['rail warn', 'Settings attention', 'Usage low or degraded', 'panels Problems warning', 'frames warn'],
-    note: 'GLY-1 option A. The chat set\'s warning drawing.',
+    note: 'The chat set\'s warning drawing (GLY-1 A).',
     parts: ['<path d="M12 4.2 21 19.5H3z"/>', '<path d="M12 10v4.2M12 17.1v.1"/>']
-  });
-  /* GLY-1 option B: warning gets a diamond and the triangle stays failed's. */
-  G.def('st-warning-diamond', {
-    family: 'status', role: 'status', act: 'none',
-    meaning: 'Warning, if the triangle stays failed\'s (GLY-1 option B).',
-    note: 'GLY-1 option B.',
-    parts: ['<path d="M12 3.6 20.4 12 12 20.4 3.6 12z"/>', '<path d="M12 8.4v4.2"/>', '<path d="M12 15.6v.1"/>']
   });
 
   /* info: the chat's info (a ring and an i) at the status ring's size, so a notice sits in a list beside the others. */
