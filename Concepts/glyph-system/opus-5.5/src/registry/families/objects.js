@@ -215,6 +215,13 @@
       { els: ['<circle cx="18" cy="18.5" r="2.6"/>', '<path d="M8.3 13.3 15.7 17.2"/>'], move: { ax: -3, ay: -1.6, ao: .5, ad: 120 } }]
   });
 
+  def('gift', {
+    meaning: 'Free: a free plan, credit or allowance.', act: 'strike', aliases: ['free'],
+    replaces: ['Usage ui-free (a gift box)'], note: 'The lid lifts off the box.',
+    parts: ['<path d="M5 12v7.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V12"/>', '<path d="M12 12v8.5"/>',
+      { els: ['<rect x="3.5" y="8" width="17" height="4" rx="1"/>', '<path d="M12 8c-1.5-3.6-5-4-5-1.7C7 8 9.8 8 12 8zM12 8c1.5-3.6 5-4 5-1.7C17 8 14.2 8 12 8z"/>'], move: { ay: -3, b: 1 } }]
+  });
+
   /* people, agents and safekeeping */
   def('robot', {
     meaning: 'An agent: an AI worker acting for you (the noun; the terminal\'s spark and cursor cell mark an agent at the keyboard).', act: 'seq', aliases: ['agent', 'agents', 'bot'],

@@ -44,6 +44,17 @@ LEAD = {
     'live': 'st-working', 'run': 'st-working', 'idle': 'st-idle', 'pending': 'st-pending', 'stale': 'st-skipped',
     'orphan': 'st-skipped', 'unknown': 'st-pending', 'dirty': 'change-modified', 'conflict': 'change-conflict',
     'current': 'ring-dot',
+    # designer2's panels family (10a1758cbd), mapped by the lead after review
+    'diff': 'diff', 'region': 'select-area', 'wrap_icon': 'wrap', 'doc:fileplus': 'file-plus', 'fileplus': 'file-plus',
+    'folderplus': 'folder-plus', 'dashboard': 'widget', 'stepover': 'step-over', 'stepinto': 'step-into', 'stepout': 'step-out',
+    'bpline': 'bp-line', 'bpcond': 'bp-cond', 'bplog': 'bp-log', 'merge': 'merge', 'pr': 'pull-request', 'stash': 'stash',
+    'output': 'output', 'docker': 'container', 'package': 'container', 'compose': 'compose', 'actions': 'pipeline',
+    'casesense': 'match-case', 'wholeword': 'match-word', 'regex': 'use-regex', 'pointer': 'pointer', 'panel': 'panel',
+    'layout': 'layout', 'splitright': 'split-right', 'splitdown': 'split-down', 'split-side': 'split-right',
+    'split-stacked': 'split-down', 'widget': 'widget', 'workgroup-plus': 'workgroup-new',
+    'lensdefault': 'lens', 'lensmute': 'eye-off', 'lensmutebtn': 'eye-off', 'lenssub': 'collapse', 'lenssubbtn': 'collapse',
+    'lensfocus': 'eye', 'lensfocusbtn': 'eye', 'tidy': 'layout', 'ui-local': 'server', 'ui-free': 'gift',
+    'agent-row:sq': 'agent-driving',
 }
 NOT_GLYPHS = {'notch', 'diamond', 'halfcircle', 'provider', 'swirl'}   # functional marks, placeholders or art
 

@@ -731,7 +731,7 @@
 "old": "<rect x=\"3\" y=\"4\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"4\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"15\" width=\"7\" height=\"6\" rx=\"1\"/><rect x=\"14\" y=\"15\" width=\"7\" height=\"6\" rx=\"1\"/><path d=\"M10 7.5h4M10 18h4\"/>",
 "vb": "0 0 24 24",
 "glyph": "compose",
-"by": "same-name",
+"by": "lead",
 "at": "PM7-base.html:57411"
 },
 {
@@ -802,8 +802,8 @@
 "name": "actions",
 "old": "<path d=\"M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22\"/>",
 "vb": "0 0 24 24",
-"glyph": "actions",
-"by": "same-name",
+"glyph": "pipeline",
+"by": "lead",
 "at": "PM7-base.html:57416"
 },
 {
@@ -816,8 +816,8 @@
 "name": "docker",
 "old": "<path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"/><polyline points=\"3.27 6.96 12 12.01 20.73 6.96\"/><line x1=\"12\" y1=\"22.08\" x2=\"12\" y2=\"12\"/>",
 "vb": "0 0 24 24",
-"glyph": "docker",
-"by": "same-name",
+"glyph": "container",
+"by": "lead",
 "at": "PM7-base.html:57417"
 },
 {
@@ -1019,7 +1019,7 @@
 "old": "<path d=\"M12 3v18\"/><rect x=\"3\" y=\"6\" width=\"6\" height=\"12\" rx=\"1\"/><rect x=\"15\" y=\"6\" width=\"6\" height=\"12\" rx=\"1\"/>",
 "vb": "0 0 24 24",
 "glyph": "diff",
-"by": "same-name",
+"by": "lead",
 "at": "PM7-base.html:57431"
 },
 {
@@ -1032,7 +1032,7 @@
 "old": "<circle cx=\"18\" cy=\"18\" r=\"3\"/><circle cx=\"6\" cy=\"6\" r=\"3\"/><path d=\"M6 21V9a9 9 0 0 0 9 9\"/>",
 "vb": "0 0 24 24",
 "glyph": "merge",
-"by": "same-name",
+"by": "lead",
 "at": "PM7-base.html:57432"
 },
 {
@@ -1045,8 +1045,8 @@
 "name": "pr",
 "old": "<circle cx=\"18\" cy=\"18\" r=\"3\"/><circle cx=\"6\" cy=\"6\" r=\"3\"/><path d=\"M13 6h3a2 2 0 0 1 2 2v7\"/><line x1=\"6\" y1=\"9\" x2=\"6\" y2=\"21\"/>",
 "vb": "0 0 24 24",
-"glyph": "pr",
-"by": "same-name",
+"glyph": "pull-request",
+"by": "lead",
 "at": "PM7-base.html:57433"
 },
 {
@@ -1352,7 +1352,7 @@
 "old": "<path d=\"M21 8v13H3V8\"/><path d=\"M1 3h22v5H1z\"/><path d=\"M10 12h4\"/>",
 "vb": "0 0 24 24",
 "glyph": "stash",
-"by": "same-name",
+"by": "lead",
 "at": "PM7-base.html:57454"
 },
 {
@@ -1542,8 +1542,8 @@
 "name": "filePlus",
 "old": "<path d=\"M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6\"/><polyline points=\"13 2 13 8 19 8\"/><line x1=\"16\" y1=\"13\" x2=\"16\" y2=\"19\"/><line x1=\"13\" y1=\"16\" x2=\"19\" y2=\"16\"/>",
 "vb": "0 0 24 24",
-"glyph": "fileplus",
-"by": "same-name",
+"glyph": "file-plus",
+"by": "lead",
 "at": "PM7-base.html:57476"
 },
 {
@@ -1555,8 +1555,8 @@
 "name": "folderPlus",
 "old": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v3\"/><path d=\"M3 7v11a2 2 0 0 0 2 2h7\"/><line x1=\"18\" y1=\"14\" x2=\"18\" y2=\"20\"/><line x1=\"15\" y1=\"17\" x2=\"21\" y2=\"17\"/>",
 "vb": "0 0 24 24",
-"glyph": "folderplus",
-"by": "same-name",
+"glyph": "folder-plus",
+"by": "lead",
 "at": "PM7-base.html:57477"
 },
 {
@@ -1608,8 +1608,8 @@
 "name": "stepOver",
 "old": "<path d=\"M4 12a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"16\" r=\"1.6\"/><polyline points=\"9 8 12 5 15 8\"/>",
 "vb": "0 0 24 24",
-"glyph": "step",
-"by": "medium",
+"glyph": "step-over",
+"by": "lead",
 "at": "PM7-base.html:57481"
 },
 {
@@ -1621,8 +1621,8 @@
 "name": "stepInto",
 "old": "<line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"13\"/><polyline points=\"7 9 12 14 17 9\"/><path d=\"M5 17h14v4H5z\"/>",
 "vb": "0 0 24 24",
-"glyph": "step",
-"by": "medium",
+"glyph": "step-into",
+"by": "lead",
 "at": "PM7-base.html:57482"
 },
 {
@@ -1634,8 +1634,8 @@
 "name": "stepOut",
 "old": "<line x1=\"12\" y1=\"16\" x2=\"12\" y2=\"7\"/><polyline points=\"7 11 12 6 17 11\"/><path d=\"M5 20h14\"/>",
 "vb": "0 0 24 24",
-"glyph": "stepout",
-"by": "same-name",
+"glyph": "step-out",
+"by": "lead",
 "at": "PM7-base.html:57483"
 },
 {
@@ -1647,8 +1647,8 @@
 "name": "bpLine",
 "old": "<circle cx=\"12\" cy=\"12\" r=\"5\"/>",
 "vb": "0 0 24 24",
-"glyph": "bpline",
-"by": "same-name",
+"glyph": "bp-line",
+"by": "lead",
 "at": "PM7-base.html:57484"
 },
 {
@@ -1660,8 +1660,8 @@
 "name": "bpCond",
 "old": "<circle cx=\"12\" cy=\"12\" r=\"5\"/><path d=\"M12 9.5v2.6l1.8 1.8\"/>",
 "vb": "0 0 24 24",
-"glyph": "bpcond",
-"by": "same-name",
+"glyph": "bp-cond",
+"by": "lead",
 "at": "PM7-base.html:57485"
 },
 {
@@ -1673,8 +1673,8 @@
 "name": "bpLog",
 "old": "<rect x=\"7.4\" y=\"7.4\" width=\"9.2\" height=\"9.2\" rx=\"1\" transform=\"rotate(45 12 12)\"/>",
 "vb": "0 0 24 24",
-"glyph": "bplog",
-"by": "same-name",
+"glyph": "bp-log",
+"by": "lead",
 "at": "PM7-base.html:57486"
 },
 {
@@ -1842,8 +1842,8 @@
 "name": "package",
 "old": "<line x1=\"16.5\" y1=\"9.4\" x2=\"7.5\" y2=\"4.21\"/><path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"/><polyline points=\"3.27 6.96 12 12.01 20.73 6.96\"/><line x1=\"12\" y1=\"22.08\" x2=\"12\" y2=\"12\"/>",
 "vb": "0 0 24 24",
-"glyph": "package",
-"by": "same-name",
+"glyph": "container",
+"by": "lead",
 "at": "PM7-base.html:28412"
 },
 {
@@ -1946,8 +1946,8 @@
 "name": "split-stacked",
 "old": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"7\" rx=\"1\"/><rect x=\"4\" y=\"14\" width=\"16\" height=\"7\" rx=\"1\"/>",
 "vb": "0 0 24 24",
-"glyph": "split-stacked",
-"by": "same-name",
+"glyph": "split-down",
+"by": "lead",
 "at": "PM7-base.html:28426"
 },
 {
@@ -1959,8 +1959,8 @@
 "name": "split-side",
 "old": "<rect x=\"3\" y=\"4\" width=\"7\" height=\"16\" rx=\"1\"/><rect x=\"14\" y=\"4\" width=\"7\" height=\"16\" rx=\"1\"/>",
 "vb": "0 0 24 24",
-"glyph": "split-side",
-"by": "same-name",
+"glyph": "split-right",
+"by": "lead",
 "at": "PM7-base.html:28428"
 },
 {
@@ -1972,8 +1972,8 @@
 "name": "workgroup-plus",
 "old": "<path d=\"M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z\"/><line x1=\"15\" y1=\"13\" x2=\"15\" y2=\"19\"/><line x1=\"12\" y1=\"16\" x2=\"18\" y2=\"16\"/>",
 "vb": "0 0 24 24",
-"glyph": "workgroup-plus",
-"by": "same-name",
+"glyph": "workgroup-new",
+"by": "lead",
 "at": "PM7-base.html:28433"
 },
 {
@@ -2220,7 +2220,7 @@
 "old": "<path d=\"M2.5 9.2l1.6-5.1c.2-.6.7-1 1.3-1h5.2c.6 0 1.1.4 1.3 1l1.6 5.1v2.6c0 .8-.6 1.4-1.4 1.4H3.9c-.8 0-1.4-.6-1.4-1.4z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/><path d=\"M2.6 9.2h3.1l.9 1.4h2.8l.9-1.4h3.1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/>",
 "vb": "0 0 24 24",
 "glyph": "stash",
-"by": "same-name",
+"by": "lead",
 "at": "00-d.js:124"
 },
 {
@@ -2550,8 +2550,8 @@
 "name": "ui-free",
 "old": "<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M5 12v8h14v-8\"/><path d=\"M12 8v12\"/><path d=\"M12 8c-1.6-3.6-5-3.9-5-1.6C7 8 10.2 8 12 8zM12 8c1.6-3.6 5-3.9 5-1.6C17 8 13.8 8 12 8z\"/>",
 "vb": "0 0 24 24",
-"glyph": "ui-free",
-"by": "same-name",
+"glyph": "gift",
+"by": "lead",
 "at": "06-marks.js:145"
 },
 {
@@ -2563,8 +2563,8 @@
 "name": "ui-local",
 "old": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"13\" width=\"18\" height=\"7\" rx=\"2\"/><path d=\"M7 7.5h.01M7 16.5h.01M11 7.5h6M11 16.5h6\"/>",
 "vb": "0 0 24 24",
-"glyph": "ui-local",
-"by": "same-name",
+"glyph": "server",
+"by": "lead",
 "at": "06-marks.js:146"
 },
 {
@@ -2954,7 +2954,7 @@
 "old": "<rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"></rect><line x1=\"14\" y1=\"3\" x2=\"14\" y2=\"21\"></line>",
 "vb": "0 0 24 24",
 "glyph": "layout",
-"by": "same-name",
+"by": "lead",
 "at": "PM7-base.html:53606"
 },
 {
@@ -3070,8 +3070,8 @@
 "name": "lensDefault",
 "old": "<circle cx=\"12\" cy=\"12\" r=\"7\"></circle><line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"></line><line x1=\"8\" y1=\"9\" x2=\"16\" y2=\"9\"></line><line x1=\"8\" y1=\"15\" x2=\"16\" y2=\"15\"></line>",
 "vb": "0 0 24 24",
-"glyph": "lensdefault",
-"by": "same-name",
+"glyph": "lens",
+"by": "lead",
 "at": "PM7-base.html:53615"
 },
 {
@@ -3083,8 +3083,8 @@
 "name": "lensMuteBtn",
 "old": "<path d=\"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94\"></path><path d=\"M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19\"></path><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"></line><path d=\"M14.12 14.12a3 3 0 1 1-4.24-4.24\"></path>",
 "vb": "0 0 24 24",
-"glyph": "lensmutebtn",
-"by": "same-name",
+"glyph": "eye-off",
+"by": "lead",
 "at": "PM7-base.html:53616"
 },
 {
@@ -3096,8 +3096,8 @@
 "name": "lensFocusBtn",
 "old": "<circle cx=\"12\" cy=\"12\" r=\"3\"></circle><circle cx=\"12\" cy=\"12\" r=\"8\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"4\"></line><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"23\"></line><line x1=\"1\" y1=\"12\" x2=\"4\" y2=\"12\"></line><line x1=\"20\" y1=\"12\" x2=\"23\" y2=\"12\"></line>",
 "vb": "0 0 24 24",
-"glyph": "lensfocusbtn",
-"by": "same-name",
+"glyph": "eye",
+"by": "lead",
 "at": "PM7-base.html:53617"
 },
 {
@@ -3109,8 +3109,8 @@
 "name": "lensSubBtn",
 "old": "<polyline points=\"4 14 10 14 10 20\"></polyline><polyline points=\"20 10 14 10 14 4\"></polyline><line x1=\"14\" y1=\"10\" x2=\"21\" y2=\"3\"></line><line x1=\"3\" y1=\"21\" x2=\"10\" y2=\"14\"></line>",
 "vb": "0 0 24 24",
-"glyph": "lenssubbtn",
-"by": "same-name",
+"glyph": "collapse",
+"by": "lead",
 "at": "PM7-base.html:53618"
 },
 {
@@ -3122,8 +3122,8 @@
 "name": "lensMute",
 "old": "<path d=\"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94\"></path><path d=\"M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19\"></path><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"></line><path d=\"M14.12 14.12a3 3 0 1 1-4.24-4.24\"></path>",
 "vb": "0 0 24 24",
-"glyph": "lensmute",
-"by": "same-name",
+"glyph": "eye-off",
+"by": "lead",
 "at": "PM7-base.html:53619"
 },
 {
@@ -3135,8 +3135,8 @@
 "name": "lensFocus",
 "old": "<circle cx=\"12\" cy=\"12\" r=\"3\"></circle><circle cx=\"12\" cy=\"12\" r=\"8\"></circle><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"4\"></line><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"23\"></line><line x1=\"1\" y1=\"12\" x2=\"4\" y2=\"12\"></line><line x1=\"20\" y1=\"12\" x2=\"23\" y2=\"12\"></line>",
 "vb": "0 0 24 24",
-"glyph": "lensfocus",
-"by": "same-name",
+"glyph": "eye",
+"by": "lead",
 "at": "PM7-base.html:53620"
 },
 {
@@ -3148,8 +3148,8 @@
 "name": "lensSub",
 "old": "<polyline points=\"4 14 10 14 10 20\"></polyline><polyline points=\"20 10 14 10 14 4\"></polyline><line x1=\"14\" y1=\"10\" x2=\"21\" y2=\"3\"></line><line x1=\"3\" y1=\"21\" x2=\"10\" y2=\"14\"></line>",
 "vb": "0 0 24 24",
-"glyph": "lenssub",
-"by": "same-name",
+"glyph": "collapse",
+"by": "lead",
 "at": "PM7-base.html:53621"
 },
 {
@@ -3759,8 +3759,8 @@
 "name": "tidy",
 "old": "<path d=\"M4 4h16\"/><rect x=\"5\" y=\"8\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"13\" y=\"8\" width=\"6\" height=\"10\" rx=\"1\"/>",
 "vb": "0 0 24 24",
-"glyph": "tidy",
-"by": "same-name",
+"glyph": "layout",
+"by": "lead",
 "at": "00-core.js:198"
 },
 {
@@ -4734,8 +4734,8 @@
 "name": "dashboard",
 "old": "<path d=\"M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z\"/>",
 "vb": "0 0 16 16",
-"glyph": "table",
-"by": "med",
+"glyph": "widget",
+"by": "lead",
 "at": "panels/js/06-icons.js:10"
 },
 {
@@ -4839,7 +4839,7 @@
 "old": "<path d=\"M2.5 3h11v10h-11zM2.5 6h11M5 8.5h4M5 10.5h6\"/>",
 "vb": "0 0 16 16",
 "glyph": "output",
-"by": "same-name",
+"by": "lead",
 "at": "panels/js/06-icons.js:18"
 },
 {
@@ -4903,8 +4903,8 @@
 "name": "splitRight",
 "old": "<path d=\"M2.5 3h11v10h-11zM8 3v10\"/>",
 "vb": "0 0 16 16",
-"glyph": "splitright",
-"by": "same-name",
+"glyph": "split-right",
+"by": "lead",
 "at": "panels/js/06-icons.js:23"
 },
 {
@@ -4916,8 +4916,8 @@
 "name": "splitDown",
 "old": "<path d=\"M2.5 3h11v10h-11zM2.5 8h11\"/>",
 "vb": "0 0 16 16",
-"glyph": "splitdown",
-"by": "same-name",
+"glyph": "split-down",
+"by": "lead",
 "at": "panels/js/06-icons.js:24"
 },
 {
@@ -5112,7 +5112,7 @@
 "old": "<path d=\"M2.5 3h11v10h-11zM2.5 6h11\"/>",
 "vb": "0 0 16 16",
 "glyph": "panel",
-"by": "same-name",
+"by": "lead",
 "at": "panels/js/06-icons.js:39"
 },
 {
@@ -5138,7 +5138,7 @@
 "old": "<path d=\"M2.5 3h11v10h-11zM8 3v5M2.5 8h11\"/>",
 "vb": "0 0 16 16",
 "glyph": "layout",
-"by": "same-name",
+"by": "lead",
 "at": "panels/js/06-icons.js:41"
 },
 {
@@ -5306,8 +5306,8 @@
 "name": "regex",
 "old": "<path d=\"M10.5 2.5v5M8.3 3.8l4.4 2.4M8.3 6.2l4.4-2.4M4 12a1 1 0 1 0 0-.01\"/>",
 "vb": "0 0 16 16",
-"glyph": "regex",
-"by": "same-name",
+"glyph": "use-regex",
+"by": "lead",
 "at": "panels/js/06-icons.js:54"
 },
 {
@@ -5319,8 +5319,8 @@
 "name": "caseSense",
 "old": "<path d=\"M2.5 12 5 4.5 7.5 12M3.4 9.5h3.2M10.5 8.7a1.9 1.9 0 1 1 0 3.3M12.4 7.5V12\"/>",
 "vb": "0 0 16 16",
-"glyph": "casesense",
-"by": "same-name",
+"glyph": "match-case",
+"by": "lead",
 "at": "panels/js/06-icons.js:55"
 },
 {
@@ -5332,8 +5332,8 @@
 "name": "wholeWord",
 "old": "<path d=\"M2.5 12.5h11M4 4.5 5.2 10 6.5 6.5 7.8 10 9 4.5M10.5 4.5v6\"/>",
 "vb": "0 0 16 16",
-"glyph": "wholeword",
-"by": "same-name",
+"glyph": "match-word",
+"by": "lead",
 "at": "panels/js/06-icons.js:56"
 },
 {
@@ -5397,8 +5397,8 @@
 "name": "region",
 "old": "<path d=\"M2.5 5V2.5H5M11 2.5h2.5V5M13.5 11v2.5H11M5 13.5H2.5V11\"/>",
 "vb": "0 0 16 16",
-"glyph": "expand",
-"by": "med",
+"glyph": "select-area",
+"by": "lead",
 "at": "panels/js/06-icons.js:61"
 },
 {
@@ -5411,7 +5411,7 @@
 "old": "<path d=\"M4 2.5l7.5 5.5-3.2.6L10 12.5l-1.6.8-1.7-3.9L4 11.6z\"/>",
 "vb": "0 0 16 16",
 "glyph": "pointer",
-"by": "same-name",
+"by": "lead",
 "at": "panels/js/06-icons.js:62"
 },
 {
@@ -5462,8 +5462,8 @@
 "name": "diff",
 "old": "<path d=\"M4.5 2.5v6M1.8 5.5h5.4M9 11.5h5.2M11.5 2.5v4\"/>",
 "vb": "0 0 16 16",
-"glyph": "changes",
-"by": "high",
+"glyph": "diff",
+"by": "lead",
 "at": "panels/js/06-icons.js:66"
 },
 {
@@ -5528,7 +5528,7 @@
 "old": "<path d=\"M2.5 2.5h11v11h-11zM2.5 6.5h11M6.5 6.5v7\"/>",
 "vb": "0 0 16 16",
 "glyph": "widget",
-"by": "same-name",
+"by": "lead",
 "at": "panels/js/06-icons.js:71"
 },
 {
@@ -5670,8 +5670,8 @@
 "name": "WRAP_ICON",
 "old": "<path d=\"M2.5 4h11M2.5 8h9a2 2 0 0 1 0 4H8M9.5 10.5 8 12l1.5 1.5M2.5 12h3\"/>",
 "vb": "0 0 16 16",
-"glyph": "wrap_icon",
-"by": "same-name",
+"glyph": "wrap",
+"by": "lead",
 "at": "panels/kinds/22-tools.js:59"
 },
 {
@@ -5774,8 +5774,8 @@
 "name": "doc:filePlus",
 "old": "<path d=\"M4 2h5.5L12.5 5v9H4zM9.5 2v3h3M8.2 7.5v4.4M6 9.7h4.4\"/>",
 "vb": "0 0 16 16",
-"glyph": "doc:fileplus",
-"by": "same-name",
+"glyph": "file-plus",
+"by": "lead",
 "at": "panels/kinds/42-document.js:51"
 },
 {
@@ -6151,8 +6151,8 @@
 "name": "agent-row:SQ",
 "old": "<rect x=\"3.5\" y=\"3.5\" width=\"9\" height=\"9\"/><path d=\"M6.5 8h3\"/>",
 "vb": "0 0 16 16",
-"glyph": "agent-row:sq",
-"by": "same-name",
+"glyph": "agent-driving",
+"by": "lead",
 "at": "terminal/js/78-agent.js:12"
 },
 {

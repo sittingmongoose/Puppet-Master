@@ -42,9 +42,9 @@
 }
 
 /* 3. NieR: a cut on (no flicker tween) and, on a PMH target, a two-step decay while .pmh-out holds. */
-html[data-o55-nier="on"] :is(button, summary, [role="button"], [data-action]):is(:hover, :focus-visible) svg.nx .nx-c { animation: none; }
-html[data-o55-nier="on"] [data-pmh-kind].pmh-out > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c,
-html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c {
+html[data-o55-nier="on"] :is(button, summary, [role="button"], [data-action]):is(:hover, :focus-visible) svg.nx .nx-c:not(.nx-p) { animation: none; }
+html[data-o55-nier="on"] [data-pmh-kind].pmh-out > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c:not(.nx-p),
+html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c:not(.nx-p) {
   animation: pmg-nier-decay var(--pmh-out-ms, 220ms) steps(2, end) both;
 }
 @keyframes pmg-nier-decay { from { stroke: var(--text); } to { stroke: var(--nx-ink, currentColor); } }
