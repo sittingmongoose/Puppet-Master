@@ -87,7 +87,15 @@
          spring, how long the frame may be hidden and still travel (ms), clip slack */
       ['frame', '--pmh-frame', 0], ['follow', '--pmh-frame-follow', 0], ['fhz', '--pmh-frame-hz', 0],
       ['fk', '--pmh-frame-k', 0.5], ['fstiff', '--pmh-frame-stiff', 520], ['fdamp', '--pmh-frame-damp', 44],
-      ['fsnap', '--pmh-frame-snap-ms', 180], ['freach', '--pmh-frame-reach', 12]
+      ['fsnap', '--pmh-frame-snap-ms', 180], ['freach', '--pmh-frame-reach', 12],
+      /* proxies on whole device pixels (0 = off): edges rounded the way Blink snaps the target's own border box, so a
+         1 px line drawn on a proxy lands on the target's border instead of smearing over two half-intensity pixels at
+         a fractional rect (NieR's hairline brackets) */
+      ['snap', '--pmh-snap', 0],
+      /* edge hold, px (0 = off): over no other target and within this band around the hovered box's edge, the hover
+         stays. A look that moves its box on hover (Retro's 2 px raise) would otherwise toggle while a slow pointer
+         crosses the strip the box moved off; deep inside a box it never holds, so an overlay still occludes */
+      ['hold', '--pmh-hold', 0]
     ];
 
     var T = {}, probe = null, tokensDirty = true, tokenFrame = 0;
@@ -316,6 +324,7 @@
       /* READ ------------------------------------------------------------ */
       if (tokensDirty) readTokens();
       var next = rest || !have ? null : (calm ? hover : want);
+      if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
       if (next && !next.isConnected) next = null;
       var enter = next !== hover;
       if (next) {
@@ -354,6 +363,12 @@
       if (springs.size || travelling || moved) raf(tick); else running = false;
     }
 
+    function inHoldBand(el) {
+      var s = ST.get(el), h = s ? tk(s.kind).hold : 0, c = h > 0 ? candOf(el) : null;
+      if (!c) return false;
+      return px >= c.l - h && px <= c.l + c.w + h && py >= c.t - h && py <= c.t + c.h + h &&
+        !(px > c.l + h && px < c.l + c.w - h && py > c.t + h && py < c.t + c.h - h);
+    }
     function swapHover(prev, next, reduced) {
       if (prev && prev.isConnected) {
         var ps = st(prev);
@@ -527,8 +542,12 @@
       if (it === -reach && ir === -reach && ib === -reach && il === -reach) return '';
       return 'inset(' + it.toFixed(0) + 'px ' + ir.toFixed(0) + 'px ' + ib.toFixed(0) + 'px ' + il.toFixed(0) + 'px)';
     }
-    function placeBox(el, memo, b, radius, clip) {
+    function placeBox(el, memo, b, radius, clip, snap) {
       var es = el.style;
+      if (snap) {
+        var d = window.devicePixelRatio || 1, sl = Math.round(b.l * d) / d, sr = Math.round(b.t * d) / d;
+        b = { l: sl, t: sr, w: Math.round((b.l + b.w) * d) / d - sl, h: Math.round((b.t + b.h) * d) / d - sr };
+      }
       var tr = 'translate(' + b.l.toFixed(1) + 'px,' + b.t.toFixed(1) + 'px)';
       if (memo.tr !== tr) { es.transform = tr; memo.tr = tr; stats.writes++; }
       var w = Math.round(b.w * 2) / 2, h = Math.round(b.h * 2) / 2;
@@ -565,7 +584,7 @@
         if (cur.el.getAttribute('data-pmh-kind') !== s.kind) { cur.el.setAttribute('data-pmh-kind', s.kind); glowEl.setAttribute('data-pmh-kind', s.kind); }
       }
       var b = boxFor(hc), clip = clipFor(b, vis, tok.glowReach);
-      placeBox(cur.el, cur.memo, b, s.radius, clip === 'hide' ? '' : clip);
+      placeBox(cur.el, cur.memo, b, s.radius, clip === 'hide' ? '' : clip, tok.snap);
       glowOn(cur, clip !== 'hide');
     }
     function ensureFrame() {
@@ -622,7 +641,7 @@
       var travel = FR.x !== gx || FR.y !== gy || FR.w !== gw || FR.h !== gh;
       if (travel !== FR.travel) { frameEl.classList.toggle('pmh-frame-travel', travel); FR.travel = travel; stats.writes++; }
       var clip = clipFor({ l: gx, t: gy, w: gw, h: gh }, vis, tok.freach);
-      placeBox(frameEl, frameMemo, { l: FR.x, t: FR.y, w: FR.w, h: FR.h }, s.radius, clip === 'hide' ? 'inset(50%)' : (travel ? '' : clip));
+      placeBox(frameEl, frameMemo, { l: FR.x, t: FR.y, w: FR.w, h: FR.h }, s.radius, clip === 'hide' ? 'inset(50%)' : (travel ? '' : clip), tok.snap);
       return travel;
     }
 

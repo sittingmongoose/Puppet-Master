@@ -88,11 +88,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
 }
 /* Basic, Friendly and Glass: the FAMILY LOOK section below. */
-/* Retro: no glow; a stepped 2 px magnet and a hard corner frame that jumps between boxes (placeholder). */
-[data-theme^="retro"]    { --pmh-mag: 2; --pmh-step: 1; --pmh-hz: 12; --pmh-field: 0; --pmh-glow: 0;
-                           --pmh-frame: 1; --pmh-frame-hz: 20; --pmh-frame-k: .5; --pmh-frame-follow: 1; }
-/* NieR: no glow and no magnet; ink corner brackets in held steps (placeholder for its reticle idiom). */
-html[data-o55-nier]      { --pmh-mag: 0; --pmh-field: 0; --pmh-glow: 0; --pmh-frame: 1; --pmh-frame-hz: 15; --pmh-frame-k: .5; }
+/* Retro and NieR: their own forms, the RETRO and NIER sections at the end of this file. */
 
 [data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
 [data-pmh-kind="row"]  { --pmh-mag-gain: .35; --pmh-glow: 0; }
@@ -270,11 +266,165 @@ html[data-theme^="glass"]:not([data-o55-nier]) .pm6-dash-card.pm6-dash-card[data
 :root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card).pmh-on::after { opacity: .5; }
 /* ===== end of FAMILY LOOK ===== */
 
-/* (c) Frame: four corner brackets just outside the box (Retro accent, NieR ink). */
-#pmh-frame { color: var(--accent-primary); }
-#pmh-frame[data-pmh-family="nier"] { color: var(--o55-nier-ink); }
-#pmh-frame > i { width: 8px; height: 8px; border: 0 solid currentColor; }
-#pmh-frame > i:nth-child(1) { left: -4px;  top: -4px;    border-width: 2px 0 0 2px; }
-#pmh-frame > i:nth-child(2) { right: -4px; top: -4px;    border-width: 2px 2px 0 0; }
-#pmh-frame > i:nth-child(3) { right: -4px; bottom: -4px; border-width: 0 2px 2px 0; }
-#pmh-frame > i:nth-child(4) { left: -4px;  bottom: -4px; border-width: 0 0 2px 2px; }
+/* ===== RETRO: "Raise" (final, 2026-10-10; design/retro/FINAL.md) =====
+   Retro presses a control by stepping it into its hard shadow (the rail's .pm-btn:active translate(1px,1px), the
+   onboarding cards' translate(3px,3px), both hard cuts); a hover is the same move turned round. The plate rises 2 px
+   up-left in one hard cut while its hard shadow grows from 3 to 5 px, so the shadow's far edge stays exactly where it
+   was on the page and the card reads as raised off it, not slid. One 33 ms tick later a 1 px phosphor rule appears one
+   pixel inside the border: the Turbo Vision active window (single frame idle, double frame active). Leaving, the rule
+   goes at once and the plate drops one tick later (.pmh-out). Two beats in, two beats out, on the left rail's 33 ms tab
+   tick; nothing moves while the pointer moves inside, nothing glows, nothing is blurred, nothing scales, no neighbour
+   is lit. translate and box-shadow change in the same style change, so plate and shadow can never disagree; neither
+   is transitioned (cuts), the rule's one-tick hold is an opacity animation.
+   One phosphor: --accent-primary (#b8d066 dark, cobalt #0047AB light), the left rail's own Retro ink (activity tile,
+   seg-tab ink, focus ring); --accent-lime stays the shell's running/ok status green.
+   Engine: no magnet, no field, no glow, no frame, so the engine writes only the state classes (and the kind
+   attribute once): nothing per pointer frame. Kinds: cards rise 2 px with the rule; tiles rise 1 px over a 3 px cast,
+   no rule; rows take the left rail's row fill (3 steps in, 2 out); icons nothing (their own quiet hover stays). */
+html[data-theme^="retro"],
+html[data-theme^="retro"] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0;
+  --pmh-glow: 0; --pmh-frame: 0; --pmh-out-ms: 34;
+  /* the plate rises off 2 px of its own edge: the engine keeps the hover while a slow pointer crosses that strip */
+  --pmh-hold: 2;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"] { --pmh-hold: 1; }
+html[data-theme^="retro"] [data-pmh-kind="row"] { --pmh-out-ms: 66; --pmh-hold: 0; }
+html[data-theme^="retro"] [data-pmh-kind="icon"] { --pmh-hold: 0; }
+/* the cast is each card's own rest shadow colour (the dash cards' grey, elsewhere the elev-2 olive / ink) */
+html[data-theme="retro-dark"] {
+  --pmh-r-cast: rgba(107, 118, 84, .56);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 60%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+html[data-theme="retro-dark"] .pm6-dash-card { --pmh-r-cast: rgba(224, 224, 224, .35); }
+html[data-theme="retro-light"] {
+  --pmh-r-cast: rgba(26, 26, 26, .30);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 70%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+}
+/* hard cuts: the base gives cards and tiles a 70-140 ms cubic on box-shadow, border and background (and pages their
+   own :hover lifts); only the transform transition stays, and hover never changes transform */
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):not(.pmu-card) { transition-property: transform !important; }
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out, :hover):not(.pmu-card) { transform: none; }
+/* the plate: raised while hovered and through the one-tick drop (.pmh-out) */
+html[data-theme^="retro"] [data-pmh-kind="card"]:is(.pmh-on, .pmh-out):not(.pmu-card) {
+  translate: -2px -2px; box-shadow: 5px 5px 0 0 var(--pmh-r-cast) !important;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"]:is(.pmh-on, .pmh-out) {
+  translate: -1px -1px; box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important;
+}
+/* hovered while the engine rests (a gesture): the rest-sized cast, not the engine part's elev-2 swap */
+html[data-theme^="retro"] [data-pmh-kind="card"]:hover:not(.pmh-on, .pmh-out, .pmu-card) { box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important; }
+html[data-theme^="retro"] [data-pmh-kind="tile"]:hover:not(.pmh-on, .pmh-out) { box-shadow: 2px 2px 0 0 var(--pmh-r-cast) !important; }
+/* the border stays the card's rest border (the engine part's reset would ink the light-bordered ones; the rule is the mark) */
+html[data-theme^="retro"] :is(.pm6-orch-widget, .pm6-chat-card)[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover),
+html[data-theme="retro-light"] .pm6-dash-card[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--border-light) !important; }
+html[data-theme^="retro"] .pm6-orch-ctl-primary[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--accent-primary) !important; }
+/* the rule: double frame on the second beat; gone on the first beat out */
+html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on:not(.pmu-card)::after {
+  content: ""; position: absolute; inset: 1px; z-index: 3; display: block; pointer-events: none;
+  border: 1px solid var(--pmh-r-rule); border-radius: 0;
+  background: none !important; box-shadow: none !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; transition: none; animation: pmh-r-hold 33ms step-end;
+}
+@keyframes pmh-r-hold { from, to { opacity: 0; } }
+/* the card's own hover tools (close, size, drag and resize grips) cut in with the raise instead of a cubic fade */
+html[data-theme^="retro"] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* rows (none renders in this build): the rail's row hover, a fill only, 3 steps in and 2 out; rows never rise */
+html[data-theme^="retro"] [data-pmh-kind="row"]:is(.pmh-on, .pmh-out)::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; display: block; pointer-events: none; border-radius: 0;
+  background: var(--pmh-r-row) !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; animation: pmh-r-fill 99ms steps(3, jump-start);
+}
+html[data-theme^="retro"] [data-pmh-kind="row"].pmh-out::before { opacity: 0; animation: pmh-r-unfill 66ms steps(2, jump-start); }
+@keyframes pmh-r-fill { from { opacity: 0; } }
+@keyframes pmh-r-unfill { from { opacity: 1; } }
+/* Reduced Motion: the plate never moves; the shadow is 5 px (tiles 3) at once, so the state still reads as raised; the
+   rule shows at once and goes at once (the engine sets no .pmh-out under Reduced Motion) */
+html[data-motion="reduced"][data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::after,
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out):not(.pmu-card) { translate: none; }
+  html[data-theme^="retro"] [data-pmh-kind]::after, html[data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+}
+/* software-rendered: every piece is a hard rect painted once per hover, so Retro keeps its whole form */
+/* ===== end of RETRO ===== */
+
+/* ===== NIER: "Lock-on" (final, 2026-10-10; design/nier/FINAL.md) =====
+   A hovered card is acquired the way NieR's target brackets acquire a target. ONE reticle per page (#pmh-frame, never
+   the shared #o55np-reticle or #o55np-cursor, which focus, clicks and the left rail own): four hairline corners, 8 x 1 px
+   (the card ticks' own size, so each inner tick finds a twin 3 px outside the border), cut onto the card 4 px open and
+   closed in two hard steps (7, 5, 3 px out, 45 ms apart). On the landing step the card's frame inks: a 1 px line of
+   ink at .6 exactly over its own border (the corners stay full ink and carry the lock; a full-ink line beside them
+   was a second, louder mark). Leaving onto nothing, the line drops at once, the corners back off one step and the
+   reticle is gone at 90 ms. To a neighbour the reticle cuts across (never glides) and closes again there. The card
+   itself never changes: no lift, no magnet, no glow, no blur, no fill, no pointer-following field. Ink only through
+   the --o55-nier-* helpers (ink is dark in NieR light and parchment in NieR dark, so the form inverts for free); only
+   translate and opacity change, one-shot and stepped.
+   Gate: the corners are the "brackets" part (Target brackets); without it the lock is the ink line alone, on the same
+   90 ms beat. Kinds: cards only; tiles and rows take the left rail's NieR row hover (ink .10, a hard cut), the
+   dashboard catalog items stay with the Menu cursor part; icons keep their own hover with no motion. */
+html[data-o55-nier],
+html[data-o55-nier][data-theme] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0; --pmh-glow: 0; --pmh-out-ms: 0;
+  /* the reticle on the rest rect, on whole device pixels (crisp hairlines); between targets a cut on the next frame,
+     and after any hidden frame it is placed, never moved (snap window 0) */
+  --pmh-frame: 1; --pmh-frame-follow: 0; --pmh-frame-hz: 120; --pmh-frame-k: 1; --pmh-frame-snap-ms: 0;
+  --pmh-frame-reach: 8; --pmh-snap: 1;
+}
+html[data-o55-nier][data-theme] :is([data-pmh-kind="tile"], [data-pmh-kind="row"], [data-pmh-kind="icon"]) { --pmh-frame: 0; }
+/* the release: the reticle stays 90 ms after .pmh-frame-on goes (the corners' backing-off step), then is cut */
+#pmh-frame[data-pmh-family="nier"] { transition: opacity 0s linear 90ms; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on { transition-delay: 0s; }
+/* the ink line over the card's own border; it lands with the corners' last step and drops at once */
+#pmh-frame[data-pmh-family="nier"]::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .6); opacity: 0; transition: opacity 0s;
+}
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 1; transition: opacity 0s linear 90ms; }
+/* the four corners: an 8 x 8 box drawing an L of two 1 px ink lines, 3 px outside the card; --pmh-n-o is the open offset */
+#pmh-frame[data-pmh-family="nier"] > i {
+  display: none; width: 8px; height: 8px; border: 0;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 1px no-repeat,
+              linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 1px 100% no-repeat;
+  translate: var(--pmh-n-o); transition: translate 90ms steps(2, end);
+}
+html[data-o55-nier-parts~="brackets"] #pmh-frame[data-pmh-family="nier"] > i { display: block; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(1) { left: -3px;  top: -3px;    --pmh-n-o: -4px -4px; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(2) { right: -3px; top: -3px;    --pmh-n-o: 4px -4px;  scale: -1 1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(3) { right: -3px; bottom: -3px; --pmh-n-o: 4px 4px;   scale: -1 -1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(4) { left: -3px;  bottom: -3px; --pmh-n-o: -4px 4px;  scale: 1 -1; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: 0 0; }
+/* the very first lock: the engine makes the frame and shows it in one frame, so there is no before-change style
+   (WebKit without @starting-style: the first lock of a page load cuts in closed, every later one steps) */
+@starting-style {
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: var(--pmh-n-o); }
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 0; }
+}
+/* the card itself does not change on hover. The engine part's PM8-parity reset (border --border, the blurred
+   --elev-2) and the pages' own :hover lifts and borders are answered with each card's rest values */
+html[data-o55-nier] :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover) { transform: none; translate: none; }
+html[data-o55-nier] .pm6-dash-card:is(:hover, .pmh-on) { box-shadow: var(--elev-1) !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-proj-card, .project-card-bento):is(:hover, .pmh-on) { box-shadow: var(--elev-2) !important; border-color: var(--border) !important; }
+html[data-o55-nier] :is(.pm6-chat-card, .pm6-orch-widget, .pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card):not(.selected):is(:hover, .pmh-on) { box-shadow: none !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card).selected:is(:hover, .pmh-on) { box-shadow: 0 0 0 1px var(--o55-nier-ink), var(--elev-2) !important; border-color: var(--o55-nier-ink) !important; }
+html[data-o55-nier] .pm6-orch-ctl-primary[data-pmh-kind]:is(:hover, .pmh-on) { border-color: var(--o55-nier-ink) !important; }
+/* the card's own hover micro-motion (the base's .pm-hover-icon scale(1.06) on a spring overshoot, the tools' 120 ms
+   ease): NieR keeps the icon still and cuts the tools in */
+html[data-o55-nier] .pm-sheen .pm-hover-icon { transform: none; transition: none; }
+html[data-o55-nier] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* tiles and rows: the left rail's NieR row hover, ink .10, a hard cut (the catalog items are Menu cursor items) */
+html[data-o55-nier] :is([data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pm6-dash-catalog-item).pmh-on {
+  background: rgba(var(--o55-nier-ink-rgb), .10) !important; box-shadow: none !important; transition-duration: 0s !important;
+}
+/* Reduced Motion: the lock is drawn and released at once (the engine already cuts the reticle between targets) */
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"],
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"]::before,
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pmh-frame[data-pmh-family="nier"], #pmh-frame[data-pmh-family="nier"]::before, #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+}
+/* software-rendered: the engine keeps the frame on that path; four 8 px corners and a line are cheap anywhere */
+/* ===== end of NIER ===== */
