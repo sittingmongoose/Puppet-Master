@@ -409,6 +409,9 @@
         "step": "workspace",
         "orientation": {"page_navigation_explained": true, "panel_purpose_explained": true, "mounted_application_visible": true},
         "chat_layout_action": "practice:workspace:chat-move:1",
+        "open_from_plus_action": "practice:workspace:open-from-plus:1",
+        "open_file_from_rail_action": "practice:workspace:open-file-from-rail:1",
+        "split_by_drag_action": "practice:workspace:split-by-drag:1",
         "widget_action": "practice:workspace:widget-add:1",
         "layout_reversible": true,
         "completed_predicate_refs": ["predicate:workspace:chat-moved", "predicate:workspace:widget-added"]
@@ -703,6 +706,7 @@
     {"name": "focus_route_requires_typed_route_target", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "remove": ["route_target"], "expected_error": "focus route requires a page identity"},
     {"name": "focus_route_rejects_workspace_as_page_identity", "definition": "guided_tour_action_request", "base_valid": "focus_route_is_typed_local_presentation", "patch": {"route_target.page_id": "workspace"}, "expected_error": "Usage remains the compatible page route inside the workspace chapter"},
     {"name": "workspace_layout_must_remain_reversible", "definition": "guided_tour_workspace_progression", "base_valid": "workspace_real_actions_and_predicates", "patch": {"layout_reversible": false}, "expected_error": "workspace practice is reversible"},
+    {"name": "workspace_panel_step_without_practice_ref_is_rejected", "definition": "guided_tour_workspace_progression", "base_valid": "workspace_real_actions_and_predicates", "remove": ["open_from_plus_action"], "expected_error": "each of the workspace chapter's panel steps carries its practice ref"},
     {"name": "planning_action_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_action_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful actions"},
     {"name": "planning_dwell_share_must_be_at_least_half", "definition": "guided_tour_planning_progression", "base_valid": "planning_majority_real_edit_and_boundary", "patch": {"majority.planning_dwell_share_basis_points": 4999}, "expected_error": "Planning owns at least half of meaningful dwell"},
     {"name": "unsure_cannot_be_resolved", "definition": "guided_tour_planning_progression", "base_valid": "planning_unsure_stays_unresolved", "patch": {"access_decision.resolution_status": "resolved"}, "expected_error": "I’m not sure yet remains unresolved"},
