@@ -2956,7 +2956,7 @@ Retired rows follow the inventory's own convention, the one `general.visual.basi
 | `code.editing.editor-strip-collapsed` | Start With Editor Strip Collapsed | There is no separate editor strip (DL-180). | Folding any panel to its tab strip (`cmd.workspace_layout.set_collapsed`), kept in the layout record |
 | `code.terminal.explanations` | Explain What Commands Do | No AI inside the terminal (DL-181, D19). | The Teacher persona in the chat (`Plans/Personas.md` section 11.8) |
 | `code.terminal.tab-role` | Tab Purpose Hints | The per-tab role setting retires (DL-181). | Shell profiles (`code.terminal.allowed-profiles`) and the tab's own label (`cmd.panel_tab.rename`) |
-| `code.terminal.search` | Enable Find in Terminal | Find is always present (DL-181). | The terminal find control (`Plans/FinalGUISpec.md#F3-641`) |
+| `code.terminal.search` | Search in Terminal | Find is always present (DL-181). | The terminal find control (`Plans/FinalGUISpec.md#F3-641`) |
 
 ### Rows amended
 
@@ -3115,7 +3115,7 @@ split_recommended: false
 depends_on: [DL-180, DL-181, DL-183, SSYS-002, SSYS-004, SSYS-009, SSYS-040, SSYS-042, F3-630, F3-636, F3-637, F3-639]
 unblocks: []
 acceptance_criteria:
-  - "A census of Plans/settings_inventory.json finds 964 unique ids in 12 categories; the 9 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 955 live rows."
+  - "A census of Plans/settings_inventory.json finds 964 unique ids in 12 categories; the 9 retired rows end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 955 live rows."
   - "The twelve added rows exist once each with their listed type, choices and default, scope global, and a valid category.subgroup.key id."
   - "Changing any added or amended row applies at once with no restart badge, and no Settings change opens, closes, moves or rearranges a panel or tab that is already open."
   - "No row writes the Home layout record: dragging the chat's width, pinning History and popping the chat out change only the layout record, and Chat History List decides only how a workspace with no saved choice starts."
@@ -3170,6 +3170,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Distinguishes the inventory-wide retired census from this wave retirement set."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Recounts live and retired inventory rows and includes the search retirement."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Sets the already-listed editor line-height default to 1.55."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
