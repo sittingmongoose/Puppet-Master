@@ -49,7 +49,7 @@
      value, shared: the global policy. */
   var POLICY_IDS = { auto: 'ai.accounts.multi-account-switching', switchLeft: 'ai.accounts.hard-switch-level', warnLeft: 'ai.accounts.soft-warning-level', cooldown: 'ai.accounts.cooldown-policy' };
   var ACCOUNT_SWITCH_ID = 'ai.accounts.account-threshold-override';
-  var policyMemo = {};
+  var policyMemo = {}, cooldownEnd = null;
   function autoOn(v) { return v !== false && v !== 'off' && v !== 'false' && v != null; }
   function levelOf(v, dflt) { if (v === '' || v === null || v === undefined) return dflt; var n = Number(v); return isFinite(n) && n > 0 && n < 100 ? n : dflt; }
   function cooldownOf(v) { return v === '' || v === null || v === undefined ? 'provider defaults' : String(v); }
@@ -266,7 +266,14 @@
         var effective = key === eff;
         var cooldown = f && f.cooldown ? { untilAt: loadedAt + (f.cooldown.until_in_min || 0) * MIN, reason: f.cooldown.reason, source: f.cooldown.source, retry: f.cooldown.retry_budget } : null;
         /* the bridge's seconds count down on the real clock: anchored there, the demo hour's clock passes the end (8.6) */
-        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) cooldown.untilAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+        /* the app's countdown (seconds left, ticked by the host) gives the same end each second within its jitter: the end
+           seen first is kept while a new reading lands within 5 s of it, so "Cooldown until 00:42" never flips to 00:43 and
+           back between two roster builds (d-switch: the flip re-rendered the Codex plate in the auto-switch click task) */
+        if (cooldown && window.PM7_USAGE && Number(window.PM7_USAGE.cooldown_seconds) > 0) {
+          var cdAt = Date.now() + Number(window.PM7_USAGE.cooldown_seconds) * 1000;
+          if (cooldownEnd !== null && Math.abs(cdAt - cooldownEnd) < 5000) cdAt = cooldownEnd;
+          cooldown.untilAt = cooldownEnd = cdAt;
+        }
         if (cooldown && cooldown.untilAt <= clockNow()) { cooldown = null; if (state === 'cooldown') state = 'standby'; }
         var supports = !!(f && f.supports_manual_set_active) && accs.length > 1;
         var exhaustedWin = wins.filter(function (w) { return w.pct !== null && w.pct >= 100; })[0];
