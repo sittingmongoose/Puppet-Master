@@ -745,7 +745,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mon
   box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--pmu-accent) 62%, transparent), 0 0 22px color-mix(in srgb, var(--pmu-accent) 22%, transparent); }
 #panel-usage .pmu-szitem { position: absolute; transform-origin: 0 0; pointer-events: none; }
 /* a tall card's miniature runs under the stage's lower edge: the last 36 px fade out */
-#panel-usage .pmu-szview.is-crop { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 36px), transparent); }
+#panel-usage .pmu-szview.is-crop { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - min(36px, 35%)), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - min(36px, 35%)), transparent); }
 #panel-usage .pmu-szitem > .pmu-card { position: relative; box-sizing: border-box; pointer-events: none; }
 #panel-usage .pmu-szitem > .pmu-card .pmu-cardtools, #panel-usage .pmu-szitem > .pmu-card .pmu-h,
 #panel-usage .pmu-szmeasure .pmu-cardtools, #panel-usage .pmu-szmeasure .pmu-h { visibility: hidden; }

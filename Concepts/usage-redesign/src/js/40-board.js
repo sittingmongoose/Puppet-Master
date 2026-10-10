@@ -1251,6 +1251,9 @@
         receipt = command('cmd.widget.move', { room: room, widget_id: g.id, from: { x: g.me.x, y: g.me.y }, to: { x: g.target.x, y: g.target.y }, board_class: cls,
           moved_peers: peers.map(function (r) { return { widget_id: r.id, to: { x: r.x, y: r.y } }; }), source: g.source || (g.kb ? 'keyboard' : 'pointer') }, { moved: true });
       } else {
+        /* a preset reached by Shift steps is kept as the panel's preset at this class, as a pick in the size menu is (its
+           name then survives a reload through the layout record's presets) */
+        if (g.kbPick && g.kbPick.w === g.target.w && g.kbPick.h === g.target.h && PMU.cards.notePick) PMU.cards.notePick(g.id, g.kbPick.pid, g.target.w, g.target.h);
         var nm = PMU.cards.sizeName(kindSpec(g.id), g.target.w, g.target.h, g.id);
         var form = PMU.cards.headForm(PMU.widgets.get(g.id) || {}, g.target.w, g.target.h, current.cls.pitchX);
         var tt = tierOf(g.target.w * current.cls.pitchX - GAP - 28, g.target.h * ROW - GAP - (PMU.cards.HEAD_PX[form] || 34) - (form === 'plate' ? 16 : 10));
@@ -1515,7 +1518,8 @@
       /* the presets offered at this board class, a fit preset at its measured height (lane c-presets) */
       /* ranked on the heights known now (measured, the last picker's, or the kind's fallback); only the preset a step
          lands on is measured, if it still has to be (one fit, not every preset's in one key press) */
-      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks - r.x; });
+      /* every preset the board can give (a card in the right half moves left to take a wider one, as the picker does) */
+      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks; });
       var horiz = key === 'ArrowRight' || key === 'ArrowLeft', fwd = key === 'ArrowRight' || key === 'ArrowDown';
       var toward = function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; };
       /* by width the direction is known; by height a preset not measured yet is ranked on its known height, and only
@@ -1529,7 +1533,7 @@
       });
       for (var ci = 0; ci < cands.length; ci++) {
         var cp = cands[ci], ch = PMU.cards.presetH ? PMU.cards.presetH(g.id, cp) : cp.h;
-        if (toward({ w: cp.w, h: ch })) { r.w = cp.w; r.h = ch; break; }
+        if (toward({ w: cp.w, h: ch })) { r.w = cp.w; r.h = ch; r.x = Math.min(r.x, cls.tracks - r.w); g.kbPick = { pid: cp.id, w: r.w, h: r.h }; break; }
       }
     } else {
       var wMax = Math.min(ks.wMax || cls.tracks, cls.tracks - r.x), hMax = ks.hMax || 40;

@@ -486,8 +486,12 @@
       cap.querySelector('.pmu-szname').textContent = p.name;
       cap.querySelector('.pmu-szdim').textContent = p.w + ' x ' + h + ' · ' + pxW + ' x ' + pxH + ' px';
       cap.querySelector('.pmu-szwhat').textContent = shownText(def.kind, shown, p);
-      /* a caption that took a third line gives the stage less room (the rows still all show) */
-      var capH = cap.offsetHeight; if (pv.capH && capH !== pv.capH) pv.capDirty = true; pv.capH = capH;
+      /* a caption taller than the one the stage was fitted with (a third line: Retro's mono face wraps "4 resets · 12 more
+         in its hover tag and Details") gives the stage less room, the first fill included, so the rows still all show.
+         The caption keeps the tallest height it has had in this opening (min-height): a shorter one never hands the room
+         back, so stage plus caption stay one height and the rows never move under the pointer */
+      var capH = cap.offsetHeight;
+      if (capH > (pv.capH || 0)) { if (pv.capH) cap.style.minHeight = capH + 'px'; pv.capH = capH; pv.capDirty = true; }
     }
     var outline = pv.el.querySelector('.pmu-szoutline'), box = { x: left, y: top, w: pxW * k, h: pxH * k };
     var old = pv.item, oldBox = pv.box;
@@ -592,7 +596,7 @@
     }
     slot.appendChild(pv.el);
     /* the stage gives way where the menu would not fit beside its anchor (a card near the window's top or bottom edge):
-       the view shrinks to 96 px at least, so every size row shows without the menu scrolling (the menu's own room:
+       the view shrinks to 72 px at least, so every size row shows without the menu scrolling (the menu's own room:
        45-menu.js place, 6 px gap and 8 px edge) */
     fitStage(h);
     if (!h.el._pmuSzWired) {
@@ -612,7 +616,7 @@
   /* the menu's height with nothing cut: its box is capped (place's max-height once it has opened, a spring's fixed height
      while it springs), so the list's hidden overflow is added back. The room is the side place gave it once it has
      opened (a drill-in from the card menu keeps the card menu's side), else the larger side, as place will choose */
-  var STAGE_PX = 160, STAGE_MIN = 96;
+  var STAGE_PX = 160, STAGE_MIN = 72;
   function fitStage(h) {
     var appEl = document.getElementById('pmuApp'), a = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : h.lastAnchor;
     if (!appEl || !a || !pv || !pv.view) return;
@@ -627,7 +631,11 @@
     var natural = h.el.offsetHeight + (list ? Math.max(0, list.scrollHeight - list.clientHeight) : 0);
     h.el.style.height = hold;
     var over = Math.ceil(natural - room);
+    /* down to 72 px where a card at the window's edge and Retro's taller rows leave less than 96 (better a shorter stage
+       than a list that scrolls) */
     if (over > 0) pv.view.style.height = Math.max(STAGE_MIN, STAGE_PX - over) + 'px';
+    /* the caption height this fit was measured with (showPreset refits when a caption grows past it) */
+    var capEl = pv.el.querySelector('.pmu-szcap'); if (capEl && capEl.offsetHeight > (pv.capH || 0)) pv.capH = capEl.offsetHeight;
     /* a stage that changed height re-places the miniature on show */
     if (pv.key && pv.p && pv.view.offsetHeight !== was) { var p = pv.p; pv.key = null; previewTo(p); }
   }
@@ -842,6 +850,8 @@
        height, and applying one (the keyboard's Shift steps, the API, the probes) */
     presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
     applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null, warmFits: warmFits,
+    /* a preset the keyboard's Shift steps landed on, at the size it landed (40-board, on Enter) */
+    notePick: function (id, pid, w, h) { (picked[id] = picked[id] || {})[clsNow().name] = { w: w, px: pxOf(w), h: h, pid: pid }; },
     /* the layout record's presets ({class: {id, w, h, px}}): the preset a panel was set to at each class while its geometry
        there is still that size (40-board writes and reads it) */
     presetsSet: function (id, geo) {
