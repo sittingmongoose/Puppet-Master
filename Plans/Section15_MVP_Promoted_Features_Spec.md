@@ -12506,7 +12506,7 @@ compatibility_only_notes:
 - "Section 1.6's section, tab-pane grid, layout-family and bottom-default rules, SMPFS-138 and SMPFS-170 remain only as lineage."
 - "terminal_section_id, terminal_workgroup_id and terminal_pane_id survive only as read-only migration inputs (Plans/storage-plan.md#SP-332)."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore waits for Reconnect / Close tab and never reconnects by itself."
+- "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore waits for Reconnect / Close tab and never reconnects by itself."
 - "Supersedes 2026-10-09 (DL-181): section 1.6's four-section, one-to-four-pane, quadrant, layout-family and bottom-default rules, SMPFS-138, the Pane Layout Family Transform and SMPFS-170's producer."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -12651,7 +12651,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
+- "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

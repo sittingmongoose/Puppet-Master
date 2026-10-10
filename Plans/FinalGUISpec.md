@@ -18143,7 +18143,7 @@ negative_constraints:
 - "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L14): An SSH-host terminal tab, like a privileged attachment, waits for a user choice instead of reconnecting on restore."
+- "Amended 2026-10-10 (lead ruling L14): An SSH-host terminal tab, like a privileged attachment, waits for a user choice instead of reconnecting on restore."
 - "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:
@@ -33264,7 +33264,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L12): The Chats rail stays until the 5.6 Pro chat port (ACD-444)."
+- "Amended 2026-10-10 (lead ruling L12): The Chats rail stays until the 5.6 Pro chat port (ACD-444)."
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
 - "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:
