@@ -143,6 +143,11 @@ html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hnow > b { border-radius: 
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-hrule { border-top-color: var(--o55-nier-warn); }
 html[data-o55-nier="on"] #panel-usage .pmu-hlab { font-family: "PM NieR Mono", var(--pmu-mono); letter-spacing: .10em; text-shadow: none; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-mark[data-mark="glow"] { stroke: var(--o55-nier-ink); filter: none; opacity: .12; }
+/* polish pass: F3-628, under NieR Mode the page draws no glow, filter or blur, whichever parts are installed (without
+   "Ink charts" the ring's head glow kept blur(2.5px) and a hero line's under-glow blur(2px), 30-charts.css). The head
+   glow becomes one plain 1 px ring around the head cap, the under-glow a flat square-cut band, as NieR draws elsewhere */
+html[data-o55-nier="on"] #panel-usage .pmu-ringglow { filter: none; fill: none; stroke: var(--c); stroke-width: 1; opacity: .6; }
+html[data-o55-nier="on"] #panel-usage .pmu-mark[data-mark="glow"] { filter: none; stroke-width: 6; opacity: .12; stroke-linecap: square; stroke-linejoin: miter; }
 html[data-o55-nier-parts~="charts"] #panel-usage .pmu-sweep-glint { display: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-meterheat:is([data-step="0"], [data-step="1"]) { --c: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-meterheat[data-step="2"] { --c: var(--o55-nier-warn); }

@@ -42,7 +42,10 @@
      never as body clutter): "provider reported · status line rate_limits · sampled 20s ago" */
   C.winSource = function (w, age) {
     var sampled = w.sampledAt !== null && w.sampledAt !== undefined ? C.sampledText(w.sampledAt) : age ? 'sampled ' + String(age).replace(/^cached /, '') : '';
-    return [w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', w.source || '', sampled].filter(Boolean).join(' · ');
+    /* the truth word once: a reading whose source is its truth word (Qwen's windows: source "provider reported") says it
+       one time (polish pass: Plan Details read "provider reported · provider reported · sampled 1m ago") */
+    var truth = w.truth && w.truth !== 'unknown' ? PMU.fmt.truth(w.truth) : '', src = String(w.source || '');
+    return [truth, src && src.toLowerCase() !== truth.toLowerCase() ? src : '', sampled].filter(Boolean).join(' · ');
   };
   /* one meter spec for a WindowView (A1 6). The notch and the warn line are the window's own provider policy: lane d-switch
      (item 2) puts providerId, switchAt, warnAt (% used) and autoOn on every window from thresholds(providerId, accountId), so

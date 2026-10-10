@@ -278,6 +278,14 @@
       var noteW = 26 + Math.max.apply(null, String(h.note).split(/<\/(?:b|span)>/).map(function (x) { return twOf(x, 12.5, 600); }));
       if (textW - noteW - 14 < 240) h = Object.assign({}, h, { note: '' }); else textW -= noteW + 14;
     }
+    /* h.labels: shorter forms of the label, most complete first. The first that keeps the label and the whole sub line
+       within the two lines is used before the sub line gives way; the full label stays in the head's hover (polish pass:
+       the Windows timeline at 1440 read "... 100% used" with "used" alone on a line and lost "· 6 later") */
+    var fullLabel = h.label;
+    if (h.labels && h.sub && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) > 2) {
+      var alt = h.labels.filter(function (l) { return C.wrapLines(l, textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) <= 2; })[0];
+      if (alt) h = Object.assign({}, h, { label: alt });
+    }
     if (h.sub && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(h.sub, textW, 12.5) > 2) {
       var segs = String(h.sub).split(' · ');
       while (segs.length > 1 && C.wrapLines(h.label || '', textW, 13.5, 560) + C.wrapLines(segs.join(' · '), textW, 12.5) > 2) segs.pop();
@@ -291,7 +299,7 @@
     var dropped = [];
     if (fullSub && h.sub !== fullSub) dropped.push(String(fullSub).replace(/<[^>]+>/g, ''));
     if (fullNote && !h.note) dropped.push(String(fullNote).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
-    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + (dropped.length ? C.hover(String(numText) + ' ' + (h.label || ''), dropped.join(' · ')) : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
+    return '<div class="pmu-herohead"' + (h.tone ? ' data-tone="' + h.tone + '"' : '') + (dropped.length || h.label !== fullLabel ? C.hover(String(numText) + ' ' + (fullLabel || ''), dropped.join(' · ')) : '') + '>' + num + '<span class="pmu-herotext"><span class="pmu-herolabel">' + esc(h.label || '') + '</span>' +
       (h.sub ? '<span class="pmu-herosub">' + h.sub + '</span>' : '') + '</span>' + (h.note ? '<span class="pmu-heronote"' + (h.noteTone ? ' data-tone="' + h.noteTone + '"' : '') + '>' + h.note + '</span>' : '') + '</div>';
   };
   /* room beats (WOW-SPEC 4, WOW-TASKS N-1): helpers for the one-shot signature beat each room file registers with

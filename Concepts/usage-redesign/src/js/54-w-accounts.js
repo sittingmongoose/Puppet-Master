@@ -619,7 +619,7 @@
     var g = PMU.roster.thresholds(), diff = polFams().filter(function (p) { var pol = polOf(p); return pol.auto !== g.auto || pol.switchLeft !== g.switchLeft; });
     /* the providers' own points are trailing " · " parts, so a narrow head drops them first (the towers' notches and their
        hover tags still say them) */
-    return (g.auto ? 'auto-switch at ' + (100 - g.switchLeft) + '%' + (diff.length ? '' : ' used') : 'auto-switch off') + diff.map(function (p) { var pol = polOf(p); return ' · ' + famShort(p) + ' ' + (pol.auto ? (100 - pol.switchLeft) + '%' : 'off'); }).join('');
+    return (g.auto ? 'auto-switch at ' + (100 - g.switchLeft) + '% used' : 'auto-switch off') + diff.map(function (p) { var pol = polOf(p); return ' · ' + famShort(p) + ' ' + (pol.auto ? (100 - pol.switchLeft) + '%' : 'off'); }).join('');
   };
   /* the providers whose own toggle, switch level or warn level differs from the shared setting (the Attention room's
      alert-rules card names them beside the shared levels; integration of lanes d-switch and d-plans) */
@@ -1283,7 +1283,10 @@
   });
   /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */
   C.act('pol-shared', function () {
-    var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.hard-switch-level', provider_id: null, account_id: null }, { opened: true });
+    /* the typed route target (UF Accounts room: "Open in Settings dispatches cmd.settings.open with target_type=setting";
+       settings_route_request.target, as openSetup sends it) */
+    var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-switch-level', target: { target_type: 'setting', setting_id: 'ai.accounts.hard-switch-level', manager_id: null, detail_id: null },
+      origin_surface: 'usage', origin_route: 'usage/accounts', provider_id: null, account_id: null }, { opened: true });
     if (receipt.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.hard-switch-level');
   });
   C.act('acct-use', function (el) { PMU.accounts.askUse(el.getAttribute('data-value'), el); });

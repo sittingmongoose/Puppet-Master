@@ -577,7 +577,12 @@
     });
     var all = Object.keys(byKey).map(function (k) { return byKey[k]; }).filter(function (x) { return x.w.resetAt > now && x.w.truth !== 'unknown'; }).sort(function (x, y) { return x.w.resetAt - y.w.resetAt; });
     var lb = body.querySelector('.pmu-herolabel'), next = all[0];
-    if (lb && next) { var t = 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used'; if (lb.textContent !== t) lb.textContent = t; }
+    if (lb && next) {
+      /* the form the head's fit chose (C.heroHead h.labels) is kept: the short form has two " · " parts */
+      var forms = heroLabels(next), t = forms[lb.textContent.split(' · ').length <= 2 ? 1 : 0], hh = lb.parentNode && lb.parentNode.parentNode;
+      if (lb.textContent !== t) lb.textContent = t;
+      if (hh && hh.hasAttribute('data-pm-hover-label')) { var hl = F.clock(next.w.resetAt) + ' ' + forms[0]; if (hh.getAttribute('data-pm-hover-label') !== hl) hh.setAttribute('data-pm-hover-label', hl); }
+    }
     return true;
   }
   /* the lanes: every account of every provider with plan windows (70-rooms-a.js C.windowLanes); the active account of each
@@ -594,6 +599,9 @@
   }
   /* "Claude Personal" where the provider has two or more accounts, else the provider's name */
   function laneWho(x) { return x.p.accounts.length > 1 && !C.nickRepeats(x.a.nickname, x.p.name) ? x.p.name + ' ' + x.a.nickname : x.p.name; }
+  /* the hero's label, whole and short: "next reset · Claude Personal 5-hour · 100% used", then without the reading (the
+     marker's own words and its hover say it), so a narrow head keeps the label on one line and the whole sub line */
+  function heroLabels(x) { var who = 'next reset · ' + laneWho(x) + ' ' + x.w.short.toLowerCase(); return [who + ' · ' + C.fmt(x.w.pct, 'pct') + ' used', who]; }
   C.kind('windows', {
     live: function (body, ctx) { return windowsLive(body, ctx); },
     liveSig: function () {
@@ -606,7 +614,7 @@
       all.sort(function (x, y) { return x.at - y.at; });
       var bw = ctx.tier.bw, bh = ctx.tier.bh, heroOk = bh >= 200, next = all[0];
       var in7 = all.filter(function (x) { return x.at - now <= span; }).length;
-      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: 'next reset · ' + laneWho(next) + ' ' + next.w.short.toLowerCase() + ' · ' + C.fmt(next.w.pct, 'pct') + ' used',
+      var head = heroOk && next ? C.heroHead(ctx, { text: F.clock(next.at), label: heroLabels(next)[0], labels: heroLabels(next).slice(1),
         sub: b(in7) + (in7 === 1 ? ' reset' : ' resets') + ' in the next 7 days · ' + b(all.length - in7) + ' later' }) : '';
       /* lane d-plans: one lane per account, grouped by provider (the provider's mark on its first lane, a rule between
          providers); a lane reads the account's nickname where the provider has two or more accounts, else the provider */

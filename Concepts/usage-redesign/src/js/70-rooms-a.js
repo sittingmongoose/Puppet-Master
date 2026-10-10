@@ -126,8 +126,10 @@
       var v = D.planView(id); if (!v) return null;
       var p = v.legacy, rp = v.provider, x = PLAN_EXTRA[v.legacyId] || null;
       var row = function (k, val) { return [k, esc(val == null || val === '' ? '-' : val)]; };
+      /* the truth word once: C.winSource leads with it ("provider reported · status line · sampled 20s ago"; polish pass:
+         the row read "provider reported · provider reported · ...") */
       var winRow = function (a, w) {
-        return row(w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + ' · ' + PMU.fmt.truth(w.truth) + (w.est ? ' · estimated' : '')) +
+        return row(w.label, (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - w.pct), 'pct') + ' left' + (w.amount ? ' · ' + w.amount : '') + ' · ' + F.reset(w).text + (w.est ? ' · estimated' : '')) +
           ' · ' + (C.winSource(w, a.ageText) || 'source not recorded'));
       };
       var sections = (rp ? rp.accounts : []).map(function (a) {
@@ -265,8 +267,11 @@
   };
 
   /* the Overview hero (WOW-TASKS N-2): every window of the active accounts as a lit gauge, ordered by pressure */
-  /* d-switch (item 2): the shared switch point and each provider whose own differs (C.autoCaption, 54-w-accounts.js) */
-  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return 'active account of each provider · ordered by pressure · ' + (C.autoCaption ? C.autoCaption() : th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off'); },
+  /* d-switch (item 2): the shared switch point and each provider whose own differs (C.autoCaption, 54-w-accounts.js).
+     They lead the caption: the card head's fit drops trailing " · " parts first (42-cards.js fitSub), so "ordered by
+     pressure" and "active account of each provider" give way before the switch points (polish pass: at 1440 and 1920
+     the shown caption never reached "Codex 85%"); the whole caption stays in the title's hover */
+  def('ov-skyline', 'overview', { kind: 'skyline', meta: function () { var th = PMU.roster.thresholds(); return (C.autoCaption ? C.autoCaption() : th.auto ? 'auto-switch at ' + (100 - th.switchLeft) + '% used' : 'auto-switch off') + ' · ordered by pressure · active account of each provider'; },
     inspect: function () {
       var m = C.skylineModel();
       return C.insp('Headroom skyline', m.cols.map(function (c) { return [c.p.name + ' · ' + c.w.label, C.fmt(c.w.pct, 'pct') + ' used · ' + C.fmt(Math.max(0, 100 - c.w.pct), 'pct') + ' left · ' + F.resetLine(c.w).text + ' · ' + c.a.nickname + ' · ' + PMU.fmt.truth(c.w.truth)]; }));

@@ -59,6 +59,13 @@
     setProviderMany: function (providerId, list, source) {
       var p = pm51(), api = p && p.providerPolicy;
       if (!api || typeof api.set !== 'function') return { ok: false, reason: 'Settings is not available' };
+      /* the switch level stays below the warn level (MA-073): the owner says what will be stored (a crossing level moves
+         to the nearest choice that keeps the order, the other level never moves) or refuses; the transaction names that */
+      if (typeof api.hold === 'function') {
+        var held = null; try { held = api.hold(providerId, list || []); } catch (error) { held = null; }
+        if (!held) return { ok: false, reason: 'The switch level has to stay below the warn level' };
+        list = held;
+      }
       var changes = (list || []).map(function (x) {
         var before = null; try { before = api.get(providerId, x.id); } catch (error) { before = null; }
         var inherit = x.value === null || x.value === undefined;
@@ -74,7 +81,8 @@
       var receipt = command('cmd.settings.transaction.apply', Object.assign({ preview_receipt_id: preview.receipt_id }, payload), { applied: true });
       if (receipt.dispatch_accepted === false) return { ok: false, reason: 'The change was cancelled', preview: preview, receipt: receipt };
       var ok = true;
-      changes.forEach(function (c) { try { if (api.set(providerId, c.setting_id, c.inherit ? null : c.value) === false) ok = false; } catch (error) { ok = false; } });
+      if (typeof api.setMany === 'function') { try { ok = api.setMany(providerId, changes.map(function (c) { return { id: c.setting_id, value: c.inherit ? null : c.value }; })) !== false; } catch (error) { ok = false; } }
+      else changes.forEach(function (c) { try { if (api.set(providerId, c.setting_id, c.inherit ? null : c.value) === false) ok = false; } catch (error) { ok = false; } });
       /* the roster's providers and accounts did not change (the policy is read live from the owner): the snapshot is kept,
          so the click task does not pay for another copy of the Settings state */
       changes.forEach(function (c) { emit('write:' + c.setting_id + '@' + providerId); });

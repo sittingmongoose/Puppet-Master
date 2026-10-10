@@ -561,6 +561,55 @@
     const body = (rows.length ? `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
     return PM51.section({ title: 'Auto-switch policies', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
   }
+  /* The switch level always stays below the warn level (MA-073, Settings_System section 8), held here at the owner's
+     write point as well as in the choices, so a write that does not come from a choice (the Usage page's transaction, a
+     host write, a script) cannot cross them either (polish pass). The level being written moves to the nearest choice on
+     its own list that keeps the order, and the other level never moves: lowering a warn level to or below the switch
+     level stores the lowest warn choice above the switch level; raising a switch level to or past the warn level stores
+     the highest switch choice below it. A write that leaves no such choice (or a return to the shared value that would
+     cross) is refused and nothing changes. The shared levels are held against every service that follows them.
+     changes: [{ id, value }] for one service p (null: the shared values); -> the changes as they will be stored, or null */
+  const SW_ID = 'ai.accounts.hard-switch-level', WARN_ID = 'ai.accounts.soft-warning-level';
+  function holdOrder(p, changes) {
+    const next = {}; (changes || []).forEach(c => { next[c.id] = c.value; });
+    const has = id => Object.prototype.hasOwnProperty.call(next, id), blank = v => v === null || v === undefined || v === '';
+    if (!has(SW_ID) && !has(WARN_ID)) return changes;
+    const shared = id => pctLeft(!p && has(id) && !blank(next[id]) ? next[id] : PM51.value(id));
+    const follows = (q, id) => (q === p && p && has(id)) ? blank(next[id]) : ownPolicy(q, id) === undefined;
+    const eff = (q, id) => follows(q, id) ? shared(id) : pctLeft(q === p && p && has(id) ? next[id] : ownPolicy(q, id));
+    const below = lim => { const c = SWITCH_LEFT.filter(v => v < lim); return c.length ? c[c.length - 1] : null; };
+    const above = floor => { const c = WARN_LEFT.filter(v => v > floor); return c.length ? c[0] : null; };
+    const out = changes.map(c => Object.assign({}, c)), at = id => out.find(c => c.id === id);
+    if (p) {
+      const sw = eff(p, SW_ID), warn = eff(p, WARN_ID);
+      if (sw === null || warn === null || sw < warn) return out;
+      if (has(SW_ID) && !blank(next[SW_ID])) { const v = below(warn); if (v === null) return null; at(SW_ID).value = v; return out; }
+      if (has(WARN_ID) && !blank(next[WARN_ID])) { const v = above(sw); if (v === null) return null; at(WARN_ID).value = v; return out; }
+      return null;
+    }
+    /* the shared levels: the shared pair itself and every service whose level follows the one written */
+    const pairs = [{ sw: shared(SW_ID), warn: shared(WARN_ID), fSw: true, fWarn: true }]
+      .concat(all().filter(canSwitch).map(q => ({ sw: eff(q, SW_ID), warn: eff(q, WARN_ID), fSw: follows(q, SW_ID), fWarn: follows(q, WARN_ID) })));
+    if (has(WARN_ID) && !blank(next[WARN_ID])) {
+      const floor = Math.max.apply(null, pairs.filter(x => x.fWarn && x.sw !== null).map(x => x.sw));
+      if (shared(WARN_ID) <= floor) { const v = above(floor); if (v === null) return null; at(WARN_ID).value = v; pairs.forEach(x => { if (x.fWarn) x.warn = v; }); }
+    }
+    if (has(SW_ID) && !blank(next[SW_ID])) {
+      const lim = Math.min.apply(null, pairs.filter(x => x.fSw && x.warn !== null).map(x => x.warn));
+      if (shared(SW_ID) >= lim) { const v = below(lim); if (v === null) return null; at(SW_ID).value = v; }
+    }
+    return out;
+  }
+  /* the shared rows commit through the page's one Settings write (commitSettingValue: the Settings rows and the Usage
+     page's setSettingFromHost alike), held to the same order */
+  const o55PolicyCommit = commitSettingValue;
+  commitSettingValue = function (id, value) {
+    if (id !== SW_ID && id !== WARN_ID) return o55PolicyCommit.apply(this, arguments);
+    const held = holdOrder(null, [{ id, value }]);
+    if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); return false; }
+    const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
+    return o55PolicyCommit.apply(this, args);
+  };
   function setPolicy(p, id, value) {
     if (!p || !POLICY_IDS.includes(id)) return false;
     if (!p.props || typeof p.props !== 'object') p.props = {};
@@ -596,12 +645,21 @@
     /* the service's own values only: { id: value } */
     own: pid => { const p = find(pid), out = {}; if (p) POLICY_IDS.forEach(id => { const v = ownPolicy(p, id); if (v !== undefined) out[id] = v; }); return out; },
     multi: pid => multiAccount(find(pid)),
-    /* value null (or '') clears the service's own value: it follows the shared one again */
-    set: (pid, id, value) => {
-      const p = find(pid); if (!setPolicy(p, id, value)) return false;
+    /* value null (or '') clears the service's own value: it follows the shared one again. Held to the switch-below-warn
+       order (holdOrder): a crossing write stores the nearest choice that keeps it, or is refused (false) */
+    set: (pid, id, value) => PM51.providerPolicy.setMany(pid, [{ id, value }]),
+    /* the changes as they will be stored (pid null: the shared values), or null when they would cross; the Usage page
+       sends these in its transaction, so the preview names what is stored */
+    hold: (pid, changes) => { if (!pid) return holdOrder(null, changes); const p = find(pid); return p ? holdOrder(p, changes) : null; },
+    /* several values of one service at once, held as one change (clearing all four at once never trips on the step
+       between them) */
+    setMany: (pid, changes) => {
+      const p = find(pid); if (!p) return false;
+      const held = holdOrder(p, changes); if (!held) return false;
+      let ok = true; held.forEach(c => { if (!setPolicy(p, c.id, c.value)) ok = false; });
       savePolicySoon();
       if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
-      return true;
+      return ok;
     }
   };
   POLICY_IDS.forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
@@ -793,7 +851,7 @@
   PM51.scopedSetter(SVC, (id, value, el) => {
     const p = prov(el);
     if (id === 'ai.models.provider-enabled') { if (value) turnOn(p, true); else turnOff(p, true); return p.name; }
-    if (POLICY_IDS.includes(id)) { setPolicy(p, id, value); save(); return p.name; }
+    if (POLICY_IDS.includes(id)) { const held = holdOrder(p, [{ id, value }]); if (held) setPolicy(p, id, held[0].value); save(); return p.name; }
     p.props[id] = value; saveState(); return p.name;
   });
   /* OpenCode's own switch is an inventory row; the service's state follows it. */

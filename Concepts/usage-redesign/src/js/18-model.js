@@ -132,9 +132,10 @@
   function resetPendingWord(w) {
     var dt = clockNow() - w.resetAt;
     var when = dt < DAY && new Date(w.resetAt).getDate() === new Date(clockNow()).getDate() ? PMU.fmt.clock(w.resetAt) : dt < 6 * DAY ? PMU.fmt.day(w.resetAt) + ' ' + PMU.fmt.clock(w.resetAt) : PMU.fmt.date(w.resetAt);
-    /* the time stays with "at" on one line where the words wrap in a narrow meter cell ("Reset at 22:59 ·" / "new reading
-       pending", never "Reset at" / "22:59 · new" / "reading" / "pending": Retro at 1920) */
-    return 'Reset at\u00a0' + String(when).replace(/ /g, '\u00a0') + ' · new reading pending';
+    /* "Reset at <time>" stays on one line where the words wrap in a narrow meter cell ("Reset at 22:59 ·" / "new reading
+       pending", never "Reset at" / "22:59 · new" / "reading" / "pending": Retro at 1920; polish pass: nor "Reset" / "at
+       06:03 ·"); the break may come after the time. The " · " stays a plain space so the fit code's ' · ' split holds */
+    return 'Reset\u00a0at\u00a0' + String(when).replace(/ /g, '\u00a0') + ' · new reading pending';
   }
   function vsWord(w) {
     if (w.vs === 'reset_pending' && w.resetAt !== null) return resetPendingWord(w);
