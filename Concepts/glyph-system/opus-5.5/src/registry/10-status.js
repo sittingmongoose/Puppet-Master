@@ -47,13 +47,14 @@
     replaces: ['Settings info tone (checking, syncing, recommended)', 'frames info notice', 'unread and notify dots'],
     parts: [RING, '<path d="M12 11.2v4.6"/>', '<path d="M12 8.3v.1"/>']
   });
-  /* off: a ring with a bar, the set's "not in use" (not set up, disabled, not installed). The bar is horizontal so it
-     never reads as skipped's diagonal slash; it is muted, like paused. */
+  /* off: the power symbol, the sign people already read as "switched off" (not set up, disabled, not installed). A
+     ring with a bar was the first sketch; the left rail's status set (leftrail-redesign d/00-d.js SOLID.blocked) and the
+     road sign both read a barred ring as "no entry", which is blocked. Muted, like paused. */
   G.def('st-off', {
     family: 'status', role: 'status', act: 'none',
     meaning: 'Off: not set up, disabled or not installed; nothing is running and nothing is wrong.',
     replaces: ['Settings off tone (not set up, not installed, not connected, disabled)', 'Usage minusCircle (needs a seat)'],
-    parts: [RING, '<path d="M8.6 12h6.8"/>']
+    parts: ['<path d="M7.7 7.3a6.6 6.6 0 1 0 8.6 0"/>', '<path d="M12 4.6v6.6"/>']
   });
   /* offline: a chain link pulled apart, sparks at the break: a service or provider that should answer and cannot be
      reached. Its two halves are the chat's link drawn as two capsules on the same diagonal, 5 units apart so the
@@ -76,5 +77,6 @@
   G.def('change-added', { family: 'status', role: 'status', act: 'none', meaning: 'Added: a new file or item.', replaces: ['editor Added', 'git A and untracked ?', 'document made'], parts: [SQ, '<path d="M12 8.7v6.6M8.7 12h6.6"/>'] });
   G.def('change-modified', { family: 'status', role: 'status', act: 'none', meaning: 'Modified: changed since it was saved or committed.', replaces: ['editor Modified', 'git M', 'tab dirty dot', 'document edited'], parts: [SQ, '<circle cx="12" cy="12" r="2.4" class="nx-f"/>'] });
   G.def('change-deleted', { family: 'status', role: 'status', act: 'none', meaning: 'Deleted: removed.', replaces: ['editor Deleted', 'git D', 'document deleted'], parts: [SQ, '<path d="M8.7 12h6.6"/>'] });
+  G.def('change-conflict', { family: 'status', role: 'status', act: 'none', meaning: 'Conflict: two changes collide and someone must choose.', replaces: ['rail conflict (a diamond with a cross)', 'git C and U'], parts: [SQ, '<path d="M12 8.2v4.6"/>', '<path d="M12 15.7v.1"/>'] });
   G.def('change-renamed', { family: 'status', role: 'status', act: 'none', meaning: 'Renamed or moved.', replaces: ['editor Renamed', 'git R'], parts: [SQ, '<path d="M8.4 12h6.6M12.6 9.3 15.3 12l-2.7 2.7"/>'] });
 })();

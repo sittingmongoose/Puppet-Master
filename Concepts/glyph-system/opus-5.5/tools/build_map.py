@@ -42,7 +42,8 @@ LEAD = {
     'wifi': 'signal', 'network': 'signal', 'system': 'cpu', 'helpcircle': 'help',
     # the rail's status marks are the status set (F3-619; DL-162)
     'live': 'st-working', 'run': 'st-working', 'idle': 'st-idle', 'pending': 'st-pending', 'stale': 'st-skipped',
-    'orphan': 'st-skipped', 'unknown': 'st-pending', 'dirty': 'change-modified',
+    'orphan': 'st-skipped', 'unknown': 'st-pending', 'dirty': 'change-modified', 'conflict': 'change-conflict',
+    'current': 'ring-dot',
 }
 NOT_GLYPHS = {'notch', 'diamond', 'halfcircle', 'provider', 'swirl'}   # functional marks, placeholders or art
 

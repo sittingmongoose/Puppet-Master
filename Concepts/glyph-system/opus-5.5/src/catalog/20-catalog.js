@@ -72,7 +72,7 @@
   function famGlyphs(f) {
     if (f.from === 'chat') return chat.filter(function (r) { return (f.match ? new RegExp(f.match).test(r.name) : true) && !(f.exclude && new RegExp(f.exclude).test(r.name)) && !G.owns(r.name); }).map(function (r) { return { name: r.name, role: r.role, act: r.act, aliases: r.aliases, source: 'c56', rec: G.record(r.name) }; });
     /* a PMG family lists its new glyphs first, then the chat glyphs it maps (G.map), so a surface's whole set is in one place */
-    var mine = records.filter(function (r) { return r.family === f.id; });
+    var mine = records.filter(function (r) { return (r.families || [r.family]).indexOf(f.id) >= 0; });
     var chatRole = function (n) { var l = chat.filter(function (x) { return x.name === n; })[0] || N.list().filter(function (x) { return x.name === n; })[0]; return l || {}; };
     return mine.filter(function (r) { return r.source === 'pmg'; }).concat(mine.filter(function (r) { return r.source !== 'pmg'; })).map(function (r) {
       var l = r.source === 'pmg' ? r : chatRole(r.name);

@@ -76,7 +76,7 @@
     if (moving > (act === 'seq' ? 3 : 2)) return bad(act === 'seq' ? 'more than three moving parts' : 'more than two moving parts (three only for act seq)');
     if (!N.register(name, { parts: parts, act: act, role: role })) return bad('PM56_NEON.register refused it');
     records[name] = {
-      name: name, family: r.family || 'misc', meaning: r.meaning, role: role, act: act,
+      name: name, family: r.family || 'misc', families: [r.family || 'misc'], meaning: r.meaning, role: role, act: act,
       replaces: r.replaces || [], aliases: r.aliases || [], surfaces: r.surfaces || [], note: r.note || '',
       redraw: r.redraw || '', moving: moving, source: 'pmg'
     };
@@ -95,9 +95,11 @@
     if (!N.has(c)) { problems.push('map ' + name + ': the 5.6 Pro set has no such glyph'); return false; }
     var rec = records[c];
     if (!rec) {
-      rec = records[c] = { name: c, family: r.family || 'chat', meaning: r.meaning || '', role: '', act: '', replaces: [], aliases: [], surfaces: [], note: '', source: 'c56' };
+      rec = records[c] = { name: c, family: r.family || 'chat', families: [], meaning: r.meaning || '', role: '', act: '', replaces: [], aliases: [], surfaces: [], note: '', source: 'c56' };
       order.push(c);
     }
+    /* one glyph can serve several families (the status marks: the rail, the terminal, the panels) */
+    if (r.family && rec.families.indexOf(r.family) < 0) rec.families.push(r.family);
     (r.replaces || []).forEach(function (x) { if (rec.replaces.indexOf(x) < 0) rec.replaces.push(x); });
     (r.surfaces || []).forEach(function (x) { if (rec.surfaces.indexOf(x) < 0) rec.surfaces.push(x); });
     if (r.meaning && !rec.meaning) rec.meaning = r.meaning;

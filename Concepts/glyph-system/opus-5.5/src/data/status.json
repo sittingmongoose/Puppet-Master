@@ -20,6 +20,7 @@
   "change-added",
   "change-modified",
   "change-deleted",
+  "change-conflict",
   "change-renamed"
  ],
  "extra": {
@@ -41,7 +42,7 @@
    "glyph": "st-off",
    "tone": "paused",
    "label": "off",
-   "meaning": "Not set up, disabled or not installed: nothing is running and nothing is wrong.",
+   "meaning": "Not set up, disabled or not installed: nothing is running and nothing is wrong. Drawn as the power symbol; a barred ring reads as no entry (blocked).",
    "example": "GitHub sync not set up"
   },
   "info": {
@@ -78,6 +79,13 @@
    "label": "renamed",
    "meaning": "Renamed or moved.",
    "example": "src/rail/index.ts"
+  },
+  "change-conflict": {
+   "glyph": "change-conflict",
+   "tone": "blocked",
+   "label": "conflict",
+   "meaning": "Two changes collide and someone must choose (a merge conflict). Not a run state.",
+   "example": "src/rail/menu.ts"
   }
  },
  "meaning": {
@@ -204,8 +212,6 @@
     "wt-dirty"
    ],
    "rail": [
-    "c (conflict)",
-    "conflict",
     "dirty",
     "warn"
    ]
@@ -545,6 +551,12 @@
     "not set up",
     "not connected",
     "off"
+   ]
+  },
+  "change-conflict": {
+   "rail": [
+    "c (conflict)",
+    "conflict"
    ]
   }
  },
