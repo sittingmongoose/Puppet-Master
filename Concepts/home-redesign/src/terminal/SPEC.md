@@ -239,3 +239,37 @@ the glyphs, does not draw curvature, burn-in or noise, and the Appearance popove
 
 Phosphor schemes map colours outside the 16 (the 256-colour cube and truecolor) onto the phosphor by brightness, so a
 program's `38;5;196` never paints red on a green tube.
+
+## 10. Performance
+
+Targets for the native engine (research-terminal-engines-ide.md E3; DL-035's own engine must meet them):
+
+| Metric | Target |
+|---|---|
+| Parse and grid throughput, ASCII, rendering on | at least 100 MB/s (stretch 200) |
+| CSI-heavy throughput | at least 30 MB/s |
+| Windows through ConPTY, plain text | at least 20 MB/s (to be measured) |
+| 10,000-line burst | parse within 100 ms; at most one render per vsync; no UI frame over 16.6 ms |
+| Keystroke to present (software) | at most one frame plus 4 ms |
+| Keystroke to photon (camera, 60-120 Hz) | at most 40 ms |
+| Skia frame, full 200 x 60 redraw | at most 4 ms; a frame with dirty rows only at most 1 ms |
+| DOM frame (web client), full 200 x 60 | at most 8 ms script, style and layout; a typical dirty frame at most 2 ms |
+| Memory, 10,000 x 200 scrollback | at most 20 MB with an 8-byte cell (stretch 5 MB once cold rows are compressed) |
+| Mounted DOM rows (web client) | visible rows plus 20, hard cap 200 |
+| Image store | 320 MiB per screen buffer on desktop, lower on the web |
+
+Measured in the concept (JavaScript and canvas 2D, so these show the design works, not the native numbers):
+
+| Measure | Nas1, software rendering (no GPU) | P1000, GPU Chrome |
+|---|---|---|
+| Full redraw, 231 x 62 cells of worst-case per-cell colours | median 27.4 ms, p95 44.3 ms | (pending) |
+| Frame with one dirty row | median 0.5 ms, p95 0.6 ms | (pending) |
+| Parse, plain ASCII | 40.2 MB/s | (pending) |
+| Parse, SGR-heavy | 14.3 MB/s | (pending) |
+| Scrollback, 10,060 x 200 cells | 9 bytes a cell in typed arrays (code point 4, style id 4, flags 1): 17.3 MB, plus about 0.2 KB of line object per line | same |
+
+What keeps the concept fast, and the native port should copy: only rows whose content version, overlays or cursor
+changed repaint; the default background is painted once by the screen box, never per cell; output after an image
+waits while the image decodes; an image change repaints the visible rows only; GPU effects run only after a repaint or
+while animating; ambient effects run at most 30 fps and only in the focused terminal; finds refresh at most every
+160 ms while output arrives; a hidden terminal draws nothing.
