@@ -27555,7 +27555,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
-depends_on: [DL-183, F3-642, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
+depends_on: [DL-183, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
 unblocks: []
 acceptance_criteria:
   - "The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot, the tab override only in the tab's state, and the look's defaults are not stored."
@@ -27661,7 +27661,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false
-depends_on: [DL-181, DL-182, SMPFS-180, SMPFS-181, SP-125, SP-128, SP-330, SP-331, F3-645, CV-362]
+depends_on: [DL-181, DL-182, SMPFS-180, SMPFS-181, SP-125, SP-128, SP-330, SP-331, CV-362]
 unblocks: []
 acceptance_criteria:
   - "A terminal tab moved, collapsed, maximized or hidden leaves its terminal_session_record unchanged; tab_id is the tab that shows the session or null."
