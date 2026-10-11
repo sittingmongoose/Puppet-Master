@@ -124533,6 +124533,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        target under the pointer (a text surface in a card): a target that carries it itself, or sits inside an
        exempt container (a focus landmark, the Usage board), still hovers. */
     var EXEMPT = '[data-pm-hover-exempt]';
+    /* An open menu or popover is drawn over the cards: while one shows, nothing hovers (the fixed frame and glow proxies
+       sit above the page and would cross its rows), and a pointer on one hovers nothing. Checked only after a click,
+       a key or a pointerdown (when menus open and close), never per frame. */
+    var POPUP = '.pmu-menu,.pmu-pop,[role="menu"]';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
        while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
@@ -124640,6 +124644,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
+    var recheck = false, popupOpen = false;
+    function anyPopup() {
+      var l = document.querySelectorAll(POPUP);
+      for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; }
+      return false;
+    }
+    /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
+       switched): the next frame looks again at what is under the pointer */
+    function recheckSoon() { recheck = true; if (hover || proxyShown()) { moved = true; start(); } }   /* else the next frame takes it */
 
     function gestureRest() {
       var b = document.body;
@@ -124653,7 +124666,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       px = e.clientX; py = e.clientY; have = true; buttons = e.buttons | 0; hit = e.target;
       var now = e.timeStamp || performance.now();
       if (e.target === lastHitEl && now - lastHitAt < 400) want = lastHitT;
-      else { want = resolve(e.target); lastHitEl = e.target; lastHitT = want; lastHitAt = now; }
+      else {
+        want = e.target && e.target.closest && e.target.closest(POPUP) ? null : resolve(e.target);
+        lastHitEl = e.target; lastHitT = want; lastHitAt = now;
+      }
       moved = true;
       start();
     }
@@ -124855,7 +124871,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
       /* READ ------------------------------------------------------------ */
       if (tokensDirty) readTokens();
-      var next = rest || !have ? null : (calm ? hover : want);
+      if (recheck) {
+        recheck = false;
+        popupOpen = anyPopup();
+        if (have && !popupOpen) {
+          var under = document.elementFromPoint(px, py);
+          if (under && under !== hit) { hit = under; want = under.closest && under.closest(POPUP) ? null : resolve(under); lastHitEl = under; lastHitT = want; lastHitAt = now; }
+        }
+        if (hover && !hover.getClientRects().length) want = null;   /* its page went away */
+      }
+      var next = rest || !have || popupOpen ? null : (calm ? hover : want);
       if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
       if (next && !next.isConnected) next = null;
       var enter = next !== hover;
@@ -125224,8 +125249,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (e.pointerType === 'touch') return;
       buttons = e.buttons | 0 || 1;
       if (hover) { springs.add(st(hover)); start(); }
+      recheckSoon();
     }, { capture: true, passive: true });
     document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; }, { capture: true, passive: true });
+    document.addEventListener('click', recheckSoon, { capture: true, passive: true });
+    document.addEventListener('keydown', recheckSoon, { capture: true, passive: true });
     window.addEventListener('scroll', function (e) {
       /* only a scroller around the scope moves its boxes (the demo chat stream scrolls on its own all the time) */
       var t = e.target;
