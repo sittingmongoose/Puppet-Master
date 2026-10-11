@@ -2144,9 +2144,11 @@ canonical_text: >-
   board's Add widget and Start from..., a widget card's Details (its gestures, size picker and menus are the Usage
   board's own controls), and on Agents the Show filters and each agent's card. The Debug Console's session sub-tabs.
   The chat header's Keep the chat open in narrow windows beside the Home options menu's, both the typed local action
-  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo after Start from has no wiring row
-  until the lead rules on its id; it is the census's one open item. ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
-  unresolved_count=0. This census supersedes
+  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo after Start from has a WM-090 row
+  with no id until the lead rules on its id; it is the census's one open item (amended 2026-10-10, DL-186; it read:
+  The Undo after Start from has no wiring row until the lead rules on its id). ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
+  unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after (amended 2026-10-10, DL-186; it read:
+  The census reports unresolved_count=0). This census supersedes
   the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
@@ -2154,7 +2156,7 @@ split_recommended: false
 depends_on: [DL-180, DL-186, DL-187, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637, F3-638]
 unblocks: [ATS-075]
 acceptance_criteria:
-  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
+  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list; every row but the Undo after Start from's names its id, and the census reports unresolved_count=1 (that Undo's id) until the lead rules, and 0 after (amended 2026-10-10, DL-186; it read: Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0.)"
   - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is saved as view state with no workspace.layout_changed event, revision advance or receipt, and no pending exception remains."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."

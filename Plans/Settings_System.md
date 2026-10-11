@@ -2178,9 +2178,9 @@ canonical_text: >-
   disclosure, and keeps its Details inspector, search landing, All Settings row, and change-refresh behaviour.
   Core settings stay on six plain pages; 10 of the 12 machine-generated reference pages and the concept-only
   Assistant page retire because every row they held now has a manager home; the planning domain keeps its id
-  with the label Planning. 674 inventory rows render inside managers, every one of the 892 concept ids
-  renders exactly once (amended 2026-10-10, DL-187: every one of the 891 live concept ids renders exactly once, and
-  the retired Chat Layout row, the 892nd id, is never offered as a setting to change; SSYS-050), and the five branching plan-limit ids that the reference builder dropped are hosted by
+  with the label Planning. 674 inventory rows render inside managers, every one of the 891 live concept ids
+  renders exactly once and the retired Chat Layout row, the 892nd id, is never offered as a setting to change
+  (amended 2026-10-10, DL-187, SSYS-050; it read: every one of the 892 concept ids renders exactly once), and the five branching plan-limit ids that the reference builder dropped are hosted by
   the placement map pending subgroup registration. The same pass gives the kit themed listboxes for every
   select and menu, dot-plus-text status tokens instead of pills, hero side panels (identity header, facts,
   progress rail, card sections revealed in a stagger, sticky footer), rosters that scroll inside their manager,
@@ -2190,8 +2190,7 @@ gui_classification_reason: Governs where canonical settings render, the listbox 
 depends_on: [SSYS-033, SSYS-005, SSYS-006, SSYS-015, DL-187]
 unblocks: []
 acceptance_criteria:
-  - A walk over every workspace and every manager tab finds each of the 892 concept ids rendered exactly once; All Settings lists 892 rows in 12 categories.
-  - "Amended 2026-10-10 (DL-187): with Chat Layout retired, the walk finds each of the 891 live concept ids rendered exactly once and All Settings lists those 891 live rows in 12 categories; the retired Chat Layout row is never offered as a setting to change."
+  - "A walk over every workspace and every manager tab finds each of the 891 live concept ids rendered exactly once; All Settings lists 891 live rows in 12 categories; the retired Chat Layout row is never offered as a setting to change (amended 2026-10-10, DL-187; it read: A walk over every workspace and every manager tab finds each of the 892 concept ids rendered exactly once; All Settings lists 892 rows in 12 categories.)"
   - Details opens for a setting rendered inside a manager; global search lands on a setting inside a non-active manager tab; refreshSettingRow swaps an inline row in place.
   - No manager renders a second Advanced disclosure; inline sections precede the manager's Advanced disclosure; advanced placements render first inside it.
   - No native select is visible in Settings; dropdown and menu popouts open with the shared sprout motion inside the viewport; no capsule pills remain except keyboard keys.
@@ -3040,7 +3039,7 @@ Every row added or amended here applies live. A change commits through the Setti
 
 ### Rows retired
 
-Retired rows follow the inventory's own convention, the one `general.visual.basic-color-scheme` carries: the row stays in `Plans/settings_inventory.json` with its id, label and shape, and its description ends with `(Superseded by …)` naming what replaced it. No id is deleted or reused. A row retired here is drawn on no page, in no manager and in no search result, Settings Transfer never proposes it, and nothing reads a value stored for it; no shipped build has stored one, because the Settings runtime is not yet built (section 7).
+Retired rows follow the inventory's own convention, the one `general.visual.basic-color-scheme` carries: the row stays in `Plans/settings_inventory.json` with its id, label and shape, and its description ends with `(Superseded by …)` naming what replaced it. No id is deleted or reused. One exception, dated 2026-10-10 (DL-187, the planning thread's ruling): `general.visual.chat-layout-mode` keeps its id, label and type but no options, default or recommended value, since it is retired with no options. A row retired here is drawn on no page, in no manager and in no search result, Settings Transfer never proposes it, and nothing reads a value stored for it; no shipped build has stored one, because the Settings runtime is not yet built (section 7).
 
 | Id | Label | Why it retires | What replaces it |
 |---|---|---|---|
@@ -3060,7 +3059,7 @@ SSYS-050's seven:
 
 | Id | Label | What changed |
 |---|---|---|
-| `general.interaction.dashboard-widgets` | Dashboard Widgets (Choose widgets) | Every dashboard tab keeps its own widgets and layout (`widget_layout:v1:dashboard:<board_id>`, WS-030); the row opens the Home dashboard tab's own widget picker where that tab is and stores no widget layout. Amended 2026-10-10 (DL-186): each board is kept per project (`widget_layout:v1:<project_id>:<board_id>`, WS-030; the 2026-10-09 key was never written), the picker is the Home dashboard's Add widget, and Home starts from its own set of Usage widgets, the old Home widgets gone; range, scope, Start from and presets are the dashboard's own Board menu, never Settings rows. |
+| `general.interaction.dashboard-widgets` | Dashboard Widgets (Choose widgets) | Every dashboard tab keeps its own widgets and layout, each board per project (`widget_layout:v1:<project_id>:<board_id>`, WS-030; amended 2026-10-10, DL-186; it read: `widget_layout:v1:dashboard:<board_id>`, a key that was never written); the row opens the Home dashboard tab's own widget picker where that tab is and stores no widget layout. Amended 2026-10-10 (DL-186): the picker is the Home dashboard's Add widget, and Home starts from its own set of Usage widgets, the old Home widgets gone; range, scope, Start from and presets are the dashboard's own Board menu, never Settings rows. |
 | `general.interaction.max-editor-tabs` | Max Open Editor Tabs | Counts editor tabs across every panel of the workspace (25, unchanged); past it the least recently used editor tab closes, never a pinned one or one with unsaved changes. Other kinds are not counted and never close on their own: closing a terminal ends its session (DL-181). |
 | `general.startup.max-persisted-tabs` | Tabs Remembered Between Sessions | Applies to tabs of every kind in a workspace's saved layout (50, unchanged), least recently used dropping first; the editor tabs among them stay within Max Open Editor Tabs, the bound section 2 of the presentation rework already names. |
 | `general.startup.reset-home-layout` | Restore Home Layout (was Reset Home Layout) | Puts the panels back in the Home layout and keeps every open tab (`cmd.workspace_layout.reset`); the label is the title bar's Home menu row's; its button reads Restore. |
@@ -3121,7 +3120,7 @@ Choices the concepts carried that are not rows, and why:
 - Degauss. A one-off action in the terminal's Appearance popover (F3-643), never stored.
 - Keeping the chat open in narrow windows (amended 2026-10-10, DL-187). The chat's own preference in its header menu and the Home options menu (`ui.chat_column.keep_open`); its 2026-10-09 row retires.
 - A dashboard's range, scope, starting set and presets (added 2026-10-10, DL-186). Each dashboard's Board menu sets them (`ui.widget_board.set_view`, `cmd.widget.reset_layout` with `set_id`, `ui.widget_preset.*`); they are kept with the board or the person's presets (WS-030), never as Settings values.
-- A terminal's notification mute and the notification rate (added 2026-10-10, DL-187, D38). The mute is that terminal tab's own state, saved with the tab (`ui.terminal.mute_notifications`, lead ruling F5), and the limit of one notification every 3 s per terminal is fixed (F3-641). The app's Notifications switch (`general.interaction.notifications-enabled`), the master switch for all alerts, also turns terminal notifications off.
+- A terminal's notification mute and the notification rate (added 2026-10-10, DL-187, D38). The mute is that terminal tab's own state, saved with the tab (`ui.terminal.mute_notifications`, lead ruling F5), and the limit of one notification every 3 s per terminal is fixed (F3-641).
 - The saved-scrollback secret scrub and the 512 MiB total across terminals (added 2026-10-10, DL-187, D36, D37). Both are fixed (lead ruling F4; SP-332); Saved Terminal Output's Session Only remains the way to save no scrollback at all.
 
 ### The terminal look rows
@@ -3355,10 +3354,8 @@ canonical_text: >-
   computers in their own SSH hosts submenu (D39). code.terminal.transcript-retention's Keep Saved Scrollback also
   leaves well-known secrets out of the saved copy and keeps saved scrollback within 512 MiB across every terminal, the
   oldest first, beside each terminal's 64 MiB; the scrub and the 512 MiB total are fixed (D36, D37, SP-332). A
-  terminal's notification mute is that tab's own state (ui.terminal.mute_notifications), the limit of one notification
-  every 3 s per terminal is fixed (F3-641), and the app's Notifications master switch
-  (general.interaction.notifications-enabled) also turns terminal notifications off (D38). No row sets a terminal
-  tab's colour or icon (D34).
+  terminal's notification mute is that tab's own state (ui.terminal.mute_notifications, D38), and the limit of one
+  notification every 3 s per terminal is fixed (F3-641). No row sets a terminal tab's colour or icon (D34).
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3424,7 +3421,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (DL-187; D34, D36 to D39; lead rulings F4 and F5): no terminal row is added; Allowed Shell Profiles names the SSH hosts submenu, Saved Terminal Output names the fixed secret scrub and 512 MiB total, the notification mute is tab state and the Notifications master switch also covers terminal notifications."
+  - "Amended 2026-10-10 (DL-187; D34, D36 to D39; lead rulings F4 and F5): no terminal row is added; Allowed Shell Profiles names the SSH hosts submenu, Saved Terminal Output names the fixed secret scrub and 512 MiB total, and the notification mute is tab state."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look consistently in the appearance-model prose and field tables."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."

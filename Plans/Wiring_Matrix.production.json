@@ -55956,7 +55956,7 @@
         "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
         "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
-        "Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091)."
+        "One Home producer composes cmd.settings.transaction.preview then cmd.settings.transaction.apply: the terminal Appearance popover's fields with All terminals selected (SSYS-051). It has no row of its own (WM-091). (amended 2026-10-10, DL-187: Keep the chat open in narrow windows is ui.chat_column.keep_open, not a Settings write; it read: Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091).)"
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56024,7 +56024,7 @@
         "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
         "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
-        "Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091)."
+        "One Home producer composes cmd.settings.transaction.preview then cmd.settings.transaction.apply: the terminal Appearance popover's fields with All terminals selected (SSYS-051). It has no row of its own (WM-091). (amended 2026-10-10, DL-187: Keep the chat open in narrow windows is ui.chat_column.keep_open, not a Settings write; it read: Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091).)"
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -62802,7 +62802,7 @@
         "cmd.widget.add must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "The dashboard tab's Add widget producer (formerly catalog.dashboard_add_widget) dispatches cmd.widget.add; cmd.dashboard.add_widget is alias metadata only, with no row, handler or event, and dashboard.widget_added is withdrawn (UCC-202).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record."
@@ -62812,7 +62812,7 @@
       "disabled_reason_projection": "state.commands.widget_add.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.add has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.add has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.add.dispatch_receipt"
         ]
@@ -62869,7 +62869,7 @@
         "cmd.widget.configure must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record."
       ],
@@ -62878,7 +62878,7 @@
       "disabled_reason_projection": "state.commands.widget_configure.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.configure has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.configure has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.configure.dispatch_receipt"
         ]
@@ -62935,7 +62935,7 @@
         "cmd.widget.move must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record."
       ],
@@ -62944,7 +62944,7 @@
       "disabled_reason_projection": "state.commands.widget_move.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.move has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.move has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.move.dispatch_receipt"
         ]
@@ -63001,7 +63001,7 @@
         "cmd.widget.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record."
       ],
@@ -63010,7 +63010,7 @@
       "disabled_reason_projection": "state.commands.widget_remove.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.remove.dispatch_receipt"
         ]
@@ -63067,7 +63067,7 @@
         "cmd.widget.reset_layout must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record.",
         "Amended 2026-10-10 (DL-186, P4): on a dashboard board the payload is { scope: room, room: <board_id>, set_id? }; set_id names the set the board starts from (default, room:<room_id>, host:dashboard or user:<preset_id>), and a reset without set_id returns the board to its own default. set_id is offered only on dashboard boards."
@@ -63077,7 +63077,7 @@
       "disabled_reason_projection": "state.commands.widget_reset_layout.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.reset_layout has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.reset_layout has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.reset_layout.dispatch_receipt"
         ]
@@ -63134,7 +63134,7 @@
         "cmd.widget.resize must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "PMConcept7 preview, hover, popup, ghost, placeholder, and animation frames remain local and do not dispatch this command.",
         "Exactly one settled command is dispatched only when the widget mutation changes canonical host state; cancellation and no-change release dispatch zero commands.",
-        "Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.",
+        "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record."
       ],
@@ -63143,7 +63143,7 @@
       "disabled_reason_projection": "state.commands.widget_resize.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.widget.resize has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or widget_layout:v1:dashboard.",
+        "description": "cmd.widget.resize has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 pointer/menu preview is local; only the settled owner-accepted mutation may update widget_layout:v1:usage or, in a dashboard tab, that board's widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186, WS-030; it read: widget_layout:v1:usage or widget_layout:v1:dashboard).",
         "receipt_or_event_refs": [
           "cmd.widget.resize.dispatch_receipt"
         ]
