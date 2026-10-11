@@ -18533,6 +18533,16 @@ rows remain `verification_pending`, so this addendum claims no executable persis
 does not create another database family, command family, event family, WorkNode, NodeSeed, executable queue,
 implementation task, production implementation, or generated governance output.
 
+Amended 2026-10-10 (DL-186): dashboard boards and presets. Dashboard tabs now run on the Usage board engine, one board per tab, and Jared's answers to the dashboard questions (D10 P1-P13, D35) settle what is kept where. `Plans/Widget_System.md#WS-030` owns the boards, their ids, sets and presets, and `Plans/FinalGUISpec.md#F3-638` their look; this passage owns keys, scope, migration and deletion. It supersedes this addendum's single Dashboard namespace for new writes: the sentences below that name `widget_layout:v1:dashboard` describe the old single Dashboard layout only.
+
+- **Boards, per project (P5).** Each board the engine runs (`home`, `metrics`, `monitoring` and every `dash-<n>` a person makes) keeps one envelope of this widget-layout family under `widget_layout:v1:<project_id>:<board_id>`, registered as family `dashboard_board_layout` in `Plans/storage_value_registry.json`. The `project_id` is 1 to 64 characters with no white space and no colon. The envelope's `host_id` is `home.dashboard`, its project is the board's real project and each record's `room_id` is the board id. Besides the widgets (their sizes, order, visibility and configuration, as `UsageWidgetLayoutRecord` above), the envelope keeps the board's view (range and scope, written by the typed local action `ui.widget_board.set_view`, lead ruling F1), the `set_id` of the set the board was started from when that set is not `default`, and a custom dashboard's name (trimmed, runs of white space made one, at most 80 characters; the default "Dashboard <n>" is not stored). Agents is drawn by the dashboard kind and stores nothing here. The ids `usage` and `dashboard` and the Usage room ids are never board ids, so no board key meets `widget_layout:v1:usage` or the old `widget_layout:v1:dashboard`. An envelope that cannot be read is set aside under its key with `:quarantine` added, and the board starts again from its own default set, as the rule above for an unreadable layout says.
+- **A project switch** writes each open board to the old project's key and reads it from the new project's.
+- **One-time adoption.** A board saved under the unscoped `widget_layout:v1:<board_id>` by the panels concept's first build of these boards is adopted once, by the first project that shows that board while its own key is missing: the envelope is taken, its project rewritten to that project, and the unscoped key removed. The form `widget_layout:v1:dashboard:<board_id>` that canon named on 2026-10-09 was never written, so nothing migrates from it.
+- **The old Dashboard layout (P1, option B).** `widget_layout:v1:dashboard` holds the old Home widgets (run progress, lanes, results), which leave Home. It is converted into no board, never written again and kept read-only as a rollback record, like `dashboard_layout:v1`.
+- **Forgetting a board (D35, P6).** Delete dashboard... (custom dashboards only, after a confirm) deletes the board's key, its quarantine copy and its name. When a custom dashboard leaves the reopen list (the closed-tab stack of 20, SP-330) while it is not open as a tab, the same three are deleted. Home, Metrics and Monitoring keep their stores; they are reset, never deleted. A saved named layout may keep its own snapshot of a board (SP-330).
+- **Presets, per user (P4, D35).** A person's saved presets belong to the person, not to a project: one record under `widget_presets:v1`, registered as family `widget_presets`. Each preset holds its id, its name, when it was saved, the board it was saved from, the layout of the widgets shown at each board class (S, M, L and XL, `Plans/Widget_System.md#WS-017`), each widget's size preset and each widget's configuration, and never a board's view. A name is trimmed, runs of white space made one, at most 80 characters, and an unnamed preset is "Preset <n>". Saving, renaming and deleting a preset are typed local actions with no command, receipt or event (`ui.widget_preset.save`, `ui.widget_preset.rename`, `ui.widget_preset.delete`, lead ruling F2). Applying one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`, which writes the board's own key; deleting a preset leaves the boards that started from it as they are.
+- **Registration.** Both families are registered `deferred_not_build_blocking` with retention `RP-CONFIG-CURRENT`: their keys, scope, quarantine, adoption and deletion are fixed here, and their value schema waits for the physical schema of this family's envelope, which `UsageWidgetLayoutRecord` describes record by record but no schema file holds yet. The panels concept's own stores (`pm.home.dashboards:v1:<project>` for names, its preset and board envelope schema ids) are concept lineage only, never product keys.
+
 ### SP-249 - Settled Widget Layout Versioning Migration And Write Boundary
 
 ```yaml
@@ -18553,9 +18563,18 @@ canonical_text: >-
   unmappable layout is quarantined or reset to the corrected current default and cannot silently override it.
   Existing `cmd.widget.*` commit paths are the only mutation seam; storage is written once after a successful
   settled commit and cancellation writes nothing.
+  Amended 2026-10-10 (DL-186): dashboard boards keep their envelopes per project under
+  `widget_layout:v1:<project_id>:<board_id>` (family `dashboard_board_layout`; host `home.dashboard`, `room_id` the
+  board id; the envelope also keeps the board's view, a non-default `set_id` and a custom dashboard's name), set an
+  unreadable envelope aside under `:quarantine`, adopt an unscoped `widget_layout:v1:<board_id>` once and remove it,
+  and forget a custom board's key, quarantine copy and name when it is deleted or leaves the reopen list unopened.
+  The old `widget_layout:v1:dashboard` converts into no board and is never written again. Presets are per user
+  under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying
+  one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are
+  not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
-depends_on: [SP-248, WS-009, WS-020, UF-095]
+depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]
 unblocks: []
 acceptance_criteria:
   - Usage and Dashboard persist under their separate canonical widget-layout namespaces and never write the Home workspace record.
@@ -18563,9 +18582,14 @@ acceptance_criteria:
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft is serializable as UsageWidgetLayoutRecord."
   - Migration validates widget identities and maps only to supported current geometry; invalid or unmappable records cannot override corrected defaults.
   - One successful settled widget command results in one storage write; cancellation or unchanged release results in none.
+  - "A dashboard board's widgets, view, non-default set_id and custom name are written only to widget_layout:v1:<project_id>:<board_id> of the board's own project; a project switch writes the open boards to the old project's keys and reads the new project's; no board key is ever usage, dashboard or a Usage room id."
+  - "An unscoped widget_layout:v1:<board_id> is adopted once into the first project that shows the board while its key is missing and is then removed; widget_layout:v1:dashboard is never converted into a board or written."
+  - "Deleting a custom dashboard, or its leaving the reopen list while not open, deletes its key, its :quarantine copy and its name; Home, Metrics and Monitoring keep theirs."
+  - "Presets are one per-user record under widget_presets:v1 holding id, name, saved time, source board, the layout per board class S, M, L and XL, each widget's size preset and configuration, never a board's view; names are at most 80 characters, default Preset <n>; save, rename and delete take no receipt or event."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
+  - Plans/storage_value_registry.json (families dashboard_board_layout and widget_presets)
   - Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)
   - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/migration_observations"
   - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/transaction_interaction_observations"
@@ -18585,9 +18609,20 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
+  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)"
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
+  - "widget_layout:v1:<project_id>:<board_id>"
+  - "widget_layout:v1:<board_id>"
+  - ":quarantine"
+  - widget_presets:v1
+  - home.dashboard
+  - dashboard_board_layout
+  - widget_presets
   - default-set version
   - UsageWidgetLayoutRecord
   - committed revision
@@ -18598,6 +18633,12 @@ negative_constraints:
   - Do not serialize transient interaction state or write storage on pointer-preview frames.
   - Do not allow an invalid old layout to override corrected current defaults.
   - Do not treat the protected generated artifact or an in-progress audit as proof that the storage write contract executes correctly.
+  - "Do not share a board across projects, write a board under the old widget_layout:v1:dashboard or widget_layout:v1:dashboard:<board_id>, or keep presets per project."
+compatibility_only_notes:
+  - "widget_layout:v1:dashboard (the old single Dashboard layout) stays a read-only rollback record, like dashboard_layout:v1; 'Dashboard records are scoped by Dashboard host' describes it only."
+  - "The concept's pm.home.dashboards:v1:<project> name store and its board and preset envelope schema ids are concept lineage only."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): dashboard boards are per project under widget_layout:v1:<project_id>:<board_id> with quarantine, one-time adoption and forgetting; presets are per user under widget_presets:v1; the single Dashboard namespace is the old layout's only."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Widget_System.md
@@ -18619,9 +18660,11 @@ canonical_text: >-
   content tier. Both fields are settled state: held-resize drafts and pointer coordinates remain local and are
   never serialized. Dashboard widget geometry remains in `widget_layout:v1:dashboard`; the Home record owns
   the Dashboard surface, not the widgets inside it.
+  Amended 2026-10-10 (DL-186): this describes the v1 record; dashboard boards now keep their widgets per project
+  under `widget_layout:v1:<project_id>:<board_id>` (SP-249), and `widget_layout:v1:dashboard` is read-only.
 gui_related: true
 gui_classification_reason: These schema fields determine restored Home dock thickness and adaptive surface content after a committed size change.
-depends_on: [SP-245, WS-018, WS-020]
+depends_on: [SP-245, WS-018, WS-020, DL-186]
 unblocks: []
 acceptance_criteria:
   - Plans/home_workspace_layout.schema.json admits and requires cross_basis_px in canonical normalized surface sizes.
@@ -18666,6 +18709,8 @@ negative_constraints:
   - Do not place Dashboard widget geometry in the Home surface layout record.
   - Do not claim schema acceptance proves runtime migration or persistence behavior.
   - The run-002 Home observation binds only restored visible Home composition; product persistence and migration remain schema-governed and are not promoted to executed native-runtime evidence.
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): the widget_layout:v1:dashboard sentence describes the v1 record only; boards are per project (SP-249)."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/home_workspace_layout.schema.json
@@ -27414,11 +27459,11 @@ This addendum compiles Jared's home and terminal decisions of 2026-10-09 into st
 
 **Key and schema.** The Home layout of a project and workspace tab is one record under `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, family `home_workspace_layout_v2`, schema `pm.home_workspace_layout.v2` 2.0.0 in `Plans/home_workspace_layout_v2.schema.json`, retention `RP-CONFIG-CURRENT`. It is the only Home layout authority. `home_workspace_layout.v1:{project_id}:{workspace_tab_id}` and the Home part of `layout:v1` (`Plans/FinalGUISpec.md` section 15.1 and `Plans/FinalGUISpec.md#F3-217`) are read-only migration inputs.
 
-**What it holds.** The panel split tree (splits with an axis, children and sizes as proportions; panels with their ordered tab ids, active tab, preview tab, pinned count, collapsed and locked flags), the tab records keyed by tab id (kind, user label, pinned, kept or preview, the kind's serialized state of at most 16 KB, the domain reference), a view-state block (focused panel, maximized panel or none, recent-tab order), the chat column (width or the window default, History pinned, popped out, shown), the user's saved named layouts (shape, sizes and the kinds each slot holds), a closed-tab stack of at most 20, `revision`, `updated_at` and the migration stamp. The schema's `$comment` lists the invariants it cannot express (sizes sum to 1, one tab in exactly one panel, pinned tabs first, one preview tab per panel, no two terminal tabs showing the same session, the 16 KB cap and the rest); the owner checks them before every write. The shipped named layouts are canon in `Plans/FinalGUISpec.md#F3-630` and are not stored.
+**What it holds.** The panel split tree (splits with an axis, children and sizes as proportions; panels with their ordered tab ids, active tab, preview tab, pinned count, collapsed and locked flags), the tab records keyed by tab id (kind, user label, pinned, kept or preview, the kind's serialized state of at most 16 KB, the domain reference), a view-state block (focused panel, maximized panel or none, recent-tab order), the chat column (width or the window default, History pinned, shown; amended 2026-10-10, DL-187: the pop-out is never saved, so the column no longer holds "popped out"), the user's saved named layouts (shape, sizes and the kinds each slot holds, and since 2026-10-10 the boards of their dashboard tabs, below), a closed-tab stack of at most 20, `revision`, `updated_at` and the migration stamp. The schema's `$comment` lists the invariants it cannot express (sizes sum to 1, one tab in exactly one panel, pinned tabs first, one preview tab per panel, no two terminal tabs showing the same session, the 16 KB cap and the rest); the owner checks them before every write. The shipped named layouts are canon in `Plans/FinalGUISpec.md#F3-630` and are not stored.
 
-**What it never holds.** Editor buffers and dirty state, terminal sessions, PTYs and scrollback, browser history and sessions, chat messages, credentials and a dashboard's widget layout. Each dashboard tab keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>` (`Plans/Widget_System.md#WS-030`). Narrow-window states, overlays, open menus, hover and drag state are never written.
+**What it never holds.** Editor buffers and dirty state, terminal sessions, PTYs and scrollback, browser history and sessions, chat messages, credentials and a dashboard's widget layout. Each dashboard board keeps its own widget layout per project under `widget_layout:v1:<project_id>:<board_id>` (`Plans/Widget_System.md#WS-030`, SP-249; amended 2026-10-10, DL-186: the key `widget_layout:v1:dashboard:<board_id>` this sentence named was never written), apart from the snapshot a saved named layout keeps (below). Narrow-window states, overlays, open menus, hover and drag state are never written.
 
-**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families.
+**Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). (Amended 2026-10-10, DL-187: the pop-out is never written at all, D32; the pop-out and return still append only `panel.undocked` or `panel.redocked`. A terminal tab's notification mute and a Debug Console tab's chosen session sub-tab, both kept in the tab's state, are written like view state too.) SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families.
 
 **First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `Plans/FinalGUISpec.md#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
 
@@ -27431,7 +27476,7 @@ The conversion table:
 | A shown editor panel (`editor_panel_1` to `editor_panel_4`) | A panel holding that editor group's open tabs, in order, as kept `file:<path>` tabs, its active tab kept; the tabs come from the editor's own workspace state (`editor_workspace_state.v1:{project_id}`). When the panel has a `browser_session_id`, a browser tab bound to it joins the panel after the editor tabs: the active tab when `browser_active` was true, else a background tab, so no browser session is dropped. |
 | A hidden editor panel (`visible: false`) that holds tabs or a browser session | A collapsed panel holding them, by the row above. |
 | A hidden editor panel with no tabs and no browser session | Nothing: it holds nothing to keep. |
-| The dashboard surface | A panel holding `dashboard:home`, pinned; its widgets stay where `Plans/Widget_System.md#WS-030` puts the Home board. A hidden dashboard becomes the same panel, collapsed. |
+| The dashboard surface | A panel holding `dashboard:home`, pinned; its widgets stay where `Plans/Widget_System.md#WS-030` puts the Home board. A hidden dashboard becomes the same panel, collapsed. Amended 2026-10-10 (DL-186): the old Home widgets leave Home (P1), so the old Dashboard layout `widget_layout:v1:dashboard` is converted into no board; it stays a read-only record (SP-249) and the Home board starts from its own default set. |
 | Each terminal section | A panel in the bottom row, in slot order. Each workgroup pane becomes its own terminal tab `terminal:<terminal_session_id>` bound to its existing session, in workgroup and pane order, read from the section, workgroup, pane, leaf-pane and session records (SP-332). The tab of the section's active session is active. A pane's own tab title becomes the tab's user label; section and workgroup titles are not carried. A pane with no attached session makes no tab. A hidden terminal section becomes the same panel, collapsed, and one with no attached session makes no panel. The conversion never starts, ends or restarts a session; the terminal runtime checks liveness later (SP-125). |
 | A docked or floating chat | The fixed chat column, shown as it was shown, at the window's default width; its host, slot and floating bounds are dropped. A chat popped out into its own window comes back in its fixed column (popped_out is current-run state, lead ruling L7). |
 | A floating editor panel or dashboard | Docked: it joins the top row at its end. |
@@ -27446,6 +27491,12 @@ The conversion table:
 
 **Concept lineage.** The panels concept saves its layout under `pm.home.panels:v1:<project>` and sets unreadable records aside under a quarantine key. Both are concept lineage only, never product keys.
 
+**Named layouts keep their dashboards' boards (amended 2026-10-10, DL-186, D10 P6, lead ruling F3).** Saving a named layout (`cmd.workspace_layout.save_named`) also keeps a snapshot of the boards of the dashboard tabs open in the layout: `boards`, keyed by board id, each the board's stored envelope (SP-249) or null when the board had nothing stored. The snapshot is capped at 64 KB per named layout: when the canonical JSON of `boards` would pass 65,536 bytes, the save keeps the layout without them and writes `boards_skipped_bytes`, the size it left out, and the save's announcement says the dashboards were not saved with it (`Plans/FinalGUISpec.md#F3-638` owns the words). Applying the layout (`cmd.workspace_layout.apply_named`) writes each saved board back to that board's own key in the current project, a null removes what the board had stored, and shown boards reload; these board writes belong to the apply and append no event of their own (`Plans/Contracts_V0.md#CV-361`). A named layout saved before 2026-10-10 has neither field and applies as it did. The schema's invariant S13 holds the cap.
+
+**The chat's pop-out is never saved (amended 2026-10-10, DL-187, D32).** Jared answered that a popped-out chat starts back in its column after a restart, so the v2 record has no `popped_out` field: a pop-out lasts while the app runs, its pop-out and return append only `panel.undocked` or `panel.redocked`, and nothing about it is written. The chat column keeps its width, History pinned and shown.
+
+**What a tab's state keeps for the 2026-10-10 answers (DL-187).** The Debug Console is one tab, `debug-console`, with a sub-tab per debug session (D33): its domain reference is empty, and the chosen session sub-tab is view state in the tab's state (lead ruling F6); an older `debug-console:<session>` id read from anywhere folds into that one tab and is never written again. A terminal tab's notification mute (D38) is that tab's state, set by `ui.terminal.mute_notifications` (lead ruling F5), so it moves and reopens with the tab. Both are written like view state: no revision advance, no receipt and no event.
+
 ### SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1
 
 ```yaml
@@ -27459,8 +27510,8 @@ canonical_text: >-
   in family home_workspace_layout_v2 with RP-CONFIG-CURRENT; it is the only Home layout authority (DL-180). It
   holds the panel split tree, the tab records, a view-state block, the chat column, the user's saved named layouts,
   a closed-tab stack of at most 20, revision, updated_at and a migration stamp, and never buffers, sessions,
-  scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each dashboard
-  tab keeps under widget_layout:v1:dashboard:<board_id> (WS-030). Narrow, overlay, menu, hover and drag state is
+  scrollback, browser history, chat messages, credentials or a dashboard's widget layout, which each board
+  keeps per project under widget_layout:v1:<project_id>:<board_id> (WS-030, SP-249). Narrow, overlay, menu, hover and drag state is
   never written. Every committed structural change validates, writes, reads back, then advances revision by one,
   publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with
   rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one
@@ -27475,10 +27526,18 @@ canonical_text: >-
   source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
   kept and a notice. The concept's pm.home.panels keys are lineage only.
   The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
+  Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width, history_pinned
+  and shown only (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
+  board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout,
+  writes boards_skipped_bytes instead and says so; applying it writes each board back to its key in the current
+  project (null removes) with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling
+  F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is
+  one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a
+  terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
-depends_on: [DL-180, DL-181, SP-245, SP-273, F3-630, F3-635, WS-030, SMPFS-180]
+depends_on: [DL-180, DL-181, DL-186, DL-187, DL-188, SP-245, SP-273, F3-630, F3-635, WS-030, SMPFS-180]
 unblocks: [SP-332, CV-361]
 acceptance_criteria:
   - "home_workspace_layout_v2 is the only family a Home layout write targets; the v1 family and layout:v1 are read only as conversion input."
@@ -27492,6 +27551,10 @@ acceptance_criteria:
   - "No v2 record holds a buffer, scrollback, browser history, chat message, credential, dashboard widget layout, narrow state, overlay, menu or drag state."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a separate chat window."
+  - "No v2 record holds the chat's pop-out: Plans/home_workspace_layout_v2.schema.json rejects popped_out (fixture chat_popped_out_saved)."
+  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each board's key in the current project, a null removing it, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
+  - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
+  - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27517,6 +27580,12 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (layout model, named layouts, the 16 KB cap; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7: the reopen stack holds 20)"
   - "Plans/storage-plan.md#SP-245"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its folded ids; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
   - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
@@ -27524,6 +27593,10 @@ preserved_exact_tokens:
   - "home_workspace_layout.v1:{project_id}:{workspace_tab_id}"
   - "layout:v1"
   - "widget_layout:v1:dashboard:<board_id>"
+  - "widget_layout:v1:<project_id>:<board_id>"
+  - "boards"
+  - "boards_skipped_bytes"
+  - "debug-console"
   - "dashboard:home"
   - "migrated_from_v1"
   - "default_after_unreadable_source"
@@ -27533,11 +27606,16 @@ negative_constraints:
   - "Do not reset, overwrite or delete a v1 record or layout:v1 during or after the conversion."
   - "Do not write a Home layout anywhere but home_workspace_layout.v2."
   - "Do not save narrow, overlay, menu, hover or drag state, a buffer, scrollback, a dashboard's widget layout or a chat position."
+  - "Do not save the chat's pop-out, or a named layout's boards past 64 KB."
   - "Do not use the concept's pm.home.panels keys as product keys."
   - "Do not start, end or restart a terminal session during the conversion."
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
+  - "Earlier text, lineage only (until 2026-10-10, DL-186): a dashboard's widget layout was kept 'under widget_layout:v1:dashboard:<board_id> (WS-030)', a key never written."
+  - "Earlier text, lineage only (until 2026-10-10, DL-187): the chat column held 'popped out', written with the record like view state."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): boards live per project under widget_layout:v1:<project_id>:<board_id>; named layouts keep their dashboards' boards up to 64 KB (boards_skipped_bytes past it); the old Dashboard layout converts into no board."
+  - "Amended 2026-10-10 (DL-187): the chat's pop-out is never saved (popped_out removed from the record); the Debug Console is one tab with its session sub-tab as view state; a terminal tab's notification mute is its state."
   - "Amended 2026-10-10 (lead ruling L7): Clarifies conversion-table geometry does not restore popped-out chat after restart."
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."

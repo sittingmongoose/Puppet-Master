@@ -187,7 +187,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -379,7 +378,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -520,7 +518,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -536,7 +533,7 @@
     },
     {
       "name": "collapsed_and_maximized",
-      "description": "Home with the tools panel collapsed to its strip and the documents panel maximized; a preview tab, a user label, a saved named layout, one closed tab, and a popped-out chat with History pinned at 520 px; the Output tab (output, its channel build as view state) and beside it a split-off channel tab (output:tests, Addendum 2 D28).",
+      "description": "Home with the tools panel collapsed to its strip and the documents panel maximized; a preview tab, a user label, a saved named layout, one closed tab, and the chat with History pinned at 520 px (amended 2026-10-10, DL-187, D32: the chat was popped out here, which the record no longer saves); the Output tab (output, its channel build as view state) and beside it a split-off channel tab (output:tests, D31). Its saved layout Review was saved with dashboards whose boards came to more than 64 KB, so it keeps only the size it left out (DL-186).",
       "record": {
         "schema_id": "pm.home_workspace_layout.v2",
         "schema_version": "2.0.0",
@@ -729,7 +726,6 @@
         "chat_column": {
           "width_px": 520,
           "history_pinned": true,
-          "popped_out": true,
           "shown": true
         },
         "named_layouts": [
@@ -778,7 +774,8 @@
                 0.66,
                 0.34
               ]
-            }
+            },
+            "boards_skipped_bytes": 70312
           }
         ],
         "closed_tabs": [
@@ -810,7 +807,7 @@
     },
     {
       "name": "three_dashboards",
-      "description": "Three dashboard tabs in one panel, each with its own board and widget layout kept outside this record.",
+      "description": "Three dashboard tabs in one panel, each with its own board and widget layout kept outside this record. Its saved layout Dashboards keeps a snapshot of the boards of the dashboard tabs open when it was saved (DL-186): Home's envelope, Metrics' envelope and Monitoring with nothing stored (null); the envelopes are illustrative.",
       "record": {
         "schema_id": "pm.home_workspace_layout.v2",
         "schema_version": "2.0.0",
@@ -991,10 +988,39 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
-        "named_layouts": [],
+        "named_layouts": [
+          {
+            "id": "saved-dashboards",
+            "name": "Dashboards",
+            "saved_at": "2026-10-10T12:00:00Z",
+            "root": {
+              "node": "slot",
+              "kinds": [
+                "dashboard",
+                "editor",
+                "plan",
+                "terminal",
+                "output"
+              ]
+            },
+            "boards": {
+              "home": {
+                "host_id": "home.dashboard",
+                "project_id": "proj-tastebook",
+                "room_id": "home"
+              },
+              "metrics": {
+                "host_id": "home.dashboard",
+                "project_id": "proj-tastebook",
+                "room_id": "metrics",
+                "set_id": "room:costs"
+              },
+              "monitoring": null
+            }
+          }
+        ],
         "closed_tabs": [],
         "migration": {
           "origin": "created_default",
@@ -1178,7 +1204,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -1365,7 +1390,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -1956,7 +1980,6 @@
         "chat_column": {
           "width_px": null,
           "history_pinned": false,
-          "popped_out": false,
           "shown": true
         },
         "named_layouts": [],
@@ -2560,7 +2583,104 @@
           "value": {}
         }
       ],
-      "why": "A dashboard's widget layout lives under widget_layout:v1:dashboard:<board_id>, never in the Home record."
+      "why": "A board's widget layout lives under widget_layout:v1:<project_id>:<board_id> (amended 2026-10-10, DL-186; it said widget_layout:v1:dashboard:<board_id>, which was never written), never in the Home record."
+    },
+    {
+      "name": "chat_popped_out_saved",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/chat_column/popped_out",
+          "value": true
+        }
+      ],
+      "why": "The chat's pop-out is never saved; after a restart the chat starts in its column (DL-187, D32)."
+    },
+    {
+      "name": "named_layout_boards_and_skipped",
+      "base_valid": "three_dashboards",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/named_layouts/0/boards_skipped_bytes",
+          "value": 70312
+        }
+      ],
+      "why": "A named layout keeps its boards or the size it left out, never both (DL-186)."
+    },
+    {
+      "name": "named_layout_skipped_bytes_within_cap",
+      "base_valid": "collapsed_and_maximized",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/named_layouts/0/boards_skipped_bytes",
+          "value": 2048
+        }
+      ],
+      "why": "Boards are left out only when they pass 64 KB (65,536 bytes), so a recorded size is above that (lead ruling F3)."
+    },
+    {
+      "name": "named_layout_boards_over_64_kb",
+      "base_valid": "three_dashboards",
+      "rejected_by": "semantic:S13",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/named_layouts/0/boards/home/padding",
+          "value": {
+            "$generate": {
+              "repeat": "x",
+              "count": 65537
+            }
+          }
+        }
+      ],
+      "why": "A named layout's boards are at most 64 KB of canonical JSON; a bigger save keeps boards_skipped_bytes instead (DL-186, lead ruling F3)."
+    },
+    {
+      "name": "named_layout_board_not_a_board_id",
+      "base_valid": "three_dashboards",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/named_layouts/0/boards/usage",
+          "value": null
+        }
+      ],
+      "why": "usage is the Usage page's own board and never a dashboard board id (WS-030)."
+    },
+    {
+      "name": "debug_console_tab_names_a_session",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/tabs/debug-console",
+          "value": {
+            "kind": "debug_console",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "debug_session_id": "dbg-1"
+            }
+          }
+        },
+        {
+          "op": "add",
+          "path": "/root/children/1/tab_ids/-",
+          "value": "debug-console"
+        }
+      ],
+      "why": "The Debug Console is one tab with a sub-tab per session; the chosen session is view state in its state, never its domain reference (DL-187, D33)."
     }
   ],
   "event_payload_examples": {
