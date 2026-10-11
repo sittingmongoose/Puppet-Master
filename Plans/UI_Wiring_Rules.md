@@ -2144,11 +2144,14 @@ canonical_text: >-
   board's Add widget and Start from..., a widget card's Details (its gestures, size picker and menus are the Usage
   board's own controls), and on Agents the Show filters and each agent's card. The Debug Console's session sub-tabs.
   The chat header's Keep the chat open in narrow windows beside the Home options menu's, both the typed local action
-  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo after Start from has a WM-090 row
-  with no id until the lead rules on its id; it is the census's one open item (amended 2026-10-10, DL-186; it read:
-  The Undo after Start from has no wiring row until the lead rules on its id). ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
-  unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after (amended 2026-10-10, DL-186; it read:
-  The census reports unresolved_count=0). This census supersedes
+  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo in the notice that follows Start
+  from maps to its WM-090 row, home.dashboard_tab.undo_start_from: one cmd.widget.reset_layout with restore_revision
+  (UCC-200), so the census has no open item (amended 2026-10-10, lead ruling; it read: The Undo after Start from
+  has a WM-090 row with no id until the lead rules on its id; it is the census's one open item; and before that,
+  amended 2026-10-10, DL-186: The Undo after Start from has no wiring row until the lead rules on its id). ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
+  unresolved_count=0 (amended 2026-10-10, lead ruling: the Undo after Start from has its id; it read: The census
+  reports unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after; and before that, amended
+  2026-10-10, DL-186: The census reports unresolved_count=0). This census supersedes
   the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
@@ -2156,12 +2159,12 @@ split_recommended: false
 depends_on: [DL-180, DL-186, DL-187, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637, F3-638]
 unblocks: [ATS-075]
 acceptance_criteria:
-  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list; every row but the Undo after Start from's names its id, and the census reports unresolved_count=1 (that Undo's id) until the lead rules, and 0 after (amended 2026-10-10, DL-186; it read: Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0.)"
+  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list; every row names its id, the Undo after Start from's being home.dashboard_tab.undo_start_from, and the census reports unresolved_count=0 (amended 2026-10-10, lead ruling; it read: every row but the Undo after Start from's names its id, and the census reports unresolved_count=1 (that Undo's id) until the lead rules, and 0 after; and before that, amended 2026-10-10, DL-186: Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0.)"
   - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is saved as view state with no workspace.layout_changed event, revision advance or receipt, and no pending exception remains."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."
-  - "Every dashboard tab control, the SSH hosts row and its hosts, New dashboard, each launcher sub-row link, the Debug Console's sub-tabs and both Keep the chat open in narrow windows items map to exactly one WM-090 row; the Undo after Start from is reported as the one open item until the lead rules on its id."
+  - "Every dashboard tab control, the SSH hosts row and its hosts, New dashboard, each launcher sub-row link, the Debug Console's sub-tabs, both Keep the chat open in narrow windows items and the Undo after Start from map to exactly one WM-090 row, and no item is open (amended 2026-10-10, lead ruling; it read: Every dashboard tab control, the SSH hosts row and its hosts, New dashboard, each launcher sub-row link, the Debug Console's sub-tabs and both Keep the chat open in narrow windows items map to exactly one WM-090 row; the Undo after Start from is reported as the one open item until the lead rules on its id)."
   - "Rename dashboard... and Delete dashboard... appear only on a custom dashboard; Home, Metrics, Monitoring and Agents show neither."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -2202,6 +2205,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (lead ruling L9): Replaces the pending History pin exception with ui.chat_column.pin_history in the closed census."
   - "Amended 2026-10-10 (DL-186, DL-187): adds the dashboard tab's controls, SSH hosts, New dashboard, the launcher's sub-row links, the Debug Console's sub-tabs, the chat header's Keep the chat open in narrow windows and the rail's Chat entry on every page; the Undo after Start from waits for the lead's ruling."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo maps to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with restore_revision), and the census reports unresolved_count=0."
   - "Superseded 2026-10-09 (DL-180): the fixed-zone census rows of the 2026-08-04 Home rules and UIW-010's 2026-08-13 amendments (Panel 1 to Panel 4, Chat and Dashboard Pop Out, the floating corner and dock track resizers, terminal add and split leaves, terminal caps, Collapse Bottom Terminal)."
 owner_hints:
   - Plans/UI_Wiring_Rules.md

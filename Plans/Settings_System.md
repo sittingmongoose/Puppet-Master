@@ -467,9 +467,11 @@ owner_doc: Plans/Settings_System.md
 canonical_text: >-
   Each Project independently persists theme family, Light/Dark/Auto presentation mode, Glass background mode, Glass
   alpha/transparency, tooltip enablement, reduced-motion request and background selection. The chat layout is no longer
-  a Settings value (DL-180): the chat stays fixed on the right, its width, pinned History and popped-out state live in
-  the Project's Home layout record (Plans/storage-plan.md#SP-330), and general.visual.chat-layout-mode is retired
-  (SSYS-050). Amended 2026-10-10 (DL-187, D32): the popped-out state is no longer saved anywhere: a popped-out chat
+  a Settings value (DL-180): the chat stays fixed on the right, its width and pinned History live in the Project's
+  Home layout record (Plans/storage-plan.md#SP-330), the v2 record keeps no pop-out (a popped-out chat lasts only
+  while the app runs and starts back in its column, D32, SP-330), and general.visual.chat-layout-mode is retired
+  (SSYS-050) (amended 2026-10-10, DL-187; it read: its width, pinned History and popped-out state live in the
+  Project's Home layout record (Plans/storage-plan.md#SP-330)). Amended 2026-10-10 (DL-187, D32): the popped-out state is no longer saved anywhere: a popped-out chat
   starts back in its column after a restart, and a stored Chat Layout value is ignored and cleared on first read, with
   no pop-out and no notice (SSYS-050). The eight built-in variants are Friendly Dark, Friendly
   Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light. Final GUI owns the untouched
@@ -511,7 +513,7 @@ source_lineage:
 preserved_exact_tokens: [Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light, 0.35, 0.45, tooltips, reduced motion, chat layout]
 negative_constraints: [Do not persist appearance outside the Project settings namespace., Do not store the chat column's width, History or pop-out as a Settings value., Do not hide unavailable Glass controls., Do not make no-Project Basic Dark durable., Do not remove accessible descriptions when hover tooltips are off., Do not suppress progress or error feedback under reduced motion.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
-stale_retired_dispositions: ["Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column's state is the Home layout record's (SP-330), and SSYS-050 records the retired row. The title's Chat Layout is historical, kept for lineage.", "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved; a stored Chat Layout value is cleared on first read with no pop-out and no notice."]
+stale_retired_dispositions: ["Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column's state is the Home layout record's (SP-330), and SSYS-050 records the retired row. The title's Chat Layout is historical, kept for lineage.", "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved; a stored Chat Layout value is cleared on first read with no pop-out and no notice.", "Amended 2026-10-10 (DL-187, D32, SP-330): the sentence that put the popped-out state in the Home layout record now says the v2 record keeps no pop-out; a popped-out chat lasts only while the app runs."]
 ```
 
 ### SSYS-011 - Provider Installation Actions And Continuation
@@ -3029,7 +3031,7 @@ Amended 2026-10-10 (DL-186, DL-187; the planning thread's rulings of 2026-10-10)
 
 ### What Settings stores, and what it never writes
 
-Every row below is an ordinary Settings value bound to exactly one Project (SSYS-002); the inventory's scope field is applicability metadata and admits no app-global store (SSYS-004). Settings never writes the Home layout record (SP-330): the split tree, the tabs, a panel's collapsed or locked state, the chat column's width, its pinned History and its popped-out state are layout state, committed by the layout commands of UCC-200. Amended 2026-10-10 (lead ruling L9, corrected to view state with no event; lead ruling L7): of the chat column's three, only the width is committed by a UCC-200 command (`cmd.workspace_layout.resize_surface`); the History pin is view state written by UCC-203's `ui.chat_column.pin_history`, with no layout event, and `popped_out` is current-run state changed by `cmd.panel.undock` and `cmd.panel.redock` (UCC-203). None of them is a Settings value. The rows here only choose defaults and how things start. Amended 2026-10-10 (DL-187, D32): `popped_out` is not even current-run state that survives a restart: a popped-out chat starts back in its column, and nothing restores the pop-out.
+Every row below is an ordinary Settings value bound to exactly one Project (SSYS-002); the inventory's scope field is applicability metadata and admits no app-global store (SSYS-004). Settings never writes the Home layout record (SP-330): the split tree, the tabs, a panel's collapsed or locked state, the chat column's width and its pinned History are layout state, committed by the layout commands of UCC-200, and the v2 record keeps no pop-out: a popped-out chat lasts only while the app runs and starts back in its column (D32, SP-330; amended 2026-10-10, DL-187; it read: the chat column's width, its pinned History and its popped-out state are layout state, committed by the layout commands of UCC-200). Amended 2026-10-10 (lead ruling L9, corrected to view state with no event; lead ruling L7): of the chat column's three, only the width is committed by a UCC-200 command (`cmd.workspace_layout.resize_surface`); the History pin is view state written by UCC-203's `ui.chat_column.pin_history`, with no layout event, and the pop-out is no field of the record: `cmd.panel.undock` and `cmd.panel.redock` change it for the current run only (UCC-203; amended 2026-10-10, DL-187, D32; it read: and `popped_out` is current-run state changed by `cmd.panel.undock` and `cmd.panel.redock` (UCC-203)). None of them is a Settings value. The rows here only choose defaults and how things start. Amended 2026-10-10 (DL-187, D32): `popped_out` is not even current-run state that survives a restart: a popped-out chat starts back in its column, and nothing restores the pop-out.
 
 Amended 2026-10-10 (lead ruling L16): the Appearance popover's All terminals is enabled and writes SSYS-051's project default row through the same Settings transaction Settings uses, so it changes every terminal while this Project is open, and its hover tag says "in this project". Only the app-wide edit stays disabled, until q-035 admits an app-wide store. This overrides the earlier wording that All terminals wrote the app default and was disabled.
 
@@ -3044,7 +3046,7 @@ Retired rows follow the inventory's own convention, the one `general.visual.basi
 | Id | Label | Why it retires | What replaces it |
 |---|---|---|---|
 | `general.interaction.panel-dock` | Panel Position | The chat never docks to another edge or floats inside the window (DL-180); the left rail's side panels are the rail canon's (DL-162, DL-163). | The chat's Pop out (`cmd.panel.undock`, Dock back `cmd.panel.redock`) |
-| `general.visual.chat-layout-mode` | Chat Layout | Overlay and Detached-as-a-float leave with the movable chat. Docked is the only state inside the window, and being popped out is a window state the Home layout record keeps and the pop-out commands change, not a choice made in Settings, so the row retires whole rather than keeping two values. Amended 2026-10-10 (DL-187, D32; the planning thread's ruling): the pop-out is never saved, so the record keeps no popped-out state either; the row keeps no options, and a stored Overlay or Detached value is ignored and cleared on first read, with no pop-out and no notice. | The chat's fixed column and its Pop out in the desktop app (`cmd.panel.undock`), which lasts only while the app runs |
+| `general.visual.chat-layout-mode` | Chat Layout | Overlay and Detached-as-a-float leave with the movable chat. Docked is the only state inside the window, and being popped out is a window state the pop-out commands change for the current run only, which the v2 record does not keep (a popped-out chat starts back in its column, D32, SP-330), not a choice made in Settings, so the row retires whole rather than keeping two values (amended 2026-10-10, DL-187; it read: being popped out is a window state the Home layout record keeps and the pop-out commands change). Amended 2026-10-10 (DL-187, D32; the planning thread's ruling): the pop-out is never saved, so the record keeps no popped-out state either; the row keeps no options, and a stored Overlay or Detached value is ignored and cleared on first read, with no pop-out and no notice. | The chat's fixed column and its Pop out in the desktop app (`cmd.panel.undock`), which lasts only while the app runs |
 | `general.interaction.chat-keep-open` | Keep the Chat Open in Narrow Windows | Retired 2026-10-10 (DL-187; the planning thread's ruling under D4): the narrow-window pin is the chat's own preference, not a Settings row. It was added on 2026-10-09 and never shipped. | Keep the chat open in narrow windows in the chat header's menu and the title bar's Home options menu (`ui.chat_column.keep_open`, UCC-203) |
 | `code.terminal.layout-style` | Preferred Layout | Single, split and Quadrant panes inside a terminal retire (DL-181). | The named layouts, Terminals 2x2 among them, and `general.startup.starting-layout` |
 | `code.terminal.auto-second-pane` | Auto-Open a Second Pane | There are no terminal sections or second panes (DL-181). | Split, which opens a new panel with its own terminal |
@@ -3188,7 +3190,9 @@ canonical_text: >-
   that read it take the new value at once, no row carries a restart badge, a row that says how something starts
   governs the next start, and no Settings change opens, closes, moves or rearranges a panel or tab already open
   (SSYS-042). Settings never writes the Home layout record (Plans/storage-plan.md#SP-330): the split tree, the
-  tabs, collapse and lock, and the chat column's width, pinned History and popped-out state are layout state.
+  tabs, collapse and lock, and the chat column's width and pinned History are layout state; the v2 record keeps no
+  pop-out, and a popped-out chat lasts only while the app runs and starts back in its column (D32, SP-330; amended
+  2026-10-10, DL-187; it read: the chat column's width, pinned History and popped-out state are layout state).
   Added: general.startup.starting-layout (Home, Build, Terminals 2x2 or Focus; Home), general.interaction.chat-keep-open
   ("Keep the chat open in narrow windows"; off), general.interaction.chat-history-list (Flyout or Pinned, the
   start for a workspace with no saved choice; Flyout), general.interaction.preview-tabs (on),
@@ -3206,7 +3210,8 @@ canonical_text: >-
   decides whether a saved layout's terminal tabs come back as SMPFS-180 says, a session verified still running
   always coming back. Retired, by the inventory's own (Superseded by ...) convention, kept as lineage, drawn
   nowhere and read by nothing: general.interaction.panel-dock, general.visual.chat-layout-mode (being popped out
-  is a window state the layout record keeps, so the row retires whole), code.terminal.layout-style,
+  is a window state of the current run only, which the v2 record does not keep, so the row retires whole; amended
+  2026-10-10, DL-187, D32; it read: being popped out is a window state the layout record keeps), code.terminal.layout-style,
   code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
   Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
@@ -3297,6 +3302,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187, D32, SP-330): the sentences that named the popped-out state as layout state the record keeps now say the v2 record keeps no pop-out; a popped-out chat lasts only while the app runs and starts back in its column."
   - "Amended 2026-10-10 (DL-187, D32; the planning thread's rulings): Chat Layout keeps no options and its stored Overlay or Detached value is cleared on first read with no pop-out and no notice; Keep the Chat Open in Narrow Windows retires to the chat's own ui.chat_column.keep_open; the census becomes 11 retired and 953 live rows, and the concept census 891 live ids plus one retired row is distinguished from it."
   - "Amended 2026-10-10 (DL-186): Dashboard Widgets stays a route; boards are per project and a dashboard's range, scope, starting set and presets are not Settings rows."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Distinguishes the inventory-wide retired census from this wave retirement set."

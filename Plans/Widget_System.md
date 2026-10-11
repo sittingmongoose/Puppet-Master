@@ -1846,6 +1846,13 @@ canonical_text: >-
   so the sets as built are concept lineage only and naming them is an open question for Usage. A reset with no
   set_id is the default set. The envelope keeps the set_id of any set other than default. Choosing a set that no
   longer exists changes nothing and says so.
+  Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo in the notice that follows Start from
+  (Plans/FinalGUISpec.md#F3-638) dispatches cmd.widget.reset_layout { scope: 'room', room: <board_id>,
+  restore_revision }, restore_revision being the board's committed layout revision (its committed_revision, WS-020)
+  just before that Start from: one receipt, offered only while the notice is up (8 s, held on pointer or focus).
+  restore_revision and set_id never travel together. The owner puts back exactly that revision's records, and a
+  restore whose revision is no longer the board's previous one is refused with a disabled reason. Like every widget
+  command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361).
   Presets (D35, Jared: "With savable presets."): a person can save a board's arrangement as their own preset, rename
   it and delete it. Presets belong to the person, not the project: they are kept in the per-user family
   `widget_presets:v1` and shown in Start from on every dashboard of every project. A preset holds its id, its name,
@@ -1903,6 +1910,7 @@ acceptance_criteria:
   - "Nothing is converted from or written to `widget_layout:v1:dashboard`, nothing is read from or written to `widget_layout:v1:dashboard:<board_id>`, and an unscoped `widget_layout:v1:<board_id>` is adopted once, by the first project that shows that board, and then removed."
   - "New dashboard opens an empty board with the next unused number, named \"Dashboard <n>\"; Rename dashboard... and renaming its tab set the stored name through cmd.panel_tab.rename; Delete dashboard... asks first, closes the tab, drops it from the reopen list and forgets its key, set-aside copy and name; Home, Metrics, Monitoring and Agents offer neither Rename dashboard... nor Delete dashboard...."
   - "Reset widgets dispatches one cmd.widget.reset_layout { scope: 'room', room } that returns the board to its default set; each Start from row dispatches one cmd.widget.reset_layout with its set_id; Start from shows the sets in F3-638's four groups, This dashboard (default), Dashboard starter (host:dashboard), the 13 Usage room sets in room order, then the person's presets; the envelope stores every set_id but default."
+  - "The Undo after Start from dispatches one cmd.widget.reset_layout { scope: 'room', room, restore_revision } with the board's committed layout revision just before that Start from and no set_id, only while its notice is up; the owner puts back exactly that revision's records, a restore whose revision is no longer the board's previous one is refused with a disabled reason, and no workspace.layout_changed is emitted (amended 2026-10-10, lead ruling)."
   - "Saving, renaming and deleting a preset dispatch no command and write only `widget_presets:v1`; a preset holds no view, appears in Start from on every dashboard of every project, and applying it dispatches cmd.widget.reset_layout with set_id user:<preset_id>."
   - "Changing a board's range or scope runs ui.widget_board.set_view, writes only that board's envelope and dispatches no command, receipt or event; each board keeps its own range and scope."
   - "Add widget offers every Usage widget grouped by Usage room, and any other registered source's widgets under that source; a widget on the board cannot be added twice; no board offers an old Home widget; every widget command inside a dashboard tab names its board in `room`, changes only that board and emits no `workspace.layout_changed`; a panel or tab command changes no board."
@@ -1945,6 +1953,7 @@ source_lineage:
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:<board_id>"
+  - "restore_revision"
   - "widget_layout:v1:dashboard:<board_id>"
   - "widget_layout:v1:dashboard:home"
   - "widget_layout:v1:dashboard"
@@ -2004,6 +2013,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard grid columns, board reset spans, measured widths and reset-save delay."
   - "Superseded 2026-10-09 (DL-180): the one Dashboard widget-layout namespace and the singleton Dashboard surface."
   - "Amended 2026-10-10 (DL-186): Start from shows the sets in F3-638's group order, the lab-only Play the next hour is no criterion of this unit, and the built-in boards' own sets stay an open question for Usage until a Usage unit lists them."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from, never with set_id."
 owner_boundary_notes:
   - "F3-638 owns how a dashboard tab looks in its panel; WS-017, WS-018, WS-019 and WS-020 keep the widget sizes, gestures and record fields; usage-feature.md owns the Usage widgets themselves, their default sets and the live readings; storage-plan registers the board and preset families; UI_Command_Catalog owns the commands and typed local actions named here."
 owner_hints:

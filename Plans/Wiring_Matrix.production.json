@@ -63106,7 +63106,8 @@
         "Successful settled state writes only the canonical widget_layout:v1:usage namespace on the Usage page or, in a dashboard tab, that board's per-project record widget_layout:v1:<project_id>:<board_id>; no per-frame draft is persisted (amended 2026-10-10, DL-186, WS-030; it read: Successful settled state writes only the canonical widget_layout:v1:usage or widget_layout:v1:dashboard namespace selected by page; no per-frame draft is persisted.)",
         "Inside a dashboard tab the row names its board in the existing room field (its board id; no board_id payload field) and writes that board's per-project record widget_layout:v1:<project_id>:<board_id> (WS-030; amended 2026-10-10, DL-186, which replaces addressed by board_id and widget_layout:v1:dashboard:<board_id>, a key that was never written); page is kept for the Usage page. A widget-layout change is a change to that board, not to the Home layout, so it emits no workspace.layout_changed (UCC-200).",
         "Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine, so this command's previews, gravity and Tidy behave on a dashboard as on the Usage page, with no frozen peers (WS-019). No row writes widget_layout:v1:dashboard any more: it holds no board and stays only a read-only record (WS-009, WS-030); the namespace a dashboard writes is its board's per-project record.",
-        "Amended 2026-10-10 (DL-186, P4): on a dashboard board the payload is { scope: room, room: <board_id>, set_id? }; set_id names the set the board starts from (default, room:<room_id>, host:dashboard or user:<preset_id>), and a reset without set_id returns the board to its own default. set_id is offered only on dashboard boards."
+        "Amended 2026-10-10 (DL-186, P4): on a dashboard board the payload is { scope: room, room: <board_id>, set_id? }; set_id names the set the board starts from (default, room:<room_id>, host:dashboard or user:<preset_id>), and a reset without set_id returns the board to its own default. set_id is offered only on dashboard boards.",
+        "Amended 2026-10-10 (lead ruling on the Undo after Start from): on a dashboard board the Undo in the notice that follows Start from sends { scope: room, room: <board_id>, restore_revision }, the board's committed layout revision just before that Start from; restore_revision and set_id never travel together, the owner puts back exactly that revision's records, and a restore whose revision is no longer the board's previous one is refused with a disabled reason."
       ],
       "evidence_required": "Production wiring contract for cmd.widget.reset_layout; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. PMConcept7 certification additionally requires preview-spy emptiness, one changed-release dispatch, cancellation rollback, namespace isolation, and settled readback evidence.",
       "state_selector": "state.commands.widget_reset_layout.availability",
@@ -71205,7 +71206,7 @@
         "home.dashboard_tab.start_from reads state.home_workspace.home_dashboard_tab_start_from.availability and shows state.home_workspace.home_dashboard_tab_start_from.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.dashboard_tab.start_from dispatches cmd.widget.reset_layout exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is { scope: room, room: <board_id>, set_id } with set_id one of default, room:<room_id> (the 13 Usage room sets), host:dashboard or user:<preset_id> (UCC-200, WS-030). The payload names the board in the existing room field (its board id; never a Usage room id) and adds no board_id field (WS-030, P3).",
-        "Start from replaces the board's widgets with the set in one settled transaction; the active set is checked and dispatches nothing. The Undo notice that follows has no command id until the lead rules (UCC-200).",
+        "Start from replaces the board's widgets with the set in one settled transaction; the active set is checked and dispatches nothing. The Undo in the notice that follows is home.dashboard_tab.undo_start_from, cmd.widget.reset_layout with restore_revision (UCC-200; amended 2026-10-10, lead ruling; it read: The Undo notice that follows has no command id until the lead rules (UCC-200)).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "home.dashboard_tab.start_from changes only that board's widget layout: it emits no event and no workspace.layout_changed, and records one dispatch receipt (UCC-200)."
       ],
@@ -71250,6 +71251,64 @@
       "event_test_requirements": [
         "Assert cmd.widget.reset_layout preserves command_id and correlation_id and records its dispatch receipt.",
         "Assert home.dashboard_tab.start_from records a dispatch receipt only, with no workspace.layout_changed and no other event, and writes only that board's record (WS-030)."
+      ]
+    },
+    "home.dashboard_tab.undo_start_from": {
+      "ui_element_id": "home.dashboard_tab.undo_start_from",
+      "ui_location": "Home > a dashboard tab > the Undo notice at the foot of the tab after Start from > Undo",
+      "ui_command_id": "cmd.widget.reset_layout",
+      "handler_location": "handlers::widget::reset_layout",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.reset_layout is registered with typed arguments (UCC-036, UCC-200) and its owner revision and idempotency contract.",
+        "home.dashboard_tab.undo_start_from reads state.home_workspace.home_dashboard_tab_undo_start_from.availability and shows state.home_workspace.home_dashboard_tab_undo_start_from.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "home.dashboard_tab.undo_start_from dispatches cmd.widget.reset_layout exactly once per activation and preserves command_id, correlation_id and the receipt.",
+        "The payload is { scope: room, room: <board_id>, restore_revision } with restore_revision the board's committed layout revision just before the Start from that the notice follows; restore_revision and set_id never travel together (UCC-200, WS-030). The payload names the board in the existing room field (its board id; never a Usage room id) and adds no board_id field (WS-030, P3).",
+        "Undo is offered only while the notice that follows Start from is up (8 s, held while the pointer or focus is on it, F3-638); the owner puts back exactly the records of restore_revision, and a restore whose revision is no longer the board's previous one is refused with a disabled reason (lead ruling, 2026-10-10).",
+        "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
+        "home.dashboard_tab.undo_start_from changes only that board's widget layout: it emits no event and no workspace.layout_changed (CV-361), and records one dispatch receipt (UCC-200)."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-638 (Plans/Widget_System.md#WS-030 for boards, sets and presets). Registration: Plans/UI_Command_Catalog.md#UCC-200 (Dashboard tab controls). Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. Added 2026-10-10 (DL-186; lead ruling on the Undo after Start from).",
+      "state_selector": "state.home_workspace.home_dashboard_tab_undo_start_from.availability",
+      "disabled_reason_projection": "state.home_workspace.home_dashboard_tab_undo_start_from.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "A settled restore of this board's widgets to restore_revision through the Usage board engine (WS-019, WS-030): one dispatch receipt and one settled write of the board's per-project record, no event and no workspace.layout_changed (a board's widgets are not the Home layout).",
+        "receipt_or_event_refs": [
+          "cmd.widget.reset_layout.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "A button named Undo in the notice that follows Start from",
+        "keyboard_access": "Tab reaches Undo in the notice and Enter or Space chooses it; Escape dismisses the notice and returns focus to Board",
+        "focus_management": "home.dashboard_tab.undo_start_from keeps focus where its owner contract says after an applied, no-change, failed or cancelled result (F3-638).",
+        "disabled_announcement": "home.dashboard_tab.undo_start_from announces state.home_workspace.home_dashboard_tab_undo_start_from.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.home.dashboard_tab.undo_start_from.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible home.dashboard_tab.undo_start_from control dispatches cmd.widget.reset_layout exactly once with the typed payload carrying restore_revision and no set_id, and the handler handlers::widget::reset_layout."
+        },
+        {
+          "test_id": "wiring.home.dashboard_tab.undo_start_from.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.home_workspace.home_dashboard_tab_undo_start_from.availability and the disabled copy reads state.home_workspace.home_dashboard_tab_undo_start_from.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.home.dashboard_tab.undo_start_from.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for home.dashboard_tab.undo_start_from: a dispatch receipt and no event."
+        },
+        {
+          "test_id": "wiring.home.dashboard_tab.undo_start_from.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered home.dashboard_tab.undo_start_from control has its accessible name and state, is reachable by keyboard (Tab reaches Undo in the notice and Enter or Space chooses it; Escape dismisses the notice and returns focus to Board) and returns focus as its owner says."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.reset_layout preserves command_id and correlation_id and records its dispatch receipt.",
+        "Assert home.dashboard_tab.undo_start_from records a dispatch receipt only, with no workspace.layout_changed and no other event, puts back exactly the records of restore_revision and writes only that board's record (WS-030)."
       ]
     },
     "home.dashboard_tab.preset_start_from": {

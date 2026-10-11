@@ -5555,7 +5555,7 @@ Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) replaces Hom
 
 It adds WM-090 (Home panels), WM-091 (the terminal tab) and WM-092 (event sets corrected). It retires 51 `home.*` production entries (the `home.editor_panel_N.*`, `home.file_manager.open_panel_N`, `home.more_options.open_panel_N` and `open_browser_panel_N`, `home.drop_target.*`, `home.dashboard.*`, `home.chat.grab`, `home.terminal_section.*`, `home.more_options.collapse_bottom` and the fixed resizers) and 8 catalog entries whose commands retired or became aliases, and adds 103 `home.*` and 36 `terminal.*` entries (108 `home.*` entries in all with the five kept ones); the five kept `home.*` entries are rebuilt on the v2 model, and the open routes carry the placement fields of `Plans/Contracts_V0.md#CV-360`. The retired entries are listed in `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` (`control_census.retired_rows_2026_10_09`), the file's own record of retired rows. It amends WM-021, WM-022, WM-041 and WM-045, the runtime-recovery terminal table and the PM7 settled interaction table with dated notes. It does not edit WM-065 to WM-075.
 
-Amended 2026-10-10 (DL-186, DL-187, DL-188; lead rulings F1, F2, F5, F6, F7 and F8): Jared's answers of 2026-10-10 add 20 `home.*` production entries and change others in place, each change dated where it stands. Added: the "+" menu's SSH hosts row (`home.plus_menu.ssh_host`, `home.plus_menu.ssh_host_new_panel`) and New dashboard (`home.plus_menu.new_dashboard`, `home.plus_menu.new_dashboard_new_panel`); the empty-panel launcher's sub-row links (`home.launcher.terminal_shell`, `home.launcher.ssh_host`, `home.launcher.browser_recent`, `home.launcher.recent_file_link`, `home.launcher.dashboard_board`, `home.launcher.new_dashboard`); and the dashboard tab's command-bearing controls (`home.dashboard_tab.add_widget`, `.open_dashboard`, `.new_dashboard`, `.start_from`, `.preset_start_from`, `.tidy`, `.reset_widgets`, `.rename_dashboard`, `.delete_dashboard` and `.agent_card`). So `Plans/Wiring_Matrix.production.json` holds 128 `home.*` entries and 1256 in all. Changed in place: the "+" menu's and the launcher's Dashboard row bodies open or reveal `dashboard:home` (wave 1's table said a new board, against UCC-200's L10 rule); the Terminal rows name installed shells; the Debug Console rows open or reveal the one `debug-console` tab; the rail's Chat entry works on every page; the six `catalog.widget_*` entries and `catalog.dashboard_catalog` name a dashboard board in `room` and the per-project key, and `catalog.widget_reset_layout` carries `set_id`; the Debug Console reveal lands in `debug-console`; the terminal's New terminal names installed shells and SSH hosts; and `assistant.redesign.cmd.chat_plan_open_version` declares `workspace.layout_changed` (WM-092, lead ruling F8). No entry is retired. The typed local actions the answers add (`ui.widget_board.set_view`, `ui.widget_preset.save`, `.rename` and `.delete`, `ui.terminal.mute_notifications`, `ui.chat_column.keep_open`) have no entry, like every typed local action.
+Amended 2026-10-10 (DL-186, DL-187, DL-188; lead rulings F1, F2, F5, F6, F7 and F8): Jared's answers of 2026-10-10 add 20 `home.*` production entries and change others in place, each change dated where it stands. Added: the "+" menu's SSH hosts row (`home.plus_menu.ssh_host`, `home.plus_menu.ssh_host_new_panel`) and New dashboard (`home.plus_menu.new_dashboard`, `home.plus_menu.new_dashboard_new_panel`); the empty-panel launcher's sub-row links (`home.launcher.terminal_shell`, `home.launcher.ssh_host`, `home.launcher.browser_recent`, `home.launcher.recent_file_link`, `home.launcher.dashboard_board`, `home.launcher.new_dashboard`); and the dashboard tab's command-bearing controls (`home.dashboard_tab.add_widget`, `.open_dashboard`, `.new_dashboard`, `.start_from`, `.preset_start_from`, `.tidy`, `.reset_widgets`, `.rename_dashboard`, `.delete_dashboard` and `.agent_card`). So `Plans/Wiring_Matrix.production.json` holds 128 `home.*` entries and 1256 in all. Amended 2026-10-10 (lead ruling on the Undo after Start from): `home.dashboard_tab.undo_start_from` (`cmd.widget.reset_layout` with `restore_revision`) is added too, so the file holds 129 `home.*` entries and 1257 in all (it read: 128 `home.*` entries and 1256 in all). Changed in place: the "+" menu's and the launcher's Dashboard row bodies open or reveal `dashboard:home` (wave 1's table said a new board, against UCC-200's L10 rule); the Terminal rows name installed shells; the Debug Console rows open or reveal the one `debug-console` tab; the rail's Chat entry works on every page; the six `catalog.widget_*` entries and `catalog.dashboard_catalog` name a dashboard board in `room` and the per-project key, and `catalog.widget_reset_layout` carries `set_id`; the Debug Console reveal lands in `debug-console`; the terminal's New terminal names installed shells and SSH hosts; and `assistant.redesign.cmd.chat_plan_open_version` declares `workspace.layout_changed` (WM-092, lead ruling F8). No entry is retired. The typed local actions the answers add (`ui.widget_board.set_view`, `ui.widget_preset.save`, `.rename` and `.delete`, `ui.terminal.mute_notifications`, `ui.chat_column.keep_open`) have no entry, like every typed local action.
 
 ### Home controls and their wiring
 
@@ -5748,7 +5748,7 @@ Amended 2026-10-10 (DL-187, D32): a popped-out chat lasts only while the app run
 | Board > Live > Live readings | the Usage page's one Live / Paused choice (`Plans/usage-feature.md#UF-107`) | none | view_only, as the PM7 table's Live / Paused row |
 | Board > Rename dashboard... (custom dashboards only), then Rename | `cmd.panel_tab.rename` on that dashboard's tab with the name | `home.dashboard_tab.rename_dashboard` | `workspace.layout_changed` |
 | Board > Delete dashboard... (custom dashboards only), then Delete dashboard; Keep it | `cmd.panel_tab.close` on that tab, after which its board, quarantine and name are forgotten (`Plans/Widget_System.md#WS-030`); Keep it dispatches nothing | `home.dashboard_tab.delete_dashboard` | `workspace.layout_changed` |
-| The Undo notice after Start from > Undo; Escape | Undo: no id yet, open for the lead's ruling (the concept writes the board's earlier record back with no command); Escape dismisses the notice | none | not certified until ruled; Escape dispatches nothing |
+| The Undo notice after Start from > Undo; Escape | Undo: one `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, restore_revision }`, the board's committed layout revision just before that Start from, only while the notice is up (8 s, held on pointer or focus), never with `set_id`, refused with a disabled reason when that revision is no longer the board's previous one; Escape dismisses the notice (amended 2026-10-10, lead ruling; it read: Undo: no id yet, open for the lead's ruling (the concept writes the board's earlier record back with no command); Escape dismisses the notice) | `home.dashboard_tab.undo_start_from` (added 2026-10-10, lead ruling; it read: none) | receipt, no event; Escape dispatches nothing (amended 2026-10-10, lead ruling; it read: not certified until ruled; Escape dispatches nothing) |
 | A widget card's gestures, size picker, card menu and gear | the Usage board's own `cmd.widget.*` rows, naming the board in `room` | the `catalog.widget_*` entries | receipt, no event |
 | A widget card > Details | the Usage page opens at that widget's room with its inspector (P8) | none | view state: a page change and the Usage page's own inspector, no command |
 | Agents > Show > a filter | that tab's own view state (lead ruling F7) | none | view-local, dispatches nothing |
@@ -5812,18 +5812,23 @@ canonical_text: >-
   typed local action with no production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open`
   with `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
   Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F6 and F7): the census grows by the answers of
-  2026-10-10, with 20 new home.* entries (128 in all). The "+" menu's SSH hosts row and New dashboard, and the
+  2026-10-10, with 21 new home.* entries (129 in all; amended 2026-10-10, lead ruling, for the Undo after Start
+  from; it read: with 20 new home.* entries (128 in all)). The "+" menu's SSH hosts row and New dashboard, and the
   empty-panel launcher's sub-row links, each have an entry; the "+" menu's and the launcher's Dashboard row bodies
   open or reveal dashboard:home; the Terminal rows list installed shells; the Debug Console rows open or reveal the
   one debug-console tab, whose session sub-tab dispatches nothing. A dashboard tab's command-bearing controls have
   home.dashboard_tab.* entries: Add widget (cmd.widget.add), a dashboard and New dashboard in its Board menu
   (cmd.panel_tab.open), Start from and Start from this preset (cmd.widget.reset_layout with set_id), Tidy
   (cmd.widget.move with arrange), Reset widgets (cmd.widget.reset_layout), Rename dashboard... (cmd.panel_tab.rename),
-  Delete dashboard... (cmd.panel_tab.close, after its confirm) and an Agents card (cmd.agents.open_thread); the widget
+  Delete dashboard... (cmd.panel_tab.close, after its confirm), the Undo after Start from (cmd.widget.reset_layout with
+  restore_revision; added 2026-10-10, lead ruling) and an Agents card (cmd.agents.open_thread); the widget
   commands name the board in their existing room field and emit no workspace.layout_changed. Range and Scope
   (ui.widget_board.set_view) and the preset save, rename and delete (ui.widget_preset.*) are typed local actions with
-  no entry; Live readings is the Usage page's view_only Live / Paused; the Undo after Start from has no entry until the
-  lead rules. The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows,
+  no entry; Live readings is the Usage page's view_only Live / Paused; the Undo in the notice that follows Start from
+  is home.dashboard_tab.undo_start_from, one cmd.widget.reset_layout with { scope: room, room: <board_id>,
+  restore_revision } while the notice is up, never with set_id, refused with a disabled reason once that revision is no
+  longer the board's previous one, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
+  after Start from has no entry until the lead rules). The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows,
   in the Home options menu and the chat header's menu, is the typed local action ui.chat_column.keep_open with no
   entry; the chat's pop-out is never saved.
 gui_related: true
@@ -5839,7 +5844,7 @@ acceptance_criteria:
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and the key entries say so."
   - "All rows sharing a command name one handler."
   - "Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry, and Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
-  - "Every dashboard tab control in the dashboard tab table maps to its one entry, typed local action or view-local disposition, except the Undo after Start from, which waits for the lead's ruling; the home.dashboard_tab.* entries of a cmd.widget.* command declare no event and those of a cmd.panel_tab.* or cmd.agents.open_thread command declare workspace.layout_changed."
+  - "Every dashboard tab control in the dashboard tab table maps to its one entry, typed local action or view-local disposition, the Undo after Start from to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with restore_revision and no set_id; amended 2026-10-10, lead ruling; it read: except the Undo after Start from, which waits for the lead's ruling); the home.dashboard_tab.* entries of a cmd.widget.* command declare no event and those of a cmd.panel_tab.* or cmd.agents.open_thread command declare workspace.layout_changed."
   - "The \"+\" menu's and the launcher's Dashboard row bodies open or reveal dashboard:home, New dashboard makes a custom dashboard, and every launcher sub-row link dispatches what its menu sub-row dispatches, as a new tab in this panel."
   - "The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows and the Debug Console's session sub-tab have no production entry and no Settings transaction."
 validation_surfaces:
@@ -5871,6 +5876,8 @@ source_lineage:
   - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets, rename and delete through the tab commands"
 preserved_exact_tokens:
   - "home.dashboard_tab.start_from"
+  - "home.dashboard_tab.undo_start_from"
+  - "restore_revision"
   - "home.plus_menu.new_dashboard"
   - "home.plus_menu.ssh_host"
   - "ui.chat_column.keep_open"
@@ -5905,6 +5912,7 @@ stale_retired_dispositions:
   - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
   - "Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard tab's controls, New dashboard and the launcher's dashboard links; the Dashboard row bodies open or reveal dashboard:home; range, scope and presets are typed local actions without entries."
   - "Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher's sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one debug-console tab whose sub-tab dispatches nothing; the rail's Chat entry on every page; Keep the chat open in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json

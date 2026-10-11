@@ -892,7 +892,8 @@ canonical_text: >-
   Its popup now holds, in order: the named layouts (Home, Build, Terminals 2x2, Focus, then the user's saved layouts,
   the current one checked; cmd.workspace_layout.apply_named); the chat's rows, Show the chat or Hide the chat
   (cmd.panel.switch), Pop out the chat or Dock the chat back (cmd.panel.undock, cmd.panel.redock) and Keep the chat open
-  in narrow windows (F3-637); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
+  in narrow windows (F3-637; amended 2026-10-10, lead ruling: the same check as the chat header's menu, both
+  dispatching ui.chat_column.keep_open, saved in the v2 record's chat column, never a Settings row); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
   Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
   general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
 gui_related: true
@@ -927,6 +928,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
 - "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
 - "Amended 2026-10-09 (DL-180): Open Panel, Open Browser in Panel, their Panel 1 to Panel 4 flyouts and the Collapse Bottom Terminal toggle with its Expand relabel are retired; Reset Layout reads Restore home layout; the popup gains the named layouts, Save this layout... and the chat's rows."
+- "Amended 2026-10-10 (lead ruling): the Keep the chat open in narrow windows row is the same check as the chat header's menu, both dispatching ui.chat_column.keep_open, saved in the v2 record's chat column."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -34837,7 +34839,8 @@ canonical_text: >-
   and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
   name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
   warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
-  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648):
+  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
+  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
   in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
   strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
   in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
@@ -34894,12 +34897,13 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
-- "The panels concept marks the chosen Debug Console sub-tab in Friendly, Glass and Basic, and in NieR Mode without the cursor part, with a 2 px underline in the look's active-tab ink that glides 260 ms (a cut in NieR Mode); a 2 px line on one side of the sub-tab is what F3-648's side-border check flags (DR-069), so canon keeps DL-162's tab ink filling the sub-tab's box, and the underline and its glide are concept lineage only. Its demo sessions (tastebook-api, import-worker) and timings are demo data."
+- "The panels concept marks the chosen Debug Console sub-tab in Friendly, Glass and Basic, and in NieR Mode without the cursor part, with a 2 px underline in the look's active-tab ink that glides 260 ms (a cut in NieR Mode); a 2 px line on one side of the sub-tab is what F3-648's side-border check flags (DR-069), so canon keeps DL-162's tab ink filling the sub-tab's box, and the underline and its glide are concept lineage only (lead ruling, 2026-10-10: the lead asks home-panels to change the concept to the fill). Its demo sessions (tastebook-api, import-worker) and timings are demo data."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
 - "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
 - "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
 - "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
+- "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -44916,7 +44920,10 @@ canonical_text: >-
   narrow ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that
   opens it again; "Keep the chat open in narrow windows" keeps it open instead. That toggle is the chat's own
   preference, not a Settings row: it sits in the chat header's menu (ACD-442) and in the title bar's Home options menu
-  (the planning thread's ruling of 2026-10-10 under D4). Pop out is the only way
+  (the planning thread's ruling of 2026-10-10 under D4). Amended 2026-10-10 (lead ruling): it is a check in the chat
+  header's menu, and the concept also offers it in the Home options menu; both dispatch the same typed local action,
+  ui.chat_column.keep_open with its argument keep_open, whose value is saved in the v2 record's chat column as
+  keep_open (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way
   to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
   Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
   Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
@@ -44964,6 +44971,7 @@ acceptance_criteria:
   - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
   - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
   - "Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options menu and is not a Settings row."
+  - "Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330), never in Settings (amended 2026-10-10, lead ruling)."
   - "After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay or Detached) pops it out or shows a notice."
   - "The left rail's Chat entry shows or hides the column on every page and never changes the page in front."
   - "On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History drops to its flyout first, then the column gives way down to 400 px, and a drag stops there."
@@ -45030,6 +45038,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D32): Jared answered L7's question: a popped-out chat starts back in its column after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode, retired) never pops it out."
   - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
   - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
+  - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -45100,7 +45109,12 @@ canonical_text: >-
   widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the
   widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3
   s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch
-  and when the tab closes, and Undo puts the board back as it was and says so. The empty board's Start from... button
+  and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo
+  dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
+  being the board's committed layout revision just before that Start from, with one receipt and only while the
+  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore whose
+  revision is no longer the board's previous one is refused with a disabled reason, and it emits no
+  workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button
   opens the same list.
   Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks
   for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at
@@ -45166,7 +45180,7 @@ acceptance_criteria:
   - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels; gravity and Tidy behave as on the Usage page, each settled change one transaction."
   - "The board's width class follows the tab's own width, the board sits on Home's tab surface in every look, and a dashboard's widget layout is never written into the Home layout record."
   - "Range and scope are chosen per dashboard and change only that board, through ui.widget_board.set_view with no receipt and no event."
-  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was."
+  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused with a disabled reason once that revision is no longer the board's previous one (amended 2026-10-10, lead ruling)."
   - "Saving, renaming and deleting a preset dispatch no command; a saved preset shows in Start from on every dashboard of every project, and deleting it leaves the dashboards that used it unchanged."
   - "A custom dashboard is renamed from Rename dashboard... or by renaming its tab, each renaming the other, and is deleted only after the confirm, which closes its tab and forgets its board and name; Home, Metrics, Monitoring and Agents show no Rename dashboard... or Delete dashboard...."
   - "Each board's contents belong to the project: a project switch shows that project's boards and lists only its own custom dashboards."
@@ -45233,6 +45247,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
   - "Amended 2026-10-10 (DL-186): Every dashboard tab is its own board on the Usage board engine: built-in and custom dashboards, per-project boards, per-dashboard range and scope, Start from with set_id and Undo, presets, rename and delete, the reopen-list and named-layout rules, the entrance, the empty board, Details to the Usage inspector, Home's tab surface and live readings per board; the old Home widgets, the shared-holder note and the wave 1 board key leave."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md

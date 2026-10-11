@@ -1914,6 +1914,12 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # profile, alias, exclusion, handler or proof is added. The typed local
     # actions the answers add (range and scope, presets, the terminal's mute, the
     # chat's narrow-window pin) have no entry.
+    # 2026-10-10 lead ruling on the Undo after Start from (UCC-200, WM-090,
+    # UIW-040): +1 production-intent home.* entry,
+    # home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with
+    # restore_revision (1256 -> 1257). It dispatches an existing catalog command
+    # with its existing handler; no command, Touch row, profile, alias,
+    # exclusion, handler or proof is added.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1921,7 +1927,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1256,
+        "production_wiring_entry_count": 1257,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

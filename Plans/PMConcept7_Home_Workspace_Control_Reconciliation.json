@@ -353,7 +353,7 @@
       "kept_disposition": "Rebuilt on the v2 model: the chat's show and hide (receipt only), Pop out (panel.undocked only), the chat width ({ surface: chat, width }) and Restore home layout from the title bar and from Settings."
     },
     "dl_180_census": {
-      "home_production_rows": 108,
+      "home_production_rows": 129,
       "terminal_tab_production_rows": 36,
       "production_wiring_owner": "Plans/Wiring_Matrix.production.json",
       "row_prefixes": [
@@ -361,7 +361,8 @@
         "terminal."
       ],
       "census_owner": "Plans/UI_Wiring_Rules.md#UIW-040 and #UIW-042",
-      "note": "semantic_production_rows above is the 2026-08-13 census of the superseded model and is kept as lineage."
+      "note": "semantic_production_rows above is the 2026-08-13 census of the superseded model and is kept as lineage.",
+      "amended_2026_10_10": "Amended 2026-10-10 (DL-186, DL-187; lead ruling on the Undo after Start from): home_production_rows moves 108 -> 129, the number of home.* entries in Plans/Wiring_Matrix.production.json: 20 entries for Jared's answers of 2026-10-10 (the \"+\" menu's SSH hosts row and New dashboard, the empty-panel launcher's sub-row links and the dashboard tab's command-bearing controls, DL-186 and DL-187) and home.dashboard_tab.undo_start_from for the Undo after Start from (cmd.widget.reset_layout with restore_revision). terminal_tab_production_rows is unchanged. It read: home_production_rows 108."
     }
   },
   "consumer_map": {

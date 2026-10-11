@@ -2745,8 +2745,11 @@ canonical_text: >-
   old Home widgets are gone from Home, and with them the step's Approval queue practice; widget_action now
   teaches a Usage widget, Upcoming resets (`ov-resets`). It reveals `dashboard:home`, and the learner adds
   Upcoming resets to the Home board from the tab's Add widget, then drags it up to where they can glance at
-  it. When the Home board already shows Upcoming resets, the step first takes it off the board
-  (cmd.widget.remove) so that it can be added. The step is finished only when, since it began, the Home
+  it. Home's default set already holds Upcoming resets, so the step first takes it off the Home board
+  (cmd.widget.remove) as part of the tour's captured practice layout, then teaches adding it; Back, Skip and Finish
+  restore the captured layout quietly (DL-153), Upcoming resets back on the Home board where it was, unless Finish's
+  explicit Keep keeps the demonstrated layout (amended 2026-10-10, lead ruling; it read: When the Home board already
+  shows Upcoming resets, the step first takes it off the board (cmd.widget.remove) so that it can be added). The step is finished only when, since it began, the Home
   board reports an accepted cmd.widget.add of `ov-resets` with room `home`, followed by an accepted
   cmd.widget.move or cmd.widget.resize of that widget there; the tour contract's
   `predicate:workspace:widget-added` names that whole condition, the add followed by the move or resize, never the
@@ -2785,7 +2788,7 @@ acceptance_criteria:
   - open_from_plus opens a tab from a panel's "+" menu through cmd.panel_tab.open, open_file_from_rail opens a file from the left rail into a panel through cmd.file.open with placement, and split_by_drag drags a tab to a panel edge through cmd.panel_tab.move with an edge split; the tab menu's Split right / Split down also completes split_by_drag.
   - Each action step is finished by what the panels report, never by a timer, and Show Me runs the same owner command.
   - widget_action stays, first shows the Home dashboard tab, and runs cmd.widget.add addressed to a dashboard board.
-  - "Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets (ov-resets) on the Home board; when the board already shows it the step first removes it; the step finishes only on an accepted cmd.widget.add of ov-resets with room home followed by an accepted cmd.widget.move or cmd.widget.resize of it, never on a timer, and predicate:workspace:widget-added is that whole condition; Show Me uses the same board commands; no old Home widget or Approval queue practice remains."
+  - "Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets (ov-resets) on the Home board; because Home's default set already holds it, the step first removes it (cmd.widget.remove) as part of the tour's captured practice layout, and Back, Skip and Finish restore that layout quietly (amended 2026-10-10, lead ruling; it read: when the board already shows it the step first removes it); the step finishes only on an accepted cmd.widget.add of ov-resets with room home followed by an accepted cmd.widget.move or cmd.widget.resize of it, never on a timer, and predicate:workspace:widget-added is that whole condition; Show Me uses the same board commands; no old Home widget or Approval queue practice remains."
   - "Amended 2026-10-10 (DL-186): Back, Skip and Finish put the Home board's widgets back with the panels through the board owner's snapshot, per project, unless Finish keeps the demonstrated layout."
   - A saved position naming a retired step resumes at the first step of that step's chapter (move_or_dock_chat resumes at workspace_orientation); finished ids of retired steps are dropped; a position saved under another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with the notice; the restore stays quiet (DL-153).
   - Back puts the panels back as they were when the step began, and Skip and Finish restore the captured v2 layout.
@@ -2839,6 +2842,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature."
   - "Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets on the Home board (add, then move or resize), and the tour's snapshots and restores cover the Home board's widgets; the old Home widgets and the Approval queue practice are gone."
   - "Amended 2026-10-10 (DL-186): the tour contract's predicate:workspace:widget-added keeps its name and now means the add followed by a move or resize."
+  - "Amended 2026-10-10 (lead ruling): Home's default set already holds Upcoming resets, so the widget step always first takes it off the Home board as part of the captured practice layout, and Back, Skip and Finish restore that layout quietly (DL-153)."
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json
