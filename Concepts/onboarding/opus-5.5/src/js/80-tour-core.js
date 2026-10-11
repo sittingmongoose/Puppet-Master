@@ -151,7 +151,7 @@
          a stepped opacity animation (the compositor runs it; an animated dash offset repaints on the main thread) */
       + Array.from({ length: 15 }, (_, k) => `<rect class="o55t-ph${k < 4 ? ' o55t-ph4' : ''}${k === 0 ? ' o55t-ph0' : ''}" rx="12" ry="12" style="--k:${k}"/>`).join('') + `</svg></div>`
       + `<div class="o55t-shield" aria-hidden="true"></div>`
-      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel"><svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel">${U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'}`
       + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
       + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
       + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`

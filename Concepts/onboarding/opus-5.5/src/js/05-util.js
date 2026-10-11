@@ -66,6 +66,36 @@
     if (!svg) svg = map[name] || map.info || '';
     return `<span class="o55-ico${cls ? ' ' + cls : ''}" aria-hidden="true">${svg}</span>`;
   };
+  /* The window's own drawings ask the neon set the same way (rollout ONBOARDING, round 2): U.nx draws one glyph, U.mark
+     one status mark of the shared vocabulary; each returns '' when PMG cannot draw it, so its caller keeps the drawing
+     it had. Both strings are cached per argument list (the screens re-render on every state change), in the form the
+     browser serialises them (a host that compares a slot's innerHTML with a fresh string, as the sound and look slots
+     do, then finds it unchanged, and U.morph sees no difference). A mark is lit and still (nx-still: it draws on once
+     and never loops) unless `moving` is set: only working moves. */
+  const NX_CACHE = Object.create(null);
+  const serialised = (html) => {
+    if (!html || typeof document === 'undefined') return html || '';
+    const t = document.createElement('template'); t.innerHTML = html; return t.innerHTML;
+  };
+  U.nx = function nx(glyph, size, role, cls) {
+    const G = window.PMG;
+    if (!glyph || !G || typeof G.has !== 'function' || !G.has(glyph)) return '';
+    const key = 'g|' + glyph + '|' + size + '|' + role + '|' + (cls || '');
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.icon(glyph, size, 'nx-r-' + role + (cls ? ' ' + cls : ''))); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
+  };
+  U.mark = function mark(status, size, cls, moving) {
+    const G = window.PMG;
+    if (!status || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(status)) return '';
+    const c = (moving ? '' : 'nx-still') + (cls ? (moving ? '' : ' ') + cls : '');
+    const key = 's|' + status + '|' + size + '|' + c;
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.status(status, size, c)); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
+  };
 
   /* Deterministic PRNG (mulberry32) so fixtures, fingerprints and sound noise are reproducible in films. */
   U.rng = function rng(seed) {

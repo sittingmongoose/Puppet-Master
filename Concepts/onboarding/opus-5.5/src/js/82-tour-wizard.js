@@ -94,7 +94,7 @@
     return head + `<div class="pm6-wiz-thread-body">${body}</div>`;
   }
   function answerRow() {
-    return `<div class="pm6-wiz-ans" data-key="ans"><span class="pm6-wiz-ans-check">${O55.c.small('check', 12)}</span><div><div class="pm6-wiz-ans-q">${U.esc(W('question'))}</div><div class="pm6-wiz-ans-a">${U.esc(W('choices.' + P.answer))}</div><div class="pm6-wiz-ans-src">${U.esc(W('badge'))}</div></div></div>`;
+    return `<div class="pm6-wiz-ans" data-key="ans"><span class="pm6-wiz-ans-check">${O55.c.smallArt('check', 12)}</span><div><div class="pm6-wiz-ans-q">${U.esc(W('question'))}</div><div class="pm6-wiz-ans-a">${U.esc(W('choices.' + P.answer))}</div><div class="pm6-wiz-ans-src">${U.esc(W('badge'))}</div></div></div>`;
   }
   /* The live plan: keyed rows so a changed answer moves only what it affects */
   function planRows() {
@@ -104,7 +104,7 @@
   }
   function docHtml(gone) {
     const { dec, open } = planRows();
-    const row = (k, text, cls) => `<div class="pm6-wiz-doc-decision o55p-row${cls ? ' ' + cls : ''}" data-key="r-${k}"><span class="pm6-wiz-glyph">${cls && cls.includes('gone') ? '−' : O55.c.small('check', 12)}</span><span>${U.esc(text)}</span></div>`;
+    const row = (k, text, cls) => `<div class="pm6-wiz-doc-decision o55p-row${cls ? ' ' + cls : ''}" data-key="r-${k}"><span class="pm6-wiz-glyph">${cls && cls.includes('gone') ? '−' : O55.c.smallArt('check', 12)}</span><span>${U.esc(text)}</span></div>`;
     const decRows = dec.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh' : '')).concat((gone || []).filter((g) => g.sec === 'dec').map((g) => row(g.k, g.t, 'o55p-gone')));
     const openRows = open.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh o55p-open' : 'o55p-open')).concat((gone || []).filter((g) => g.sec === 'open').map((g) => row(g.k, g.t, 'o55p-gone')));
     return `<div class="pm6-wiz-doc-h" data-key="h">${U.esc(W('title'))} — ${U.esc(W('badge'))}</div>`
@@ -115,7 +115,7 @@
       + `<div class="pm6-wiz-doc-sec o55p-boundary" data-key="s-b"><div class="pm6-wiz-doc-sec-p"><strong>${U.esc(W('doc.boundary'))}</strong></div></div>`;
   }
   function railHtml() {
-    const g = (done, label) => `<div class="pm6-wiz-gate${done ? ' done' : ''}"><span class="pm6-wiz-gate-mark">${done ? O55.c.small('check', 11) : ''}</span><span>${U.esc(label)}</span></div>`;
+    const g = (done, label) => `<div class="pm6-wiz-gate${done ? ' done' : ''}"><span class="pm6-wiz-gate-mark">${done ? O55.c.smallArt('check', 11) : ''}</span><span>${U.esc(label)}</span></div>`;
     return `<div class="pm6-wiz-rail-title">${U.esc(W('rail.title'))}</div>` + g(true, W('rail.g1')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g2')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g3'))
       + `<div class="o55p-fence" data-key="fence"><button type="button" class="pm6-wiz-approve o55p-approve" aria-disabled="true" data-pm-hover-exempt="true" tabindex="-1">${icon('rocket')}Approve And Build</button><span class="o55p-fencenote">${O55.c.small('lock', 13)}${U.esc(W('rail.fence'))}</span></div>`;
   }

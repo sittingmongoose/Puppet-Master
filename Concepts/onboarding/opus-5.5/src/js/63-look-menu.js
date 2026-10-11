@@ -15,7 +15,7 @@
   O55.lookMenu = {
     /* attr: the click attribute of the host (data-o55-do in onboarding, data-o55t in the tour) */
     button(cls, attr, open) {
-      return `<button type="button" class="${cls} o55-lookbtn${open ? ' o55-on' : ''}" ${attr}="lookMenu" aria-haspopup="true" aria-expanded="${!!open}" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.look'))}" title="${U.esc(T('chrome.look'))}">${ICON}</button>`;
+      return `<button type="button" class="${cls} o55-lookbtn${open ? ' o55-on' : ''}" ${attr}="lookMenu" aria-haspopup="true" aria-expanded="${!!open}" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.look'))}" title="${U.esc(T('chrome.look'))}">${U.nx('palette', 18, 'control') || ICON}</button>`;
     },
     panel(attr) {
       const th = O55.theme();
