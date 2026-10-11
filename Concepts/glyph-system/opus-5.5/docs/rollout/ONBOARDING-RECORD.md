@@ -54,3 +54,15 @@ GLY-4 (share folder `2026-10-11-glyph-gly4-onboarding-art/`).
 ## Not changed here
 - The art scenes (GLY-4), the logo, the tour pointer, QR and identity art, the NieR pod.
 - The pills' boxes (`.o55-pill`, `.o55-tag`, `.o55-chip`): pm7-no-pills' follow-up branch; the marks inside are these.
+
+## Pre-landing run on the merged branch (ad7f6fccdd: main 62f37f65df and 3ad5e84b71 merged)
+P1000, main's own harness (3ad5e84b71: owner fixtures, agent-browser adapter); evidence in
+`results/prelanding-composed/` (SHA256SUMS there).
+- Tours: 7/7 three times.
+- Scenarios as landed: 1/69 here and s01 fails on main's own page too: `drive.mjs` `openOnboarding()` sleeps a fixed 900 ms
+  and on the P1000 the window opens about 2 s after `O55.ui.open()` (probe `drive-probe.mjs`: S.sess null at 900 ms,
+  'welcome' 2 s later). Reported to the planner and codex-onboarding-scenarios.
+- With a scratch harness that waits for `O55.S.sess.screen && O55.S.open` (150 ms polls, 9 s): the glyph branch 67/69,
+  main's page 46/69 in the same session; the branch's two failures (s10 'no field name on begin', n11 'no control pick
+  existing on where') fail identically on main, more fixed-sleep timing. The glyph branch adds no failure.
+
