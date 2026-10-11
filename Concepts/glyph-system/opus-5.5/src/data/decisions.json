@@ -194,6 +194,58 @@
     "record": "D44 (DECISIONS-ADDENDUM-3.md, home-panels-terminal packet)",
     "words": "i agree"
    }
+  },
+  {
+   "id": "GLY-4",
+   "title": "The onboarding art draws the neon set's shapes",
+   "question": "The onboarding window's interface uses the neon set (D44). Its art scenes still draw their own twenty small pictures (folder, server, vault, key, ...), each look in its own material (Basic's blueprint line, Friendly's paper, Glass's light, Retro's pixels, NieR's ink), so one screen can show two drawings of one thing. Card with every glyph in every look: share folder 2026-10-11-glyph-gly4-onboarding-art.",
+   "options": [
+    {
+     "key": "A",
+     "title": "Neon shapes, each look's own material",
+     "recommended": true,
+     "detail": "The scene draws the same folder, server and vault as the pane, still as line, paper, light, pixels or ink: one drawing per thing everywhere, and the art keeps its character. Retro's pixel sprites are redrawn by hand to the neon outlines (12 of 20 change, 8 already match).",
+     "demo": [
+      {
+       "glyph": "vault",
+       "label": "vault"
+      },
+      {
+       "glyph": "monitor",
+       "label": "computer"
+      },
+      {
+       "glyph": "archive",
+       "label": "box"
+      },
+      {
+       "glyph": "key",
+       "label": "key"
+      },
+      {
+       "glyph": "sparkles",
+       "label": "spark"
+      },
+      {
+       "glyph": "sprout",
+       "label": "seed"
+      }
+     ]
+    },
+    {
+     "key": "B",
+     "title": "Keep the art's own drawings",
+     "detail": "Nothing changes; a vault stays a shield with a check in the scene and a safe in the pane, a computer a laptop in one and a monitor in the other.",
+     "demo": []
+    },
+    {
+     "key": "C",
+     "title": "Neon tubes in the scenes too",
+     "detail": "The scene glyphs glow like the interface's; the looks lose their own material in the art (Friendly's paper and Retro's pixels carry lit tubes).",
+     "demo": []
+    }
+   ],
+   "answer": null
   }
  ]
 }
