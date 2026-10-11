@@ -633,8 +633,7 @@ function checkUndo(rec, u) {
   u.off = text;
   u.btn.setAttribute('aria-disabled', 'true');
   u.btn.setAttribute('data-disabled-reason', text);
-  u.btn.setAttribute('data-pm-hover-detail', text);
-  u.btn.style.opacity = '.5'; u.btn.style.cursor = 'default';
+  u.btn.setAttribute('data-pm-hover-detail', text);   /* dimmed by 62-kind-dashboard.css [aria-disabled] */
   if (t) { t.textContent = text; t.title = text; }
   rec.api.announce(text);
   return true;

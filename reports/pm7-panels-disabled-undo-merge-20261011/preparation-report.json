@@ -1,0 +1,253 @@
+{
+  "status": "Prepared for root review; unlanded",
+  "agent": "codex-pm7-panels-disabled-undo",
+  "branch": "fix/pm7-panels-disabled-undo-merge-20261011",
+  "worktree": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-panels-disabled-undo-merge-20261011",
+  "base": "cc2371eb29f3ad227b2f28260bd758c48dcd4560",
+  "authority": {
+    "owner_thread": "mcp:124f95c3-7249-41cd-ad8d-aad8ec6a5899",
+    "owner_run": 12,
+    "owner_mail": {
+      "original_path": "/mnt/Cursor/Inbox/box/home-redesign-planner/read/1011211839-31ad.json",
+      "retained_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/owner-final-mail-1011211839-31ad.json",
+      "sha256": "b03627d33cca3a73bb015ad28a6b5cb7b36dab204c8dc5fc10f59eefc83b5393"
+    },
+    "original_base": "2f91e7a6228e5d3b50be997a562eb263bef059bc",
+    "owner_branch": "concept/home-panels-d10-followup-20261011",
+    "owner_commit": "821bbe1032433705b8754227d0606ddcaf51bb12",
+    "role": "Mechanical custody/composition only. Owner owns and approved both source files under the existing ruling; no design/canon choice.",
+    "prior_receipts": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/d10-followup/SHA256SUMS",
+        "sha256": "c331110aa2ff902f0644e331e8f54db9c247a3807110b204d81fd7127e4d5351"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/d10-followup/AUDIT.md",
+        "sha256": "3fd6f8562cffe77fc3ad60e79497faac00676bb154ae6882c1af699807990f66"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-d10-followup-20261011/coordinator-closure-20261011/command-receipts.json",
+        "sha256": "403eec65989af4947f9d456078bde1860492557927446ce1e462b4d984c66ed7"
+      }
+    ]
+  },
+  "scope": {
+    "sources": [
+      {
+        "path": "Concepts/home-redesign/src/panels/css/62-kind-dashboard.css",
+        "original_base_blob": "a87d1efdf25224d3d5d30fcf07082954d2206a34",
+        "composition_base_blob": "a87d1efdf25224d3d5d30fcf07082954d2206a34",
+        "owner_final_blob": "98ae54402d78d255976052a183439434f2ade0a6",
+        "base_sha256": "ec979111b030a3d71464f5b5b7d91a0c97803cc49c9cbf107087d100034aae40",
+        "owner_sha256": "23c66d1ab1707a4e2e3d01fbda88fa764b58df5c7421d8654702aab6df2948ea",
+        "base_equals_original": true
+      },
+      {
+        "path": "Concepts/home-redesign/src/panels/kinds/30-dashboard.js",
+        "original_base_blob": "20b1cf61a755a9d8b569b2049cdb3513e802503c",
+        "composition_base_blob": "20b1cf61a755a9d8b569b2049cdb3513e802503c",
+        "owner_final_blob": "db68d8654e7ccbfc335cece13692bb176d935da0",
+        "base_sha256": "9c8303d88ffe4cd75ca609d3ec1796bdd3fad42d3b0bba11fafaf0e4f69006fb",
+        "owner_sha256": "1aae0d6c1593aa603003f3998be53e5305b6c7847062400e9dd39f910ebe6439",
+        "base_equals_original": true
+      }
+    ],
+    "product_paths": [
+      "Concepts/HomeTestPMConcept7.html",
+      "Concepts/LeftRailPMConcept7.html",
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "Concepts/PMConcept7.html",
+      "Concepts/home-redesign/src/panels/css/62-kind-dashboard.css",
+      "Concepts/home-redesign/src/panels/kinds/30-dashboard.js"
+    ],
+    "report_paths": [
+      "reports/pm7-panels-disabled-undo-merge-20261011/preparation-report.json",
+      "reports/pm7-panels-disabled-undo-merge-20261011/SHA256SUMS"
+    ],
+    "only_owner_two_file_diff_carried": true,
+    "old_generated_pages_cherry_picked": false,
+    "D10_features_already_landed": "P1 B/P11/P12/presets in 62f37f65df; not rebuilt/redesigned",
+    "no_Plans_edits": true
+  },
+  "custody": {
+    "git_apply_check": "PASS",
+    "source_patch_bytes_identical": true,
+    "stable_patch_id": "8c4539723c6d3bc339f4e8b43a94e35c45745342",
+    "patch_sha256": "c0e0b4d2dfbade8f42290d0d4cc2bc698f52027f62d2d3f771af3cba278df611",
+    "whole_files_equal_owner_blobs": true,
+    "current_base_blobs_equal_original_base": true
+  },
+  "byte_proof": {
+    "method": "For each output, read bytes at the exact composition base. Require each complete original source block and its marker exactly once, replace each complete old source with the complete author source exactly once, compare all resulting bytes to the regenerated output. Reverse both replacements and require exact base bytes.",
+    "all_four_outputs_pass": true,
+    "no_other_byte_change": true,
+    "outputs": [
+      {
+        "path": "Concepts/PMConcept7.html",
+        "base_sha256": "322fc257b7e6822b14e6d9e610f86b51b1fca1a107170f9fa4397f52531c6f5a",
+        "candidate_sha256": "4687b1ecb639c100425e25eeb35bf400089132d796d3be4b38b18caa1cb933a9",
+        "bytes": 18562641,
+        "byte_delta": 767,
+        "css_replacements": 1,
+        "js_replacements": 1,
+        "inverse_restores_base_exactly": true
+      },
+      {
+        "path": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+        "base_sha256": "322fc257b7e6822b14e6d9e610f86b51b1fca1a107170f9fa4397f52531c6f5a",
+        "candidate_sha256": "4687b1ecb639c100425e25eeb35bf400089132d796d3be4b38b18caa1cb933a9",
+        "bytes": 18562641,
+        "byte_delta": 767,
+        "css_replacements": 1,
+        "js_replacements": 1,
+        "inverse_restores_base_exactly": true
+      },
+      {
+        "path": "Concepts/HomeTestPMConcept7.html",
+        "base_sha256": "322fc257b7e6822b14e6d9e610f86b51b1fca1a107170f9fa4397f52531c6f5a",
+        "candidate_sha256": "4687b1ecb639c100425e25eeb35bf400089132d796d3be4b38b18caa1cb933a9",
+        "bytes": 18562641,
+        "byte_delta": 767,
+        "css_replacements": 1,
+        "js_replacements": 1,
+        "inverse_restores_base_exactly": true
+      },
+      {
+        "path": "Concepts/LeftRailPMConcept7.html",
+        "base_sha256": "877f467de5a8fa4ad33f3f25b3f57c1c6a0ee9c6fd6151cfa34cd34ce1c78c23",
+        "candidate_sha256": "f2ab4f91e5bb0086cc008a3c97ea1e9537a819c6dd3c1e6f427238876e5e469a",
+        "bytes": 19197188,
+        "byte_delta": 767,
+        "css_replacements": 1,
+        "js_replacements": 1,
+        "inverse_restores_base_exactly": true
+      }
+    ]
+  },
+  "checks": {
+    "builder_order": [
+      "python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
+      "python3 Concepts/home-redesign/tools/build_home.py",
+      "python3 Concepts/leftrail-redesign/tools/build_rail.py"
+    ],
+    "all_builds_exit": 0,
+    "all_three_builder_check_modes": "PASS, exit 0",
+    "source_node_check": "PASS, exit 0",
+    "embedded_script_syntax_and_existing_builder_guards": "PASS through existing builders/checks",
+    "git_diff_check": "PASS, exit 0",
+    "existing_builder_note": "Known page-wide universal selector in src/css/10-window.css remains an existing NOTE; unchanged and no source repair attempted."
+  },
+  "probes": {
+    "assertions_and_product_code_unchanged": true,
+    "original_probe_hashes": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/d10-followup/probes/ui.mjs",
+        "sha256": "c49806217159725beea75701d57ae43085e9a0ba2dfbd925b45c46c7de1de476"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/d10-followup/probes/undo-off.mjs",
+        "sha256": "2bf2379064c066576bcb27cbda71823d6494ff6b16a9687bdcd765fa08882fe7"
+      }
+    ],
+    "ui": {
+      "results": "4/4 PASS; errors 0",
+      "start_from": "Actual Board menu offers Undo",
+      "restore": "Exact same widget ID list before and after Undo",
+      "later_widget_mutation": "Notice removed (gone=true); not an observed refused notice",
+      "demo_time": "Correct header selector finds Demo time while hour plays"
+    },
+    "refusal": {
+      "method": "Explicit board.restoreWhy override returns stale; a forced refusal check, not a spontaneous user-path observation",
+      "looks": [
+        "basic-dark",
+        "basic-light",
+        "friendly-light",
+        "glass-dark",
+        "retro-dark",
+        "nier"
+      ],
+      "results": "6/6 complete computed-state rows, errors 0; aria-disabled=true, exact reason, empty inline style, opacity .5, hover background/foreground equal rest",
+      "nier": "Full formerly cut row captured, including complete rest and hover cursor/background/foreground; NieR pointer part supplies its existing cursor",
+      "keyboard_focus": "Preserved by exact author CSS: existing focus rules retained and disabled hover rule excludes :focus-visible; not separately exercised by these two unchanged probes"
+    }
+  },
+  "prior_evidence_limits": [
+    "Initial owner audit.json is not wholly green: an API-level false Undo row and wrong Demo-time header selector remain preserved.",
+    "Earlier actual-menu/selector follow-up and final-candidate UI at coordinator receipt position 993 separately pass; a later real widget mutation removes the notice.",
+    "Owner refusal command at position 980 printed five full rows; its NieR row was cut by the owner's shell pipeline. This run closes the full NieR output without inferring fields from the old cut line."
+  ],
+  "admission": {
+    "host": "ubuntu-agent-nas1",
+    "kind": "Ordinary functional/DOM checks; no GPU, WebGL, performance or exclusive-device claim",
+    "browser_cap": 4,
+    "own_browsers_at_once": 1,
+    "recording": false,
+    "owner_Playwright_lab": "Read-only existing dependency at /home/sittingmongoose/pm-scratch/home-panels-20261009/lab/; not edited or deleted",
+    "owned_helpers": [
+      {
+        "id": "b6bc987e80ec",
+        "unit": "intel-browser-b6bc987e80ec",
+        "status": "complete",
+        "profile_removed": true,
+        "unit_inactive": true
+      },
+      {
+        "id": "ad56ba325164",
+        "unit": "intel-browser-ad56ba325164",
+        "status": "complete",
+        "profile_removed": true,
+        "unit_inactive": true
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/custody.json",
+      "sha256": "ac3a93fa3c7f7134440faa849fe9a6ee51badb93a0b9fa3aa5bae993d0326d25"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/owner-two-file.patch",
+      "sha256": "c0e0b4d2dfbade8f42290d0d4cc2bc698f52027f62d2d3f771af3cba278df611"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/composition-proof.json",
+      "sha256": "62738ec5faccfac3d323c6b559e8234098b3efaceaa45ad00c8b2b19076e1bcb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/probe-results.json",
+      "sha256": "5de31fdd7ead51ff60bbb3f37f02775f483266af974b85f9d0976d7d2575cf16"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/logs/probe-ui.log",
+      "sha256": "4f3744d5f415fd1735612f259e575fc44a1dafd9c04d233e807c543f8a2f443b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/logs/probe-undo-off.log",
+      "sha256": "8782a0a2fe34eada55684b1daaa177e478f6cd877e3500d1a219c9b530394d39"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/verification-command-receipts.json",
+      "sha256": "26fbe3f2bfdce130f16085a2a36e3fe0960cdcfbd3bf2e3109b4aaf2c8e075ff"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/verification-recipes.json",
+      "sha256": "5466c18bef9de69bff5f54dbba554a9882713889e4db4c6ba32a5e4b05e0ace6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-panels-disabled-undo-merge-20261011/verification-SHA256SUMS",
+      "sha256": "9a3c04a4f47f9b26f9a80ec77fa05f0cd89d3472f74ae99116097dbf33ababca"
+    }
+  ],
+  "handoff": {
+    "preparation_blockers": [],
+    "root_action_required": "Review and choose a ready gap; ready hover retains priority. Root runs required shared pre-push landing check under lock.",
+    "forbidden_actions_performed": [],
+    "no_shared_checkout_or_main_edit": true,
+    "no_landing_lock_taken": true,
+    "no_main_push": true,
+    "no_governance_snapshot_baseline_reseal": true,
+    "no_owner_wake_or_extra_worker": true,
+    "unlanded_bound_worktree_and_branch_retained": true,
+    "final_receipt": "External handoff.json records final branch HEAD, both push destinations, and final cleanup after this report is committed."
+  }
+}
