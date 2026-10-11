@@ -1108,8 +1108,16 @@
     const aid = ds(el, 'account');
     if (aid && (find(id).accounts || []).some(x => x.id === aid)) {
       const sel = `.pm51-acc-item[data-account="${cssEscape(aid)}"] .o55-field[data-setting-id="${SW_ID}"]`;
-      o55OpenAround(sel);
-      window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+      /* the detail swaps in while its outgoing copy is still drawn: the account is opened and scrolled to in the copy that
+         stays (D43, Open in Settings from the Usage page: the toggle was clicked in the outgoing copy, so the account came
+         back closed and the scroll landed on the copy that left) */
+      let tries = 0;
+      const land = () => {
+        if (root.querySelectorAll(sel).length > 1 && ++tries < 30) { window.setTimeout(land, 70); return; }
+        o55OpenAround(sel);
+        window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+      };
+      land();
     }
   });
   /* Auto-switch policies: a service's arrow opens it under Services at its auto-switch row */
