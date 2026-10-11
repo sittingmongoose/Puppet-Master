@@ -1,9 +1,12 @@
-/* Chrome for the onboarding tools: pm_cdp's launch with one private profile per browser, and a close() that waits for
- * Chrome and its helper processes to exit and then removes the profile (each is ~150 MB, and the shared /tmp is a
- * 16 GB tmpfs that every agent on the machine writes to). Tools import { launch, sleep } from here. */
+/* Chrome for onboarding tools: pm_cdp input through agent-browser, which owns the real private profile,
+ * enforces the machine's cap and removes the profile at stop. close() also removes pm_cdp's empty pipe-launch
+ * directory. Tools import { launch, sleep } from here; no recording is started. */
 import { launch as cdpLaunch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
 import { rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
+import { fileURLToPath } from 'node:url';
+
+const executable = fileURLToPath(new URL('./agent-browser-pipe.mjs', import.meta.url));
 
 let n = 0;
 const openBrowsers = new Set();
@@ -12,7 +15,9 @@ for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { await P
 export { sleep };
 export async function launch(opts = {}) {
   const profile = opts.profile || `${tmpdir()}/pm-cdp-profile-${process.pid}-o55-${++n}`;
-  const b = await cdpLaunch(Object.assign({}, opts, { profile }));
+  let b;
+  try { b = await cdpLaunch(Object.assign({}, opts, { profile, chrome: executable })); }
+  catch (err) { rmSync(profile, { recursive: true, force: true }); throw err; }
   let closed = false;
   const close = async () => {
     if (closed) return; closed = true; openBrowsers.delete(close);

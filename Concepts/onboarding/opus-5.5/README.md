@@ -89,6 +89,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | Tool | Use |
 |---|---|
 | `tools/scenarios.mjs <out> [--only ids] [--theme t] [--snaps]` | Acceptance scenarios by real clicks; `--snaps` photographs every screen reached. |
+| `tools/owner_fixtures.mjs` | Test-only owner-result fixtures used by the scenarios: explicit request-bound claim/bootstrap/pair/trust, GitHub terminal creation, and protected Recovery Kit/policy results. Missing or mismatched proof must stay pending. |
 | `tools/schema_check.py validate <drafts.json>` / `coverage [--check]` | jsonschema validation of captured drafts against `Plans/product_onboarding_contracts.schema.json`; coverage table. |
 | `tools/draft_matrix.mjs <out.json>` | Data-level matrix of drafts for every journey, service, privacy and remote mode. |
 | `tools/film.mjs <out> [--scenes] [--themes] [--freeze]` | Slow-motion 60 fps films (CDP playback rate + the motion clock). |
@@ -111,7 +112,16 @@ Recorded media (screenshots, contact sheets, film frames, videos, audio renders)
 `~/pm-scratch`, is reviewed, and is deleted when the work is finished (Jared, 2026-09-24). Results are written down
 inline in the landing records and in `REPORT.md` instead. Every tool deletes its Chrome profile when it exits.
 
-The tools launch Chrome on the GPU (no `--disable-gpu`) and accept `--page <built html>` to test a private build
+The onboarding driver and tour acceptance suites launch each browser with `agent-browser` through
+`tools/chrome.mjs` and `tools/agent-browser-pipe.mjs` (Node 22). The helper enforces the machine's cap and stops that
+exact browser and its profile at close. When the shared browser cap is full, start retries every 15 seconds,
+up to 80 attempts; other launch failures fail immediately. Tour waits require the current step's settled callout,
+and the plan review must finish reading its parts before Next. Nas1 runs ordinary page checks and screenshots with intentional software
+rendering; it has a four-browser cap and no video. These suites exit nonzero if any scenario fails. Owner results
+are deliberately injected by the test harness after checking the pending gates; fixture acceptance is not native
+execution, protected authentication, or durable owner proof. Kit bytes are never supplied or read from the DOM.
+
+The tools accept `--page <built html>` to test a private build
 (`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`; without
 `--page` they test the checked-in page.
 
