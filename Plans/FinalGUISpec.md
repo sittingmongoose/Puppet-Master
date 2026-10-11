@@ -34843,19 +34843,32 @@ canonical_text: >-
   session, and the sub-tab shown is view state with no command (lead ruling F6); an older `debug-console:<session>`
   id folds into it with that session shown (F3-635). The sub-tabs sit in the tab's shared header row (F3-635) as an
   ARIA tab list with a roving focus: Left and Right move and choose at once and wrap, Home and End go to the first
-  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
+  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides, 4 px apart and shows the session's
   name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
   warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
-  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
-  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
-  in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
-  strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
-  in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
-  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px with a 5 px radius,
+  first name with its text column. The chosen Debug Console sub-tab and every segmented toggle are filled on their own box, never underlined:
+  Friendly, Glass and Basic use each look's neutral selection fill (the surface a chosen row uses), never an
+  accent; Glass adds its 1 px rim on the filled box's top edge; Retro keeps reverse video; NieR keeps its
+  ink block with or without the cursor part (F3-648). The console beneath
+  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px around the fill box with a 1 px gap and a 9 px radius,
   square in Retro and with NieR's square part. Its hover tag names the session, how it runs and its state, and a
   paused session's location shows as a file reference beside the tab's buttons (F3-634). Below 460 px of body the
   state words go, below 640 px the paused-at reference goes, and below 820 px the buttons lose their words. Each
   session keeps its own console, state and frame.
+  The chosen fill sits 4 px in from the row's top and bottom: 21 px tall in the 29 px header row, 24 px in a
+  32 px body row and 20 px in a 28 px DevTools tool row, with 6 px corners (0 in Retro and NieR's square
+  part). Basic and Friendly dark use the chosen-row surface, the text colour at 11 %; Basic light uses 17 %
+  and Friendly light 20 %. Glass dark uses selection frost and Glass light its reading plate, with the same
+  top rim. The fill reads at least 1.3:1 against the row, chosen words at least 4.5:1, and a count or state
+  dot at least 3:1. Hover is a quieter step on the same box, about half the chosen fill; weight and size
+  stay unchanged. Options have 8 px side padding and 4 px gaps; a body row keeps 3 px inside each end, and a
+  leading header toggle starts its fill 4 px from the panel edge. One fill moves between boxes: Basic glides
+  220 ms, Friendly springs 420 ms with one 8 % overshoot held inside the row, Glass glides 460 ms without
+  liquid stretch; Retro and NieR cut, Reduced Motion and the system preference are instant, and Animation
+  speed scales it. Options on different lines of a wrapped Metric switch below 520 px change at once; its
+  gap is 4 px. With the fill, state words hide below 500 px in Retro and Friendly and 600 px in NieR with
+  its headers part; the paused-at reference hides below 680 px in NieR with headers, and button words below
+  920 px there; the other thresholds above stand.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
@@ -34889,6 +34902,8 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-187"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console sub-tabs; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -34911,6 +34926,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
 - "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
 - "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
+- "Amended 2026-10-11 (lead ruling 2026-10-11, D29): Debug sub-tabs and segmented toggles share neutral chosen fills and the measured sub-tab geometry."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -44711,6 +44727,9 @@ canonical_text: >-
   without a path. In-tab view saves coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px,
   Basic 6 px and Retro/NieR square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping
   slack.
+  The Debug Console's chosen sub-tab and every segmented toggle are filled on their own box, never
+  underlined, with Friendly's, Glass's and Basic's neutral chosen-row surface, never an accent; Glass adds
+  its 1 px top rim, Retro uses reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -44761,6 +44780,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and fold; concept lineage only)"
   - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Open in new tab"
   - "output:<channel>"
@@ -44810,6 +44830,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
   - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral chosen fill."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
@@ -45544,6 +45565,9 @@ canonical_text: >-
   rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
   or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
   of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
+  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
+  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
+  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
@@ -45572,6 +45596,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "3px left-edge accent stripe"
   - "accent-left-border"
@@ -45585,6 +45610,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
   - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
