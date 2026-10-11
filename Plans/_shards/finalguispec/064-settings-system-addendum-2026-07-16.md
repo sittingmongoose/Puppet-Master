@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31376-L32268
+Source lines: L31376-L32275
 
-Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
+Source SHA256: `a74986e6892dde6385ca5587566b89db5e9ec99007f0e9aba901aa643e3c7d26`
 
 ---
 
@@ -719,6 +719,13 @@ most specific set value winning. The retired row stays in the registry marked su
 `ai.accounts.hard-switch-level` at scope account; no surface reads or writes it after that, Settings offers no control
 for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
 own switch level, and the row count stays 916.
+
+Amended 2026-10-10 (owner decision D43, `Plans/Decision_Log.md#DL-174`, owner `Plans/Settings_System.md#SSYS-044`):
+an account's own `ai.accounts.hard-switch-level` at scope account is set in that account's own rows of Settings > AI >
+Providers & Accounts and also on the Usage Accounts room, on the account's card and in its Details
+(`Plans/usage-feature.md#UF-107`); it is the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=account` and the account id, neither
+surface keeps a copy, and the row count stays 916.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3340-L3406
 
-Source SHA256: `1949b9b3de3ac86875fd1f5e2e6856cf2b60a2e5004e17bab0464682e123814b`
+Source SHA256: `f9cf2dec0eb846d6eb072074d1fe6bbd45d0533c7ca016ff3efb1274a5f1d7a8`
 
 ---
 
@@ -29,7 +29,7 @@ acceptance_criteria:
   - validate-wiring-matrix fails if production wiring registers `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical command rows instead of compatibility aliases or exclusions.
   - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success; event-primary dispatch proves usage_event/usage_event_ref, while a PMConcept7 Ledger attempt dispatch proves usage_attempt/attempt_id plus usage_event_ref correlation. The two cmd.nav.open_usage_subject selector branches carry no OpenSubject; the two pre-existing artifact rows retain their artifact OpenSubject bridge and remain event-primary; all preserve applicable provider/account/runtime refs.
   - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters, while current PMConcept7 aggregate provider/account/panel cards remain local inspectors with no command, receipt, event, route object id, or invented route kind.
-  - The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level appear only on their existing account-select and Settings-transaction rows, with Usage Accounts locations, and never as route/open rows; the account card body and Details still dispatch nothing.
+  - The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level and each account's own switch level (D43, 2026-10-10) appear only on their existing account-select and Settings-transaction rows, with Usage Accounts locations, and never as route/open rows; the account card body and Details still dispatch nothing.
   - Wiring evidence distinguishes thread Context Detail Pane commands from app-wide Usage route/open commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix

@@ -312,3 +312,63 @@ html[data-o55-nier="on"] #panel-usage .pmu-polval { border-radius: 0; border-col
 html[data-o55-nier="on"] #panel-usage .pmu-polval:hover:not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
 html[data-o55-nier="on"] #panel-usage .pmu-ladnotch { border-radius: 0; background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
+
+/* ------------------------------------------------------------------ an account's own switch level (Jared 2026-10-10 D43)
+   One value button per account of a provider that switches (54-w-accounts.js accSwBtn). Following its provider: the
+   provider's own mark (12 px, never recoloured) and a quiet value, no edge at rest (the row's hover draws a faint one, so
+   it reads as a control); the mark says whose level it is where no word sits under the value. Its own level:
+   the meters' notch as its glyph and the value in ink on a hairline, so the accounts that differ stand out down a plate.
+   It sits in its own SWITCH AT column ("own level" or the provider under it), under the action word, or beside the
+   binding meter on a narrow plate. No fill at rest, no pill (a 6 px corner on a 22 px button; square in Retro and NieR);
+   the hover is an ink wash a step above the row's own hover. */
+#panel-usage .pmu-accsw { position: relative; display: inline-flex; align-items: center; gap: 3px; flex: none; height: 22px; padding: 0 4px; border: 1px solid transparent; border-radius: 6px;
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
+  transition: background-color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-accsw[data-own] { color: var(--pmu-ink); font-weight: 650; border-color: var(--pmu-rule-strong); }
+#panel-usage .pmu-accswi { display: inline-grid; place-items: center; flex: none; width: 10px; height: 14px; }
+#panel-usage .pmu-accswi > i { grid-area: 1 / 1; display: grid; place-items: center; font-style: normal; }
+#panel-usage .pmu-accswi .is-link { margin: 0 -1px; }   /* the 12 px mark in the 10 px box: 3 px to the edge, 2 px to the value */
+#panel-usage .pmu-accswi .is-own { color: var(--pmu-ink); }
+#panel-usage .pmu-accswi .is-own svg { width: 6px; height: 14px; }
+#panel-usage .pmu-accsw:not([data-own]) .is-own, #panel-usage .pmu-accsw[data-own] .is-link { display: none; }
+#panel-usage .pmu-accrow:hover .pmu-accsw:not([data-own]) { border-color: var(--pmu-rule-2); }
+#panel-usage .pmu-accrow:hover .pmu-accsw:is(:hover, .is-open):not([disabled]), #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) {
+  background: color-mix(in srgb, var(--pmu-ink) 9%, transparent); border-color: var(--pmu-rule-strong); color: var(--pmu-ink); }
+#panel-usage .pmu-accsw:active:not([disabled]) { background: color-mix(in srgb, var(--pmu-ink) 14%, transparent); }
+#panel-usage .pmu-accsw.is-open { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule-strong)); }
+#panel-usage .pmu-accsw:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+/* off or unavailable: the value and the notch dim, the provider's mark never does (marks are never tinted) */
+#panel-usage .pmu-accsw[data-off] :is(.is-own, .pmu-accswv) { opacity: .55; }
+#panel-usage .pmu-accsw[disabled] { cursor: default; }
+#panel-usage .pmu-accsw[disabled] :is(.is-own, .pmu-accswv) { opacity: .5; }
+/* its own column: the value, and under it what it is (the word starts at the glyph's left edge) */
+#panel-usage .pmu-accswcell { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; min-width: 0; }
+#panel-usage .pmu-accsww { padding-left: 5px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
+#panel-usage .pmu-accswcap { white-space: nowrap; }
+/* under the action word: the cell stacks, right-aligned (the button may lean up to 6 px into the 16 px gap on its left);
+   a compact row whose action is a button is 46 px with a 22 px button */
+#panel-usage .pmu-accactcell.is-stack { flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; }
+#panel-usage .pmu-accactcell.is-stack > .pmu-accactw { display: flex; justify-content: flex-end; min-width: 0; max-width: 100%; }
+#panel-usage .pmu-accactcell.is-stack > .pmu-accsw { height: 20px; }
+#panel-usage .pmu-accrow.is-compact.is-swbtn { min-height: 46px; }
+#panel-usage .pmu-accrow.is-compact.is-swbtn .pmu-accbtn { height: 22px; }
+/* a narrow plate: beside the binding meter, under the action word's column */
+#panel-usage .pmu-acc[data-sw="row2"] .pmu-acccell { grid-column: 1 / 2; }
+#panel-usage .pmu-accswcell.is-row2 { grid-column: 2; grid-row: 2; justify-self: end; align-self: center; }
+/* the looks: Friendly's glyph answers the hover on its spring, Glass lifts the wash with a top highlight, Retro is square and
+   stepped, NieR draws the following state on a dashed ink edge and its own level on a solid one, and inverts on hover */
+html[data-theme^="friendly"] #panel-usage .pmu-accsw { border-radius: 8px; }
+html[data-theme^="friendly"] #panel-usage .pmu-accswi > i { transition: transform calc(240ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
+html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) .pmu-accswi > i { transform: scale(1.18); }
+html[data-theme^="glass"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
+html[data-theme="glass-light"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-accsw { border-radius: 0; transition-timing-function: steps(2, jump-start); }
+html[data-o55-nier="on"] #panel-usage .pmu-accsw { border-radius: 0; color: var(--o55-nier-ink); border: 1px dashed rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .42); transition-timing-function: steps(2, jump-start); }
+html[data-o55-nier="on"] #panel-usage .pmu-accsw[data-own] { border-style: solid; border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-accswi > i { color: inherit; }
+html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover .pmu-accsw:not([data-own]) { border-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .7); }
+html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover .pmu-accsw:is(:hover, .is-open):not([disabled]), html[data-o55-nier="on"] #panel-usage .pmu-accsw:is(:hover, .is-open):not([disabled]) {
+  background: var(--o55-nier-ink); border-style: solid; border-color: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); box-shadow: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-accsw:focus-visible { outline: 1px solid var(--o55-nier-ink); outline-offset: 2px; }
+html[data-o55-nier="on"] #panel-usage .pmu-accsww { color: var(--o55-nier-ink); opacity: .7; letter-spacing: .02em; }
+html[data-motion="reduced"] #panel-usage :is(.pmu-accsw, .pmu-accswi > i) { transition: none !important; }

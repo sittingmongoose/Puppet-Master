@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L4283
+Source lines: L13-L4285
 
-Source SHA256: `8d72a461742b0873f0afc2414265b123e34eb71b269bcce6e3395c02d78f5cb7`
+Source SHA256: `691632bad3b0c6b350b78e1e75516740082b4c16a55cb4f03f8f341a9ddb991e`
 
 ---
 
@@ -3733,7 +3733,9 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 
 **Owner decision 2026-10-10 (USG-2):** Jared asked for MA-073's status states to be written as a mapping: each state is defined by a set of section 5 reason codes. `Plans/Multi-Account.md` now carries the MA-073 state table, read top to bottom, with no new code and no stored status.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5).
+**Owner decision 2026-10-10 (D43):** Jared's words were "account cards get switches", overriding the recommendation to leave an account's own switch level to Settings. Each account card on the Usage page carries one control for `ai.accounts.hard-switch-level` at scope account, on its card and in its Details. Showing it only on the accounts of a provider with two or more accounts is the reading of those words, not part of them: an account whose provider has no other account has nothing to switch to, so its card shows no control, as such a provider shows no auto-switch controls (`Plans/Multi-Account.md#MA-073`). The control is the same value as that account's own row in Settings, not a copy. It shows the level the account resolves to and whether that level is the account's own or follows its provider, and it offers following the provider again, which clears the account's own value. It commits through the same Settings transaction, at scope account with the account id; it keeps the provider's hold rules, so a level at or past the warning level that applies to the account is shown disabled with the reason; and its Open in Settings lands inside that account. The spec now says so in `Plans/Settings_System.md#SSYS-044` and section 8.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5); `/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D43, the owner decision of 2026-10-10 on account switch controls).
 
 ContractRef: ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-022, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/UI_Command_Catalog.md#UCC-147, ContractName:Plans/Commands_System.md#CS-067, ContractName:Plans/Wiring_Matrix.md#WM-043
 

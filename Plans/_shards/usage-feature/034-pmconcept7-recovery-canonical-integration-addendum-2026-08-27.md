@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6436-L6557
+Source lines: L6436-L6558
 
-Source SHA256: `bba264695b719c8bd97652a02d923a5c9b4815852927a8ebf3eb90ce55d70cb3`
+Source SHA256: `bec43c18313870739e4570ebce77cfe5ce82e0671caf50d48c587c4c9a37f824`
 
 ---
 
@@ -52,9 +52,10 @@ canonical_text: >-
   command, receipt, or domain event. The Accounts room acts in place through explicit controls on its cards, never
   through the card itself (UF-107, DL-174): an account's "Use this account" control dispatches the existing
   `cmd.account.select_profile` as a labelled override and shows only where the provider's capability
-  `supports_manual_set_active` is true, and a provider's Auto-switch toggle and switch level are bound Settings
+  `supports_manual_set_active` is true, a provider's Auto-switch toggle and switch level are bound Settings
   controls that commit through `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with
-  `scope=provider`. Opening a card's Details stays a local inspector. When a selected provider
+  `scope=provider`, and each account's own switch level is one that commits through the same pair with
+  `scope=account` (D43, 2026-10-10). Opening a card's Details stays a local inspector. When a selected provider
   route cannot run because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
   `Host/Environment`, preserves operation and continuation identity, and reuses `cmd.settings.open` with
   `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
@@ -69,7 +70,7 @@ acceptance_criteria:
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
   - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
   - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
-  - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with scope=provider on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
+  - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level (scope=provider) and each account's own switch level (scope=account, D43 2026-10-10) dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

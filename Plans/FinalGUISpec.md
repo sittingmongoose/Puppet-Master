@@ -32085,6 +32085,13 @@ most specific set value winning. The retired row stays in the registry marked su
 for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
 own switch level, and the row count stays 916.
 
+Amended 2026-10-10 (owner decision D43, `Plans/Decision_Log.md#DL-174`, owner `Plans/Settings_System.md#SSYS-044`):
+an account's own `ai.accounts.hard-switch-level` at scope account is set in that account's own rows of Settings > AI >
+Providers & Accounts and also on the Usage Accounts room, on the account's card and in its Details
+(`Plans/usage-feature.md#UF-107`); it is the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=account` and the account id, neither
+surface keeps a copy, and the row count stays 916.
+
 ### F3-442 - Project Settings Modal Reconciliation
 
 ```yaml
@@ -35677,8 +35684,8 @@ canonical_text: >-
   retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
   inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
   one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
-  owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
+  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
+  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
   previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
