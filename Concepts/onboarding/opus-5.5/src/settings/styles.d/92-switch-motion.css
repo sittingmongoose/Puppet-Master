@@ -10,3 +10,9 @@ html #panel-settings .toggle.pm-switch-from:not(.on)::after { transform: transla
    goes straight to its place (card NP-SWITCH). */
 @media (prefers-reduced-motion: reduce) { html #panel-settings .toggle::before { transition: opacity 160ms ease !important; } }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { transition: opacity 160ms ease !important; }
+/* Retro and NieR swap the key's ink with the lit layer's (reverse video). The key keeps its old ink until it lands, so it
+   never crosses its own colour mid-way (a solid block for a step); the frame it starts from carries the old ink too. */
+html[data-theme^="retro"] #panel-settings .toggle::after, html[data-theme^="retro"] #panel-settings .toggle:not(.on)::after { transition: transform 160ms steps(4, end), background-color 0s linear 160ms; }
+html[data-o55-nier="on"] #panel-settings .toggle::after, html[data-o55-nier="on"] #panel-settings .toggle:not(.on)::after { transition: transform 180ms steps(2, end), background-color 0s linear 180ms; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from:not(.on)::after { background-color: var(--k3-surface-3) !important; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from.on::after { background-color: var(--k3-text-1) !important; }
