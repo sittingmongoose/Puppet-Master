@@ -1593,7 +1593,7 @@
             var v = C.view(id, 'f-' + f.key, 'all'), o = f.options.filter(function (x) { return x.value === v; })[0];
             return '<button type="button" class="pmu-tfilter" data-pmu-act="tfilter" data-key="' + esc(f.key) + '" aria-haspopup="menu">' + esc(f.label) + ' <b>' + esc(o ? o.label : 'All') + '</b>' + C.glyph('chevronDown') + '</button>';
           }).join('') + '<span class="pmu-tcount">' + (rows.length ? esc((pageStarts[page] + 1) + '-' + (pageStarts[page] + shown.length) + ' of ' + rows.length) : '0 of 0') + '</span>' +
-          (m.toolbar.export ? '<button type="button" class="pmu-iconbtn pmu-texport" data-pmu-act="texport" aria-label="Export" data-pm-hover-label="Export these records">' + SVG['export'] + '</button>' : '') + '</div>';
+          (m.toolbar.export ? '<button type="button" class="pmu-iconbtn pmu-texport" data-pmu-act="texport" aria-label="Export" data-pm-hover-label="Export these records">' + PMU.svg('export', 16) + '</button>' : '') + '</div>';
       }
       var head = '<div class="pmu-trow pmu-thead" style="grid-template-columns:' + tmpl + '">' + cols.map(function (c) { return '<span class="pmu-cap"' + (c.align === 'right' ? ' data-align="r"' : '') + '>' + esc(c.label) + '</span>'; }).join('') + '</div>';
       var bodyRows = shown.length ? shown.map(function (r, i) {

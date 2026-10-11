@@ -345,7 +345,10 @@
       var d = 60 + 18 * Math.min(i, 9);
       PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }],
         { dur: 110, delay: d, easing: nier ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
-      var path = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg path, .pmu-mcheck svg polyline') : null;
+      /* the neon check's visible tube (.nx-c; its halo .nx-h is hidden at rest and must not take the draw), or the old
+         drawing's path without PMG; a control glyph plays no act as it mounts, so this draw is its one motion */
+      var ck = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg') : null;
+      var path = ck ? ck.querySelector('.nx-c') || ck.querySelector('path, polyline') : null;
       if (path) {
         path.setAttribute('pathLength', '1'); path.style.strokeDasharray = '1';
         PMU.motion.animate(path, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { dur: 160, delay: d + 60, easing: nier ? 'steps(3,jump-start)' : POP, fill: 'backwards' });

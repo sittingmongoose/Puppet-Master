@@ -613,7 +613,7 @@
       if (!!was.active !== !!r.active) {
         el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
         var ck = el.querySelector('.pmu-mcheck');
-        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + (SVG.check || '') + '</span>');
+        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + PMU.svg('check', 14, 'control') + '</span>');
         else if (!r.active && ck) ck.remove();
       }
     });

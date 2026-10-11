@@ -292,7 +292,7 @@
         if (!h || !Array.isArray(h.flat)) return;
         var i = h.flat.length; h.flat.push(openRow);
         c.innerHTML = '<div class="pmu-mdiv" role="separator"></div><button type="button" class="pmu-poprow pmu-mitem has-sub" role="menuitem" tabindex="-1" data-mi="' + i + '" data-pm-hover-exempt="menu">' +
-          '<span class="pmu-mlead pmu-micon" aria-hidden="true">' + SVG.gear + '</span><span class="pmu-mcopy"><b>' + esc(openRow.label) + '</b><span>' + esc(openRow.sub) + '</span></span></button>';
+          '<span class="pmu-mlead pmu-micon" aria-hidden="true">' + PMU.svg('gear', 14) + '</span><span class="pmu-mcopy"><b>' + esc(openRow.label) + '</b><span>' + esc(openRow.sub) + '</span></span></button>';
       },
       onPick: function (v, r, h) {
         if (v === 'open') { accSwOpen(a); return; }
