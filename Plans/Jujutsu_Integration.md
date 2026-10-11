@@ -413,7 +413,7 @@ Results distinguish `accepted`, `succeeded`, `blocked`, `failed`, `cancelled`, `
 
 ### 4.1 Adaptive Source Control
 
-JJ mode exposes **Changes**, **Workspaces**, **History**, **Bookmarks**, and **Operation Log**. In the left rail the five show in this order as Jujutsu's own tab strip, one view at a time, separate from Git's strip (2026-10-09, `Plans/Decision_Log.md#DL-163`; `Plans/FinalGUISpec.md#F3-623` and `#F3-624`). Forge-derived Reviews, Review Versions/Threads, Pipelines/Checks, Source of Truth, and Mirror Health appear only when the effective provider and capability envelope support them. Git-only stage/unstage, index, stash, and Branches sections are absent. Human copy may say “change,” “bookmark,” “operation,” “workspace,” and “conflict”; raw IDs appear only in Technical Details.
+JJ mode exposes **Changes**, **Workspaces**, **History**, **Bookmarks**, and **Operation Log**. In the left rail the five show in this order as Jujutsu's own tab strip, one view at a time, separate from Git's strip (2026-10-09, `Plans/Decision_Log.md#DL-163`; `Plans/FinalGUISpec.md#F3-623` and `#F3-624`). Forge-derived Reviews, Review Versions/Threads, Pipelines/Checks, Source of Truth, and Mirror Health appear only when the effective provider and capability envelope support them. Git-only stage/unstage, index, stash, and Branches sections are absent. Human copy may say “change,” “bookmark,” “operation,” “workspace,” and “conflict”; raw IDs appear only in Technical Details, except a change's short change ID, which also shows on its row because Jujutsu users name changes by it (owner, 2026-10-10, `Plans/Decision_Log.md#DL-163`; `Plans/FinalGUISpec.md#F3-624`).
 
 ### 4.2 Setup and health
 

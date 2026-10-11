@@ -5,8 +5,9 @@
    passes this file adds:
    - the card's family word in sentence case and always shown (the shell hides it below 250 px; FinalGUISpec lets the
      width tier gate chrome, never label text);
-   - states the shared vocabulary reads wrongly: "expired" is stale (a clock), not pending; provenance words
-     ("agent judgment") and the Investigation facts are plain facts, not states;
+   - states the shared vocabulary reads wrongly: "expired" is its own word, Expired, on the stopped ring (an ended
+     state, like skipped; F3-619), neither pending nor stale (owner, 2026-10-10); provenance words ("agent judgment")
+     and the Investigation facts are plain facts, not states;
    - full words for "15 rec", "EVIDENCE", "x2", "Ok", "Prov", "6d" / "7d", "12k" and the UPPERCASE stat labels;
    - a card whose family and state word do not fit on one line puts the state under the family (measured, never cut);
    - motion the shared code cannot see: this panel has no [data-pane], so the cards deal in on open, on a tab change
@@ -33,7 +34,7 @@
 
   function states(panel) {
     panel.querySelectorAll('.sh-card > .sh-r1 > .pm-chip').forEach(ch => {
-      if (/^\s*expired\b/i.test(ch.textContent)) LANE_E.chipAs(ch, 'stale');
+      if (/^\s*expired\b/i.test(ch.textContent)) { LANE_E.chipAs(ch, 'idle'); LANE_E.capOwn(ch); }
     });
     panel.querySelectorAll(FACT_CHIPS).forEach(ch => LANE_E.chipAs(ch, 'token'));
     panel.querySelectorAll('.sh-sortrow > .pm-chip').forEach(ch => LANE_E.chipAs(ch, 'token'));
