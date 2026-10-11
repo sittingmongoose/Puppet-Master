@@ -10,14 +10,32 @@ import { resolve, dirname } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const pageIdx = process.argv.indexOf('--page');
 export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html');
+const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
+const attr = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
 export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1440, height = 900, query = '', snapDir = null, snapPrefix = '' } = {}) {
   const { page, close } = await launch({ width, height });
-  const [fam, mode] = theme.split('-');
-  await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
-  await page.goto(pathToFileURL(PAGE).href + `?o55=off&o55scenario=${encodeURIComponent(scenario)}${query}`);
-  await sleep(1100);
-  await page.evaluate((f, m) => { window.PM_THEME.setFamily(f, { persist: false }); window.PM_THEME.setMode(m, { persist: false }); localStorage.removeItem('pm.o55.onboarding.v1'); }, fam, mode);
+  const context = () => page.evaluate(() => {
+    const S = window.O55 && window.O55.S, r = document.getElementById('pm-o55-onboarding');
+    const l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+    const b = l && l.querySelector('.o55-primary');
+    return `screen=${S && S.sess && S.sess.screen}, open=${!!(S && S.open)}, rendered=${l && l.getAttribute('data-screen')}, root=${r ? r.className : 'absent'}, layer=${l ? l.className : 'absent'}, disabledReason=${b && b.getAttribute('data-disabled-reason')}`;
+  });
+  const wait = async (fn, { timeout = 12000, every = 150, what = 'condition', args = [] } = {}) => {
+    const t0 = Date.now();
+    do {
+      if (await page.evaluate(fn, ...args)) return true;
+      await sleep(every); // Poll interval; readiness is determined by the observable condition.
+    } while (Date.now() - t0 < timeout);
+    throw new Error(`timeout after ${timeout}ms waiting for ${what} (${await context()})`);
+  };
+  try {
+    const [fam, mode] = theme.split('-');
+    await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
+    await page.goto(pathToFileURL(PAGE).href + `?o55=off&o55scenario=${encodeURIComponent(scenario)}${query}`);
+    await wait(() => !!(window.PM_THEME && window.PM_THEME.setFamily && window.PM_THEME.setMode && window.O55 && window.O55.ui && window.O55.ui.open && window.PM7_ONBOARDING_CINEMATIC), { what: 'theme and onboarding APIs ready' });
+    await page.evaluate((f, m) => { window.PM_THEME.setFamily(f, { persist: false }); window.PM_THEME.setMode(m, { persist: false }); localStorage.removeItem('pm.o55.onboarding.v1'); }, fam, mode);
+  } catch (err) { await close(); throw err; }
   const log = [];
   let lastSnapScreen = null, snapN = 0;
   /* with snapDir, every newly reached screen is photographed once it has settled (a walk-through of the flow) */
@@ -25,57 +43,99 @@ export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1
     if (!snapDir) return;
     const sc = await page.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen);
     if (!sc || sc === lastSnapScreen) return;
-    lastSnapScreen = sc; await sleep(900);
+    await d.settle();
+    lastSnapScreen = sc;
     const r = await page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-win'); if (!b || !b.getClientRects().length) return null; const q = b.getBoundingClientRect(); return { x: q.left - 12, y: q.top - 12, width: q.width + 24, height: q.height + 24 }; });
     if (r) await page.screenshot(`${snapDir}/${snapPrefix}${String(++snapN).padStart(2, '0')}-${sc}.png`, { clip: r });
   };
   const d = {
     page, log, errors: page.errors,
-    async settle(ms = 650) { await sleep(ms); },
+    async settle(opts = {}) {
+      // Older illustration tools pass a number here. It now requests state settlement, with no timed pause.
+      return wait(() => {
+        const S = window.O55 && window.O55.S, r = document.getElementById('pm-o55-onboarding');
+        if (!S) return false;
+        if (!S.open) return (!r || r.hidden) && !document.getElementById('o55-open-scrim');
+        const l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
+        if (!S.sess || !r || r.hidden || !l || l.getAttribute('data-screen') !== S.sess.screen) return false;
+        if (S.vt || document.documentElement.hasAttribute('data-o55-vt') || r.matches('.o55-hold, .o55-opening, .o55-closing') || l.matches('.o55-hold, .o55-entering') || r.querySelector('.o55-pane > .o55-out')) return false;
+        // Infinite ambient loops and spinners are not transitions and must not hold up input.
+        return !l.getAnimations({ subtree: true }).some((a) => a.playState !== 'finished' && a.playState !== 'idle' && Number.isFinite(a.effect.getComputedTiming().endTime));
+      }, { what: 'onboarding screen and transitions settled', ...(typeof opts === 'object' ? opts : {}) });
+    },
     async screen() { return page.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen); },
     async state(fn) { return page.evaluate(fn); },
-    async openOnboarding(opts) { await page.evaluate((o) => window.O55.ui.open(o || { fresh: true }), opts || null); await sleep(900); await autoSnap(); },
-    autoSnap,
-    /* click a control in the current layer by action (and arg) with a real mouse event */
-    async act(action, arg, { settle = 700 } = {}) {
-      const sel = `#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="${action}"]` + (arg != null ? `[data-arg="${String(arg).replace(/"/g, '\\"')}"]` : '');
-      const ok = await page.evaluate((s) => { const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length); if (!el) return false; el.scrollIntoView({ block: 'center' }); return true; }, sel);
-      if (!ok) throw new Error(`no control ${action}${arg != null ? ' ' + arg : ''} on ${await d.screen()}`);
-      await page.click(sel);
-      log.push({ act: action, arg, screen: await d.screen() });
-      await sleep(settle); await autoSnap();
+    async openOnboarding(opts) {
+      await page.evaluate((o) => window.O55.ui.open(o || { fresh: true }), opts || null);
+      await d.until(() => !!(window.O55.S.open && window.O55.S.sess && document.querySelector('#pm-o55-onboarding .o55-layer[data-screen]')), { what: 'onboarding window mounted' });
+      await d.settle(); await autoSnap();
     },
-    async primary({ settle = 900 } = {}) {
+    autoSnap,
+    async untilElement(sel, what = sel, timeout = 12000) {
+      return wait((s) => [...document.querySelectorAll(s)].some((e) => e.getClientRects().length && !e.closest('[inert]')), { args: [sel], timeout, what: 'visible ' + what });
+    },
+    /* Wait for an uncovered, stationary control, then use real CDP mouse input. Also used for shell menus. */
+    async click(sel, what = sel) {
+      await d.settle();
+      let last = null, prev = null;
+      const t0 = Date.now(), timeout = 12000;
+      do {
+        last = await page.evaluate((s) => {
+          const el = [...document.querySelectorAll(s)].find((e) => e.getClientRects().length && !e.closest('[inert]'));
+          if (!el) return null;
+          el.scrollIntoView({ block: 'nearest' });
+          const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, top = document.elementFromPoint(x, y);
+          return { x, y, w: r.width, h: r.height, hit: !!top && (top === el || el.contains(top)), disabled: el.disabled || el.getAttribute('aria-disabled') === 'true', over: top && (top.id || top.tagName) };
+        }, sel);
+        if (last && prev && last.w > 0 && last.h > 0 && last.hit && !last.disabled && ['x', 'y', 'w', 'h'].every((k) => Math.abs(last[k] - prev[k]) < 0.5)) {
+          await page.mouse(last.x, last.y); return;
+        }
+        prev = last; await sleep(60); // Separate geometry probes; elapsed time alone never permits a click.
+      } while (Date.now() - t0 < timeout);
+      const why = !last ? 'absent or inert' : last.disabled ? 'disabled' : !last.hit ? 'covered by ' + last.over : 'still moving';
+      throw new Error(`timeout after ${timeout}ms waiting for ${what}: ${why} (${await context()})`);
+    },
+    /* click a control in the current layer by action (and arg) with a real mouse event */
+    async act(action, arg, { settle = true } = {}) {
+      const sel = `${LAYER} [data-o55-do="${attr(action)}"]` + (arg != null ? `[data-arg="${attr(arg)}"]` : '');
+      await d.click(sel, `control ${action}${arg != null ? ' ' + arg : ''}`);
+      log.push({ act: action, arg, screen: await d.screen() });
+      if (settle !== false) { await d.settle(); await autoSnap(); }
+    },
+    async primary({ settle = true } = {}) {
+      await d.settle(); await d.untilElement(`${LAYER} .o55-primary`, 'primary control');
+      await wait((s) => { const b = document.querySelector(s); return b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, { args: [`${LAYER} .o55-primary`], what: 'primary control enabled' });
       const info = await page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b ? { label: b.textContent.trim(), disabled: b.getAttribute('aria-disabled') === 'true', reason: b.getAttribute('data-disabled-reason') } : null; });
       if (!info) throw new Error('no primary on ' + await d.screen());
       if (info.disabled) throw new Error(`primary "${info.label}" disabled on ${await d.screen()}: ${info.reason}`);
-      await page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary');
+      await d.click(`${LAYER} .o55-primary`, 'primary control');
       log.push({ primary: info.label });
-      await sleep(settle); await autoSnap();
+      if (settle !== false) { await d.settle(); await autoSnap(); }
       return info.label;
     },
-    async primaryInfo() { return page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b ? { label: b.textContent.trim(), disabled: b.getAttribute('aria-disabled') === 'true', reason: b.getAttribute('data-disabled-reason') } : null; }); },
-    async back() { await page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-back'); log.push({ back: true }); await sleep(800); },
+    async primaryInfo() { await d.settle(); return page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b ? { label: b.textContent.trim(), disabled: b.getAttribute('aria-disabled') === 'true', reason: b.getAttribute('data-disabled-reason') } : null; }); },
+    async back() { await d.click(`${LAYER} .o55-back`, 'Back control'); log.push({ back: true }); await d.settle(); await autoSnap(); },
     /* type into a bound field (real key input via insertText) */
-    async type(bind, text, { clear = true, settle = 400 } = {}) {
-      const sel = `#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-bind="${bind}"]`;
-      const ok = await page.evaluate((s, c) => { const el = document.querySelector(s); if (!el) return false; el.focus(); if (c) { el.select && el.select(); } return true; }, sel, clear);
-      if (!ok) throw new Error('no field ' + bind + ' on ' + await d.screen());
+    async type(bind, text, { clear = true, settle = true } = {}) {
+      if (settle !== false) await d.settle();
+      const sel = `${LAYER} [data-o55-bind="${attr(bind)}"]`;
+      await d.untilElement(sel, 'field ' + bind);
+      const before = await page.evaluate((s, c) => { const el = document.querySelector(s); el.focus(); if (c) { el.select && el.select(); } return el.value; }, sel, clear);
       if (clear) await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Backspace', code: 'Backspace', windowsVirtualKeyCode: 8 }), await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Backspace', code: 'Backspace', windowsVirtualKeyCode: 8 });
       await page.send('Input.insertText', { text });
       log.push({ type: bind, text: /pw|pass|token|key|phrase/.test(bind) ? '•••' : text });
-      await sleep(settle);
+      await wait((s, value) => { const el = document.querySelector(s); return el && el.value === value; }, { args: [sel, (clear ? '' : before) + text], what: 'field ' + bind + ' to accept input' });
+      if (settle !== false) await d.settle();
     },
-    async until(fn, { timeout = 15000, every = 200, what = 'condition' } = {}) {
-      const t0 = Date.now();
-      while (Date.now() - t0 < timeout) { if (await page.evaluate(fn)) return true; await sleep(every); }
-      throw new Error('timeout waiting for ' + what + ' on ' + await d.screen());
+    until: (fn, opts = {}) => wait(fn, { timeout: 15000, ...opts }),
+    async untilScreen(id, timeout = 12000) {
+      await wait((sc) => { const S = window.O55.S, l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return S.open && S.sess && S.sess.screen === sc && l && l.getAttribute('data-screen') === sc; }, { args: [id], timeout, what: 'screen ' + id + ' rendered' });
+      return d.settle({ timeout, what: 'screen ' + id + ' settled' });
     },
-    async untilScreen(id, timeout = 12000) { return d.until(new Function(`return window.O55.S.sess && window.O55.S.sess.screen === ${JSON.stringify(id)}`), { timeout, what: 'screen ' + id }); },
     async draft(which) { return page.evaluate((w) => window.O55.draft.exportPlan(window.O55.S.sess.drafts[w || window.O55.S.sess.active]), which || null); },
     async refusals() { return page.evaluate(() => window.O55.owners.log.filter((e) => !e.ok)); },
     async commands() { return page.evaluate(() => window.O55.owners.log.map((e) => e.id + ':' + e.phase + (e.ok ? '' : ':REFUSED'))); },
-    async snap(path) { const r = await page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-win').getBoundingClientRect(); return { x: b.left - 12, y: b.top - 12, width: b.width + 24, height: b.height + 24 }; }); await page.screenshot(path, { clip: r }); },
+    async snap(path) { await d.settle(); const r = await page.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-win').getBoundingClientRect(); return { x: b.left - 12, y: b.top - 12, width: b.width + 24, height: b.height + 24 }; }); await page.screenshot(path, { clip: r }); },
     close
   };
   return d;
