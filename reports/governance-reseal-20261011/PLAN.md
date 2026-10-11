@@ -1,6 +1,6 @@
 # Combined governance reseal plan — 2026-10-11
 
-**Phase 1 only. Nothing has been sealed or landed by this thread.** Jared assigned `codex-combined-reseal` the PMConcept7 home redesign chain's combined reseal, relayed by `claude-usage-scheduler` on 2026-10-11. Coordinator: `home-redesign-planner`. Phase 2 starts only upon the coordinator's explicit mailbox **go**, after the three prerequisite landings below.
+**Phase 1 only. Nothing has been sealed or landed by this thread.** Jared assigned `codex-combined-reseal` the PMConcept7 home redesign chain's combined reseal, relayed by `claude-usage-scheduler` on 2026-10-11. Coordinator: `home-redesign-planner`. Phase 2 starts only upon the coordinator's explicit mailbox **go**, after the four prerequisite landings below.
 
 Branch: `plans/combined-reseal-20261011`. Full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/plans-combined-reseal-20261011`, owned by `/home/sittingmongoose/src/PuppetMaster/.git`. Phase 1 fetched and verified `origin/main` **`618fd35e0e52eac0d6df5d1e3ff55d5c0a2bbf4b`**. All measurements below describe that revision; Phase 2 recomputes them at the new main.
 
@@ -19,10 +19,13 @@ The only addition to that procedure is DL-188's explicitly approved, bounded che
 
 ## Required landings before go
 
+Chain update from the planner, mailbox `1011065727-3387` (2026-10-11): **panels+terminal publish, rail answers, Usage D43, hpt's small round, then the reseal go**. D43 is an additional prerequisite; this update does not authorize Phase 2.
+
 | Landing | Additional inputs to inventory after it lands |
 |---|---|
 | `home-panels`: combined panels and terminal publish into PMConcept7 | The published panels and terminal integration in `Concepts/PMConcept7.html` and companions; possibly additional `Plans/` changes. Take the final landing SHA and actual path diff from the coordinator. Concepts-only changes require no invented governance hashes. Any changed locked or inventoried input enters the reseal census. |
 | `leftrail-polish-lead`: `concept/leftrail-rail-answers-20261010` | The branch carries amendments to DL-162/DL-163 and their consumers. Its pushed canon commit `a25b885a3e` changes `Plans/Decision_Log.md`, `Plans/FinalGUISpec.md`, and `Plans/Jujutsu_Integration.md`, with regenerated index/shards. It names JJI section 4.1 and F3-624/F3-619/F3-528. DL-162/DL-163 already exist on current main; verify the amended passages after the owner rebases and lands. The branch also has Concepts changes, which this thread only observes. |
+| Usage D43: `concept/usage-d43-20261010` at `1f9962a880` | Canon in CS-067/068, WM-043/045, UCC-147, UF-093/107, MA-073, F3-441, UIW-012, ATS, SSYS-019 and DL-174. The fetched branch head is `1f9962a880baf7fea250a995da0fc3541e7457dd`. Its expected canonical inputs are `Plans/Automated_Testing_System.md`, `Commands_System.md`, `Decision_Log.md`, `FinalGUISpec.md`, `Multi-Account.md`, `Settings_System.md`, `UI_Command_Catalog.md`, `UI_Wiring_Rules.md`, `Wiring_Matrix.md`, `Wiring_Matrix.production.json`, `settings_system_contract_fixtures.json`, `settings_system_contracts.schema.json`, `touch_closure.json`, and `usage-feature.md`, plus derived shards/index. The branch also publishes Concepts copies; this thread does not edit them. Require the actual final landing SHA/diff and re-read those units after the owner's landing; refresh whichever resulting hashes the existing governance inventories bind. |
 | `hpt-plans-lead`: small canon round | F3-490 amendment, the final wave 2 numbers/IDs, and the stored onboarding-session NieR choice contract. Require the owner landing SHA and final IDs; do not reserve or invent them here. Include the source schema, storage registry, fixtures, owner prose and derived artifacts that actually land. |
 
 The onboarding item is **a dependency, not a reseal-owned canon edit**. The planner explicitly assigned it to hpt's small round in `1011054952-0e8a`; hpt supplied the contract in `1011055039-79fa`: optional `look_choice` on `pm.product_onboarding.session.v2`, referencing existing `onboarding_look_choice` in `Plans/product_onboarding_contracts.schema.json`. Its fields are `theme_family`, `theme_mode`, `nier_mode`, `nier_parts`, `nier_background`, all nullable with existing enums. At 2.0.0, absence means all null, with no version bump or migration. Requests replace only the fields they set; resume repaints the stored choice, with nulls falling back to F3-520's start rule. Settings writes occur at Project commit. Owners/sources: PWIZ Product Onboarding, storage-plan/registry, DL-153, and Jared's answer `1010191558-0ce6` item 2. Verify the owner's landed implementation and fixtures; do not implement it during resealing.
@@ -106,7 +109,7 @@ The seven generated currentness files are `CURRENT_EVENT_SOURCE_INVENTORY.json`,
 
 ## Phase 2 commands and order
 
-Run only after the planner's go has been read, recorded and matched to all three landed SHAs. Fetch/rebase on the new main, reread the relevant owner passages and requests, and record `origin/main` as the seal's main base. The branch may also contain this plan commit; do not mislabel its HEAD as main. Preparation uses the full local T3 worktree; shared checkout mutation is reserved for landing.
+Run only after the planner's go has been read, recorded and matched to all four landed SHAs, including Usage D43. Fetch/rebase on the new main, reread the relevant owner passages and requests, and record `origin/main` as the seal's main base. The branch may also contain this plan commit; do not mislabel its HEAD as main. Preparation uses the full local T3 worktree; shared checkout mutation is reserved for landing.
 
 ```bash
 RESEAL_EVIDENCE=/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011
@@ -172,7 +175,7 @@ RESEAL_CURRENTNESS=Plans/.audits/event-authority-2026-08-13-currentness
 - `decision_id`: **`dec-2026-10-11-combined-governance-reseal`**; absent at the Phase 1 base. Check uniqueness again before applying.
 - `scope`: `plans.governance.reseal_repository_wide`.
 - `decision`: `reseal_spec_lock_live_evidence_readiness_dl188_checkpoint_and_currentness_at_main_<frozen-main-short-sha>_without_certification_or_runtime_enablement`.
-- `rationale`: Jared's 2026-10-11 assignment, previous seal `cf7fdffe84`, both landed home canon rounds, all three prerequisite main SHAs and final wave 2 IDs, hpt's landed `look_choice`, the DL-188 two-pin-only receipt refresh, unchanged frozen 252-row custody, run-002 refresh pair, and externally generated currentness written in place at landing. No certification harness or denominator/depth/runtime/buildability claim.
+- `rationale`: Jared's 2026-10-11 assignment, previous seal `cf7fdffe84`, both landed home canon rounds, all four prerequisite main SHAs (including Usage D43) and final wave 2 IDs, hpt's landed `look_choice`, the DL-188 two-pin-only receipt refresh, unchanged frozen 252-row custody, run-002 refresh pair, and externally generated currentness written in place at landing. No certification harness or denominator/depth/runtime/buildability claim.
 - `applied_to`: Spec Lock; the three live bundle files; buildability report; node-readiness report; PNC-019 receipt; run 002's `batch_report.jsonl` and `final_validation_summary.json` — nine tracked artifacts.
 - `contract_refs`: `PolicyRule:Decision_Policy.md#spec-lock-update-protocol`, `ContractName:Plans/Decision_Log.md#DL-039`, `ContractName:Plans/Decision_Log.md#DL-067`, `ContractName:Plans/Decision_Log.md#DL-188`, `SchemaID:pm.auto_decisions.schema.v1`.
 - `timestamp_utc` and `inputs_hash`: generated by `upsert_auto_decision` from actual inputs, at the same pre-Spec-Lock point as the previous procedure. Never hand-edit a row or change historical rows.
@@ -222,4 +225,4 @@ Raw outputs: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase
 
 The preview inventories 255 sources (96 direct Plans Markdown, 159 registered machine inputs), 3,773 discovery tokens and 11,334 occurrences; these are discovery counts, not adjudications. Its quarantine ledger and group manifest are byte-identical to the input edition. The current landing baseline was recorded at `86d0fe8b3f` after snapshot `pds-20261010-008`; totals are run-gates 5,397, audit-governance 5,381, current-run validation 0. The inherited baseline lacks ignored audit inputs, so compare actual keyed findings as the landing checker does, rather than requiring identical aggregate totals in this fully prepared worktree.
 
-The two scope questions are resolved: hpt owns the missing onboarding field before go, and the planner accepts the DL-188 two-pin-only refresh. Phase 2 still requires the coordinator's go and the three final landing receipts.
+The two scope questions are resolved: hpt owns the missing onboarding field before go, and the planner accepts the DL-188 two-pin-only refresh. Phase 2 still requires the coordinator's go and the four final landing receipts in the updated order above.
