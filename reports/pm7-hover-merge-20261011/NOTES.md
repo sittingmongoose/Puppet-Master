@@ -1,6 +1,6 @@
 # PM7 hover mechanical candidate — 2026-10-11
 
-Preparation-only candidate on `fix/pm7-hover-merge-20261011`. Owner approval is supplied by Jared's brief; this worker performs mechanical composition and static checks. Planner: `home-redesign-planner` (T3 `72e7fc9e-30bf-4689-b780-2855a55deacb`).
+Preparation-only candidate on `fix/pm7-hover-merge-20261011`. Jared's handoff authorizes coordination and mechanical preparation. The existing source fixes were reviewed and pushed by `pm7-hover`'s Opus owner at `0f1b96f3ba` and `49bcb9841c`; this is not a new Jared approval of the composed candidate. Current-base browser acceptance and landing approval remain pending. This worker performs mechanical composition and static checks. Planner: `home-redesign-planner` (T3 `72e7fc9e-30bf-4689-b780-2855a55deacb`).
 
 ## Pins and original custody
 
