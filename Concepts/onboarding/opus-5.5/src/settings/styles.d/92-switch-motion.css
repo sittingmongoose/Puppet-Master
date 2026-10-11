@@ -1,0 +1,12 @@
+/* O55 · switch motion: the one frame a redrawn switch spends in the state it was clicked from (kit.d/26-switch-motion.js).
+   No transition into this state; removing the class lets 91-no-pills.css's slide and wipe (or Reduced Motion's fade) run.
+   The lit layer carries both its clip and its opacity, so the same frame works for the slide and for the fade. */
+html #panel-settings .toggle.pm-switch-from.on::before { clip-path: inset(0 100% 0 0) !important; opacity: 0 !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from.on::after { transform: none !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from:not(.on)::before { clip-path: inset(0 0 0 0) !important; opacity: 1 !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from:not(.on)::after { transform: translateX(18px) !important; transition: none !important; }
+/* Reduced Motion: the app stops every transition (pm6's global block, for prefers-reduced-motion and for
+   data-motion="reduced"). The switch keeps one calm cue that does not move: its colour fades in over 160 ms while the key
+   goes straight to its place (card NP-SWITCH). */
+@media (prefers-reduced-motion: reduce) { html #panel-settings .toggle::before { transition: opacity 160ms ease !important; } }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { transition: opacity 160ms ease !important; }
