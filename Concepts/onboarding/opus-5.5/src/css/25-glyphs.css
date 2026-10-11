@@ -20,3 +20,15 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark.o55-phmark-nx { color: v
 
 /* A row still looking for something leads with the working mark where its glyph tile would be. */
 #pm-o55-onboarding .o55-row-wait > .o55-mk { margin: 0 6px; }
+
+/* NieR's buttons turn to reverse video on hover or when on (ink fill, paper text: the head and sheet buttons, the
+   secondary buttons, links, chips, the tour bar). The set's hover ignite inks a glyph with the text ink, which in NieR
+   is the fill itself, so the glyph vanished (1.0:1, measured on the P1000). In the window and the tour under NieR a glyph
+   follows its host's own text colour, as the old icons did; tone marks keep their tone. */
+html[data-o55-nier="on"] :is(#pm-o55-onboarding, #pm-o55-tour) svg.nx:not([class*="nx-t-"]) { --nx-ink: currentColor; }
+
+/* Two light looks draw the window's accent too light for a glyph: Friendly Light's coral read 2.6-2.8:1 on the pane and
+   Glass Light's blue 2.5:1 on its tinted tiles (P1000 census, 2026-10-11). Inside the glyph hosts only, the accent
+   is the same hue made deep enough for 3.3:1 on every field it sits on; text and buttons keep the look's accent. */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"][data-mode="light"] :is(svg.nx.o55-sg, .o55-phmark-nx) { --o55-accent: #d05836; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="glass"][data-mode="light"] :is(svg.nx.o55-sg, .o55-glyph, .o55-phmark-nx) { --o55-accent: #005aa2; }
