@@ -30334,15 +30334,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="conflict"] { color: var(--d-conflict) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--d-orange) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="current"] { color: var(--accent-primary) !important; }
-/* the glyph: its shape is the state, its colour follows the word */
+/* the glyph: the neon set draws it in its tone ink (pm7-glyphs, RAIL); the box stays 12 px */
 [data-rail-skin="d"] .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
 [data-rail-skin="d"] .d-gl svg { width: 12px; height: 12px; display: block; overflow: visible; }
-[data-rail-skin="d"] .d-gl[data-pulse]::after {
-  content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
-  animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
-}
-[data-rail-skin="d"][data-o55-nier-parts~="square"] .d-gl[data-pulse]::after, [data-rail-skin="d"][data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
-@keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
 /* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-dot, .dot).d-dot {
   width: 12px !important; height: 12px !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
@@ -30365,11 +30359,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-gitbadge.d-word { min-width: 0; font: 500 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; }
 /* counts that change roll; numbers never jump */
 [data-rail-skin="d"] .d-roll { display: inline-block; font-variant-numeric: tabular-nums; }
-/* pending turns slowly (it is waiting on something); a live dot breathes only when it is restarting or watching */
-[data-rail-skin="d"] .d-gl .d-spin { transform-origin: 8px 8px; animation: d-spin 7s linear infinite; }
-@keyframes d-spin { to { transform: rotate(360deg); } }
-[data-rail-skin="d"][data-theme^="retro"] .d-gl .d-spin { animation-timing-function: steps(8, end); animation-duration: 4s; }
-[data-rail-skin="d"] .d-gl[data-pulse]::after { inset: 0; }
 
 /* ---- 6. Controls ---------------------------------------------------------------------------------------------------------
    One button: a quiet filled rectangle with the inner radius, 28 px high, sentence-case 12 px label. The primary action
@@ -31251,7 +31240,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="fail"] { color: var(--d-fail); }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] { color: var(--d-idle); }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] + .pm6-chat-modelname { text-decoration: line-through; color: var(--d-text-3); }
-[data-rail-skin="d"][data-o55-nier="on"] .pmr-menu[data-pmr-menu="d-rd-sessions"] .pmr-mi:hover > .d-gl { color: inherit; }
 
 /* header status: the skin's line replaces the shell's two lengths */
 [data-rail-skin="d"] #panel-run #rdStatus > .sh-btext { display: none !important; }
@@ -31568,7 +31556,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent);
 }
 [data-rail-skin="d"][data-o55-nier="on"] #bottomDebugHost .rd-sestab.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink) !important; box-shadow: none; }
-[data-rail-skin="d"][data-o55-nier="on"] #bottomDebugHost .rd-sestab.active > .d-gl { color: inherit !important; }
 [data-rail-skin="d"] #bottomDebugHost .rd-sestab > .sh-sdot { display: none !important; }
 [data-rail-skin="d"] #bottomDebugHost .rd-chrome {
   flex-wrap: wrap; gap: 6px 12px !important; min-height: 40px; padding: 5px 12px !important; border-bottom: 1px solid var(--d-line) !important;
@@ -32059,18 +32046,17 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 [data-rail-skin="d"] #panel-testing .pm-chip[data-d-st], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
-   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
-   keep more of the colour (they are shapes, not text). Measured in GPU Chrome against the pixels under each word and
-   glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1), glyphs 3.3:1 or
-   better (2026-10-09, lane F). */
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; the
+   glyphs take their tone ink from the neon mark itself (pm7-glyphs, RAIL). Measured in GPU Chrome against the pixels
+   under each word and glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1),
+   glyphs 3.3:1 or better (2026-10-09, lane F). */
 [data-rail-skin="d"] { --lf-tx: 100%; --lf-gl: 100%; }
 [data-rail-skin="d"][data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
 [data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
 [data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
 [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
 [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
-[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st],
-[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st] > .d-gl {
+[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st] {
   color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
 }
 [data-rail-skin="d"][data-theme$="-light"] #panel-testing :is(.pm-chip, .lf-state, .c)[data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents :is(.pm-chip, .lf-state, .c)[data-d-st],
@@ -32430,13 +32416,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-motion="reduced"] #activityBar *, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
-[data-rail-skin="d"][data-motion="reduced"] .d-gl::after, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   [data-rail-skin="d"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
-  [data-rail-skin="d"] .d-gl::after { display: none !important; }
-  [data-rail-skin="d"] .d-gl .d-spin { animation: none !important; }
 }
-[data-rail-skin="d"][data-motion="reduced"] .d-gl .d-spin, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl .d-spin { animation: none !important; }
 [data-rail-skin="d"][data-motion="reduced"] #activityBar .icon, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar .icon { transition: none !important; }
 </style>
 <!-- RAIL:CSS:END -->
@@ -142841,12 +142823,63 @@ PMR.append = append;
 
 /* ---------- icons ------------------------------------------------------------------------------------------------ */
 /* PM_ICONS names (see DATA.md). Returns <span class="pmr-ico"> holding the SVG; unknown names render an empty box so
-   the layout never jumps. */
+   the layout never jumps. The neon glyph set (pm7-glyphs, RAIL) draws first: NEON maps each rail name to its glyph
+   (the map's "Rail and Settings bridge" group, T-bridge, plus T-jj's undo/oplog, which reach icon() through
+   menus). SIZE is the static render size per icon class (never measured: the boxes stay exactly as the CSS sizes
+   them) and ROLE the glyph's own role. Names PMG cannot draw (the file-type icons, alert) keep the old drawing. */
+const NEON = {
+  folder: 'folder', chevL: 'chevron-left', scissors: 'scissors', clipboard: 'clipboard', eyeOff: 'eye-off',
+  compose: 'compose', chat: 'chat', files: 'folder', search: 'search', source: 'branch', actions: 'pipeline',
+  docker: 'container', tests: 'check-circle', agents: 'robot', artifacts: 'archive', chevD: 'chevron-down',
+  chevR: 'chevron-right', x: 'close', plus: 'plus', minus: 'minus', check: 'check', warn: 'warning', info: 'info',
+  refresh: 'refresh', external: 'open', diff: 'diff', merge: 'merge', pr: 'pull-request', trash: 'trash',
+  play: 'play', stop: 'stop', eye: 'eye', copy: 'copy', terminal: 'terminal', cog: 'settings', filter: 'filter',
+  clock: 'clock', layers: 'layers', flame: 'flame', upload: 'upload', link: 'link', user: 'user',
+  spark: 'sparkles', bell: 'bell', pull: 'download', push: 'upload', fetch: 'swap', branch: 'branch',
+  stash: 'stash', folderOpen: 'folder', globe: 'globe', monitor: 'monitor', pin: 'pin', key: 'key',
+  book: 'notebook', camera: 'camera', file: 'page', arrowUp: 'arrow-up', arrowDn: 'arrow-down', grip: 'grip',
+  edit: 'edit', filePlus: 'file-plus', folderPlus: 'folder-plus', boxMinus: 'minus', boxPlus: 'plus',
+  pause: 'pause', stepOver: 'step-over', stepInto: 'step-into', stepOut: 'step-out', bpLine: 'bp-line',
+  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history',
+};
+const NEON_ROLE = {
+  folder: 'concept', chevL: 'control', scissors: 'concept', clipboard: 'concept', eyeOff: 'control',
+  compose: 'concept', chat: 'concept', files: 'concept', search: 'concept', source: 'control', actions: 'concept',
+  docker: 'concept', tests: 'concept', agents: 'concept', artifacts: 'control', chevD: 'control',
+  chevR: 'control', x: 'control', plus: 'control', minus: 'control', check: 'concept', warn: 'concept',
+  info: 'concept', refresh: 'control', external: 'control', diff: 'control', merge: 'control', pr: 'concept',
+  trash: 'control', play: 'control', stop: 'control', eye: 'concept', copy: 'control', terminal: 'concept',
+  cog: 'control', filter: 'control', clock: 'concept', layers: 'concept', flame: 'concept', upload: 'concept',
+  link: 'control', user: 'concept', spark: 'concept', bell: 'concept', pull: 'concept', push: 'concept',
+  fetch: 'control', branch: 'control', stash: 'control', folderOpen: 'concept', globe: 'concept',
+  monitor: 'concept', pin: 'control', key: 'concept', book: 'concept', camera: 'concept', file: 'concept',
+  arrowUp: 'control', arrowDn: 'control', grip: 'control', edit: 'control', filePlus: 'control',
+  folderPlus: 'control', boxMinus: 'control', boxPlus: 'control', pause: 'control', stepOver: 'control',
+  stepInto: 'control', stepOut: 'control', bpLine: 'concept', bpCond: 'concept', bpLog: 'concept',
+  undo: 'control', oplog: 'concept',
+};
+/* the review switcher's own classes are not listed: rail_layer keeps their prefix out of the published page,
+   so the switcher (review-only) takes the default size */
+const NEON_SIZE = {
+  'pmr-btn-ico': 15, 'pmr-mi-ico': 15, 'pmr-mi-sub': 13, 'pmr-trigger-ico': 14, 'pmr-trigger-chev': 14,
+  'pmr-c-act-ico': 16, 'pmr-c-act-chev': 14, 'pmr-c-mini-ico': 14,
+  'pmr-c-rico': 16, 'pmr-c-filter-ico': 14, 'pmr-c-lens-kick-ico': 14, 'pmr-c-chev': 12,
+  'pmr-c-title-chev': 14, 'pmr-c-footline-ico': 15, 'pmr-c-footline-chev': 14, 'pmr-c-sync-chev': 13,
+  'pmr-b-act-ico': 16, 'pmr-b-act-chev': 14, 'pmr-b-chev': 14, 'pmr-b-crumbsep': 12, 'pmr-b-disc-chev': 12,
+  'pmr-b-port-ico': 14, 'pmr-b-title-chev': 14, 'pmr-b-back-ico': 16, 'pmr-b-twist': 12, 'pmr-b-ficon': 16,
+  'pmr-b-filter-ico': 14, 'd-plus': 13, 'd-select-ico': 16, 'd-select-chev': 12, 'd-fold-chev': 13,
+};
+PMR.neonMap = NEON;
+PMR.neonRole = NEON_ROLE;
 function icon(name, cls) {
   const s = h('span', { class: ['pmr-ico', cls], 'aria-hidden': 'true', 'data-ico-name': name || '' });
   let svg = '';
-  try { if (name && typeof window.PMIcon === 'function') svg = window.PMIcon(name) || ''; } catch (e) { svg = ''; }
-  if (!svg && name && window.PM_ICONS && typeof window.PM_ICONS[name] === 'string') svg = window.PM_ICONS[name];
+  const G = window.PMG, g = (name && NEON[name]) || name;
+  if (g && G && G.has(g)) svg = G.icon(g, NEON_SIZE[cls] || 16, 'nx-r-' + (NEON_ROLE[name] || 'concept'));
+  if (!svg) {
+    try { if (name && typeof window.PMIcon === 'function') svg = window.PMIcon(name) || ''; } catch (e) { svg = ''; }
+    if (!svg && name && window.PM_ICONS && typeof window.PM_ICONS[name] === 'string') svg = window.PM_ICONS[name];
+  }
   if (svg) s.innerHTML = svg;
   return s;
 }
@@ -143649,11 +143682,24 @@ const PHRASES = [
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };
 
-/* ---- status: a glyph whose shape is the state; colour comes from data-d-st on the element ----
+/* ---- status: the neon glyph set draws the states (pm7-glyphs, RAIL); the tables below stay as the fallback ----
+   KEY maps each rail state to the shared vocabulary (families/rail.js holds the reasons). svgFor asks window.PMG
+   first and keeps the old drawings only for states PMG cannot draw (paused, immutable) or when PMG is missing.
    One family on a 16-unit grid. Definite states are solid badges with the mark knocked out (done, failed, warning,
    blocked, info, conflict); live things are a dot with a halo; stopped is a ring; pending is a dashed ring that
    turns slowly; changed is a half-filled circle; a stash is a tray. Knock-outs are masks, so they show whatever
    is behind the glyph (a shelf tint, a selected row) instead of a guessed surface colour. */
+const KEY = {
+  ok: 'complete', fail: 'failed', warn: 'warning', blocked: 'blocked', info: 'info', conflict: 'change-conflict',
+  live: 'working', run: 'working', idle: 'idle', pending: 'pending', unknown: 'pending', stale: 'skipped',
+  orphan: 'skipped', dirty: 'change-modified', stash: 'archive', current: 'ring-dot',
+};
+/* the shared vocabulary's PM7 additions (status.json extra): the chat's PMG.status only knows its own 13 keys, so
+   these render the catalog's way (20-catalog.js statusMark): the nx-st wrapper in the key's tone, the glyph in it. */
+const EXTRA_ST = {
+  warning: ['st-warning', 'attention'], info: ['st-info', 'idle'],
+  'change-conflict': ['change-conflict', 'blocked'], 'change-modified': ['change-modified', 'changed'],
+};
 let maskSeq = 0;
 const SOLID = {
   ok:       { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M5 8.3l2 2 4-4.4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' },
@@ -143676,6 +143722,19 @@ const G = {
   stash: '<path d="M2.5 9.2l1.6-5.1c.2-.6.7-1 1.3-1h5.2c.6 0 1.1.4 1.3 1l1.6 5.1v2.6c0 .8-.6 1.4-1.4 1.4H3.9c-.8 0-1.4-.6-1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2.6 9.2h3.1l.9 1.4h2.8l.9-1.4h3.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
 };
 function svgFor(st) {
+  const P = window.PMG, key = KEY[st];
+  if (P && key) {
+    /* concepts: the tray and the position marker, drawn as concept glyphs */
+    if ((key === 'archive' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
+    /* live states move (the bead orbits at the set's slow 9 s); every other state is lit and still */
+    const cls = (st === 'live' || st === 'run' || st === 'pending') ? '' : 'nx-still';
+    if (window.PM56_NEON && window.PM56_NEON.STATUS[key]) return P.status(key, 12, cls);
+    const x = EXTRA_ST[key];
+    if (x && P.has(x[0])) {
+      return '<span class="nx-st nx-st-' + key + ' nx-tn-' + x[1] + ' nx-still" data-k="st:' + key
+        + '" aria-hidden="true">' + P.icon(x[0], 12, 'nx-r-status nx-t-' + x[1]) + '</span>';
+    }
+  }
   let body = G[st];
   if (!body) {
     const s = SOLID[st] || SOLID.info, id = 'dgm' + (++maskSeq);
@@ -143684,10 +143743,9 @@ function svgFor(st) {
   }
   return '<svg viewBox="0 0 16 16" width="12" height="12" focusable="false" aria-hidden="true">' + body + '</svg>';
 }
-function glyph(st, pulse) {
+function glyph(st) {
   const s = PMR.h('span', { class: 'd-gl', 'aria-hidden': 'true', 'data-gl': st });
   s.innerHTML = svgFor(st);
-  if (pulse) s.setAttribute('data-pulse', '');
   return s;
 }
 /* a status word -> state */
@@ -143817,7 +143875,6 @@ function applyChips(root, animate) {
     if (isCount) { if (gl) gl.remove(); return; }
     if (!gl) gl = inject(el, glyph(st), el.firstChild);
     else if (gl.getAttribute('data-gl') !== st) { gl.setAttribute('data-gl', st); gl.innerHTML = svgFor(st); }
-    if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
     if (changed && animate) statusPop(el, gl);
   });
 }
@@ -143829,7 +143886,6 @@ function applyDots(root) {
     if (el.closest('[data-pane="branches"]')) st = st === 'live' ? 'current' : st === 'warn' ? 'stash' : st;
     const foot = el.closest('.fm-footstat, .fm-indexchip');
     if (foot) st = foot.classList.contains('warn') ? 'warn' : 'live';
-    const pulse = st === 'run' || !!el.closest('.fm-footstat');
     if (el.getAttribute('data-gl') === st && el.classList.contains('d-dot')) return;
     if (!el.classList.contains('d-dot')) {
       const html = el.innerHTML;
@@ -143838,7 +143894,6 @@ function applyDots(root) {
     }
     setAttr(el, 'data-d-st', st);
     setAttr(el, 'data-gl', st);
-    if (pulse) setAttr(el, 'data-pulse', '');
     el.innerHTML = svgFor(st);
   });
 }
@@ -143880,7 +143935,7 @@ function ownerFilter(menuId, hover, classes, start, onChange) {
   const chosen = new Set(start);
   const value = PMR.h('span.d-select-v');
   const trig = PMR.h('button', { type: 'button', class: 'd-select', 'aria-haspopup': 'menu', 'aria-expanded': 'false' },
-    PMR.icon('filter', 'd-select-ico'), PMR.h('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD'));
+    PMR.icon('filter', 'd-select-ico'), PMR.h('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD', 'd-select-chev'));
   PMR.hover(trig, hover[0], hover[1]);
   const show = () => {
     const names = classes.filter(c => chosen.has(c[0])).map(c => c[1]);
@@ -144168,6 +144223,8 @@ function observePanels() {
    The example data continues today's cards (tastebook, current change nkmwqzvw) and lives here, in concept D only. */
 
 const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', view: null, reasons: [], registered: false };
+/* neon render sizes per icon class (pm7-glyphs, RAIL): static, never measured; the CSS keeps every box as it is */
+const JJ_SIZE = { sm: 13, 'sh-accchev': 10, 'd-jj-chev': 12, 'd-jj-grp-ico': 11 };
 const JJ_TABS = [
   { id: 'changes', label: 'Changes', icon: 'diff', git: 'changes' },
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
@@ -144219,9 +144276,15 @@ const JJ_CMDS = [
 const jh = (spec, attrs, ...kids) => PMR.h(spec, attrs, ...kids);
 function jjIco(name, cls) {
   const i = jh('i', { class: ['pm-ico', cls], 'data-ico': name, 'aria-hidden': 'true' });
-  const raw = JJ_SVG[name]
-    ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
-    : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  /* the neon set draws first (oplog -> history), through the shared rail map; JJ_SVG and PMIcon stay as fallback */
+  const G = window.PMG, g = (name && PMR.neonMap[name]) || name;
+  let raw = '';
+  if (g && G && G.has(g)) raw = G.icon(g, JJ_SIZE[cls] || 14, 'nx-r-' + (PMR.neonRole[name] || 'concept'));
+  if (!raw) {
+    raw = JJ_SVG[name]
+      ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
+      : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  }
   i.innerHTML = raw || '';
   return i;
 }
@@ -144317,7 +144380,7 @@ function jjShelf(s) {
 const jjFoot = text => jh('div.pm-footnote', { text });
 const jjWide = c => jjBtn(Object.assign({ cls: 'd-jj-wide' }, c));
 function jjGroup(icon, name, count, mono) {
-  return jh('div.d-jj-grp', jjIco(icon), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
+  return jh('div.d-jj-grp', jjIco(icon, 'd-jj-grp-ico'), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
 }
 
 /* ---------- the example repository (tastebook; DECISION §5) ---------- */
@@ -144684,7 +144747,7 @@ function jjCard() {
 /* the card folds like Git's; one remembered preference for both engines */
 function jjWireFold(card) {
   const head = card.querySelector('.pm7-post-card-head');
-  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD'));
+  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD', 'd-fold-chev'));
   PMR.hover(btn, 'Show or hide the destinations', 'Where this publishes, the expected head and the review state');
   head.appendChild(btn);
   const set = (folded, animate) => {
@@ -145245,7 +145308,7 @@ function wirePublish(panel) {
   const head = card.querySelector('.pm7-post-card-head');
   if (!head) return;
   card._dPub = true;
-  const btn = PMR.h('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD'));
+  const btn = PMR.h('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD', 'd-fold-chev'));
   PMR.hover(btn, 'Show or hide the destinations', 'Where this publishes, the expected head and the review state');
   inject(head, btn);
   const set = (folded, animate) => {
@@ -146135,11 +146198,6 @@ function dsrSetStatus(m, st, word, rest, animate) {
     m.setAttribute('data-d-st', st);
     if (gl) { gl.setAttribute('data-gl', st); gl.innerHTML = svgFor(st); }
   }
-  if (gl) {
-    const pulse = st === 'run';
-    if (pulse && !gl.hasAttribute('data-pulse')) gl.setAttribute('data-pulse', '');
-    if (!pulse && gl.hasAttribute('data-pulse')) gl.removeAttribute('data-pulse');
-  }
   if (w.textContent !== word) w.textContent = word;
   if (r.textContent !== rest) r.textContent = rest;
   if (was && was !== st && animate) statusPop(m, gl);
@@ -146775,7 +146833,6 @@ const LANE_E = (() => {
       g.innerHTML = svgFor(st);
     }
     if (g.getAttribute('data-d-st') !== st) g.setAttribute('data-d-st', st);
-    if (st === 'run') { if (!g.hasAttribute('data-pulse')) g.setAttribute('data-pulse', ''); } else if (g.hasAttribute('data-pulse')) g.removeAttribute('data-pulse');
     return g;
   }
   /* a shell chip whose word the shared vocabulary reads wrongly: force its state (and glyph); "token" = a plain fact */
@@ -146900,7 +146957,7 @@ const LANE_E = (() => {
     if (applies.length < 2) { serviceFact(panel, sel, nameOf(applies[0])); return; }
     const value = PMR.h('span.d-select-v');
     const trig = PMR.h('button', { type: 'button', class: 'd-select d-e-service', 'aria-haspopup': 'menu', 'aria-expanded': 'false', 'aria-label': 'Automation service' },
-      value, PMR.icon('chevD'));
+      value, PMR.icon('chevD', 'd-select-chev'));
     PMR.hover(trig, 'Choose the automation service', 'This project has ' + applies.length + ' automation services. GitHub keeps Current Branch, Workflows and Settings; the others show their own native view.');
     const sync = () => { const o = sel.options[sel.selectedIndex]; value.textContent = o ? o.textContent.trim() : ''; };
     sync();
@@ -147252,7 +147309,7 @@ const LF_RUN = (() => {
     const shape = SHAPE[st] || st;
     let gl = head.querySelector(':scope > .lf-lead');
     if (!gl) {
-      gl = glyph(shape, st === 'run');
+      gl = glyph(shape);
       gl.classList.add('lf-lead');
       gl.setAttribute('data-d-st', st);
       inject(head, gl, head.querySelector(':scope > .sh-dot') || head.querySelector(':scope > .sh-main'));
@@ -147262,7 +147319,6 @@ const LF_RUN = (() => {
     gl.setAttribute('data-d-st', st);
     gl.setAttribute('data-gl', shape);
     gl.innerHTML = svgFor(shape);
-    if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
     if (animate) popGlyph(gl);
   }
   /* move a node to a new parent and remember where it lived */
@@ -147339,7 +147395,6 @@ const LF_RUN = (() => {
       if (!gl || gl.getAttribute('data-gl') === shape) return;
       gl.setAttribute('data-gl', shape);
       gl.innerHTML = svgFor(shape);
-      if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
       if (animate) popGlyph(gl);
     });
   }
