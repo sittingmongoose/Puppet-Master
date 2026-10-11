@@ -28507,6 +28507,30 @@ html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition:
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, .orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) > * { scrollbar-color: transparent transparent; }
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console):is(:hover, .pm6-sb-active) :is(.orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) { scrollbar-color: var(--pm6-sb-thumb) transparent; }
 
+/* ---- css/25-glyphs.css ---- */
+/* The neon glyph set in the onboarding window and the tour (pm7-glyphs D44; rollout ONBOARDING round 2, spec in
+   Concepts/glyph-system/opus-5.5/docs/rollout/ONBOARDING.md). The glyphs and marks bring their own lighting
+   (neon-icons.css and the PM7 bridge); this file only lets the window's hosts hold them. Every rule here keys on a class
+   the glyph path alone writes (o55-phmark-nx, o55-q-nx, o55-mk), so a page without window.PMG renders exactly as
+   before. */
+
+/* A phase or step mark is the shared mark on its own: the solid disc it sat on goes (GLY-3: one drawing per state
+   everywhere), and so do the turning ring of a running phase and Retro's stepping pixel, because the working mark's bead
+   is that motion now. The box keeps its size, so the label does not move. The position marker (a step you are on) is
+   a concept glyph and takes the window's accent; status marks carry their tone's ink. */
+#pm-o55-onboarding .o55-phmark.o55-phmark-nx {
+  border: 0 !important; background: none !important; box-shadow: none !important; animation: none !important;
+  color: var(--o55-accent) !important;
+}
+#pm-o55-onboarding .o55-phmark.o55-phmark-nx::after { content: none !important; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark.o55-phmark-nx { color: var(--o55-nier-ink) !important; }
+
+/* The details disclosure's "?" is the help glyph: its drawn circle replaces the bordered one. */
+#pm-o55-onboarding .o55-q.o55-q-nx { width: auto; height: auto; border: 0 !important; border-radius: 0; }
+
+/* A row still looking for something leads with the working mark where its glyph tile would be. */
+#pm-o55-onboarding .o55-row-wait > .o55-mk { margin: 0 6px; }
+
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
    Families differ in easing and material, never in waiting time (canon budgets). Retro never scales (steps + cuts).
@@ -121401,6 +121425,36 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!svg) svg = map[name] || map.info || '';
     return `<span class="o55-ico${cls ? ' ' + cls : ''}" aria-hidden="true">${svg}</span>`;
   };
+  /* The window's own drawings ask the neon set the same way (rollout ONBOARDING, round 2): U.nx draws one glyph, U.mark
+     one status mark of the shared vocabulary; each returns '' when PMG cannot draw it, so its caller keeps the drawing
+     it had. Both strings are cached per argument list (the screens re-render on every state change), in the form the
+     browser serialises them (a host that compares a slot's innerHTML with a fresh string, as the sound and look slots
+     do, then finds it unchanged, and U.morph sees no difference). A mark is lit and still (nx-still: it draws on once
+     and never loops) unless `moving` is set: only working moves. */
+  const NX_CACHE = Object.create(null);
+  const serialised = (html) => {
+    if (!html || typeof document === 'undefined') return html || '';
+    const t = document.createElement('template'); t.innerHTML = html; return t.innerHTML;
+  };
+  U.nx = function nx(glyph, size, role, cls) {
+    const G = window.PMG;
+    if (!glyph || !G || typeof G.has !== 'function' || !G.has(glyph)) return '';
+    const key = 'g|' + glyph + '|' + size + '|' + role + '|' + (cls || '');
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.icon(glyph, size, 'nx-r-' + role + (cls ? ' ' + cls : ''))); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
+  };
+  U.mark = function mark(status, size, cls, moving) {
+    const G = window.PMG;
+    if (!status || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(status)) return '';
+    const c = (moving ? '' : 'nx-still') + (cls ? (moving ? '' : ' ') + cls : '');
+    const key = 's|' + status + '|' + size + '|' + c;
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.status(status, size, c)); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
+  };
 
   /* Deterministic PRNG (mulberry32) so fixtures, fingerprints and sound noise are reproducible in films. */
   U.rng = function rng(seed) {
@@ -121842,11 +121896,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   /* the wave paths of buttonHtml's icon, so an in-place rebind renders exactly what buttonHtml would */
   const WAVE = { on: ['M15.5 8.5a5 5 0 0 1 0 7', 'M18.4 5.6a9 9 0 0 1 0 12.8'], off: ['M16 9l5 6', 'M21 9l-5 6'] };
+  /* the neon set's speaker and speaker-off (pm7-glyphs D44): two drawings, so a rebind swaps the whole svg; '' without
+     PMG (the old icon and its wave swap then stay exactly as they were). U.nx returns the browser's serialised form. */
+  const neonSvg = (on) => O55.util.nx(on ? 'speaker' : 'speaker-off', 18, 'control');
   function syncButtons() {
     document.querySelectorAll('button.o55-sound').forEach((b) => {
       const on = !S.muted, label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
       b.setAttribute('aria-pressed', String(on));
       b.setAttribute('aria-label', label); b.setAttribute('title', label);
+      const svg = b.querySelector('svg');
+      if (svg && svg.classList.contains('nx')) { const nx = neonSvg(on); if (nx && svg.outerHTML !== nx) svg.outerHTML = nx; return; }
       const paths = b.querySelectorAll('svg path');
       for (let i = 0; i < 2 && i + 1 < paths.length; i++) paths[i + 1].setAttribute('d', WAVE[on ? 'on' : 'off'][i]);
     });
@@ -123456,7 +123515,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const path = (d) => `<path d="${d}"></path>`;
     const wave = WAVE[on ? 'on' : 'off'].map(path).join('');
     return `<button type="button" class="o55-sound ${cls || ''}" data-o55-do="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label)}">`
-      + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg></button>`;
+      + (neonSvg(on) || `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg>`) + '</button>';
   };
 
   /* ---- the library: every sound a moment plays, by plain name, with the moment it plays at; renders and previews
@@ -131404,7 +131463,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
-      + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>${U.esc(T('chrome.close'))}</span></button></div></header>`
+      + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host" aria-hidden="true"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
@@ -131672,7 +131731,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return `<span class="o55nw-keys" aria-hidden="true">${foot.primary ? k(T('nierWindow.keys.enterCap'), T('nierWindow.keys.enter')) : ''}`
       + `${k(T('nierWindow.keys.escCap'), T('nierWindow.keys.esc'))}${choose ? k('\u2190 \u2192', T('nierWindow.keys.choose')) : ''}</span>`;
   }
-  const backIcon = () => '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+  const backIcon = () => U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
   function btn(b, cls) {
     const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
     return `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`
@@ -132204,12 +132263,45 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, esc = U.esc;
-  const glyph = (g) => `<span class="o55-glyph" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22">${O55.art.glyph(g || 'spark', 'currentColor', 1.9)}</svg></span>`;
-  const small = (g, s) => `<svg class="o55-sg" viewBox="0 0 24 24" width="${s || 16}" height="${s || 16}" aria-hidden="true">${O55.art.glyph(g || 'spark', 'currentColor', 2.1)}</svg>`;
+  /* The window's interface icons are the neon set's (pm7-glyphs D44; rollout ONBOARDING round 2). ART maps each art
+     glyph a screen names to its neon glyph (the catalog's before-and-after map, table T-art); the art scenes still draw
+     A.glyphs in each family's material (card GLY-4). Every name falls back to its art drawing when PMG cannot draw it.
+     smallArt is the old drawing, kept for the tour's Planning Wizard mock, which must keep matching the wizard (the
+     wizard gets no adoption). 13 px asks were 13 only for the art strokes' sake; the set draws them at 14. */
+  const ART = {
+    seed: 'sprout', folder: 'folder', computer: 'monitor', person: 'user', cloud: 'cloud', vault: 'vault',
+    server: 'server', box: 'archive', rewind: 'history', key: 'key', globe: 'globe', spark: 'sparkles', link: 'link',
+    power: 'lightning', history: 'history', phone: 'phone', check: 'check', lock: 'lock', plug: 'plug', stack: 'layers'
+  };
+  const px = (s) => (s === 13 ? 14 : s || 16);
+  const glyphArt = (g) => `<svg viewBox="0 0 24 24" width="22" height="22">${O55.art.glyph(g || 'spark', 'currentColor', 1.9)}</svg>`;
+  const glyph = (g) => `<span class="o55-glyph" aria-hidden="true">${U.nx(ART[g || 'spark'], 22, 'concept') || glyphArt(g)}</span>`;
+  const smallArt = (g, s) => `<svg class="o55-sg" viewBox="0 0 24 24" width="${s || 16}" height="${s || 16}" aria-hidden="true">${O55.art.glyph(g || 'spark', 'currentColor', 2.1)}</svg>`;
+  const small = (g, s) => U.nx(ART[g || 'spark'], px(s), 'concept', 'o55-sg') || smallArt(g, s);
+  /* A status of the shared vocabulary, beside its words: done is the drawn check, a warning the triangle, working the
+     bead on its ring (the only mark that moves). `old` is what the window drew before, for a page without PMG. */
+  const mark = (status, s, old) => U.mark(status, px(s), 'o55-sg o55-mk', status === 'working') || (old != null ? old : '');
+  const spinOld = '<span class="o55-spin" aria-hidden="true"></span>';
+  const spin = (s) => mark('working', s || 12, spinOld);
+  const done = (s) => mark('complete', s, smallArt('check', s));
   const X = { 'data-pm-hover-exempt': 'true' };
+  const PHASE = { waiting: 'pending', active: 'working', done: 'complete', failed: 'failed' };
+  const NOTE = { warn: 'warning', ok: 'complete', info: 'info' };
+  const phmark = (status, old) => {
+    const m = mark(status, 14, null);
+    return m ? `<span class="o55-phmark o55-phmark-nx" aria-hidden="true">${m}</span>` : `<span class="o55-phmark" aria-hidden="true">${old}</span>`;
+  };
+  /* A step of a list you walk (the backup's steps): done is the done mark, the step you are on is the set's position
+     marker (the ring with a dot, the rail's "current"), a later step is pending. */
+  const stepmark = (state, old) => {
+    const m = state === 'done' ? mark('complete', 14, null) : state === 'active' ? U.nx('ring-dot', 14, 'concept', 'o55-mk') : mark('pending', 14, null);
+    return m ? `<span class="o55-phmark o55-phmark-nx" aria-hidden="true">${m}</span>` : `<span class="o55-phmark" aria-hidden="true">${old}</span>`;
+  };
+  /* the details disclosure's "?" is the set's help glyph (the help circle beside every Settings field) */
+  const help = () => { const g = U.nx('help', 18, 'control'); return g ? `<span class="o55-q o55-q-nx" aria-hidden="true">${g}</span>` : '<span class="o55-q" aria-hidden="true">?</span>'; };
 
   const C = O55.c = {
-    glyph, small,
+    glyph, small, smallArt, mark, spin, done, stepmark,
     /* Choice cards (radio semantics). options: [{v, title, sub, glyph, tag, disabled, reason, key}] */
     cards(action, options, selected, o) {
       o = o || {};
@@ -132230,7 +132322,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + `<span class="o55-rowtext"><span class="o55-rowtitle">${esc(r.title)}</span>` + (r.meta ? `<span class="o55-rowmeta">${esc(r.meta)}</span>` : '') + '</span>'
         + (r.state ? C.pill(r.state[0], r.state[1]) : '') + act + '</div>';
     },
-    pill(kind, label) { return `<span class="o55-pill o55-pill-${esc(kind)}">${kind === 'ready' ? small('check', 12) : kind === 'wait' ? '<span class="o55-spin" aria-hidden="true"></span>' : ''}${esc(label)}</span>`; },
+    pill(kind, label) { return `<span class="o55-pill o55-pill-${esc(kind)}">${kind === 'ready' ? done(12) : kind === 'wait' ? spin(12) : ''}${esc(label)}</span>`; },
     field(f) {
       const id = f.id || 'o55f-' + f.bind;
       const type = f.type || 'text';
@@ -132238,7 +132330,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         ? `<textarea id="${id}" data-o55-bind="${esc(f.bind)}" rows="${f.rows || 3}" placeholder="${esc(f.placeholder || '')}"${U.attrs(X)}>${esc(f.value || '')}</textarea>`
         : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' : ''}${f.invalid ? ' aria-invalid="true"' : ''}${U.attrs(X)}>`;
       return `<div class="o55-field${f.invalid ? ' o55-invalid' : ''}${f.cls ? ' ' + f.cls : ''}" data-key="field-${esc(f.bind)}"><label for="${id}">${esc(f.label)}</label>${f.prefix ? `<div class="o55-inputwrap"><span class="o55-prefix">${esc(f.prefix)}</span>${input}</div>` : input}`
-        + (f.hint || f.error ? `<span class="o55-hint${f.error ? ' o55-err' : ''}" aria-live="polite">${f.valid ? small('check', 12) : ''}${esc(f.error || f.hint)}</span>` : '') + '</div>';
+        + (f.hint || f.error ? `<span class="o55-hint${f.error ? ' o55-err' : ''}" aria-live="polite">${f.valid ? done(12) : ''}${esc(f.error || f.hint)}</span>` : '') + '</div>';
     },
     toggle(t) {
       return `<button type="button" class="o55-toggle${t.on ? ' o55-on' : ''}" role="switch" aria-checked="${!!t.on}" data-o55-do="${esc(t.do)}"${t.arg != null ? ` data-arg="${esc(t.arg)}"` : ''}${U.attrs(X)} data-key="tg-${esc(t.do)}-${esc(t.arg || '')}">`
@@ -132252,12 +132344,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     details(S, key, label, body) {
       const open = !!S.sess.ui['details:' + key];
       return `<div class="o55-details${open ? ' o55-open' : ''}" data-key="det-${esc(key)}"><button type="button" class="o55-detbtn" data-o55-do="details" data-arg="${esc(key)}" aria-expanded="${open}"${U.attrs(X)}>`
-        + `<span class="o55-q" aria-hidden="true">?</span><span>${esc(label)}</span></button>` + (open ? `<div class="o55-detbody">${body}</div>` : '') + '</div>';
+        + `${help()}<span>${esc(label)}</span></button>` + (open ? `<div class="o55-detbody">${body}</div>` : '') + '</div>';
     },
+    /* A phase's mark is the shared mark on its own (GLY-3: one drawing per state everywhere); the disc it sat on goes
+       (o55-phmark-nx, 25-glyphs.css), so the tone carries what the fill did. */
     phases(list) {
-      return `<ol class="o55-phases">` + list.map((p) => `<li class="o55-ph o55-ph-${esc(p.status)}" data-key="ph-${esc(p.key)}"><span class="o55-phmark" aria-hidden="true">${p.status === 'done' ? small('check', 13) : p.status === 'failed' ? '!' : ''}</span><span class="o55-phlabel">${esc(p.label)}</span>${p.detail ? `<span class="o55-phdetail">${esc(p.detail)}</span>` : ''}</li>`).join('') + '</ol>';
+      return `<ol class="o55-phases">` + list.map((p) => `<li class="o55-ph o55-ph-${esc(p.status)}" data-key="ph-${esc(p.key)}">${phmark(PHASE[p.status] || 'pending', p.status === 'done' ? small('check', 13) : p.status === 'failed' ? '!' : '')}<span class="o55-phlabel">${esc(p.label)}</span>${p.detail ? `<span class="o55-phdetail">${esc(p.detail)}</span>` : ''}</li>`).join('') + '</ol>';
     },
-    note(text, kind, g) { return `<p class="o55-note o55-note-${esc(kind || 'info')}">${small(g || (kind === 'warn' ? 'spark' : 'check'), 14)}<span>${esc(text)}</span></p>`; },
+    /* A note that names no glyph shows its kind's mark (warn: the triangle; ok: done; info: the ringed i). */
+    note(text, kind, g) { return `<p class="o55-note o55-note-${esc(kind || 'info')}">${g ? small(g, 14) : mark(NOTE[kind] || 'info', 14, smallArt(kind === 'warn' ? 'spark' : 'check', 14))}<span>${esc(text)}</span></p>`; },
     identity(seed, words, caption) {
       const fam = O55.theme().family;
       return `<div class="o55-identity-chip" data-key="id-${esc(seed)}">${O55.art.identitySvg(seed, 46, fam)}<span><span class="o55-idwords">${esc(words)}</span>${caption ? `<span class="o55-idcap">${esc(caption)}</span>` : ''}</span></div>`;
@@ -132268,7 +132363,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sheet(S, key, title, body, foot) {
       if (S.sess.ui.sheet !== key) return '';
       return `<div class="o55-sheet" data-open="true" data-key="sheet-${esc(key)}" role="group" aria-label="${esc(title)}"><div class="o55-sheethead"><h2>${esc(title)}</h2>`
-        + `<button type="button" class="o55-iconbtn" data-o55-do="sheet-close" aria-label="${esc(O55.t('chrome.done'))}"${U.attrs(X)}><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>`
+        + `<button type="button" class="o55-iconbtn" data-o55-do="sheet-close" aria-label="${esc(O55.t('chrome.done'))}"${U.attrs(X)}>${U.nx('close', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`
         + `<div class="o55-sheetbody">${body}</div>${foot ? `<div class="o55-sheetfoot">${foot}</div>` : ''}</div>`;
     },
     kv(rows) { return `<dl class="o55-kv">${rows.filter(Boolean).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`; }
@@ -132386,7 +132481,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* A disclosure row that reveals more choices in place (source_more / remote_more); never a nested dialog. */
   F.more = function more(open, label, action, body, key) {
     return `<div class="o55-more${open ? ' o55-open' : ''}" data-key="more-${U.esc(key || action)}"><button type="button" class="o55-morebtn" data-o55-do="${U.esc(action)}" aria-expanded="${open}" data-pm-hover-exempt="true">`
-      + `<span>${U.esc(label)}</span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>`
+      + `<span>${U.esc(label)}</span>${U.nx('chevron-down', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'}</button>`
       + (open ? `<div class="o55-morebody">${body}</div>` : '') + '</div>';
   };
   /* Copy-to-clipboard button with a transient "Copied" state (no fake success: it reports the clipboard result). */
@@ -132414,7 +132509,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   O55.lookMenu = {
     /* attr: the click attribute of the host (data-o55-do in onboarding, data-o55t in the tour) */
     button(cls, attr, open) {
-      return `<button type="button" class="${cls} o55-lookbtn${open ? ' o55-on' : ''}" ${attr}="lookMenu" aria-haspopup="true" aria-expanded="${!!open}" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.look'))}" title="${U.esc(T('chrome.look'))}">${ICON}</button>`;
+      return `<button type="button" class="${cls} o55-lookbtn${open ? ' o55-on' : ''}" ${attr}="lookMenu" aria-haspopup="true" aria-expanded="${!!open}" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.look'))}" title="${U.esc(T('chrome.look'))}">${U.nx('palette', 18, 'control') || ICON}</button>`;
     },
     panel(attr) {
       const th = O55.theme();
@@ -132797,7 +132892,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => SLIDERS };
+  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();
 
 /* ---- js/65-screens-welcome.js ---- */
@@ -135198,7 +135293,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const here = S.env.here, ck = S.sess.ui.check || { done: [] };
     const chip = (key, label) => {
       const done = (ck.done || []).includes(key);
-      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.small('check', 13) : '<span class="o55-spin" aria-hidden="true"></span>'}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
+      return `<span class="o55-chip${done ? ' o55-chip-ok' : ''}" data-key="chip-${key}">${done ? C.done(13) : C.spin(12)}<span>${U.esc(done ? label : T('where.check.checking'))}</span></span>`;
     };
     return `<div class="o55-chiprow" data-key="check" role="status" aria-label="${U.esc(T('where.check.label'))}">`
       + chip('space', T('where.check.space', { gb: here.freeGB }))
@@ -135325,7 +135420,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           out += `<div class="o55-sublinks" data-key="l-found">${C.link(T('connect.route.found'), 'manualOff')}</div>`;
         } else {
           const list = found(S), st = F.state(S, scanKey(S));
-          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
+          if (!list.length) out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('connect.route.looking'))}</span></span></div>`;
           else out += C.cards('pickServer', list.map((s) => ({ v: s.id, glyph: 'server', title: s.name, sub: s.address + ' · ' + nProjects(s.projects.length), tag: s.via === 'vpn' ? 'VPN' : '' })), d.server_ref, { label: T('connect.route.found') });
           if (st && st.state === 'done' && !list.length) out += C.note(T('connect.route.none'), 'warn');
           out += C.note(T('connect.route.vpnLine'), 'info', 'link');
@@ -135396,7 +135491,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) {
       const d = cd(S), s = server(S) || {}, c = S.sess.connect;
       let out = '';
-      if (c.paired) out += `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('chrome.alreadyDone') + ' — ' + T('connect.pair.done', { name: s.name }))}</span></div>`;
+      if (c.paired) out += `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone') + ' — ' + T('connect.pair.done', { name: s.name }))}</span></div>`;
       out += `<div class="o55-routeline" data-key="routeline" aria-label="${U.esc(T('connect.review.route'))}">`
         + `<span class="o55-routenode">${C.small('computer', 18)}<span>${U.esc(S.env.client.name)}</span></span>`
         + `<span class="o55-routelink"><span>${U.esc(routeLabel(d))}</span></span>`
@@ -135649,7 +135744,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
-        out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
@@ -135750,7 +135845,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) {
       const sv = S.sess.server, u = unclaimed(S);
       const name = serverNameOf(S);
-      if (sv.claimed) return `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('chrome.alreadyDone'))}</span></div>`;
+      if (sv.claimed) return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone'))}</span></div>`;
       let out = C.identity(u.seed, words(u.seed), u.address);
       out += C.field({ bind: 'name', label: T('server.confirm.nameLabel'), value: name, placeholder: 'Home NAS', error: F.nonEmpty(name) ? '' : T('name.empty'), invalid: !F.nonEmpty(name) });
       out += F.chips('suggest', suggestions(S), name);
@@ -135955,7 +136050,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
       if (!inviteOpen(S)) card += `<div class="o55-sublinks" data-key="expirednew">${C.link(T('chrome.newCode'), 'newCode')}</div>`;
       if ((sv.paired || []).length) {
-        const rows = sv.paired.map((p) => `<div class="o55-row" data-key="paired-${U.esc(U.slug(p.id))}">${C.small('check', 18)}`
+        const rows = sv.paired.map((p) => `<div class="o55-row" data-key="paired-${U.esc(U.slug(p.id))}">${C.done(18)}`
           + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(p.name)}</span><span class="o55-rowmeta">${U.esc(T('server.ready.pairedDev'))}</span></span></div>`).join('');
         card += C.group(T('server.ready.pairedTitle'), rows + `<p class="o55-hint" data-key="pairedsub">${U.esc(T('server.ready.pairedSub'))}</p>`);
       }
@@ -136630,7 +136725,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
-          out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
+          out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
@@ -136640,7 +136735,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (d && d.pm) out += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
           const cs = F.state(S, 'sshcheck:' + d.id);
-          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.small('power', 14)}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
+          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
             + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
             + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
             + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
@@ -137270,7 +137365,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) {
       const si = SI(S), f = si.kind === 'forge' ? O55.fixtures.forge(si.service) : null, env = S.env.forges[si.service] || { accounts: [], signup: true };
       let out = '';
-      if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
+      if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
       const known = si.kind === 'forge' ? accountFor(S, si.service) : null;
       if (si.state === 'idle' && known && !si.another) {
         out += C.cards('useKnown', [{ v: known, glyph: 'person', title: T('online.signin.connected', { account: known }), sub: T('online.signin.connectedSub') }], known, {});
@@ -137289,7 +137384,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="wait">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
         /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
         if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
         else {
@@ -137772,7 +137867,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     body(S) {
       const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? C.link(T('review.edit'), 'edit', edit) : ''}</div>`;
       const st = F.state(S, 'recheck:' + d.project_draft_revision);
-      let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.small('check', 12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
+      let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
         if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
@@ -138298,7 +138393,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const next = STEPS.find((s) => !done.includes(s));
       let out = `<ol class="o55-steplist" data-key="steps">` + STEPS.map((s) => {
         const state = done.includes(s) ? 'done' : s === next ? 'active' : 'waiting';
-        return `<li class="o55-step o55-step-${state}" data-key="st-${s}"><span class="o55-phmark" aria-hidden="true">${state === 'done' ? C.small('check', 13) : ''}</span><span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
+        return `<li class="o55-step o55-step-${state}" data-key="st-${s}">${C.stepmark(state, state === 'done' ? C.smallArt('check', 13) : '')}<span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
       }).join('') + '</ol>';
       /* connecting, by kind of place: the NAS over SSH with a key, a bucket or a server with its access details, a
          cloud drive through its own sign-in page */
@@ -138322,7 +138417,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work"><span class="o55-spin"></span> ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.mark('working', 12, '<span class="o55-spin"></span>')} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {
@@ -138954,7 +139049,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          a stepped opacity animation (the compositor runs it; an animated dash offset repaints on the main thread) */
       + Array.from({ length: 15 }, (_, k) => `<rect class="o55t-ph${k < 4 ? ' o55t-ph4' : ''}${k === 0 ? ' o55t-ph0' : ''}" rx="12" ry="12" style="--k:${k}"/>`).join('') + `</svg></div>`
       + `<div class="o55t-shield" aria-hidden="true"></div>`
-      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel"><svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel">${U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'}`
       + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
       + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
       + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`
@@ -140235,7 +140330,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return head + `<div class="pm6-wiz-thread-body">${body}</div>`;
   }
   function answerRow() {
-    return `<div class="pm6-wiz-ans" data-key="ans"><span class="pm6-wiz-ans-check">${O55.c.small('check', 12)}</span><div><div class="pm6-wiz-ans-q">${U.esc(W('question'))}</div><div class="pm6-wiz-ans-a">${U.esc(W('choices.' + P.answer))}</div><div class="pm6-wiz-ans-src">${U.esc(W('badge'))}</div></div></div>`;
+    return `<div class="pm6-wiz-ans" data-key="ans"><span class="pm6-wiz-ans-check">${O55.c.smallArt('check', 12)}</span><div><div class="pm6-wiz-ans-q">${U.esc(W('question'))}</div><div class="pm6-wiz-ans-a">${U.esc(W('choices.' + P.answer))}</div><div class="pm6-wiz-ans-src">${U.esc(W('badge'))}</div></div></div>`;
   }
   /* The live plan: keyed rows so a changed answer moves only what it affects */
   function planRows() {
@@ -140245,7 +140340,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   function docHtml(gone) {
     const { dec, open } = planRows();
-    const row = (k, text, cls) => `<div class="pm6-wiz-doc-decision o55p-row${cls ? ' ' + cls : ''}" data-key="r-${k}"><span class="pm6-wiz-glyph">${cls && cls.includes('gone') ? '−' : O55.c.small('check', 12)}</span><span>${U.esc(text)}</span></div>`;
+    const row = (k, text, cls) => `<div class="pm6-wiz-doc-decision o55p-row${cls ? ' ' + cls : ''}" data-key="r-${k}"><span class="pm6-wiz-glyph">${cls && cls.includes('gone') ? '−' : O55.c.smallArt('check', 12)}</span><span>${U.esc(text)}</span></div>`;
     const decRows = dec.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh' : '')).concat((gone || []).filter((g) => g.sec === 'dec').map((g) => row(g.k, g.t, 'o55p-gone')));
     const openRows = open.map(([k, t]) => row(k, t, P.fresh && P.fresh.includes(k) ? 'o55p-fresh o55p-open' : 'o55p-open')).concat((gone || []).filter((g) => g.sec === 'open').map((g) => row(g.k, g.t, 'o55p-gone')));
     return `<div class="pm6-wiz-doc-h" data-key="h">${U.esc(W('title'))} — ${U.esc(W('badge'))}</div>`
@@ -140256,7 +140351,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       + `<div class="pm6-wiz-doc-sec o55p-boundary" data-key="s-b"><div class="pm6-wiz-doc-sec-p"><strong>${U.esc(W('doc.boundary'))}</strong></div></div>`;
   }
   function railHtml() {
-    const g = (done, label) => `<div class="pm6-wiz-gate${done ? ' done' : ''}"><span class="pm6-wiz-gate-mark">${done ? O55.c.small('check', 11) : ''}</span><span>${U.esc(label)}</span></div>`;
+    const g = (done, label) => `<div class="pm6-wiz-gate${done ? ' done' : ''}"><span class="pm6-wiz-gate-mark">${done ? O55.c.smallArt('check', 11) : ''}</span><span>${U.esc(label)}</span></div>`;
     return `<div class="pm6-wiz-rail-title">${U.esc(W('rail.title'))}</div>` + g(true, W('rail.g1')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g2')) + g(!!P.answer && P.answer !== 'unsure', W('rail.g3'))
       + `<div class="o55p-fence" data-key="fence"><button type="button" class="pm6-wiz-approve o55p-approve" aria-disabled="true" data-pm-hover-exempt="true" tabindex="-1">${icon('rocket')}Approve And Build</button><span class="o55p-fencenote">${O55.c.small('lock', 13)}${U.esc(W('rail.fence'))}</span></div>`;
   }
