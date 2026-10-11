@@ -99,7 +99,7 @@ const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrat
 
 /* ---- status: the neon glyph set draws the states (pm7-glyphs, RAIL); the tables below stay as the fallback ----
    KEY maps each rail state to the shared vocabulary (families/rail.js holds the reasons). svgFor asks window.PMG
-   first and keeps the old drawings only for states PMG cannot draw (paused, immutable) or when PMG is missing.
+   first (PMG.status draws every vocabulary key) and keeps the old drawings only for when PMG is missing.
    One family on a 16-unit grid. Definite states are solid badges with the mark knocked out (done, failed, warning,
    blocked, info, conflict); live things are a dot with a halo; stopped is a ring; pending is a dashed ring that
    turns slowly; changed is a half-filled circle; a stash is a tray. Knock-outs are masks, so they show whatever
@@ -107,13 +107,8 @@ const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrat
 const KEY = {
   ok: 'complete', fail: 'failed', warn: 'warning', blocked: 'blocked', info: 'info', conflict: 'change-conflict',
   live: 'working', run: 'working', idle: 'idle', pending: 'pending', unknown: 'pending', stale: 'skipped',
-  orphan: 'skipped', dirty: 'change-modified', stash: 'archive', current: 'ring-dot',
-};
-/* the shared vocabulary's PM7 additions (status.json extra): the chat's PMG.status only knows its own 13 keys, so
-   these render the catalog's way (20-catalog.js statusMark): the nx-st wrapper in the key's tone, the glyph in it. */
-const EXTRA_ST = {
-  warning: ['st-warning', 'attention'], info: ['st-info', 'idle'],
-  'change-conflict': ['change-conflict', 'blocked'], 'change-modified': ['change-modified', 'changed'],
+  orphan: 'skipped', dirty: 'change-modified', stash: 'stash', current: 'ring-dot',
+  paused: 'paused', immutable: 'blocked',
 };
 let maskSeq = 0;
 const SOLID = {
@@ -140,15 +135,10 @@ function svgFor(st) {
   const P = window.PMG, key = KEY[st];
   if (P && key) {
     /* concepts: the tray and the position marker, drawn as concept glyphs */
-    if ((key === 'archive' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
+    if ((key === 'stash' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
     /* live states move (the bead orbits at the set's slow 9 s); every other state is lit and still */
-    const cls = (st === 'live' || st === 'run' || st === 'pending') ? '' : 'nx-still';
-    if (window.PM56_NEON && window.PM56_NEON.STATUS[key]) return P.status(key, 12, cls);
-    const x = EXTRA_ST[key];
-    if (x && P.has(x[0])) {
-      return '<span class="nx-st nx-st-' + key + ' nx-tn-' + x[1] + ' nx-still" data-k="st:' + key
-        + '" aria-hidden="true">' + P.icon(x[0], 12, 'nx-r-status nx-t-' + x[1]) + '</span>';
-    }
+    const cls = (st === 'live' || st === 'run') ? '' : 'nx-still';
+    if (P.hasStatus(key)) return P.status(key, 12, cls);
   }
   let body = G[st];
   if (!body) {
