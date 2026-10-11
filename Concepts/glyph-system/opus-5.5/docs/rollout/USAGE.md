@@ -82,3 +82,15 @@ t3-usage-pm7, 2026-10-11. The control adds `.pmu-accsw` (button), `.pmu-accswi` 
 - `is-own` -> keep PMU.icons.notch exactly: it must stay identical to the meters' own notch (not a glyph).
 - The menu's "Open in Settings" row: gear -> `settings`.
 If the rollout runs before D43 lands, leave a note in the D43 branch's files instead of editing them.
+
+## Step 6, after home-panels' publish lands on main (their files; home-panels reviews this step)
+
+home-panels, 2026-10-11: on their branch `PMU.icon(name)` returns `<span class="pmu-ico">` + svg, so routing their raw-SVG
+call sites through it would change those buttons' DOM and the CSS that sizes `.pmu-iconbtn > svg`. So:
+1. `src/js/00-core.js`: add `PMU.svg(name, size)`: the same NEON lookup and cache as `PMU.icon`, returning the bare svg
+   (PMG.flat for the four card-head tools, `PMG.icon` otherwise, the old `SVG[name]` as the fallback) with no wrapper.
+2. `42-cards.js` card-head buttons (`SVG.toolGrip/toolSize/toolGear/toolKebab`), `45-menu.js` `icon()` (`SVG[name]`) and
+   `90-api.js` `[data-icon]` fill (`SVG[name]`): call `PMU.svg(name, <the size that file's CSS gives the svg>)` instead.
+   The DOM keeps its shape (a bare svg where a bare svg was), so `.pmu-iconbtn > svg` and its siblings still match.
+3. Keep `data-tool`, aria labels and every class. Rebase onto main after the publish first; the Usage gates (walk/cmp,
+   usage_boot, flick2, the idle strip) run again on the rebased page, and home-panels reviews the diff.
