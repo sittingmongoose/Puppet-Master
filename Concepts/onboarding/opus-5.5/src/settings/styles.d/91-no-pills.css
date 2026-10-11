@@ -85,3 +85,62 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .pm51-meter-
   -webkit-mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
   mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
 }
+
+/* ── Status mark slot (NP-STATUS) ───────────────────────────────────────────────────────────────────────────────
+   A status is a mark and a word: every status dot in Settings now sits in one uniform 1em slot that the neon
+   glyph rollout will later fill with PMG.status(key, 14, 'nx-still'). Today the slot draws exactly the dot it
+   replaces (same colour, diameter and centre); the negative inline margin pays back the slot's extra width so
+   the word starts where it started. Colours still come from the old tone hooks (carry-over rules below, each
+   citing the rule it replaces); the [data-status] rules name each key's usual ink for slots without one. */
+html #panel-settings .pm-status-mark { display: inline-block; flex: none; width: 1em; height: 1em; position: relative; vertical-align: -0.125em; padding: 0; border: 0; background: none; margin-inline: calc((var(--pm-dot, 6px) - 1em) / 2); }
+html #panel-settings .pm-status-mark::before { content: ""; position: absolute; inset: 0; margin: auto; width: var(--pm-dot, 6px); height: var(--pm-dot, 6px); border-radius: 50%; background: var(--pm-status-ink, currentColor); }
+/* the two 7px dots (styles.css .pm51-status i, 11-web.js .o55-chain-step i); every other slot keeps 6px */
+html #panel-settings :is(.pm51-status, .o55-chain-step) .pm-status-mark { --pm-dot: 7px; }
+/* each key's usual ink */
+html #panel-settings .pm-status-mark[data-status="idle"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="working"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="complete"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="warning"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="waiting"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="paused"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="recovering"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="info"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="reviewing"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="failed"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="blocked"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="offline"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="off"] { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm-status-mark[data-status="change-modified"] { --pm-status-ink: var(--k3-accent); }
+/* status tokens (carry-over from styles.css .pm51-status.tone-* i) */
+html #panel-settings .pm51-status.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm51-status.tone-info .pm-status-mark { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm51-status.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm51-status.tone-blocked .pm-status-mark { --pm-status-ink: var(--k3-red); }
+html #panel-settings :is(.pm51-status.tone-off, .pm51-status.tone-neutral) .pm-status-mark { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm51-acc-end .pm51-status > .pm-status-mark { margin-top: calc(.32em - (1em - 7px) / 2); margin-bottom: calc((7px - 1em) / 2); }
+/* roster and delivery-history dots (carry-over from the base .status-dot colour rules) */
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.ready { --pm-status-ink: var(--k3-green); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.attention { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: #69677d; }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.info { --pm-status-ink: var(--k3-blue); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.error { --pm-status-ink: var(--k3-red); }
+/* the base page paints kept .status-dot classes on the element itself; the slot paints only ::before */
+html #panel-settings .status-dot.pm-status-mark { background: none; border-radius: 0; }
+html[data-o55-nier] #panel-settings .status-dot.pm-status-mark { background: none; }
+/* changed marker and its halo (carry-over from 10-rows.css .o55-changed i) */
+html #panel-settings .o55-changed .pm-status-mark { --pm-status-ink: var(--k3-accent); }
+html #panel-settings .o55-changed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-amber-soft); }
+/* service chains (carry-over from 11-web.js .o55-chain-step i: off and blocked fall through to the grey) */
+html #panel-settings .o55-chain-step.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .o55-chain-step.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.o55-chain-step.tone-off, .o55-chain-step.tone-blocked) .pm-status-mark { --pm-status-ink: var(--k3-text-3); }
+/* rail health (carry-over from the base .side-health::before: currentColor plus its glow) */
+html #panel-settings .side-health.pm-has-mark::before { content: none; }
+html #panel-settings .side-health .pm-status-mark { --pm-status-ink: currentColor; }
+html #panel-settings .side-health .pm-status-mark::before { box-shadow: 0 0 10px currentColor; }
+/* home attention rows (carry-over from the base .status-dot.attention) */
+html #panel-settings .attention-row .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+/* NieR idle dots (carry-over from 13-nier.css:538) */
+html[data-o55-nier] #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: var(--o55-nier-line-strong); }

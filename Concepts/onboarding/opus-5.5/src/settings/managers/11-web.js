@@ -86,7 +86,7 @@
     const m = Object.assign({}, PM51.value(MATRIX) || {}); m[ability] = list.join(' → ');
     if (commitSettingValue(MATRIX, m)) { saveState(); o55Notify(MATRIX, m); }
   }
-  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}"><i></i>${h(svcLabel(n))}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
+  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}">${PM51.mark(PM51.statusKey(label, t), t)}${h(svcLabel(n))}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
   function fallbackText(r) {
     const on = (r.fallbacks || []).filter(f => f.enabled !== false);
     if (!on.length) return 'Nothing. The ability stops and tells you.';
