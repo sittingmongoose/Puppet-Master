@@ -35866,13 +35866,25 @@ html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="
   }
   /* a calm status mark: lit and still from the first frame, no list rhythm and no mount act (Usage: b-motion's room
      entrance owns arrival motion). The wrapper takes nx-still and pmg-calm (pm7-bridge.css). */
-  function calm(key, size, cls) { return N.status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
+  /* PMG's own statuses (warning, offline, off, info, the change marks: 10-status.js) in the chat's status wrapper, so
+     PMG.status(key) draws every key of the vocabulary; the chat's own keys and aliases go to PM56_NEON.status. */
+  var EXTRA_ST = Object.create(null);
+  function statusDef(key, glyph, tone) { EXTRA_ST[key] = { glyph: glyph, tone: tone }; }
+  function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function status(key, size, cls) {
+    var x = EXTRA_ST[key];
+    if (!x) return N.status(key, size, cls);
+    return '<span class="nx-st nx-st-' + esc(key) + ' nx-tn-' + x.tone + (cls ? ' ' + esc(cls) : '') + '" data-k="st:' + esc(key) + '" aria-hidden="true">' +
+      N.icon(x.glyph, size, 'nx-r-status nx-t-' + x.tone) + '</span>';
+  }
+  function hasStatus(key) { return !!EXTRA_ST[key] || !!(N.STATUS[key] || Object.keys(N.STATUS).some(function (k) { return (N.STATUS[k].aliases || []).indexOf(key) >= 0; })); }
+  function calm(key, size, cls) { return status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
 
   window.PMG = {
     version: 1,
     ACTS: ACTS, ROLES: ROLES,
     def: def, map: map,
-    icon: N.icon, status: N.status, has: N.has, alias: N.alias, flat: flat, calm: calm,
+    icon: N.icon, status: status, statusDef: statusDef, hasStatus: hasStatus, has: N.has, alias: N.alias, flat: flat, calm: calm,
     records: function () { return order.map(function (k) { return records[k]; }); },
     record: function (k) { return records[N.alias(k)] || records[k] || records[aliasOf[k]] || null; },
     /* true for a name PMG drew or aliased (the catalog keeps those out of the chat set's lists) */
@@ -35950,6 +35962,17 @@ html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="
   G.def('change-deleted', { family: 'status', role: 'status', act: 'none', meaning: 'Deleted: removed.', replaces: ['editor Deleted', 'git D', 'document deleted'], parts: [SQ, '<path d="M8.7 12h6.6"/>'] });
   G.def('change-conflict', { family: 'status', role: 'status', act: 'none', meaning: 'Conflict: two changes collide and someone must choose.', replaces: ['rail conflict (a diamond with a cross)', 'git C and U'], parts: [SQ, '<path d="M12 8.2v4.6"/>', '<path d="M12 15.7v.1"/>'] });
   G.def('change-renamed', { family: 'status', role: 'status', act: 'none', meaning: 'Renamed or moved.', replaces: ['editor Renamed', 'git R'], parts: [SQ, '<path d="M8.4 12h6.6M12.6 9.3 15.3 12l-2.7 2.7"/>'] });
+
+  /* the vocabulary's PMG keys, so PMG.status(key) draws them like the chat's 13 (tone: the wrapper's backlight and ink) */
+  G.statusDef('warning', 'st-warning', 'attention');
+  G.statusDef('offline', 'st-offline', 'attention');
+  G.statusDef('off', 'st-off', 'paused');
+  G.statusDef('info', 'st-info', 'idle');
+  G.statusDef('change-added', 'change-added', 'done');
+  G.statusDef('change-modified', 'change-modified', 'changed');
+  G.statusDef('change-deleted', 'change-deleted', 'blocked');
+  G.statusDef('change-renamed', 'change-renamed', 'changed');
+  G.statusDef('change-conflict', 'change-conflict', 'blocked');
 })();
 
 /* glyph-system/opus-5.5/src/registry/families/controls.js */
@@ -36631,7 +36654,7 @@ html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="
   m('st-pending', ['d G.pending (a dashed ring that turns)', 'd G.unknown (a dashed ring with a question mark)']);
   m('st-skipped', ['d G.stale (a clock in a ring)', 'd G.orphan (a broken ring)', 'F3-619 expired, superseded, terminated']);
   m('ring-dot', ['d G.current (a ring with a dot): where you are, a position marker, not a state']);
-  m('archive', ['d G.stash (a tray)']);
+  m('stash', ['d G.stash (a tray)']);
 })();
 
 /* glyph-system/opus-5.5/src/registry/families/terminal.js */
@@ -144408,7 +144431,8 @@ PMR.append = append;
    the layout never jumps. The neon glyph set (pm7-glyphs, RAIL) draws first: NEON maps each rail name to its glyph
    (the map's "Rail and Settings bridge" group, T-bridge, plus T-jj's undo/oplog, which reach icon() through
    menus). SIZE is the static render size per icon class (never measured: the boxes stay exactly as the CSS sizes
-   them) and ROLE the glyph's own role. Names PMG cannot draw (the file-type icons, alert) keep the old drawing. */
+   them) and ROLE the glyph's own role. The file-type icons draw as the page, alert as the warning mark; a name
+   PMG cannot draw keeps the old drawing. */
 const NEON = {
   folder: 'folder', chevL: 'chevron-left', scissors: 'scissors', clipboard: 'clipboard', eyeOff: 'eye-off',
   compose: 'compose', chat: 'chat', files: 'folder', search: 'search', source: 'branch', actions: 'pipeline',
@@ -144422,7 +144446,8 @@ const NEON = {
   book: 'notebook', camera: 'camera', file: 'page', arrowUp: 'arrow-up', arrowDn: 'arrow-down', grip: 'grip',
   edit: 'edit', filePlus: 'file-plus', folderPlus: 'folder-plus', boxMinus: 'minus', boxPlus: 'plus',
   pause: 'pause', stepOver: 'step-over', stepInto: 'step-into', stepOut: 'step-out', bpLine: 'bp-line',
-  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history',
+  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history', alert: 'st-warning',
+  rust: 'page', svelte: 'page', sql: 'page', md: 'page', ts: 'page', toml: 'page', yml: 'page', xml: 'page',
 };
 const NEON_ROLE = {
   folder: 'concept', chevL: 'control', scissors: 'concept', clipboard: 'concept', eyeOff: 'control',
@@ -144438,7 +144463,9 @@ const NEON_ROLE = {
   arrowUp: 'control', arrowDn: 'control', grip: 'control', edit: 'control', filePlus: 'control',
   folderPlus: 'control', boxMinus: 'control', boxPlus: 'control', pause: 'control', stepOver: 'control',
   stepInto: 'control', stepOut: 'control', bpLine: 'concept', bpCond: 'concept', bpLog: 'concept',
-  undo: 'control', oplog: 'concept',
+  undo: 'control', oplog: 'concept', alert: 'concept',
+  rust: 'concept', svelte: 'concept', sql: 'concept', md: 'concept', ts: 'concept', toml: 'concept',
+  yml: 'concept', xml: 'concept',
 };
 /* the review switcher's own classes are not listed: rail_layer keeps their prefix out of the published page,
    so the switcher (review-only) takes the default size */
@@ -145266,7 +145293,7 @@ const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrat
 
 /* ---- status: the neon glyph set draws the states (pm7-glyphs, RAIL); the tables below stay as the fallback ----
    KEY maps each rail state to the shared vocabulary (families/rail.js holds the reasons). svgFor asks window.PMG
-   first and keeps the old drawings only for states PMG cannot draw (paused, immutable) or when PMG is missing.
+   first (PMG.status draws every vocabulary key) and keeps the old drawings only for when PMG is missing.
    One family on a 16-unit grid. Definite states are solid badges with the mark knocked out (done, failed, warning,
    blocked, info, conflict); live things are a dot with a halo; stopped is a ring; pending is a dashed ring that
    turns slowly; changed is a half-filled circle; a stash is a tray. Knock-outs are masks, so they show whatever
@@ -145274,13 +145301,8 @@ const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrat
 const KEY = {
   ok: 'complete', fail: 'failed', warn: 'warning', blocked: 'blocked', info: 'info', conflict: 'change-conflict',
   live: 'working', run: 'working', idle: 'idle', pending: 'pending', unknown: 'pending', stale: 'skipped',
-  orphan: 'skipped', dirty: 'change-modified', stash: 'archive', current: 'ring-dot',
-};
-/* the shared vocabulary's PM7 additions (status.json extra): the chat's PMG.status only knows its own 13 keys, so
-   these render the catalog's way (20-catalog.js statusMark): the nx-st wrapper in the key's tone, the glyph in it. */
-const EXTRA_ST = {
-  warning: ['st-warning', 'attention'], info: ['st-info', 'idle'],
-  'change-conflict': ['change-conflict', 'blocked'], 'change-modified': ['change-modified', 'changed'],
+  orphan: 'skipped', dirty: 'change-modified', stash: 'stash', current: 'ring-dot',
+  paused: 'paused', immutable: 'blocked',
 };
 let maskSeq = 0;
 const SOLID = {
@@ -145307,15 +145329,10 @@ function svgFor(st) {
   const P = window.PMG, key = KEY[st];
   if (P && key) {
     /* concepts: the tray and the position marker, drawn as concept glyphs */
-    if ((key === 'archive' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
+    if ((key === 'stash' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
     /* live states move (the bead orbits at the set's slow 9 s); every other state is lit and still */
-    const cls = (st === 'live' || st === 'run' || st === 'pending') ? '' : 'nx-still';
-    if (window.PM56_NEON && window.PM56_NEON.STATUS[key]) return P.status(key, 12, cls);
-    const x = EXTRA_ST[key];
-    if (x && P.has(x[0])) {
-      return '<span class="nx-st nx-st-' + key + ' nx-tn-' + x[1] + ' nx-still" data-k="st:' + key
-        + '" aria-hidden="true">' + P.icon(x[0], 12, 'nx-r-status nx-t-' + x[1]) + '</span>';
-    }
+    const cls = (st === 'live' || st === 'run') ? '' : 'nx-still';
+    if (P.hasStatus(key)) return P.status(key, 12, cls);
   }
   let body = G[st];
   if (!body) {
