@@ -59,8 +59,9 @@ export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1
         const l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
         if (!S.sess || !r || r.hidden || !l || l.getAttribute('data-screen') !== S.sess.screen) return false;
         if (S.vt || document.documentElement.hasAttribute('data-o55-vt') || r.matches('.o55-hold, .o55-opening, .o55-closing') || l.matches('.o55-hold, .o55-entering') || r.querySelector('.o55-pane > .o55-out')) return false;
-        // Infinite ambient loops and spinners are not transitions and must not hold up input.
-        return !l.getAnimations({ subtree: true }).some((a) => a.playState !== 'finished' && a.playState !== 'idle' && Number.isFinite(a.effect.getComputedTiming().endTime));
+        // Wait for the layer transition, not descendant hover feedback that can retarget every frame.
+        // The next control has its own visibility, hit-test, and geometry wait in click().
+        return !l.getAnimations({ subtree: false }).some((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime));
       }, { what: 'onboarding screen and transitions settled', ...(typeof opts === 'object' ? opts : {}) });
     },
     async screen() { return page.evaluate(() => window.O55.S.sess && window.O55.S.sess.screen); },
