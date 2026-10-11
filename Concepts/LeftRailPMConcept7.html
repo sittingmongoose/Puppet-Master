@@ -38060,7 +38060,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { transition: transform
 #panel-usage .pmu-stepper button { display: inline-grid; place-items: center; width: 24px; height: 100%; padding: 0; border: 0; background: transparent; color: var(--pmu-ink-3); cursor: pointer; }
 #panel-usage .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
 #panel-usage .pmu-stepper button svg { width: 12px; height: 12px; }
-#panel-usage .pmu-stepper output, #panel-usage .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-stepper output, #panel-usage .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 html[data-theme^="retro"] #panel-usage :is(.pmu-toggle, .pmu-toggle::after, .pmu-stepper) { border-radius: 0; }
 html[data-theme^="retro"] #panel-usage .pmu-toggle::after { transition-timing-function: steps(2, jump-start); }
 /* the value-change underline (B v2 8.5) */
@@ -40577,7 +40577,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
    binding meter on a narrow plate. No fill at rest, no pill (a 6 px corner on a 22 px button; square in Retro and NieR);
    the hover is an ink wash a step above the row's own hover. */
 #panel-usage .pmu-accsw { position: relative; display: inline-flex; align-items: center; gap: 3px; flex: none; height: 22px; padding: 0 4px; border: 1px solid transparent; border-radius: 6px;
-  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
   transition: background-color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-accsw[data-own] { color: var(--pmu-ink); font-weight: 650; border-color: var(--pmu-rule-strong); }
 #panel-usage .pmu-accswi { display: inline-grid; place-items: center; flex: none; width: 10px; height: 14px; }
@@ -57690,7 +57690,7 @@ var PMU_SERIES = {
   /* the button's width with its glyph box (10 px) and the widest value in the theme's face at its weight, 3 px between
      them and 4 px each side, so the column that holds it never re-lays when the account takes its own level or follows
      again */
-  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 12.5, 650) * 1.06 + 8 + 2); }
+  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
   /* what the buttons of a plate show, as one string (a plate whose accounts' levels changed is patched, never left stale) */
   function accSwSig(p) { return switchable(p) ? p.accounts.map(function (a) { return a.key + ':' + accSwAt(a, p) + (accSwOwn(a) ? 'o' : '') + ((a.policy || polOf(p)).auto ? '' : 'x'); }).join(',') : ''; }
   /* every switch-level button under root takes its account's state in place: the value rolls (odometer 220; NieR decodes),
