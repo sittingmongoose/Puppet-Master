@@ -141008,6 +141008,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     lead: () => T('server.ready.lead'),
     enter(S) { const sv = S.sess.server; delete sv.pairCode; delete sv.candidateAt; if (!sv.pairUntil || Date.now() > sv.pairUntil) newInvite(S); else if (EPH() && !EPH().getInvite(sv.pairGen)) newInvite(S); },
     body(S) {
+      // Adopt before drawing. refresh() calls mounted(), so mounted must never refresh this screen itself.
+      pollGuestRun(S);
       const sv = S.sess.server, t = F.countdown(sv.pairUntil || Date.now()), link = 'https://' + U.slug(sv.displayName || 'home-nas') + '.local:7443/pair';
       const code = (EPH() && EPH().getInvite(sv.pairGen)) || '';
       let card = `<div class="o55-paircard" data-key="pair"><div class="o55-qrbox">${code ? F.qr('pair-' + code, 132) : ''}</div><div class="o55-pairinfo">`
@@ -141053,7 +141055,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       card += `<div class="o55-sublinks" data-key="restore">${C.link(T('server.ready.restore'), 'restore')}</div>`;
       return card;
     },
-    mounted(S) { F.ticker(S, 's-ready', 1000); pollGuestRun(S); if (S.open && S.sess.screen === 's-ready') O55.ui.refresh(); },
+    mounted(S) { F.ticker(S, 's-ready', 1000); },
     foot: () => ({ primary: { label: T('chrome.continue'), do: 'next' } }),
     do: {
       match(S, id) { const sv = S.sess.server, c = (sv.candidates || []).find((x) => x.id === id); if (!c || !(EPH() && EPH().getWords(c.id))) return; c.confirmed = !c.confirmed; S.save(); O55.ui.refresh(); O55.sound.play(c.confirmed ? 'toggleOn' : 'toggleOff'); },
