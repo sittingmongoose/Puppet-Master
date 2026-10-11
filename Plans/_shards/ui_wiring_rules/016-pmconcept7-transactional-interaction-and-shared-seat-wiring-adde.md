@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L762-L877
+Source lines: L762-L879
 
-Source SHA256: `59d06d10242be9b0c9e04467151e8d9b32ed951b9a3cec6a5fcee9de69e49c65`
+Source SHA256: `ae16b718354adcfd7a8dee63e240281f64c01b2237781af7018c50a080de0cd3`
 
 ---
 
@@ -28,8 +28,9 @@ PMConcept7 Ledger attempt row normalizes to usage_attempt/attempt_id without `Op
 usage_event_ref plus provider/account/runtime refs as correlation.
 Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
 invented route kind. On the redesigned Usage Accounts room the card body and Details stay local; Use this account
-dispatches `cmd.account.select_profile` and each provider's Auto-switch toggle and switch level commit through the Settings
-transaction pair at scope provider (`Plans/UI_Command_Catalog.md#UCC-147`, `Plans/Settings_System.md#SSYS-044`).
+dispatches `cmd.account.select_profile`, and each provider's Auto-switch toggle and switch level at scope provider and each
+account's own switch level at scope account (D43, 2026-10-10) commit through the Settings transaction pair
+(`Plans/UI_Command_Catalog.md#UCC-147`, `Plans/Settings_System.md#SSYS-044`).
 Usage Tidy is one settled layout transaction: steps 3 to 5 run once for the whole repacked room, with exactly one
 existing `cmd.widget.move` and one receipt, never one move per card; a Tidy that changes nothing follows step 6.
 
@@ -72,8 +73,9 @@ canonical_text: >-
   effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
   applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
   the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
-  one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account and the
-  provider Auto-switch toggle and switch level dispatch their owner commands (UCC-147).
+  one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account, the
+  provider Auto-switch toggle and switch level and each account's own switch level dispatch their owner commands
+  (UCC-147).
 gui_related: true
 gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3920-L4030
+Source lines: L3920-L4031
 
-Source SHA256: `f9af971e0328db881e9488ebbabbf57685cc317d6b0a5a21c3d468e26247c799`
+Source SHA256: `02e80b082367ae4f0e531e9fb0266d647bb7556a801a116a456b04d16f325dd6`
 
 ---
 
@@ -27,6 +27,7 @@ state selector, effect, cancellation, error, and evidence boundaries summarized 
 | Aggregate provider/account/panel details | `view_only` local inspector | current Usage projection; no router or command handler | no command, receipt, domain event, or persistence | local inspector | missing presentation data remains local; no fallback route or invented object kind |
 | Usage Accounts Use this account | `cmd.account.select_profile`, shown only when `supports_manual_set_active` | `handlers::account::select_profile`; Multi-Account owner (`Plans/Multi-Account.md#MA-073`) | dispatch receipt and the existing `account_switch_event` history; no Usage-side state | the account card and every account and provider projection | past the provider's switch point it asks first; declining dispatches nothing; owner disabled reasons stay visible |
 | Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the provider plate and Settings › Providers & Accounts, showing the same value | stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
+| Usage Accounts account switch level (D43, 2026-10-10) | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `account` with the account id | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the account's card and Details and its own row in Settings › Providers & Accounts, showing the same value | a level at or past the warning level that applies to the account is offered only as disabled, with the reason; stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
 | Usage room/scope/range/disclosure/filter/More-menu | `view_only` | current Usage view projection | no command/receipt/event; settled preference storage remains storage-owned | current Usage render | dismissal/cancel restores or retains prior local selection |
 | Usage Live / Paused | `view_only` | current Usage view projection holds or applies arriving projection updates | no command/receipt/event; the remembered choice is the storage-owned Usage view preference `live` | current Usage render | none; the concept's demo controls have no row (`Plans/usage-feature.md#UF-107`) |
 | Context ring popup/hover | `view_only` | shared Assistant local overlay projection | no command/receipt/event | compact context summary | dismissal emits nothing |
@@ -59,8 +60,8 @@ canonical_text: >-
   Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
   cmd.widget.move carrying arrange { mode: tidy, detail } with one receipt, never one move per card, and a
   size-picker preset commits one cmd.widget.resize. The Usage Accounts room's Use this account reuses the
-  account-select row, and each provider's Auto-switch toggle and switch level reuse the Settings transaction rows at
-  scope provider; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
+  account-select row, and each provider's Auto-switch toggle and switch level at scope provider and each account's
+  own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
   drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
   remain local inspectors; Context-ring actions reuse their existing rows; and the same
   Assistant node/store is re-seated across Home and global docks without cloning. The concept-only size_surface
@@ -76,7 +77,7 @@ acceptance_criteria:
   - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
   - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
   - "A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit."
-  - "The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair at scope provider, the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
+  - "The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level, and each account's own switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair, at scope provider for the provider's controls and at scope account for an account's (D43, 2026-10-10), the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
   - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
   - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.

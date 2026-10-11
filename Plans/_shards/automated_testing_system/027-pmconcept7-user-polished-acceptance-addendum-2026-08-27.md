@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L3437-L4090
 
-Source SHA256: `7fd8a8f3ec58d968f11131a84cb6823810a633317b900f43fc1785e429475e69`
+Source SHA256: `0bb0522147e1a134c83941e876edf725a4e5993dcaf9e1458d8fce1fc0069dd3`
 
 ---
 
@@ -39,8 +39,8 @@ canonical_text: >-
   Fixture presence and `must`/`must_not` lists grant static representation only; runtime, visual, motion, and
   migration behavior require fresh browser execution, raw receipts, and independent review.
   For the redesigned Usage page (2026-10-09) the suite also covers the Accounts room acting in place (one row per
-  account of each provider, Use this account and each provider's Auto-switch toggle and switch level with the dispositions of
-  UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
+  account of each provider, Use this account, each provider's Auto-switch toggle and switch level and each account's own
+  switch level (D43, 2026-10-10) with the dispositions of UCC-147 and the hosted-control commits of SSYS-044), per-provider auto-switch resolution, notches, blocks and
   target choice (MA-073), Live / Paused as a remembered view-only choice, every widget kind's size presets and their
   stored preset_id (WS-017, WS-020), and the single commit of Usage board gravity and Tidy (WS-019). The concept's
   demo controls take UF-107's lab-only disposition and receive no fixture or gate.
@@ -56,7 +56,7 @@ acceptance_criteria:
   - "Fixture expectations forbid unknown, hidden, disabled, unsupported, partial, missing, and redacted values from being represented as zero, success, settled, or authoritative; live rendering remains browser-audit work."
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures and python3 scripts/pm-validate-pm7-gui-fixtures.py validate both pass for static fixture representation; runtime, visual, motion, and migration acceptance still requires fresh browser execution, raw receipts, and independent review."
   - "Accounts room fixtures list every account of a provider as its own row (three ChatGPT / Codex accounts as three rows in both Accounts and Plans & limits), show Use this account only when supports_manual_set_active is true and expect one cmd.account.select_profile per use with a confirmation first when the account is past its provider's switch point, and expect the card body and Details to dispatch nothing."
-  - "Per-provider auto-switch fixtures cover account over provider over project over global resolution with an inherited default, a one-account provider reading off with its stored value kept, notches only on that provider's meters, blocked switches for missing, estimated, stale, sign-in-required and reset-passed readings, the most-remaining target with priority then id tie-breaks, and one cmd.settings.transaction.preview plus one bound cmd.settings.transaction.apply at scope provider per settled change after which Usage and Settings show the same value, with no Usage-local write."
+  - "Per-provider auto-switch fixtures cover account over provider over project over global resolution with an inherited default, a one-account provider reading off with its stored value kept, notches only on that provider's meters, blocked switches for missing, estimated, stale, sign-in-required and reset-passed readings, the most-remaining target with priority then id tie-breaks, and one cmd.settings.transaction.preview plus one bound cmd.settings.transaction.apply at scope provider, or at scope account with the account id for an account's own switch level (D43, 2026-10-10), per settled change after which Usage and Settings show the same value, with no Usage-local write."
   - "Live / Paused fixtures cover Live by default, the choice remembered across reload, Paused holding the shown projection, the return to Live, and zero commands; checks of stillness at idle run with Live paused, since live beats are the one motion allowed at idle while Live is on."
   - "Size-preset fixtures cover each widget kind's presets in every room that hosts it at 12, 20, 24, and 30 tracks, expecting a complete, sensible tier for every offered preset, every kind's smallest preset complete on 400, 550, and 700 px boards, no row for a preset the board's class or width does not offer, a stage preview without dispatch on row hover or focus, one cmd.widget.resize per choice, and the stored preset_id or null, kept over reload and look change."
   - "Gravity and Tidy fixtures expect one command and one receipt for the whole settled room after a move, resize, preset, hide, or show, a held preview that moves only obstructed peers, a commit equal to the last-painted layout with gravity applied at settle, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } for a Tidy that moves cards, and nothing for a Tidy that moves nothing."

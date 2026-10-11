@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L5377-L5506
+Source lines: L5377-L5509
 
-Source SHA256: `449b238228de750c1964bf4283f7935677a4e79e98094f507a1e1c6443182dad`
+Source SHA256: `ea963f5bde327df3fdffb268efe8ebeb01c6813b9a918ef9a1b96af1208ae907`
 
 ---
 
@@ -37,7 +37,10 @@ canonical_text: >-
   provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
   section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
   the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
-  for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. For each
+  for that provider id (Plans/Settings_System.md#SSYS-044), and neither surface keeps a copy. An account's own
+  switch level is one Settings value the same way: Settings edits it in the account's own rows, and from the owner
+  decision of 2026-10-10 (D43) the Usage Accounts room hosts it on that account's card and in its Details; both
+  edit it through the same pair at scope account for that account id (SSYS-044). For each
   provider: auto-switch acts only while the provider has two or more signed-in accounts, and with one account it
   reads off until a second account is signed in while its stored value is kept, its notch drawn dim on every meter,
   and Usage shows auto-switch controls only where Settings does, for a provider of a kind with accounts that has two
@@ -63,14 +66,14 @@ canonical_text: >-
   section 5 reason codes that holds for the provider, read in the table's order, and the state is derived from those
   codes each time and never stored.
 gui_related: true
-gui_classification_reason: Settings shows and edits each provider's auto-switch, switch point, warning level and rest period; the Usage Accounts room edits the auto-switch and switch point and shows the warning level and rest period read-only, with the notches, status and confirmations.
+gui_classification_reason: Settings shows and edits each provider's auto-switch, switch point, warning level and rest period; the Usage Accounts room edits the auto-switch, the provider's switch point and each account's own switch level, and shows the warning level and rest period read-only, with the notches, status and confirmations.
 depends_on: [MA-036, MA-049, MA-069, SSYS-009, SSYS-018, SSYS-044]
 unblocks: []
 acceptance_criteria:
   - "The four rows resolve, for every provider and account, through one ladder, global, project, provider, account, the most specific set value winning wherever the row has that scope; every one of the four has global, project and provider scopes, and a provider with no value of its own shows and uses the resolved shared value, labelled as the shared value."
   - "An account's own switch level is read and written only as ai.accounts.hard-switch-level at scope account; a stored ai.accounts.account-threshold-override value is carried there once, and no surface reads or writes the retired id afterwards."
   - "Each status state shown equals the state the MA-073 state table derives from the provider's section 5 reason codes, and no status value is stored."
-  - "Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider id, and the other surface shows the new value without a reload, before its next paint; neither surface holds its own copy."
+  - "Changing a provider's auto-switch, switch point, warning level or rest period in Settings, or its auto-switch or switch point on the Usage Accounts room, commits one Settings transaction at scope provider for that provider id, and changing an account's own switch level in Settings, or on its Usage card or in its Details (D43, 2026-10-10), commits one at scope account for that account id; the other surface shows the new value without a reload, before its next paint; neither surface holds its own copy."
   - "Neither surface offers a switch level at or past the warning level that applies at its scope (provider or account), or a warning level at or below its switch level."
   - "A provider with one account shows a dim notch on every meter and no auto-switch controls on Usage or in Settings."
   - "A provider with one signed-in account reads off until a second account is signed in, without changing its stored value; with two or more it acts on its own values only."

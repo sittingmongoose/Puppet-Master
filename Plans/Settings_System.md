@@ -881,8 +881,9 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  cmd.settings.open carries one exact setting_id or manager_id/detail_id target plus the Project and complete owner-target
-  context: Server, Vault, Host, Environment, Client, provider, provider route, thread, operation, topology generation, and
+  cmd.settings.open carries one exact setting_id target, which may also name a provider_id and, inside that provider, an
+  account_id, landing on the row inside that provider's section or that account (SSYS-044's hosted controls), or one
+  exact manager_id/detail_id target, plus the Project and complete owner-target context: Server, Vault, Host, Environment, Client, provider, provider route, thread, operation, topology generation, and
   expected revision, using nullable fields only when that identity is not applicable. The return contract freezes origin
   route, focus, query, scroll anchor, continuation ID/generation, expiry, close policy, and Escape order:
   close_transient, close_details, clear_query, return_to_opener. A stale generation or changed context rejects return and
@@ -896,6 +897,7 @@ depends_on: [SSYS-006, SSYS-014, SSYS-018]
 unblocks: [SSYS-017]
 acceptance_criteria:
   - Setting and manager routes are mutually exclusive and use stable IDs rather than labels or DOM selectors.
+  - A setting target's optional provider_id and account_id are typed fields of the route request; an account_id needs its provider_id, and a setting target without them keeps its meaning.
   - Exact return restores focus, query, and scroll only when continuation generation and context still match.
   - The six route-only UI actions use the frozen manager/detail targets and authorize no owner operation.
   - Visible Back/Close presentation remains host/K3-controlled while the semantic Back/Close/Escape contract is mandatory.
@@ -1218,7 +1220,7 @@ ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractN
 
 ### 4.1 Shell and route integration
 
-Settings opens from Home, Assistant Chat, command palette, natural language, owner remediation, a manager card, or a setting deep link only through `cmd.settings.open` and `pm.settings_route_request.v1`. A target is exactly one `setting_id` or one stable `manager_id` plus optional `detail_id`; visible labels, search text, and DOM selectors are never authority. The exact context always serializes Project, Server, Vault, Host, Environment, Client, provider, provider route, thread, operation, topology generation, and expected revision, using null only when a field is inapplicable.
+Settings opens from Home, Assistant Chat, command palette, natural language, owner remediation, a manager card, or a setting deep link only through `cmd.settings.open` and `pm.settings_route_request.v1`. A target is exactly one `setting_id`, which may also name a `provider_id` and, inside it, an `account_id` (SSYS-019, for SSYS-044's hosted controls), or one stable `manager_id` plus optional `detail_id`; visible labels, search text, and DOM selectors are never authority. The exact context always serializes Project, Server, Vault, Host, Environment, Client, provider, provider route, thread, operation, topology generation, and expected revision, using null only when a field is inapplicable.
 
 `pm.settings_route_return.v1` binds route and continuation IDs/generations and restores focus, query, and scroll only when the origin and exact context still match. Escape runs `close_transient`, `close_details`, `clear_query`, then `return_to_opener`. Visible Back/Close/breadcrumb geometry remains host/K3-controlled; deterministic close, Escape, return, and stale-generation rejection are mandatory semantics.
 
@@ -2937,7 +2939,7 @@ canonical_text: >-
   (Plans/Multi-Account.md#MA-073), and for ai.accounts.hard-switch-level at scope account, one control on each account
   card of such a plate and in that account's Details (owner decision 2026-10-10: account cards get switches); the
   account's control shows the level the account resolves to, says whether that level is the account's own or follows
-  its provider, and offers following the provider again, which clears the account's own value; the provider's
+  its provider (Plans/usage-feature.md#UF-107 says how it shows it), and offers following the provider again, which clears the account's own value; the provider's
   ai.accounts.soft-warning-level and ai.accounts.cooldown-policy are shown there as read values and edited only in
   Settings, reached through Open in Settings. A hosted control is a bound control of the same
   setting, not a copy: it reads the effective value, its scope and whether it is inherited from the Settings
@@ -2954,7 +2956,8 @@ canonical_text: >-
   keeps the provider's hold rules: it stays below the warning level that applies to that account, a level at or past
   that warning level is shown disabled with the reason, and the Settings owner holds or refuses a write that would
   cross them, so a crossed pair is never stored (Plans/Multi-Account.md#MA-073). The hosted control offers
-  Open in Settings through cmd.settings.open with target_type setting, landing on the row inside that provider's
+  Open in Settings through cmd.settings.open with target_type setting, its setting target naming the provider and,
+  for an account's level, the account (SSYS-019), landing on the row inside that provider's
   section, or inside that account for an account's level. The Settings row stays the row's one home for SSYS-040's count; a hosted control is a consumer of it and
   adds no setting key, scope, manager_id, route, detail id or command id.
 gui_related: true
@@ -2968,7 +2971,7 @@ acceptance_criteria:
   - "After an applied change on either surface, Settings and the Usage Accounts room show the same value, inherited, the provider's own or the account's own, without a reload."
   - "An account's hosted switch level shows the level the account resolves to and whether it is the account's own or follows its provider, offers following the provider again as one transaction that clears the account's own value, and offers no level at or past the warning level that applies to that account; the Settings owner holds or refuses a crossing write, so none is stored."
   - "No hosted control writes through a host-side setter, a local store or any path other than the Settings transaction, and none keeps a value of its own."
-  - "Open in Settings dispatches cmd.settings.open with target_type setting and lands on the row inside that provider's section."
+  - "Open in Settings dispatches cmd.settings.open with target_type setting, its setting target naming the provider and, for an account's level, the account, and lands on the row inside that provider's section, or inside that account for an account's level."
   - "No setting key, scope, manager_id, route, detail id or command id is added for hosting."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

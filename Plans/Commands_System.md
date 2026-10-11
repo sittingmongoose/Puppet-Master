@@ -4773,10 +4773,11 @@ canonical_text: >-
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
   dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
   `pm.settings_route_request.v1` target and exact-return identity. The one exception (2026-10-09,
-  Plans/Decision_Log.md#DL-174) is a bound Settings control that the redesigned Usage Accounts room hosts in
-  place, which UF-092 carves out and SSYS-044 owns: each provider's Auto-switch toggle and switch level commit
-  through the Settings owner's cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
-  provider, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
+  Plans/Decision_Log.md#DL-174) is the bound Settings controls that the redesigned Usage Accounts room hosts in
+  place, which UF-092 carves out and SSYS-044 owns and lists: each provider's Auto-switch toggle and switch level
+  at scope provider and, from the owner decision of 2026-10-10 (D43), each account's own switch level at scope
+  account commit through the Settings owner's cmd.settings.transaction.preview and then
+  cmd.settings.transaction.apply, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
   level and rest period included, still dispatches cmd.settings.open. On the same room an account's Use this
   account control dispatches the existing account profile selection command, cmd.account.select_profile, as a
   labelled override; it is an explicit account action, shown only where the provider supports choosing the active
@@ -4792,7 +4793,7 @@ acceptance_criteria:
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
   - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
-  - "Every Usage Settings change dispatches cmd.settings.open except a provider's Auto-switch toggle and switch level on the Accounts room, which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply at scope provider and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
+  - "Every Usage Settings change dispatches cmd.settings.open except the Accounts room's hosted controls SSYS-044 lists, a provider's Auto-switch toggle and switch level at scope provider and an account's own switch level at scope account (D43, 2026-10-10), which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -4859,6 +4860,7 @@ The canonical dispositions are:
 | Usage Tidy and board gravity (redesigned page) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for Tidy; gravity inside the action's own widget command | One settled layout transaction with one receipt; no per-card move and no new command (`Plans/Widget_System.md#WS-019`). |
 | Usage Accounts room Use this account | `cmd.account.select_profile` | Explicit labelled override, shown only where `supports_manual_set_active` holds; never a page-scope pick. |
 | Usage Accounts room provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | The Settings owner's transaction commits the one Settings value; Usage keeps no copy (`Plans/Settings_System.md#SSYS-044`). |
+| Usage Accounts room account switch level (D43, 2026-10-10) | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `account` with the account id | The same transaction commits the account's own Settings value, and following the provider again clears it; Usage keeps no copy (`Plans/Settings_System.md#SSYS-044`). |
 | Context-ring popup/hover summary | local projection (`view_only`) | Opening or hovering the menu does not compact context or open a detail surface. |
 | `Compact Now` | `cmd.chat.compact_context` | Dispatches only after explicit selection. While no `context.compaction.*` Event Authority registration exists, production wiring records the command result/receipt and visible projection state rather than fabricating an event family. |
 | `More Details`, focus, and close | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the shared thread Context Detail Pane; it does not create a Usage route or a second chat-local details store. |
@@ -4892,8 +4894,8 @@ canonical_text: >-
   PM7 command family, second Assistant command path, or rejected provider-management
   command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
   Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
-  switch level reuse the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply at
-  scope provider (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
+  switch level at scope provider and each account's own switch level at scope account (D43, 2026-10-10) reuse
+  the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
   whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
   commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
   take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
@@ -4909,7 +4911,7 @@ acceptance_criteria:
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
   - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
   - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
-  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
+  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level and at scope account for an account's own switch level (D43, 2026-10-10), exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1258-L1345
+Source lines: L1260-L1347
 
-Source SHA256: `59d06d10242be9b0c9e04467151e8d9b32ed951b9a3cec6a5fcee9de69e49c65`
+Source SHA256: `ae16b718354adcfd7a8dee63e240281f64c01b2237781af7018c50a080de0cd3`
 
 ---
 

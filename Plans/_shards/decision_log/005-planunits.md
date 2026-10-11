@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3944-L13447
+Source lines: L3944-L13448
 
-Source SHA256: `2e92922a0c4f8e7d13d38abe4ab70538074418bc88bda05dc32195c21e3b390c`
+Source SHA256: `80a141dc2395c4a463ec8e95dde2141e9ff89a8bf8fddafaeafe39937e053840`
 
 ---
 
@@ -9035,11 +9035,12 @@ canonical_text: >-
   project, provider, account, the most specific set value winning, and a value stored under the retired id is
   carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
   status state is defined by a set of section 5 reason codes, in the MA-073 state table.
-  Owner decision 2026-10-10 (D43): each account of a provider with two or more accounts carries one bound control for
-  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, showing the level the account
-  resolves to and whether it is the account's own or follows its provider, offering following the provider again,
-  committed through the Settings transaction at scope account and held below the warning level that applies to that
-  account; its Open in Settings lands inside that account (SSYS-044).
+  Owner decision 2026-10-10 (D43, "account cards get switches"): each account card carries one bound control for
+  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, shown only on the accounts of
+  a provider with two or more accounts (the reading of those words: a lone account has nothing to switch to),
+  showing the level the account resolves to and whether it is the account's own or follows its provider, offering
+  following the provider again, committed through the Settings transaction at scope account and held below the
+  warning level that applies to that account; its Open in Settings lands inside that account (SSYS-044).
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
