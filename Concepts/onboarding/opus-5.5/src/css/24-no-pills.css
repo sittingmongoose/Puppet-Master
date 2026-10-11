@@ -26,3 +26,6 @@ html[data-theme^="glass"] .title-bar .page-tab-ink {
   background: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 52%, #241450) 100%) !important;
 }
 html[data-theme] .title-bar .search-bar, html[data-theme] .title-bar .pm6-tb-search-wrap .search-bar { border-radius: var(--pm-ctl-r) !important; }
+/* Friendly floats the title bar as a card with its large card corner (20px), which on a 40px bar is a capsule; it takes
+   Glass's floating-bar corner instead, still soft and well under half its height. */
+html[data-theme^="friendly"] .title-bar { border-radius: 14px !important; }
