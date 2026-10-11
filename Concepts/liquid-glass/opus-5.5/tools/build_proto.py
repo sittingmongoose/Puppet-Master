@@ -37,9 +37,12 @@ def main():
                     for w in sorted((PKG / 'src' / 'walls').glob('*.webp')))
     style = f'<style id="lg-css">\nhtml {{\n{vars_}}}\n{css}</style>\n'
     script = f'<script id="lg-js">\n{js}</script>\n'
-    if base.count('</head>') != 1 or base.count('</body>') != 1:
-        sys.exit('base: expected one </head> and one </body>')
-    out = base.replace('</head>', style + '</head>', 1).replace('</body>', script + '</body>', 1)
+    # the page's own scripts can hold '</head>' or '</body>' inside string literals: the document's head ends at the
+    # first one, its body at the last one
+    h, b = base.find('</head>'), base.rfind('</body>')
+    if h < 0 or b < 0 or b < h:
+        sys.exit('base: no </head> before </body>')
+    out = base[:h] + style + base[h:b] + script + base[b:]
     out = out.replace('<html lang="en"', '<html lang="en" data-concept-model="Opus 5.5"', 1)
     p = pathlib.Path(a.out)
     p.parent.mkdir(parents=True, exist_ok=True)
