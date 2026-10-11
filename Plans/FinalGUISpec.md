@@ -31781,20 +31781,22 @@ canonical_text: >-
   keyvalue render as expandable editors that open in place beneath the row. The 824-setting
   inventory's rows resolve across eleven of these renderer types at promotion; the color
   renderer is part of the contract and serves color-typed rows. Rows show badges from the
-  vocabulary restart, adjudication, and new; status pills for ok, needs-setup, and attention
+  vocabulary restart, adjudication, and new; status marks for ok, needs-setup, and attention
   from the derived-status feed; and scope tags from the six scopes global, project, run,
   persona, account, and provider. A row whose scope includes both project and global renders
   an inherit-origin line disclosing that the effective value inherits from the global scope
-  and can be overridden at project scope.
+  and can be overridden at project scope. Amended 2026-10-10 (DL-184, F3-648): a status
+  renders as a mark and a word, the mark in a 1em glyph slot with no container, never a
+  pill; the toggle renderer draws the look's rectangle with a square key, never a capsule.
 gui_related: true
-gui_classification_reason: This unit defines visible setting row control renderers, badge and status pill vocabulary, scope tags, and the inherit-origin line.
+gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
 depends_on: [F3-432, F3-441]
 unblocks: []
 acceptance_criteria:
 - "Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number, text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable editors."
 - "The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer shows working-then-done verb states on invocation."
-- "Rows render badges only from the vocabulary restart, adjudication, and new, and status pills only from ok, needs-setup, and attention."
+- "Rows render badges only from the vocabulary restart, adjudication, and new, and status marks (a mark and a word, no pill) only from ok, needs-setup, and attention."
 - "Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
