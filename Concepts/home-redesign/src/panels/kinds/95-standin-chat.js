@@ -636,6 +636,8 @@ function moreMenu(anchor) {
     floating ? { id: 'dock', label: 'Dock back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); syncPop(); } }
       : { id: 'pop', label: 'Pop out', sub: 'The only way to move the chat', icon: 'popOut', run: function () { PMW.chatCol.popOut(); syncPop(); } },
     { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, run: function () { setPinned(!pinned); } },
+    // D4's pin: the same row as the title bar's Home options, dispatching ui.chat_column.keep_open (46-chat.js)
+    PMW.chatCol.keepOpenRow(),
     { id: 'clear', label: 'Clear what you sent', sub: 'In this thread', icon: 'reopen', disabled: !(S.sent[S.thread] || []).length, run: function () { resetThread(); } }
   ] });
 }

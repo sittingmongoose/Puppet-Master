@@ -49,11 +49,13 @@ registerSettings('editor', {
   'diff.layout': 'auto',
   'wordWrap': false
 });
+/* "Keep the chat open in narrow windows" is not a setting: it is the layout record's chat column keep_open
+   (ui.chat_column.keep_open, 46-chat.js), so no Settings row can show it. A stored 'chat.pinOpen' from before is carried
+   into the record once and dropped (persist.migratePinOpen, 16-persist.js). */
 registerSettings('chat', {
   'width': { type: 'number', min: 400, max: 760, label: 'Chat width' },
-  'history': { type: 'enum', values: ['flyout', 'pinned'], label: 'Thread history' },
-  'pinOpen': { type: 'boolean', label: 'Keep the chat open in narrow windows' }
-}, { 'width': null, 'history': 'flyout', 'pinOpen': false });
+  'history': { type: 'enum', values: ['flyout', 'pinned'], label: 'Thread history' }
+}, { 'width': null, 'history': 'flyout' });
 
 var settings = PMW.settings = PM_HOME.settings = {
   get: function (key) {

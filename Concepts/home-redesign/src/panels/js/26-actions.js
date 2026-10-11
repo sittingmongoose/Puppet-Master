@@ -417,8 +417,11 @@ PMW.applyNamed = function (name, opts) {
   if (!built) return false;
   var res = commit(opts.reset ? CMD.reset : CMD.applyNamed, { name: name }, function (d) {
     built.revision = d.revision;
+    // the chat column is not part of a layout's shape: a named layout or Restore home layout keeps it (keep_open)
+    var chatColumn = d.chat_column;
     for (var k in d) delete d[k];
     Object.assign(d, model.clone(built));
+    if (chatColumn) d.chat_column = model.clone(chatColumn);
     return {};
   });
   if (res.ok) {

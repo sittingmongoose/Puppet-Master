@@ -10,7 +10,8 @@
    row:  { id, label, sub, right, icon, kind (a kind icon), checked (true|false: a check slot), danger, disabled, reason,
            run(info) (info = { alt, row }), alt: { label, icon, run } (the trailing cell: "Open in new panel"),
            links: [{ label, title, run }] (an inline sub-row of plain links), submenu: spec | () => spec,
-           keywords, keepOpen, close(row) (renders a close cell instead of alt; may return a Promise) }
+           keywords, keepOpen, close(row) (renders a close cell instead of alt; may return a Promise),
+           action (the typed action id the row dispatches, written to the item as data-ui-action-id) }
    Keyboard: Up/Down (rows and links in reading order), Home/End, Enter/Space picks, Alt+Enter the trailing cell,
    Right opens a submenu, Left or Escape goes back, Escape closes and returns focus, Tab closes, printable keys go to
    the search field (else type-ahead), Delete on a row with a close cell closes that item.
@@ -121,6 +122,7 @@ menu.open = function (anchor, spec) {
     var main = h('button', { type: 'button', class: 'pmw-mitem pmw-cur' + (r.disabled ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') + (r.submenu ? ' has-sub' : '') + (r.current ? ' is-current' : ''),
       role: r.checked != null ? 'menuitemcheckbox' : 'menuitem', tabindex: '-1' });
     if (r.checked != null) main.setAttribute('aria-checked', r.checked ? 'true' : 'false');
+    if (r.action) main.setAttribute('data-ui-action-id', r.action);
     if (r.disabled) main.setAttribute('aria-disabled', 'true');
     if (r.icon || r.kind) {
       var lead = h('span', { class: 'pmw-mlead' });

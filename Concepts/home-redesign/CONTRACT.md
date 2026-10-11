@@ -68,7 +68,7 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `output` | `output`, `output:<channel>` | one Output tab, the channel is its view state (D31); a channel opened as its own tab from the picker is `output:<channel>`, fixed to that channel |
 | `problems` | `problems` | one per workspace |
 | `ports` | `ports` | one per workspace |
-| `debug-console` | `debug-console` | one Debug Console tab with a sub-tab per debug session; the session on screen is its view state (`state.session`, D33). `PM_HOME.open({ kind: 'debug-console', session })` reveals the tab and switches it. The ids of the old one-tab-per-session shape, `debug-console:<session>`, fold into this tab with that session chosen (section 3, `fold`) |
+| `debug-console` | `debug-console` | one Debug Console tab with a sub-tab per debug session; the session on screen is its view state (`state.session`, D33). The sub-tabs are a tablist in the header row; the chosen one is filled on its own box and never underlined (the lead's ruling of 2026-10-10, DR-069, F3-648, D5): DL-162's tab ink in Basic, Friendly and Glass, Retro's reverse video, NieR's ink block with or without the cursor part, moving in the look's own tab-change voice and instant under Reduced Motion (NUMBERS has the values). `PM_HOME.open({ kind: 'debug-console', session })` reveals the tab and switches it. The ids of the old one-tab-per-session shape, `debug-console:<session>`, fold into this tab with that session chosen (section 3, `fold`) |
 
 Retired, never registered: the chat's Goal tab (`goal-artifact`, DL-147), its lab-only workspaces (`order-export:`,
 `b16-work:`, `b17-work:`, `bsd12:`, `eli5-evidence:`). Activity Detail stays inside the chat (D3) and is not a kind.
@@ -408,6 +408,14 @@ calls `show()`; it never changes the page in front, Enter and Space do the same 
 focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
 and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
 after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and `chat.width` are.
+"Keep the chat open in narrow windows" (D4's pin) is the typed UI action `ui.chat_column.keep_open` (section 8), saved
+in the layout record's chat column as `keep_open` (default false; canon's v2 `chat_column`) and never a Settings row.
+`chatCol.keepOpen()` reads it and `chatCol.setKeepOpen(on)` writes it like view state (no receipt, event or revision);
+`PM_HOME.command('ui.chat_column.keep_open', { keep_open })` is the same (without `keep_open` it toggles). Two menus
+carry it as the same checked row, `chatCol.keepOpenRow()`: the title bar's Home options and the chat's own header menu
+(the stand-in's More today; the 5.6 Pro chat's header menu takes the row at the port). With it on, the narrow ladder never
+folds the chat to its strip. A named layout and Restore home layout keep the chat column; a project switch shows that
+project's own. A stored `chat.pinOpen` setting from before is carried into the record once at boot and dropped.
 Until publish retires Settings' Chat Layout row (the planner's ruling on D3 and D32), a pop out the page asks for
 through `PM_HOME_WORKSPACE.popOutChat` before the person's first press or key (that row's saved Overlay or Detached
 replaying at start) leaves the chat in its column.
@@ -477,8 +485,9 @@ from the row, then Recent. A sub-row that wraps starts its new line with an entr
 Every committed structural change is one command with a receipt and emits the one existing event
 `workspace.layout_changed` (no new event family); an open that only reveals an existing tab emits nothing. Previews
 (hover, drag, menu open, the "+" menu, the "+N" list, panel menus) dispatch nothing; a changed release commits once; a
-failed commit rolls back. Activation and maximize are view state: typed local UI actions (`ui.panel_tab.activate`,
-`ui.workspace_layout.maximize`) with no receipt and no event, written with the layout's view-state block. Names agreed
+failed commit rolls back. Activation, maximize and the chat column's keep-open pin are view state: typed local UI
+actions (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.chat_column.keep_open`) with no receipt and no
+event, written with the layout's view-state block or its chat column. Names agreed
 with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/panels/js/02-commands.js`).
 
 | Command | Args | Notes |
@@ -501,6 +510,7 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 | `cmd.workspace_layout.apply_named` / `.save_named` / `.reset` | `name` | `reset` is "Restore home layout" (`general.startup.reset-home-layout`) |
 | `cmd.workspace_layout.restore` | `source` | a whole saved layout back in one command (the tour's snapshot, `source: 'guided_tour_restore'`); the id still needs the Plans thread's agreement |
 | `cmd.panel.undock` | `'chat'` | the chat's Pop out, its only way to move (D3) |
+| `ui.chat_column.keep_open` | `{ keep_open }` (true or false; without it, a toggle) | view state (no receipt, no event), saved in the layout record's chat column as `keep_open`: "Keep the chat open in narrow windows" (D4's pin), never a Settings row; dispatched by the title bar's Home options and the chat's own header menu (section 6.1) |
 
 `PM_HOME.command_log`, `PM_HOME.receipt_log` and `PM_HOME.event_log` hold the last 200 of each for checks and the tour.
 
@@ -607,7 +617,9 @@ lists. The terminal's parchment and ink are its own CSS under `html[data-o55-nie
 `panels.layout.named`, `panels.tabs.preview` (true), `panels.plus.default` ('menu'), `panels.tabs.sizing` ('shrink'),
 `editor.font.family`, `editor.font.size` (13), `editor.minimap` (true), `editor.stickyScroll` (true),
 `editor.scheme` ('follow', D30; registered by the editor kind), `chat.width` (null = the default for the window),
-`chat.history` ('flyout' or 'pinned'). A pinned History widens the chat column by 240 px (the chat draws it at 200
+`chat.history` ('flyout' or 'pinned'). "Keep the chat open in narrow windows" is not a setting: it is the layout
+record's chat column `keep_open` (`ui.chat_column.keep_open`, section 6.1), so no Settings row can show it; the former
+`chat.pinOpen` key is carried into the record once and dropped. A pinned History widens the chat column by 240 px (the chat draws it at 200
 while its whole column is under 540); `chat.width` and the 400-760 drag range stay the message area's. The widening
 counts in the narrow ladder, the peek (400 plus History) and the popped-out window (440 plus History), and is never
 saved. The terminal's appearance model (D15) lives under `terminal.*`,
@@ -695,3 +707,8 @@ root. A kind never appends its own overlay to `document.body`.
   (rows after a hairline; asked by the terminal for D38). Section 5: `PM_HOME.catalog.remove`. Section 6.1: the D32
   interim guard. A named layout keeps at most 64 KB of dashboard contents (canon); a larger save keeps the layout
   without them and says so.
+- v1.4 (2026-10-10): two rulings of the Plans canon lead. Section 2: the Debug Console's chosen sub-tab is filled on its
+  own box (DL-162's tab ink, Retro's reverse video, NieR's ink block), with no underline. Sections 6.1, 8 and 12: "Keep
+  the chat open in narrow windows" is the typed UI action `ui.chat_column.keep_open`, saved in the layout record's chat
+  column as `keep_open`, dispatched by the title bar's Home options and the chat's own header menu; the `chat.pinOpen`
+  setting is gone (carried over once). Menu rows may carry `action`, written as `data-ui-action-id`.

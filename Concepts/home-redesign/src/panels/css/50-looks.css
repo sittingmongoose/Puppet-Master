@@ -114,6 +114,8 @@ html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-
 html[data-theme="friendly-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-text-3: color-mix(in srgb, var(--text-muted) 55%, var(--text-primary));
   --pmw-tab-inactive: color-mix(in srgb, var(--text-primary) 94%, var(--text-muted));
+  /* the active tab's green read 3.1:1 on its plate (and the Debug Console's chosen sub-tab, 3.2:1 on its fill) */
+  --pmw-tab-active: color-mix(in srgb, var(--accent-lime) 66%, #000);
   --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue)) 62%, #000);
   --pmw-ok: color-mix(in srgb, var(--accent-lime) 62%, #000);
   --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 60%, #000);

@@ -1,7 +1,8 @@
 /* The narrow ladder (D4), keyed on the centre's width C (window minus rail minus chat), never on the window, and never
    saved. Order (Jared: "Rail, then chat"): C < 960 the rail side panel eases to 240 and then folds to its icon bar
    below 760 (it then opens as an overlay), then the chat eases toward its minimum (400); one panel column below 600
-   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user pinned it.
+   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user keeps it open
+   (the layout record's chat column keep_open, ui.chat_column.keep_open, 46-chat.js).
    Each step has 48 px of hysteresis. It measures what is applied now, so theme paddings, resizers and the activity bar
    need no constants. The only file allowed to read the window size (the chat's default width scales with it).
    Pinned History (D3, settings 'chat.history' = 'pinned'): the column grows by the History width instead of squeezing
@@ -130,7 +131,7 @@ narrow.update = function () {
   var m = narrow.measure();
   if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev, m.hist);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -220,8 +221,10 @@ narrow.install = function () {
   var ab = qs('#activityBar');
   if (ab) new MutationObserver(narrow.schedule).observe(ab, { attributes: true, attributeFilter: ['class'] });
   PMW.settings.on('chat.width', narrow.schedule);
-  PMW.settings.on('chat.pinOpen', narrow.schedule);
   PMW.settings.on('chat.history', narrow.schedule);
+  // keep_open lives in the layout record: a project switch or a restored layout can change it (its own action schedules
+  // the ladder itself)
+  bus.on('layout', narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };

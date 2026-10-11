@@ -158,6 +158,30 @@ chatCol.popOutFromPage = function () {
 };
 chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-float')); };
 
+/* Keep the chat open in narrow windows (D4's pin; the lead's ruling of 2026-10-10). It is the typed local UI action
+   ui.chat_column.keep_open, saved in the layout record's chat column as keep_open (default false) and written like view
+   state, with the layout and no receipt, event or revision, as ui.panel_tab.activate is; never a Settings row. With it on
+   the narrow ladder never folds the chat to its strip (44-narrow.js). Two menus carry it as the same checked row,
+   keepOpenRow(), which dispatches the action: the title bar's Home options (49-titlebar.js) and the chat's own header
+   menu (the stand-in's More, kinds/95-standin-chat.js). */
+chatCol.keepOpen = function () { var l = state.layout; return !!(l && l.chat_column && l.chat_column.keep_open); };
+chatCol.setKeepOpen = function (on) {
+  on = !!on;
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (chatCol.keepOpen() === on) return { ok: true, no_change: true, keep_open: on };
+  viewAction(UI.keepChatOpen, function (lay) { lay.chat_column = { keep_open: on }; }, { animate: false });
+  narrow.schedule();
+  announce(on ? 'The chat stays open in narrow windows' : 'The chat folds to a strip in narrow windows');
+  return { ok: true, keep_open: on };
+};
+chatCol.keepOpenRow = function () {
+  var on = chatCol.keepOpen();
+  return { id: 'chat-keep-open', label: 'Keep the chat open in narrow windows', sub: 'Instead of folding to a strip at the edge',
+    action: UI.keepChatOpen, checked: on, run: function () { PM_HOME.command(UI.keepChatOpen, { keep_open: !on }); } };
+};
+/* { keep_open: true | false }; without it the action toggles */
+COMMAND_HANDLERS[UI.keepChatOpen] = function (a) { return chatCol.setKeepOpen(a && typeof a.keep_open === 'boolean' ? a.keep_open : !chatCol.keepOpen()); };
+
 /* the folded chat strip (D4, C < 480): a button opens the chat over the centre until Escape or a click outside */
 function peeking() { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-peek')); }
 chatCol.isPeeking = peeking;

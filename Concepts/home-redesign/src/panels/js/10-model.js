@@ -6,6 +6,7 @@
      root: Node,
      tabs: { <tabId>: { id, kind, label, title, icon, state, pinned, preview, userLabel } },
      view: { focus: <panelId>, maximized: <panelId>|null, mru: [<tabId>] },   // view state (ui.* actions)
+     chat_column: { keep_open: false },                                        // the chat column's view state (ui.chat_column.*)
      closed: [ { tab, panelId, index } ],                                      // reopen stack, newest last
      named: 'home' | 'build' | 'terminals' | 'focus' | <saved name> | null
    }
@@ -30,7 +31,8 @@ model.same = function (a, b) {
   return JSON.stringify(x) === JSON.stringify(y);
 };
 model.empty = function () {
-  return { schema: SCHEMA, revision: 0, seq: 0, root: null, tabs: {}, view: { focus: null, maximized: null, mru: [] }, closed: [], named: null };
+  return { schema: SCHEMA, revision: 0, seq: 0, root: null, tabs: {}, view: { focus: null, maximized: null, mru: [] },
+    chat_column: { keep_open: false }, closed: [], named: null };
 };
 
 function nextId(l, prefix) { l.seq = (l.seq || 0) + 1; return prefix + l.seq; }
@@ -243,6 +245,9 @@ model.setSizes = function (l, splitId, sizes) {
 model.normalize = function (l, opts) {
   opts = opts || {};
   if (!l.view) l.view = { focus: null, maximized: null, mru: [] };
+  // the chat column (canon's v2 chat_column; the concept keeps only keep_open here, D4's pin): a record written before
+  // it existed reads as false, and anything but true is false
+  l.chat_column = { keep_open: !!(l.chat_column && l.chat_column.keep_open === true) };
   if (!l.closed) l.closed = [];
   if (!l.tabs) l.tabs = {};
   var seen = {};

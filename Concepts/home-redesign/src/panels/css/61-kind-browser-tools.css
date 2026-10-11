@@ -408,31 +408,57 @@
   .pmw-tool-acts { grid-area: acts; }
 }
 
-/* Debug Console (D33): one tab, a sub-tab per debug session in the header row. The sub-tabs are the Plan viewer's
-   header toggle grammar (text options whose underline rides the row's hairline), each the session's state dot, its
-   name and its state in words; one underline (.pmw-tool-sind) glides to the chosen one (22-tools.js). The first
-   sub-tab's dot lines up with the console's glyph column. Words go below 460 px of body, names shorten last; the
-   paused-at reference goes below 640 px; the buttons lose their words below 820 px (the row's labelsAt). */
+/* Debug Console (D33): one tab, a sub-tab per debug session in the header row, each the session's state dot, its name
+   and its state in words. The chosen sub-tab is filled on its own box, never underlined (the lead's ruling of
+   2026-10-10: DR-069 and F3-648 count a one-sided coloured line as a side stripe, and D5 bans underline markers). The
+   fill is DL-162's tab ink, the one the rail's tab strips use (Concepts/leftrail-redesign 22-tabs and 90-themes): a
+   tint of the accent with a 1 px ring of it and a small drop shadow in Basic and Friendly, the violet liquid ink in
+   Glass, solid ink in NieR Mode (the ink block, with or without the cursor part); Retro keeps its reverse video. A
+   hover is the quiet hover fill on the same box. Weight and size never change with the choice, so the boxes never
+   move. The fill box is 21 px tall in the 29 px row: the focus ring goes round it with a 1 px gap and still stays
+   inside the row, clear of the fill. One ink (.pmw-tool-sink) carries the fill from box to box on a change
+   (22-tools.js). The row starts 1 px in so the first sub-tab's fill and ring are never clipped, and the first
+   sub-tab's dot still lines up with the console's glyph column. Words go below 460 px of body, names shorten last;
+   the paused-at reference goes below 640 px; the buttons lose their words below 820 px (the row's labelsAt). */
+.pmw-tool-dbg > .pmw-hrow { padding-left: 1px; }
 .pmw-tool-dbg .pmw-hrow-left { align-self: stretch; }
-.pmw-tool-dbg .pmw-hfact[data-id="sessions"] { align-self: stretch; margin-left: -8px; }
-.pmw-tool-stabs { position: relative; display: flex; align-items: stretch; gap: 2px; height: 100%; min-width: 0; }
-.pmw-tool-stab { position: relative; flex: 0 1 auto; min-width: 44px; display: inline-flex; align-items: center; gap: 7px; height: 100%; padding: 0 8px;
-  border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer;
+.pmw-tool-dbg .pmw-hfact[data-id="sessions"] { align-self: stretch; margin-left: 3px; }
+.pmw-tool-stabs { position: relative; display: flex; align-items: stretch; gap: 4px; height: 100%; min-width: 0; padding-right: 3px; }
+.pmw-tool-stab { position: relative; z-index: 1; isolation: isolate; flex: 0 1 auto; min-width: 44px; display: inline-flex; align-items: center; gap: 7px; height: 100%;
+  padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer;
   transition: color var(--pmw-t-fast) var(--pmw-ease); }
-.pmw-tool-stab:hover, .pmw-tool-stab[aria-selected="true"] { color: var(--pmw-text); }
-/* the focus ring sits inside the row, clear of the underline under it */
-.pmw-tool-stab:focus-visible { outline: none; }
-.pmw-tool-stab:focus-visible::before { content: ""; position: absolute; inset: 5px 2px 7px; border-radius: 5px; box-shadow: 0 0 0 2px var(--pmw-focus); pointer-events: none; }
+.pmw-tool-stab:hover { color: var(--pmw-text); }
+/* the chosen name takes the panel tab's own active ink (Friendly's accent, Glass dark's white, Basic's text) */
+.pmw-tool-stab[aria-selected="true"] { color: var(--pmw-tab-active, var(--pmw-text)); }
+/* the fill box (the sub-tab's own) and the ink that moves between boxes share one geometry and one look */
+.pmw-tool-stab::after, .pmw-tool-sink { content: ""; position: absolute; top: 4px; bottom: 4px; border-radius: 6px; pointer-events: none; }
+.pmw-tool-stab::after { z-index: -1; left: 0; right: 0; }
+.pmw-tool-stab:hover:not([aria-selected="true"])::after { background: var(--pmw-hover); }
+.pmw-tool-stab[aria-selected="true"]::after, .pmw-tool-sink {
+  background: color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 16%, var(--surface-elevated, var(--pmw-surface-2)));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 24%, transparent); }
+.pmw-tool-sink { z-index: 0; left: 0; width: 0; display: none; will-change: transform; }
+/* while the ink travels it is the only fill */
+.pmw-tool-stabs[data-moving] > .pmw-tool-sink { display: block; }
+.pmw-tool-stabs[data-moving] > .pmw-tool-stab::after { opacity: 0; }
+/* the focus ring goes round the fill box with a 1 px gap, inside the row */
+.pmw-tool-stab:focus-visible { outline: none; box-shadow: none; }
+.pmw-tool-stab:focus-visible::before { content: ""; position: absolute; top: 1px; bottom: 1px; left: -3px; right: -3px; border: 2px solid var(--pmw-focus);
+  border-radius: 9px; pointer-events: none; }
 .pmw-tool-sname { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 .pmw-tool-sword { flex: none; font-size: 11px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+.pmw-tool-stab[aria-selected="true"] .pmw-tool-sword { color: inherit; opacity: .9; }
 /* the dot sits where the console's glyph column has its marks and the name starts on the console's text column */
 .pmw-tool-sdot { flex: none; width: 7px; height: 7px; margin: 0 3px 0 2.5px; border-radius: 50%; background: currentColor; }
 .pmw-tool-sdot.is-warn { color: var(--pmw-warn); }
 .pmw-tool-sdot.is-ok { color: var(--pmw-ok); }
 .pmw-tool-sdot.is-dim { color: var(--pmw-text-3); }
 .pmw-tool-stab:not([aria-selected="true"]):not(:hover) .pmw-tool-sdot { opacity: .8; }
-/* the underline takes the look's active-tab ink (Friendly's accent, Glass dark's white): it answers the strip */
-.pmw-tool-sind { position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: var(--pmw-tab-active, var(--pmw-text)); transform-origin: 0 0; pointer-events: none; }
+/* light looks: the ink is the raised surface with the accent's ring (DL-162's light ink) */
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-tool-stab[aria-selected="true"]::after,
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-tool-sink {
+  background: var(--surface-elevated, var(--pmw-surface-2));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 30%, transparent); }
 .pmw-tool-dat { flex: none; font-size: inherit; }
 .pmw-tool-dpanes { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .pmw-tool-dpane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
@@ -466,7 +492,7 @@
    above and turned the channel picker into a capsule and every full-width row's hover and focus plate into one. These
    restate each button's own radius at that weight (CONTRACT 13), in Friendly only, so the two-class state rules above
    still win and NieR's square part keeps its square corners. Rows that span the body stay square, as in every look. */
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-tool-stab, button.pmw-br-pbtn,
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-br-pbtn,
   button.pmw-br-tb-signin, button.pmw-br-tb-cta, button.pmw-br-sso-btn) { border-radius: 6px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-file, button.pmw-tool-prow, button.pmw-br-prow, button.pmw-br-ttw) { border-radius: 0; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-flink, button.pmw-br-back) { border-radius: 2px; }
@@ -475,6 +501,17 @@
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-dash-chip { border-radius: 4px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-dash-retry { border-radius: 5px; }
 
+/* Glass: the debug sub-tabs take DL-162's violet liquid ink (a lit top edge inside the fill, a soft violet glow) */
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]::after, html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-tool-sink {
+  background: linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%);
+  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55); }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]::after, html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-tool-sink {
+  background: linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%);
+  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35); }
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { color: #fff; }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { color: #2A1848; }
 /* Glass: no blur layers of our own; the prompt bar and dock stay legible over the panel's frost */
 html[data-theme^="glass"] .pmw-br-prompt { background: color-mix(in srgb, var(--pmw-surface) 96%, transparent); }
 html[data-theme^="glass"] .pmw-br-addr { background: color-mix(in srgb, var(--pmw-surface-2) 88%, transparent); }
@@ -484,14 +521,16 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-addr, .pmw-br-pr
   .pmw-tool-chan, .pmw-tool-btn) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-dbody, .pmw-tool-list, .pmw-tool-ptable, .pmw-tool-count, .pmw-tool-stab, .pmw-tool-chan) { font-family: var(--pm-font-code); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sdot { border-radius: 0; }
-/* the debug sub-tabs: the chosen session is the reverse-video cell (no underline), a hover lights the name */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab { border-radius: 0; }
+/* the debug sub-tabs: the chosen session is the reverse-video cell on the fill box (square, no shadow), a hover lights
+   the name; it changes in one step, as Retro's tabs snap */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab::after, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:focus-visible::before { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:hover { color: var(--accent-lime); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { background: var(--accent-lime); color: var(--surface); }
+/* light Retro's phosphor green read 3.7:1 as a hovered name on its tint: the same green, darker */
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-tool-stab:hover:not([aria-selected="true"]) { color: color-mix(in srgb, var(--accent-lime) 72%, #000); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:hover:not([aria-selected="true"])::after { background: color-mix(in srgb, var(--accent-lime) 14%, transparent); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]::after { background: var(--accent-lime); box-shadow: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--surface); opacity: 1; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:focus-visible::before { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sind { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap:not(.is-refused), .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) {
   background: var(--accent-lime); color: var(--surface); outline: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap, .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark, .pmw-br-ttag, .pmw-br-tattr, .pmw-br-ttext) {
@@ -509,13 +548,16 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-view.is-loading::aft
 
 /* NieR: ink and parchment, square corners, no glow; small headers go uppercase with the headers part */
 html[data-o55-nier="on"] :is(.pmw-br-addr, .pmw-br-prompt, .pmw-br-pbtn, .pmw-br-tpick, .pmw-br-cap, .pmw-br-thumb, .pmw-br-hltag, .pmw-br-rhint, .pmw-br-rsize, .pmw-tool-chan, .pmw-tool-btn, .pmw-tool-sdot) { border-radius: 0; }
-/* the debug sub-tabs: ink underline; with the cursor part the chosen session is the ink block (the selected item) */
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab::before { border-radius: 0; }
-html[data-o55-nier="on"] .pmw-tool-sind { background: var(--o55-nier-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--o55-nier-on-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-sind { display: none; }
+/* the debug sub-tabs: the chosen session is filled with ink on its own box (DL-162's NieR tab ink, the ink block of the
+   cursor part), paper words, no shadow; square corners with the square part. A hover is the NieR hover tint with or
+   without the cursor part, as on the panel's own tabs, so the ink block is only ever the chosen session (an inked
+   hover read as a second chosen sub-tab). The change is a cut and the words change with it (no fade). */
+html[data-o55-nier="on"] .pmw-tool-stab { transition: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab::after, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab::before { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-tool-stab:hover:not([aria-selected="true"])::after { background: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10)); }
+html[data-o55-nier="on"] .pmw-tool-stab[aria-selected="true"] { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-tool-stab[aria-selected="true"]::after { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
 /* The session names shorten last in every look (the dot keeps the state when the words go). The headers part sets the
    row in spaced capitals, about a third wider, so in NieR the words go below 600 px of body (not 460), the paused-at
    reference below 680 (not 640) and the buttons' words below 920 (not the row's 820); Retro's code face and Friendly's

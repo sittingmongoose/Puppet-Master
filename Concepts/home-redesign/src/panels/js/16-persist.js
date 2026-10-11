@@ -97,6 +97,37 @@ var persist = PMW.persist = {
   },
   clear: function () { store.remove(persist.key()); },
 
+  /* 'chat.pinOpen' was a panels setting until 2026-10-10; "Keep the chat open in narrow windows" is now the layout
+     record's chat column keep_open (ui.chat_column.keep_open, 46-chat.js). Once, at boot: a stored true is carried into
+     this project's layout and into every other project's saved layout (the setting was one for all projects), and only
+     when this project's layout is written is the setting dropped from pm.home.settings:v1, so it cannot be carried
+     twice and is never lost to a failed write. A stored false is just dropped. Returns whether a true was carried. */
+  migratePinOpen: function () {
+    var KEY = 'chat.pinOpen';
+    if (!Object.prototype.hasOwnProperty.call(settingsValues, KEY)) return false;
+    var on = settingsValues[KEY] === true;
+    if (on && state.layout) {
+      // this project's unreadable record could not be set aside yet, so it is not written now: carry the pin next time
+      if (pendingQuarantine) return false;
+      state.layout.chat_column = { keep_open: true };
+      try {
+        var keys = [];
+        for (var i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+        keys.forEach(function (k) {
+          if (!k || k.indexOf(LAYOUT_KEY_PREFIX) !== 0 || k === persist.key()) return;
+          var rec = store.get(k);
+          if (!rec || !rec.layout || rec.layout.schema !== model.SCHEMA) return;
+          if (rec.layout.chat_column && rec.layout.chat_column.keep_open === true) return;
+          rec.layout.chat_column = { keep_open: true };
+          store.set(k, rec);
+        });
+      } catch (_) {}
+      if (!persist.save()) return false;
+    }
+    settings.set(KEY, null);
+    return on;
+  },
+
   /* Saved named layouts name their tabs by id (14-layouts.js, SAVED_KEY): an id a kind folds now
      (debug-console:<session>, D33) is rewritten, once at boot, to the one tab it names, so that tab still goes back to
      its own panel and stays the panel's active tab when the layout is applied. Returns whether anything was rewritten. */
