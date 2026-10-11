@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43516-L43700
+Source lines: L43519-L43703
 
-Source SHA256: `c4e0648fec475fbf84ad37a492f8a1e09a8c7d0f4b0d6a3f72e2086826b6d73e`
+Source SHA256: `a74986e6892dde6385ca5587566b89db5e9ec99007f0e9aba901aa643e3c7d26`
 
 ---
 
@@ -110,7 +110,7 @@ canonical_text: >-
   The five Jujutsu views (F3-623, DL-163) use two-line rows: line 1 the name with a file letter, an age or a diff at
   its end, and line 2 the state glyph and word (F3-619) and then the facts, left-aligned under the name. Raw commit,
   operation and workspace IDs appear only in a Technical details disclosure in the expanded row (JJI section 4.1);
-  whether a change's short change ID may also show on line 2 is an open owner question (DL-163). Every dropdown is
+  a change's short change ID also shows on line 2, the owner's choice of 2026-10-10 (DL-163). Every dropdown is
   the chat picker (F3-621). Changes shows the current change @ first: its description or "No description yet",
   its state (conflicted, empty, on an older main, divergent), a note offering Rebase onto main when main has moved,
   a description box with Describe, then New change as the primary action, Squash, and More with Rebase onto…,

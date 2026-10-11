@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4290-L14428
+Source lines: L4293-L14434
 
-Source SHA256: `993739b8f0606084ee4783a7bd5d6db92aa740ccd4f1572a87dd72e7b63a9292`
+Source SHA256: `691632bad3b0c6b350b78e1e75516740082b4c16a55cb4f03f8f341a9ddb991e`
 
 ---
 
@@ -8832,8 +8832,11 @@ canonical_text: >-
   Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
   under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
   dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
-  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
-  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  grammar in one owner. The owner answered its two open questions on 2026-10-10, one set of status marks (F3-585's
+  and the rail's) and some frost back on the plates, and the glyph and Liquid Glass design threads carry them; his
+  other answers that day are in the concept: the worktree Owner filter takes several owners (W-075), Current Branch
+  leads Actions & Pipelines (GI-011), the binding picker shows only with several bindings (F3-528) and an expired
+  artifact reads Expired (F3-619). Settled later
   under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
   owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
   More tray as the chat picker (F3-625).
@@ -8901,8 +8904,8 @@ canonical_text: >-
   bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
   strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
   Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
-  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
-  ID shows on its row and whether to keep "Operation Log".
+  workspace and what Undo reverts after an automatic working-copy save. The owner answered his two on 2026-10-10:
+  a change's short change ID shows on its row (JJI section 4.1 and F3-624 amended) and "Operation Log" stays.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
 split_recommended: false
@@ -8911,7 +8914,7 @@ unblocks: [F3-623, F3-624]
 acceptance_criteria:
   - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
   - "No command, action, schema value or wiring row is added by this decision."
-  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+  - "The owner's question, the two choices left to him and his answers of 2026-10-10 are recorded in plain words with their source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

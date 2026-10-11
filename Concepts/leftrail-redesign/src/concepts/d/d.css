@@ -731,6 +731,45 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select .d-select-v { color: var(--d-text); font-weight: 600; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select > .pmr-ico:last-child { margin-left: auto; width: 12px; height: 12px; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .d-select.is-menu-open > .pmr-ico:last-child { transform: rotate(180deg); }
+/* a menu of several choices at once (PMR.menu multi: the Owner filter) gives every choice a check box, so it reads as
+   "pick any" before the first pick. A pick fills the box in the look's own time and then draws its check: Basic and
+   Glass fill from the centre, Friendly's box springs, Retro fills and prints in steps, NieR wipes its ink in from the
+   left; under Reduced Motion the box and its check fade in place. NieR's box takes its row's own ink (a chosen or
+   hovered row is inverted), so it reads on paper and on the ink bar alike. */
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  display: inline-grid; place-items: center; width: 14px; height: 14px; box-sizing: border-box; opacity: 1;
+  border: 1.5px solid var(--d-text-3); border-radius: min(var(--d-r), 3px); color: var(--d-on-accent);
+  background: linear-gradient(var(--accent-primary), var(--accent-primary)) no-repeat center / 0% 0%;
+  transition: background-size var(--d-t2) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-size: 100% 100%; border-color: var(--accent-primary); }
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck svg { width: 10px; height: 10px; overflow: visible; }
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-width: 3; stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset var(--d-t1) var(--d-ease); }
+[data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
+[data-rail-skin="d"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { animation: d-bump var(--d-t3) var(--d-spring); }
+[data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  color: inherit; border-color: color-mix(in srgb, currentColor 62%, transparent);
+  background-image: linear-gradient(currentColor, currentColor); background-position: left center; background-size: 0% 100%;
+}
+[data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { border-color: currentColor; background-size: 100% 100%; }
+[data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke: var(--o55-nier-ink); }
+[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  background-image: none; background-color: transparent; animation: none;
+  transition: background-color 140ms linear, border-color 140ms linear;
+}
+[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
+[data-rail-skin="d"][data-o55-nier="on"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck, [data-rail-skin="d"][data-o55-nier="on"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
+[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path {
+  stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear;
+}
+[data-rail-skin="d"][data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path, [data-rail-skin="d"][data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck { background-image: none; animation: none; transition: background-color 140ms linear, border-color 140ms linear; }
+  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
+  [data-rail-skin="d"][data-o55-nier="on"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
+  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear; }
+  [data-rail-skin="d"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+}
 
 /* button rows: equal columns that fold to one column instead of shortening words */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.pm-eqrow, .pm-btnrow) { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin: var(--d-g) 0 0 !important; }
@@ -1860,7 +1899,7 @@
 [data-rail-skin="d"] #panel-git .pm7-automation-context-main > .pm7-context-title {
   font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; letter-spacing: 0; text-transform: none;
 }
-[data-rail-skin="d"] #panel-git .pm7-automation-select.d-hidden { display: none !important; }
+[data-rail-skin="d"] #panel-git :is(.pm7-automation-select, .pm7-automation-context-main).d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-git .d-e-service { font-family: var(--body-font) !important; font-size: var(--d-fs-name) !important; font-weight: 600 !important; padding: 4px 8px !important; }
 [data-rail-skin="d"] #panel-git .d-e-service > .d-select-v { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 [data-rail-skin="d"] #panel-git .pm7-automation-common { display: grid !important; grid-template-columns: max-content minmax(0, 1fr); gap: 1px 8px !important; align-items: baseline; padding: 0 1px; }

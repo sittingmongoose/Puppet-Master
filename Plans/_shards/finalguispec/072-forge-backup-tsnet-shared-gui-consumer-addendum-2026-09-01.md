@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36856-L36944
+Source lines: L36856-L36946
 
-Source SHA256: `c4e0648fec475fbf84ad37a492f8a1e09a8c7d0f4b0d6a3f72e2086826b6d73e`
+Source SHA256: `a74986e6892dde6385ca5587566b89db5e9ec99007f0e9aba901aa643e3c7d26`
 
 ---
 
@@ -31,7 +31,9 @@ canonical_text: >-
   Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
   Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
   service that opens the chat picker (F3-621), never a native select; picking runs
-  ui.repository_automation.binding.select and changes nothing else.
+  ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
+  field shows only when the project has several bindings; with one, the rail names the service as a fact beside
+  the revision (owner, 2026-10-10).
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
