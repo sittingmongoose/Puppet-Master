@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3397-L3896
+Source lines: L3420-L3936
 
-Source SHA256: `fef6c1c17802f543c0abaf13deb262b81c43b0da0f4423c8521c3d0176744df4`
+Source SHA256: `42728733152ab43044573b47f71b7786b83f9ef829f311046dca8f1541bb0082`
 
 ---
 
@@ -41,16 +41,23 @@ canonical_text: >-
   panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons stays inside the
   boundary of the shell's one hover grammar: no magnet, light or glow, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
   2026-08-04 Home owner boundary for panel and tab presentation.
+  Amended 2026-10-10 (DL-187): the Debug Console is one tab whose debug sessions are switched inside it by session
+  sub-tabs (D33), the way Output switches its channel inside its one tab: which session shows is view state, never a
+  panel tab, never in the strip and never a second tab model, and the row that switches it is the kind's own row,
+  recorded by its owner units (F3-635, F3-490). The terminal's sub-tabs stay retired. Terminal tabs carry no colour
+  or icon of the person's choosing on the strip until the neon glyph system redesigns them (D34); every tab keeps its
+  kind's bundled icon.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-631, F3-632, F3-633, F3-635]
+depends_on: [DL-180, DL-187, F3-630, F3-631, F3-632, F3-633, F3-635]
 unblocks: []
 acceptance_criteria:
   - "No tab kind or panel owner defines its own tab strip, tab overflow, \"+\" button, menu button, panel menu or header row, and every kind-specific row is justified in its owner unit."
   - "The dashboard, the terminal and the browser are tab kinds of F3-630's one panel model, with no second panel model, layout record, strip or placement rule."
   - "Every tab state mark comes from the one status set of F3-585 and every kind icon is a bundled SVG icon_id."
   - "One keyboard table and one web-client mapping rule serve every panel; no kind redefines a panel key."
+  - "Amended 2026-10-10 (DL-187): the Debug Console's session sub-tabs switch a view inside its one tab and never act as panel tabs; no terminal tab shows a colour or icon of the person's choosing on the strip."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -79,12 +86,15 @@ negative_constraints:
   - "Do not give a tab kind its own strip, overflow, \"+\" or menu button, panel menu or header row."
   - "Do not build a second panel model, layout store or placement rule for the dashboard, the terminal or the browser."
   - "Do not add a tab status glyph outside the one status set or a kind icon outside the bundled icon registry."
+  - "Do not make a debug session its own panel tab or draw its sub-tabs as a second tab strip."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187): the Debug Console's session sub-tabs (D33) are view state inside its one tab, and terminal tab colours and icons stay off the strip (D34)."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
 
 ### DR-066 - One Gesture Kit For Panels And The Usage Board
 
@@ -111,16 +121,21 @@ canonical_text: >-
   (DR-058) and how panel previews look stays F3-630's and F3-647's. Under Reduced Motion every part of the kit is
   instant and every close path still works. This replaces the 2026-08-04 Home owner boundary's sentence that U10's
   interaction behaviour is "a reusable interaction vocabulary only".
+  Amended 2026-10-10 (DL-186): every dashboard tab's board is a board of the one Usage board engine (WS-030), so the
+  board's resolver, gravity, Tidy and previews are one and the same on the Usage page and on every dashboard
+  (WS-019): no dashboard keeps a settlement, gravity or resize rule of its own, and one widget gesture at a time
+  holds across every board on the page, a gesture started on one board ending any still running on another.
 gui_related: true
 gui_classification_reason: "Fixes one gesture kit for moving panels, tabs and Usage widgets."
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-503, WS-019]
+depends_on: [DL-180, DL-186, F3-630, F3-503, WS-019]
 unblocks: []
 acceptance_criteria:
   - "The panel split tree and the Usage widget board run one gesture kit; neither keeps its own pointer controller, preview transaction, keyboard move path or announcement scheme."
   - "No preview dispatches a command, writes storage or emits an event; a changed release commits one owner command and a cancel restores the exact earlier picture."
   - "The snapping widget grid lays out widgets only, and in the home centre only inside dashboard tabs; no panel is placed on widget tracks."
   - "The Home layout record holds no widget command, widget order, widget geometry or Dashboard widget state."
+  - "Amended 2026-10-10 (DL-186): gravity, Tidy and the move and resize previews are the same on every dashboard board as on the Usage page, no dashboard keeps its own settlement, and at most one widget gesture runs on the page at a time."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -151,8 +166,10 @@ negative_constraints:
   - "Do not build a second gesture controller, preview transaction or keyboard move path for panels or for widgets."
   - "Do not lay out panels on the widget grid or widgets in the split tree."
   - "Do not write widget layout into the Home record or panel layout into a widget board."
+  - "Do not keep a second board engine, or a dashboard-only settlement, gravity or resize rule."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L13): Lost pointer capture cancels a gesture and restores the earlier picture without a commit."
+  - "Amended 2026-10-10 (DL-186): dashboards run the one Usage board engine, so its gravity, Tidy and previews are the same on every board."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
@@ -280,7 +297,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15, D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
@@ -299,7 +316,7 @@ negative_constraints:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project default through the Settings transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default; no surface writes an app-wide value until q-035."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

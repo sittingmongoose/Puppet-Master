@@ -344,9 +344,9 @@
     "cmd.editor.open_panel": "2026-10-09 (DL-180, DL-181): retired (UCC-200, CS-101): a panel is created by cmd.workspace_layout.split or by an open with where=panel; there are no fixed editor panel slots. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.editor.close_panel": "2026-10-09 (DL-180, DL-181): retired (UCC-200, CS-101): replaced by cmd.workspace_layout.close_panel. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.browser.devtools.open": "2026-10-09 (DL-180, DL-181): alias of cmd.browser.open_devtools (UCC-202); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
-    "cmd.dashboard.add_widget": "2026-10-09 (DL-180, DL-181): alias of cmd.widget.add addressed by board_id inside a dashboard tab (UCC-202, WS-030); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
+    "cmd.dashboard.add_widget": "2026-10-09 (DL-180, DL-181): alias of cmd.widget.add naming the board in its existing room field inside a dashboard tab (UCC-202, WS-030; amended 2026-10-10, DL-186: it read addressed by board_id); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.terminal.focus_session": "2026-10-09 (DL-180, DL-181): alias of cmd.terminal.focus (UCC-202); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.workspace_layout.size_surface": "2026-10-09 (DL-180, DL-181): concept-only preset alias that normalizes to cmd.workspace_layout.resize_surface after preset resolution (CS-068, CS-101); never a primary command. Listed here so the catalog's lineage mention needs no production row of its own."
   },
-  "updated_at_utc": "2026-10-10T21:30:00+00:00"
+  "updated_at_utc": "2026-10-10T23:59:00+00:00"
 }

@@ -2,15 +2,17 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3597-L3680
+Source lines: L3597-L3685
 
-Source SHA256: `b7bd5779fad4d78c52e369ea8f6cf747ff65d613c699ffab85c40a391e054683`
+Source SHA256: `8772b2d696177a79dbb77d016a5e3f1d8c1ec0aef2150ce77ee1487022d812e2`
 
 ---
 
 ## PMConcept7 Home Workspace event contracts — 2026-08-04
 
-Amended 2026-10-09 (DL-180, DL-181): `workspace.layout_changed` moves to the 2.0.0 payload of CV-361 once Event Authority admits it (until then the registered family stays 1.1.0 and 2.0.0 is `requires_central_adjudication`), whose `change` names each committed structural change of the v2 Home layout (SP-330); the 1.1.0 payload described below stays readable through its compatibility reader. `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule: no producer writes it, and moving a terminal tab is a `tab_moved` that keeps its session. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. Home commands carry panel, tab and split ids where they used surface and workgroup ids. The receipt outcomes below (`applied`, `no_change`, `cancelled`, `failed` with `rolled_back=true`) stand unchanged.
+Amended 2026-10-09 (DL-180, DL-181): `workspace.layout_changed` moves to the 2.0.0 payload of CV-361, whose `change` names each committed structural change of the v2 Home layout (SP-330); the 1.1.0 payload described below stays readable through its compatibility reader. `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule: no producer writes it, and moving a terminal tab is a `tab_moved` that keeps its session. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. Home commands carry panel, tab and split ids where they used surface and workgroup ids. The receipt outcomes below (`applied`, `no_change`, `cancelled`, `failed` with `rolled_back=true`) stand unchanged.
+
+Amended 2026-10-10 (DL-188): Jared approved the Event Authority checkpoint on 2026-10-10 (D42, "approved"), so `Plans/event_family_registry.json` registers `workspace.layout_changed` at family revision 2.0.0 (registry revision `2026-10-09.1`, still 43 families) and every new event carries the 2.0.0 payload. The paragraph above said the move waited for that admission ("once Event Authority admits it (until then the registered family stays 1.1.0 and 2.0.0 is `requires_central_adjudication`)"); that wait is over.
 
 The existing `UICommand` and `EventRecord` envelopes remain canonical. Home
 commands carry `project_id`, `workspace_tab_id` where applicable, a stable
@@ -56,7 +58,8 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Home leaf actions bind the canonical UICommand envelope to precise applied, no_change, cancelled, disabled-before-dispatch, and failed-rollback outcomes; workspace.layout_changed and terminal.workgroup_moved carry exact identity, revision, host, insertion, correlation, and persistence truth without fabricated command-applied events.
-  Amended 2026-10-09 (DL-180, DL-181): once Event Authority admits it, new workspace.layout_changed events use CV-361's 2.0.0 payload, whose change names the structural change and whose id lists name the panels, tabs and splits it touched, in place of the host, slot and insertion fields; terminal.workgroup_moved is withdrawn under SMPFS-170's rule and has no producer; the receipt outcomes stand unchanged.
+  Amended 2026-10-09 (DL-180, DL-181): new workspace.layout_changed events use CV-361's 2.0.0 payload, whose change names the structural change and whose id lists name the panels, tabs and splits it touched, in place of the host, slot and insertion fields; terminal.workgroup_moved is withdrawn under SMPFS-170's rule and has no producer; the receipt outcomes stand unchanged.
+  Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (Jared's D42), so it is the registered family revision and the earlier "once Event Authority admits it" condition is met.
 gui_related: true
 gui_classification_reason: The contract drives visible Home success, disabled, cancellation, failure, and recovery projections.
 split_recommended: false
@@ -82,6 +85,7 @@ node_compile_hint:
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
 - Plans/Decision_Log.md#DL-180 and #DL-181 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)
+- Plans/Decision_Log.md#DL-188 (amendment of 2026-10-10; cited here for the same reason, since DL-188 depends on DL-180)
 preserved_exact_tokens: [workspace.layout_changed, terminal.workgroup_moved, persisted=true, no_change, rolled_back=true]
 negative_constraints:
 - Do not emit generated or fabricated command-applied events.
@@ -90,5 +94,6 @@ compatibility_only_notes:
 - The 1.1.0 workspace.layout_changed payload and terminal.workgroup_moved 1.0.0 stay readable for events already written.
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180, DL-181): the payload moves to CV-361's 2.0.0 once Event Authority admits it, and terminal.workgroup_moved is withdrawn."
+- "Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the admission condition in the canonical text is met and removed."
 owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-plan.md]
 ```

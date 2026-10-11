@@ -2,15 +2,17 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45288-L46060
+Source lines: L45641-L46472
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
 ## DL-181 to DL-183 — The Terminal As A Tab: Chrome, Features, Appearance, Effects, Fonts, Images And Agents (2026-10-09)
 
 This addendum compiles the owner decisions DL-181 (the terminal rebuilt as one session per tab, its chrome, what it helps you do, and agents and people sharing a terminal), DL-182 (images) and DL-183 (schemes, backgrounds, effects and fonts), with the lead rulings those cards record. The terminal is one tab kind of F3-635 and lives in the panels of F3-630; its session model is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, and its engine stays DL-035's own (SMPFS-184). The units below own the terminal tab's presentation only. They supersede F3-062 (the bottom runtime workgroup strip) and F3-450 (the four-pane split guard), and retire the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064, Appendix B's locked decision 12, the section 16 "4-split terminal" mapping and section 7.4.1's quadrant and explanations wording. They amend F3-065, F3-083, F3-120, F3-121, F3-194, F3-221, F3-226, F3-228, F3-245, F3-431, F3-449, F3-544, F3-546, F3-549 and the DL-035 consumer preamble. F3-193, F3-216, F3-238, F3-249, F3-357 to F3-361, F3-372, F3-412 to F3-416, F3-545, F3-547, F3-548, F3-582 and F3-583 stand unchanged. The rules stay with their owners: SMPFS-181 (image protocols, hardening and quotas), SMPFS-182 (agents and people), SMPFS-183 (marks, links, find, copy mode, progress, the bell, IME and the accessible buffer), SP-331 and SP-332 (storage), SSYS-051 (the Settings rows), UCC-201 (the commands) and DR-068 (one appearance model). General code text across the app stays with DL-161, F3-426 and F3-430. The terminal concept (branch `concept/home-terminal-20261009`, its SPEC and its architecture) is source lineage only: its class names, data attributes, script globals, settings keys, storage keys and harness hooks are not canon.
+
+Amended 2026-10-10 (DL-187): F3-640 and F3-641 add a program's notifications and the per-terminal mute (D38), the installed shells and SSH hosts under New terminal (D39), no terminal tab colours or icons (D34) and the restore notice's left-out secrets (D36), and F3-644 follows terminal SPEC 01c5e78c42 section 4 (every face the page's own, its script slices and its italics). F3-646 was checked against that SPEC's section 8, which did not change.
 
 ### F3-640 — The Terminal Tab's Chrome
 
@@ -29,7 +31,9 @@ canonical_text: >-
   folder. A failed last command adds its exit code after the label, a terminal an agent is driving shows the 7 px
   square agent mark, and a running process shows the static busy mark, all from the strip's one mark set (F3-631,
   DL-141). The hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
-  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. Under the
+  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. No colour
+  or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab colours and icons wait for their
+  redesign within Puppet Master's neon glyph system (F3-449, F3-631). Under the
   strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px tall, 24 px targets,
   12 px text and 11 px for secondary facts, labels when the tab body is at least 520 px wide and icons with hover tags
   below that, and the row hidden when the body is under 150 px tall. Its left side shows the folder in the code face
@@ -49,7 +53,13 @@ canonical_text: >-
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
-  ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
+  ended when the tab closed; this is a new session.". When well-known secrets were left out of the saved copy
+  (D36; the saved copy and its scrub are SP-332's), the notice ends "N secrets were left out of the saved copy.", and in
+  the restored lines each left-out secret reads `[API key · not saved]` (or token, secret or private key) in its own
+  cells, followed by blank cells, or `•` where the secret was shorter than that label, so the line keeps its width and
+  every mark and image stays where it was; a private key keeps its BEGIN and END lines, its first body line carrying
+  the label and the rest of its body empty. The live screen never shows these labels: it keeps what the program
+  printed. A command still running when the earlier session ended comes
   back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
   loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
   when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
@@ -62,8 +72,10 @@ canonical_text: >-
   tall and in the alternate screen. The More menu, in order: New terminal (a submenu of the shell profiles and SSH
   hosts), Split down, a hairline, Appearance..., Text size (Bigger, Smaller, Reset), a hairline, Copy mode, Quick
   select, Select all, Clear, Clear scrollback, Plain-text buffer, a hairline, Agent input (Ask each time, then one
-  row per agent allowed in this terminal, each of which revokes that agent's grant), Send signal (Interrupt SIGINT,
-  Terminate SIGTERM, Kill SIGKILL), Restart session. The screen's context menu opens on a right click, or a
+  row per agent allowed in this terminal, each of which revokes that agent's grant), Mute notifications (a check,
+  absent where the platform has no system notifications; F3-641), Send signal (Interrupt SIGINT, Terminate SIGTERM,
+  Kill SIGKILL), Restart session. New terminal's submenu lists the installed shells, then, after a hairline, SSH
+  hosts, a submenu of the hosts (D39). The tab's menu ends, after a hairline, with Mute notifications too (F3-631). The screen's context menu opens on a right click, or a
   Shift+right click while a program reports the mouse: Open in editor and Copy path on a file reference, Open link
   and Copy link on a URL, then Copy, Paste, Select all, Find and Clear. The command-mark menu opens on a click on a
   gutter glyph: a header row with the command, its state, its duration and who typed it ("You typed this" or
@@ -86,7 +98,8 @@ canonical_text: >-
   belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and Clear scrollback
   `cmd.terminal.clear_scrollback`; Appearance... opens the Appearance popover (F3-642); Find, Copy mode, Quick
   select, Plain-text buffer and Text size are the typed local actions `ui.terminal.find`, `ui.terminal.copy_mode`,
-  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; the command-mark items are
+  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; Mute notifications is the typed local
+  action `ui.terminal.mute_notifications`, that tab's own state with no command (F3-641); the command-mark items are
   `ui.terminal.mark.copy_command`, `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the
   catalogue's rerun command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
   `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all, Clear, Send
@@ -98,7 +111,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
-depends_on: [DL-181, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
+depends_on: [DL-181, DL-187, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
 unblocks: [F3-641, F3-646, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every terminal tab holds one session; Split opens a new panel with a new terminal in the same folder and shell profile, and no terminal tab draws a split, section, workgroup, sub-tab or bottom bar."
@@ -111,6 +124,9 @@ acceptance_criteria:
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
   - "Alt+PageUp and Alt+PageDown reach the host from a focused terminal, F6 and Shift+F6 reach the host before the terminal sees them, and the host acts on no key during IME composition."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
+  - "No terminal tab shows a colour or an icon the person chose."
+  - "Mute notifications shows in the More menu between Agent input and Send signal and at the end of the tab's menu after a hairline, and is absent where the platform has no system notifications; New terminal lists the installed shells and, after a hairline, the SSH hosts submenu."
+  - "A restored terminal whose saved copy left secrets out shows each label in the secret's own cells with the line's width, marks and images unchanged, and its notice ends with the count; the live screen never shows the labels."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -132,6 +148,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3 to 5 and 9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36, D38, D39)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1, 2 and 7 (concept lineage only)"
 preserved_exact_tokens:
   - "terminal:<session>"
   - "<process> · <folder>"
@@ -149,6 +168,10 @@ preserved_exact_tokens:
   - "Open output in an editor tab"
   - "ui.terminal.find"
   - "cmd.terminal.clear_scrollback"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "N secrets were left out of the saved copy."
+  - "[API key · not saved]"
 negative_constraints:
   - "Do not draw a bottom bar, an in-tab split, a section, a workgroup or a sub-tab in a terminal tab."
   - "Do not show a session id, tab id or nonce as text."
@@ -162,13 +185,14 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
   - "Amended 2026-10-10 (lead ruling L14, review): The general restore sentence names the SSH-host exception in place, so only a local-profile tab starts its new session at once."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
+  - "Amended 2026-10-10 (DL-187; terminal SPEC 01c5e78c42): no tab colour or icon (D34); Mute notifications in the More menu and the tab menu (D38); installed shells and an SSH hosts submenu under New terminal (D39); the restore notice's secrets count and the left-out secret labels (D36)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
   - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/DRY_Rules.md#DR-067
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/storage-plan.md#SP-332
 
 ### F3-641 — What The Terminal Helps You Do
 
@@ -202,7 +226,17 @@ canonical_text: >-
   copies its text, Shift with the label inserts it at the prompt, Alt with the label opens it, and Esc cancels.
   Terminals you are not in are dimmed by their look (F3-643). Progress a program reports with OSC 9;4 shows inside
   its own tab as advisory progress that completes nothing (F3-546). The visual bell, when the bell setting asks for
-  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Input methods
+  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Notifications (D38,
+  DL-187): a notification a program sends (OSC 9, OSC 777 `notify` or OSC 99; OSC 9;4 stays progress) raises a system
+  notification while Puppet Master is in the background; while it is in front the notification is announced
+  instead, and the terminal's tab, when it is not the focused one, takes its attention mark. A terminal raises at most
+  one notification every 3 s, and clicking a system notification brings that terminal forward. Each terminal can be
+  muted: Mute notifications, a check in the More menu (F3-640) and at the end of the tab's menu (F3-631), is that
+  tab's own state, saved with the tab, and the typed local action `ui.terminal.mute_notifications`, with no command
+  (lead ruling F5); it is absent where the platform has no system notifications. Where the platform asks the
+  person's permission for notifications, as a web browser does, Puppet Master asks only after a notification has
+  arrived, once, in an inline notice row (F3-640) when the person is back: Allow, Mute this terminal, Not now. The
+  engine side is SMPFS-183's. Input methods
   (IME) work at the prompt (SMPFS-183). The plain-text buffer (Alt+F2, or More, Plain-text buffer) shows the screen
   and the scrollback as plain text for screen readers; Ctrl+Up and Ctrl+Down move between commands and Esc returns
   to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
@@ -211,7 +245,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
-depends_on: [DL-181, F3-640, F3-634, F3-546, F3-547, SMPFS-183, SMPFS-180]
+depends_on: [DL-181, DL-187, F3-640, F3-634, F3-546, F3-547, SMPFS-183, SMPFS-180]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Every prompt line with a verified mark has one gutter glyph showing its command's state, no mark is drawn as a stripe, and a mark without the terminal's secret creates no glyph."
@@ -221,6 +255,9 @@ acceptance_criteria:
   - "Copy mode and quick select work with the keys above and leave with Esc."
   - "The plain-text buffer opens with Alt+F2, moves between commands with Ctrl+Up and Ctrl+Down, and reads images as their text descriptions."
   - "No explain, fix, suggest or ask action and no inline completion appears anywhere in the terminal tab."
+  - "A program's OSC 9, OSC 777 notify or OSC 99 notification raises a system notification only while Puppet Master is in the background, at most one every 3 s per terminal, and clicking it brings that terminal forward; in front it is announced and an unfocused terminal tab takes its attention mark."
+  - "Mute notifications is a per-tab check saved with the tab, in the More menu and the tab menu, dispatching no command; a muted terminal raises no notification; the item is absent where the platform has no system notifications."
+  - "Where the platform needs the person's permission, it is asked once, only after a notification arrived, in an inline notice with Allow, Mute this terminal and Not now."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -239,6 +276,9 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D13, D19)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 8 (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1 and 2 (notifications; concept lineage only)"
 preserved_exact_tokens:
   - "path:line:col"
   - "OSC 9;4"
@@ -246,18 +286,25 @@ preserved_exact_tokens:
   - "Copy mode"
   - "Quick select"
   - "plain-text buffer"
+  - "OSC 777"
+  - "OSC 99"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "Mute this terminal"
 negative_constraints:
   - "Do not draw a command mark as a stripe or treat a mark without the terminal's secret as a boundary."
   - "Do not open a link on a plain click; a plain click selects."
   - "Do not add an AI action or an inline completion to the terminal."
+  - "Do not raise a system notification while Puppet Master is in front, more than once every 3 s for one terminal, or from a muted terminal, and do not ask for notification permission before a notification arrived."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187, D38; terminal SPEC 01c5e78c42): adds system notifications from OSC 9, OSC 777 and OSC 99 in the background, the 3 s limit, the per-tab mute and the permission notice."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-546, ContractName:Plans/FinalGUISpec.md#F3-547
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-546, ContractName:Plans/FinalGUISpec.md#F3-547, ContractName:Plans/Decision_Log.md#DL-187
 
 ### F3-642 — The Terminal's Appearance
 
@@ -283,7 +330,7 @@ canonical_text: >-
   (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
-  These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
+  These schemes are one code colour-scheme catalog that serves the editor and the terminal (D30, amending
   D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17
   editor syntax colours are authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1
   throughout on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme takes its editor syntax colours from its
@@ -364,7 +411,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
@@ -390,8 +437,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for every syntax token, comments included (7:1 on PM High Contrast), and both surfaces draw them as they are, an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
@@ -510,25 +557,31 @@ canonical_text: >-
   Retro code text, D17a). The editor's code face is JetBrains Mono in every look, Retro included (F3-639). The
   terminal's default face is JetBrains Mono in every look except Retro, where it is VT323; Sixtyfour, Sixtyfour
   Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
-  is offered for readability; and the system monospace is also a choice (F3-642). JetBrains Mono is provided by the
-  page, not by the terminal: its upright bytes are NieR Mode's PM NieR Mono files under the general family name
-  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is
-  JetBrains Mono's own italic, which the page's code face embeds in PMConcept7 with the same script slices (Latin
-  file 42,964 bytes; DL-161, F3-430), so italic code is drawn, not slanted, and the terminal adds no italic of its own. The faces, with licence, bytes, axes and
-  default size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, the
-  page's face (31,432 bytes for its Latin upright file), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
+  is offered for readability in every look; and the system monospace is also a choice (F3-642). Every one of these
+  faces is the page's own, embedded once through DL-161's pipeline as one set of files shared with the rest of the
+  page (DR-050), and the terminal carries no font file of its own (amended 2026-10-10, DL-183, terminal SPEC 01c5e78c42
+  section 4). JetBrains Mono's upright bytes are NieR Mode's PM NieR Mono files under the general family name
+  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is JetBrains Mono's
+  own italic, which the page's code face embeds with the same script slices (DL-161, F3-430), so italic code and a
+  program's italic text (SGR 3) are drawn, not slanted; VT323, Sixtyfour and Departure Mono have no italic, and theirs
+  is synthesised. Each face comes as script slices with its Latin file last: JetBrains Mono as per-script slices and
+  Latin, upright and italic; VT323 as Vietnamese, Latin Extended and Latin; Sixtyfour as Latin Extended and Latin;
+  Sixtyfour Raster as Latin only; Atkinson Hyperlegible Mono as Latin Extended and Latin, upright and italic; and
+  Departure Mono as the whole font, 1,186 glyphs, in one file. The faces, with licence, Latin bytes, axes and default
+  size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, 31,432 bytes
+  upright and 42,964 bytes italic, weight 100 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
   bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
   4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
   baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,
   17,752 bytes upright and 19,084 bytes italic, weight 200 to 800, 13 px and 1.35; Departure Mono, a Retro option,
   OFL-1.1 (its v1.500 release ships the SIL Open Font License, not MIT), 22,496 bytes, no axes, 13.75 px and 1.20;
-  and the system monospace, 13 px and 1.30. The terminal's own faces total 84,572 bytes before base64. Box drawing
+  and the system monospace, 13 px and 1.30. The terminal-only faces total 84,572 bytes of Latin files before base64,
+  plus 47,780 bytes of Latin Extended and Vietnamese slices. Box drawing
   (U+2500 to U+257F), block elements (U+2580 to U+259F), braille (U+2800 to U+28FF), powerline (U+E0B0 to U+E0BF)
   and sextants (U+1FB00 to U+1FB3B) are drawn by the terminal, so no patched font is needed, and the terminal's faces
   are never mirrored into PM Symbols. Licence rule: only permissively licensed faces are built in, under the SIL Open
   Font License, Apache or MIT, each with its licence text and its source and SHA-256 record; every terminal face is
-  OFL-1.1. The files go through DL-161's embedding pipeline as one set of files shared with the rest of the page
-  (DR-050). A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
+  OFL-1.1. A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
   separate from rendered GUI text (F3-414). General code text across the chat and PMConcept7
   (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in NieR) is not this unit's: it
   belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under D17a, and Retro's interface and
@@ -542,7 +595,9 @@ acceptance_criteria:
   - "The editor draws JetBrains Mono in every look, Retro included."
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
   - "Each face that has a default size and line height listed above opens at them."
-  - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal's own faces total 84,572 bytes before base64."
+  - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal-only faces total 84,572 bytes of Latin files before base64, plus 47,780 bytes of Latin Extended and Vietnamese slices."
+  - "Every face the terminal draws is the page's own, embedded once through DL-161's pipeline, the terminal package carries no font file, and each face ships the script slices listed here."
+  - "A program's italic text draws JetBrains Mono's own italic and Atkinson Hyperlegible Mono's own italic, and is synthesised in VT323, Sixtyfour and Departure Mono."
   - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
   - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."
   - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this unit."
@@ -564,6 +619,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D17)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 4 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, section 4 (every face the page's own, the slices and the italic; concept lineage only)"
 preserved_exact_tokens:
   - "JetBrains Mono"
   - "VT323"
@@ -571,6 +627,7 @@ preserved_exact_tokens:
   - "Departure Mono"
   - "Atkinson Hyperlegible Mono"
   - "84,572 bytes"
+  - "47,780 bytes"
   - "PM Symbols"
   - "OFL-1.1"
 negative_constraints:
@@ -579,7 +636,9 @@ negative_constraints:
   - "Do not amend DL-161, F3-426 or F3-430 from this unit, or change Retro's general code text."
 compatibility_only_notes:
   - "The concept's font file names are lineage; the product's files are the embedding pipeline's (DL-161, DR-050)."
-stale_retired_dispositions: []
+  - "Terminal SPEC ac63b1f467 gave JetBrains Mono's upright file the weight axis 400 to 800 and its italic 100 to 800; SPEC 01c5e78c42 lists the family as one row with weight 100 to 800, which this unit follows."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-183; terminal SPEC 01c5e78c42, section 4): every face is the page's own through DL-161's pipeline and the terminal carries no font file; the script slices (Latin Extended and Vietnamese among them), JetBrains Mono's italic and the synthesised italic of VT323, Sixtyfour and Departure Mono are stated; the 47,780 bytes of non-Latin slices are added to the 84,572 bytes of Latin."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Decision_Log.md

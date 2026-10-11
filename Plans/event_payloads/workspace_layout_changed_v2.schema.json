@@ -78,9 +78,23 @@
         {
           "type": "string",
           "enum": [
+            "cmd.agents.open_thread",
             "cmd.browser.open_workspace_preview",
+            "cmd.chat.attachment.open",
+            "cmd.chat.close_thread_context_details",
+            "cmd.chat.focus_thread_context_details",
+            "cmd.chat.open_thread_context_details",
+            "cmd.chat.plan.open_details",
+            "cmd.chat.plan.open_version",
+            "cmd.collaboration.open",
+            "cmd.dev.show_output",
+            "cmd.dev.show_ports",
+            "cmd.dev.show_problems",
+            "cmd.docker.compose.open_file",
             "cmd.editor.close_tab",
             "cmd.file.open",
+            "cmd.file.open_with",
+            "cmd.git.diff_open",
             "cmd.nav.open_subject",
             "cmd.panel_tab.close",
             "cmd.panel_tab.keep",
@@ -90,7 +104,15 @@
             "cmd.panel_tab.rename",
             "cmd.panel_tab.reopen_closed",
             "cmd.panel_tab.unpin",
+            "cmd.run_debug.config.open_file",
+            "cmd.run_debug.console.reveal",
+            "cmd.run_debug.terminal.reveal",
+            "cmd.search.open_result",
+            "cmd.source_control.open_merge_editor",
+            "cmd.terminal.focus",
             "cmd.terminal.open",
+            "cmd.terminal.reveal",
+            "cmd.terminal.show",
             "cmd.workspace_layout.apply_named",
             "cmd.workspace_layout.close_panel",
             "cmd.workspace_layout.lock",
@@ -106,7 +128,7 @@
           "type": "null"
         }
       ],
-      "description": "The admitted command, under the id its caller used (aliases keep their ids: Plans/UI_Command_Catalog.md#UCC-200, Plans/Commands_System.md#CS-101); null only for the v1-to-v2 migration."
+      "description": "The admitted command, under the id its caller used (aliases keep their ids: Plans/UI_Command_Catalog.md#UCC-200, Plans/Commands_System.md#CS-101); null only for the v1-to-v2 migration. Amended 2026-10-10 (DL-188): the list names every admitted route of UCC-200's table of routes that open or reveal a tab (cmd.chat.plan.open_details and cmd.chat.plan.open_version included; the two candidates cmd.chat.open_working_notebook and cmd.terminal.open_retained_output join only when admitted), cmd.chat.attachment.open, whose wiring row declares the event although the table does not list it yet, and the alias cmd.editor.close_tab, so an event under the caller's own id validates. The six reveal-only routes (cmd.terminal.show, cmd.terminal.focus, cmd.terminal.reveal, cmd.browser.focus_browser_tab, cmd.chat.focus_thread_context_details, cmd.run_debug.terminal.reveal) never add a tab, so they are accepted for tab_kept and panel_expanded but not tab_opened. The list, less that alias, must equal the production wiring rows that declare workspace.layout_changed; scripts/pm-validate-pm7-gui-fixtures.py checks it."
     },
     "actor": {
       "type": "string",
@@ -208,7 +230,7 @@
           "width_px"
         ]
       },
-      "description": "The chat column fields a chat_column_changed changed: only width_px, from a width drag. shown and history_pinned are view state and popped_out is written with the pop-out's own panel.undocked or panel.redocked; none of them appends this event. Empty for every other change."
+      "description": "The chat column fields a chat_column_changed changed: only width_px, from a width drag. shown and history_pinned are view state and none of them appends this event. Amended 2026-10-10 (DL-187, D32): the chat's pop-out is never saved, so the record has no popped_out field; a pop-out and its return append only panel.undocked or panel.redocked. Empty for every other change."
     },
     "commit_origin": {
       "type": "string",
@@ -274,7 +296,23 @@
               "cmd.file.open",
               "cmd.nav.open_subject",
               "cmd.browser.open_workspace_preview",
-              "cmd.terminal.open"
+              "cmd.terminal.open",
+              "cmd.agents.open_thread",
+              "cmd.chat.attachment.open",
+              "cmd.chat.open_thread_context_details",
+              "cmd.chat.plan.open_details",
+              "cmd.chat.plan.open_version",
+              "cmd.collaboration.open",
+              "cmd.dev.show_output",
+              "cmd.dev.show_ports",
+              "cmd.dev.show_problems",
+              "cmd.docker.compose.open_file",
+              "cmd.file.open_with",
+              "cmd.git.diff_open",
+              "cmd.run_debug.config.open_file",
+              "cmd.run_debug.console.reveal",
+              "cmd.search.open_result",
+              "cmd.source_control.open_merge_editor"
             ]
           }
         }
@@ -296,7 +334,8 @@
           "command_id": {
             "enum": [
               "cmd.panel_tab.close",
-              "cmd.editor.close_tab"
+              "cmd.editor.close_tab",
+              "cmd.chat.close_thread_context_details"
             ]
           }
         }
@@ -343,7 +382,28 @@
               "cmd.file.open",
               "cmd.nav.open_subject",
               "cmd.browser.open_workspace_preview",
-              "cmd.terminal.open"
+              "cmd.terminal.open",
+              "cmd.agents.open_thread",
+              "cmd.chat.attachment.open",
+              "cmd.chat.open_thread_context_details",
+              "cmd.chat.plan.open_details",
+              "cmd.chat.plan.open_version",
+              "cmd.collaboration.open",
+              "cmd.dev.show_output",
+              "cmd.dev.show_ports",
+              "cmd.dev.show_problems",
+              "cmd.docker.compose.open_file",
+              "cmd.file.open_with",
+              "cmd.git.diff_open",
+              "cmd.run_debug.config.open_file",
+              "cmd.run_debug.console.reveal",
+              "cmd.search.open_result",
+              "cmd.source_control.open_merge_editor",
+              "cmd.chat.focus_thread_context_details",
+              "cmd.run_debug.terminal.reveal",
+              "cmd.terminal.focus",
+              "cmd.terminal.reveal",
+              "cmd.terminal.show"
             ]
           }
         }
@@ -516,7 +576,28 @@
               "cmd.file.open",
               "cmd.nav.open_subject",
               "cmd.browser.open_workspace_preview",
-              "cmd.terminal.open"
+              "cmd.terminal.open",
+              "cmd.agents.open_thread",
+              "cmd.chat.attachment.open",
+              "cmd.chat.open_thread_context_details",
+              "cmd.chat.plan.open_details",
+              "cmd.chat.plan.open_version",
+              "cmd.collaboration.open",
+              "cmd.dev.show_output",
+              "cmd.dev.show_ports",
+              "cmd.dev.show_problems",
+              "cmd.docker.compose.open_file",
+              "cmd.file.open_with",
+              "cmd.git.diff_open",
+              "cmd.run_debug.config.open_file",
+              "cmd.run_debug.console.reveal",
+              "cmd.search.open_result",
+              "cmd.source_control.open_merge_editor",
+              "cmd.chat.focus_thread_context_details",
+              "cmd.run_debug.terminal.reveal",
+              "cmd.terminal.focus",
+              "cmd.terminal.reveal",
+              "cmd.terminal.show"
             ]
           }
         }

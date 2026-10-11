@@ -892,7 +892,8 @@ canonical_text: >-
   Its popup now holds, in order: the named layouts (Home, Build, Terminals 2x2, Focus, then the user's saved layouts,
   the current one checked; cmd.workspace_layout.apply_named); the chat's rows, Show the chat or Hide the chat
   (cmd.panel.switch), Pop out the chat or Dock the chat back (cmd.panel.undock, cmd.panel.redock) and Keep the chat open
-  in narrow windows (F3-637); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
+  in narrow windows (F3-637; amended 2026-10-10, lead ruling: the same check as the chat header's menu, both
+  dispatching ui.chat_column.keep_open, saved in the v2 record's chat column, never a Settings row); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
   Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
   general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
 gui_related: true
@@ -927,6 +928,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
 - "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
 - "Amended 2026-10-09 (DL-180): Open Panel, Open Browser in Panel, their Panel 1 to Panel 4 flyouts and the Collapse Bottom Terminal toggle with its Expand relabel are retired; Reset Layout reads Restore home layout; the popup gains the named layouts, Save this layout... and the chat's rows."
+- "Amended 2026-10-10 (lead ruling): the Keep the chat open in narrow windows row is the same check as the chat header's menu, both dispatching ui.chat_column.keep_open, saved in the v2 record's chat column."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -1128,10 +1130,14 @@ canonical_text: >-
   Home layout record keeps (SP-330).
   Amended 2026-10-10 (lead ruling L6): Pop out is desktop only. The web client offers no Pop out; the chat stays in its
   column (F3-637). This settles the open question above.
+  Amended 2026-10-10 (DL-187, D32): the chat's popped-out state lasts only while the app runs and is never saved; the
+  v2 Home layout record keeps the column's visibility and width but not the pop-out (SP-330), so after a restart the
+  chat starts in its column (F3-637). The sentence above that puts the popped-out state in the saved chat column state
+  is replaced.
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
-depends_on: [F3-501, DL-180]
+depends_on: [F3-501, DL-180, DL-187]
 unblocks: []
 acceptance_criteria:
 - Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
@@ -1154,6 +1160,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
+- "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
@@ -1165,6 +1172,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
 - "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
 - "Amended 2026-10-10 (lead ruling L6): The open question on a web Pop out is settled: the web client offers no Pop out and the chat stays in its column (F3-637)."
+- "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved and is no longer part of the chat column state the v2 Home layout record keeps; after a restart the chat starts in its column (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -1832,6 +1840,8 @@ Primary content: 1280 - 48 - 48 = 1184px wide
 
 The activity bar is the canonical entry point for persistent left-hand side-panel operational surfaces per F3-481.
 
+Amended 2026-10-10 (DL-187, D40): `chat` stays an activity-bar entry, but it opens no side panel: it shows or hides the chat column on the right, on every page, without changing the page in front (F3-042, F3-637). The lists below keep `chat` as that entry; the sentence that put Chat in the side-panel slot is amended in place.
+
 Required side-panel items for this feature set:
 - `search`
 - `chat`
@@ -1845,7 +1855,7 @@ Required side-panel items for this feature set:
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
 
 Required shell rules:
-- Search, File Manager, Source Control, Actions & Pipelines, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single left-hand side-panel slot defined by the shell.
+- Search, File Manager, Source Control, Actions & Pipelines, Docker Manager, Artifacts, and Run & Debug occupy the single left-hand side-panel slot defined by the shell; the Chat entry shows or hides the chat column instead (amended 2026-10-10, DL-187, D40; F3-042).
 - None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface.
 - Activity-bar labels, tooltips, shortcuts, and command IDs MUST use the same surface vocabulary across shell chrome, command palette, and wiring tables.
 - Detachable side-panel surfaces return to the same left-hand slot when re-docked.
@@ -2491,9 +2501,11 @@ Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. T
 
 Amended 2026-10-09 (DL-180): a dashboard is a tab kind, not a singleton surface. Several dashboard tabs may be open, each a board with its own widget layout, and `dashboard:home` is the pinned Home dashboard (F3-638); a dashboard tab can show every Usage widget, with Orchestrator widgets after that page's redesign (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`). The sentences below that said otherwise are amended in place.
 
-Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) stays as the Home board's starting set (WS-030) and is lineage only as a limit on the catalogue; the rule that broader `widget.*` entries wait for an owner's promotion is lineage, and DL-180 is that promotion for Usage widgets.
+Amended 2026-10-10 (DL-186): every dashboard tab holds its own board on the Usage board engine, with built-in and custom dashboards (F3-638). The old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join after that page's redesign, so the earlier default set is no board's starting set; Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030). Each board's contents are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key `widget_layout:v1:dashboard:<board_id>` that DL-180 named, with today's `widget_layout:v1:dashboard` converting into `widget_layout:v1:dashboard:home`, was never written, and nothing converts into it. The sentences below are amended in place.
 
-Each dashboard board keeps its own widget layout under `widget_layout:v1:dashboard:<board_id>`, never inside the Home layout record; today's `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home`, the Home dashboard's board, as WS-030 says (amended 2026-10-09, DL-180). `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. A dashboard tab can show every Usage widget (F3-638); the Home dashboard's default widgets and the catalogue are `Plans/Widget_System.md#WS-030`'s. Amended 2026-10-09 (DL-180): the earlier exact default set (`widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, `widget-custom-metrics`) stays as the Home board's starting set (WS-030) and is lineage only as a limit on the catalogue (amended 2026-10-10, DL-186: it is no board's starting set now, F3-277); the rule that broader `widget.*` entries wait for an owner's promotion is lineage, and DL-180 is that promotion for Usage widgets.
+
+Each dashboard board keeps its own widget layout, per project, under `widget_layout:v1:<project_id>:<board_id>`, never inside the Home layout record (amended 2026-10-09, DL-180, and 2026-10-10, DL-186; WS-030); `widget_layout:v1:dashboard` is no board's key, since `dashboard` is a reserved id that no board takes, and what storage keeps of it is WS-030's and `Plans/storage-plan.md`'s. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, Actions & Pipelines, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
 
 ### 7.3 Shared route and open behavior
 
@@ -3332,6 +3344,8 @@ Since 2026-10-09 the left rail's panels do not abbreviate text at any width; the
 
 Superseded 2026-10-09 (DL-180): a dashboard tab's columns follow the tab's own width, never the window (F3-638, F3-636); the board's column ladder is `Plans/Widget_System.md#WS-030`'s, with the Usage thread's presets tested at 400, 550 and 700 px still to come. The window-width table below is lineage.
 
+Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine, so a board lays out on the Usage board's tracks and width classes (`Plans/Widget_System.md#WS-017`: 12, 20, 24 or 30 tracks by the board's own width, with WS-017's one per-kind preset table), measured on the tab's own width (F3-638). The column ladder and the presets "still to come" named above are replaced.
+
 | Window Width | Grid Columns |
 |-------------|-------------|
 | < 1200px | 2 columns |
@@ -3546,7 +3560,9 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 |-----|---------|----------------|
 | `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
 | `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180) | On each committed change, written and read back before it commits (F3-HOME-004) |
-| `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says | On change (debounced 300ms) |
+| `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; the per-board key above was never written, and this key, the old Home widgets' grid, is no board's key (WS-030); no write goes to it now, and it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write frequency in this row is lineage; what storage keeps of the key is `Plans/storage-plan.md`'s | On change (debounced 300ms); lineage, no write now (DL-186) |
+| `widget_layout:v1:<project_id>:<board_id>` | One dashboard board's widgets with their positions, sizes and settings, its own range and scope, and the set it started from; the record and its one-time adoption of an older unscoped key are WS-030's (added 2026-10-10, DL-186) | On each settled change of that board (WS-030) |
+| `widget_presets:v1` | The person's saved dashboard presets, shared by every project; the record is WS-030's (added 2026-10-10, DL-186) | On saving, renaming or deleting a preset |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
 | `glass_background_mode:v1` | Glass wallpaper background mode (mesh, depth, or minimal) for the Glass theme family | On change |
@@ -3624,7 +3640,7 @@ Normative mapping notes:
 - `editor_state.v1:{project_id}:{file_path_hash}` and `editor_workspace_state.v1:{project_id}` are separate canonical, non-rebuildable families. The per-file row owns unsaved-buffer recovery; the project-wide row owns tabs and view positions and MUST NOT contain buffer bytes. Neither row implies that a local or remote file write succeeded.
 - `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and the SP-252 Onboarding predecessor keys are read-only `StorageMigrationCoordinator` copy-forward inputs, never ordinary-open fallbacks or new-write keys. The global onboarding alias may copy forward only when its target Project/session is unambiguous. A missing canonical row plus a present alias enters migration; it does not authorize a lazy rewrite-on-save. Editor/hotreload new writes use `editor_workspace_state.v1:{project_id}` and `hotreload_state.v1:{project_id}`; Onboarding consumes only SP-252's current session-key/value-schema binding. A reset does not delete a real Project or authorize repeating its creation.
 - Missing `hotreload_state` or `onboarding_state` may use the registered default/first-run presentation. Corrupt or incompatible values are secured byte-for-byte in quarantine before the GUI discloses the reset and uses defaults. Missing, corrupt, or incompatible `editor_buffer_recovery_state` or `editor_workspace_state` is not a silent empty/default workspace: the GUI attempts mandatory-backup recovery and discloses the affected files/workspace state and maximum credible loss when recovery is unavailable.
-- `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
+- `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030), and `widget_layout:v1:dashboard` is no board's key.
 - §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
 - Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221).
@@ -3651,7 +3667,7 @@ Amended 2026-10-09 (DL-180): Home restores from its v2 layout record `home_works
 On startup:
 1. Resolve the active Project's detached shell snapshot. Read its `layout:v1` and restore panel positions, sizes, dock states, and detached-terminal geometry; only a genuinely absent fresh-project snapshot receives the factory layout. A copied Project reads its destination-owned snapshot, never a live source-project value. Amended 2026-10-09 (DL-180): `layout:v1` restores only side-panel dock state and the popped-out chat window's geometry, and detached-terminal geometry goes with the bottom terminal (F3-061); the home panels, their tabs and the chat column restore from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and the factory layout is the Home named layout (F3-630).
 2. Read the active Project's `theme:v1` and apply its explicit saved selection. Only an untouched first-open/fresh-project absence seeds Basic Dark; startup never replaces an existing saved selection with either Basic Dark or the superseded Friendly Dark default.
-3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`. Amended 2026-10-09 (DL-180): each dashboard board restores its widget layout from `widget_layout:v1:dashboard:<board_id>`; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset, and stays, like `dashboard_layout:v1`, a read-only migration input (WS-030).
+3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`. Amended 2026-10-09 (DL-180): each dashboard board restores its widget layout from `widget_layout:v1:dashboard:<board_id>`; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset, and stays, like `dashboard_layout:v1`, a read-only migration input (WS-030). Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. Nothing writes `widget_layout:v1:dashboard` now; it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write-back to it at the start of this step is lineage; what storage keeps of it is `Plans/storage-plan.md`'s.
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
@@ -4310,7 +4326,7 @@ These decisions are final and must not be revisited during implementation:
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
 
-Amended 2026-10-10 (Addendum 2 D28, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
+Amended 2026-10-10 (D31, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
@@ -4319,6 +4335,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
 
 Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
+
+Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine, one board each (F3-638). The old Home widgets, C.2's run progress, lanes and results among them, have left Home until Orchestrator widgets join after that page's redesign, so C.2's default layout is no board's default and C.1's line that the existing Dashboard card types remain as default widgets no longer holds; each board's contents are kept per project (WS-030), so the key C.5's migration writes is no board's key: `widget_layout:v1:dashboard` stays only a read-only record and rollback backup that nothing writes now (`Plans/Widget_System.md#WS-009`), and C.5's write into it is lineage.
 
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
@@ -4332,7 +4350,7 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 - Widget gutters: 8px (MD spacing token) between widgets.
 
 **What stays the same from section 7.2:**
-- All existing Dashboard card types remain as default widgets.
+- All existing Dashboard card types remain as default widgets (amended 2026-10-10, DL-186: no longer; the old Home widgets have left Home, F3-638).
 - The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards (the accent-left-border is retired, amended 2026-10-09, DL-184; F3-648).
 - CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
@@ -6126,11 +6144,14 @@ canonical_text: >-
   `widget_layout:v1:dashboard:<board_id>` (WS-030); `widget_layout:v1:dashboard` joins `dashboard_layout:v1` as a
   read-only migration input and backup, converting into `widget_layout:v1:dashboard:home` on first read and never
   reset.
+  Amended 2026-10-10 (DL-186): the active Dashboard family is one key per project and board, `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); the per-board key above was never written and nothing converts into it, and `widget_layout:v1:dashboard`
+  is no board's key.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -6163,6 +6184,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Retired layout keys are read-only migration backups."
 - "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the active Dashboard key; each board has its own (WS-030)."
+- "Amended 2026-10-10 (DL-186): boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; nothing converts into the per-board key DL-180 named."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -7852,16 +7874,24 @@ canonical_text: >-
   repository_automation, docker_manager, artifacts, run_debug, testing, and agents with
   matching labels, tooltips, shortcuts, and command IDs. The testing and agents
   panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
+  Amended 2026-10-10 (DL-187, D40): `chat` stays an activity-bar entry but opens no side panel. A click on it, or
+  Enter or Space where the entry takes focus, shows the chat column (F3-637) when the chat is not on screen and hides
+  it when it is, on every page, and never changes the page in front; where the narrow ladder has folded the chat to
+  its strip, the entry opens the chat over the centre (F3-636). Each show or hide is one cmd.panel.switch with chat
+  and one receipt. A press that moves 4 px or more, or ends as the rail's own drag, reorders the rail (or moves the
+  entry into More) and shows or hides nothing. The entry is lit while the column is shown, its folded strip included,
+  and its hover tag reads Chat, "Shows or hides the chat column".
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-187]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "The side-panel inventory is canonical at 10 panels."
+- "The activity bar's Chat entry opens no side panel: on every page a click, Enter or Space shows or hides the chat column with one cmd.panel.switch and receipt, never changes the page in front, opens a folded chat over the centre, and is lit while the column is shown; a press that moves 4 px or more is the rail's reorder and toggles nothing."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -7877,6 +7907,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0036"
+- "Plans/Decision_Log.md#DL-187"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D40)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept lineage only)"
 preserved_exact_tokens:
 - "search"
 - "chat"
@@ -7887,10 +7921,13 @@ preserved_exact_tokens:
 - "artifacts"
 - "run_debug"
 - "Canonical side-panel descriptions"
-negative_constraints: []
+- "Shows or hides the chat column"
+negative_constraints:
+- "Do not open a side panel or change the page in front from the activity bar's Chat entry."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The notifications side panel joined the inventory per the 2026-07-16 shell sweep promotion (F3-453) and is retired from the inventory per PMConcept7 title-bar notifications (2026-07-23); the shared alert store and ack/snooze lifecycle survive in F3-453, and durable alerts render via the title-bar notification stack (F3-460) and sprout inbox panel (F3-461)."
+- "Amended 2026-10-10 (DL-187, D40): `chat` stays in the inventory as an activity-bar entry that shows or hides the chat column on every page; it is no longer a side-panel occupant (panels NUMBERS 339203bd76, CONTRACT section 6.1)."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
@@ -14426,10 +14463,12 @@ canonical_text: >-
   `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
   `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
   shell records are unchanged.
+  Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in
+  `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -14467,6 +14506,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Deprecated key reads are forward-migration only."
 - "Amended 2026-10-09 (DL-180): Home's layout and the dashboard boards' widget layouts are not kept in the project shell records (SP-330, WS-030)."
+- "Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes:
 - "Shell persistence remains in narrow project shell records, not in canonical blocked or `/attention` truth."
 owner_hints:
@@ -16300,7 +16340,9 @@ superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Window-width dashboard columns are retired:
-  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's. The
+  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's
+  (amended 2026-10-10, DL-186: a board lays out on the Usage board's tracks and width classes of WS-017, measured on the
+  tab's own width, F3-638). The
   text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product
   truth. Superseded by F3-638 (DL-180).
   Dashboard grid columns respond to width: two columns below 1200px, three columns from
@@ -16310,7 +16352,7 @@ gui_classification_reason: >-
   This unit defines visible Dashboard grid column counts despite the source inference being
   false.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16341,6 +16383,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Superseded 2026-10-09 (DL-180): the 1200 px and 1600 px window breakpoints for dashboard columns are retired (F3-638, F3-636, WS-030)."
+- "Amended 2026-10-10 (DL-186): a dashboard board lays out on the Usage board's tracks and width classes (WS-017), measured on the tab's own width (F3-638), not on a column ladder of WS-030's."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17406,12 +17449,15 @@ canonical_text: >-
   height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
   reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
   `widget_layout:v1:dashboard:<board_id>` (WS-030).
+  Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`,
+  and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's
+  key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
   persistence keys.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17452,6 +17498,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): `layout:v1` is no longer a Home layout authority; the v2 Home layout record is."
+- "Amended 2026-10-10 (DL-186): dashboard boards persist per project under `widget_layout:v1:<project_id>:<board_id>` and presets per person in `widget_presets:v1` (WS-030)."
 owner_boundary_notes:
 - "Project state is a lightweight shell/UX projection cache, not a canonical state store."
 owner_hints:
@@ -17909,11 +17956,13 @@ canonical_text: >-
   (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
   chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
   (WS-030); section 15.4 gives the order.
+  Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
 split_recommended: false
-depends_on: [F3-458, DL-180]
+depends_on: [F3-458, DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -17953,6 +18002,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "`dashboard_layout:v1`, `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only coordinator migration inputs; ordinary startup does not use them as fallbacks."
 - "Amended 2026-10-09 (DL-180): `layout:v1` no longer restores the Home layout or detached-terminal geometry, and the single `widget_layout:v1:dashboard` is a read-only migration input into `widget_layout:v1:dashboard:home` (SP-330, WS-030)."
+- "Amended 2026-10-10 (DL-186): dashboard boards restore per project from `widget_layout:v1:<project_id>:<board_id>`; `widget_layout:v1:dashboard` converts into no board (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20811,11 +20861,14 @@ canonical_text: >-
   `widget-recent-results` with IDs `orch-progress-v1`, `lanes-view-v1`, and `results-v1`.
   Amended 2026-10-09 (DL-180): this default is the Home board's starting set (`dashboard:home`), which WS-030 owns and
   states in full (its set adds `widget-custom-metrics`); the other boards' starting layouts are WS-030's too.
+  Amended 2026-10-10 (DL-186): the old Home widgets have left Home (Jared, P1 B), so this layout is no board's starting
+  set; Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030), and run progress, lanes and
+  results come back to dashboards only when Orchestrator widgets join the board engine after that page's redesign.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the default visible Dashboard widgets.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20851,6 +20904,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the default Dashboard layout is now the Home board's starting set, owned by WS-030."
+- "Amended 2026-10-10 (DL-186): this layout is no board's starting set; the built-in dashboards start from sets of Usage widgets (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -21085,11 +21139,15 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): the Dashboard now keeps one widget layout per board,
   `widget_layout:v1:dashboard:<board_id>`; the `widget_layout:v1:dashboard` this migration writes converts into
   `widget_layout:v1:dashboard:home` on first read and is never reset (WS-030).
+  Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); `widget_layout:v1:dashboard` converts into no board and stays only a read-only record and rollback backup
+  that nothing writes now (Plans/Widget_System.md#WS-009), so this migration's write into it is lineage, and the
+  per-board key named above was never written.
 gui_related: false
 gui_classification_reason: >-
   This unit defines storage migration logic rather than a visible GUI surface.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -21127,6 +21185,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "`dashboard_layout:v1` is deprecated after migration."
 - "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the end of this migration; it is a read-only migration input into the Home board's `widget_layout:v1:dashboard:home` (WS-030)."
+- "Amended 2026-10-10 (DL-186): `widget_layout:v1:dashboard` converts into no board and nothing writes it now (WS-009), so this migration's write is lineage; boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes:
 - "storage-plan.md and Widget_System.md own storage namespace and widget schema details."
 owner_hints:
@@ -21148,11 +21207,13 @@ canonical_text: >-
   `widget_layout:v1:dashboard` is itself a read-only migration input that converts into
   `widget_layout:v1:dashboard:home` on first read and is never reset, and once it has converted the per-board key is
   the one read.
+  Amended 2026-10-10 (DL-186): future reads use each board's per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030);
+  `widget_layout:v1:dashboard` converts into no board, and the per-board key named above was never written.
 gui_related: false
 gui_classification_reason: >-
   This unit constrains legacy dashboard layout key usage.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -21185,6 +21246,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the single dashboard key is no longer the read target; each board reads its own `widget_layout:v1:dashboard:<board_id>` (WS-030)."
+- "Amended 2026-10-10 (DL-186): each board reads its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -31849,16 +31911,18 @@ canonical_text: >-
   drives the glass composition layer and persists at `glass_background_mode:v1`; the glass
   alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at
   `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion
-  state; and the chat layout mode setting drives the chat mount layout. Each binding applies
+  state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
+  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored
+  Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies
   on change with no reload. The concept's interface-density live-apply hook had no consumer
   and is demo residue excluded from this canonical wiring map.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
-depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444]
+depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444, DL-187]
 unblocks: []
 acceptance_criteria:
-- "Changing theme, glass background mode, glass alpha, reduce-animations, or chat layout mode applies live to the theme engine, glass composition, --glass-alpha within clamps, reduced-motion state, and chat mount layout respectively, with no reload."
+- "Changing theme, glass background mode, glass alpha or reduce-animations applies live to the theme engine, glass composition, --glass-alpha within clamps and reduced-motion state respectively, with no reload; the retired chat layout mode binds nothing (amended 2026-10-10, DL-187)."
 - "The theme, glass background mode, and glass alpha bindings persist through theme:v1, glass_background_mode:v1, and glass_alpha:v1 respectively."
 - "The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -31888,6 +31952,7 @@ compatibility_only_notes:
 - "Slint portability: live-apply bindings map to typed state setters; theme switches swap precomputed per-variant token tables and glass alpha updates a single scalar, with no arbitrary-content backdrop blur, no SVG filters, and no runtime color math."
 stale_retired_dispositions:
 - "The concept's interface-density live-apply hook is demo residue with no consumer; it is excluded from the canonical wiring map and retired without replacement."
+- "Amended 2026-10-10 (DL-187, D32): the chat layout mode binding retires with general.visual.chat-layout-mode; the chat is a fixed column (F3-637) and a stored value never pops it out."
 owner_boundary_notes:
 - "Theme engine and token tables are owned by F3-425 and F3-426; glass composition and background modes by F3-427 and F3-428; glass alpha clamps by F3-429; storage-key registration by F3-444."
 owner_hints:
@@ -32460,10 +32525,12 @@ canonical_text: >-
   with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
   marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
   a coloured border or stripe (DR-069).
+  Amended 2026-10-10 (DL-187, D34): Jared confirmed this: terminal tab colours and icons stay off the strip for now
+  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system.
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
-depends_on: [DL-181, F3-640, F3-631]
+depends_on: [DL-181, DL-187, F3-640, F3-631]
 unblocks: []
 acceptance_criteria:
 - "A terminal tab can be renamed from its tab menu through cmd.panel_tab.rename, and clearing the label restores the terminal's own label."
@@ -32484,6 +32551,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:6892"
 - "Plans/FinalGUISpec.md:6945"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)"
 preserved_exact_tokens:
 - "8"
 - "20"
@@ -32494,6 +32562,7 @@ compatibility_only_notes:
 - "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are not drawn on the strip."
+- "Amended 2026-10-10 (DL-187, D34): Jared kept terminal tab colours and icons off the strip until the neon glyph system redesigns them."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -34089,10 +34158,12 @@ canonical_text: >-
   copy authored after this date say left-hand; existing rows are corrected opportunistically
   as they are touched, and GATE-010 evidence must not fail a row solely for a stale
   right-hand location string authored before this date.
+  Amended 2026-10-10 (DL-187, D40): chat no longer occupies the panel slot. It stays an activity-bar entry that shows
+  or hides the chat column on every page (F3-042, F3-637), so the slot hosts the other occupants listed above.
 gui_related: true
 gui_classification_reason: This unit fixes the shell-level side on which every rail panel mounts.
 split_recommended: false
-depends_on: [F3-478]
+depends_on: [F3-478, DL-187]
 unblocks: []
 acceptance_criteria:
 - "The activity bar and panel slot render on the left shell edge in the Slint build."
@@ -34112,11 +34183,13 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (renders the rail left; source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+- "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens: []
 negative_constraints:
 - "Do not cite pre-2026-07-27 right-hand slot prose as live placement authority."
 stale_retired_dispositions:
 - "Right-hand side-panel slot phrasing in sections 3.2/4.1 and older wiring-row ui_location strings become findable lineage superseded by this ruling."
+- "Amended 2026-10-10 (DL-187, D40): chat is no longer an occupant of the panel slot; its activity-bar entry shows or hides the chat column (F3-042, F3-637)."
 owner_boundary_notes:
 - "F3-478 recorded the deviation; this unit resolves it. Wiring-row string hygiene is owned by Plans/Wiring_Matrix.production.json maintenance."
 owner_hints:
@@ -34759,15 +34832,33 @@ canonical_text: >-
   occupant" read as the Debug tab; its three states, session chrome, Console and Process panes stand. The Debug tab is a
   tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals by
   F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
+  Amended 2026-10-10 (DL-187, D33): there is one Debug Console tab, `debug-console`, holding a sub-tab for each debug
+  session, and the sub-tab shown is view state with no command (lead ruling F6); an older `debug-console:<session>`
+  id folds into it with that session shown (F3-635). The sub-tabs sit in the tab's shared header row (F3-635) as an
+  ARIA tab list with a roving focus: Left and Right move and choose at once and wrap, Home and End go to the first
+  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
+  name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
+  warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
+  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
+  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
+  in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
+  strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
+  in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
+  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px with a 5 px radius,
+  square in Retro and with NieR's square part. Its hover tag names the session, how it runs and its state, and a
+  paused session's location shows as a file reference beside the tab's buttons (F3-634). Below 460 px of body the
+  state words go, below 640 px the paused-at reference goes, and below 820 px the buttons lose their words. Each
+  session keeps its own console, state and frame.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
-depends_on: [F3-483, F3-489, DL-180]
+depends_on: [F3-483, F3-489, DL-180, DL-187]
 unblocks: []
 acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
 - "ATTACHED shows per-session sub-tabs per F3-484, the session chrome row (adapter identity, mirrored state chip, elapsed time, Terminate/Disconnect), the CONSOLE pane with stream tags and session-gated REPL input with per-session history, and the PROCESS pane only under integrated_terminal routing."
 - "TERMINATED shows exit code plus Restart and retains console scrollback."
+- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (the tab ink filling its box in Friendly, Glass, Basic and NieR Mode without the cursor part, reverse video in Retro, the ink block in NieR Mode with the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
 - "The §7.20.2 'Debug Console' entry and the locked-decision 'classical debugger surface' entry both resolve to this tab."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -34788,6 +34879,9 @@ source_lineage:
 - "Plans/FinalGUISpec.md:1787 (§7.20.2 Debug, Problems, Output, and Ports pane list)"
 - "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane ownership; referenced)"
 - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- "Plans/Decision_Log.md#DL-187"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console sub-tabs; concept lineage only)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -34795,6 +34889,7 @@ preserved_exact_tokens:
 - "Restart"
 - "integrated_terminal"
 - "Debug Console"
+- "debug-console"
 negative_constraints:
 - "Do not re-own Debug Console REPL/evaluation versus stdout separation semantics; Plans/Section15_MVP_Promoted_Features_Spec.md owns them and this unit references them."
 - "Do not destroy console scrollback on session end."
@@ -34802,9 +34897,13 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
+- "The panels concept marks the chosen Debug Console sub-tab in Friendly, Glass and Basic, and in NieR Mode without the cursor part, with a 2 px underline in the look's active-tab ink that glides 260 ms (a cut in NieR Mode); a 2 px line on one side of the sub-tab is what F3-648's side-border check flags (DR-069), so canon keeps DL-162's tab ink filling the sub-tab's box, and the underline and its glide are concept lineage only (lead ruling, 2026-10-10: the lead asks home-panels to change the concept to the fill). Its demo sessions (tastebook-api, import-worker) and timings are demo data."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
 - "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
+- "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
+- "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
+- "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -35665,16 +35764,22 @@ canonical_text: >-
   operation before focus, capture, class, or DOM mutation. The compatibility-only
   cmd.workspace_layout.size_surface token resolves a semantic preset to dimensions and dispatches
   cmd.workspace_layout.resize_surface; it is not a second registered command.
+  Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine (F3-638), so a dashboard board's preview,
+  resize, gravity and Tidy follow the Usage rules above (WS-019); the Dashboard frozen resize-peer geometry named above
+  described the old Home widget grid, which has left Home, and no surface uses it now.
+  Amended 2026-10-10 (DL-188): Event Authority admitted workspace.layout_changed 2.0.0 (Jared, D42), so the v2 Home
+  record's committed structural changes emit payload 2.0.0 (Plans/Contracts_V0.md#CV-361); events already written at
+  1.1.0 stay readable and are never rewritten.
 gui_related: true
 gui_classification_reason: This unit governs visible drag, resize, reorder, preset, cancellation, and cleanup behavior.
 split_recommended: false
-depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
+depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012, DL-186, DL-188]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out (amended 2026-10-10, DL-186: dashboard boards resize the same way, and no surface keeps the frozen Dashboard resize peers), and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
-  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: once Event Authority admits it, every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180, and 2026-10-10, DL-188: Event Authority admitted payload 2.0.0 (D42), so every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361; the 1.1.0 fields above describe the v1 record only, and events already written at 1.1.0 stay readable and are never rewritten)."
   - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -35686,6 +35791,7 @@ context_scope: pm7_transactional_direct_manipulation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/event_payloads/workspace_layout_changed.schema.json
+  - Plans/event_payloads/workspace_layout_changed_v2.schema.json
   - Plans/event_family_registry.json
   - Plans/shared_runtime_command_contracts.schema.json
   - Plans/shared_runtime_command_contract_fixtures.json
@@ -35700,12 +35806,17 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-186
+  - Plans/Decision_Log.md#DL-188
 preserved_exact_tokens: [workspace.layout_changed, cmd.workspace_layout.size_surface, cmd.workspace_layout.resize_surface, Escape, pointercancel, lostpointercapture, no-change release, last painted intent]
 negative_constraints:
   - "Do not persist or emit pointer-preview frames."
   - "Do not dispatch a command merely because a pointer moved, a hover changed, or a popup opened."
   - "Do not re-hit-test or retarget a reorder at pointer-up after a different stable intent was last painted."
   - "Do not treat cancellation acknowledgement as successful cleanup without rollback evidence."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): dashboard boards run the Usage board engine, so their preview, resize, gravity and Tidy follow the Usage rules (WS-019); the Dashboard frozen resize-peer geometry applies to no surface, in the canonical text and the first acceptance criterion."
+  - "Amended 2026-10-10 (DL-188): Event Authority admitted workspace.layout_changed 2.0.0 (D42); the v2 Home record's committed structural changes emit payload 2.0.0 (CV-361), and events already written at 1.1.0 stay readable."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -35807,17 +35918,22 @@ canonical_text: >-
   kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
   composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
   "Home editor and terminal surfaces" read as panel tabs (F3-635).
+  Amended 2026-10-10 (DL-186): every dashboard tab's board runs the Usage board engine (F3-638), so a dashboard board's
+  move, resize, gravity and Tidy follow the Usage page's rules (WS-019, F3-515): its resize preview shows the Usage
+  board's live displacement of obstructed peers, and the settled change takes the Usage board's gravity. The
+  "Dashboard-frozen resize peers" above are retired, and the wrapper or host that owns a dashboard card's mutations is
+  that card's board in its dashboard tab.
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516, DL-180]
+depends_on: [F3-513, F3-514, F3-516, DL-180, DL-186]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
-  - "Home editor/terminal surfaces and Dashboard widgets preserve stable identities, tabs, move/options/resize affordances, semantic sizes, and settled-state continuity; Panel 1 retains the Browser Preview and Automation owner sessions without duplication in the stable `Preview -> Automation -> overflow/actions anchor` group order, owner refresh is idempotent and produces no recurring child-list reseat loop once that group is settled, only the active session participates in layout or focus order, and legacy overflow fitting cannot reveal inactive Automation; Dashboard cards remain owned by their tab/category wrapper or host even when that wrapper participates presentation-only in the outer grid, and pointer/keyboard move and resize have parity for the dedicated handle, truthful aria-grabbed state, measured placeholder and ghost, stable before/after insertion intent, live reorder-peer displacement versus Dashboard-frozen resize peers, last-painted-intent changed-only commit, rollback, and complete cancellation/no-op cleanup without NotFound or a stuck move state."
+  - "Home editor/terminal surfaces and Dashboard widgets preserve stable identities, tabs, move/options/resize affordances, semantic sizes, and settled-state continuity; Panel 1 retains the Browser Preview and Automation owner sessions without duplication in the stable `Preview -> Automation -> overflow/actions anchor` group order, owner refresh is idempotent and produces no recurring child-list reseat loop once that group is settled, only the active session participates in layout or focus order, and legacy overflow fitting cannot reveal inactive Automation; Dashboard cards remain owned by their tab/category wrapper or host even when that wrapper participates presentation-only in the outer grid, and pointer/keyboard move and resize have parity for the dedicated handle, truthful aria-grabbed state, measured placeholder and ghost, stable before/after insertion intent, live reorder-peer displacement and, on dashboard boards as on the Usage page, live displacement of obstructed resize peers, last-painted-intent changed-only commit, rollback, and complete cancellation/no-op cleanup without NotFound or a stuck move state (amended 2026-10-10, DL-186: the Dashboard-frozen resize peers this criterion named are retired, WS-019, F3-515)."
   - "Search, Source Control, Artifacts, Tests, Actions, Agents, Debug & Run, Docker, Files, and related Cozy Shelves panels retain recovered spacing, indentation, readable rows, and working controls."
   - "Title bar, page tabs, theme picker, left rail, menus, portals, bottom surfaces, and status remain inside viewport bounds at supported desktop widths; Planning Wizard, Home, Orchestrator, and Projects use physical-width-aware one-column or scrollable narrow composition with no empty tracks or application/page horizontal overflow; a narrow title-bar page overflow picker remains visually above and owns hit testing across its painted rectangle, disables the ancestor edge-fade mask only through opening/open/closing, restores the mask afterward, and never exposes an underlying page control to the same click."
-  - "Page, tab, menu, drawer, hover, drag, resize, and reflow motion has no black, blank, white-until-hover, clipped, or one-frame teardown state; Usage reorder and pointer-only live resize-repack preview keep every peer mounted and nonzero-opacity with no restarted entrance animation, while Dashboard resize retains frozen peers."
+  - "Page, tab, menu, drawer, hover, drag, resize, and reflow motion has no black, blank, white-until-hover, clipped, or one-frame teardown state; Usage reorder and pointer-only live resize-repack preview keep every peer mounted and nonzero-opacity with no restarted entrance animation, on the Usage page and on every dashboard board alike (amended 2026-10-10, DL-186: Dashboard resize no longer retains frozen peers)."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
@@ -35845,15 +35961,18 @@ source_lineage:
   - Concepts/pm7-tools/home_workspace_source.py (authored Home owner projection; Browser Preview and Automation inactive-state repair)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-186
 preserved_exact_tokens: [Basic, Friendly, Retro, Glass, liquid-ink, Home, Dashboard, Cozy Shelves, aria-grabbed]
 negative_constraints:
   - "Do not let theme overlays alter functional ownership or control identity."
-  - "Do not replace the custom Home editor or Dashboard tab models with a generic tab implementation."
+  - "Do not give the Home editor or a dashboard a strip or tab model of its own; both are tabs in the one strip of F3-631 (amended 2026-10-10 under DL-180: the earlier constraint against replacing their custom tab models with a generic tab implementation is lineage)."
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
+  - "Amended 2026-10-10 (DL-186): Dashboard-frozen resize peers are retired; dashboard boards run the Usage board engine and move, resize, settle under gravity and Tidy as on the Usage page (WS-019, F3-515, F3-638), in the canonical text and the second and fifth acceptance criteria."
+  - "Amended 2026-10-10 (DL-180 leftover): the negative constraint against replacing the custom Home editor or Dashboard tab models with a generic tab implementation now forbids a strip or tab model of their own (F3-631)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -35887,13 +36006,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines how visible PMConcept7 acceptance evidence is owned and reviewed.
 split_recommended: false
-depends_on: [F3-514, F3-515, F3-516, F3-517]
+depends_on: [F3-514, F3-515, F3-516, F3-517, DL-186]
 unblocks: [ATS-036, ATS-037, ATS-038, ATS-039, ATS-040]
 acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -35918,11 +36037,14 @@ source_lineage:
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md#DL-186
 preserved_exact_tokens: [tests/fixtures/usage_gui, tests/fixtures/pm7_shared, actual pixels, frame-by-frame, accessibility]
 negative_constraints:
   - "Do not call concept reports or screenshots alone a canonical fixture suite."
   - "Do not claim final visual completion from geometry-only checks."
   - "Do not add accessibility bootstrap acceptance work."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): motion certification no longer asks for Dashboard-frozen resize peers; dashboard boards show the Usage board's live resize displacement (F3-517, ATS-037)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md]
 ```
 
@@ -36257,17 +36379,22 @@ canonical_text: >-
   fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel
   (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip
   and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's.
+  Amended 2026-10-10 (DL-186, P1 B and P10): the old Home widgets have left Home, so the widget step now teaches a
+  Usage widget: it opens the Home dashboard and asks the learner to add Upcoming resets with Add widget and then move
+  it to where they can glance at it (F3-638); it is finished by the Home board's own accepted add of that widget
+  followed by a move or resize of it, never by a timer, highlighting or a generic Next. The step and its contract are
+  PWIZ-035's.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, PWIZ-035]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, DL-186, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035)."
+  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10, DL-186; F3-638)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
@@ -36310,14 +36437,16 @@ source_lineage:
   - Concepts/pm7-tools/guided_tour_source.py
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply, NieR Mode, Adjust NieR look]
+  - Plans/Decision_Log.md#DL-186
+  - "Concepts/home-redesign/src/panels/js/52-tour.js and NUMBERS.md (widget_action) at c4e32ec0b7 on branch concept/home-panels-20261009 (the widget step as built; concept lineage only)"
+preserved_exact_tokens: [Planning Wizard, Assistant Chat, Teacher, Guided example, "What happens before Puppet Master changes my files?", "Ask Teacher anything about Puppet Master…", ELI5, "ELI5: Off", Reduced Motion, general.visual.reduce-animations, ui.guided_tour.toggle_eli5, ui.guided_tour.show_me, programmatic-focus-landmark, Pause, Skip Tour, Back, Try it, Show Me, Finish tour, "Change the look", "Sound off — click to turn on", general.visual.theme, general.visual.theme-mode, general.interaction.sound-effects, Explain this reply simply, cmd.chat.eli5.explain_reply, NieR Mode, Adjust NieR look, Upcoming resets]
 negative_constraints:
   - "Do not build a tooltip carousel, parallel demo application, or five-chapter tour."
   - "Do not rewrite, regenerate or replace the Teacher example answer for ELI5; its simpler version is one extra reply from Explain this reply simply (DL-126)."
   - "Do not clone live controls, fabricate success, or cancel owner work when a view closes."
   - "Do not use a provider, model, token budget, or protected AuthBrowserSession content for the deterministic lesson."
   - "Do not retain the superseded Usage-first/Chat-final film or revive the old five-chapter controller."
-  - "Do not omit navigation, real Chat movement, or the real widget practice; do not turn workspace instruction into a long feature checklist."
+  - "Do not omit navigation or the real widget practice; do not turn workspace instruction into a long feature checklist (amended 2026-10-10: the chat is never moved, F3-637, so no Chat movement is practised)."
   - "Do not put Reduced Motion into a separate tour chapter; keep the brief introduction with ELI5 and preference ownership in Settings."
   - "Do not restore `ui.guided_tour.toggle_reduced_motion`; ELI5 is the only tour-specific top-bar preference toggle."
   - "Do not persist Tour-bar Look or sound choices outside the Settings-owned effective prefs or invent new settings keys for them."
@@ -36329,6 +36458,7 @@ negative_constraints:
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
+  - "Amended 2026-10-10 (DL-186, P1 B, P10): the widget step teaches adding Upcoming resets to the Home dashboard and moving it; the old Home widgets are gone; the negative constraint no longer asks for Chat movement, which DL-180 retired."
 owner_boundary_notes:
   - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
@@ -43787,6 +43917,15 @@ are side panels, a workspace tab is still a project tab). The panels concept (it
 and the anatomy mock) is source lineage only: its class names, data attributes, scripts, storage keys, demo contents
 and harness hooks are not canon.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are compiled into this block's units in
+place, each with a dated note: F3-638 (every dashboard tab its own board on the Usage board engine, custom dashboards,
+Start from and presets; DL-186), F3-637 (a popped-out chat starts back in its column, the Usage board's 400 px floor;
+DL-187) with F3-042 and section 4.1 (the rail's Chat entry shows or hides the column), F3-635 with F3-490 (one Debug
+Console tab with session sub-tabs), F3-632 (every installed shell, an SSH hosts submenu and New dashboard in "+"),
+F3-631 (no terminal tab colours or icons; a kind's own tab-menu rows) and F3-521 (the tour's widget step teaches
+Upcoming resets). F3-515's layout event note records that Event Authority admitted payload 2.0.0 (DL-188). Addendum 2's
+items are cited as D29 to D31 (D41).
+
 ### F3-630 — The Universal Panel Model And Its Layout
 
 ```yaml
@@ -43955,12 +44094,12 @@ canonical_text: >-
   Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a strip of
   its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19 ("Strips
   shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between tabs, 2 px in
-  Retro (the 8 px gap approved by Jared on 2026-10-10). The active tab's plate overlaps the body by 1 px and joins it
+  Retro (the 8 px gap approved by Jared on 2026-10-10, D29). The active tab's plate overlaps the body by 1 px and joins it
   through the contact-aware silhouette of F3-505, generalised here from the editor and dashboard strips to every panel
   and every tab kind, so the active tab and its panel read as one shape. That fused shape is the only mark of the active
   tab: no underline, no accent line, no accent crown strip, no pill. In Friendly, Glass and Basic, light and dark, the
   plate takes the body's own fill; no look gives the active tab a separately coloured plate, Glass dark included (Jared,
-  2026-10-10: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
+  2026-10-10, D29: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
   material and never in an accent colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647).
   Contact is measured to the neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side.
   Crown, shoulder and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px;
@@ -43982,13 +44121,18 @@ canonical_text: >-
   whose last command failed shows the exit code after its label in the error colour; a tab an agent is using shows the 7
   px square agent mark and its hover tag names the agent; a running process shows a static busy glyph, never a spinner
   in Retro or NieR Mode. Every mark that names a state comes from the one status set (DL-141, F3-585), no tab invents
-  its own, and every mark is also in the tab's accessible name. The close target is 24 x 24 px with a 12 px glyph; it is
+  its own, and every mark is also in the tab's accessible name. Terminal tabs show no colour or icon of the person's
+  choosing on the strip (D34, DL-187): Jared asked for terminal tab colours and icons to be redesigned within Puppet
+  Master's neon glyph system, and until that redesign they stay off the strip (F3-449, F3-640). The close target is 24 x 24 px with a 12 px glyph; it is
   hidden on inactive tabs narrower than 96 px, where a middle click and Delete still close. The "+" (F3-632) is 28 x 28
   px, right after the last visible tab. "+N" is plain text in the strip's own type ("+7"; Retro "[+7]"; NieR Mode small
   caps after a hairline), never a badge. The strip is an ARIA tablist: arrows move between tabs, Home and End go to the
   ends, Enter or Space activates, Delete closes, and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open
   (on a preview tab), Pin or Unpin, Rename..., Move to new panel, Move to panel, and Split right or Split down with this
-  tab, each one command (cmd.panel_tab.close, keep, pin, unpin, rename, move). Rename sets a user label that the kind's
+  tab, each one command (cmd.panel_tab.close, keep, pin, unpin, rename, move). A kind may add rows of its own at the
+  end of the tab menu, after a hairline, through its registration (F3-635): the terminal adds Mute notifications
+  (F3-641). A kind's rows do what that kind registers for them, which need not be a command: Mute notifications is the
+  typed local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that the kind's
   own label no longer overrides; an empty name gives the kind's label back. Activating a tab is view state
   (ui.panel_tab.activate), with no receipt and no event. A tab label never shows an internal id. Tabs, strip buttons and
   dividers take at most a static tint on hover (F3-647). This unit supersedes the editor-and-dashboard scope of F3-505,
@@ -43997,7 +44141,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
-depends_on: [DL-180, DL-141, F3-505, F3-421, F3-585, F3-630, F3-635]
+depends_on: [DL-180, DL-187, DL-141, F3-505, F3-421, F3-585, F3-630, F3-635]
 unblocks: [F3-633, F3-647, DR-065, UCC-200, ATS-075]
 acceptance_criteria:
   - "Every panel, the dashboard's included, renders the same 35 px strip with 31 px tabs, 8 px apart (2 px in Retro)."
@@ -44009,7 +44153,8 @@ acceptance_criteria:
   - "Pinned tabs are 36 px, icon only, leftmost and never hidden; pin and unpin are reachable only from the tab menu."
   - "The dirty dot, italic preview label, hollow square, exit code, agent mark and busy glyph render as stated, come from the one status set, and are announced in the tab's accessible name."
   - "Close targets are 24 x 24 px and hidden on inactive tabs under 96 px, where middle click and Delete still close."
-  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's rows each dispatch one command."
+  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's own rows (Close, Keep open, Pin or Unpin, Rename..., Move to new panel, Move to panel, Split right or Split down) each dispatch one command; a kind's rows after the hairline do what that kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications, with no command (amended 2026-10-10, DL-187, D38: the criterion that every row of the tab menu dispatches one command now covers the menu's own rows only)."
+  - "No terminal tab shows a colour or an icon the person chose; a kind's own tab-menu rows come last, after a hairline."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44031,6 +44176,10 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D29: the 8 px gap and Glass dark's plate)"
+  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds after a hairline; concept lineage only)"
 preserved_exact_tokens:
   - "35 px"
   - "31 px"
@@ -44052,12 +44201,14 @@ negative_constraints:
   - "Do not show an internal id in a tab label."
 compatibility_only_notes:
   - "Slint portability: the split tree, the strip, the silhouette and every gesture are projections over the Rust-owned layout model (F3-HOME-005); the concept's DOM and CSS mechanics are not the product mechanism."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187, D34): Terminal tabs show no colour or icon of the person's choosing until the neon glyph system redesigns them; a kind may add its own rows at the end of the tab menu after a hairline (the terminal's Mute notifications)."
+  - "Amended 2026-10-10 (DL-187, D38): only the tab menu's own rows each dispatch one command; a kind's rows do what the kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-449
 
 ### F3-632 — The "+" Menu And The Empty Panel
 
@@ -44073,36 +44224,48 @@ canonical_text: >-
   row does the same. Ctrl+T (Alt+T in a web browser, F3-635) makes a new tab of the panel's usual kind without the menu:
   the panel's dedicated kind, else its active tab's kind, else an editor buffer. The rows, in this order: a
   type-to-filter field, "Open anything: kinds, files, URLs", focused when the menu opens, whose typing also finds files
-  and an address; Terminal (Ctrl+Shift+`), with a sub-row of shell profiles and SSH hosts from the terminal kind
-  (F3-640); Browser (Ctrl+Shift+B), with a sub-row of recent addresses; File... (Ctrl+P), with the three most recent
-  files inline, each clickable; Dashboard, with a sub-row of the project's dashboard boards (F3-638); Plan or
-  document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
+  and an address; Terminal (Ctrl+Shift+`), with a sub-row of every shell installed on the computer, from the terminal
+  kind (F3-640, D39); when the terminal kind knows SSH hosts, the row SSH hosts, right under Terminal; Browser
+  (Ctrl+Shift+B), with a sub-row of recent addresses; File... (Ctrl+P), with the three most recent files inline, each
+  clickable; Dashboard, with a sub-row of Home, Metrics, Monitoring, Agents, this project's custom dashboards by name
+  and New dashboard (F3-638); Plan or document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
   a hairline; Split right (Ctrl+\); Split down (Ctrl+Shift+\); Reopen closed tab (Ctrl+Shift+T, Alt+Shift+T in a web
   browser). Kinds join the menu through their registration (F3-635) in this order, and every row shows the shortcut that
-  works where the app runs. Recent files open as kept tabs (F3-634). A row that cannot act is shown disabled with its
+  works where the app runs. A sub-row lists all of its kind's entries unless the kind caps its own; the Terminal row
+  lists every installed shell (D39). SSH hosts opens a submenu with one row per host, its host name and, as the
+  second line, user@host; a host row's body opens that host in this panel and its trailing cell in a new panel, and
+  the submenu has a filter field of its own once it holds more than 7 hosts. Typing in the menu's field also lists the
+  hosts themselves ("SSH host · <detail>"), found by name or detail, and Enter opens one. Recent files open as kept tabs (F3-634). A row that cannot act is shown disabled with its
   reason on the row (Split right where the centre is too narrow to split, Reopen closed tab when nothing has been
   closed). Opening, filtering, browsing and closing the menu dispatch nothing; the chosen row dispatches its one open or
   split command (cmd.panel_tab.open, cmd.workspace_layout.split, cmd.panel_tab.reopen_closed). The menu opens in the one
   overlay root (DR-067) in the look's menu style (F3-647). An empty panel (the only panel in the centre, or a locked
   panel whose last tab closed) shows the same rows as a launcher: 32 px full-width list rows with the kind's icon, its
-  label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
+  label and its shortcut, no tiles and no pills, each row's sub-row under it as a line of links whose text starts 32 px
+  in from the row's edge (hidden in a panel under 360 px wide), the SSH hosts row opening its submenu from the row,
+  then the five most recent files, then a one-line hint. A sub-row that wraps never starts its new line with a
+  separator dot. The menu and the
   launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
   Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
   The Output row opens or reveals `output`, the one Output tab whose channel switches inside it (F3-635).
-  The Dashboard row body opens or reveals dashboard:home; its sub-rows open or reveal the other starting boards. No board is created, renamed or deleted in wave 1.
+  The Dashboard row body opens or reveals dashboard:home; its sub-rows open or reveal that dashboard, and New dashboard
+  makes a new, empty custom dashboard (D35, DL-186; F3-638).
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-631, F3-634, F3-635]
+depends_on: [DL-180, DL-186, DL-187, F3-630, F3-631, F3-634, F3-635]
 unblocks: [UCC-200, WM-090, PWIZ-035, ATS-075]
 acceptance_criteria:
   - "The \"+\" opens the menu and never creates a tab by itself; Ctrl+T creates a tab of the panel's usual kind."
-  - "The menu lists exactly, in order: the filter field, Terminal, Browser, File..., Dashboard, Plan or document..., Artifact..., the one Output, Problems, Ports, Debug Console row with its submenu, a hairline, Split right, Split down, Reopen closed tab, with the shortcuts and sub-rows stated here."
+  - "The menu lists exactly, in order: the filter field, Terminal, SSH hosts (only when the terminal kind knows hosts), Browser, File..., Dashboard, Plan or document..., Artifact..., the one Output, Problems, Ports, Debug Console row with its submenu, a hairline, Split right, Split down, Reopen closed tab, with the shortcuts and sub-rows stated here."
   - "A row's body opens a new tab in this panel; its 34 x 34 px trailing cell, Alt+click or Alt+Enter opens a new panel by the fit rule."
   - "Opening and browsing the menu dispatch nothing; each chosen row dispatches one command; disabled rows show their reason."
   - "An empty panel shows the same rows as 32 px full-width list rows, then five recent files, then a hint, with no tiles and no pills."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The Output row opens or reveals output and never makes output:<channel>; a reveal leaves its tab where it is."
+  - "The Terminal row's sub-row lists every installed shell; with SSH hosts known, an SSH hosts row right under Terminal opens a submenu of the hosts (a filter field above 7), whose row body opens a host here and trailing cell in a new panel, and typing in the menu's field finds a host by name or detail."
+  - "The Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this project's custom dashboards by name and New dashboard, which makes a new, empty custom dashboard."
+  - "The empty-panel launcher shows each row's sub-row as a line of links under it, hidden under 360 px of panel width, and no wrapped sub-row starts with a separator dot."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44117,13 +44280,20 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D6)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/38-menus.js on branch concept/home-panels-20261009 at 1565156bce (the disabled Split and Reopen closed tab rows with their reasons; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35, D39)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 3 and 7; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 1, the \"+\" menu row; concept lineage only)"
+  - "Concepts/home-redesign/NUMBERS.md at c4e32ec0b7 on branch concept/home-panels-20261009 (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7; the Dashboard sub-row as built; concept lineage only)"
 preserved_exact_tokens:
   - "output"
   - "Open anything: kinds, files, URLs"
@@ -44137,6 +44307,8 @@ preserved_exact_tokens:
   - "Split right"
   - "Split down"
   - "Reopen closed tab"
+  - "SSH hosts"
+  - "New dashboard"
   - "34 x 34"
   - "32 px"
 negative_constraints:
@@ -44146,13 +44318,15 @@ negative_constraints:
 compatibility_only_notes:
   - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards without creating, renaming or deleting boards."
+  - "Amended 2026-10-10 (DL-187, D39): The Terminal row lists every installed shell, SSH hosts get their own submenu row under it, the field finds hosts, and the launcher shows each row's sub-row as links."
+  - "Amended 2026-10-10 (DL-186, D35): The Dashboard sub-row adds this project's custom dashboards and New dashboard; L10's interim rule that no board is created, renamed or deleted is answered."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-640
 
 ### F3-633 — The "+N" List Of Hidden Tabs
 
@@ -44297,7 +44471,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -44327,7 +44501,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept names its module PM_HOME.open and its chat bridge openEditor; those names are concept lineage, not product names."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
@@ -44359,10 +44533,11 @@ canonical_text: >-
   transcript (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
   detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>` only for a channel
   split off with "Open in new tab", showing only that channel); problems
-  (`problems`); ports (`ports`); and debug_console (`debug-console:<session>`). The document kinds are editor, plan,
+  (`problems`); ports (`ports`); and debug_console (`debug-console`, one Debug Console tab with a sub-tab per debug
+  session, the session shown being its view state; F3-490). The document kinds are editor, plan,
   document, artifact, run, transcript, context and record; terminal, browser, dashboard and the four tool kinds output,
   problems, ports and debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools.
-  Problems and Ports are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147), Activity Detail (it
+  Problems, Ports and the Debug Console are one tab each per workspace. Never a kind: the chat's Goal tab (DL-147), Activity Detail (it
   stays inside the chat, F3-637), the chat's lab-only workspaces, and wand setup sheets (they stay app modals). A tab id
   is opaque and stable, its prefix names its kind, and one id is one tab in the whole workspace; an id with an unknown
   prefix opens nothing, and two kinds claiming one prefix is a start-up error. Tab identity is separate from domain
@@ -44375,8 +44550,8 @@ canonical_text: >-
   artifact tab (RAP-065), the Your rules document (F3-579) a document tab, and F3-297's editor-tab Browser a browser
   tab. Each kind registers its label, its group name for the "+N" list, its icon (a bundled
   SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and
-  sub-row, how it makes a tab id for an open (the terminal mints a new session), how it mounts, what it serializes and
-  whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
+  sub-row, how it makes a tab id for an open (the terminal mints a new session), the older id forms it folds into one
+  tab, the rows it adds to the tab menu (F3-631), how it mounts, what it serializes and whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
   background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer's tab state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
   terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes against the
   window, only against its own width and height; it is told when they change, with a last call once a divider drag or a
@@ -44405,7 +44580,13 @@ canonical_text: >-
   keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as Alt+T, Alt+W, Alt+Shift+T, Alt+`
   (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432, keyboard), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
   F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
-  The channel shown in `output` is view state, never part of its id (Addendum 2 D28).
+  The channel shown in `output` is view state, never part of its id (D31). The Output tab is labelled Output and a
+  split-off channel tab Output · <Channel>; opening a channel from anywhere switches `output` to it (F3-634).
+  The Debug Console is one tab, `debug-console`, with a sub-tab for each debug session (D33, DL-187); which session
+  it shows is view state, with no command, saved with the tab (lead ruling F6), and an open that names a session
+  reveals the tab and switches it to that session. An id of the earlier one-tab-per-session form,
+  `debug-console:<session>`, folds into `debug-console` with that session shown wherever it appears: in an open, in a
+  saved layout or a named layout, and in the reopen list.
   A tab's typing field, including the terminal input and the editor's IME field, passes the panels'
   navigation keys to the host once the tab declines the key: Alt+1..9, Alt+Shift+1..9, Alt+arrows,
   Alt+Shift+arrows, Alt+PgUp/PgDn in the web client (Ctrl+PgUp/PgDn in the desktop app), Ctrl+P,
@@ -44437,8 +44618,10 @@ canonical_text: >-
   below 520 px and line/column and folder below 360 px; saved view state is error/warning/info visibility
   and collapsed files. Ports columns are 96 px / 1fr / 1.3fr / 140 px / 220 px; below 760 px Origin hides
   and actions become icon-only in 108 px; below 480 px rows stack; actions are 32 px and rows at least 44
-  px. Ports saves added and removed port numbers. Debug Console caps at 400 lines, input history at 30 (20
-  saved), with a 34 px input row and session/history saved state. Browser and Debug Console fields have one
+  px. Ports saves added and removed port numbers. Each Debug Console session keeps its own console, capped at 400
+  lines, its own state and its own frame; input history keeps 30 entries, 20 of them saved, and stays per session as
+  F3-490 says; the input row is 34 px, and the tab saves the session shown and the history (amended 2026-10-10,
+  DL-187, D33). Browser and Debug Console fields have one
   focus ring drawn by the header row, with no second field border, shadow or outline. The source's scripted
   Output preview begins after 700 ms, adds a line every 260-680 ms and pauses 1.8-5 s; Debug Console preview
   Continue re-hits at 1.9 s and Restart pauses at 1.7 s (60 ms under Reduced Motion). Those scripted timings
@@ -44520,7 +44703,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
-depends_on: [DL-180, DL-181, DL-147, F3-568, F3-630]
+depends_on: [DL-180, DL-181, DL-187, DL-147, F3-568, F3-630]
 unblocks: [F3-640, SP-330, UCC-200, CS-100, RAP-065, WS-030, DR-065, DR-067, G-030, ATS-075]
 acceptance_criteria:
   - "Exactly the fifteen kinds listed here are registered, each with the id prefixes stated, and no Goal tab, Activity Detail, lab-only workspace or setup sheet is a kind."
@@ -44534,6 +44717,8 @@ acceptance_criteria:
   - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
+  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
+  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
   - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44552,7 +44737,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D9, D11, D12)"
@@ -44560,6 +44745,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and fold; concept lineage only)"
+  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)"
 preserved_exact_tokens:
   - "Open in new tab"
   - "output:<channel>"
@@ -44578,6 +44768,7 @@ preserved_exact_tokens:
   - "problems"
   - "ports"
   - "debug_console"
+  - "debug-console"
   - "dashboard:home"
   - "16 KB"
   - "30 px"
@@ -44596,6 +44787,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
+  - "The panels concept (339203bd76) shares one Debug Console input history across its sessions; canon keeps the history per session, as F3-490 already said, and the concept's demo sessions are demo data."
   - "The concept browser's demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask; Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092)."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers Ctrl+PgDn/PgUp as Alt+PgDn/PgUp."
@@ -44604,7 +44796,9 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded editor-buffer state."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
+  - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
@@ -44612,7 +44806,7 @@ owner_hints:
   - Plans/Glossary.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-490
 
 ### F3-636 — Narrow Windows: The Centre-Width Ladder
 
@@ -44646,10 +44840,13 @@ canonical_text: >-
   returns at 1210 px going wider, and the chat folds to its strip at 930 px going narrower and unfolds at
   990 px going wider. These are measured outcomes of the C keys above, not window-width keys. The ladder
   uses 48 px hysteresis; these transition pairs and temporary History drops are never saved.
+  Amended 2026-10-10 (DL-187): the ladder acts only while Home is the page shown, since it measures Home's centre; on
+  the Usage page the chat keeps the Usage board at least 400 px wide instead, and on other pages the chat column is the
+  person's width (F3-637).
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
-depends_on: [DL-180, F3-471, F3-630, F3-637]
+depends_on: [DL-180, DL-187, F3-471, F3-630, F3-637]
 unblocks: [SSYS-050, ACD-500, ATS-075]
 acceptance_criteria:
   - "Every narrow step keys on the centre width (window minus rail minus chat), never on the window width."
@@ -44678,6 +44875,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D4)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/44-narrow.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the ladder only while Home is the page; concept lineage only)"
 preserved_exact_tokens:
   - "960"
   - "760"
@@ -44692,6 +44890,7 @@ negative_constraints:
   - "Do not fold the chat before the rail's side panel."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds History drop and strip fold thresholds with the rail folded, without saving narrow state."
+  - "Amended 2026-10-10 (DL-187): The ladder acts only while Home is the page shown; the Usage page keeps its own 400 px board floor (F3-637)."
 compatibility_only_notes: []
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -44713,11 +44912,18 @@ canonical_text: >-
   and it is never moved, docked, grabbed or floated inside the window: it carries no grip and no surface menu of the
   home centre. Its default width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a
   1470 px window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between 400 and 760
-  px, never so wide that the centre drops below 960 px; the drag previews locally and commits once on release as
+  px, never so wide that the centre drops below 960 px, and on the Usage page never so wide that the Usage board drops
+  below 400 px (below); the drag previews locally and commits once on release as
   cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the v2 layout record (SP-330), and a
-  width the user never set follows the window. Showing and hiding the chat stay cmd.panel.switch with chat. The narrow
-  ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that opens
-  it again; the setting "Keep the chat open in narrow windows" (SSYS-050) keeps it open instead. Pop out is the only way
+  width the user never set follows the window. Showing and hiding the chat stay cmd.panel.switch with chat, and the
+  left rail's Chat entry shows or hides the column on every page without changing the page in front (F3-042, D40). The
+  narrow ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that
+  opens it again; "Keep the chat open in narrow windows" keeps it open instead. That toggle is the chat's own
+  preference, not a Settings row: it sits in the chat header's menu (ACD-442) and in the title bar's Home options menu
+  (the planning thread's ruling of 2026-10-10 under D4). Amended 2026-10-10 (lead ruling): it is a check in the chat
+  header's menu, and the concept also offers it in the Home options menu; both dispatch the same typed local action,
+  ui.chat_column.keep_open with its argument keep_open, whose value is saved in the v2 record's chat column as
+  keep_open (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way
   to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
   Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
   Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
@@ -44730,7 +44936,16 @@ canonical_text: >-
   minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
   popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
   and the 360 px chat beside an open document of APR-038 and F3-569.
-  After a restart the chat starts in its column (F3-504); whether a popped-out chat reopens popped out is an open question for Jared.
+  After a restart the chat starts in its column, also when it was popped out as the app closed (Jared, D32; F3-504):
+  the pop-out is never saved, while the column's visibility and width are (SP-330). A Chat Layout value saved before
+  this redesign, Overlay or Detached, never pops the chat out at start: general.visual.chat-layout-mode retires, and a
+  stored value is ignored and cleared on first read, with no pop-out and no notice (SSYS-050).
+  On the Usage page the chat never squeezes the Usage board below 400 px, the narrowest board every Usage widget's
+  smallest preset is checked at (Plans/Widget_System.md#WS-017; the planning thread's ruling of 2026-10-10): a pinned
+  History drops back to its flyout first, then the column gives way down to its 400 px minimum, and it grows back
+  toward the person's width as the board gets room again; a width drag there stops where the board would drop below
+  400 px. None of this is saved beyond the width the person dragged to. The narrow ladder of F3-636 runs only while
+  Home is the page shown; on any other page the column is the person's width, plus a pinned History.
   ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
   The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240 px to
   the column, or 200 px while the whole column is under 540 px; the messages keep their width. The pinned
@@ -44746,7 +44961,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
-depends_on: [DL-180, F3-504, F3-527, F3-630]
+depends_on: [DL-180, DL-187, F3-504, F3-527, F3-630]
 unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
 acceptance_criteria:
   - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
@@ -44755,6 +44970,12 @@ acceptance_criteria:
   - "Pop out in the desktop app opens the one chat in its own window and Dock back returns it to its column; no second chat surface ever exists."
   - "History opens as a flyout by default and pinning it widens the column by the list's width without narrowing the messages; Activity Detail stays in the chat."
   - "Below a centre width of 480 px the chat folds to a 32 px strip unless Keep the chat open in narrow windows is on."
+  - "Keep the chat open in narrow windows is reachable from the chat header's menu and the title bar's Home options menu and is not a Settings row."
+  - "Keep the chat open in narrow windows is a check in the chat header's menu and in the Home options menu; both dispatch ui.chat_column.keep_open with keep_open, and the value is saved in the v2 record's chat column (SP-330), never in Settings (amended 2026-10-10, lead ruling)."
+  - "After a restart a chat that was popped out shows in its column, and no stored Chat Layout value (Overlay or Detached) pops it out or shows a notice."
+  - "The left rail's Chat entry shows or hides the column on every page and never changes the page in front."
+  - "On the Usage page no chat width, drag or pinned History leaves the Usage board below 400 px: a pinned History drops to its flyout first, then the column gives way down to 400 px, and a drag stops there."
+  - "The narrow ladder acts only while Home is the page shown; on another page the column is the person's width plus a pinned History."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "History adds 240 px, or 200 px below a 540 px whole-column width, without changing the message area's width or its 400-760 px drag range; the pinned column and peek obey the stated minima and centre budget."
 validation_surfaces:
@@ -44781,6 +45002,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept lineage only)"
+  - "The planning thread's rulings of 2026-10-10: the Usage board's 400 px floor (pm-mail 1010142236-fced) and Chat Layout's retirement with the narrow-window pin on the chat's header menu (pm-mail 1010211322-7b6c)"
+  - "Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the Usage board floor as built; concept lineage only)"
 preserved_exact_tokens:
   - "clamp(400, 0.26667 x window width + 88, 640)"
   - "400"
@@ -44792,12 +45018,15 @@ preserved_exact_tokens:
   - "cmd.panel.undock"
   - "cmd.panel.redock"
   - "Keep the chat open in narrow windows"
+  - "general.visual.chat-layout-mode"
   - "The chat assistant window should be full vertical height, unless it pops out, then the user can adjust it."
 negative_constraints:
   - "Do not dock, grab, float or move the chat inside the window or, in the web client, inside the page, or make it a tab."
   - "Do not size the chat against the window inside its column."
   - "Do not make Activity Detail or the History list a panel tab."
   - "Do not keep a second thread-history list."
+  - "Do not save the chat's pop-out across a restart, or let a stored Chat Layout value pop it out."
+  - "Do not let the chat leave the Usage page's board below 400 px."
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
@@ -44806,13 +45035,17 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history, view state saved in the v2 record's chat column as history_pinned with no event; this supersedes the earlier L9 wording 'commits history_pinned with chat_column_changed'."
   - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
   - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
+  - "Amended 2026-10-10 (DL-187, D32): Jared answered L7's question: a popped-out chat starts back in its column after a restart, the pop-out is never saved, and a stored Chat Layout value (general.visual.chat-layout-mode, retired) never pops it out."
+  - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
+  - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
+  - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-504, ContractName:Plans/UI_Command_Catalog.md#UCC-203
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-504, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-042, ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/Settings_System.md#SSYS-050
 
 ### F3-638 — The Dashboard Tab
 
@@ -44822,46 +45055,137 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). A dashboard tab shows the Usage page's
-  widget design and can show every Usage widget; Orchestrator widgets join after the Orchestrator page's own redesign,
-  and Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Several
-  dashboard tabs may be open, each a board with its own widget layout; `dashboard:home` is the Home dashboard, pinned in
-  the default layout (F3-630), and the "+" menu's Dashboard row lists the project's boards (F3-632). A dashboard tab
-  sits in the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the
-  tab the board is the Usage widget board: its snapping widget grid, its Add widget flow, its widget gestures and its
-  settled sizes live inside the tab only, and never lay out panels (DR-066). The board's columns follow the dashboard
-  tab's own width (F3-635), never the window. Hosting, the boards, the per-board widget layout
-  `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are
-  Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this
-  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are
-  Plans/Widget_System.md#WS-017's one per-kind table (DL-176). A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
-  widgets. This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
-  C.4.1, F3-517's "distinct tab models" for Home and Dashboard, section 7.2's singleton dashboard, and the dashboard's
-  own Main, Metrics and Monitoring strip of F3-505.
-  Dashboard body padding is 12/12/16 px, or 8/8/12 below 420 px width. Agents cards use tracks of at least
-  240 px and one column below 420 px. Below 200 px height the shared-holder note hides its icon and sub-
-  line; the shared header is icon-only below 520 px and hidden below 150 px. Add widget is a 24 px target,
-  about 98-119 px with its label and 24 × 24 px below 520 px; Show it here and Open transcript use 32 px
-  document actions. Text formerly 10 px or 9 px inside the board is 11 px; compact status labels are 11/16
-  px with 10 px glyphs, lane dots 8 px and agent bars 4 px high with a 1 px radius. Card buttons have an 8
-  px radius and header Add widget 6 px, both 0 in Retro and NieR. The visible Agents clock ticks every 1 s;
-  the source preview's working progress increases 1 % per 9 s, caps at 96 % and transitions in 260 ms,
-  stepped in NieR and instant under Reduced Motion. Agents filters are all, working, needs, waiting and
-  done; the non-default filter is per-tab state and saves coalesced at about 250 ms. Shared grid content has
-  one holder: explicit activate or reveal claims it; an open while another grid is visible shows the note;
-  hiding hands over to another visible grid and closing parks it. Widget-grid columns, reset sizes and
-  reset-save timing are Plans/Widget_System.md#WS-030's.
+  A dashboard is a tab kind (F3-635), not a singleton surface (DL-180, D10). Every dashboard tab holds its own board on
+  the Usage board engine (DL-186): it shows the Usage page's widget design and can show every Usage widget, and
+  Plans/usage-feature.md#UF-062's rule that every Usage widget can be hosted on the dashboard now holds. Boards are
+  built for more than one widget source: Usage widgets now, Orchestrator widgets after the Orchestrator page's own
+  redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands'
+  payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
+  Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
+  make as many custom dashboards as they like (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
+  Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The
+  old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine
+  after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard
+  kind itself, not by the board engine: one card per agent at work, each opening that agent's transcript as a kept tab
+  (Alt+click in a new panel), with the filters All agents, Working, Needs you, Waiting and Finished in its Show menu;
+  it has no widgets and no board record, and resetting it means its filter (lead ruling F7). A dashboard tab sits in
+  the same tab strip as every other tab (F3-631): it has no strip of its own and no second tab model. Inside the tab
+  the board is the Usage widget board: its widget grid, its gestures, gravity and Tidy behave exactly as on the Usage
+  page, each settled change one transaction (Plans/Widget_System.md#WS-019), and they act inside the tab only, never
+  laying out panels (DR-066). The board lays out on the Usage board's tracks and width classes
+  (Plans/Widget_System.md#WS-017), measured on the tab's own width, never the window (F3-635), and it sits on Home's
+  tab surface, not the Usage page's background, in every look (P11). Each board's contents are kept per project
+  (`widget_layout:v1:<project_id>:<board_id>`; the keys, the one-time adoption of an older key and the records are
+  Plans/Widget_System.md#WS-030's and Plans/storage-plan.md's), so a project switch shows each dashboard tab with that
+  project's board and a project lists only its own custom dashboards. A dashboard's widget layout is never stored
+  inside the Home layout record, and Home's panels are not widgets.
+  The header row is F3-635's shared row. Its left side shows the dashboard's name, the Live mark while Live readings
+  are on and the board holds a Usage widget, the widget count ("N widgets", "1 widget" or "No widgets") and the range,
+  with the scope when it is not all usage; its right side shows Add widget, Board and Maximize (Restore while
+  maximized; Shift+Escape). The Live mark is the Usage page's own indicator in each look's words (Live; Retro [LIVE];
+  NieR Mode LIVE) and pulses once for each live change the board applies, never between them and never under Reduced
+  Motion. On Agents the left side counts the agents at work ("N agents · N working · N need you", and "Showing
+  <filter>" under a filter) and Show takes the place of Add widget and Board.
+  Add widget opens a searchable list ("Find a widget") of every widget the board can be given: a section for each
+  Usage room in the Usage page's room order (F3-514), then the Usage widgets that belong to no room, then one section
+  for each other widget source under its label. Each row's second line names its room or source and what kind of
+  widget it is in plain words; a widget already on the board is checked and disabled with the reason "Already on this
+  dashboard". Choosing one adds it (cmd.widget.add), scrolls to it and moves focus onto it.
+  The Board menu holds, in order: Dashboards (Home, Metrics, Monitoring, Agents, this project's custom dashboards by
+  name with their widget counts, and New dashboard; the current one checked); This dashboard (Range, Scope, Start
+  from, Save as preset..., Tidy, Reset widgets); Live (Live readings); and, on a custom dashboard only, after a
+  hairline, Rename dashboard... and Delete dashboard.... On Agents it holds Dashboards and Show. On an empty board Save
+  as preset... and Tidy are disabled with their reasons ("Add a widget first", "Nothing to tidy yet"). Range (Last 5
+  hours, Last 24 hours, Last 7 days, Last 30 days) and Scope (All current usage, Work accounts, Personal accounts, or
+  one provider) belong to each dashboard and change only its board, independent of the Usage page's (P2); choosing one
+  is the typed local action ui.widget_board.set_view, view state kept in the board's record with no receipt and no
+  event (lead ruling F1). Live readings is the Usage page's own Live / Paused choice, one switch shared with the Usage
+  page (Plans/usage-feature.md#UF-107). Tidy and Reset widgets are the board's own (WS-019, WS-030): Reset widgets
+  returns Home, Metrics and Monitoring to their default sets and a custom dashboard to empty.
+  Start from lists the sets a board can start from in four groups (P4): This dashboard (the board's own default),
+  Dashboard starter, Usage rooms (the Usage page's 13 room sets, in its room order) and Your presets. Each row's second
+  line says what the set holds, a preset adding the day it was saved, and the active set is checked; a filter field
+  ("Find a room or a preset") appears once there are more than three presets. Choosing a set replaces the board's
+  widgets with it through one cmd.widget.reset_layout naming the set (set_id; WS-030). Because Start from replaces the
+  widgets, an Undo notice then shows at the foot of the tab for 8 s, held while the pointer or focus is on it and for 3
+  s after; it ends at the next change to the board's widgets, on Escape (focus returns to Board), on a project switch
+  and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo
+  dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
+  being the board's committed layout revision just before that Start from, with one receipt and only while the
+  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore whose
+  revision is no longer the board's previous one is refused with a disabled reason, and it emits no
+  workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button
+  opens the same list.
+  Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks
+  for a name, starting from the dashboard's name made unique; a name is trimmed, its spaces collapsed and kept to at
+  most 80 characters, and a preset saved without one is called "Preset <n>". With no presets, Your presets holds "Save
+  this dashboard as a preset..."; with some, its last row, "Rename or delete presets", lists them, each with Start
+  from this preset, Rename preset... and Delete preset... behind a confirm (Delete preset or Keep it). A dashboard that
+  started from a deleted preset keeps its widgets. A preset keeps the widgets shown at each board width class with
+  their sizes and settings, never the board's own range and scope. Saving, renaming and deleting a preset are the
+  typed local actions ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, with no command;
+  using one is cmd.widget.reset_layout with set_id user:<id> (lead ruling F2).
+  New dashboard, in the Board menu, the "+" menu's Dashboard sub-row (F3-632) and the catalog, makes a custom dashboard
+  (D35); so does a new tab or a split in a panel whose usual kind is the dashboard (Ctrl+T, F3-632). It starts empty
+  and is called "Dashboard <n>". Rename dashboard... asks for a name and renames the tab with cmd.panel_tab.rename;
+  renaming the tab renames the dashboard too, and clearing the tab's label gives back "Dashboard <n>". A name is
+  trimmed and kept to at most 80 characters, and is kept per project with the board (WS-030). The name shows on the
+  tab, in the header row, in the Board menu, in the "+" menu and in the catalog. Delete dashboard... asks first
+  ("Delete <name>?": Delete dashboard, whose widgets cannot be brought back, or Keep it), then closes the tab
+  (cmd.panel_tab.close), drops it from the reopen list and forgets its board and its name; it leaves the "+" menu and
+  the catalog. Home, Metrics, Monitoring and Agents can be reset but never deleted, and show neither Rename
+  dashboard... nor Delete dashboard...; a label the person gives one of their tabs names that tab only (F3-631).
+  A closed custom dashboard keeps its board while it can be reopened from the reopen list and is forgotten when it
+  leaves the list, unless it is open as a tab; the built-in dashboards keep theirs (P6). A saved named layout keeps the
+  boards of the dashboards it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its
+  boards and says so (lead ruling F3; Plans/storage-plan.md#SP-330); applying the layout puts back the boards it kept,
+  and a named layout saved before this applies as before.
+  A board's first show plays the Usage page's calm reading-order entrance, and none under Reduced Motion (P7). An empty
+  board shows an invitation over the board, which stays laid out beneath it: a small sketch of a board, "<Name> is
+  empty", one line saying what to do, and Add widget and Start from... buttons; a new, empty dashboard puts focus on its
+  Add widget, and otherwise focus goes to the board's first card in reading order. Details on a widget opens the Usage
+  page at that widget's room with its inspector open (P8). Live readings apply to dashboards too, each board
+  separately, with the Usage page's idle rule (F3-628, UF-107): nothing animates at idle except one live change per
+  applied batch while Live is on, and a board that is not on screen does no live work (P12). Play the next hour, Back
+  to now and the Demo time, which the concept also runs on dashboards, stay the lab-only demo controls UF-107
+  classifies, part of the one Demo Studio (F3-649), never product controls. This supersedes F3-279's exact four-widget
+  catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and
+  Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard,
+  and the dashboard's own Main, Metrics and Monitoring strip of F3-505.
+  Measurements: the tab body pads its board and the Agents cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
+  width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
+  520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
+  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly #C2557A,
+  #E07BA0 in dark; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
+  diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks,
+  a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px
+  below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in
+  Retro and NieR Mode); it enters in 220 ms, rising 8 px, and leaves in 160 ms, with no motion under Reduced Motion. The
+  empty board's invitation has 24, 20 and 32 px of padding; its sketch of three 44 px tracks by 30 px rows hides below
+  320 px of height and its line below 220 px; its title is 15/21 px and its line 12.5/18 px, at most 360 px wide; its
+  buttons sit 18 px below, 8 px apart; its tiles enter 40 ms apart over 320 ms and its words and buttons follow from
+  160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; the concept's
+  working progress gains 1 % every 9 s up to 96 % and moves in 260 ms, stepped in NieR Mode and at once under Reduced
+  Motion; a filter other than All agents is that tab's own state, saved about 250 ms after it changes.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
-depends_on: [DL-180, F3-514, F3-631, F3-635]
+depends_on: [DL-180, DL-186, F3-514, F3-631, F3-635]
 unblocks: [WS-030, ATS-075]
 acceptance_criteria:
-  - "A dashboard opens as a tab of kind dashboard in any panel; several may be open, each with its own board and layout."
-  - "A dashboard tab can show every Usage widget, and no four-widget limit applies."
+  - "A dashboard opens as a tab of kind dashboard in any panel; several may be open, each holding its own board on the Usage board engine, and Agents is drawn by the kind with its filters and no board record."
+  - "A dashboard tab can show every Usage widget, no four-widget limit applies, and no old Home widget (run progress, lanes, results) or Home (current) board appears on any dashboard."
+  - "Home, Metrics and Monitoring open with their own default sets; a new custom dashboard opens empty, shows the invitation with Add widget and Start from..., and puts focus on Add widget."
   - "A dashboard tab uses the panel's one strip and has no strip of its own."
-  - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels."
-  - "The board's column count follows the tab's own width, and a dashboard's widget layout is never written into the Home layout record."
+  - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels; gravity and Tidy behave as on the Usage page, each settled change one transaction."
+  - "The board's width class follows the tab's own width, the board sits on Home's tab surface in every look, and a dashboard's widget layout is never written into the Home layout record."
+  - "Range and scope are chosen per dashboard and change only that board, through ui.widget_board.set_view with no receipt and no event."
+  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused with a disabled reason once that revision is no longer the board's previous one (amended 2026-10-10, lead ruling)."
+  - "Saving, renaming and deleting a preset dispatch no command; a saved preset shows in Start from on every dashboard of every project, and deleting it leaves the dashboards that used it unchanged."
+  - "A custom dashboard is renamed from Rename dashboard... or by renaming its tab, each renaming the other, and is deleted only after the confirm, which closes its tab and forgets its board and name; Home, Metrics, Monitoring and Agents show no Rename dashboard... or Delete dashboard...."
+  - "Each board's contents belong to the project: a project switch shows that project's boards and lists only its own custom dashboards."
+  - "A closed custom dashboard can be reopened with its board while it is in the reopen list and is forgotten once it leaves it unless it is open; a named layout puts back the boards it saved, and a save whose boards exceed 64 KB keeps the layout without them and says so."
+  - "A board's first show plays the reading-order entrance (none under Reduced Motion); Details opens the Usage page's inspector for that widget; a board that is not on screen does no live work, and nothing animates at idle except one live change per applied batch while Live is on."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44873,11 +45197,18 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
   - Plans/usage-feature.md
+  - Plans/storage-plan.md
 node_compile_hint:
   mode: gui_promotion_contract
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-186"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; design lineage only)"
+  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10)"
+  - "Concepts/home-redesign/NUMBERS.md (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7) and CONTRACT.md section 3.1 (SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9) at c4e32ec0b7 on branch concept/home-panels-20261009 (the dashboard kind as built; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/kinds/30-dashboard.js at c4e32ec0b7 on branch concept/home-panels-20261009 (labels, prompts and confirms as built; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D10)"
@@ -44886,21 +45217,43 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
 preserved_exact_tokens:
   - "dashboard:home"
-  - "widget_layout:v1:dashboard:<board_id>"
+  - "dashboard:dash-<n>"
+  - "widget_layout:v1:<project_id>:<board_id>"
   - "UF-062"
+  - "Start from"
+  - "set_id"
+  - "Save as preset..."
+  - "Rename dashboard..."
+  - "Delete dashboard..."
+  - "New dashboard"
+  - "Reset widgets"
+  - "Already on this dashboard"
+  - "ui.widget_board.set_view"
+  - "ui.widget_preset.save"
+  - "64 KB"
 negative_constraints:
   - "Do not limit a dashboard tab to the four widgets of F3-279."
   - "Do not lay out panels with the widget grid or store dashboard widget layout in the Home layout record."
   - "Do not give a dashboard tab a strip or tab model of its own."
+  - "Do not keep the old Home widgets, a Home (current) board or a dashboard engine of its own beside the Usage board engine."
+  - "Do not delete Home, Metrics, Monitoring or Agents, or offer Rename dashboard... on them."
+  - "Do not dispatch a command or emit an event for a dashboard's range or scope, or for saving, renaming or deleting a preset."
+  - "Do not draw a dashboard's board on the Usage page's background, or let a board that is not on screen do live work."
+compatibility_only_notes:
+  - "Earlier text, lineage only (DL-180, 2026-10-09): Several dashboard tabs may be open, each a board with its own widget layout; `dashboard:home` is the Home dashboard, pinned in the default layout, and the \"+\" menu's Dashboard row lists the project's boards. The board's columns follow the dashboard tab's own width, never the window. Hosting, the boards, the per-board widget layout `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are Plans/Widget_System.md#WS-017's one per-kind table (DL-176)."
+  - "Earlier text, lineage only (R35, panels NUMBERS 6026fa8432): Below 200 px height the shared-holder note hides its icon and sub-line. Add widget is a 24 px target, about 98-119 px with its label and 24 × 24 px below 520 px; Show it here and Open transcript use 32 px document actions. Text formerly 10 px or 9 px inside the board is 11 px; compact status labels are 11/16 px with 10 px glyphs, lane dots 8 px and agent bars 4 px high with a 1 px radius. Card buttons have an 8 px radius and header Add widget 6 px, both 0 in Retro and NieR. Shared grid content has one holder: explicit activate or reveal claims it; an open while another grid is visible shows the note; hiding hands over to another visible grid and closing parks it. Widget-grid columns, reset sizes and reset-save timing are Plans/Widget_System.md#WS-030's. These described the old Home widgets moved between dashboard tabs, which left Home with DL-186."
+  - "The concept keeps custom dashboard names in pm.home.dashboards:v1:<project>, names its engine and hooks PMU.boards and PMW.dashboard, and gives its preset record a schema id of its own; those are concept lineage. `widget_presets:v1` is the product key for the person's presets (section 15.1), and the records are WS-030's and storage-plan's."
+  - "The concept's agents, their models and progress, and its build-failure notes for a missing board engine are demo data or build lineage, not canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
-compatibility_only_notes: []
+  - "Amended 2026-10-10 (DL-186): Every dashboard tab is its own board on the Usage board engine: built-in and custom dashboards, per-project boards, per-dashboard range and scope, Start from with set_id and Undo, presets, rename and delete, the reopen-list and named-layout rules, the entrance, the empty board, Details to the Usage inspector, Home's tab surface and live readings per board; the old Home widgets, the shared-holder note and the wave 1 board key leave."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/usage-feature.md#UF-062, ContractName:Plans/FinalGUISpec.md#F3-279
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/usage-feature.md#UF-062, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/FinalGUISpec.md#F3-279
 
 ### F3-639 — The Code Editor Tab
 
@@ -45003,7 +45356,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
@@ -45027,8 +45380,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35 review, SP-330): A buffer's tab state keeps title, language and edit or read-only state only; its text stays out of the Home record and the concept's 12,000-character text state is lineage (lead ruling L25: SP-330 does not admit buffer text)."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/FileManager.md
@@ -45118,7 +45471,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D23, D24)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728 (the NieR lead's rule for new surfaces)"
@@ -45146,7 +45499,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the shared icon glyph grammar and primary-button luminance crossover."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Requires page-derived text and state contrast and luminance-selected primary-button ink."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:
   - Plans/FinalGUISpec.md
@@ -45289,6 +45642,8 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/DRY_R
 
 This addendum compiles the owner decisions DL-181 (the terminal rebuilt as one session per tab, its chrome, what it helps you do, and agents and people sharing a terminal), DL-182 (images) and DL-183 (schemes, backgrounds, effects and fonts), with the lead rulings those cards record. The terminal is one tab kind of F3-635 and lives in the panels of F3-630; its session model is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, and its engine stays DL-035's own (SMPFS-184). The units below own the terminal tab's presentation only. They supersede F3-062 (the bottom runtime workgroup strip) and F3-450 (the four-pane split guard), and retire the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064, Appendix B's locked decision 12, the section 16 "4-split terminal" mapping and section 7.4.1's quadrant and explanations wording. They amend F3-065, F3-083, F3-120, F3-121, F3-194, F3-221, F3-226, F3-228, F3-245, F3-431, F3-449, F3-544, F3-546, F3-549 and the DL-035 consumer preamble. F3-193, F3-216, F3-238, F3-249, F3-357 to F3-361, F3-372, F3-412 to F3-416, F3-545, F3-547, F3-548, F3-582 and F3-583 stand unchanged. The rules stay with their owners: SMPFS-181 (image protocols, hardening and quotas), SMPFS-182 (agents and people), SMPFS-183 (marks, links, find, copy mode, progress, the bell, IME and the accessible buffer), SP-331 and SP-332 (storage), SSYS-051 (the Settings rows), UCC-201 (the commands) and DR-068 (one appearance model). General code text across the app stays with DL-161, F3-426 and F3-430. The terminal concept (branch `concept/home-terminal-20261009`, its SPEC and its architecture) is source lineage only: its class names, data attributes, script globals, settings keys, storage keys and harness hooks are not canon.
 
+Amended 2026-10-10 (DL-187): F3-640 and F3-641 add a program's notifications and the per-terminal mute (D38), the installed shells and SSH hosts under New terminal (D39), no terminal tab colours or icons (D34) and the restore notice's left-out secrets (D36), and F3-644 follows terminal SPEC 01c5e78c42 section 4 (every face the page's own, its script slices and its italics). F3-646 was checked against that SPEC's section 8, which did not change.
+
 ### F3-640 — The Terminal Tab's Chrome
 
 ```yaml
@@ -45306,7 +45661,9 @@ canonical_text: >-
   folder. A failed last command adds its exit code after the label, a terminal an agent is driving shows the 7 px
   square agent mark, and a running process shows the static busy mark, all from the strip's one mark set (F3-631,
   DL-141). The hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
-  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. Under the
+  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. No colour
+  or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab colours and icons wait for their
+  redesign within Puppet Master's neon glyph system (F3-449, F3-631). Under the
   strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px tall, 24 px targets,
   12 px text and 11 px for secondary facts, labels when the tab body is at least 520 px wide and icons with hover tags
   below that, and the row hidden when the body is under 150 px tall. Its left side shows the folder in the code face
@@ -45326,7 +45683,13 @@ canonical_text: >-
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
-  ended when the tab closed; this is a new session.". A command still running when the earlier session ended comes
+  ended when the tab closed; this is a new session.". When well-known secrets were left out of the saved copy
+  (D36; the saved copy and its scrub are SP-332's), the notice ends "N secrets were left out of the saved copy.", and in
+  the restored lines each left-out secret reads `[API key · not saved]` (or token, secret or private key) in its own
+  cells, followed by blank cells, or `•` where the secret was shorter than that label, so the line keeps its width and
+  every mark and image stays where it was; a private key keeps its BEGIN and END lines, its first body line carrying
+  the label and the rest of its body empty. The live screen never shows these labels: it keeps what the program
+  printed. A command still running when the earlier session ended comes
   back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
   loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
   when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
@@ -45339,8 +45702,10 @@ canonical_text: >-
   tall and in the alternate screen. The More menu, in order: New terminal (a submenu of the shell profiles and SSH
   hosts), Split down, a hairline, Appearance..., Text size (Bigger, Smaller, Reset), a hairline, Copy mode, Quick
   select, Select all, Clear, Clear scrollback, Plain-text buffer, a hairline, Agent input (Ask each time, then one
-  row per agent allowed in this terminal, each of which revokes that agent's grant), Send signal (Interrupt SIGINT,
-  Terminate SIGTERM, Kill SIGKILL), Restart session. The screen's context menu opens on a right click, or a
+  row per agent allowed in this terminal, each of which revokes that agent's grant), Mute notifications (a check,
+  absent where the platform has no system notifications; F3-641), Send signal (Interrupt SIGINT, Terminate SIGTERM,
+  Kill SIGKILL), Restart session. New terminal's submenu lists the installed shells, then, after a hairline, SSH
+  hosts, a submenu of the hosts (D39). The tab's menu ends, after a hairline, with Mute notifications too (F3-631). The screen's context menu opens on a right click, or a
   Shift+right click while a program reports the mouse: Open in editor and Copy path on a file reference, Open link
   and Copy link on a URL, then Copy, Paste, Select all, Find and Clear. The command-mark menu opens on a click on a
   gutter glyph: a header row with the command, its state, its duration and who typed it ("You typed this" or
@@ -45363,7 +45728,8 @@ canonical_text: >-
   belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and Clear scrollback
   `cmd.terminal.clear_scrollback`; Appearance... opens the Appearance popover (F3-642); Find, Copy mode, Quick
   select, Plain-text buffer and Text size are the typed local actions `ui.terminal.find`, `ui.terminal.copy_mode`,
-  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; the command-mark items are
+  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; Mute notifications is the typed local
+  action `ui.terminal.mute_notifications`, that tab's own state with no command (F3-641); the command-mark items are
   `ui.terminal.mark.copy_command`, `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the
   catalogue's rerun command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
   `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all, Clear, Send
@@ -45375,7 +45741,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
-depends_on: [DL-181, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
+depends_on: [DL-181, DL-187, F3-635, F3-630, F3-631, F3-634, SMPFS-180, SMPFS-183, DR-067]
 unblocks: [F3-641, F3-646, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every terminal tab holds one session; Split opens a new panel with a new terminal in the same folder and shell profile, and no terminal tab draws a split, section, workgroup, sub-tab or bottom bar."
@@ -45388,6 +45754,9 @@ acceptance_criteria:
   - "Each key above does its action in a focused terminal, each key in the given-back list reaches the host, and every other Ctrl+key reaches the shell."
   - "Alt+PageUp and Alt+PageDown reach the host from a focused terminal, F6 and Shift+F6 reach the host before the terminal sees them, and the host acts on no key during IME composition."
   - "No session id, tab id or nonce appears as text, and no notice is a modal or carries a coloured side stripe."
+  - "No terminal tab shows a colour or an icon the person chose."
+  - "Mute notifications shows in the More menu between Agent input and Send signal and at the end of the tab's menu after a hairline, and is absent where the platform has no system notifications; New terminal lists the installed shells and, after a hairline, the SSH hosts submenu."
+  - "A restored terminal whose saved copy left secrets out shows each label in the secret's own cells with the line's width, marks and images unchanged, and its notice ends with the count; the live screen never shows the labels."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -45409,6 +45778,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3 to 5 and 9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36, D38, D39)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1, 2 and 7 (concept lineage only)"
 preserved_exact_tokens:
   - "terminal:<session>"
   - "<process> · <folder>"
@@ -45426,6 +45798,10 @@ preserved_exact_tokens:
   - "Open output in an editor tab"
   - "ui.terminal.find"
   - "cmd.terminal.clear_scrollback"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "N secrets were left out of the saved copy."
+  - "[API key · not saved]"
 negative_constraints:
   - "Do not draw a bottom bar, an in-tab split, a section, a workgroup or a sub-tab in a terminal tab."
   - "Do not show a session id, tab id or nonce as text."
@@ -45439,13 +45815,14 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
   - "Amended 2026-10-10 (lead ruling L14, review): The general restore sentence names the SSH-host exception in place, so only a local-profile tab starts its new session at once."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
+  - "Amended 2026-10-10 (DL-187; terminal SPEC 01c5e78c42): no tab colour or icon (D34); Mute notifications in the More menu and the tab menu (D38); installed shells and an SSH hosts submenu under New terminal (D39); the restore notice's secrets count and the left-out secret labels (D36)."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
   - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/DRY_Rules.md#DR-067
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/storage-plan.md#SP-332
 
 ### F3-641 — What The Terminal Helps You Do
 
@@ -45479,7 +45856,17 @@ canonical_text: >-
   copies its text, Shift with the label inserts it at the prompt, Alt with the label opens it, and Esc cancels.
   Terminals you are not in are dimmed by their look (F3-643). Progress a program reports with OSC 9;4 shows inside
   its own tab as advisory progress that completes nothing (F3-546). The visual bell, when the bell setting asks for
-  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Input methods
+  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Notifications (D38,
+  DL-187): a notification a program sends (OSC 9, OSC 777 `notify` or OSC 99; OSC 9;4 stays progress) raises a system
+  notification while Puppet Master is in the background; while it is in front the notification is announced
+  instead, and the terminal's tab, when it is not the focused one, takes its attention mark. A terminal raises at most
+  one notification every 3 s, and clicking a system notification brings that terminal forward. Each terminal can be
+  muted: Mute notifications, a check in the More menu (F3-640) and at the end of the tab's menu (F3-631), is that
+  tab's own state, saved with the tab, and the typed local action `ui.terminal.mute_notifications`, with no command
+  (lead ruling F5); it is absent where the platform has no system notifications. Where the platform asks the
+  person's permission for notifications, as a web browser does, Puppet Master asks only after a notification has
+  arrived, once, in an inline notice row (F3-640) when the person is back: Allow, Mute this terminal, Not now. The
+  engine side is SMPFS-183's. Input methods
   (IME) work at the prompt (SMPFS-183). The plain-text buffer (Alt+F2, or More, Plain-text buffer) shows the screen
   and the scrollback as plain text for screen readers; Ctrl+Up and Ctrl+Down move between commands and Esc returns
   to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
@@ -45488,7 +45875,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
-depends_on: [DL-181, F3-640, F3-634, F3-546, F3-547, SMPFS-183, SMPFS-180]
+depends_on: [DL-181, DL-187, F3-640, F3-634, F3-546, F3-547, SMPFS-183, SMPFS-180]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Every prompt line with a verified mark has one gutter glyph showing its command's state, no mark is drawn as a stripe, and a mark without the terminal's secret creates no glyph."
@@ -45498,6 +45885,9 @@ acceptance_criteria:
   - "Copy mode and quick select work with the keys above and leave with Esc."
   - "The plain-text buffer opens with Alt+F2, moves between commands with Ctrl+Up and Ctrl+Down, and reads images as their text descriptions."
   - "No explain, fix, suggest or ask action and no inline completion appears anywhere in the terminal tab."
+  - "A program's OSC 9, OSC 777 notify or OSC 99 notification raises a system notification only while Puppet Master is in the background, at most one every 3 s per terminal, and clicking it brings that terminal forward; in front it is announced and an unfocused terminal tab takes its attention mark."
+  - "Mute notifications is a per-tab check saved with the tab, in the More menu and the tab menu, dispatching no command; a muted terminal raises no notification; the item is absent where the platform has no system notifications."
+  - "Where the platform needs the person's permission, it is asked once, only after a notification arrived, in an inline notice with Allow, Mute this terminal and Not now."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -45516,6 +45906,9 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D13, D19)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 1 to 3 and 8 (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1 and 2 (notifications; concept lineage only)"
 preserved_exact_tokens:
   - "path:line:col"
   - "OSC 9;4"
@@ -45523,18 +45916,25 @@ preserved_exact_tokens:
   - "Copy mode"
   - "Quick select"
   - "plain-text buffer"
+  - "OSC 777"
+  - "OSC 99"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "Mute this terminal"
 negative_constraints:
   - "Do not draw a command mark as a stripe or treat a mark without the terminal's secret as a boundary."
   - "Do not open a link on a plain click; a plain click selects."
   - "Do not add an AI action or an inline completion to the terminal."
+  - "Do not raise a system notification while Puppet Master is in front, more than once every 3 s for one terminal, or from a muted terminal, and do not ask for notification permission before a notification arrived."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187, D38; terminal SPEC 01c5e78c42): adds system notifications from OSC 9, OSC 777 and OSC 99 in the background, the 3 s limit, the per-tab mute and the permission notice."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-546, ContractName:Plans/FinalGUISpec.md#F3-547
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-546, ContractName:Plans/FinalGUISpec.md#F3-547, ContractName:Plans/Decision_Log.md#DL-187
 
 ### F3-642 — The Terminal's Appearance
 
@@ -45560,7 +45960,7 @@ canonical_text: >-
   (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
   (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
-  These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
+  These schemes are one code colour-scheme catalog that serves the editor and the terminal (D30, amending
   D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17
   editor syntax colours are authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1
   throughout on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme takes its editor syntax colours from its
@@ -45641,7 +46041,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
@@ -45667,8 +46067,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for every syntax token, comments included (7:1 on PM High Contrast), and both surfaces draw them as they are, an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
-  - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
+  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
 owner_hints:
@@ -45787,25 +46187,31 @@ canonical_text: >-
   Retro code text, D17a). The editor's code face is JetBrains Mono in every look, Retro included (F3-639). The
   terminal's default face is JetBrains Mono in every look except Retro, where it is VT323; Sixtyfour, Sixtyfour
   Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
-  is offered for readability; and the system monospace is also a choice (F3-642). JetBrains Mono is provided by the
-  page, not by the terminal: its upright bytes are NieR Mode's PM NieR Mono files under the general family name
-  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is
-  JetBrains Mono's own italic, which the page's code face embeds in PMConcept7 with the same script slices (Latin
-  file 42,964 bytes; DL-161, F3-430), so italic code is drawn, not slanted, and the terminal adds no italic of its own. The faces, with licence, bytes, axes and
-  default size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, the
-  page's face (31,432 bytes for its Latin upright file), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
+  is offered for readability in every look; and the system monospace is also a choice (F3-642). Every one of these
+  faces is the page's own, embedded once through DL-161's pipeline as one set of files shared with the rest of the
+  page (DR-050), and the terminal carries no font file of its own (amended 2026-10-10, DL-183, terminal SPEC 01c5e78c42
+  section 4). JetBrains Mono's upright bytes are NieR Mode's PM NieR Mono files under the general family name
+  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is JetBrains Mono's
+  own italic, which the page's code face embeds with the same script slices (DL-161, F3-430), so italic code and a
+  program's italic text (SGR 3) are drawn, not slanted; VT323, Sixtyfour and Departure Mono have no italic, and theirs
+  is synthesised. Each face comes as script slices with its Latin file last: JetBrains Mono as per-script slices and
+  Latin, upright and italic; VT323 as Vietnamese, Latin Extended and Latin; Sixtyfour as Latin Extended and Latin;
+  Sixtyfour Raster as Latin only; Atkinson Hyperlegible Mono as Latin Extended and Latin, upright and italic; and
+  Departure Mono as the whole font, 1,186 glyphs, in one file. The faces, with licence, Latin bytes, axes and default
+  size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, 31,432 bytes
+  upright and 42,964 bytes italic, weight 100 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
   bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
   4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
   baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,
   17,752 bytes upright and 19,084 bytes italic, weight 200 to 800, 13 px and 1.35; Departure Mono, a Retro option,
   OFL-1.1 (its v1.500 release ships the SIL Open Font License, not MIT), 22,496 bytes, no axes, 13.75 px and 1.20;
-  and the system monospace, 13 px and 1.30. The terminal's own faces total 84,572 bytes before base64. Box drawing
+  and the system monospace, 13 px and 1.30. The terminal-only faces total 84,572 bytes of Latin files before base64,
+  plus 47,780 bytes of Latin Extended and Vietnamese slices. Box drawing
   (U+2500 to U+257F), block elements (U+2580 to U+259F), braille (U+2800 to U+28FF), powerline (U+E0B0 to U+E0BF)
   and sextants (U+1FB00 to U+1FB3B) are drawn by the terminal, so no patched font is needed, and the terminal's faces
   are never mirrored into PM Symbols. Licence rule: only permissively licensed faces are built in, under the SIL Open
   Font License, Apache or MIT, each with its licence text and its source and SHA-256 record; every terminal face is
-  OFL-1.1. The files go through DL-161's embedding pipeline as one set of files shared with the rest of the page
-  (DR-050). A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
+  OFL-1.1. A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
   separate from rendered GUI text (F3-414). General code text across the chat and PMConcept7
   (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in NieR) is not this unit's: it
   belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under D17a, and Retro's interface and
@@ -45819,7 +46225,9 @@ acceptance_criteria:
   - "The editor draws JetBrains Mono in every look, Retro included."
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
   - "Each face that has a default size and line height listed above opens at them."
-  - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal's own faces total 84,572 bytes before base64."
+  - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal-only faces total 84,572 bytes of Latin files before base64, plus 47,780 bytes of Latin Extended and Vietnamese slices."
+  - "Every face the terminal draws is the page's own, embedded once through DL-161's pipeline, the terminal package carries no font file, and each face ships the script slices listed here."
+  - "A program's italic text draws JetBrains Mono's own italic and Atkinson Hyperlegible Mono's own italic, and is synthesised in VT323, Sixtyfour and Departure Mono."
   - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
   - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."
   - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this unit."
@@ -45841,6 +46249,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D17)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 4 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, section 4 (every face the page's own, the slices and the italic; concept lineage only)"
 preserved_exact_tokens:
   - "JetBrains Mono"
   - "VT323"
@@ -45848,6 +46257,7 @@ preserved_exact_tokens:
   - "Departure Mono"
   - "Atkinson Hyperlegible Mono"
   - "84,572 bytes"
+  - "47,780 bytes"
   - "PM Symbols"
   - "OFL-1.1"
 negative_constraints:
@@ -45856,7 +46266,9 @@ negative_constraints:
   - "Do not amend DL-161, F3-426 or F3-430 from this unit, or change Retro's general code text."
 compatibility_only_notes:
   - "The concept's font file names are lineage; the product's files are the embedding pipeline's (DL-161, DR-050)."
-stale_retired_dispositions: []
+  - "Terminal SPEC ac63b1f467 gave JetBrains Mono's upright file the weight axis 400 to 800 and its italic 100 to 800; SPEC 01c5e78c42 lists the family as one row with weight 100 to 800, which this unit follows."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-183; terminal SPEC 01c5e78c42, section 4): every face is the page's own through DL-161's pipeline and the terminal carries no font file; the script slices (Latin Extended and Vietnamese among them), JetBrains Mono's italic and the synthesised italic of VT323, Sixtyfour and Departure Mono are stated; the 47,780 bytes of non-Latin slices are added to the 84,572 bytes of Latin."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Decision_Log.md

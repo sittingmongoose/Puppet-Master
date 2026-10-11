@@ -2193,6 +2193,8 @@ preserved_contractrefs:
 
 Jared's home redesign of 2026-10-09 (DL-180, DL-181) makes the middle of the window one universal panel system and the terminal one session per tab. Several of its words were already taken: the left rail calls its views panels, a workspace tab is a project tab, and the terminal had sections, workgroups, sub-tabs and panes. G-030 fixes one meaning for each word and lists the words that retire. It amends G-010 and the Terminal runtime terms above, which keep Terminal Session and Dev Session unchanged.
 
+Amended 2026-10-10 (DL-186, DL-187): Jared's answers add words for dashboards that people make and the presets they save, and bring back sub-tab for one current use, the Debug Console's session sub-tabs. G-030 now defines board, built-in dashboard, custom dashboard, Start from, preset (saved preset) beside a widget's size preset, and session sub-tab.
+
 ### G-030 - Panels, Tabs And The Words Around Them
 
 ```yaml
@@ -2227,14 +2229,26 @@ canonical_text: >-
   words, kept only in lineage and migration text: terminal section, workgroup, sub-tab, quadrant, terminal pane, the
   four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place; the
   default Home layout's bottom row is an ordinary panel row.
+  Amended 2026-10-10 (DL-186, DL-187): a board is one widget board of the one board engine, the Usage page's or a
+  dashboard tab's; a dashboard tab shows exactly one board (WS-030). A built-in dashboard is Home, Metrics,
+  Monitoring or Agents, which can be reset but never renamed as a board or deleted; a custom dashboard is one a
+  person made with New dashboard, which they can rename and delete (D35). Start from is the Board menu's choice that
+  replaces a board's widgets with a set: the board's own default, a Usage room's set, the dashboard starter or a
+  saved preset. A preset, or saved preset where a size preset could be meant, is a board's arrangement that a person
+  saved and can rename or delete; it belongs to the person across projects and is applied through Start from. A
+  widget's size preset (WS-017) is always called a size preset where the two could be confused. A session sub-tab is
+  the Debug Console's switch between debug sessions inside its one tab (D33): it is view state, never a panel tab,
+  and it does not revive the retired terminal sub-tab.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false
-depends_on: [DL-180, DL-181, F3-630, F3-635]
+depends_on: [DL-180, DL-181, DL-186, DL-187, F3-630, F3-635]
 unblocks: []
 acceptance_criteria:
 - Each word defined here has one meaning, and an owner document that uses it in another sense qualifies it (panel tab, side panel, workspace tab, web page).
 - No active unit uses terminal section, workgroup, sub-tab, quadrant, terminal pane or the bottom panel as a place for current product behaviour; they appear only in lineage, migration or retirement text.
+- "Amended 2026-10-10 (DL-187): the retired sub-tab is a terminal's sub-tab; the Debug Console's session sub-tab (D33) is a current word and names view state inside one tab."
+- "Amended 2026-10-10 (DL-186): board, built-in dashboard, custom dashboard, Start from, preset and session sub-tab each have one meaning, and a widget's size preset is called a size preset wherever a saved preset could be meant."
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - "Output in the tab-kind and tool-kind lists means one tab with its channel switched inside it; split-off channel identity follows F3-635."
 validation_surfaces:
@@ -2250,12 +2264,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D5-D11)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8, section 7.3 gap C17 (worklist)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3, Appendix 5 C.3 and Appendix 8 F.3 (worklist)
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33, D35)"
 preserved_exact_tokens:
 - panel
 - side panel
@@ -2278,17 +2295,27 @@ preserved_exact_tokens:
 - sub-tab
 - quadrant
 - bottom panel
+- board
+- built-in dashboard
+- custom dashboard
+- Start from
+- saved preset
+- size preset
+- session sub-tab
 negative_constraints:
 - Do not call a left rail panel a panel where a home panel could be meant; call it a side panel.
 - Do not use workspace tab for a panel tab.
 - Do not revive a retired word as a current product term.
+- Do not call a widget's size preset a preset where a person's saved board preset could be meant, or a debug session's sub-tab a panel tab.
 compatibility_only_notes:
 - Terminal section, workgroup, sub-tab, quadrant and terminal pane stay readable in superseded units and in the old records that are read-only migration inputs (SP-330, SP-332).
 stale_retired_dispositions:
-- "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+- "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+- "Amended 2026-10-10 (DL-186, DL-187): adds board, built-in dashboard, custom dashboard, Start from, preset (saved preset) beside size preset, and the Debug Console's session sub-tab; the retired sub-tab is the terminal's."
 - 'Retired 2026-10-09 (DL-180, DL-181): terminal section, workgroup, sub-tab, quadrant, terminal pane, the four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place.'
 owner_boundary_notes:
 - Glossary owns the words; the panel model is FinalGUISpec F3-630 to F3-639, the terminal tab F3-640 and SMPFS-180, the dashboard boards WS-030, and the layout record SP-330.
+- The boards, Start from and presets are WS-030's; the size presets WS-017's; the Debug Console's sub-tabs F3-635's and F3-490's.
 owner_hints:
 - Plans/Glossary.md
 - Plans/FinalGUISpec.md

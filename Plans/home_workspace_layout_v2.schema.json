@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/home_workspace_layout/2.0.0/home_workspace_layout_v2.schema.json",
   "title": "Puppet Master Home Workspace Layout V2",
-  "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the user's saved named layouts, the closed-tab stack and the migration stamp. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each dashboard tab keeps its own under widget_layout:v1:dashboard:<board_id>, Plans/Widget_System.md#WS-030). Narrow-window states, overlays, open menus, hover and drag state are never saved. Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
-  "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 no two open terminal tabs name the same ref.terminal_session_id (one session per tab); a terminal tab's id is terminal:<the session it was first opened with> and never changes, while ref.terminal_session_id is the session it shows now, which differs from the id's suffix after Restart or a restore whose session did not survive (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule.",
+  "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the user's saved named layouts, the closed-tab stack and the migration stamp. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each board keeps its own per project under widget_layout:v1:<project_id>:<board_id>, Plans/Widget_System.md#WS-030 and Plans/storage-plan.md#SP-330; amended 2026-10-10, DL-186, from the never-written widget_layout:v1:dashboard:<board_id>). Narrow-window states, overlays, open menus, hover and drag state are never saved. The chat's pop-out is never saved (DL-187, D32). A saved named layout may keep a snapshot of the boards of its dashboard tabs, at most 64 KB (DL-186). Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
+  "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 no two open terminal tabs name the same ref.terminal_session_id (one session per tab); a terminal tab's id is terminal:<the session it was first opened with> and never changes, while ref.terminal_session_id is the session it shows now, which differs from the id's suffix after Restart or a restore whose session did not survive (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule. S13 (DL-186) a named layout holds boards or boards_skipped_bytes, never both; the canonical JSON encoding of its boards map is at most 64 KB (65,536 bytes), and boards_skipped_bytes, when present, is the size of the boards map that save left out, so it is above 65,536; boards names only boards of dashboard tabs that were open when the layout was saved, and never agents, which stores nothing (lead ruling F7). S14 (DL-187, D33) at most one tab has kind debug_console, and its id is debug-console.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -100,7 +100,7 @@
     "panel_tab_id": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
-      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output, output:<channel>, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (output, problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI. Output uses output for the one tab with its channel as view state; output:<channel> is only a split-off channel (Addendum 2 D28, Plans/FinalGUISpec.md#F3-635)."
+      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output, output:<channel>, problems, ports, debug-console and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (output, problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI. Output uses output for the one tab with its channel as view state; output:<channel> is only a split-off channel (D31, Plans/FinalGUISpec.md#F3-635). The Debug Console is the one tab debug-console with a sub-tab per debug session (D33, DL-187); an older debug-console:<session> id folds into it and is never written."
     },
     "tab_kind": {
       "type": "string",
@@ -681,13 +681,8 @@
           "then": {
             "properties": {
               "ref": {
-                "properties": {
-                  "debug_session_id": true
-                },
-                "additionalProperties": false,
-                "required": [
-                  "debug_session_id"
-                ]
+                "properties": {},
+                "additionalProperties": false
               }
             }
           }
@@ -779,7 +774,7 @@
         },
         "debug_session_id": {
           "$ref": "#/$defs/non_empty_string",
-          "description": "The debug session a Debug Console tab shows (the debug_session_id of Plans/UI_Command_Catalog.md#UCC-077)."
+          "description": "Unused since 2026-10-10 (DL-187, D33): the Debug Console is one tab whose chosen session sub-tab is view state in its state, so no kind carries this key in ref."
         }
       }
     },
@@ -830,10 +825,9 @@
       "required": [
         "width_px",
         "history_pinned",
-        "popped_out",
         "shown"
       ],
-      "description": "The fixed chat column on the right (Plans/FinalGUISpec.md#F3-637). It has no position: it is never in the split tree and never moved inside the window.",
+      "description": "The fixed chat column on the right (Plans/FinalGUISpec.md#F3-637). It has no position: it is never in the split tree and never moved inside the window. Amended 2026-10-10 (DL-187, D32): the chat's pop-out is never saved, so the column has no popped_out; after a restart the chat starts in its column.",
       "properties": {
         "width_px": {
           "anyOf": [
@@ -852,8 +846,9 @@
           "type": "boolean",
           "description": "The 5.6 Pro History list pinned open, which widens the chat by the list's own width. Written like view state: no receipt, no event, no revision advance."
         },
-        "popped_out": {
-          "type": "boolean"
+        "keep_open": {
+          "type": "boolean",
+          "description": "Amended 2026-10-10 (DL-187): \"Keep the chat open in narrow windows\", set by ui.chat_column.keep_open from the chat header's menu or the Home options menu (Plans/UI_Command_Catalog.md#UCC-203). Absent means off. It is the user's choice, not a narrow-window state: the narrow ladder reads it and the ladder's own steps are never written. Written like view state: no receipt, no event, no revision advance (Plans/storage-plan.md#SP-330)."
         },
         "shown": {
           "type": "boolean"
@@ -882,9 +877,39 @@
         },
         "root": {
           "$ref": "#/$defs/slot_node"
+        },
+        "boards": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(home|metrics|monitoring|dash-[1-9][0-9]*)$"
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object",
+                "description": "The board's stored envelope as it was when the layout was saved (Plans/Widget_System.md#WS-030; the widget-layout record of Plans/storage-plan.md#SP-249)."
+              },
+              {
+                "type": "null",
+                "description": "The board had nothing stored; applying the layout removes what the board has stored."
+              }
+            ]
+          },
+          "description": "DL-186 (P6): the boards of the dashboard tabs open when the layout was saved, by board id. Applying the layout writes each one back to that board's key in the current project. At most 64 KB of canonical JSON (S13). Agents is drawn by the dashboard kind and stores nothing, so it is never a key here (amended 2026-10-10, DL-186, lead ruling F7; Plans/storage-plan.md#SP-249)."
+        },
+        "boards_skipped_bytes": {
+          "type": "integer",
+          "minimum": 65537,
+          "description": "DL-186 (lead ruling F3): written instead of boards when the snapshot would pass 64 KB; the size in bytes of what was left out, which the save's announcement reports."
         }
       },
-      "description": "A saved layout keeps shape, sizes and the kinds each slot holds, never tabs, sessions or buffers."
+      "description": "A saved layout keeps shape, sizes and the kinds each slot holds, never tabs, sessions or buffers. Amended 2026-10-10 (DL-186): it may also keep a snapshot of the boards of its dashboard tabs (boards), or, when that would pass 64 KB, only the size it left out (boards_skipped_bytes); a layout saved before holds neither and applies as before.",
+      "not": {
+        "required": [
+          "boards",
+          "boards_skipped_bytes"
+        ]
+      }
     },
     "slot_node": {
       "oneOf": [

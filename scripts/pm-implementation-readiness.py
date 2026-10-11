@@ -766,16 +766,20 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # seven v1 Home and terminal families (the v1 Home record and the terminal section, workgroup and editor-terminal
 # records) move from later_gui_or_feature_projection to migration_only as read-only migration inputs. Retention
 # policies and critical memberships are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 297
+# Re-pinned 2026-10-10 for SP-249/SP-330 (DL-186): dashboard_board_layout (per-project dashboard boards under
+# widget_layout:v1:{project_id}:{board_id}) and widget_presets (per-user presets under widget_presets:v1) add two
+# deferred_not_build_blocking later_gui_or_feature_projection families, deferred until the widget-layout envelope
+# has a physical value schema. Retention policies and critical/MVP memberships are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 299
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 277,
-    "deferred_not_build_blocking": 19,
+    "deferred_not_build_blocking": 21,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 247,
+    "later_gui_or_feature_projection": 249,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

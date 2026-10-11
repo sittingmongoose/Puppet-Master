@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L276-L1397
+Source lines: L276-L1405
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -627,7 +627,8 @@ canonical_text: >-
   Its popup now holds, in order: the named layouts (Home, Build, Terminals 2x2, Focus, then the user's saved layouts,
   the current one checked; cmd.workspace_layout.apply_named); the chat's rows, Show the chat or Hide the chat
   (cmd.panel.switch), Pop out the chat or Dock the chat back (cmd.panel.undock, cmd.panel.redock) and Keep the chat open
-  in narrow windows (F3-637); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
+  in narrow windows (F3-637; amended 2026-10-10, lead ruling: the same check as the chat header's menu, both
+  dispatching ui.chat_column.keep_open, saved in the v2 record's chat column, never a Settings row); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
   Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
   general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
 gui_related: true
@@ -662,6 +663,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
 - "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
 - "Amended 2026-10-09 (DL-180): Open Panel, Open Browser in Panel, their Panel 1 to Panel 4 flyouts and the Collapse Bottom Terminal toggle with its Expand relabel are retired; Reset Layout reads Restore home layout; the popup gains the named layouts, Save this layout... and the chat's rows."
+- "Amended 2026-10-10 (lead ruling): the Keep the chat open in narrow windows row is the same check as the chat header's menu, both dispatching ui.chat_column.keep_open, saved in the v2 record's chat column."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -863,10 +865,14 @@ canonical_text: >-
   Home layout record keeps (SP-330).
   Amended 2026-10-10 (lead ruling L6): Pop out is desktop only. The web client offers no Pop out; the chat stays in its
   column (F3-637). This settles the open question above.
+  Amended 2026-10-10 (DL-187, D32): the chat's popped-out state lasts only while the app runs and is never saved; the
+  v2 Home layout record keeps the column's visibility and width but not the pop-out (SP-330), so after a restart the
+  chat starts in its column (F3-637). The sentence above that puts the popped-out state in the saved chat column state
+  is replaced.
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
-depends_on: [F3-501, DL-180]
+depends_on: [F3-501, DL-180, DL-187]
 unblocks: []
 acceptance_criteria:
 - Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
@@ -889,6 +895,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
+- "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
@@ -900,6 +907,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
 - "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
 - "Amended 2026-10-10 (lead ruling L6): The open question on a web Pop out is settled: the web client offers no Pop out and the chat stays in its column (F3-637)."
+- "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved and is no longer part of the chat column state the v2 Home layout record keeps; after a restart the chat starts in its column (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 

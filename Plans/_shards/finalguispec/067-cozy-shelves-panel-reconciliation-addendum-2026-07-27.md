@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33426-L34124
+Source lines: L33495-L34197
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -674,10 +674,12 @@ canonical_text: >-
   copy authored after this date say left-hand; existing rows are corrected opportunistically
   as they are touched, and GATE-010 evidence must not fail a row solely for a stale
   right-hand location string authored before this date.
+  Amended 2026-10-10 (DL-187, D40): chat no longer occupies the panel slot. It stays an activity-bar entry that shows
+  or hides the chat column on every page (F3-042, F3-637), so the slot hosts the other occupants listed above.
 gui_related: true
 gui_classification_reason: This unit fixes the shell-level side on which every rail panel mounts.
 split_recommended: false
-depends_on: [F3-478]
+depends_on: [F3-478, DL-187]
 unblocks: []
 acceptance_criteria:
 - "The activity bar and panel slot render on the left shell edge in the Slint build."
@@ -697,11 +699,13 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (renders the rail left; source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+- "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens: []
 negative_constraints:
 - "Do not cite pre-2026-07-27 right-hand slot prose as live placement authority."
 stale_retired_dispositions:
 - "Right-hand side-panel slot phrasing in sections 3.2/4.1 and older wiring-row ui_location strings become findable lineage superseded by this ruling."
+- "Amended 2026-10-10 (DL-187, D40): chat is no longer an occupant of the panel slot; its activity-bar entry shows or hides the chat column (F3-042, F3-637)."
 owner_boundary_notes:
 - "F3-478 recorded the deviation; this unit resolves it. Wiring-row string hygiene is owned by Plans/Wiring_Matrix.production.json maintenance."
 owner_hints:

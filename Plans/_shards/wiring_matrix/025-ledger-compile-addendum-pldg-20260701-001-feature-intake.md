@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3475-L3846
+Source lines: L3475-L3851
 
-Source SHA256: `2878b35a859b2b7fbcf938fa968707184a733a13c04c6a56749b5efdc368fe26`
+Source SHA256: `1949b9b3de3ac86875fd1f5e2e6856cf2b60a2e5004e17bab0464682e123814b`
 
 ---
 
@@ -72,7 +72,11 @@ canonical_text: >-
   the workspace chapter teaches opening a tab from the "+" menu (`cmd.panel_tab.open`), opening a file from the rail
   into a panel (`cmd.file.open`), splitting by dragging a tab to a panel edge (`cmd.panel_tab.move` with a split; the
   tab menu's Split right and Split down count too) and adding a widget to the dashboard tab (`cmd.widget.add` with its
-  `board_id`), each checkpoint observed from the panels' own committed results (PWIZ-035, WM-090). Planning receives at least half of meaningful
+  `board_id`), each checkpoint observed from the panels' own committed results (PWIZ-035, WM-090). Amended 2026-10-10
+  (DL-186; P1 B, P10): the widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there,
+  through `cmd.widget.add` and then `cmd.widget.move` or `cmd.widget.resize` naming the Home board in their existing
+  `room` field (it read: `board_id`), finished only by the board's accepted add and then move or resize (PWIZ-035); the
+  old Home widgets are gone from Home. Planning receives at least half of meaningful
   actions and dwell, including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
   mounted owner handler and observed success predicate; generic Next, narration, timers, or look-alike controls cannot
   fabricate a checkpoint. ELI5 stays beside Pause and Skip; that tour control, `ui.guided_tour.toggle_eli5`, changes
@@ -103,7 +107,7 @@ canonical_text: >-
   PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, PWIZ-035, SP-330, WM-090]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
 unblocks: []
 acceptance_criteria:
   - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
@@ -131,7 +135,7 @@ acceptance_criteria:
   - Tour Next and Back follow valid story beats with exact scene-heading focus but cannot satisfy Teacher selection, composer send, same-answer ELI5 (the one extra, simpler reply from Explain this reply simply), panel/widget practice, Planning answer edit, or any other required observed checkpoint.
   - Every important practice action offers Try it and Show Me through the same mounted owner handler and success predicate; stale, unrelated, narrated, or timer-only observations never advance the story.
   - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across the chat's Pop out and Dock back (the chat never moves inside the window, DL-180), and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
-  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Its four actions (amended 2026-10-09, DL-180) are opening a tab from the "+" menu, opening a file from the rail into a panel, splitting by dragging a tab to a panel edge (or the tab menu's Split right or Split down) and adding a widget to the dashboard tab; no step asks the learner to move or dock the chat. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
+  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Its four actions (amended 2026-10-09, DL-180) are opening a tab from the "+" menu, opening a file from the rail into a panel, splitting by dragging a tab to a panel edge (or the tab menu's Split right or Split down) and adding a widget to the dashboard tab (amended 2026-10-10, DL-186: Upcoming resets added to the Home dashboard, then moved or resized there); no step asks the learner to move or dock the chat. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - "While a Skip or Finish restore runs, the application's own notices about it stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153)."
   - "The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: their writes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, Adjust NieR look is `ui.settings.nier_editor.open`, and the Tour's census stays its eleven actions (DL-153)."
@@ -282,6 +286,7 @@ stale_retired_dispositions:
   - "cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias."
   - "cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases, and handlers."
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat practice retires; the workspace chapter practises the \"+\" menu, opening a file from the rail, splitting by dragging a tab and adding a widget to the dashboard tab, and the tour captures and restores the v2 Home layout record."
+  - "Amended 2026-10-10 (DL-186; P1 B, P10): the widget practice teaches Upcoming resets on the Home dashboard, added then moved or resized, its widget commands naming the Home board in room."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
   - Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.

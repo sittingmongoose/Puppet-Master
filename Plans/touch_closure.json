@@ -5158,7 +5158,7 @@
       "handler_owner": "Widget System command router; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "The current tour reuses Widget add/configure for practice and owner layout/visibility methods for restoration; remove remains retained in ordinary Usage/Dashboard. No native execution is evidenced.",
+      "production_or_simulation": "The current tour reuses Widget add/configure for practice and owner layout/visibility methods for restoration; remove remains retained in ordinary Usage/Dashboard. No native execution is evidenced. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); configure is not a tour checkpoint.",
       "gui_triggers": [
         "Usage and Dashboard widget options",
         "Guided Tour workspace widget practice and captured-state restoration",
@@ -5207,7 +5207,7 @@
       "handler_owner": "Widget System transactional move/resize route; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 Usage and Dashboard exercise transactional widget move/resize simulation independently of Guided Tour; native Slint/Rust wiring is absent.",
+      "production_or_simulation": "PMConcept7 Usage and Dashboard exercise transactional widget move/resize simulation independently of Guided Tour; native Slint/Rust wiring is absent. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); ordinary Usage and Dashboard movement and resizing are still exercised outside the tour too.",
       "gui_triggers": [
         "Usage and Dashboard pointer and keyboard widget move/resize controls",
         "Usage Tidy from a card menu or the Customize panel, and the board gravity each settled Usage move, resize, preset, hide or show applies inside its own single command (WS-019)"
@@ -11184,7 +11184,7 @@
       "command",
       "cmd.widget.configure",
       "partial",
-      "Current tour widget practice reuses the existing configuration owner and success predicate. Scoped concept journeys are not exhaustive control coverage or native execution."
+      "Current tour widget practice reuses the existing configuration owner and success predicate. Scoped concept journeys are not exhaustive control coverage or native execution. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); configure is not a tour checkpoint."
     ],
     [
       "TOUCH-GWID-004",
@@ -11192,7 +11192,7 @@
       "command",
       "cmd.widget.move",
       "partial",
-      "The current Usage/Dashboard interaction source exercises settled widget movement independently of Guided Tour; exhaustive post-approval browser/video and native pointer/keyboard settlement evidence remain pending or unproven."
+      "The current Usage/Dashboard interaction source exercises settled widget movement independently of Guided Tour; exhaustive post-approval browser/video and native pointer/keyboard settlement evidence remain pending or unproven. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); after the add, a move or a resize finishes the tour's widget practice."
     ],
     [
       "TOUCH-GWID-005",
@@ -11200,7 +11200,7 @@
       "command",
       "cmd.widget.resize",
       "partial",
-      "The current Usage/Dashboard interaction source exercises settled widget resizing independently of Guided Tour; exhaustive post-approval browser/video and native pointer/keyboard settlement evidence remain pending or unproven."
+      "The current Usage/Dashboard interaction source exercises settled widget resizing independently of Guided Tour; exhaustive post-approval browser/video and native pointer/keyboard settlement evidence remain pending or unproven. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); after the add, a move or a resize finishes the tour's widget practice."
     ],
     [
       "TOUCH-GLAY-001",

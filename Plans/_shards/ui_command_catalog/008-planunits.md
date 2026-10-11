@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1265-L6948
+Source lines: L1269-L6959
 
-Source SHA256: `ac5db31a609655be0a1d4a235a2791c59416f2fa023b205df2947fb49e42b72a`
+Source SHA256: `5258c8594defdcca2eb03557e1f2adcca4e4ffe26cc34f642a3b72a3dc3fc8d9`
 
 ---
 
@@ -1905,7 +1905,9 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   Widget layout command rows define add, remove, resize, configure, move, and reset_layout commands with widget-hostability limited to Dashboard, Usage page, and actual Orchestrator widget-tab surfaces.
-  Amended 2026-10-09 (DL-180): the Dashboard host is any dashboard tab in any panel, each addressed by board_id (WS-030), with page kept for the Usage page; cmd.dashboard.add_widget is an alias of cmd.widget.add (UCC-202); a widget-layout change is a change to that board and emits no workspace.layout_changed.
+  Amended 2026-10-09 (DL-180): the Dashboard host is any dashboard tab in any panel, each named by the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: each addressed by board_id) (WS-030), with page kept for the Usage page; cmd.dashboard.add_widget is an alias of cmd.widget.add (UCC-202); a widget-layout change is a change to that board and emits no workspace.layout_changed.
+  Amended 2026-10-10 (DL-186): a dashboard board is named in the payload's existing room field, whose value is the board id, and there is no board_id payload field; cmd.widget.reset_layout gains the optional set_id (default, room:<room_id>, host:dashboard or user:<preset_id>), offered only on dashboard boards.
+  Amended 2026-10-10 (lead ruling on the Undo after Start from): cmd.widget.reset_layout also gains the optional restore_revision, sent only by the Undo in the notice that follows Start from on a dashboard board, { scope: room, room: <board_id>, restore_revision } with the board's committed layout revision just before that Start from; restore_revision and set_id never travel together, the owner puts back exactly that revision's records, a restore whose revision is no longer the board's previous one is refused with a disabled reason, and it emits no workspace.layout_changed.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -1915,12 +1917,15 @@ depends_on:
 - PDS-005
 - PNC-001
 - DL-180
+- DL-186
 unblocks: []
 acceptance_criteria:
 - UCC-036 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
-- "Inside a dashboard tab every cmd.widget.* row is addressed by board_id and emits no workspace.layout_changed."
+- "Inside a dashboard tab every cmd.widget.* row names its board in room (amended 2026-10-10, DL-186; it read: is addressed by board_id) and emits no workspace.layout_changed."
+- "cmd.widget.reset_layout carries set_id only on a dashboard board, and a reset without set_id returns the board to its own default."
+- "cmd.widget.reset_layout carries restore_revision only from the Undo after Start from on a dashboard board, never together with set_id, and a restore_revision that is no longer the board's previous revision is refused with a disabled reason (amended 2026-10-10, lead ruling)."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1952,6 +1957,8 @@ preserved_contractrefs:
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): widget rows inside dashboard tabs are addressed by board_id."
+  - "Amended 2026-10-10 (DL-186): a dashboard board is named in the existing room field, not a board_id field, and cmd.widget.reset_layout gains the optional set_id."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): cmd.widget.reset_layout gains the optional restore_revision for that Undo, and the 2026-10-09 amendment's addressed by board_id reads as the board id in the existing room field."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

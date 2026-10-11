@@ -3536,7 +3536,11 @@ canonical_text: >-
   the workspace chapter teaches opening a tab from the "+" menu (`cmd.panel_tab.open`), opening a file from the rail
   into a panel (`cmd.file.open`), splitting by dragging a tab to a panel edge (`cmd.panel_tab.move` with a split; the
   tab menu's Split right and Split down count too) and adding a widget to the dashboard tab (`cmd.widget.add` with its
-  `board_id`), each checkpoint observed from the panels' own committed results (PWIZ-035, WM-090). Planning receives at least half of meaningful
+  `board_id`), each checkpoint observed from the panels' own committed results (PWIZ-035, WM-090). Amended 2026-10-10
+  (DL-186; P1 B, P10): the widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there,
+  through `cmd.widget.add` and then `cmd.widget.move` or `cmd.widget.resize` naming the Home board in their existing
+  `room` field (it read: `board_id`), finished only by the board's accepted add and then move or resize (PWIZ-035); the
+  old Home widgets are gone from Home. Planning receives at least half of meaningful
   actions and dwell, including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
   mounted owner handler and observed success predicate; generic Next, narration, timers, or look-alike controls cannot
   fabricate a checkpoint. ELI5 stays beside Pause and Skip; that tour control, `ui.guided_tour.toggle_eli5`, changes
@@ -3567,7 +3571,7 @@ canonical_text: >-
   PlanUnit records wiring obligations only and does not generate wiring JSON.
 gui_related: true
 gui_classification_reason: Defines owner-referenced Product Onboarding phase graphs and three-scene Guided Tour actions, transitions, reverse wiring, and owner-routed GUI behavior.
-depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, PWIZ-035, SP-330, WM-090]
+depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, ACD-484, DL-180, DL-186, PWIZ-035, SP-330, WM-090]
 unblocks: []
 acceptance_criteria:
   - Main, connect-existing and Project Later consume the three exact PWIZ-021 stage-order definitions; wiring does not re-own their roster. Provider/Free Models phases require a real committed Project and never appear in connect-existing or Project Later as fake completed work.
@@ -3595,7 +3599,7 @@ acceptance_criteria:
   - Tour Next and Back follow valid story beats with exact scene-heading focus but cannot satisfy Teacher selection, composer send, same-answer ELI5 (the one extra, simpler reply from Explain this reply simply), panel/widget practice, Planning answer edit, or any other required observed checkpoint.
   - Every important practice action offers Try it and Show Me through the same mounted owner handler and success predicate; stale, unrelated, narrated, or timer-only observations never advance the story.
   - Chat opens first; `cmd.persona.select`, `cmd.chat.send`, `cmd.chat.eli5.set` (the quick dot, later replies only), and `cmd.chat.eli5.explain_reply` retain their sole Persona/Chat owners and gain exact tour consumers. The guided conversation is locally isolated, retains its identity across the chat's Pop out and Dock back (the chat never moves inside the window, DL-180), and shows the same answer for ELI5 only as one extra, simpler reply from Explain this reply simply; the original reply is never re-sent, regenerated or rewritten (DL-126).
-  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Its four actions (amended 2026-10-09, DL-180) are opening a tab from the "+" menu, opening a file from the rail into a panel, splitting by dragging a tab to a panel edge (or the tab menu's Split right or Split down) and adding a widget to the dashboard tab; no step asks the learner to move or dock the chat. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
+  - Workspace practice consumes existing panel, workspace-layout, and widget commands according to the chosen action. Its four actions (amended 2026-10-09, DL-180) are opening a tab from the "+" menu, opening a file from the rail into a panel, splitting by dragging a tab to a panel edge (or the tab menu's Split right or Split down) and adding a widget to the dashboard tab (amended 2026-10-10, DL-186: Upcoming resets added to the Home dashboard, then moved or resized there); no step asks the learner to move or dock the chat. Planning retains at least half of meaningful actions and dwell, accepts a genuine edited answer, changes only the dependent consequence, and leaves unsure choices unresolved.
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - "While a Skip or Finish restore runs, the application's own notices about it stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153)."
   - "The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: their writes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, Adjust NieR look is `ui.settings.nier_editor.open`, and the Tour's census stays its eleven actions (DL-153)."
@@ -3746,6 +3750,7 @@ stale_retired_dispositions:
   - "cmd.onboarding.free_models.setup is source-lineage-only; it is neither a production row nor a compatibility alias."
   - "cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are packet source-lineage candidates rejected as commands, aliases, and handlers."
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat practice retires; the workspace chapter practises the \"+\" menu, opening a file from the rail, splitting by dragging a tab and adding a widget to the dashboard tab, and the tour captures and restores the v2 Home layout record."
+  - "Amended 2026-10-10 (DL-186; P1 B, P10): the widget practice teaches Upcoming resets on the Home dashboard, added then moved or resized, its widget commands naming the Home board in room."
 negative_constraints:
   - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
   - Do not register a `cmd.onboarding.*` semantic command, production row, compatibility alias, generic handler, or EventRecord.
@@ -3948,13 +3953,24 @@ below now covers every panel and tab commit (`cmd.panel_tab.*` and `cmd.workspac
 `pm.home_workspace_layout.v2`, SP-330); Collapse Bottom Terminal retires and any panel folds to its strip. The Chat row
 no longer re-seats the chat: show and hide stay `cmd.panel.switch`, the width is
 `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`, and Pop out and Dock back are `cmd.panel.undock`
-and `cmd.panel.redock` with `chat` (UCC-203). Dashboard widgets live in dashboard tabs, each board in its own
-`widget_layout:v1:dashboard:<board_id>` (WS-030).
+and `cmd.panel.redock` with `chat` (UCC-203). Dashboard widgets live in dashboard tabs, each board kept per project as
+`widget_layout:v1:<project_id>:<board_id>` (WS-030; amended 2026-10-10, DL-186; it read: each board in its own
+`widget_layout:v1:dashboard:<board_id>`).
+
+Amended 2026-10-10 (DL-186): every dashboard tab is its own board on the Usage board engine. The rows below that say
+Usage now hold on every dashboard board too: a dashboard's resize and reorder preview and settle exactly as the Usage
+page's, with gravity at settle and no frozen peers (the clause "Dashboard resize peers remain frozen" and
+"Dashboard reflows after commit" are retired), and Tidy on a dashboard is the same one `cmd.widget.move` with
+`arrange` (`detail` `diagnostics`, `Plans/Widget_System.md#WS-019`). A dashboard's widget commands name the board in
+their existing `room` field, not `board_id`, and each board is kept per project as
+`widget_layout:v1:<project_id>:<board_id>` (`Plans/Widget_System.md#WS-030`); the wave 1 key
+`widget_layout:v1:dashboard:<board_id>` was never written. A dashboard's own Live readings is the Usage page's one
+Live / Paused choice (the Live / Paused row). The dashboard tab's own controls are WM-090's Dashboard tab table.
 
 | Producer | Command/disposition | Handler/reducer and owner state | Persistence/effect | Consumer | Cancel/error path |
 |---|---|---|---|---|---|
-| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row, addressed by `board_id` in a dashboard tab (amended 2026-10-09) | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard` (per board `widget_layout:v1:dashboard:<board_id>` from 2026-10-09, WS-030); dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
-| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers in the held preview and apply Usage board gravity only at settle, Dashboard resize peers remain frozen | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once, with gravity applied at settle; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
+| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row, naming the board in its existing `room` field in a dashboard tab (amended 2026-10-09; amended 2026-10-10, DL-186: it read addressed by `board_id`) | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` on the Usage page, or in a dashboard tab that board's per-project `widget_layout:v1:<project_id>:<board_id>` (amended 2026-10-10, DL-186, WS-030; it read: `widget_layout:v1:usage` or `widget_layout:v1:dashboard`, per board `widget_layout:v1:dashboard:<board_id>` from 2026-10-09, a key never written); dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
+| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers in the held preview and apply Usage board gravity only at settle, Dashboard resize peers remain frozen (retired 2026-10-10, DL-186: every dashboard board previews and settles as the Usage board does) | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once, with gravity applied at settle; Dashboard reflows after commit (retired 2026-10-10, DL-186: a dashboard board keeps its last-painted preview the same way) | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
 | Usage Tidy (card menu or Customize panel) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for the whole repacked room | `handlers::widget::move`; Widget System owner (`Plans/Widget_System.md#WS-019`) | one settled layout transaction: one write of `widget_layout:v1:usage` and one receipt; no per-card move, no Tidy command | current Usage room and saved layout projection | a Tidy that moves nothing dispatches nothing; rejection leaves the pre-Tidy layout |
 | Usage size picker preset | `cmd.widget.resize` with the preset's geometry | `handlers::widget::resize`; settled record stores `preset_id` (`Plans/Widget_System.md#WS-020`) | one settled write and receipt, gravity included; picker open and row-hover preview are `view_only` | current Usage card and saved layout projection | dismissing the picker or an unchanged choice dispatches nothing |
 | Home move/resize/collapse/reset (amended 2026-10-09: every panel and tab commit) | `cmd.workspace_layout.*` and `cmd.panel_tab.*` rows (WM-090) | `handlers::workspace_layout::*`, `handlers::panel_tab::*`; `pm.home_workspace_layout.v2` owner (`pm.home_workspace_layout.v1` is a read-only migration input) | one revision-checked commit; existing `workspace.layout_changed` effect with its v2 payload (CV-361); no preview effect | Home panels: split tree, tabs, sizes and folded panels | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
@@ -3990,7 +4006,8 @@ canonical_text: >-
   settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
   error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
   its target footprint and visibly repack only obstructed peers, with Usage board gravity applied at settle and
-  never previewed, while Dashboard resize peers remain frozen; one changed
+  never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every dashboard
+  board previews and settles as the Usage board does, gravity included); one changed
   pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
   cmd.workspace_layout.*, and on Usage that one command carries the whole settled room, gravity included. Usage
   Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
@@ -4060,6 +4077,7 @@ negative_constraints:
   - Do not route aggregate Usage cards, dispatch cmd.nav.open_usage_subject without the branch's stable selector, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use correlation identity as the PMConcept7 Ledger object_id.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the chat's in-window re-seat across Home and global docks retires (Pop out and Dock back remain), and Home commits move to the v2 record. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; WM-090 depends on this unit instead. Pop out's command is Plans/UI_Command_Catalog.md#UCC-203."
+  - "Amended 2026-10-10 (DL-186): the frozen Dashboard resize peers retire; every dashboard board runs the Usage board engine, so its resize, reorder, gravity and Tidy wire exactly as the Usage page's, its widget commands name the board in room, and each board is kept per project (WS-030). DL-186 is cited here and not in depends_on for the same loop reason as DL-180."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
@@ -5537,6 +5555,8 @@ Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) replaces Hom
 
 It adds WM-090 (Home panels), WM-091 (the terminal tab) and WM-092 (event sets corrected). It retires 51 `home.*` production entries (the `home.editor_panel_N.*`, `home.file_manager.open_panel_N`, `home.more_options.open_panel_N` and `open_browser_panel_N`, `home.drop_target.*`, `home.dashboard.*`, `home.chat.grab`, `home.terminal_section.*`, `home.more_options.collapse_bottom` and the fixed resizers) and 8 catalog entries whose commands retired or became aliases, and adds 103 `home.*` and 36 `terminal.*` entries (108 `home.*` entries in all with the five kept ones); the five kept `home.*` entries are rebuilt on the v2 model, and the open routes carry the placement fields of `Plans/Contracts_V0.md#CV-360`. The retired entries are listed in `Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json` (`control_census.retired_rows_2026_10_09`), the file's own record of retired rows. It amends WM-021, WM-022, WM-041 and WM-045, the runtime-recovery terminal table and the PM7 settled interaction table with dated notes. It does not edit WM-065 to WM-075.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188; lead rulings F1, F2, F5, F6, F7 and F8): Jared's answers of 2026-10-10 add 20 `home.*` production entries and change others in place, each change dated where it stands. Added: the "+" menu's SSH hosts row (`home.plus_menu.ssh_host`, `home.plus_menu.ssh_host_new_panel`) and New dashboard (`home.plus_menu.new_dashboard`, `home.plus_menu.new_dashboard_new_panel`); the empty-panel launcher's sub-row links (`home.launcher.terminal_shell`, `home.launcher.ssh_host`, `home.launcher.browser_recent`, `home.launcher.recent_file_link`, `home.launcher.dashboard_board`, `home.launcher.new_dashboard`); and the dashboard tab's command-bearing controls (`home.dashboard_tab.add_widget`, `.open_dashboard`, `.new_dashboard`, `.start_from`, `.preset_start_from`, `.tidy`, `.reset_widgets`, `.rename_dashboard`, `.delete_dashboard` and `.agent_card`). So `Plans/Wiring_Matrix.production.json` holds 128 `home.*` entries and 1256 in all. Amended 2026-10-10 (lead ruling on the Undo after Start from): `home.dashboard_tab.undo_start_from` (`cmd.widget.reset_layout` with `restore_revision`) is added too, so the file holds 129 `home.*` entries and 1257 in all (it read: 128 `home.*` entries and 1256 in all). Changed in place: the "+" menu's and the launcher's Dashboard row bodies open or reveal `dashboard:home` (wave 1's table said a new board, against UCC-200's L10 rule); the Terminal rows name installed shells; the Debug Console rows open or reveal the one `debug-console` tab; the rail's Chat entry works on every page; the six `catalog.widget_*` entries and `catalog.dashboard_catalog` name a dashboard board in `room` and the per-project key, and `catalog.widget_reset_layout` carries `set_id`; the Debug Console reveal lands in `debug-console`; the terminal's New terminal names installed shells and SSH hosts; and `assistant.redesign.cmd.chat_plan_open_version` declares `workspace.layout_changed` (WM-092, lead ruling F8). No entry is retired. The typed local actions the answers add (`ui.widget_board.set_view`, `ui.widget_preset.save`, `.rename` and `.delete`, `ui.terminal.mute_notifications`, `ui.chat_column.keep_open`) have no entry, like every typed local action.
+
 ### Home controls and their wiring
 
 Every control below commits through the gesture transaction of `Plans/UI_Wiring_Rules.md#UIW-012`: opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; a changed release or activation dispatches one command; an unchanged or cancelled gesture (Escape, a pointer cancel, a lost window, a drop past the workspace) dispatches nothing and restores the earlier picture; a failed commit rolls back and emits nothing. Every committed structural change emits the one existing event `workspace.layout_changed` with the v2 payload that names the change (`Plans/Contracts_V0.md#CV-361`), and an open that only reveals a tab that is already open emits nothing. Typed local actions (`ui.panel_tab.*`, `ui.workspace_layout.*`) have no production entry, no receipt and no event (`Plans/Commands_System.md#CS-100`).
@@ -5584,18 +5604,23 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | The filter field: an address it recognised | `cmd.browser.open_workspace_preview` | `home.plus_menu.filter_address` | the browser event set; `workspace.layout_changed` only when a tab is added |
 | "+" > Terminal: the row's body | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile, `where: tab` | `home.plus_menu.terminal` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Terminal: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile, `where: panel` | `home.plus_menu.terminal_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Terminal > a shell profile or SSH host: the row's body | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `home.plus_menu.terminal_profile` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Terminal > a shell profile or SSH host: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: panel` | `home.plus_menu.terminal_profile_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Terminal > an installed shell: the row's body (amended 2026-10-10, D39: every installed shell, uncapped; SSH hosts have their own row below) | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `home.plus_menu.terminal_profile` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Terminal > an installed shell: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: panel` | `home.plus_menu.terminal_profile_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > SSH hosts (only when the terminal kind knows SSH hosts) | opens its submenu | none | view-local, dispatches nothing |
+| "+" > SSH hosts > a host: the row's body; the same host found by typing in the menu's filter field (added 2026-10-10, D39) | `cmd.panel_tab.open` with `{ kind: terminal }` and that host's `profile`, `where: tab` | `home.plus_menu.ssh_host` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > SSH hosts > a host: the trailing cell, Alt+click, Alt+Enter (added 2026-10-10, D39) | `cmd.panel_tab.open` with `{ kind: terminal }` and that host's `profile`, `where: panel` | `home.plus_menu.ssh_host_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Browser: the row's body | `cmd.panel_tab.open` with `{ kind: browser }` (a blank browser), `where: tab` | `home.plus_menu.browser` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Browser: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: browser }` (a blank browser), `where: panel` | `home.plus_menu.browser_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Browser > a recent address: the row's body | `cmd.browser.open_workspace_preview`, `where: tab` | `home.plus_menu.browser_recent` | the browser event set; `workspace.layout_changed` only when a tab is added |
 | "+" > Browser > a recent address: the trailing cell, Alt+click, Alt+Enter | `cmd.browser.open_workspace_preview`, `where: panel` | `home.plus_menu.browser_recent_new_panel` | the browser event set; `workspace.layout_changed` only when a tab is added |
 | "+" > File... > one of the three recent files: the row's body | `cmd.file.open` with `mode: keep`, `where: tab` | `home.plus_menu.recent_file` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > File... > one of the three recent files: the trailing cell, Alt+click, Alt+Enter | `cmd.file.open` with `mode: keep`, `where: panel` | `home.plus_menu.recent_file_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Dashboard: the row's body | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id` (a new board), `where: tab` | `home.plus_menu.dashboard` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Dashboard: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id` (a new board), `where: panel` | `home.plus_menu.dashboard_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Dashboard > a board: the row's body | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`, `where: tab` | `home.plus_menu.dashboard_board` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Dashboard: the row's body | `cmd.panel_tab.open` with `{ kind: dashboard, board_id: home }`, opening or revealing `dashboard:home`, `where: tab` (amended 2026-10-10, DL-186: it read with no `board_id` (a new board), against UCC-200's L10 rule; New dashboard is its own sub-row below) | `home.plus_menu.dashboard` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Dashboard: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: dashboard, board_id: home }`, `where: panel` (amended 2026-10-10, DL-186, as the row above) | `home.plus_menu.dashboard_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Dashboard > a board (Home, Metrics, Monitoring, Agents, or one of this project's custom dashboards by name; amended 2026-10-10, DL-186): the row's body | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`, `where: tab` | `home.plus_menu.dashboard_board` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Dashboard > a board: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`, `where: panel` | `home.plus_menu.dashboard_board_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Dashboard > New dashboard: the row's body (added 2026-10-10, DL-186, D35) | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new, empty custom dashboard `dashboard:dash-<n>`, `where: tab` | `home.plus_menu.new_dashboard` | `workspace.layout_changed` |
+| "+" > Dashboard > New dashboard: the trailing cell, Alt+click, Alt+Enter (added 2026-10-10, DL-186, D35) | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`, `where: panel` | `home.plus_menu.new_dashboard_new_panel` | `workspace.layout_changed` |
 | "+" > Plan or document... > a choice in its picker: the row's body | `cmd.nav.open_subject`, `where: tab` | `home.plus_menu.plan_or_document` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.plus_menu.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.plus_menu.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -5608,7 +5633,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | "+" > Output, Problems, Ports, Debug Console > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.plus_menu.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.plus_menu.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Ports: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: ports }`, `where: panel` | `home.plus_menu.ports_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| "+" > Output, Problems, Ports, Debug Console > Debug Console: the row's body | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: tab` | `home.plus_menu.debug_console` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| "+" > Output, Problems, Ports, Debug Console > Debug Console: the row's body | `cmd.panel_tab.open` with `{ kind: debug_console }`, opening or revealing the one tab `debug-console` (amended 2026-10-10, DL-187, D33), `where: tab` | `home.plus_menu.debug_console` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Debug Console: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: panel` | `home.plus_menu.debug_console_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > File... (the row's body); "+" > Plan or document... and Artifact... (opening the picker); "+" > the tool row (opening its submenu) | opens Quick Open, a picker or a submenu | none | view-local, dispatches nothing |
 | "+" > File...: the trailing cell, Alt+click, Alt+Enter | opens Quick Open for a new panel; its Enter dispatches `cmd.file.open` with `mode: keep`, `where: panel` through `home.quick_open.open` | none | view-local, dispatches nothing |
@@ -5620,8 +5645,8 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Empty-panel launcher > Terminal: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: terminal }`, `where: panel` | `home.launcher.terminal_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Browser: the row's body | `cmd.panel_tab.open` with `{ kind: browser }`, `where: tab` | `home.launcher.browser` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Browser: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: browser }`, `where: panel` | `home.launcher.browser_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Dashboard: the row's body | `cmd.panel_tab.open` with `{ kind: dashboard }` (a new board), `where: tab` | `home.launcher.dashboard` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Dashboard: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: dashboard }` (a new board), `where: panel` | `home.launcher.dashboard_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Dashboard: the row's body | `cmd.panel_tab.open` with `{ kind: dashboard, board_id: home }`, opening or revealing `dashboard:home`, `where: tab` (amended 2026-10-10, DL-186: it read a new board) | `home.launcher.dashboard` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Dashboard: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: dashboard, board_id: home }`, `where: panel` (amended 2026-10-10, DL-186, as the row above) | `home.launcher.dashboard_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Plan or document... > a choice in its picker: the row's body | `cmd.nav.open_subject`, `where: tab` | `home.launcher.plan_or_document` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Plan or document... > a choice in its picker: the trailing cell, Alt+click, Alt+Enter | `cmd.nav.open_subject`, `where: panel` | `home.launcher.plan_or_document_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Artifact... > a choice in its picker: the row's body | `cmd.nav.open_subject` with the artifact subject, `where: tab` | `home.launcher.artifact` | `workspace.layout_changed` when a tab is added; none on a reveal |
@@ -5632,12 +5657,18 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Empty-panel launcher > Problems: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: problems }`, `where: panel` | `home.launcher.problems_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Ports: the row's body | `cmd.panel_tab.open` with `{ kind: ports }`, `where: tab` | `home.launcher.ports` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Ports: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: ports }`, `where: panel` | `home.launcher.ports_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
-| Empty-panel launcher > Debug Console: the row's body | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: tab` | `home.launcher.debug_console` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Debug Console: the row's body | `cmd.panel_tab.open` with `{ kind: debug_console }`, opening or revealing the one tab `debug-console` (amended 2026-10-10, DL-187, D33), `where: tab` | `home.launcher.debug_console` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Debug Console: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: panel` | `home.launcher.debug_console_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > Split right | `cmd.workspace_layout.split` with `direction: right` | `home.launcher.split_right` | `workspace.layout_changed` |
 | Empty-panel launcher > Split down | `cmd.workspace_layout.split` with `direction: down` | `home.launcher.split_down` | `workspace.layout_changed` |
 | Empty-panel launcher > Reopen closed tab | `cmd.panel_tab.reopen_closed` | `home.launcher.reopen_closed` | `workspace.layout_changed` |
 | Empty-panel launcher > one of the five recent files | `cmd.file.open` with `mode: keep` | `home.launcher.recent_file` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Terminal's sub-row link: an installed shell (added 2026-10-10, D39; the launcher shows each row's sub-row as links, hidden in a panel under 360 px) | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `home.launcher.terminal_shell` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > SSH hosts (opens its submenu from the row) > a host (added 2026-10-10, D39) | `cmd.panel_tab.open` with `{ kind: terminal }` and that host's `profile`, `where: tab` | `home.launcher.ssh_host` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Browser's sub-row link: a recent address (added 2026-10-10) | `cmd.browser.open_workspace_preview`, `where: tab` | `home.launcher.browser_recent` | the browser event set; `workspace.layout_changed` only when a tab is added |
+| Empty-panel launcher > File...'s sub-row link: one of the three recent files (added 2026-10-10) | `cmd.file.open` with `mode: keep`, `where: tab` | `home.launcher.recent_file_link` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Dashboard's sub-row link: a board (added 2026-10-10, DL-186) | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`, `where: tab` | `home.launcher.dashboard_board` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Empty-panel launcher > Dashboard's sub-row link: New dashboard (added 2026-10-10, DL-186, D35) | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`, `where: tab` | `home.launcher.new_dashboard` | `workspace.layout_changed` |
 | Empty-panel launcher > File...; the hint line | opens Quick Open; the hint dispatches nothing | none | view-local, dispatches nothing |
 | Empty-panel launcher > File...: the trailing cell, Alt+click, Alt+Enter | opens Quick Open for a new panel; its Enter dispatches `cmd.file.open` with `mode: keep`, `where: panel` through `home.quick_open.open` | none | view-local, dispatches nothing |
 
@@ -5675,16 +5706,19 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 
 | Control | Dispatch | Production entry | Effect |
 |---|---|---|---|
-| Activity bar > Chat | `cmd.panel.switch` with `chat` | `home.chat.activity_toggle` | receipt, no event |
+| Activity bar > Chat, on every page (amended 2026-10-10, DL-187, D40: it shows or hides the column without changing the page in front; a press that moves 4 px or more is the rail's reorder and toggles nothing) | `cmd.panel.switch` with `chat` | `home.chat.activity_toggle` | receipt, no event |
 | Home options menu > Show the chat / Hide the chat | `cmd.panel.switch` with `chat` | `home.more_options.chat_visibility` | receipt, no event |
 | The chat column's inner edge: drag | `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`, one commit on release | `home.resizer.chat` | `workspace.layout_changed` |
 | The chat header menu > Pop out (desktop app) | `cmd.panel.undock` with `chat` | `home.chat.pop_out` | `panel.undocked` |
 | Home options menu > Pop out the chat (desktop app) | `cmd.panel.undock` with `chat` | `home.more_options.chat_pop_out` | `panel.undocked` |
 | The popped-out chat window > Dock back (return) | `cmd.panel.redock` with `chat` | `home.chat.dock_back` | `panel.redocked` |
 | Home options menu > Dock the chat back | `cmd.panel.redock` with `chat` | `home.more_options.chat_dock_back` | `panel.redocked` |
-| Home options menu > Keep the chat open in narrow windows | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over its SSYS-050 row | none | the existing `catalog.settings_transaction_preview` and `catalog.settings_transaction_apply` rows; receipt, no event |
+| Home options menu > Keep the chat open in narrow windows | `ui.chat_column.keep_open` (amended 2026-10-10, DL-187: the planning thread's ruling under D4 makes it the chat's own preference, not a Settings row; it read: the Settings transaction pair over its SSYS-050 row) | none | typed local action, no receipt, no event |
+| The chat header's menu > Keep the chat open in narrow windows (added 2026-10-10, DL-187) | `ui.chat_column.keep_open` | none | typed local action, no receipt, no event |
 | The History list's pin (5.6 Pro History flyout) | `ui.chat_column.pin_history` with `history_pinned` | none | typed local action (view state); the v2 chat column's `history_pinned` is saved as view state in the v2 record's chat column, with no `workspace.layout_changed` event, revision advance or receipt, like `ui.workspace_layout.maximize` |
 | The chat's 32 px edge strip in a narrow window: opening the chat from it | nothing: a narrow-ladder state, never saved (F3-636) | none | none |
+
+Amended 2026-10-10 (DL-187, D32): a popped-out chat lasts only while the app runs. Its pop-out is never saved, so after a restart the chat starts in its column and nothing dispatches `cmd.panel.redock` at start; a stored Chat Layout value (`general.visual.chat-layout-mode`, retired) never pops it out (`Plans/Settings_System.md#SSYS-050`).
 
 **The narrow switcher** (`Plans/FinalGUISpec.md#F3-636`)
 
@@ -5692,6 +5726,41 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 |---|---|---|---|
 | The panel switcher ("2/3") in the one-column strip: choosing a panel, or its previous and next | `ui.workspace_layout.focus_panel` | none | typed local action, no receipt, no event |
 | "New panel", trailing cells and splits while the centre is one column | the same rows as above; the item opens in the next panel of the switcher and the announcement says so; nothing new is created | none | as the row it came from |
+
+**The dashboard tab** (`Plans/FinalGUISpec.md#F3-638`; `Plans/UI_Command_Catalog.md#UCC-200`'s Dashboard tab controls). Added 2026-10-10 (DL-186; D10 P1 to P13, D35; lead rulings F1, F2 and F7). Every dashboard tab is its own board on the Usage board engine; widget commands name the board in their existing `room` field and emit no `workspace.layout_changed` (a board's widgets are not the Home layout); opening the Add widget list, the Board menu, Start from, a submenu, a name prompt or a confirm dispatches nothing.
+
+| Control | Dispatch | Production entry | Effect |
+|---|---|---|---|
+| Header row > Add widget; the empty board's Add widget | opens the "Find a widget" list | none | view-local, dispatches nothing |
+| Add widget list > a widget | `cmd.widget.add` with the board in `room` and the `widget_id` | `home.dashboard_tab.add_widget` | receipt, no event |
+| Header row > Board | opens the Board menu | none | view-local, dispatches nothing |
+| Header row > Maximize / Restore | `ui.workspace_layout.maximize` | none | typed local action, no receipt, no event |
+| Board > Dashboards > a dashboard | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }` | `home.dashboard_tab.open_dashboard` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| Board > Dashboards > New dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new, empty custom dashboard | `home.dashboard_tab.new_dashboard` | `workspace.layout_changed` |
+| Board > This dashboard > Range > a range; Scope > a scope | `ui.widget_board.set_view` (lead ruling F1) | none | typed local action, no receipt, no event |
+| Board > This dashboard > Start from > a set; the empty board's Start from... > a set | `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, set_id }` | `home.dashboard_tab.start_from` | receipt, no event |
+| Board > This dashboard > Save as preset...; Start from > Your presets > Save this dashboard as a preset..., then Save | `ui.widget_preset.save` (lead ruling F2) | none | typed local action, no receipt, no event |
+| Start from > Your presets > Rename or delete presets > a preset > Start from this preset | `cmd.widget.reset_layout` with `set_id: user:<preset_id>` | `home.dashboard_tab.preset_start_from` | receipt, no event |
+| ... > Rename preset..., then Rename | `ui.widget_preset.rename` | none | typed local action, no receipt, no event |
+| ... > Delete preset..., then Delete preset; Keep it | `ui.widget_preset.delete`; Keep it dispatches nothing | none | typed local action, no receipt, no event |
+| Board > This dashboard > Tidy | one `cmd.widget.move` carrying `arrange { mode: tidy, detail: diagnostics }` (`Plans/Widget_System.md#WS-019`) | `home.dashboard_tab.tidy` | receipt, no event |
+| Board > This dashboard > Reset widgets | `cmd.widget.reset_layout` with `{ scope: room, room: <board_id> }` and no `set_id` | `home.dashboard_tab.reset_widgets` | receipt, no event |
+| Board > Live > Live readings | the Usage page's one Live / Paused choice (`Plans/usage-feature.md#UF-107`) | none | view_only, as the PM7 table's Live / Paused row |
+| Board > Rename dashboard... (custom dashboards only), then Rename | `cmd.panel_tab.rename` on that dashboard's tab with the name | `home.dashboard_tab.rename_dashboard` | `workspace.layout_changed` |
+| Board > Delete dashboard... (custom dashboards only), then Delete dashboard; Keep it | `cmd.panel_tab.close` on that tab, after which its board, quarantine and name are forgotten (`Plans/Widget_System.md#WS-030`); Keep it dispatches nothing | `home.dashboard_tab.delete_dashboard` | `workspace.layout_changed` |
+| The Undo notice after Start from > Undo; Escape | Undo: one `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, restore_revision }`, the board's committed layout revision just before that Start from, only while the notice is up (8 s, held on pointer or focus), never with `set_id`, refused with a disabled reason when that revision is no longer the board's previous one; Escape dismisses the notice (amended 2026-10-10, lead ruling; it read: Undo: no id yet, open for the lead's ruling (the concept writes the board's earlier record back with no command); Escape dismisses the notice) | `home.dashboard_tab.undo_start_from` (added 2026-10-10, lead ruling; it read: none) | receipt, no event; Escape dispatches nothing (amended 2026-10-10, lead ruling; it read: not certified until ruled; Escape dispatches nothing) |
+| A widget card's gestures, size picker, card menu and gear | the Usage board's own `cmd.widget.*` rows, naming the board in `room` | the `catalog.widget_*` entries | receipt, no event |
+| A widget card > Details | the Usage page opens at that widget's room with its inspector (P8) | none | view state: a page change and the Usage page's own inspector, no command |
+| Agents > Show > a filter | that tab's own view state (lead ruling F7) | none | view-local, dispatches nothing |
+| Agents > an agent's card; Alt+click | `cmd.agents.open_thread` as a kept transcript tab; Alt+click with `where: panel` | `home.dashboard_tab.agent_card` | `workspace.layout_changed` when a tab is added; none on a reveal |
+
+Play the next hour, Back to now and the Demo time are lab-only demo controls (`Plans/usage-feature.md#UF-107`) with no row. A custom dashboard leaving the reopen list is forgotten by storage housekeeping that dispatches nothing (WS-030). In a panel whose usual kind is the dashboard, Ctrl+T (`home.keys.new_tab`) and a split make a new custom dashboard.
+
+**Tool tabs** (`Plans/FinalGUISpec.md#F3-635`, `#F3-490`). Added 2026-10-10 (DL-187, D33; lead ruling F6).
+
+| Control | Dispatch | Production entry | Effect |
+|---|---|---|---|
+| The Debug Console's session sub-tabs in its header row: a click; Left, Right, Home, End, Enter or Space | nothing: the session shown is view state of the one `debug-console` tab | none | view-local, dispatches nothing |
 
 **Keys** (`Plans/FinalGUISpec.md#F3-635`, `Plans/UI_Command_Catalog.md#UCC-200`). In a web browser the four chords the browser owns are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+\`, and every label shows the key that works where the app runs. The shell keeps Ctrl+1..9 and Ctrl+K: there are no Ctrl+K chords, and no bare letter or digit is a panel key.
 
@@ -5742,10 +5811,30 @@ canonical_text: >-
   Output opens or reveals `output`. The channel picker switches its channel with `ui.output.select_channel`, a
   typed local action with no production entry, receipt or event. "Open in new tab" uses `cmd.panel_tab.open`
   with `output:<channel>`; it emits workspace.layout_changed only when it adds a tab (UCC-200, F3-635).
+  Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F6 and F7): the census grows by the answers of
+  2026-10-10, with 21 new home.* entries (129 in all; amended 2026-10-10, lead ruling, for the Undo after Start
+  from; it read: with 20 new home.* entries (128 in all)). The "+" menu's SSH hosts row and New dashboard, and the
+  empty-panel launcher's sub-row links, each have an entry; the "+" menu's and the launcher's Dashboard row bodies
+  open or reveal dashboard:home; the Terminal rows list installed shells; the Debug Console rows open or reveal the
+  one debug-console tab, whose session sub-tab dispatches nothing. A dashboard tab's command-bearing controls have
+  home.dashboard_tab.* entries: Add widget (cmd.widget.add), a dashboard and New dashboard in its Board menu
+  (cmd.panel_tab.open), Start from and Start from this preset (cmd.widget.reset_layout with set_id), Tidy
+  (cmd.widget.move with arrange), Reset widgets (cmd.widget.reset_layout), Rename dashboard... (cmd.panel_tab.rename),
+  Delete dashboard... (cmd.panel_tab.close, after its confirm), the Undo after Start from (cmd.widget.reset_layout with
+  restore_revision; added 2026-10-10, lead ruling) and an Agents card (cmd.agents.open_thread); the widget
+  commands name the board in their existing room field and emit no workspace.layout_changed. Range and Scope
+  (ui.widget_board.set_view) and the preset save, rename and delete (ui.widget_preset.*) are typed local actions with
+  no entry; Live readings is the Usage page's view_only Live / Paused; the Undo in the notice that follows Start from
+  is home.dashboard_tab.undo_start_from, one cmd.widget.reset_layout with { scope: room, room: <board_id>,
+  restore_revision } while the notice is up, never with set_id, refused with a disabled reason once that revision is no
+  longer the board's previous one, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
+  after Start from has no entry until the lead rules). The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows,
+  in the Home options menu and the chat header's menu, is the typed local action ui.chat_column.keep_open with no
+  entry; the chat's pop-out is never saved.
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
-depends_on: [DL-180, UCC-200, UCC-202, UCC-203, CS-100, CS-101, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-502, CV-360, CV-361, SP-330, UIW-012, UIW-040, UIW-041, WM-045]
+depends_on: [DL-180, DL-186, DL-187, UCC-200, UCC-202, UCC-203, CS-100, CS-101, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-502, CV-360, CV-361, SP-330, UIW-012, UIW-040, UIW-041, WM-045]
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control in the Home tables maps to exactly one production entry, typed local action or view-local disposition, and every home.* production entry appears in the tables."
@@ -5755,6 +5844,9 @@ acceptance_criteria:
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and the key entries say so."
   - "All rows sharing a command name one handler."
   - "Output opens or reveals output; its picker switch is ui.output.select_channel without a production entry, and Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
+  - "Every dashboard tab control in the dashboard tab table maps to its one entry, typed local action or view-local disposition, the Undo after Start from to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with restore_revision and no set_id; amended 2026-10-10, lead ruling; it read: except the Undo after Start from, which waits for the lead's ruling); the home.dashboard_tab.* entries of a cmd.widget.* command declare no event and those of a cmd.panel_tab.* or cmd.agents.open_thread command declare workspace.layout_changed."
+  - "The \"+\" menu's and the launcher's Dashboard row bodies open or reveal dashboard:home, New dashboard makes a custom dashboard, and every launcher sub-row link dispatches what its menu sub-row dispatches, as a new tab in this panel."
+  - "The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows and the Debug Console's session sub-tab have no production entry and no Settings transaction."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5771,13 +5863,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9 and 13; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; the \"+\" menu, Commands and keys; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2 items 2, 7 and 10)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)"
+  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets, rename and delete through the tab commands"
 preserved_exact_tokens:
+  - "home.dashboard_tab.start_from"
+  - "home.dashboard_tab.undo_start_from"
+  - "restore_revision"
+  - "home.plus_menu.new_dashboard"
+  - "home.plus_menu.ssh_host"
+  - "ui.chat_column.keep_open"
   - "Open in new tab"
   - "output:<channel>"
   - "output"
@@ -5803,16 +5906,19 @@ negative_constraints:
 compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface and has no entry."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (lead ruling L9): The History pin is wired as ui.chat_column.pin_history with no production entry."
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): The History pin is saved as view state with no workspace.layout_changed event; it is no longer committed with chat_column_changed (CV-361 binds chat_column_changed to a width drag only)."
   - "Retired 2026-10-09 (DL-180): 51 home.* entries of the fixed-zone model; the list is control_census.retired_rows_2026_10_09 in Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json."
+  - "Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard tab's controls, New dashboard and the launcher's dashboard links; the Dashboard row bodies open or reveal dashboard:home; range, scope and presets are typed local actions without entries."
+  - "Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher's sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one debug-console tab whose sub-tab dispatches nothing; the rail's Chat entry on every page; Keep the chat open in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Wiring_Rules.md#UIW-040
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Wiring_Rules.md#UIW-040
 
 ### Terminal tab controls and their wiring
 
@@ -5831,7 +5937,7 @@ A terminal is one tab kind with one session per tab (`Plans/Section15_MVP_Promot
 
 | Control | Dispatch | Production entry | Effect |
 |---|---|---|---|
-| New terminal > a shell profile or SSH host | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `terminal.more.new_terminal` | `workspace.layout_changed` when a tab is added; none on a reveal |
+| New terminal > an installed shell, or SSH hosts > a host (amended 2026-10-10, DL-187, D39: every installed shell, then after a hairline an SSH hosts submenu) | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `terminal.more.new_terminal` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Split down | `cmd.workspace_layout.split` with the terminal spec, `direction: down` | `terminal.more.split_down` | `workspace.layout_changed` |
 | Appearance... | opens the Appearance popover | none | view-local, dispatches nothing |
 | Text size > Bigger, Smaller, Reset (Ctrl+=, Ctrl+-, Ctrl+0) | `ui.terminal.zoom` | none | typed local action, no receipt, no event |
@@ -5843,6 +5949,7 @@ A terminal is one tab kind with one session per tab (`Plans/Section15_MVP_Promot
 | Plain-text buffer (Alt+F2) | `ui.terminal.a11y_buffer` | none | typed local action, no receipt, no event |
 | Agent input > Ask each time | nothing: a state row | none | none |
 | Agent input > an agent allowed in this terminal | `cmd.terminal.revoke_agent_input` | `terminal.more.revoke_agent_input` | receipt, no event |
+| Mute notifications (a check, between Agent input and Send signal; absent where the platform has no system notifications; added 2026-10-10, DL-187, D38) | `ui.terminal.mute_notifications` (lead ruling F5) | none | typed local action, no receipt, no event; that tab's own state, saved with the tab |
 | Send signal > Interrupt (SIGINT) | `cmd.terminal.interrupt` | `terminal.more.signal_interrupt` | receipt, no event |
 | Send signal > Terminate (SIGTERM) | `cmd.terminal.send_signal` with `SIGTERM` | `terminal.more.signal_terminate` | receipt, no event |
 | Send signal > Kill (SIGKILL) | `cmd.terminal.send_signal` with `SIGKILL` | `terminal.more.signal_kill` | receipt, no event |
@@ -5901,6 +6008,9 @@ A terminal is one tab kind with one session per tab (`Plans/Section15_MVP_Promot
 | Closing a running terminal: "Close this terminal? <process> is still running and will be stopped." > Close terminal | `cmd.panel_tab.close`, the confirmed two-step close that ends the session | `terminal.close_row.close_terminal` | `workspace.layout_changed` |
 | The same row > Keep it open | nothing: the close is cancelled | none | none |
 | The restored notice and the could-not-load-scrollback notice | nothing: text only; no control dispatches | none | none |
+| The tab's menu > Mute notifications, the terminal kind's row after a hairline (added 2026-10-10, DL-187, D38) | `ui.terminal.mute_notifications` | none | typed local action, no receipt, no event |
+| A system notification a program raised (OSC 9, OSC 777 `notify`, OSC 99) while Puppet Master is in the background: a click (added 2026-10-10, DL-187, D38) | brings the app and that terminal forward: `ui.panel_tab.activate` with `focus: true` | none | typed local action, no receipt, no event |
+| The notification permission notice (where the platform asks, once, after a notification arrived) > Allow; Mute this terminal; Not now (added 2026-10-10, DL-187, D38) | Allow asks the platform's own permission; Mute this terminal is `ui.terminal.mute_notifications`; Not now dispatches nothing | none | no command, receipt or event |
 | An image a limit, a quota or a transfer rule refuses | nothing: the image is not drawn and the program receives SMPFS-181's fixed reply; no notice control exists | none | none |
 
 **Appearance popover** (`Plans/FinalGUISpec.md#F3-642`, `#F3-643`)
@@ -5941,10 +6051,16 @@ canonical_text: >-
   structural command it dispatches. The fourteen terminal ids that existed only in this document's runtime-recovery
   table, and cmd.terminal.split_pane, move_pane, close_pane, detach, reattach_section, move_workgroup and the
   restart_session spelling, have no row; cmd.terminal.focus_session is alias metadata of cmd.terminal.focus.
+  Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, in the More menu and at the end of
+  the tab's menu, and the permission notice's Mute this terminal are the typed local action
+  ui.terminal.mute_notifications with no entry; the notice's Allow asks the platform and Not now dispatches nothing;
+  a click on a system notification brings the terminal forward with ui.panel_tab.activate; New terminal's entry
+  covers every installed shell and the SSH hosts submenu. No control sets a terminal tab's colour or icon (D34), and
+  no terminal.* entry is added.
 gui_related: true
 gui_classification_reason: "Binds every control of the terminal tab, its menus, links, notices, agent rows and Appearance popover to exactly one command or typed local action."
 split_recommended: false
-depends_on: [DL-181, DL-183, UCC-201, UCC-202, CS-101, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-182, CV-362, SSYS-051, UIW-042, WM-090]
+depends_on: [DL-181, DL-183, DL-187, UCC-201, UCC-202, CS-101, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-182, CV-362, SSYS-051, UIW-042, WM-090]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Every control in the terminal tables maps to exactly one production entry, typed local action or no-dispatch disposition, and every terminal.* production entry appears in the tables."
@@ -5953,6 +6069,7 @@ acceptance_criteria:
   - "A person's keystroke in an agent-driven terminal is recorded as cmd.terminal.take_over with origin keystroke, never as a second id."
   - "Ctrl+click on a file reference dispatches cmd.file.open with mode preview, Ctrl+double-click with mode keep, Ctrl+Alt+click with where panel, and a plain click dispatches nothing."
   - "No terminal session command entry declares an event."
+  - "Mute notifications in the More menu and the tab menu, the permission notice's three answers and a notification's click have no production entry, and Mute notifications is absent where the platform has no system notifications."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5973,7 +6090,10 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md (SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b; sections 1 to 3 and 8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md (SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3; E.3, the fourteen Wiring_Matrix-only terminal ids)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 2: notifications, the More menu; concept lineage only)"
 preserved_exact_tokens:
+  - "ui.terminal.mute_notifications"
   - "cmd.terminal.take_over"
   - "cmd.terminal.hand_back"
   - "cmd.terminal.interrupt"
@@ -5993,6 +6113,7 @@ negative_constraints:
   - "Do not add AI controls to the terminal."
 stale_retired_dispositions:
   - "Retired 2026-10-09 (DL-181): catalog.terminal_split_pane, catalog.terminal_move_pane, catalog.terminal_close_pane, catalog.terminal_detach, catalog.terminal_reattach_section and catalog.terminal_focus_session lose their production entries."
+  - "Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, the notification click and the permission notice are wired as typed local actions or no dispatch with no entry; New terminal lists installed shells and an SSH hosts submenu."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
@@ -6014,6 +6135,9 @@ The home audit found commands whose production rows named different event sets (
 | `cmd.dashboard.add_widget` | `catalog.dashboard_add_widget` | `[dashboard.widget_added]`, beside `catalog.widget_add` with `[]` | no row: an alias of `cmd.widget.add`, whose rows emit no event; `dashboard.widget_added` is withdrawn (UCC-202) |
 | `cmd.browser.devtools.open` | `assistant.redesign.cmd.browser_devtools_open` beside `catalog.browser_open_devtools` | two ids and two handlers for one action | the Assistant toolbar row dispatches `cmd.browser.open_devtools`; both rows name `handlers::browser_runtime::devtools_open` (UCC-202) |
 | Open routes that can add a tab: `cmd.file.open_with`, `cmd.git.diff_open`, `cmd.source_control.open_merge_editor`, `cmd.docker.compose.open_file`, `cmd.run_debug.config.open_file`, `cmd.search.open_result`, `cmd.nav.open_subject`, `cmd.collaboration.open`, `cmd.agents.open_thread`, `cmd.chat.open_thread_context_details`, `cmd.chat.close_thread_context_details`, `cmd.terminal.open`, `cmd.dev.show_output`, `cmd.dev.show_problems`, `cmd.dev.show_ports`, `cmd.run_debug.console.reveal`, `cmd.chat.plan.open_details`, `cmd.chat.attachment.open` | their one catalog or Assistant row each | `[]`, while `cmd.browser.open_workspace_preview` already declared `workspace.layout_changed` for the same kind of open | `[workspace.layout_changed]`, emitted only when the route adds (or, for the context close, removes) a tab; a reveal emits nothing (`Plans/Contracts_V0.md#CV-361`, UCC-200) |
+| `cmd.chat.plan.open_version` (added 2026-10-10, lead ruling F8) | `assistant.redesign.cmd.chat_plan_open_version` | `[]` (CS-088, WM-065, before DL-188 admitted the event) | `[workspace.layout_changed]`, emitted only when the route adds a tab; a reveal of the Plan's tab already open emits nothing; the entry declares the effect, placement and layout-event test exactly as `cmd.chat.plan.open_details`'s does |
+
+Amended 2026-10-10 (lead ruling F8; DL-188): `cmd.chat.plan.open_version` (DL-157) is an open route of the one opening module like `cmd.chat.plan.open_details`, so its entry declares `workspace.layout_changed` with the same effect contract, placement fields and layout-event test. This amends the empty event set that `Plans/Commands_System.md#CS-088` and `#WM-065` gave the route while `workspace.layout_changed` 2.0.0 was not yet admitted; Jared admitted it on 2026-10-10 (D42, `Plans/Decision_Log.md#DL-188`), and CS-088 and WM-065 themselves are not edited here.
 
 `cmd.browser.open_workspace_preview` keeps its canonical event set exactly (`workspace.layout_changed`, `browser.session.created`, `browser.session.state_changed`), the set `scripts/pm-plans-verify.py` pins. The four alias tokens (`cmd.editor.close_tab`, `cmd.dashboard.add_widget`, `cmd.browser.devtools.open`, `cmd.terminal.focus_session`) and the retired command ids keep no production entry; the exact exclusions they need in `Plans/Wiring_Matrix.production.exclusions.json` are a companion edit of that file.
 
@@ -6033,6 +6157,10 @@ canonical_text: >-
   search results, subjects, collaboration runs, agent transcripts, the thread context tab and its close, Open in
   Terminal, Show Output, Show Problems, Show Ports, the Debug Console reveal, the chat's plan details and attachments);
   a reveal of an open tab emits nothing. cmd.browser.open_workspace_preview keeps its pinned set exactly.
+  Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_version joins the open routes: its entry declares
+  workspace.layout_changed, emitted only when it adds a tab, with the effect contract, placement fields and
+  layout-event test of cmd.chat.plan.open_details. This amends the empty event set CS-088 and WM-065 recorded for it
+  before Jared admitted workspace.layout_changed 2.0.0 (D42).
   cmd.terminal.move_workgroup and cmd.terminal.split_pane lose their rows with their commands, and
   terminal.workgroup_moved is withdrawn. cmd.dashboard.add_widget is an alias of cmd.widget.add with no row, and
   dashboard.widget_added is withdrawn. The Assistant toolbar's DevTools row dispatches the canonical
@@ -6040,13 +6168,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Makes each visible control's declared effect the one event set its command emits."
 split_recommended: false
-depends_on: [DL-180, DL-181, UCC-200, UCC-201, UCC-202, UCC-203, CV-361, WM-090, WM-091]
+depends_on: [DL-180, DL-181, DL-188, UCC-200, UCC-201, UCC-202, UCC-203, CV-361, WM-090, WM-091]
 unblocks: []
 acceptance_criteria:
   - "For every command, all production entries that dispatch it declare the same expected_event_types and name one handler."
   - "home.chat.activity_toggle declares no event; home.chat.pop_out declares panel.undocked only."
   - "Every cmd.file.open entry, and every open-route entry listed in this unit, declares workspace.layout_changed and its effect contract says the event follows an added tab only."
   - "No entry declares terminal.workgroup_moved or dashboard.widget_added."
+  - "assistant.redesign.cmd.chat_plan_open_version declares workspace.layout_changed with a layout-event test, its effect contract saying the event follows an added tab only."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -6064,7 +6193,11 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2 items 2, 7 and 10)"
+  - "Plans/Decision_Log.md#DL-188"
+  - "Plans/Decision_Log.md#DL-157 (the exact-version open route; cited, not a dependency)"
+  - "Plans/Commands_System.md#CS-088 and Plans/Wiring_Matrix.md#WM-065 (the route's earlier empty event set, amended here; cited, not dependencies)"
 preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
   - "workspace.layout_changed"
   - "panel.undocked"
   - "terminal.workgroup_moved"
@@ -6074,6 +6207,7 @@ negative_constraints:
   - "Do not add an event family for panels, tabs or layouts."
 stale_retired_dispositions:
   - "Corrected 2026-10-09 (DL-180): the per-row event mismatches the home audit listed (section 6.2, item 7)."
+  - "Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_version's entry declares workspace.layout_changed like cmd.chat.plan.open_details; this amends CS-088's and WM-065's empty event set for the route, which predates the admission of workspace.layout_changed 2.0.0 (D42)."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json

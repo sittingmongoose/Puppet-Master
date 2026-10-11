@@ -2,15 +2,17 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2094-L2351
+Source lines: L2094-L2405
 
-Source SHA256: `7305e454af529789b29d5c19b50a0321546bce0b4d090dbdcd8d0699110160c5`
+Source SHA256: `0b12619eb7765f9dc6a7c2d120dfe892ef364b668e279ae2ba5238af617521c7`
 
 ---
 
 ## DL-180 to DL-183 — Wiring Rules For The Universal Panels And The Terminal Tab (2026-10-09)
 
 Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) replaces Home's four fixed editor panels, its singleton dashboard, its movable chat and its docked terminal sections with one universal panel system, and makes the terminal one session per tab. This addendum gives the rules the wiring follows. UIW-040 is the closed census of Home controls and supersedes the fixed-zone rows of the 2026-08-04 Home rules and of UIW-010's amendments; UIW-041 says how a tab is opened, kept, closed, reopened, moved and pinned and what each step emits; UIW-042 is the closed census of controls inside a terminal tab. The one wiring row per control is `Plans/Wiring_Matrix.md#WM-090` and `#WM-091`; the command ids are `Plans/UI_Command_Catalog.md#UCC-200` to `#UCC-203`. UIW-010 and UIW-012 are amended in place: the census rule and the transaction rule stand, the chat no longer re-seats inside the window, and the terminal caps and Collapse Bottom Terminal leave the census. This addendum does not edit UIW-026 to UIW-031.
+
+Amended 2026-10-10 (DL-186, DL-187): Jared's answers of 2026-10-10 add to the censuses. UIW-040 gains the dashboard tab's controls (Add widget, the Board menu with Start from, presets, Tidy, Reset widgets, Rename and Delete dashboard, the Undo notice, an Agents card), the "+" menu's SSH hosts row and New dashboard, the launcher's sub-row links, the Debug Console's session sub-tabs and the chat header's Keep the chat open in narrow windows, and the rail's Chat entry works on every page. UIW-041 says how a custom dashboard is renamed, deleted and forgotten. UIW-042 gains Mute notifications, a notification's click and the notification permission notice.
 
 ### UIW-040 - The Home Census: One Closed List Of Home Controls
 
@@ -48,20 +50,39 @@ canonical_text: >-
   with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the dock track and the floating
   corner resizer; the dashboard's grab, pop-out and resizer; the chat's grab; the terminal sections (grab, bottom
   toggle, new section, split pane, move workgroup, resizer); and Collapse Bottom Terminal. A disabled control projects
-  its owner's reason (UCC-200) and dispatches nothing. ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
-  unresolved_count=0. This census supersedes
+  its owner's reason (UCC-200) and dispatches nothing. Amended 2026-10-10 (DL-186, DL-187): the list adds the "+"
+  menu's SSH hosts row with its hosts and the Dashboard sub-row's custom dashboards and New dashboard; the empty-panel
+  launcher's sub-row links (a shell, a host, a recent address, a recent file, a board, New dashboard); the Terminal row
+  lists installed shells. A dashboard tab: its header row (Add widget with its list, Board, Maximize or Restore), the
+  Board menu (Dashboards with each dashboard and New dashboard; This dashboard with Range, Scope, Start from and its
+  sets, Save as preset..., Tidy and Reset widgets; Live readings; and on a custom dashboard only Rename dashboard...
+  and Delete dashboard... with its confirm), Start from's Your presets (Save this dashboard as a preset..., Start from
+  this preset, Rename preset..., Delete preset... with its confirm), the Undo notice after Start from, the empty
+  board's Add widget and Start from..., a widget card's Details (its gestures, size picker and menus are the Usage
+  board's own controls), and on Agents the Show filters and each agent's card. The Debug Console's session sub-tabs.
+  The chat header's Keep the chat open in narrow windows beside the Home options menu's, both the typed local action
+  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo in the notice that follows Start
+  from maps to its WM-090 row, home.dashboard_tab.undo_start_from: one cmd.widget.reset_layout with restore_revision
+  (UCC-200), so the census has no open item (amended 2026-10-10, lead ruling; it read: The Undo after Start from
+  has a WM-090 row with no id until the lead rules on its id; it is the census's one open item; and before that,
+  amended 2026-10-10, DL-186: The Undo after Start from has no wiring row until the lead rules on its id). ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
+  unresolved_count=0 (amended 2026-10-10, lead ruling: the Undo after Start from has its id; it read: The census
+  reports unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after; and before that, amended
+  2026-10-10, DL-186: The census reports unresolved_count=0). This census supersedes
   the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
 split_recommended: false
-depends_on: [DL-180, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637]
+depends_on: [DL-180, DL-186, DL-187, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631, F3-632, F3-633, F3-636, F3-637, F3-638]
 unblocks: [ATS-075]
 acceptance_criteria:
-  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
+  - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list; every row names its id, the Undo after Start from's being home.dashboard_tab.undo_start_from, and the census reports unresolved_count=0 (amended 2026-10-10, lead ruling; it read: every row but the Undo after Start from's names its id, and the census reports unresolved_count=1 (that Undo's id) until the lead rules, and 0 after; and before that, amended 2026-10-10, DL-186: Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0.)"
   - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is saved as view state with no workspace.layout_changed event, revision advance or receipt, and no pending exception remains."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."
+  - "Every dashboard tab control, the SSH hosts row and its hosts, New dashboard, each launcher sub-row link, the Debug Console's sub-tabs, both Keep the chat open in narrow windows items and the Undo after Start from map to exactly one WM-090 row, and no item is open (amended 2026-10-10, lead ruling; it read: Every dashboard tab control, the SSH hosts row and its hosts, New dashboard, each launcher sub-row link, the Debug Console's sub-tabs and both Keep the chat open in narrow windows items map to exactly one WM-090 row; the Undo after Start from is reported as the one open item until the lead rules on its id)."
+  - "Rename dashboard... and Delete dashboard... appear only on a custom dashboard; Home, Metrics, Monitoring and Agents show neither."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -83,7 +104,13 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md (SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8; section 6.2)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu, the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)"
 preserved_exact_tokens:
+  - "Rename dashboard..."
+  - "Delete dashboard..."
+  - "New dashboard"
   - "unresolved_count"
   - "Collapse Bottom Terminal"
   - "Restore home layout"
@@ -94,6 +121,8 @@ negative_constraints:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (lead ruling L9): Replaces the pending History pin exception with ui.chat_column.pin_history in the closed census."
+  - "Amended 2026-10-10 (DL-186, DL-187): adds the dashboard tab's controls, SSH hosts, New dashboard, the launcher's sub-row links, the Debug Console's sub-tabs, the chat header's Keep the chat open in narrow windows and the rail's Chat entry on every page; the Undo after Start from waits for the lead's ruling."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo maps to home.dashboard_tab.undo_start_from (cmd.widget.reset_layout with restore_revision), and the census reports unresolved_count=0."
   - "Superseded 2026-10-09 (DL-180): the fixed-zone census rows of the 2026-08-04 Home rules and UIW-010's 2026-08-13 amendments (Panel 1 to Panel 4, Chat and Dashboard Pop Out, the floating corner and dock track resizers, terminal add and split leaves, terminal caps, Collapse Bottom Terminal)."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
@@ -135,10 +164,19 @@ canonical_text: >-
   workspace.layout_changed once with its v2 payload (CV-361) and writes pm.home_workspace_layout.v2 once (SP-330);
   activating a tab is ui.panel_tab.activate with no receipt and no event; a cancelled, unchanged or failed step emits
   nothing and puts the layout back.
+  Amended 2026-10-10 (DL-186, D35; DL-187, D33): a custom dashboard follows the same steps. New dashboard (and Ctrl+T
+  or a split in a dashboard panel) adds a new, empty custom dashboard tab in one commit; Rename dashboard... and
+  renaming its tab are the one cmd.panel_tab.rename, which renames the dashboard too, and clearing the label gives
+  back "Dashboard <n>"; Delete dashboard..., after its confirm, is the one cmd.panel_tab.close, after which the
+  dashboard leaves the reopen list and its board and name are forgotten. Closing a custom dashboard's tab in any other
+  way keeps its board while it can be reopened; when it leaves the closed-tab stack and is not open as a tab, its
+  board is forgotten, with no command (WS-030). The built-in dashboards keep their boards and are never deleted. The
+  Debug Console is one tab, debug-console: opening or revealing it shows the session asked for in its sub-tabs, and an
+  older debug-console:<session> id folds into it wherever it appears (an open, a restore or Reopen closed tab).
 gui_related: true
 gui_classification_reason: "The visible life of a tab: how it opens, becomes kept, closes, comes back, moves and pins."
 split_recommended: false
-depends_on: [DL-180, DL-181, UIW-012, UIW-040, UCC-200, F3-630, F3-631, F3-634, CV-360, CV-361, SP-330, SMPFS-180]
+depends_on: [DL-180, DL-181, DL-186, DL-187, UIW-012, UIW-040, UCC-200, F3-630, F3-631, F3-634, F3-638, CV-360, CV-361, SP-330, SMPFS-180]
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Opening an id that is already open anywhere activates it where it is, emits no workspace.layout_changed and opens no second tab."
@@ -148,6 +186,8 @@ acceptance_criteria:
   - "Closing the last tab closes the panel unless it is the only centre panel or locked; then the empty-panel launcher shows."
   - "Reopen closed tab restores the newest closed tab; a reopened terminal is a new session in the same folder and profile and says so."
   - "Every committed step emits exactly one workspace.layout_changed; activation, a reveal, a cancelled or failed step emit none."
+  - "Deleting a custom dashboard is one cmd.panel_tab.close after its confirm and forgets its board and name; a closed custom dashboard reopens with its board while it is on the closed-tab stack and is forgotten when it leaves it unless it is open; a built-in dashboard is never deleted."
+  - "An older debug-console:<session> id opens, restores or reopens as the one debug-console tab with that session shown, never as a second tab."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -165,9 +205,12 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
 preserved_exact_tokens:
+  - "debug-console"
   - "cmd.panel_tab.keep"
   - "cmd.panel_tab.close"
   - "cmd.panel_tab.reopen_closed"
@@ -182,6 +225,7 @@ negative_constraints:
   - "Do not emit workspace.layout_changed for a reveal, an activation, or a cancelled, unchanged or failed step."
 stale_retired_dispositions:
   - "Superseded 2026-10-09 (DL-180): the editor-only tab lifecycle of catalog.editor_close_tab (cmd.editor.close_tab is now an alias of cmd.panel_tab.close, which serves tabs of every kind) and the fixed-panel open targets Panel 1 to Panel 4."
+  - "Amended 2026-10-10 (DL-186, D35; DL-187, D33): custom dashboards are made, renamed and deleted through the tab commands and forgotten when they leave the closed-tab stack; the Debug Console is one debug-console tab into which older per-session ids fold."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md
@@ -219,16 +263,22 @@ canonical_text: >-
   Retro, Degauss. A refused image has no control: the program gets SMPFS-181's fixed reply. Not on the list, and never
   wired: a split inside a terminal, a section, workgroup or sub-tab control, a terminal pop-out, the per-tab role
   setting and any AI control in the terminal (Explain What Commands Do leaves for the chat's Teacher).
+  Amended 2026-10-10 (DL-187; D34, D38, D39): New terminal lists every installed shell, then an SSH hosts submenu with
+  each host; Mute notifications sits in the More menu between Agent input and Send signal and at the end of the tab's
+  menu after a hairline (absent where the platform has no system notifications); a click on a system notification a
+  program raised; the notification permission notice (Allow, Mute this terminal, Not now). Not on the list: any
+  control that gives a terminal tab a colour or icon (D34).
 gui_related: true
 gui_classification_reason: "The closed list of visible controls inside a terminal tab that the wiring must cover, one row each."
 split_recommended: false
-depends_on: [DL-181, DL-182, DL-183, UIW-040, UCC-201, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-181, SMPFS-182]
+depends_on: [DL-181, DL-182, DL-183, DL-187, UIW-040, UCC-201, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-181, SMPFS-182]
 unblocks: [ATS-076]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-091 row, and every terminal.* production entry maps to a control on the list."
   - "The Permission row offers exactly Allow once, Allow in this terminal and Deny."
   - "No control on a terminal tab splits inside the terminal, moves a section or workgroup, pops the terminal out or asks an AI to explain a command."
   - "A plain click on a link only selects text."
+  - "Mute notifications in the More menu and the tab menu, a notification's click and the permission notice's three answers each map to one WM-091 row, and no control sets a terminal tab's colour or icon."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -250,7 +300,10 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md (SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b; sections 1 to 3 and 8; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 2; concept lineage only)"
 preserved_exact_tokens:
+  - "Mute notifications"
   - "Allow in this terminal"
   - "Keep it open"
   - "Open output in an editor tab"
@@ -260,6 +313,7 @@ negative_constraints:
   - "Do not add an AI control, a split inside a terminal, a section, a workgroup, a sub-tab or a terminal pop-out."
 stale_retired_dispositions:
   - "Superseded 2026-10-09 (DL-181): the terminal add and split leaves, the four-section and four-pane cap states and the bottom terminal rows of the earlier Home census."
+  - "Amended 2026-10-10 (DL-187; D34, D38, D39): adds Mute notifications, a notification's click, the permission notice and the installed shells and SSH hosts under New terminal; no tab colour or icon control."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md

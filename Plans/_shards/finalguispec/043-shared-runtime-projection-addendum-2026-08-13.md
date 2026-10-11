@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5574-L27006
+Source lines: L5592-L27068
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -563,11 +563,14 @@ canonical_text: >-
   `widget_layout:v1:dashboard:<board_id>` (WS-030); `widget_layout:v1:dashboard` joins `dashboard_layout:v1` as a
   read-only migration input and backup, converting into `widget_layout:v1:dashboard:home` on first read and never
   reset.
+  Amended 2026-10-10 (DL-186): the active Dashboard family is one key per project and board, `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); the per-board key above was never written and nothing converts into it, and `widget_layout:v1:dashboard`
+  is no board's key.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -600,6 +603,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Retired layout keys are read-only migration backups."
 - "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the active Dashboard key; each board has its own (WS-030)."
+- "Amended 2026-10-10 (DL-186): boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; nothing converts into the per-board key DL-180 named."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -2289,16 +2293,24 @@ canonical_text: >-
   repository_automation, docker_manager, artifacts, run_debug, testing, and agents with
   matching labels, tooltips, shortcuts, and command IDs. The testing and agents
   panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
+  Amended 2026-10-10 (DL-187, D40): `chat` stays an activity-bar entry but opens no side panel. A click on it, or
+  Enter or Space where the entry takes focus, shows the chat column (F3-637) when the chat is not on screen and hides
+  it when it is, on every page, and never changes the page in front; where the narrow ladder has folded the chat to
+  its strip, the entry opens the chat over the centre (F3-636). Each show or hide is one cmd.panel.switch with chat
+  and one receipt. A press that moves 4 px or more, or ends as the rail's own drag, reorders the rail (or moves the
+  entry into More) and shows or hides nothing. The entry is lit while the column is shown, its folded strip included,
+  and its hover tag reads Chat, "Shows or hides the chat column".
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-187]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "The side-panel inventory is canonical at 10 panels."
+- "The activity bar's Chat entry opens no side panel: on every page a click, Enter or Space shows or hides the chat column with one cmd.panel.switch and receipt, never changes the page in front, opens a folded chat over the centre, and is lit while the column is shown; a press that moves 4 px or more is the rail's reorder and toggles nothing."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -2314,6 +2326,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0036"
+- "Plans/Decision_Log.md#DL-187"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D40)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept lineage only)"
 preserved_exact_tokens:
 - "search"
 - "chat"
@@ -2324,10 +2340,13 @@ preserved_exact_tokens:
 - "artifacts"
 - "run_debug"
 - "Canonical side-panel descriptions"
-negative_constraints: []
+- "Shows or hides the chat column"
+negative_constraints:
+- "Do not open a side panel or change the page in front from the activity bar's Chat entry."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The notifications side panel joined the inventory per the 2026-07-16 shell sweep promotion (F3-453) and is retired from the inventory per PMConcept7 title-bar notifications (2026-07-23); the shared alert store and ack/snooze lifecycle survive in F3-453, and durable alerts render via the title-bar notification stack (F3-460) and sprout inbox panel (F3-461)."
+- "Amended 2026-10-10 (DL-187, D40): `chat` stays in the inventory as an activity-bar entry that shows or hides the chat column on every page; it is no longer a side-panel occupant (panels NUMBERS 339203bd76, CONTRACT section 6.1)."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md"
 owner_hints:
@@ -8863,10 +8882,12 @@ canonical_text: >-
   `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), and each dashboard board's widget layout in
   `widget_layout:v1:dashboard:<board_id>` (WS-030); the Orchestrator Progress widget layout and the narrow project
   shell records are unchanged.
+  Amended 2026-10-10 (DL-186): each dashboard board's widget layout is kept per project in
+  `widget_layout:v1:<project_id>:<board_id>` (WS-030), not in the per-board key above.
 gui_related: true
 gui_classification_reason: This unit defines GUI shell persistence, widget layout, and view-state storage behavior.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -8904,6 +8925,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Deprecated key reads are forward-migration only."
 - "Amended 2026-10-09 (DL-180): Home's layout and the dashboard boards' widget layouts are not kept in the project shell records (SP-330, WS-030)."
+- "Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes:
 - "Shell persistence remains in narrow project shell records, not in canonical blocked or `/attention` truth."
 owner_hints:
@@ -10737,7 +10759,9 @@ superseded_by: F3-638
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Window-width dashboard columns are retired:
-  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's. The
+  a dashboard tab's columns follow the tab's own width, never the window, and the board's column ladder is WS-030's
+  (amended 2026-10-10, DL-186: a board lays out on the Usage board's tracks and width classes of WS-017, measured on the
+  tab's own width, F3-638). The
   text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product
   truth. Superseded by F3-638 (DL-180).
   Dashboard grid columns respond to width: two columns below 1200px, three columns from
@@ -10747,7 +10771,7 @@ gui_classification_reason: >-
   This unit defines visible Dashboard grid column counts despite the source inference being
   false.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -10778,6 +10802,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Superseded 2026-10-09 (DL-180): the 1200 px and 1600 px window breakpoints for dashboard columns are retired (F3-638, F3-636, WS-030)."
+- "Amended 2026-10-10 (DL-186): a dashboard board lays out on the Usage board's tracks and width classes (WS-017), measured on the tab's own width (F3-638), not on a column ladder of WS-030's."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -11843,12 +11868,15 @@ canonical_text: >-
   height, terminal section split ratios), which becomes a read-only migration input converted on first read and never
   reset, and keeps only side-panel and detached-window geometry; each dashboard board keeps
   `widget_layout:v1:dashboard:<board_id>` (WS-030).
+  Amended 2026-10-10 (DL-186): each dashboard board keeps its contents per project in `widget_layout:v1:<project_id>:<board_id>`,
+  and the person's dashboard presets live in `widget_presets:v1` (WS-030); `widget_layout:v1:dashboard` is no board's
+  key and nothing writes it now, so its write frequency is lineage (Plans/Widget_System.md#WS-009).
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
   persistence keys.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -11889,6 +11917,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): `layout:v1` is no longer a Home layout authority; the v2 Home layout record is."
+- "Amended 2026-10-10 (DL-186): dashboard boards persist per project under `widget_layout:v1:<project_id>:<board_id>` and presets per person in `widget_presets:v1` (WS-030)."
 owner_boundary_notes:
 - "Project state is a lightweight shell/UX projection cache, not a canonical state store."
 owner_hints:
@@ -12346,11 +12375,13 @@ canonical_text: >-
   (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out
   chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>`
   (WS-030); section 15.4 gives the order.
+  Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
 split_recommended: false
-depends_on: [F3-458, DL-180]
+depends_on: [F3-458, DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -12390,6 +12421,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "`dashboard_layout:v1`, `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and `onboarding:v1` are read-only coordinator migration inputs; ordinary startup does not use them as fallbacks."
 - "Amended 2026-10-09 (DL-180): `layout:v1` no longer restores the Home layout or detached-terminal geometry, and the single `widget_layout:v1:dashboard` is a read-only migration input into `widget_layout:v1:dashboard:home` (SP-330, WS-030)."
+- "Amended 2026-10-10 (DL-186): dashboard boards restore per project from `widget_layout:v1:<project_id>:<board_id>`; `widget_layout:v1:dashboard` converts into no board (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -15248,11 +15280,14 @@ canonical_text: >-
   `widget-recent-results` with IDs `orch-progress-v1`, `lanes-view-v1`, and `results-v1`.
   Amended 2026-10-09 (DL-180): this default is the Home board's starting set (`dashboard:home`), which WS-030 owns and
   states in full (its set adds `widget-custom-metrics`); the other boards' starting layouts are WS-030's too.
+  Amended 2026-10-10 (DL-186): the old Home widgets have left Home (Jared, P1 B), so this layout is no board's starting
+  set; Home, Metrics and Monitoring start from their own sets of Usage widgets (WS-030), and run progress, lanes and
+  results come back to dashboards only when Orchestrator widgets join the board engine after that page's redesign.
 gui_related: true
 gui_classification_reason: >-
   This unit defines the default visible Dashboard widgets.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15288,6 +15323,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the default Dashboard layout is now the Home board's starting set, owned by WS-030."
+- "Amended 2026-10-10 (DL-186): this layout is no board's starting set; the built-in dashboards start from sets of Usage widgets (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -15522,11 +15558,15 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): the Dashboard now keeps one widget layout per board,
   `widget_layout:v1:dashboard:<board_id>`; the `widget_layout:v1:dashboard` this migration writes converts into
   `widget_layout:v1:dashboard:home` on first read and is never reset (WS-030).
+  Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`
+  (WS-030); `widget_layout:v1:dashboard` converts into no board and stays only a read-only record and rollback backup
+  that nothing writes now (Plans/Widget_System.md#WS-009), so this migration's write into it is lineage, and the
+  per-board key named above was never written.
 gui_related: false
 gui_classification_reason: >-
   This unit defines storage migration logic rather than a visible GUI surface.
 split_recommended: true
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15564,6 +15604,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "`dashboard_layout:v1` is deprecated after migration."
 - "Amended 2026-10-09 (DL-180): `widget_layout:v1:dashboard` is no longer the end of this migration; it is a read-only migration input into the Home board's `widget_layout:v1:dashboard:home` (WS-030)."
+- "Amended 2026-10-10 (DL-186): `widget_layout:v1:dashboard` converts into no board and nothing writes it now (WS-009), so this migration's write is lineage; boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes:
 - "storage-plan.md and Widget_System.md own storage namespace and widget schema details."
 owner_hints:
@@ -15585,11 +15626,13 @@ canonical_text: >-
   `widget_layout:v1:dashboard` is itself a read-only migration input that converts into
   `widget_layout:v1:dashboard:home` on first read and is never reset, and once it has converted the per-board key is
   the one read.
+  Amended 2026-10-10 (DL-186): future reads use each board's per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030);
+  `widget_layout:v1:dashboard` converts into no board, and the per-board key named above was never written.
 gui_related: false
 gui_classification_reason: >-
   This unit constrains legacy dashboard layout key usage.
 split_recommended: false
-depends_on: [DL-180]
+depends_on: [DL-180, DL-186]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -15622,6 +15665,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the single dashboard key is no longer the read target; each board reads its own `widget_layout:v1:dashboard:<board_id>` (WS-030)."
+- "Amended 2026-10-10 (DL-186): each board reads its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2137
+Source lines: L1781-L2139
 
-Source SHA256: `d9bb319478a72b955fb98a9312216c4e9917879338ecb172cf0aa94c6c95dfb4`
+Source SHA256: `468e42291ffd8b7408b8ca3d913ccb8712363222d05f0b52889f5287fa914575`
 
 ---
 
@@ -87,6 +87,8 @@ Guided Tour teaches through successful actions in this exact chapter order: Assi
 The current chapter IDs are `chat_teacher`, `workspace`, and `planning_wizard`; stable step IDs belong to those chapters, with an optional non-action introduction. Assistant Chat opens first through its existing shell control. The learner selects Teacher, sends the supplied question `What happens before Puppet Master changes my files?` through the real composer, sees the local answer stream in that same conversation, and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and leaves the original reply unchanged; the callout then points to the quick dot by the message box, which makes later replies simple, because switching ELI5 never rewrites or regenerates a reply (DL-126, ACD-484). The thread is labeled `Guided example`. The simpler reply uses clearer adult language, shorter structure, and less assumed knowledge; forced analogies or baby talk are not required. The real Chat owner owns the messages and reply; the Tour controller stores refs, not chat content. Normal Chat send and ELI5 retain their domain owners; a local tour fixture must never fall through to a provider-backed send or claim a production receipt.
 
 Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035).
+
+Amended 2026-10-10 (DL-186): the widget action is now adding the Usage widget Upcoming resets to the Home dashboard and then moving or resizing it there; the old Home widgets and their Approval queue practice are gone (PWIZ-035).
 
 Workspace practice explains page navigation and panels, then asks for a real Chat move/dock and a real widget add, move, resize, or focus action. Manual practice and `Show Me` use the same mounted owner handler and success predicate. Every important action first brings its target into view, explains one outcome, offers Try it and visible Show Me, and acknowledges the observed result. Show Me adds interruptible pre-cue, visible travel, destination reaction, and settle around that handler; timers, narration, screenshot substitution, a second mutation implementation, and generic Next never satisfy an action checkpoint.
 

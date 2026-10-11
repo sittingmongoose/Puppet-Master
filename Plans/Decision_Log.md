@@ -4000,7 +4000,7 @@ ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, Contract
 
 **Related:** the terminal side of this redesign is `Plans/Decision_Log.md#DL-181` to `Plans/Decision_Log.md#DL-183`; the shell-wide bans are `Plans/Decision_Log.md#DL-184`; the Demo Studio and the later chat port are `Plans/Decision_Log.md#DL-185`. Hover on panels and tabs follows the hover thread's merged system (`Plans/DRY_Rules.md#DR-072`): magnet and glow only on cards, rows and tiles; tabs, dividers and editor or terminal text get at most a static tint.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D1-D10, D21, D23-D25 and D28 with Jared's words); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html`, SHA-256 `52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981` (the agreed anatomy); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md`, SHA-256 `aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9` (the panels concept's host contract); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md`, SHA-256 `019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162` (the panels concept's numbers as built); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md`, SHA-256 `a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2` (D26 tab visuals, D28 Output channels, and the tour checkpoint rule proposed to the Plans lead); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js`, SHA-256 `433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9` (the tour's 18 published steps becoming 20).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D1-D10, D21, D23-D25 and D28 with Jared's words); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html`, SHA-256 `52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981` (the agreed anatomy); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md`, SHA-256 `aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9` (the panels concept's host contract); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md`, SHA-256 `019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162` (the panels concept's numbers as built); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md`, SHA-256 `1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6` (D29 tab visuals, D31 Output channels, and the tour checkpoint rule proposed to the Plans lead); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js`, SHA-256 `433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9` (the tour's 18 published steps becoming 20).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065
 
@@ -4114,7 +4114,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-18
 4. **One scheme catalog and one popover for the editor and the terminal** (Jared, 2026-10-10, amending D15 and D21): `Plans/FinalGUISpec.md#F3-642` holds the catalog and the popover, `Plans/FinalGUISpec.md#F3-639` binds the editor to them with Retro's monochrome syntax following the terminal's Retro scheme choice, and `Plans/DRY_Rules.md#DR-068` widens from one terminal appearance model to one code colour-scheme catalog and one Appearance popover; storage `Plans/storage-plan.md#SP-331` and Settings `Plans/Settings_System.md#SSYS-050` and `Plans/Settings_System.md#SSYS-051` follow.
 5. **Not changed here:** general code text across the app is `Plans/Decision_Log.md#DL-161`, `Plans/FinalGUISpec.md#F3-426` and `Plans/FinalGUISpec.md#F3-430` as the 5.6 Pro fonts work amends them under Jared's answer of 2026-10-10.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D15-D17); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md`, SHA-256 `1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299` (D17a, Retro code text); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md`, SHA-256 `71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2` (the terminal concept's schemes, fonts and appearance fields); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md`, SHA-256 `4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b` (the revised fonts table); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md`, SHA-256 `a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2` (D27, the shared scheme catalog and Retro's editor syntax).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D15-D17); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md`, SHA-256 `1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299` (D17a, Retro code text); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md`, SHA-256 `71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2` (the terminal concept's schemes, fonts and appearance fields); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md`, SHA-256 `4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b` (the revised fonts table); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md`, SHA-256 `1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6` (D30, the shared scheme catalog and Retro's editor syntax).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/DRY_Rules.md#DR-068
 
@@ -4176,6 +4176,108 @@ ContractRef: ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUI
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decisions D26-D28).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-649, ContractName:Plans/DRY_Rules.md#DR-070, ContractName:Plans/assistant-chat-design.md#ACD-501
+
+### DL-186: Dashboards run on the Usage board engine, one board per tab, saved per project, with presets you can save
+
+**Question:** Now that dashboard tabs run on the Usage page's widget board, what happens to the old Home widgets, where is each board kept, and what can a person do with a dashboard?
+
+**Why it came up:** DL-180 made the dashboard an ordinary tab that can show every Usage widget and said it would run on the Usage board engine once that engine could run several boards at once. The panels thread built that second step on 2026-10-10 and brought Jared thirteen questions (P1 to P13) about the old Home widgets, ranges, presets, storage and the tour. Jared also answered an earlier question from the Plans thread: may a person make, rename or delete a dashboard (PLN-4)?
+
+**What you get:**
+- Every dashboard tab is its own board on the Usage board engine: Home, Metrics and Monitoring are built in, and you can make as many more as you like ("Dashboard 2" and on, or your own name). Agents stays a board the dashboard draws itself.
+- A new dashboard starts empty. Home, Metrics and Monitoring start from their own sets of Usage widgets.
+- Each dashboard has its own time range and scope (5 hours, 24 hours, 7 days or 30 days; all accounts, work, personal, or one provider), kept with that board.
+- Reset puts a board back to its own default. Start from offers the board's default, each of the Usage page's 13 room sets, the dashboard starter, and any preset you saved. You can save a board's arrangement as your own preset, rename it or delete it; presets are yours across projects.
+- You can rename or delete a dashboard you made (with a confirm). Home, Metrics, Monitoring and Agents can be reset but never deleted.
+- Each board's widgets are kept per project. A dashboard you closed keeps its board while you can still reopen it, and forgets it once it leaves the reopen list. A saved named layout keeps the boards of the dashboards it holds (up to 64 KB; a bigger one is saved without its boards, and says so).
+- Moving and resizing widgets behaves exactly as on the Usage page: other cards fall into empty space when you let go, and Tidy repacks a board in one step.
+- Live updates and "Play the next hour" run on dashboards too, and a dashboard you cannot see does no work. A dashboard's first appearance plays the calm reading-order entrance. Details on a widget opens the Usage page with that widget's inspector.
+- Boards sit on the Home tab's own surface, not the Usage page's background.
+- The old Home widgets (run progress, lanes, results) leave Home until the Orchestrator page is redesigned. The Guided Tour's widget step now teaches adding Upcoming resets to the Home dashboard.
+
+**What it costs:**
+- Run progress, lanes and results are not on Home until Orchestrator widgets join the board engine.
+- Every board is one more stored record per project; deleting a dashboard you made deletes its widgets.
+
+**Options considered:** Keeping the old Home widgets as a "Home (current)" board until the Orchestrator redesign (Jared chose to drop them now, option B). Dashboards following the Usage page's range and scope (Jared chose their own). Boards shared across projects (Jared chose per project). Showing the Usage page's background behind a board (Jared chose Home's tab surface). A new dashboard starting from the dashboard starter set (Jared chose empty, with the starter as a Start from choice).
+
+**What Jared asked (2026-10-10, relayed by the planning thread):**
+- P1, the old Home widgets: option B, drop them now.
+- P2: each dashboard has its own range and scope. P3: widget command payloads stay as they are, but boards, the catalogue and the layout record are designed for several sources (Usage now, the Orchestrator after its redesign, others later). P4: Reset offers the board's default and the 13 room sets through the existing reset command with a field naming the set, and you can save your own preset. P5: saved per project. P6: a closed board is forgotten when it leaves the reopen list, and named layouts keep board contents. P7: the reading-order entrance on first show. P8: Details goes to the Usage page's inspector. P9: Agents stays drawn by the dashboard. P10: the tour teaches Upcoming resets. P11: Home's tab surface. P12: live beats and Play the next hour on dashboards too. P13: the sets as built, and a new dashboard starts empty.
+- PLN-4 (D35): "With savable presets." Custom dashboards can be made, renamed and deleted; Home, Metrics, Monitoring and Agents can be reset but not deleted.
+- The storage key, the set names, the preset record and the rename and delete wiring are what the panels thread built, recorded as such. The 64 KB snapshot limit is the panels lead's proposal, adopted by the Plans lead.
+
+**What the spec now says:**
+1. **Dashboard boards** (`Plans/Widget_System.md#WS-030`, rewritten): per-project keys, the board ids, the Home host and sources, Reset and Start from with `set_id`, presets, rename, delete and reset, the reopen-list rule and named-layout snapshots; `#WS-019` (gravity and Tidy on every board) and `#WS-020` amended; `Plans/usage-feature.md` (live beats on dashboards).
+2. **The dashboard tab** (`Plans/FinalGUISpec.md#F3-638`) and the Guided Tour's widget step (`Plans/Planning_Wizard.md#PWIZ-035`, `Plans/FinalGUISpec.md#F3-521`).
+3. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-200`, `Plans/Wiring_Matrix.md#WM-090`): `cmd.widget.reset_layout` gains `set_id`; range and scope, and saving, renaming and deleting presets, are typed local actions; rename and delete reuse the tab commands.
+4. **Storage** (`Plans/storage-plan.md`, `Plans/storage_value_registry.json`): the per-project board family and the per-user preset family.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D35); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md`, SHA-256 `927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796` (the questions P1-P13; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1, 2026-10-10); the panels thread's build facts, pm-mail 1010221905-e13e.
+
+ContractRef: ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+
+### DL-187: Ten answers on the chat, the Debug Console, terminal tabs, saved scrollback, notifications and shells
+
+**Question:** The home redesign left ten questions for Jared, each with an interim rule in canon (PLN-1 to PLN-10). What are his answers?
+
+**Why it came up:** Wave 1 of the home redesign canon (DL-180 to DL-185) landed with interim rules where Jared had not yet answered. He answered all ten on 2026-10-10.
+
+**What you get:**
+- A chat you popped out comes back in its column after a restart (D32).
+- One Debug Console tab, with a sub-tab for each debug session (D33).
+- Terminal tabs show no colour or icon choices on the tab strip for now; they will be redesigned with Puppet Master's neon glyph system (D34).
+- Saved terminal scrollback has well-known secrets (API keys, bearer tokens and JWTs, key-named assignments, private-key blocks) replaced before it is written to disk; the live screen keeps the original (D36).
+- Saved scrollback has a total cap of 512 MiB across every terminal; past it, the oldest saved scrollback goes first. Each terminal keeps its own 64 MiB (D37).
+- A program's notification in a terminal raises a system notification while Puppet Master is in the background, at most one every 3 seconds per terminal, and each terminal can be muted from its More menu (D38).
+- The "+" menu lists the shells installed on the computer, with SSH hosts in their own submenu (D39).
+- Chat stays a left-rail entry; it shows or hides the chat column (D40).
+- The Chat Layout setting retires: a stored Overlay or Detached value is ignored and cleared, with no pop-out and no notice.
+
+**What it costs:**
+- Scrubbing can replace something that only looked like a secret; the live screen still shows it.
+- Terminal tab colours and icons wait for the glyph system.
+
+**Options considered:** For each question the interim rule canon carried (a popped-out chat reopening popped out; one tab per debug session; no cap; no notifications) and the alternatives in the question set.
+
+**What Jared asked (2026-10-10, answering the question set, relayed by the scheduler):** PLN-1 "a popped-out chat starts back in its column after a restart"; PLN-2 one Debug tab with a sub-tab per session; PLN-3 "redesign them" (terminal tab colours and icons, now part of the glyph system); PLN-4 see DL-186; PLN-5 scrub well-known secret formats from saved scrollback, the live screen keeps the original; PLN-6 a total cap across terminals (for example 512 MiB), oldest first, 64 MiB per terminal stays; PLN-7 system notifications while the app is in the background, with a per-terminal mute; PLN-8 installed shells, SSH hosts in a submenu; PLN-9 chat stays a rail entry that shows or hides the column; PLN-10 Addendum 2 renumbered to D29-D31. The 3-second limit, the scrub patterns and the fixed 512 MiB are the terminal thread's build, recorded by the Plans lead; retiring Chat Layout is the planning thread's ruling under D3 and D32.
+
+**What the spec now says:**
+1. **Chat** (`Plans/FinalGUISpec.md#F3-637`, `#F3-042`; `Plans/storage-plan.md#SP-330`): the pop-out is never saved; the rail's Chat entry shows or hides the column (`cmd.panel.switch`); `general.visual.chat-layout-mode` retires (`Plans/Settings_System.md#SSYS-050`).
+2. **Debug Console** (`Plans/FinalGUISpec.md#F3-635`, `#F3-490`): one tab, `debug-console`, session sub-tabs.
+3. **Terminal** (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, `#SMPFS-183`, `Plans/storage-plan.md#SP-332`, `Plans/FinalGUISpec.md#F3-640`, `#F3-641`, `#F3-632`): no tab colours or icons; secrets scrubbed from saved scrollback; the 512 MiB total cap; notifications and the mute; installed shells and SSH hosts in "+".
+4. **Numbering:** Addendum 2's items are cited as D29 to D31 everywhere.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D32-D41); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md`, SHA-256 `a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc` (the terminal's build of D36-D39, concept lineage only); `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md`, SHA-256 `2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6` (the panels' build of D32, D33, D39 and D40, concept lineage only).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/storage-plan.md#SP-332
+
+### DL-188: Event Authority admits workspace.layout_changed 2.0.0
+
+**Question:** May the one event every panel and tab change records, `workspace.layout_changed`, move to the payload the universal panels need?
+
+**Why it came up:** DL-180 makes every committed panel and tab change emit `workspace.layout_changed`. Its registered payload, 1.1.0, still describes the old Home of four editor panels, docks and terminal sections. Moving a registered event family moves the Event Authority checkpoint, which Jared approves himself (DL-039, DL-045), so wave 1 landed with the move recorded as pending.
+
+**What you get:**
+- `workspace.layout_changed` is registered at family revision 2.0.0 with the payload of `Plans/Contracts_V0.md#CV-361`: a `change` field naming what happened, the panels, tabs and splits it touched, both revisions and who did it.
+- Registry checkpoint = approve `Plans/event_family_registry.json` revision `2026-10-09.1` (43 families; `workspace.layout_changed` payload 2.0.0) as the PNC-019 baseline, superseding the pinned `2026-09-25.1`.
+- Events already written at 1.1.0 stay readable and are never rewritten.
+
+**What it costs:**
+- The checkpoint's evidence and the readiness receipt are refreshed by the next reseal.
+
+**Options considered:** Keeping 1.1.0 and stretching it to the new model (it has no field for a tab, a split or a change kind).
+
+**What Jared asked (2026-10-10, about 21:20 UTC, in the planning thread):** "approved".
+
+**What the spec now says:**
+1. **The registry and its checkpoint** (`Plans/event_family_registry.json`, `scripts/pm_pnc019_currentness.py`, the event fixtures).
+2. **The payload** (`Plans/Contracts_V0.md#CV-361`, `Plans/event_payloads/workspace_layout_changed_v2.schema.json`), no longer pending.
+3. **The PM7 fixtures** validate against the 2.0.0 payload.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D42).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/event_family_registry.json, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Decision_Log.md#DL-045
 
 ## Owner / Consumer Map
 
@@ -14123,6 +14225,196 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
   - Plans/assistant-chat-design.md
+```
+
+### DL-186 - Dashboards Run On The Usage Board Engine One Board Per Tab Saved Per Project With Savable Presets
+
+```yaml
+plan_unit_id: DL-186
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-186 records Jared's answers of 2026-10-10 on dashboard tabs (D10 P1-P13) and on custom dashboards (D35, PLN-4).
+  Every dashboard tab is its own board on the Usage board engine: Home, Metrics and Monitoring built in, Agents drawn by
+  the dashboard kind, and custom dashboards that a person makes, renames and deletes; the built-ins reset but never
+  delete. A new dashboard starts empty and the built-ins start from their own sets. Each board keeps its own range and
+  scope. Reset returns a board to its default; Start from offers the default, the Usage page's 13 room sets, the
+  dashboard starter and the person's saved presets, through cmd.widget.reset_layout with a field naming the set;
+  presets are saved, renamed and deleted locally per user. Board contents are stored per project; a closed custom
+  board is forgotten when it leaves the reopen list; named layouts keep their boards' contents. Gravity and Tidy behave
+  on every board as on the Usage page; live beats and Play the next hour run on dashboards too; a dashboard's first
+  show plays the reading-order entrance; Details opens the Usage page's inspector; boards sit on Home's tab surface.
+  The old Home widgets (run progress, lanes, results) leave Home until the Orchestrator redesign, and the Guided Tour's
+  widget step teaches adding Upcoming resets. Widget command payloads stay as they are; boards, the catalogue and the
+  layout record are designed for several sources. The storage key, set ids, preset record and rename and delete wiring
+  are the panels thread's build; the 64 KB named-layout snapshot limit is a lead ruling.
+gui_related: true
+gui_classification_reason: Records the owner's answers on how dashboard tabs and their boards behave.
+split_recommended: false
+depends_on: [DL-180]
+unblocks: [WS-030, WS-019, WS-020, F3-638, F3-521, PWIZ-035, UCC-200, WM-090, SP-330]
+acceptance_criteria:
+  - "WS-030 owns dashboard boards as built: per-project keys, board ids, the Home host and sources, set_id, presets, rename, delete and reset, the reopen-list rule and named-layout snapshots."
+  - "WS-019 no longer says Dashboard keeps its own settlement; gravity and Tidy apply on every board."
+  - "No active unit keeps the old Home widgets on Home or a Home (current) board, and the tour's widget step adds Upcoming resets."
+  - "Jared's answers are recorded in plain words, with the build facts and the lead ruling labelled as such."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Widget_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Planning_Wizard.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; answers relayed by the planning thread, pm-mail 1010191613-9ce1)"
+preserved_exact_tokens:
+  - "DL-186"
+  - "set_id"
+  - "Start from"
+  - "Upcoming resets"
+negative_constraints:
+  - "Do not keep a separate dashboard engine, a Home (current) board or the old Home widgets on Home."
+  - "Do not delete a built-in dashboard (Home, Metrics, Monitoring, Agents)."
+owner_hints:
+  - Plans/Widget_System.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-187 - Ten Answers On The Chat The Debug Console Terminal Tabs Saved Scrollback Notifications And Shells
+
+```yaml
+plan_unit_id: DL-187
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-187 records Jared's answers of 2026-10-10 to the home redesign's open questions PLN-1 to PLN-10 (D32-D41). A
+  popped-out chat starts back in its column after a restart; the pop-out is never saved (D32). One Debug Console tab
+  holds a sub-tab per debug session (D33). Terminal tabs show no colour or icon choices on the strip until the neon
+  glyph system redesigns them (D34). Saved terminal scrollback has well-known secret formats replaced before it is
+  written to disk, while the live screen keeps the original (D36). Saved scrollback has a fixed total cap of 512 MiB
+  across terminals, trimming the oldest first, and each terminal keeps its 64 MiB (D37). A terminal program's
+  notification raises a system notification while Puppet Master is in the background, at most one every 3 seconds per
+  terminal, with a per-terminal mute (D38). The "+" menu lists the installed shells with SSH hosts in a submenu (D39).
+  Chat stays a left-rail entry that shows or hides the chat column (D40). Addendum 2's items are cited as D29 to D31
+  (D41). The Chat Layout setting general.visual.chat-layout-mode retires: a stored Overlay or Detached value is ignored
+  and cleared on first read with no pop-out and no notice (the planning thread's ruling under D3 and D32). The scrub
+  patterns, the 3-second limit and the fixed cap are the terminal thread's build; the cap's fixed value is a lead
+  ruling.
+gui_related: true
+gui_classification_reason: Records the owner's answers on the chat, Debug Console, terminal tabs and terminal storage.
+split_recommended: false
+depends_on: [DL-180, DL-181]
+unblocks: [F3-637, F3-042, F3-635, F3-490, F3-632, F3-640, F3-641, SMPFS-180, SMPFS-183, SP-330, SP-332, SSYS-050]
+acceptance_criteria:
+  - "Each answer is carried by its owner unit, and no active unit keeps the interim rule it replaced."
+  - "general.visual.chat-layout-mode is retired with no options and the first-read clearing rule."
+  - "Every citation of Addendum 2's items reads D29, D30 or D31."
+  - "Jared's answers are recorded in plain words, with the build facts and the lead ruling labelled as such."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/storage-plan.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32-D41)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-187"
+  - "debug-console"
+  - "512 MiB"
+  - "general.visual.chat-layout-mode"
+negative_constraints:
+  - "Do not save the chat's pop-out across a restart."
+  - "Do not write a saved scrollback copy before scrubbing the well-known secret formats."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+
+### DL-188 - Event Authority Admits workspace.layout_changed 2.0.0
+
+```yaml
+plan_unit_id: DL-188
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-188 records Jared's approval of 2026-10-10 ("approved", D42) of the Event Authority checkpoint that moves
+  workspace.layout_changed to family revision 2.0.0 with the payload of Plans/Contracts_V0.md#CV-361. Registry
+  checkpoint: Plans/event_family_registry.json revision 2026-10-09.1 (43 families; workspace.layout_changed payload
+  2.0.0) is approved as the PNC-019 baseline, superseding the pinned 2026-09-25.1, in the manner of DL-039 and DL-045.
+  Events already written at 1.1.0 stay readable through the payload's compatibility reader and are never rewritten.
+  The checkpoint evidence and the readiness receipt are refreshed by the next reseal.
+gui_related: false
+gui_classification_reason: Records an Event Authority checkpoint approval for a persisted event family.
+split_recommended: false
+depends_on: [DL-180]
+unblocks: [CV-361, SP-330]
+acceptance_criteria:
+  - "Plans/event_family_registry.json registers workspace.layout_changed at family revision 2.0.0 with the v2 payload schema, at registry revision 2026-10-09.1 with 43 families."
+  - "The PNC-019 checkpoint pinned in the readiness scripts names that revision, and the event fixtures and the PM7 fixture validator use the 2.0.0 payload."
+  - "No unit still calls the 2.0.0 payload pending Event Authority admission."
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures
+  - python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_checkpoint_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/event_family_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - scripts/pm_pnc019_currentness.py
+  - scripts/pm-validate-pm7-gui-fixtures.py
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D42)"
+  - "Plans/Decision_Log.md#DL-039 (the checkpoint pattern; cited, not a dependency)"
+  - "Plans/Decision_Log.md#DL-045 (the binding pattern; cited, not a dependency)"
+preserved_exact_tokens:
+  - "DL-188"
+  - "workspace.layout_changed"
+  - "2026-10-09.1"
+negative_constraints:
+  - "Do not rewrite events already written at 1.1.0."
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
 ```
 
 ## Migration Coverage
