@@ -1903,6 +1903,17 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # terminal section/workgroup/pane rows (1156 -> 1236). No Touch row, profile,
     # alias, handler or proof is added; the catalog tokens the retired rows leave are
     # listed in Plans/Wiring_Matrix.production.exclusions.json.
+    # 2026-10-10 Jared's answers on dashboards, the Debug Console and the terminal
+    # (DL-186, DL-187; WM-090, UIW-040): +20 production-intent home.* entries: the
+    # "+" menu's SSH hosts row and New dashboard (4), the empty-panel launcher's
+    # sub-row links (6) and the dashboard tab's command-bearing controls (10:
+    # Add widget, a dashboard and New dashboard in its Board menu, Start from,
+    # Start from this preset, Tidy, Reset widgets, Rename dashboard..., Delete
+    # dashboard... and an Agents card) (1236 -> 1256). Every one dispatches an
+    # existing catalog command with its existing handler; no command, Touch row,
+    # profile, alias, exclusion, handler or proof is added. The typed local
+    # actions the answers add (range and scope, presets, the terminal's mute, the
+    # chat's narrow-window pin) have no entry.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1910,7 +1921,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1236,
+        "production_wiring_entry_count": 1256,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
