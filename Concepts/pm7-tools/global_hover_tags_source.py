@@ -179,7 +179,9 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     'hidden-template':'Inert source template that is never mounted as an interactive surface.',
     'programmatic-focus-landmark':'Static heading focused only to announce a modal or route transition; it is not an action or a second tooltip target.',
     'tooltip-owner':'The shared hover-tag overlay and its persistent description nodes.',
-    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.'
+    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.',
+    'labelled-field':'A field in a Settings panel whose label and help line sit beside it; a tag would only repeat them over the heading above.',
+    'menu':'A menu and its rows, back button and search field, which already show their names; a row given its own data-pm-hover-label is not exempt and keeps its tag.'
   });
   var SEMANTIC_ACTION_SELECTOR='a[href],button,input:not([type="hidden"]),select,textarea,summary,[contenteditable="true"],[role="button"],[role="link"],[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"],[role="tab"],[role="checkbox"],[role="radio"],[role="switch"],[role="slider"],[data-action],[data-command-id],[data-ui-action-id],[data-callback],[onclick]';
   var ACTION_SELECTOR=SEMANTIC_ACTION_SELECTOR+',[tabindex]';
