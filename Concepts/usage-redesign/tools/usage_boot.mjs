@@ -128,11 +128,16 @@ async function runPage(name, file) {
         f.bodyFlag = document.body.classList.contains('pmu-page-active');
       }
 
-      /* Home */
+      /* Home: since the panels publish (main 62f37f65df) Home is the panels layer, and its default layout opens the Home
+         dashboard tab, whose board is a hosted Usage board; the old .pm6-dash-card grid stays in the page, hidden. So the
+         check counts the hosted plates on screen and measures the panel's tab strip (the reference build has the Home
+         layer too, so the strip's height must match it); the old grid's count is kept for the record */
       window.PM_PAGES.go('dashboard'); await sleep(700);
-      const cards = document.querySelectorAll('#panel-dashboard .pm6-dash-card, .page-dashboard .pm6-dash-card');
-      const head = document.querySelector('.pm6-dash-card .pm6-dash-card-head');
-      f.home = { cards: cards.length, headH: head ? Math.round(head.getBoundingClientRect().height) : 0, dashWidgets: !!window.PM7_DASH_WIDGETS };
+      const shown = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+      const plates = [...document.querySelectorAll('[data-pmu-host] .pmu-board > .pmu-card')].filter(shown);
+      const strip = [...document.querySelectorAll('.pmw-panel .pmw-strip')].filter(shown)[0];
+      f.home = { cards: plates.length, headH: strip ? Math.round(strip.getBoundingClientRect().height) : 0, dashWidgets: !!window.PM7_DASH_WIDGETS,
+        legacyCards: document.querySelectorAll('#panel-dashboard .pm6-dash-card').length };
       f.bodyFlagAfterLeave = document.body.classList.contains('pmu-page-active') || document.body.classList.contains('pm7u-page-active');
       return f;
     });
