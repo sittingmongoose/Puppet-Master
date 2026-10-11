@@ -47,18 +47,50 @@ Each regenerated page equals its current-main bytes with only the exact approved
 - Published/onboarding/Home HTML SHA-256: `322fc257b7e6822b14e6d9e610f86b51b1fca1a107170f9fa4397f52531c6f5a`.
 - Rail review HTML SHA-256: `877f467de5a8fa4ad33f3f25b3f57c1c6a0ee9c6fd6151cfa34cd34ce1c78c23`.
 
+Tested source/output commit: `978a01e97ffbe7fba2fd18ef32a3e2ad7a8e5e8a`, pushed to both remotes before the rerun. Final reporting changes only this report and its checksum manifest.
+
+| Source/test file | Composed SHA-256 (also original owner head) |
+|---|---|
+| `30-motion.js` | `f52fdb3b052860ca5145ab8683acf57daa0823d26cb60822108d7ae938d45276` |
+| `90-register.js` | `5b6cef9614b8f1b4d9bacf84be7306983dfafeb095446e783980897a3443d949` |
+| `tools/rail_boot.mjs` | `171547ed269ccb211e8bd12f66a00382c42ca19c6bdf9de105325ddc8f6e349b` |
+
 Existing builder informational output about the onboarding universal selector was retained without repair or waiver.
 
-## P1000 rerun — PENDING
+## P1000 rerun — PASS
 
 Canonical GPU guide read. Initial normal-admission check at `2026-10-11T20:37:22Z` showed one other active helper browser, 38 GiB available memory, and 83 GiB free local disk. Other users remain present/allowed; this is a shared-device acceptance rerun with at most one owned helper browser at a time, no recording, exclusivity, performance, or certification claim.
 
-The existing owner recipes will run serially with the unchanged composed `rail_boot.mjs`: Glass-first (`--themes glass-dark,glass-light`), review (default all eight themes), then published (`--page Concepts/PMConcept7.html`, default all eight themes), each `--concepts d --restore`, with the review `?rail=current` reference. Glass-first includes three restore looks (Glass dark/light plus NieR); review and published each include all nine restore looks (eight themes plus NieR). The previous Glass-first raw summary also records three looks, despite the owner's shorthand describing the overall nine-look result.
+The existing owner recipes ran serially with the unchanged composed `rail_boot.mjs`, at the default 1600 × 1000 viewport:
 
-Any new failed source/test assertion stops approval and further dependent testing; evidence is preserved without worker repair or gate waiver.
+```sh
+node Concepts/leftrail-redesign/tools/rail_boot.mjs <external-out>/glassfirst --concepts d --restore --themes glass-dark,glass-light
+node Concepts/leftrail-redesign/tools/rail_boot.mjs <external-out>/review --concepts d --restore
+node Concepts/leftrail-redesign/tools/rail_boot.mjs <external-out>/published --concepts d --restore --page Concepts/PMConcept7.html
+```
+
+All use the default review `?rail=current` reference and `?o55=off`. Exact commands, working directory, timestamps, time bounds, admission, exit codes and results are retained in `p1000-recipes.json`. Mode limits were 900/1800/1800 seconds, with a 65-minute overall test deadline. A transparent helper observer recorded start/stop ownership while forwarding the original helper arguments/output/status; the owner harness bytes and assertions were unchanged.
+
+| Mode | UTC interval | Seconds | Exit / failed checks | Exact restore looks |
+|---|---|---:|---|---:|
+| Glass-first | 20:41:19–20:48:56 | 456.592 | 0 / 0 | 3 |
+| Review | 20:48:56–21:02:02 | 786.804 | 0 / 0 | 9 |
+| Published | 21:02:03–21:15:03 | 780.054 | 0 / 0 | 9 |
+
+Every mode reports Quadro P1000 (`ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)`), zero reference/concept console errors, zero missing actions, and an 11 px type floor across all nine panels. All three reference-baseline comparisons are exact. Every restore uses all nine panels plus the activity bar, with zero differing snapshots, zero leftover D marks, and the skin attribute restored. These are the unchanged harness's settled, normalized DOM snapshots.
+
+Glass-first covers Glass dark/light plus NieR. Review and published cover all nine restore looks: Basic, Friendly, Glass and Retro in dark/light plus NieR. The previous Glass-first raw summary also records three looks, despite the owner's shorthand describing the overall nine-look result.
+
+All **103** staged source/asset/HTML files, including the unchanged harness and pages' embedded look assets, match the committed input hashes before execution and remain byte-identical afterwards. The exact committed input archive is retained as `inputs/composed-inputs.tar.gz` (SHA-256 `10be7911f15f71ee99ad05fe4fe3b8a38e8f32ff9c6e2c27988a68889ca2f2c1`). No new failed source/test assertion occurred; no repair or gate waiver was made. Original owner branch remains at `60c76e6642`, and observed remote main remains `2f91e7a622` at the closing custody check.
 
 ## Evidence and checkpoint
 
-Raw custody, command receipts, gate logs, and rerun evidence belong only under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-rail-followup-merge-20261011/`. The adjacent `SHA256SUMS` binds the current evidence files; full source/blob/HTML hashes are in `custody/source-custody.json`, `gates/generated-custody.json`, and `gates/syntax.json` there.
+Raw custody, command receipts, gate logs, inputs, results and cleanup receipts are retained under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-rail-followup-merge-20261011/`. Its final `SHA256SUMS` has SHA-256 `b5358f6a8392a7e03cfb20a55e18b7363a43d6abc358bfa00d2cce327e818e3d`; the adjacent repository `SHA256SUMS` binds that manifest and every evidence file. Full source/blob/HTML hashes are in `custody/source-custody.json`, `gates/generated-custody.json`, `gates/syntax.json`, and the before/after input manifests.
 
-At this preparation checkpoint, P1000 execution and cleanup are pending. The bound unlanded result worktree must remain for the planner. A bounded mailbox waiter remains armed during work; no worker/subagent was started.
+Result JSON SHA-256:
+
+- `glassfirst/rail-boot.json`: `f5a14a08cd91acf0472be640316e4561f7ede3193e609f7c3337eb36cd8d3004`.
+- `review/rail-boot.json`: `c8f375169a26bdb23c3368119a9c05bd431423c3ba0c0205499653d6aa3a6eec`.
+- `published/rail-boot.json`: `cdddfe96c419a5d7cc75019428edc43507453b31854be9b5e93d4618a7864a9d`.
+
+Cleanup: all 15 owned helper sessions are stopped; observed owned concurrency never exceeded one. No owned browser/profile, runner/test process, default helper log, server, recording, or P1000 scratch remains. Necessary unit logs were copied into external evidence before removing the owned runtime copies. Other sessions/jobs were untouched. The bounded mailbox waiter is disarmed at the final checkpoint; no owned automatic task remains. No worker/subagent or additional worktree was started. Local temporary test/browser/server artifacts are absent; the bound **unlanded** result worktree and branch are retained for the planner. Main/shared checkout/landing lock remain untouched. Landing stays held pending planner custody review and owner requirements; the queued glyph rail review and Errored-word colour decision remain outside this worker's authority.
