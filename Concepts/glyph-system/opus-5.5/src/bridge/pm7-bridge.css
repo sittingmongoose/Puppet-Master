@@ -38,8 +38,14 @@ svg:where(.nx[width="16"], .nx[width="17"], .nx[width="18"]) { --nx-stroke-base:
 /* NieR Dark's quiet tones (neon-icons.css section 11 paints idle and paused as the ink at .45) read 2.70-2.98:1 on
    every NieR Dark field in PMConcept7 (measured by pm7-glyphs-designer2 on the terminal sheet, 2026-10-10); .55 reads
    3.29-3.72:1 and keeps the quiet order (idle and paused stay under every live tone). NieR Light keeps the chat's
-   .545 and .63. Same specificity as the source rule, later in the cascade. */
-html[data-o55-nier="on"] body[data-theme="basic-dark"] { --nx-idle-a: .55; --nx-paused-a: .55; }
+   .545 and .63. Same specificity as the source rule, later in the cascade. Paused (info and off are paused too) takes .6:
+   an info toast's card (rgb 71 69 59) read 2.99:1 at .55 and reads 3.2:1 at .6, still a step above idle. */
+html[data-o55-nier="on"] body[data-theme="basic-dark"] { --nx-idle-a: .55; --nx-paused-a: .6; }
+
+/* Toasts (rollout TOASTS): the dismiss is the close control at the secondary text ink and full strength. The base's ×
+   sat at .72 of the muted ink and read 1.4-2.7:1 on the severity-tinted cards; hover still ignites it. */
+:is(#rsStage, #rsStack, #rsPanel) .n-card .n-x { opacity: 1; }
+:is(#rsStage, #rsStack, #rsPanel) .n-card .n-x > svg.nx { --nx-ink: var(--text-secondary); }
 
 /* PMG.calm(key): a status mark that is lit and still from its first frame (no list rhythm, no mount act): Usage, where
    the room entrance owns all arrival motion (t3-usage-pm7, 2026-10-10). */

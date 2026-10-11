@@ -7,19 +7,23 @@
     "token": "--accent-error",
     "pm7": "#C62828",
     "designed": "",
-    "before": 4.75,
+    "before": 4.2,
     "ink": "#c62828",
-    "after": 4.75,
-    "moved": 0
+    "after": 4.2,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.2
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#E65100",
     "designed": "",
-    "before": 3.2,
-    "ink": "#e65100",
-    "after": 3.2,
-    "moved": 0
+    "before": 2.92,
+    "ink": "#de4e00",
+    "after": 3.11,
+    "moved": 3,
+    "extra_fields": 3,
+    "on_extra": 3.11
    },
    "working": {
     "token": "--accent-blue",
@@ -28,7 +32,9 @@
     "before": 5.95,
     "ink": "#0056b3",
     "after": 5.95,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -37,7 +43,9 @@
     "before": 5.5,
     "ink": "#6f42c1",
     "after": 5.5,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
@@ -46,16 +54,20 @@
     "before": 4.24,
     "ink": "#0b8043",
     "after": 4.24,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.51
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#3B3B3B",
     "designed": "",
-    "before": 9.46,
+    "before": 8.4,
     "ink": "#6a6a6a",
-    "after": 4.56,
-    "moved": 74
+    "after": 4.04,
+    "moved": 74,
+    "extra_fields": 2,
+    "on_extra": 4.04
    },
    "idle": {
     "token": "--text-muted",
@@ -64,7 +76,9 @@
     "before": 5.05,
     "ink": "#727c8b",
     "after": 3.58,
-    "moved": 38
+    "moved": 38,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "basic-dark": {
@@ -72,19 +86,23 @@
     "token": "--accent-error",
     "pm7": "#EF5350",
     "designed": "",
-    "before": 3.95,
+    "before": 3.62,
     "ink": "#ef5350",
-    "after": 3.95,
-    "moved": 0
+    "after": 3.62,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 3.62
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#FFB74D",
     "designed": "",
-    "before": 7.96,
+    "before": 6.69,
     "ink": "#ffb74d",
-    "after": 7.96,
-    "moved": 0
+    "after": 6.69,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.69
    },
    "working": {
     "token": "--accent-blue",
@@ -93,7 +111,9 @@
     "before": 6.22,
     "ink": "#64b5f6",
     "after": 6.22,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -102,7 +122,9 @@
     "before": 6.04,
     "ink": "#b79cff",
     "after": 6.04,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
@@ -111,16 +133,20 @@
     "before": 7.34,
     "ink": "#3dd68c",
     "after": 7.34,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 1,
+    "on_extra": 7.45
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#A0A0A0",
     "designed": "",
-    "before": 5.27,
+    "before": 4.55,
     "ink": "#959595",
-    "after": 4.57,
-    "moved": -18
+    "after": 3.95,
+    "moved": -18,
+    "extra_fields": 2,
+    "on_extra": 3.95
    },
    "idle": {
     "token": "--text-muted",
@@ -129,7 +155,9 @@
     "before": 2.85,
     "ink": "#717887",
     "after": 3.11,
-    "moved": 10
+    "moved": 10,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "friendly-light": {
@@ -140,7 +168,9 @@
     "before": 2.88,
     "ink": "#e6593e",
     "after": 3.13,
-    "moved": 6
+    "moved": 6,
+    "extra_fields": 1,
+    "on_extra": 3.16
    },
    "attention": {
     "token": "--accent-warning",
@@ -149,7 +179,9 @@
     "before": 1.95,
     "ink": "#aa811e",
     "after": 3.13,
-    "moved": 23
+    "moved": 23,
+    "extra_fields": 1,
+    "on_extra": 3.28
    },
    "working": {
     "token": "--accent-blue",
@@ -158,7 +190,9 @@
     "before": 2.71,
     "ink": "#3791bb",
     "after": 3.1,
-    "moved": 8
+    "moved": 8,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -167,7 +201,9 @@
     "before": 3.16,
     "ink": "#9678c9",
     "after": 3.16,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
@@ -176,7 +212,9 @@
     "before": 2.81,
     "ink": "#2c977b",
     "after": 3.16,
-    "moved": 5
+    "moved": 5,
+    "extra_fields": 2,
+    "on_extra": 3.22
    },
    "paused": {
     "token": "--text-secondary",
@@ -185,7 +223,9 @@
     "before": 4.98,
     "ink": "#716979",
     "after": 4.59,
-    "moved": 9
+    "moved": 9,
+    "extra_fields": 1,
+    "on_extra": 4.69
    },
    "idle": {
     "token": "--text-muted",
@@ -194,7 +234,9 @@
     "before": 2.61,
     "ink": "#8d8593",
     "after": 3.13,
-    "moved": -21
+    "moved": -21,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "friendly-dark": {
@@ -202,19 +244,23 @@
     "token": "--accent-error",
     "pm7": "#FF8A73",
     "designed": "",
-    "before": 5.75,
+    "before": 4.95,
     "ink": "#ff8a73",
-    "after": 5.75,
-    "moved": 0
+    "after": 4.95,
+    "moved": 0,
+    "extra_fields": 1,
+    "on_extra": 4.95
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#FFD97F",
     "designed": "",
-    "before": 9.75,
+    "before": 7.47,
     "ink": "#ffd97f",
-    "after": 9.75,
-    "moved": 0
+    "after": 7.47,
+    "moved": 0,
+    "extra_fields": 1,
+    "on_extra": 7.47
    },
    "working": {
     "token": "--accent-blue",
@@ -223,7 +269,9 @@
     "before": 6.88,
     "ink": "#6fc6e8",
     "after": 6.88,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -232,25 +280,31 @@
     "before": 6.76,
     "ink": "#c3b1e4",
     "after": 6.76,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#6FDABC",
     "designed": "",
-    "before": 7.83,
+    "before": 6.33,
     "ink": "#6fdabc",
-    "after": 7.83,
-    "moved": 0
+    "after": 6.33,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.33
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#B4AEBE",
     "designed": "",
-    "before": 6.13,
+    "before": 5.09,
     "ink": "#9c95aa",
-    "after": 4.58,
-    "moved": -36
+    "after": 3.8,
+    "moved": -36,
+    "extra_fields": 1,
+    "on_extra": 3.8
    },
    "idle": {
     "token": "--text-muted",
@@ -259,7 +313,9 @@
     "before": 3.66,
     "ink": "#898393",
     "after": 3.59,
-    "moved": -2
+    "moved": -2,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "glass-light": {
@@ -270,7 +326,9 @@
     "before": 2.41,
     "ink": "#a93548",
     "after": 3.14,
-    "moved": 16
+    "moved": 16,
+    "extra_fields": 2,
+    "on_extra": 4.1
    },
    "attention": {
     "token": "--accent-warning",
@@ -279,7 +337,9 @@
     "before": 2.55,
     "ink": "#82560a",
     "after": 3.14,
-    "moved": 8
+    "moved": 8,
+    "extra_fields": 2,
+    "on_extra": 4.17
    },
    "working": {
     "token": "--accent-blue",
@@ -288,7 +348,9 @@
     "before": 2.19,
     "ink": "#0060ad",
     "after": 3.14,
-    "moved": 17
+    "moved": 17,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -297,16 +359,20 @@
     "before": 2.55,
     "ink": "#6848c1",
     "after": 3.13,
-    "moved": 9
+    "moved": 9,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#087f67",
     "designed": "",
-    "before": 2.42,
-    "ink": "#076c57",
-    "after": 3.13,
-    "moved": 8
+    "before": 2.33,
+    "ink": "#076955",
+    "after": 3.11,
+    "moved": 9,
+    "extra_fields": 2,
+    "on_extra": 3.11
    },
    "paused": {
     "token": "--text-secondary",
@@ -315,7 +381,9 @@
     "before": 4.14,
     "ink": "#434f55",
     "after": 4.14,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 4,
+    "on_extra": 5.33
    },
    "idle": {
     "token": "--text-muted",
@@ -324,7 +392,9 @@
     "before": 2.12,
     "ink": "#586164",
     "after": 3.11,
-    "moved": -40
+    "moved": -40,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "glass-dark": {
@@ -332,19 +402,23 @@
     "token": "--accent-error",
     "pm7": "#ff7893",
     "designed": "",
-    "before": 6.45,
+    "before": 4.31,
     "ink": "#ff7893",
-    "after": 6.45,
-    "moved": 0
+    "after": 4.31,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.31
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#ffd173",
     "designed": "",
-    "before": 11.29,
+    "before": 6.4,
     "ink": "#ffd173",
-    "after": 11.29,
-    "moved": 0
+    "after": 6.4,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.4
    },
    "working": {
     "token": "--accent-blue",
@@ -353,7 +427,9 @@
     "before": 9.97,
     "ink": "#64d9ff",
     "after": 9.97,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -362,25 +438,31 @@
     "before": 6.23,
     "ink": "#b18cff",
     "after": 6.23,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#68f2bd",
     "designed": "",
-    "before": 11.6,
+    "before": 6.6,
     "ink": "#68f2bd",
-    "after": 11.6,
-    "moved": 0
+    "after": 6.6,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.6
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "rgba(235, 227, 250, .78)",
     "designed": "",
-    "before": 8.32,
-    "ink": "#9082aa",
-    "after": 4.58,
-    "moved": -69
+    "before": 4.86,
+    "ink": "#9a8eb2",
+    "after": 3.1,
+    "moved": -53,
+    "extra_fields": 4,
+    "on_extra": 3.1
    },
    "idle": {
     "token": "--text-muted",
@@ -389,7 +471,9 @@
     "before": 3.85,
     "ink": "#7c728e",
     "after": 3.59,
-    "moved": -7
+    "moved": -7,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "retro-light": {
@@ -397,19 +481,23 @@
     "token": "--accent-error",
     "pm7": "#D32F2F",
     "designed": "",
-    "before": 4.39,
+    "before": 3.78,
     "ink": "#d32f2f",
-    "after": 4.39,
-    "moved": 0
+    "after": 3.78,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 3.78
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#A65800",
     "designed": "",
-    "before": 4.61,
+    "before": 4.01,
     "ink": "#a65800",
-    "after": 4.61,
-    "moved": 0
+    "after": 4.01,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.01
    },
    "working": {
     "token": "--accent-blue",
@@ -418,7 +506,9 @@
     "before": 7.44,
     "ink": "#0047ab",
     "after": 7.44,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -427,25 +517,31 @@
     "before": 3.21,
     "ink": "#ff1493",
     "after": 3.21,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#2f7a3d!important",
     "designed": "",
-    "before": 4.66,
+    "before": 4.3,
     "ink": "#2f7a3d",
-    "after": 4.66,
-    "moved": 0
+    "after": 4.3,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.3
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#444444",
     "designed": "",
-    "before": 8.59,
+    "before": 7.23,
     "ink": "#6d6d6d",
-    "after": 4.57,
-    "moved": 64
+    "after": 3.85,
+    "moved": 64,
+    "extra_fields": 2,
+    "on_extra": 3.85
    },
    "idle": {
     "token": "--text-muted",
@@ -454,7 +550,9 @@
     "before": 7.19,
     "ink": "#837e74",
     "after": 3.57,
-    "moved": 72
+    "moved": 72,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "retro-dark": {
@@ -462,19 +560,23 @@
     "token": "--accent-error",
     "pm7": "#e2694f",
     "designed": "",
-    "before": 4.91,
+    "before": 4.08,
     "ink": "#e2694f",
-    "after": 4.91,
-    "moved": 0
+    "after": 4.08,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.08
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#d8b93c",
     "designed": "",
-    "before": 8.42,
+    "before": 6.6,
     "ink": "#d8b93c",
-    "after": 8.42,
-    "moved": 0
+    "after": 6.6,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.6
    },
    "working": {
     "token": "--accent-blue",
@@ -483,7 +585,9 @@
     "before": 7.61,
     "ink": "#9db4d0",
     "after": 7.61,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -492,25 +596,31 @@
     "before": 7.2,
     "ink": "#c3a0d8",
     "after": 7.2,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#86c46a",
     "designed": "",
-    "before": 7.79,
+    "before": 6.16,
     "ink": "#86c46a",
-    "after": 7.79,
-    "moved": 0
+    "after": 6.16,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 6.16
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#a8b394",
     "designed": "",
-    "before": 7.35,
+    "before": 5.79,
     "ink": "#7f8e65",
-    "after": 4.6,
-    "moved": -66
+    "after": 3.62,
+    "moved": -66,
+    "extra_fields": 2,
+    "on_extra": 3.62
    },
    "idle": {
     "token": "--text-muted",
@@ -519,7 +629,9 @@
     "before": 4.22,
     "ink": "#717a61",
     "after": 3.59,
-    "moved": -17
+    "moved": -17,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "nier-light": {
@@ -527,19 +639,23 @@
     "token": "--accent-error",
     "pm7": "#a94a38",
     "designed": "",
-    "before": 2.92,
-    "ink": "#a14735",
-    "after": 3.13,
-    "moved": 4
+    "before": 2.88,
+    "ink": "#9f4635",
+    "after": 3.15,
+    "moved": 5,
+    "extra_fields": 2,
+    "on_extra": 3.15
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#5c5022",
     "designed": "",
-    "before": 4.14,
+    "before": 4.05,
     "ink": "#5c5022",
-    "after": 4.14,
-    "moved": 0
+    "after": 4.05,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.05
    },
    "working": {
     "token": "--accent-blue",
@@ -548,7 +664,9 @@
     "before": 8.51,
     "ink": "#211f1b",
     "after": 8.51,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -557,7 +675,9 @@
     "before": 5.26,
     "ink": "#454138",
     "after": 5.26,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
@@ -566,16 +686,20 @@
     "before": 2.98,
     "ink": "#64662e",
     "after": 3.14,
-    "moved": 2
+    "moved": 2,
+    "extra_fields": 2,
+    "on_extra": 3.49
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#4d4b3f",
     "designed": "",
-    "before": 4.54,
+    "before": 4.25,
     "ink": "#4d4b3f",
-    "after": 4.54,
-    "moved": 0
+    "after": 4.25,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.25
    },
    "idle": {
     "token": "--text-muted",
@@ -584,7 +708,9 @@
     "before": 4.53,
     "ink": "#5c5a4d",
     "after": 3.59,
-    "moved": 22
+    "moved": 22,
+    "extra_fields": 0,
+    "on_extra": null
    }
   },
   "nier-dark": {
@@ -592,19 +718,23 @@
     "token": "--accent-error",
     "pm7": "#c96b57",
     "designed": "",
-    "before": 3.16,
-    "ink": "#c96b57",
-    "after": 3.16,
-    "moved": 0
+    "before": 2.9,
+    "ink": "#cc7461",
+    "after": 3.15,
+    "moved": 5,
+    "extra_fields": 2,
+    "on_extra": 3.15
    },
    "attention": {
     "token": "--accent-warning",
     "pm7": "#c2b169",
     "designed": "",
-    "before": 5.4,
+    "before": 4.63,
     "ink": "#c2b169",
-    "after": 5.4,
-    "moved": 0
+    "after": 4.63,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.63
    },
    "working": {
     "token": "--accent-blue",
@@ -613,7 +743,9 @@
     "before": 7.24,
     "ink": "#d1cdb7",
     "after": 7.24,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "changed": {
     "token": "--accent-magenta",
@@ -622,25 +754,31 @@
     "before": 5.3,
     "ink": "#b5b096",
     "after": 5.3,
-    "moved": 0
+    "moved": 0,
+    "extra_fields": 0,
+    "on_extra": null
    },
    "done": {
     "token": "--accent-lime",
     "pm7": "#b6b964",
     "designed": "",
-    "before": 5.58,
+    "before": 4.8,
     "ink": "#b6b964",
-    "after": 5.58,
-    "moved": 0
+    "after": 4.8,
+    "moved": 0,
+    "extra_fields": 2,
+    "on_extra": 4.8
    },
    "paused": {
     "token": "--text-secondary",
     "pm7": "#a8a593",
     "designed": "",
-    "before": 4.67,
+    "before": 3.88,
     "ink": "#a6a391",
-    "after": 4.57,
-    "moved": -3
+    "after": 3.8,
+    "moved": -3,
+    "extra_fields": 2,
+    "on_extra": 3.8
    },
    "idle": {
     "token": "--text-muted",
@@ -649,7 +787,9 @@
     "before": 4.04,
     "ink": "#948f7b",
     "after": 3.58,
-    "moved": -16
+    "moved": -16,
+    "extra_fields": 0,
+    "on_extra": null
    }
   }
  }

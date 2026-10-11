@@ -57,7 +57,7 @@
         tab('terminal', 'zsh', S.status('waiting', 12)) +
         tab('globe', 'localhost:5173', S.status('working', 12)) +
       '</div><div class="pn-strip">' +
-        tab('output', 'Output', S.icon('st-info', 12, tone('idle'))) +
+        tab('output', 'Output', S.icon('st-info', 12, tone('paused'))) +
         tab('warning', 'Problems', S.status('failed', 12)) +
         tab('page', '<i>README.md</i>', '') +
         tab('widget', 'Usage board', '', '', false, true) +

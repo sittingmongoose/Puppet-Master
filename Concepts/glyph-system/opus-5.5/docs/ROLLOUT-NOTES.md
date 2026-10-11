@@ -68,7 +68,7 @@ element) and `11bad014f6` (add selection).
    data grid; the map has `table` at medium confidence).
 3. **Tab marks: one 12 px slot after the label, one mark, in this order:** needs you `status('waiting')`, failed
    `status('failed')`, agent driving `agent-driving` (tone working, the loop of terminal item 6), agent paused
-   `agent-cursor` (tone paused), busy `status('working')`, news `st-info` (tone idle). Every mark gets `nx-self`, so a
+   `agent-cursor` (tone paused), busy `status('working')`, news `st-info` (tone paused). Every mark gets `nx-self`, so a
    tab's hover plays only its kind glyph. The tooltip lists any marks the winner hides. Remove `.pmw-agentmark`,
    `.pmw-tattn` and every rule that paints them; the warning-coloured square goes, because an agent's ask (needs you)
    and a background tab's news must not look alike (order and split: lead ruling). **News** marks a tab an agent opened

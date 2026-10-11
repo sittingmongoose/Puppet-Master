@@ -71,7 +71,7 @@
   G.statusDef('warning', 'st-warning', 'attention');
   G.statusDef('offline', 'st-offline', 'attention');
   G.statusDef('off', 'st-off', 'paused');
-  G.statusDef('info', 'st-info', 'idle');
+  G.statusDef('info', 'st-info', 'paused');
   G.statusDef('change-added', 'change-added', 'done');
   G.statusDef('change-modified', 'change-modified', 'changed');
   G.statusDef('change-deleted', 'change-deleted', 'blocked');
