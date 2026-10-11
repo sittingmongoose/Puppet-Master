@@ -21,8 +21,8 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
   --accent-orange: #FFB15C; --accent-warning: #FFD06E; --accent-error: #FF8A8A;
   --graph-passed: #5BE38F; --graph-failed: #FF8A8A; --graph-running: #FFB15C; --graph-planning: #97A6FF; --graph-gating: #FF86C2; --graph-pending: rgba(217, 222, 232, .6);
   --background: #04060d; --surface: rgba(12, 16, 30, .46); --surface-elevated: rgba(18, 22, 38, .62);
-  --lg-tint-panel: rgba(8, 11, 24, .52); --lg-tint-card: rgba(8, 11, 24, .56); --lg-tint-bar: rgba(8, 11, 24, .50);
-  --lg-tint-menu: rgba(10, 13, 26, .66); --lg-tint-lens: rgba(255, 255, 255, .07); --lg-tint-ctl: rgba(255, 255, 255, .07);
+  --lg-tint-panel: rgba(7, 10, 22, .66); --lg-tint-card: rgba(7, 10, 22, .70); --lg-tint-bar: rgba(7, 10, 22, .62);
+  --lg-tint-menu: rgba(10, 13, 26, .66); --lg-tint-lens: rgba(255, 255, 255, .05); --lg-tint-ctl: rgba(255, 255, 255, .07);
   --lg-fill: rgba(255, 255, 255, .075); --lg-fill-hover: rgba(255, 255, 255, .13); --lg-fill-press: rgba(255, 255, 255, .18);
   --lg-line: rgba(255, 255, 255, .10);
   --lg-edge-top: rgba(255, 255, 255, .30); --lg-edge-bot: rgba(0, 0, 0, .28); --lg-hl: .95;
@@ -39,7 +39,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
   --graph-passed: #0B6A2E; --graph-failed: #BE1F2A; --graph-running: #A04B00; --graph-planning: #3D50D6; --graph-gating: #B0216B; --graph-pending: rgba(38, 44, 56, .45);
   --background: #eef1f6; --surface: rgba(255, 255, 255, .5); --surface-elevated: rgba(255, 255, 255, .7);
   --lg-tint-panel: rgba(255, 255, 255, .56); --lg-tint-card: rgba(255, 255, 255, .62); --lg-tint-bar: rgba(255, 255, 255, .58);
-  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .30); --lg-tint-ctl: rgba(255, 255, 255, .4);
+  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .16); --lg-tint-ctl: rgba(255, 255, 255, .4);
   --lg-fill: rgba(12, 15, 21, .055); --lg-fill-hover: rgba(12, 15, 21, .09); --lg-fill-press: rgba(12, 15, 21, .13);
   --lg-line: rgba(12, 15, 21, .09);
   --lg-edge-top: rgba(255, 255, 255, .9); --lg-edge-bot: rgba(30, 45, 90, .14); --lg-hl: 1;
@@ -132,6 +132,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: transparent !important; box-shadow: none !important; border: 0 !important;
   border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 6;
 }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon { opacity: 1 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon:hover .symbol { background: var(--lg-fill-hover) !important; color: var(--text-primary) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--lg-on-sel) !important; background: transparent !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar :is(.d-abind) { opacity: 0 !important; }

@@ -65,7 +65,9 @@
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
       var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R), d = s[0];
       if (d <= 0) { edge[i] = 1; continue; }
-      var u = Math.min(1, Math.max(0, (d - B * 0.30) / (B * 0.62))); edge[i] = 1 - u * u * (3 - 2 * u);
+      /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
+      var sharp = Math.min(3, B * 0.3), soft = Math.min(8, B * 0.8), u = Math.min(1, Math.max(0, (d - sharp) / (soft - sharp)));
+      edge[i] = 1 - u * u * (3 - 2 * u);
       var vx = 0, vy = 0;
       if (mag > 1) { vx = -px * (1 - 1 / mag); vy = -py * (1 - 1 / mag); }
       if (d < B) {
@@ -75,8 +77,8 @@
            band, and never from past the centre (a small lens would otherwise mirror its label) */
         m = Math.max(0, Math.min(m, 1.55 * B - d, (mag > 1 ? 0.45 : 0.78) * (Math.min(W, H) / 2 - d)));
         vx -= s[1] * m; vy -= s[2] * m;
-        var face = s[1] * L0 + s[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.2) * 0.42;
-        var line = Math.exp(-d / 1.25), glow = Math.exp(-d / (B * 0.38)) * 0.32;
+        var face = s[1] * L0 + s[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
+        var line = Math.exp(-d / 1.25), glow = Math.exp(-d / Math.min(6, B * 0.22)) * 0.10;
         sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.10);
         rim[i] = Math.min(1, Math.exp(-d / 2.2) + Math.exp(-d / (B * 0.5)) * 0.35);
       }
@@ -147,16 +149,20 @@
      light = specular strength. Panels and cards are frosted so text on them reads; controls are clearer; lenses are clear
      and magnify. */
   var KINDS = {
-    panel:   { bezel: 26, thick: 74, blur: 22, sat: 1.7, ca: 0,    mag: 1,    light: 1.0 },
-    card:    { bezel: 20, thick: 60, blur: 26, sat: 1.6, ca: 0,    mag: 1,    light: 0.9 },
+    panel:   { bezel: 32, thick: 80, blur: 22, sat: 1.7, ca: 0,    mag: 1,    light: 1.05 },
+    card:    { bezel: 28, thick: 70, blur: 26, sat: 1.6, ca: 0,    mag: 1,    light: 1.0 },
     control: { bezel: 13, thick: 40, blur: 5,  sat: 1.8, ca: 0.07, mag: 1,    light: 1.1 },
     track:   { bezel: 12, thick: 34, blur: 7,  sat: 1.7, ca: 0.05, mag: 1,    light: 1.0 },
     lens:    { bezel: 4,  thick: 10, blur: 0,  sat: 1.5, ca: 0.10, mag: 1.10, light: 1.35 },
     sel:     { bezel: 6,  thick: 12, blur: 0,  sat: 1,   ca: 0,    mag: 1,    light: 1.1, flat: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95 },
-    bar:     { bezel: 10, thick: 28, blur: 16, sat: 1.6, ca: 0,    mag: 1,    light: 0.8 },
+    bar:     { bezel: 14, thick: 34, blur: 16, sat: 1.6, ca: 0,    mag: 1,    light: 0.95 },
   };
   var glassSet = new Set();
+  /* every glass element's optics are sized to it: when the board or a panel resizes one, it is measured again */
+  var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    entries.forEach(function (en) { var e = en.target, k = e.getAttribute('data-lg-kind'); if (k && isGlass() && e.isConnected) mount(e, k); });
+  }) : null;
   function radiusOf(e, W, H) { var r = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0; return Math.max(0, Math.min(r, W / 2 - 0.5, H / 2 - 0.5)); }
   /* mount or refresh one glass element at its current size; returns the filter record (null on the CPU path) */
   function mount(e, kind) {
@@ -165,7 +171,8 @@
     if (W < 4 || H < 4) return null;
     var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
     var sig = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind;
-    e.classList.add('lg-g'); e.setAttribute('data-lg-kind', kind); glassSet.add(e);
+    e.classList.add('lg-g'); e.setAttribute('data-lg-kind', kind);
+    if (!glassSet.has(e)) { glassSet.add(e); if (sizeWatch) sizeWatch.observe(e); }
     if (e.__lgSig === sig && (gpu() ? e.__lgF : true)) return e.__lgF;
     var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
     /* the rim is a background layer of the glass itself (never a child: hosts like the title bar measure their

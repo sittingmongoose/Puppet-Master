@@ -53,12 +53,19 @@ for (const look of LOOKS) for (const clar of CLAR) {
         if (r.width < 2 || r.height < 4 || r.right < 0 || r.bottom < 0 || r.left > innerWidth || r.top > innerHeight) continue;
         let op = 1; for (let a = e; a; a = a.parentElement) op *= +getComputedStyle(a).opacity;
         if (op < 0.05) continue;
+        /* text clipped away by a scrolling or overflow-hidden ancestor (rows past the board's edge) is not drawn */
+        let vx0 = r.left, vy0 = r.top, vx1 = r.right, vy1 = r.bottom;
+        for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+          const o = getComputedStyle(a); if (o.overflow === 'visible' && o.overflowX === 'visible' && o.overflowY === 'visible') continue;
+          const ar = a.getBoundingClientRect(); vx0 = Math.max(vx0, ar.left); vy0 = Math.max(vy0, ar.top); vx1 = Math.min(vx1, ar.right); vy1 = Math.min(vy1, ar.bottom);
+        }
+        if (vx1 <= vx0 || vy1 <= vy0 || (vx1 - vx0) * (vy1 - vy0) < 0.5 * r.width * r.height) continue;
         /* text covered by another element (a clipped label under a switch) is not ink anyone reads */
         const top = document.elementFromPoint(Math.min(innerWidth - 1, Math.max(0, (r.left + r.right) / 2)), Math.min(innerHeight - 1, Math.max(0, (r.top + r.bottom) / 2)));
         if (top && top !== e && !e.contains(top) && !top.contains(e) && !top.closest('.lg-lens, .lg-rim, #lg-sweep')) continue;
         out.push({ kind: 'text', sel: sel, name: e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + '.' + String(e.className).trim().split(/\s+/).slice(0, 2).join('.'),
           text: n.nodeValue.trim().slice(0, 40), color: cs.color, op, size: parseFloat(cs.fontSize), weight: +cs.fontWeight,
-          r: [Math.max(0, r.left), Math.max(0, r.top), Math.min(innerWidth, r.right), Math.min(innerHeight, r.bottom)] });
+          r: [Math.max(0, vx0), Math.max(0, vy0), Math.min(innerWidth, vx1), Math.min(innerHeight, vy1)] });   /* only the drawn part */
       }
       for (const g of reg.querySelectorAll('svg, i.pm-ico, .pmu-ico, .pmu-navicon')) {
         const r = g.getBoundingClientRect(); if (r.width < 6 || r.height < 6 || r.width > 32 || r.height > 32) continue;   /* icons, not charts */
@@ -66,7 +73,13 @@ for (const look of LOOKS) for (const clar of CLAR) {
         let col = cs.color; const st = cs.stroke; if (st && st !== 'none' && !/url/.test(st)) col = st;
         let op = 1; for (let a = g; a; a = a.parentElement) op *= +getComputedStyle(a).opacity;
         if (op < 0.05) continue;
-        out.push({ kind: 'glyph', sel, name: (g.closest('[class]') || g).className.toString().slice(0, 40), color: col, op, r: [r.left, r.top, r.right, r.bottom] });
+        let gx0 = r.left, gy0 = r.top, gx1 = r.right, gy1 = r.bottom;
+        for (let a = g.parentElement; a && a !== document.body; a = a.parentElement) {
+          const o = getComputedStyle(a); if (o.overflow === 'visible' && o.overflowX === 'visible' && o.overflowY === 'visible') continue;
+          const ar = a.getBoundingClientRect(); gx0 = Math.max(gx0, ar.left); gy0 = Math.max(gy0, ar.top); gx1 = Math.min(gx1, ar.right); gy1 = Math.min(gy1, ar.bottom);
+        }
+        if (gx1 <= gx0 || gy1 <= gy0 || (gx1 - gx0) * (gy1 - gy0) < 0.5 * r.width * r.height) continue;
+        out.push({ kind: 'glyph', sel, name: (g.closest('[class]') || g).className.toString().slice(0, 40), color: col, op, r: [gx0, gy0, gx1, gy1] });
       }
     }
     return out;

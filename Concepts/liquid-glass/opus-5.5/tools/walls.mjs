@@ -12,7 +12,7 @@ const res = await p.evaluate(() => {
   function ribbons(dark) {
     const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
     g.fillStyle = lin(g, 0, 0, W * 0.3, H, dark ? [[0, '#03050c'], [1, '#0a0f24']] : [[0, '#f4f2ee'], [1, '#e9eef7']]); g.fillRect(0, 0, W, H);
-    const pal = dark ? [['#0b2a8f', '#1f5bff'], ['#3a1a9e', '#8a4dff'], ['#006d7a', '#19d3c5'], ['#7a0f5a', '#ff4fa3'], ['#13307a', '#4f8dff'], ['#5b2a00', '#ffb347']]
+    const pal = dark ? [['#0b2a8f', '#1f5bff'], ['#3a1a9e', '#8a4dff'], ['#006d7a', '#19d3c5'], ['#7a0f5a', '#ff4fa3'], ['#13307a', '#4f8dff'], ['#2a1070', '#b77bff']]
                      : [['#9cc5ff', '#5b8cff'], ['#d9c6ff', '#9b7bff'], ['#a6f0e4', '#2fbfae'], ['#ffd0e6', '#ff6fb1'], ['#c4dcff', '#7aa7ff'], ['#ffe1b8', '#ffab4a']];
     const bands = 9;
     for (let k = 0; k < bands; k++) {
@@ -20,7 +20,9 @@ const res = await p.evaluate(() => {
       const top = x => base + Math.sin(x / W * Math.PI * fr + ph) * amp + Math.sin(x / W * Math.PI * 3.1 + ph * 1.7) * amp * 0.25;
       g.beginPath(); g.moveTo(0, H); for (let x = 0; x <= W; x += 8) g.lineTo(x, top(x)); g.lineTo(W, H); g.closePath();
       g.fillStyle = lin(g, 0, base - amp, 0, base + H * 0.5, [[0, c1], [0.35, c0], [1, dark ? '#03050c' : '#f4f2ee']]);
-      g.globalAlpha = dark ? 0.92 : 0.9; g.fill(); g.globalAlpha = 1;
+      /* each band casts a soft shadow up onto the one behind it, so the layers read as depth */
+      g.save(); g.shadowColor = dark ? 'rgba(0,0,0,.55)' : 'rgba(40,60,120,.18)'; g.shadowBlur = 46; g.shadowOffsetY = -10;
+      g.globalAlpha = dark ? 0.94 : 0.92; g.fill(); g.restore(); g.globalAlpha = 1;
       g.beginPath(); for (let x = 0; x <= W; x += 8) { const y = top(x); x ? g.lineTo(x, y) : g.moveTo(x, y); }
       g.strokeStyle = dark ? 'rgba(255,255,255,.55)' : 'rgba(255,255,255,.95)'; g.lineWidth = 2.2; g.stroke();
       g.strokeStyle = dark ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.35)'; g.lineWidth = 14; g.stroke();
