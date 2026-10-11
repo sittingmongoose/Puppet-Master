@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""build_proto.py - the Liquid Glass concept page: published PMConcept7 plus src/lg.css, src/lg.js and the baked wallpapers.
+"""build_proto.py - the Liquid Glass concept page: published PMConcept7 plus src/glass.css, src/glass.js and src/walls/*.webp.
 
     python3 build_proto.py --out <path.html> [--base Concepts/PMConcept7.html]
 
@@ -8,8 +8,8 @@ published only by opus-5.5 build.py). Adds <style id="lg-css"> before </head> an
 each exactly once, and stamps data-concept-model="Opus 5.5" on the page as the concept rules ask.
 """
 import argparse
+import base64
 import hashlib
-import json
 import pathlib
 import subprocess
 import sys
@@ -28,13 +28,13 @@ def main():
     for mark in ('id="lg-css"', 'id="lg-js"'):
         if mark in base:
             sys.exit(f'base already carries {mark}')
-    walls = json.loads((PKG / 'src' / 'wallpapers.json').read_text())['images']
-    css = (PKG / 'src' / 'lg.css').read_text(encoding='utf-8')
-    js = (PKG / 'src' / 'lg.js').read_text(encoding='utf-8')
-    chk = subprocess.run(['node', '--check', str(PKG / 'src' / 'lg.js')], capture_output=True, text=True)
+    css = (PKG / 'src' / 'glass.css').read_text(encoding='utf-8')
+    js = (PKG / 'src' / 'glass.js').read_text(encoding='utf-8')
+    chk = subprocess.run(['node', '--check', str(PKG / 'src' / 'glass.js')], capture_output=True, text=True)
     if chk.returncode:
-        sys.exit('lg.js: ' + chk.stderr)
-    vars_ = ''.join(f"  --lg-{k.replace('_', '-')}: url({v['data_uri']});\n" for k, v in sorted(walls.items()))
+        sys.exit('glass.js: ' + chk.stderr)
+    vars_ = ''.join(f"  --lg-wall-{w.stem}: url(data:image/webp;base64,{base64.b64encode(w.read_bytes()).decode()});\n"
+                    for w in sorted((PKG / 'src' / 'walls').glob('*.webp')))
     style = f'<style id="lg-css">\nhtml {{\n{vars_}}}\n{css}</style>\n'
     script = f'<script id="lg-js">\n{js}</script>\n'
     if base.count('</head>') != 1 or base.count('</body>') != 1:

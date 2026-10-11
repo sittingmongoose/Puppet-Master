@@ -1,0 +1,236 @@
+/* Liquid Glass v2: the look (pm7-liquid-glass, Opus 5.5, 2026-10-11). glass.js computes each glass element's optics;
+ * this sheet sets the scene and the material's colour, edges and depth. Live only while html[data-lg="on"] and the look
+ * is Glass. Every other look, and Glass with data-lg="off", draws what PMConcept7 draws today.
+ *
+ * The scene follows Apple's own structure: a crisp wallpaper; floating sheets of glass; and controls that sit on a sheet
+ * as vibrant fills, never glass on raw content. The sheets are the title bar, the sidebar (activity bar and rail panel),
+ * Usage's navigation and toolbar, each card, the chat column, menus and the status bar. The chosen tab, segment, row or
+ * rail icon is a clear lens that magnifies the label under it. Fonts are kept. No capsules: controls 6 px (3 px
+ * inside), sheets concentric at 18, 16 and 14 px.
+ * P = html[data-lg="on"][data-theme^="glass"]:not(#lgz); the :not(#id) lifts these rules over the base's id-weighted
+ * Glass rules without touching their sources.
+ */
+
+/* ---------------------------------------------------------------------------------------------------------------
+   1. Tokens
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
+  --text-primary: #F6F8FC; --text-secondary: #D9DEE8; --text-muted: #BAC2D0;
+  --border: rgba(255, 255, 255, .16); --border-light: rgba(255, 255, 255, .09);
+  --accent-blue: #74B9FF; --accent-primary-rgb: 116, 185, 255; --accent-magenta: #FF86C2; --accent-lime: #5BE38F;
+  --accent-orange: #FFB15C; --accent-warning: #FFD06E; --accent-error: #FF8A8A;
+  --graph-passed: #5BE38F; --graph-failed: #FF8A8A; --graph-running: #FFB15C; --graph-planning: #97A6FF; --graph-gating: #FF86C2; --graph-pending: rgba(217, 222, 232, .6);
+  --background: #04060d; --surface: rgba(12, 16, 30, .46); --surface-elevated: rgba(18, 22, 38, .62);
+  --lg-tint-panel: rgba(8, 11, 24, .52); --lg-tint-card: rgba(8, 11, 24, .56); --lg-tint-bar: rgba(8, 11, 24, .50);
+  --lg-tint-menu: rgba(10, 13, 26, .66); --lg-tint-lens: rgba(255, 255, 255, .07); --lg-tint-ctl: rgba(255, 255, 255, .07);
+  --lg-fill: rgba(255, 255, 255, .075); --lg-fill-hover: rgba(255, 255, 255, .13); --lg-fill-press: rgba(255, 255, 255, .18);
+  --lg-line: rgba(255, 255, 255, .10);
+  --lg-edge-top: rgba(255, 255, 255, .30); --lg-edge-bot: rgba(0, 0, 0, .28); --lg-hl: .95;
+  --lg-shadow: rgba(0, 2, 12, .55); --lg-shadow-near: rgba(0, 2, 12, .30);
+  --lg-sel: rgba(116, 185, 255, .52); --lg-on-sel: #FFFFFF;
+  --lg-wall: var(--lg-wall-ribbons-dark);
+  color-scheme: dark;
+}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
+  --text-primary: #0C0F15; --text-secondary: #262C38; --text-muted: #424A59;
+  --border: rgba(12, 15, 21, .14); --border-light: rgba(12, 15, 21, .08);
+  --accent-blue: #005FCC; --accent-primary-rgb: 0, 95, 204; --accent-magenta: #B0216B; --accent-lime: #0B6A2E;
+  --accent-orange: #A04B00; --accent-warning: #714600; --accent-error: #BE1F2A;
+  --graph-passed: #0B6A2E; --graph-failed: #BE1F2A; --graph-running: #A04B00; --graph-planning: #3D50D6; --graph-gating: #B0216B; --graph-pending: rgba(38, 44, 56, .45);
+  --background: #eef1f6; --surface: rgba(255, 255, 255, .5); --surface-elevated: rgba(255, 255, 255, .7);
+  --lg-tint-panel: rgba(255, 255, 255, .56); --lg-tint-card: rgba(255, 255, 255, .62); --lg-tint-bar: rgba(255, 255, 255, .58);
+  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .30); --lg-tint-ctl: rgba(255, 255, 255, .4);
+  --lg-fill: rgba(12, 15, 21, .055); --lg-fill-hover: rgba(12, 15, 21, .09); --lg-fill-press: rgba(12, 15, 21, .13);
+  --lg-line: rgba(12, 15, 21, .09);
+  --lg-edge-top: rgba(255, 255, 255, .9); --lg-edge-bot: rgba(30, 45, 90, .14); --lg-hl: 1;
+  --lg-shadow: rgba(30, 45, 90, .22); --lg-shadow-near: rgba(30, 45, 90, .12);
+  --lg-sel: rgba(0, 95, 204, .88); --lg-on-sel: #FFFFFF;
+  --lg-wall: var(--lg-wall-ribbons-light);
+  color-scheme: light;
+}
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-dark); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-light); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
+  --border-radius: 16px; --pm-ctl-r: 6px; --pm-ctl-r-in: 3px;
+  --lg-r-sheet: 18px; --lg-r-card: 16px; --lg-r-bar: 14px;
+  --display-font: 'Inter', system-ui, sans-serif; --body-font: 'Inter', system-ui, sans-serif;
+  --pmr-radius: 6px; --pmr-radius-lg: 14px; --pmr-hover: var(--lg-fill-hover); --d-chrome: transparent;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   2. The scene: the wallpaper, crisp, full bleed; nothing between it and the sheets. The base's cloudscape, sky overlay
+      and opaque shell are forced off (its pm7-architectural-glass-final block uses !important).
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body { background: var(--background) var(--lg-wall) center / cover no-repeat fixed !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .app-shell,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuApp.pmu-shell,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuStage,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot > .side-panel-view {
+  background: transparent !important; border-color: transparent !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::before,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::after { opacity: 0 !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   3. The glass material. glass.js sets each sheet's backdrop-filter (blur, refraction, saturation) and its specular rim
+      (--lg-spec, computed for that shape). Here the background stacks the rim, the pointer's light and the tint, and
+      the shadows give the depth: a lit top edge, a darker bottom edge, and a soft shadow that grows with the sheet.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g { border: 0 !important; isolation: isolate; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="panel"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, radial-gradient(240px circle at var(--lg-mx, -999px) var(--lg-my, -999px), rgba(255, 255, 255, calc(.13 * var(--lg-shine, 0))), transparent 70%), linear-gradient(var(--lg-tint-panel), var(--lg-tint-panel)) !important; border-radius: var(--lg-r-sheet) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="card"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, radial-gradient(240px circle at var(--lg-mx, -999px) var(--lg-my, -999px), rgba(255, 255, 255, calc(.13 * var(--lg-shine, 0))), transparent 70%), linear-gradient(var(--lg-tint-card), var(--lg-tint-card)) !important; border-radius: var(--lg-r-card) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="bar"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, radial-gradient(240px circle at var(--lg-mx, -999px) var(--lg-my, -999px), rgba(255, 255, 255, calc(.13 * var(--lg-shine, 0))), transparent 70%), linear-gradient(var(--lg-tint-bar), var(--lg-tint-bar)) !important; border-radius: var(--lg-r-bar) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="menu"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, radial-gradient(240px circle at var(--lg-mx, -999px) var(--lg-my, -999px), rgba(255, 255, 255, calc(.13 * var(--lg-shine, 0))), transparent 70%), linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g:is([data-lg-kind="track"], [data-lg-kind="control"]) {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, radial-gradient(240px circle at var(--lg-mx, -999px) var(--lg-my, -999px), rgba(255, 255, 255, calc(.13 * var(--lg-shine, 0))), transparent 70%), linear-gradient(var(--lg-tint-ctl), var(--lg-tint-ctl)) !important; border-radius: var(--pm-ctl-r) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 6px 14px -8px var(--lg-shadow) !important;
+}
+.lg-lens, .lg-press, #lg-lenses { display: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens.lg-under { opacity: 0; transition: opacity 120ms ease; }
+/* the window is not focused: the glass recedes, its rims dim and its selection greys */
+html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-sel: rgba(150, 156, 170, .45); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   4. The sheets, placed: everything floats over the wallpaper with gaps that let it through
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar { border-radius: var(--lg-r-bar) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .app-name { color: var(--text-primary) !important; font-weight: 650; letter-spacing: -.01em; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .left-panel { border-radius: var(--lg-r-sheet) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #chatPanel { border-radius: var(--lg-r-sheet) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-rail { margin: 0 6px 0 2px; border-radius: var(--lg-r-sheet) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { margin: 0 6px 6px; border-radius: var(--lg-r-bar) !important; position: relative; z-index: 4; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-board > .pmu-card { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm7GlobalStatusBar { margin: 0 8px 4px; border-radius: 10px !important; border: 0 !important; }
+/* inside a sheet nothing paints its own plate: the sheet is the material */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g :is(.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar, .fm-filter, .pm7-scm-context, .sh-foot, .pmu-cardhead, .pmu-cardbody, .pmu-brand, .pmu-nav) {
+  background: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: transparent !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card :is(.pmu-film-glint) { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: transparent !important; box-shadow: none !important; border: 0 !important;
+  border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 6;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon:hover .symbol { background: var(--lg-fill-hover) !important; color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--lg-on-sel) !important; background: transparent !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar :is(.d-abind) { opacity: 0 !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   5. Controls on a sheet: vibrant fills, the look's 6 px corners, a quiet hover; text buttons sit in their own fill
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#projectMenuBtn, #pm-home-more-btn, #themeSelect, #tbSearchInput, .pmu-ctlbtn, .pmu-iconbtn, .pmu-livebtn, .pmu-livechev, #fmRootBtn) {
+  background: var(--lg-fill) !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
+  color: var(--text-primary) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  transition: background-color 160ms ease;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#projectMenuBtn, #pm-home-more-btn, #themeSelect, .pmu-ctlbtn, .pmu-iconbtn, .pmu-livebtn, .pmu-livechev, #fmRootBtn):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #tbSearchInput::placeholder { color: var(--text-muted) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livebtn) { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livechev) { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: 1px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRefresh { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: -5px; }
+/* the tab strips: a fill track on the sheet; the lens does the choosing */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs, #pmuRange) {
+  background: var(--lg-fill) !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; position: relative;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab-ink, .pmu-seg-ink, .pm-segtab-ink) { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item) {
+  background: transparent !important; box-shadow: none !important; border-radius: var(--pm-ctl-r-in) !important;
+  color: var(--text-secondary) !important; position: relative; z-index: 1;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item):hover { color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item).active { color: var(--text-primary) !important; font-weight: 650; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .pm-segtab { position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .pm-segtab > .pm-segtab-track {
+  display: block; position: absolute; left: 6px; right: 6px; top: 3px; height: 34px; border-radius: var(--pm-ctl-r);
+  background: var(--lg-fill); pointer-events: none; z-index: 0;
+}
+.pm-segtab-track { display: none; }
+/* lists on a sheet */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn {
+  background: transparent !important; box-shadow: none !important; border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 1;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn::before, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--lg-fill-hover) !important; color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active * { color: var(--lg-on-sel) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active { font-weight: 650; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):is(.selected, .active, [aria-selected="true"]) { background: var(--lg-fill-press) !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored { opacity: 1 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored :is(.fm-name, .fm-count, .fm-gitbadge) { color: var(--text-muted) !important; }
+/* switches and meters on a sheet: the look's rectangle, a glass key; square bar ends (no-pills) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) { border-radius: var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-toggle::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-wswitch-track > i {
+  border-radius: var(--pm-ctl-r-in) !important; background: linear-gradient(180deg, #FFFFFF, #E6ECF6) !important;
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 0 rgba(20, 30, 60, .12), 0 1px 3px rgba(0, 8, 30, .4) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRoomTitle, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-rail h1 { color: var(--text-primary) !important; font-weight: 700; letter-spacing: -.015em; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-pop, .pmr-menu-list) :is(.pmu-poprow, .pmu-mitem, .pmr-menu-item, [role="menuitem"], [role="option"]) { border-radius: var(--pm-ctl-r) !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   6. The lens: clear glass over the chosen item. glass.js gives it refraction that bends at its rim and magnifies at
+      its centre, so the label under it swells; it moves on a spring, stretching with its speed. A standalone choice
+      (activity bar, Usage's navigation) is the macOS sidebar selection: accent glass, white ink, grey when unfocused.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens {
+  display: block; position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none;
+  border-radius: var(--pm-ctl-r-in); background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 4px 12px -4px var(--lg-shadow), 0 1px 2px var(--lg-shadow-near);
+  transform-origin: 50% 50%; will-change: transform;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-solo] { border-radius: var(--pm-ctl-r); background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-sel), var(--lg-sel)); z-index: 0; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 10px 24px -6px var(--lg-shadow), 0 2px 4px var(--lg-shadow-near); transition: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
+  display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .85), rgba(255, 255, 255, .25) 55%, transparent); mix-blend-mode: plus-lighter;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   7. The CPU path (no GPU): the same sheets, rims and shine as frosted glass without refraction or live blur;
+      denser so text holds over the crisp wallpaper
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(10, 13, 26, .80); --lg-tint-card: rgba(10, 13, 26, .82); --lg-tint-bar: rgba(10, 13, 26, .80); --lg-tint-menu: rgba(12, 15, 28, .92); --lg-tint-lens: rgba(255, 255, 255, .16); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .94); --lg-tint-lens: rgba(255, 255, 255, .7); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   8. The concept's own control (status bar), in the same material
+   --------------------------------------------------------------------------------------------------------------- */
+#lg-demo-pop { display: none; }
+#lg-demo-pop[data-open] {
+  display: block; position: fixed; z-index: 2147483100; right: 12px; bottom: 36px; width: 300px; padding: 14px;
+  font: 12.5px/1.45 var(--body-font, Inter, system-ui, sans-serif); color: var(--text-primary); border-radius: 16px;
+  background: var(--lg-tint-menu, rgba(20, 20, 30, .9));
+}
+#lg-demo-pop h3 { margin: 0 0 8px; font-size: 13px; font-weight: 650; }
+#lg-demo-pop .lg-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 0; position: relative; z-index: 6; }
+#lg-demo-pop .lg-row > span { color: var(--text-secondary); }
+#lg-demo-pop .lg-seg { display: inline-flex; padding: 2px; border-radius: 6px; background: var(--lg-fill, rgba(255, 255, 255, .08)); }
+#lg-demo-pop .lg-seg button { all: unset; cursor: pointer; padding: 3px 9px; border-radius: 3px; color: var(--text-secondary); font-weight: 550; }
+#lg-demo-pop .lg-seg button[aria-pressed="true"] { background: var(--lg-fill-press, rgba(255, 255, 255, .18)); color: var(--text-primary); }
+#lg-demo-pop .lg-seg button:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 1px; }
