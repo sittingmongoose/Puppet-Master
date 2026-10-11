@@ -27455,7 +27455,7 @@ negative_constraints:
 
 This addendum compiles Jared's home and terminal decisions of 2026-10-09 into storage: `Plans/Decision_Log.md#DL-180` (one universal panel system), `Plans/Decision_Log.md#DL-181` (one terminal session per tab), `Plans/Decision_Log.md#DL-182` (terminal images) and `Plans/Decision_Log.md#DL-183` (terminal appearance). It adds SP-330 (the v2 Home layout record, its key, transaction and the migration from v1 and from the Home part of `layout:v1`), SP-331 (where terminal appearance is stored) and SP-332 (the terminal records re-scoped, with saved scrollback). SP-330 replaces the v1 record as the selected Home layout: SP-245 and the PMConcept7 Home Workspace layout passage are amended so the v1 key is a read-only migration input. SP-122 is superseded by SP-332. SP-014, SP-093, SP-100, SP-114, SP-118, SP-123, SP-124, SP-126, SP-127 and SP-273 are amended in place, and so are the terminal persistence passages and the bounded-collections table of section 2. The panel model is `Plans/FinalGUISpec.md#F3-630`, the tab kinds and their host contract are `Plans/FinalGUISpec.md#F3-635`, and the terminal as one session per tab is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`; this document owns keys, transactions, migration, retention and failure behaviour only.
 
-Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are compiled into these units in place, with no new unit. SP-330: the chat's pop-out is never saved (D32), named layouts keep the boards of their dashboard tabs up to 64 KB (D10 P6, lead ruling F3), the old Dashboard layout converts into no board (P1), the Debug Console is one tab with its session sub-tab as view state (D33) and a terminal tab's notification mute is its state (D38). SP-332: well-known secret formats are scrubbed from saved scrollback (D36) and every terminal's saved copy together is capped at 512 MiB (D37). Outside this addendum, SP-249 now keeps dashboard boards per project and presets per user (D10 P4, P5, P6, D35), SP-250 is dated to match, and SP-273 records that Event Authority admitted `workspace.layout_changed` 2.0.0 (D42).
+Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are compiled into these units in place, with no new unit. SP-330: the chat's pop-out is never saved (D32), named layouts keep the boards of their dashboard tabs up to 64 KB (D10 P6, lead ruling F3), the old Dashboard layout converts into no board (P1), the Debug Console is one tab with its session sub-tab as view state (D33), a terminal tab's notification mute is its state (D38) and the chat column keeps the narrow-window pin `keep_open` (`ui.chat_column.keep_open`). SP-332: well-known secret formats are scrubbed from saved scrollback (D36) and every terminal's saved copy together is capped at 512 MiB (D37). Outside this addendum, SP-249 now keeps dashboard boards per project and presets per user (D10 P4, P5, P6, D35), SP-250 is dated to match, and SP-273 records that Event Authority admitted `workspace.layout_changed` 2.0.0 (D42).
 
 ### The v2 Home layout record (SP-330)
 
@@ -27493,11 +27493,13 @@ The conversion table:
 
 **Concept lineage.** The panels concept saves its layout under `pm.home.panels:v1:<project>` and sets unreadable records aside under a quarantine key. Both are concept lineage only, never product keys.
 
-**Named layouts keep their dashboards' boards (amended 2026-10-10, DL-186, D10 P6, lead ruling F3).** Saving a named layout (`cmd.workspace_layout.save_named`) also keeps a snapshot of the boards of the dashboard tabs open in the layout: `boards`, keyed by board id, each the board's stored envelope (SP-249) or null when the board had nothing stored. The snapshot is capped at 64 KB per named layout: when the canonical JSON of `boards` would pass 65,536 bytes, the save keeps the layout without them and writes `boards_skipped_bytes`, the size it left out, and the save's announcement says the dashboards were not saved with it (`Plans/FinalGUISpec.md#F3-638` owns the words). Applying the layout (`cmd.workspace_layout.apply_named`) writes each saved board back to that board's own key in the current project, a null removes what the board had stored, and shown boards reload; these board writes belong to the apply and append no event of their own (`Plans/Contracts_V0.md#CV-361`). A named layout saved before 2026-10-10 has neither field and applies as it did. The schema's invariant S13 holds the cap.
+**Named layouts keep their dashboards' boards (amended 2026-10-10, DL-186, D10 P6, lead ruling F3).** Saving a named layout (`cmd.workspace_layout.save_named`) also keeps a snapshot of the boards of the dashboard tabs open in the layout: `boards`, keyed by board id, each the board's stored envelope (SP-249) or null when the board had nothing stored. The snapshot is capped at 64 KB per named layout: when the canonical JSON of `boards` would pass 65,536 bytes, the save keeps the layout without them and writes `boards_skipped_bytes`, the size it left out, and the save's announcement says the dashboards were not saved with it (`Plans/FinalGUISpec.md#F3-638` owns the words). Applying the layout (`cmd.workspace_layout.apply_named`) writes each saved board back to that board's own key in the current project, a null removes what the board had stored, and shown boards reload; these board writes belong to the apply and append no event of their own (`Plans/Contracts_V0.md#CV-361`). A named layout saved before 2026-10-10 has neither field and applies as it did. The schema's invariant S13 holds the cap. The Agents board is drawn by the dashboard kind and stores nothing (SP-249, lead ruling F7), so `boards` never names `agents`; the schema accepts only `home`, `metrics`, `monitoring` and `dash-<n>` keys.
 
 **The chat's pop-out is never saved (amended 2026-10-10, DL-187, D32).** Jared answered that a popped-out chat starts back in its column after a restart, so the v2 record has no `popped_out` field: a pop-out lasts while the app runs, its pop-out and return append only `panel.undocked` or `panel.redocked`, and nothing about it is written. The chat column keeps its width, History pinned and shown.
 
 **What a tab's state keeps for the 2026-10-10 answers (DL-187).** The Debug Console is one tab, `debug-console`, with a sub-tab per debug session (D33): its domain reference is empty, and the chosen session sub-tab is view state in the tab's state (lead ruling F6); an older `debug-console:<session>` id read from anywhere folds into that one tab and is never written again. A terminal tab's notification mute (D38) is that tab's state, set by `ui.terminal.mute_notifications` (lead ruling F5), so it moves and reopens with the tab. Both are written like view state: no revision advance, no receipt and no event.
+
+**Keep the chat open in narrow windows (amended 2026-10-10, DL-187).** The pin that `ui.chat_column.keep_open` sets from the chat header's menu and the Home options menu (`Plans/UI_Command_Catalog.md#UCC-203`; it is no longer a Settings row) is kept in the chat column as `keep_open`, beside `history_pinned`, and is off while absent. It is the person's choice, not a narrow-window state: the narrow ladder reads it, and the ladder's own steps are still never written. It is written like view state: no revision advance, no receipt and no event. The concept keeps it beside the chat's width and History choice in one record (`chat.pinOpen` in `Concepts/home-redesign/src/panels/js/04-settings.js` at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a; concept lineage only).
 
 ### SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1
 
@@ -27517,7 +27519,7 @@ canonical_text: >-
   never written. Every committed structural change validates, writes, reads back, then advances revision by one,
   publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with
   rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one
-  panel_expanded. View state, the chat column's shown, history_pinned and popped_out, and a terminal tab's ref moving to a new
+  panel_expanded. View state, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new
   session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part
   of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
   become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
@@ -27536,6 +27538,9 @@ canonical_text: >-
   F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is
   one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a
   terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state.
+  A named layout's boards never name agents, which stores nothing (lead ruling F7). The chat column also keeps
+  keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's
+  choice, not a narrow-window state, and is written like view state.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -27545,7 +27550,7 @@ acceptance_criteria:
   - "home_workspace_layout_v2 is the only family a Home layout write targets; the v1 family and layout:v1 are read only as conversion input."
   - "Every valid record in Plans/home_workspace_layout_v2_fixtures.json validates against the schema and the semantic invariants, and every invalid case is rejected by the schema or by the invariant it names."
   - "A structural change writes, reads back and only then advances revision by one and appends one workspace.layout_changed; a failure leaves the prior record byte-identical with a rolled_back=true receipt and no event; a reveal-only open writes nothing."
-  - "View-state writes, the chat column's shown and popped_out, and a terminal tab's ref moving to a new session never advance revision, take a receipt or append an event."
+  - "View-state writes, the chat column's shown and history_pinned, and a terminal tab's ref moving to a new session never advance revision, take a receipt or append an event."
   - "A newly created default layout, and the default written after an unreadable source, are at revision 0 with no event."
   - "The fixture's v1 record (four editor panels, a dashboard, two terminal sections with workgroups and a floating chat) converts to exactly its expected_v2 record, the v1 record is unchanged afterwards and one migrated_from_v1 event is appended."
   - "No v1 surface that holds a tab, a browser session or a terminal session is dropped: an inactive browser session becomes a background browser tab in its panel, and a hidden editor panel, dashboard or terminal section becomes a collapsed panel."
@@ -27557,6 +27562,7 @@ acceptance_criteria:
   - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each board's key in the current project, a null removing it, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
   - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
   - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
+  - "A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open, set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27587,6 +27593,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D38)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its folded ids; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
@@ -27598,6 +27605,8 @@ preserved_exact_tokens:
   - "widget_layout:v1:<project_id>:<board_id>"
   - "boards"
   - "boards_skipped_bytes"
+  - "keep_open"
+  - "ui.chat_column.keep_open"
   - "debug-console"
   - "dashboard:home"
   - "migrated_from_v1"
@@ -27609,15 +27618,17 @@ negative_constraints:
   - "Do not write a Home layout anywhere but home_workspace_layout.v2."
   - "Do not save narrow, overlay, menu, hover or drag state, a buffer, scrollback, a dashboard's widget layout or a chat position."
   - "Do not save the chat's pop-out, or a named layout's boards past 64 KB."
+  - "Do not treat keep_open as a narrow-window state, or write the narrow ladder's steps."
   - "Do not use the concept's pm.home.panels keys as product keys."
   - "Do not start, end or restart a terminal session during the conversion."
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
   - "Earlier text, lineage only (until 2026-10-10, DL-186): a dashboard's widget layout was kept 'under widget_layout:v1:dashboard:<board_id> (WS-030)', a key never written."
   - "Earlier text, lineage only (until 2026-10-10, DL-187): the chat column held 'popped out', written with the record like view state."
+  - "Earlier text, lineage only (until 2026-10-10, DL-187): 'View state, the chat column's shown, history_pinned and popped_out, and a terminal tab's ref moving to a new session are written with the record without a revision advance, receipt or event.' and the criterion 'View-state writes, the chat column's shown and popped_out, and a terminal tab's ref moving to a new session never advance revision, take a receipt or append an event.'"
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186): boards live per project under widget_layout:v1:<project_id>:<board_id>; named layouts keep their dashboards' boards up to 64 KB (boards_skipped_bytes past it); the old Dashboard layout converts into no board."
-  - "Amended 2026-10-10 (DL-187): the chat's pop-out is never saved (popped_out removed from the record); the Debug Console is one tab with its session sub-tab as view state; a terminal tab's notification mute is its state."
+  - "Amended 2026-10-10 (DL-187): the chat's pop-out is never saved (popped_out removed from the record, and from the view-state sentence and its criterion, which now name shown and history_pinned); the Debug Console is one tab with its session sub-tab as view state; a terminal tab's notification mute is its state; the chat column keeps keep_open, the narrow-window pin, as view state; a named layout's boards never name agents (lead ruling F7)."
   - "Amended 2026-10-10 (lead ruling L7): Clarifies conversion-table geometry does not restore popped-out chat after restart."
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
@@ -27756,7 +27767,7 @@ Amended 2026-10-10 (lead ruling L1): the session record references its home pane
 
 **Secrets are left out of the saved copy (amended 2026-10-10, DL-187, D36).** Before a copy is written, well-known secret formats are replaced in it: vendor API keys (`sk-...`, `AKIA...`, `ghp_...`, `github_pat_...`, `glpat-...`, `xox?-...`, `AIza...`, Stripe `sk_live_...`), bearer tokens and JWTs, `KEY=value` assignments whose name says key, secret, token or password, and the body of a private-key block. The live screen keeps the original. A secret's cells are rewritten in place, so the line keeps its width and every image anchor and mark stays put: the label `[API key · not saved]` (with `token`, `secret` or `private key` in place of `API key`) followed by blank cells, or `•` when the secret is shorter than the label. A private key keeps its BEGIN and END lines; its first body line carries the label and the rest of the body is empty. Command lines and link targets in the copy are scrubbed the same way. A restored tab's notice ends "N secrets were left out of the saved copy." (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). This is a floor for the common formats, not a promise that no secret is ever saved.
 
-**A total cap across terminals (amended 2026-10-10, DL-187, D37, lead ruling F4).** Every terminal's saved copy together is capped at 512 MiB on this machine, a fixed value and not a setting; the 64 MiB per terminal tab stays. When a save would pass the total, the oldest saved scrollback gives way first: the saved copies of terminals that are not running now (closed tabs, and the terminals of other projects), least recently saved first, are deleted until a full per-terminal quota fits again; if that is still not enough, the terminal being saved keeps fewer of its images (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`). A small index of each copy's bytes and save time keeps the total without reading the copies.
+**A total cap across terminals (amended 2026-10-10, DL-187, D37, lead ruling F4).** Every terminal's saved copy together is capped at 512 MiB on this machine, a fixed value and not a setting; the 64 MiB per terminal tab stays. When a save would pass the total, the oldest saved scrollback gives way first: the saved copies of terminals that are not running now (closed tabs, and the terminals of other projects), least recently saved first, are deleted until a full per-terminal quota fits again; if that is still not enough, the terminal being saved keeps fewer of its images (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`). A small index of each copy's bytes and save time keeps the total without reading the copies. The total is reached by this trimming order, not held as a hard ceiling: only copies of terminals not running now are deleted, and text never gives way to images, so enough running terminals with long text can still pass 512 MiB, and the SPEC names no step past that (an open item below).
 
 **A terminal's notification mute (amended 2026-10-10, DL-187, D38).** It is the terminal tab's own state in the v2 Home record (SP-330), set by `ui.terminal.mute_notifications` (lead ruling F5); it is not part of saved scrollback or of the session record.
 
@@ -27768,7 +27779,7 @@ Saved images follow saved scrollback's own rules, the transcript chunks': the sa
 
 **Open items.** Two are left for the lead and Jared. First, SP-125's transcript chunks, and with them saved scrollback and its PNG frames, have no physical family in `Plans/storage_value_registry.json`, so no registry row yet carries their key by project and terminal tab, the 64 MiB and 7-day retention, `backup_required: false` or the export and sync exclusion. Registering them needs a value schema, a retention policy and a redaction transform, and is not done in this addendum. Second, whether saved scrollback should be scrubbed of secrets that a program itself printed (for example a file of keys shown with `cat`) is Jared's question; until he answers, it is kept unredacted on this machine only, as above.
 
-Amended 2026-10-10 (DL-187): Jared answered the second item (D36): well-known secret formats are scrubbed from the saved copy before it is written, as "Secrets are left out of the saved copy" above says, and the live screen keeps the original. The first item stands, and the total cap's index of bytes and save times (D37) joins it: it has no registry row either.
+Amended 2026-10-10 (DL-187): Jared answered the second item (D36): well-known secret formats are scrubbed from the saved copy before it is written, as "Secrets are left out of the saved copy" above says, and the live screen keeps the original. The first item stands, and the total cap's index of bytes and save times (D37) joins it: it has no registry row either. A third item is new: what a save does when the saved text of terminals still running passes 512 MiB by itself, since the SPEC's trimming order deletes only copies of terminals not running now and then images, and text never gives way.
 
 ### SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback
 
@@ -27810,8 +27821,9 @@ canonical_text: >-
   Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab
   kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved
   first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images,
-  with an index of bytes and save times keeping the total (D37, lead ruling F4). The scrub question is answered;
-  the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
+  with an index of bytes and save times keeping the total (D37, lead ruling F4); the total is reached by that order,
+  not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub
+  question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
   state in the v2 Home record (D38, SP-330).
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
@@ -27878,7 +27890,7 @@ negative_constraints:
   - "Do not put saved scrollback or its images in a backup, an export or sync."
   - "Do not store an agent's terminal write grant."
   - "Do not write a saved copy before the well-known secret formats are replaced, or change the live screen's text when scrubbing."
-  - "Do not let every terminal's saved copy together pass 512 MiB, or make the total a setting."
+  - "Do not write a save that brings every terminal's saved copy together past 512 MiB without first applying the trimming order (copies of terminals not running now, least recently saved first, then the saving terminal's images), and do not make the total a setting."
 compatibility_only_notes:
   - "terminal_leaf_pane_id survives only as legacy_terminal_leaf_pane_id on converted values."
   - "Earlier text, lineage only (until 2026-10-10, DL-187): saved scrollback held 'the output unredacted', and whether to scrub secrets a program printed was an open item; there was no total cap across terminals."

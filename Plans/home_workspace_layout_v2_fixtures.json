@@ -12,7 +12,7 @@
     "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (named layout trees; concept lineage only)",
     "Concepts/home-redesign/src/panels/js/14-layouts.js at commit 35e51da2314d186d21798ebf2ae4823a6b2e284a (branch concept/home-panels-20261009), SHA-256 8d05d9b09028725d7a0bff444b20d7e655047bb7485350c8e771323223f5316e (the default Home tabs; concept lineage only)"
   ],
-  "notes": "Each valid record validates against the schema and passes the semantic invariants S1-S12 listed in the schema's $comment. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid record; rejected_by says whether the schema or a named semantic invariant rejects it. An op value of the form {\"$generate\": {\"repeat\": c, \"count\": n}} stands for a string of n copies of c. The migration case's inputs are illustrative extracts: the v1 record validates against Plans/home_workspace_layout.schema.json, editor_groups stands for the editor's own workspace state (editor_workspace_state.v1) and terminal_sections for the terminal section, workgroup, pane and session records; expected_v2 is the record SP-330's conversion produces.",
+  "notes": "Each valid record validates against the schema and passes the semantic invariants S1-S14 listed in the schema's $comment (S13 and S14 added 2026-10-10, DL-186 and DL-187). Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid record; rejected_by says whether the schema or a named semantic invariant rejects it. An op value of the form {\"$generate\": {\"repeat\": c, \"count\": n}} stands for a string of n copies of c. The migration case's inputs are illustrative extracts: the v1 record validates against Plans/home_workspace_layout.schema.json, editor_groups stands for the editor's own workspace state (editor_workspace_state.v1) and terminal_sections for the terminal section, workgroup, pane and session records; expected_v2 is the record SP-330's conversion produces.",
   "valid": [
     {
       "name": "default_home",
@@ -726,6 +726,7 @@
         "chat_column": {
           "width_px": 520,
           "history_pinned": true,
+          "keep_open": true,
           "shown": true
         },
         "named_layouts": [
@@ -2654,6 +2655,32 @@
         }
       ],
       "why": "usage is the Usage page's own board and never a dashboard board id (WS-030)."
+    },
+    {
+      "name": "named_layout_boards_names_agents",
+      "base_valid": "three_dashboards",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/named_layouts/0/boards/agents",
+          "value": null
+        }
+      ],
+      "why": "Agents is drawn by the dashboard kind and stores nothing, so a named layout never snapshots it (DL-186, lead ruling F7, SP-249)."
+    },
+    {
+      "name": "chat_keep_open_not_boolean",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/chat_column/keep_open",
+          "value": "on"
+        }
+      ],
+      "why": "Keep the chat open in narrow windows is on or off, set by ui.chat_column.keep_open (DL-187, SP-330)."
     },
     {
       "name": "debug_console_tab_names_a_session",
