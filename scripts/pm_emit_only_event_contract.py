@@ -13,7 +13,9 @@ PREEXISTING_REGISTRY_COUNT = 40
 # 3890d86c70 goal.created v3, 5fc9747b6f goal.updated v3, 1136661ddc goal.cancelled v3,
 # e686963ad5 goal_run.started v3, a3c511657f goal_run.cancelled v3, f6350caf27 goal_run.certified
 # v3. Row order and membership are unchanged. Re-freeze again only for landed, recorded changes.
-PREEXISTING_REGISTRY_ROWS_SHA256 = "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050"
+# Re-frozen 2026-10-10 (was a27cf49b...): DL-188 (D42) moves workspace.layout_changed to family revision
+# 2.0.0 (CV-361), approved by Jared; row order and membership are unchanged.
+PREEXISTING_REGISTRY_ROWS_SHA256 = "237b757a8f78e70fc77d3332f27eb51f0c4f80f2f5fbc16d5ff6792a344c49f8"
 
 
 def preexisting_registry_unchanged(manifest, registry):

@@ -79,7 +79,6 @@
           "type": "string",
           "enum": [
             "cmd.agents.open_thread",
-            "cmd.browser.focus_browser_tab",
             "cmd.browser.open_workspace_preview",
             "cmd.chat.attachment.open",
             "cmd.chat.close_thread_context_details",
@@ -400,7 +399,6 @@
               "cmd.run_debug.console.reveal",
               "cmd.search.open_result",
               "cmd.source_control.open_merge_editor",
-              "cmd.browser.focus_browser_tab",
               "cmd.chat.focus_thread_context_details",
               "cmd.run_debug.terminal.reveal",
               "cmd.terminal.focus",
@@ -595,7 +593,6 @@
               "cmd.run_debug.console.reveal",
               "cmd.search.open_result",
               "cmd.source_control.open_merge_editor",
-              "cmd.browser.focus_browser_tab",
               "cmd.chat.focus_thread_context_details",
               "cmd.run_debug.terminal.reveal",
               "cmd.terminal.focus",

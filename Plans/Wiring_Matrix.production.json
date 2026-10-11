@@ -11612,7 +11612,7 @@
       "disabled_reason_projection": "state.commands.browser_focus_browser_tab.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.browser.focus_browser_tab is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events.",
+        "description": "cmd.browser.focus_browser_tab is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events. Amended 2026-10-10 (CV-361, lead ruling): it reveals the tab that hosts the browser session wherever it is, and when that tab sits in a collapsed panel the host expands the panel through cmd.workspace_layout.set_collapsed, which records panel_expanded under its own command id.",
         "receipt_or_event_refs": [
           "cmd.browser.focus_browser_tab.dispatch_receipt"
         ]
@@ -11646,7 +11646,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.focus_browser_tab records a no-persist dispatch receipt and emits no browser/runtime domain event."
+        "Assert cmd.browser.focus_browser_tab records a dispatch receipt or route/open disposition and declares no event; a collapsed host panel expands only through cmd.workspace_layout.set_collapsed's own panel_expanded."
       ]
     },
     "catalog.browser_keep_closed": {
@@ -15257,7 +15257,9 @@
       "ui_location": "Shared Assistant > Thread Context Detail Pane > Focus",
       "ui_command_id": "cmd.chat.focus_thread_context_details",
       "handler_location": "handlers::chat::focus_thread_context_details",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
       "acceptance_checks": [
         "cmd.chat.focus_thread_context_details must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.chat.focus_thread_context_details must expose projected state selector and disabled reason before dispatch",
@@ -15271,9 +15273,10 @@
       "state_selector": "state.commands.chat_focus_thread_context_details.availability",
       "disabled_reason_projection": "state.commands.chat_focus_thread_context_details.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.focus_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. The PMConcept7 action targets the existing shared Context Detail Pane and preserves Assistant/thread/context identity across page re-seating.",
+        "effect_kind": "mixed",
+        "description": "cmd.chat.focus_thread_context_details reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.chat.focus_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. The PMConcept7 action targets the existing shared Context Detail Pane and preserves Assistant/thread/context identity across page re-seating.",
         "receipt_or_event_refs": [
+          "workspace.layout_changed",
           "cmd.chat.focus_thread_context_details.dispatch_receipt"
         ]
       },
@@ -15297,7 +15300,7 @@
         {
           "test_id": "wiring.catalog.chat_focus_thread_context_details.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.focus_thread_context_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Assert the exact effect of cmd.chat.focus_thread_context_details: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
         },
         {
           "test_id": "wiring.catalog.chat_focus_thread_context_details.accessibility",
@@ -15307,11 +15310,16 @@
         {
           "test_id": "wiring.catalog.chat_focus_thread_context_details.pm7_shared_context_pane",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Assert the action uses the existing pane/store, preserves thread/context identity across page changes, and creates no duplicate Assistant or detail drawer."
+          "requirement": "Assert the exact effect of cmd.chat.focus_thread_context_details: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
+        },
+        {
+          "test_id": "wiring.catalog.chat_focus_thread_context_details.layout_event",
+          "evidence_kind": "event_test",
+          "requirement": "Reveal through cmd.chat.focus_thread_context_details a tab whose panel is collapsed and assert exactly one workspace.layout_changed with change panel_expanded and the v2 payload; reveal it again in an expanded panel and assert no event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.focus_thread_context_details records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
+        "Assert cmd.chat.focus_thread_context_details emits exactly one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and none when it only activates, focuses or scrolls; no other event.",
         "Assert the PMConcept7 Context Detail Pane action records only its declared receipt/layout disposition and creates no duplicate pane/store or unexpected event."
       ]
     },
@@ -51242,7 +51250,9 @@
       "ui_location": "Debug & Run > the Debug Console tab > Process pane > reveal the integrated terminal's tab",
       "ui_command_id": "cmd.run_debug.terminal.reveal",
       "handler_location": "handlers::run_debug::terminal_reveal",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
       "acceptance_checks": [
         "cmd.run_debug.terminal.reveal must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.terminal.reveal availability class is session_state (session_active && console_routing == integrated_terminal) with confirmation class none; disabled reasons come only from the closed set: unsupported, session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
@@ -51253,9 +51263,10 @@
       "state_selector": "state.cmd_run_debug_terminal_reveal.enabled",
       "disabled_reason_projection": "state.cmd_run_debug_terminal_reveal.disabled_reason",
       "effect_contract": {
-        "effect_kind": "route_open",
-        "description": "cmd.run_debug.terminal.reveal focuses the Debug tab's Process pane through canonical route/open identity.",
+        "effect_kind": "mixed",
+        "description": "cmd.run_debug.terminal.reveal reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.run_debug.terminal.reveal focuses the Debug tab's Process pane through canonical route/open identity.",
         "receipt_or_event_refs": [
+          "workspace.layout_changed",
           "cmd.run_debug.terminal.reveal.route_open_receipt"
         ]
       },
@@ -51284,7 +51295,7 @@
         {
           "test_id": "wiring.catalog.run_debug_terminal_reveal.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.run_debug.terminal.reveal records route/open receipt cmd.run_debug.terminal.reveal.route_open_receipt and emits no fabricated domain event."
+          "requirement": "Assert the exact effect of cmd.run_debug.terminal.reveal: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
         },
         {
           "test_id": "wiring.catalog.run_debug_terminal_reveal.accessibility",
@@ -51298,6 +51309,7 @@
         }
       ],
       "event_test_requirements": [
+        "Assert cmd.run_debug.terminal.reveal emits exactly one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and none when it only activates, focuses or scrolls; no other event.",
         "Assert cmd.run_debug.terminal.reveal records route/open receipt cmd.run_debug.terminal.reveal.route_open_receipt and emits no fabricated domain event."
       ]
     },
@@ -59340,7 +59352,9 @@
       "ui_location": "Problems, Ports and Output > Show Terminal link, and focus routes (the terminal tab of the session, else the most recently focused terminal tab)",
       "ui_command_id": "cmd.terminal.focus",
       "handler_location": "handlers::terminal::focus",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
       "acceptance_checks": [
         "cmd.terminal.focus must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.terminal.focus must expose projected state selector and disabled reason before dispatch",
@@ -59353,9 +59367,10 @@
       "state_selector": "state.commands.terminal_focus.availability",
       "disabled_reason_projection": "state.commands.terminal_focus.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "mixed",
+        "description": "cmd.terminal.focus reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
         "receipt_or_event_refs": [
+          "workspace.layout_changed",
           "cmd.terminal.focus.dispatch_receipt"
         ]
       },
@@ -59379,16 +59394,21 @@
         {
           "test_id": "wiring.catalog.terminal_focus.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Assert the exact effect of cmd.terminal.focus: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
         },
         {
           "test_id": "wiring.catalog.terminal_focus.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.terminal_focus.layout_event",
+          "evidence_kind": "event_test",
+          "requirement": "Reveal through cmd.terminal.focus a tab whose panel is collapsed and assert exactly one workspace.layout_changed with change panel_expanded and the v2 payload; reveal it again in an expanded panel and assert no event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.terminal.focus records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.terminal.focus emits exactly one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and none when it only activates, focuses or scrolls; no other event."
       ]
     },
     "catalog.terminal_kill_session": {
@@ -59629,7 +59649,9 @@
       "ui_location": "Any surface that reveals a terminal session > the session's terminal tab, in whichever panel holds it",
       "ui_command_id": "cmd.terminal.reveal",
       "handler_location": "handlers::terminal::reveal",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
       "acceptance_checks": [
         "Reveal activates the session's terminal tab wherever it is, pulls it out of \"+N\", expands its collapsed panel and scrolls the target session into view; it never assumes a bottom panel and never starts a duplicate shell (amended 2026-10-09, UCC-201).",
         "Reveal preserves terminal workspace/session identity and focuses the existing bound session",
@@ -59641,9 +59663,10 @@
       "state_selector": "state.commands.terminal_reveal.availability",
       "disabled_reason_projection": "state.commands.terminal_reveal.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.terminal.reveal has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "mixed",
+        "description": "cmd.terminal.reveal reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.reveal has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
         "receipt_or_event_refs": [
+          "workspace.layout_changed",
           "cmd.terminal.reveal.dispatch_receipt"
         ]
       },
@@ -59667,16 +59690,21 @@
         {
           "test_id": "wiring.catalog.terminal_reveal.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.reveal has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Assert the exact effect of cmd.terminal.reveal: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
         },
         {
           "test_id": "wiring.catalog.terminal_reveal.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.terminal_reveal.layout_event",
+          "evidence_kind": "event_test",
+          "requirement": "Reveal through cmd.terminal.reveal a tab whose panel is collapsed and assert exactly one workspace.layout_changed with change panel_expanded and the v2 payload; reveal it again in an expanded panel and assert no event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.terminal.reveal records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.terminal.reveal emits exactly one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and none when it only activates, focuses or scrolls; no other event."
       ]
     },
     "catalog.terminal_show": {
@@ -59684,7 +59712,9 @@
       "ui_location": "Chat command cards and derived runtime surfaces > Show Terminal (focuses the session's terminal tab wherever it is)",
       "ui_command_id": "cmd.terminal.show",
       "handler_location": "handlers::terminal::show",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
       "acceptance_checks": [
         "cmd.terminal.show must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.terminal.show must expose projected state selector and disabled reason before dispatch",
@@ -59697,9 +59727,10 @@
       "state_selector": "state.commands.terminal_show.availability",
       "disabled_reason_projection": "state.commands.terminal_show.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.terminal.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "mixed",
+        "description": "cmd.terminal.show reveals its tab wherever it is through the one opening module (F3-634, DR-071). A reveal that expands its tab's collapsed panel emits exactly one workspace.layout_changed with change panel_expanded and its v2 payload (CV-361); a reveal that changes nothing structural emits nothing. Amended 2026-10-10 (DL-188, CV-361): the row declared no event, although expanding a collapsed panel is a structural change; it read: cmd.terminal.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
         "receipt_or_event_refs": [
+          "workspace.layout_changed",
           "cmd.terminal.show.dispatch_receipt"
         ]
       },
@@ -59723,16 +59754,21 @@
         {
           "test_id": "wiring.catalog.terminal_show.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.terminal.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Assert the exact effect of cmd.terminal.show: one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and only its receipt or route/open disposition, with no event, when it only activates, focuses or scrolls; no other event."
         },
         {
           "test_id": "wiring.catalog.terminal_show.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.terminal_show.layout_event",
+          "evidence_kind": "event_test",
+          "requirement": "Reveal through cmd.terminal.show a tab whose panel is collapsed and assert exactly one workspace.layout_changed with change panel_expanded and the v2 payload; reveal it again in an expanded panel and assert no event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.terminal.show records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.terminal.show emits exactly one workspace.layout_changed (change panel_expanded) when its reveal expands a collapsed panel, and none when it only activates, focuses or scrolls; no other event."
       ]
     },
     "catalog.terminal_terminate_session": {
