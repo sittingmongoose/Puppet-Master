@@ -321,7 +321,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
    binding meter on a narrow plate. No fill at rest, no pill (a 6 px corner on a 22 px button; square in Retro and NieR);
    the hover is an ink wash a step above the row's own hover. */
 #panel-usage .pmu-accsw { position: relative; display: inline-flex; align-items: center; gap: 3px; flex: none; height: 22px; padding: 0 4px; border: 1px solid transparent; border-radius: 6px;
-  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; line-height: 1; font-weight: 540; font-variant-numeric: tabular-nums; white-space: nowrap; cursor: pointer;
   transition: background-color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-accsw[data-own] { color: var(--pmu-ink); font-weight: 650; border-color: var(--pmu-rule-strong); }
 #panel-usage .pmu-accswi { display: inline-grid; place-items: center; flex: none; width: 10px; height: 14px; }

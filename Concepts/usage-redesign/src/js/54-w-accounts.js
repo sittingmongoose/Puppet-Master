@@ -217,7 +217,7 @@
   /* the button's width with its glyph box (10 px) and the widest value in the theme's face at its weight, 3 px between
      them and 4 px each side, so the column that holds it never re-lays when the account takes its own level or follows
      again */
-  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 12.5, 650) * 1.06 + 8 + 2); }
+  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
   /* what the buttons of a plate show, as one string (a plate whose accounts' levels changed is patched, never left stale) */
   function accSwSig(p) { return switchable(p) ? p.accounts.map(function (a) { return a.key + ':' + accSwAt(a, p) + (accSwOwn(a) ? 'o' : '') + ((a.policy || polOf(p)).auto ? '' : 'x'); }).join(',') : ''; }
   /* every switch-level button under root takes its account's state in place: the value rolls (odometer 220; NieR decodes),
