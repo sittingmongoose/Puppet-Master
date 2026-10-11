@@ -43237,15 +43237,18 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-card[data-lifte
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted] .pmu-cardtitles { margin-right: 0; transition: none; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted]::before { will-change: opacity; }
 /* the carried plate's painted frost (Glass, html[data-lg-frost="painted"]): the same lift layer, under the plate's content
-   (z-index -1 in the plate's own stacking context, set in the lift's frame), takes the colour a plate at rest shows
-   (--pmu-frost-plate: its tint over the pane, measured inside resting plates on the P1000, 2026-10-11: glass-dark
-   37 27 57, glass-light 224 228 228, the same in every Glass background) with the plate's own sheen or hero sheet
-   (inherited), so the carried plate looks as it did at rest, only the plates it passes stay behind frost instead of
-   showing through. It fades in with the lift shadow over 140 ms on the compositor and out with the drop's settle. */
+   (z-index -1 in the plate's own stacking context, set in the lift's frame), takes the colour the live glass shows on a
+   carried plate (--pmu-frost-plate: its tint over the pane with the landing's accent under it, a touch cooler than at
+   rest) with the plate's own sheen or hero sheet (inherited), so the carried plate looks as the live one does, only the
+   plates it passes stay behind frost instead of showing through. It fades in with the lift shadow over 140 ms on the
+   compositor and out with the drop's settle. Measured on the P1000 (2026-10-11, pm7-glyphs' review): the mean of an empty
+   strip of the carried plate over its landing with ?pmu-frost=0, glass-dark 38 33 64, glass-light 217 226 230, the same
+   in every Glass background. Re-measure the same way when the plate tint (--pmu-card), the landing's fill or the Glass
+   wallpaper changes, or the carried plate drifts from the live look. */
 html[data-theme^="glass"][data-lg-frost="painted"] :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card:is([data-lifted], [data-settling]):not([data-head="band"])::before {
   z-index: -1; background-color: var(--pmu-frost-plate); background-image: inherit; }
-html[data-theme="glass-dark"] { --pmu-frost-plate: rgb(37, 27, 57); }
-html[data-theme="glass-light"] { --pmu-frost-plate: rgb(224, 228, 228); }
+html[data-theme="glass-dark"] { --pmu-frost-plate: rgb(38, 33, 64); }
+html[data-theme="glass-light"] { --pmu-frost-plate: rgb(217, 226, 230); }
 /* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
    `*` part restyled the lifted card's whole subtree at pick-up and drop) */
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-lifted] { cursor: grabbing !important; }
