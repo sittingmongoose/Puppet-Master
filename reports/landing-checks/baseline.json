@@ -622,16 +622,6 @@
   },
   {
    "check": "audit-governance",
-   "count": 1,
-   "error": "workspace_event_command_producer_drift",
-   "fingerprints": [
-    "e1fce17c82b6"
-   ],
-   "path": "",
-   "subcheck": "pm7_gui_fixtures"
-  },
-  {
-   "check": "audit-governance",
    "count": 72,
    "error": "unresolved_local_ref",
    "fingerprints": [
@@ -946,6 +936,16 @@
     "271f85538f3e"
    ],
    "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm_pnc019_currentness.py",
    "subcheck": "spec_lock"
   },
   {
@@ -1415,16 +1415,6 @@
   },
   {
    "check": "run-gates",
-   "count": 1,
-   "error": "workspace_event_command_producer_drift",
-   "fingerprints": [
-    "e1fce17c82b6"
-   ],
-   "path": "",
-   "subcheck": "validate_pm7_gui_fixtures"
-  },
-  {
-   "check": "run-gates",
    "count": 50,
    "error": "unresolved_local_ref",
    "fingerprints": [
@@ -1681,6 +1671,16 @@
    ],
    "path": "scripts/pm-implementation-readiness.py",
    "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm_pnc019_currentness.py",
+   "subcheck": "verify_spec_lock"
   }
  ],
  "checks": {
@@ -1716,8 +1716,8 @@
      "sampled": 100
     },
     "pm7_gui_fixtures": {
-     "reported": 4,
-     "sampled": 4
+     "reported": 3,
+     "sampled": 3
     },
     "prd_planning_runtime_contracts": {
      "exported": 1240,
@@ -1725,8 +1725,8 @@
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 20,
-     "sampled": 20
+     "reported": 21,
+     "sampled": 21
     },
     "support_refs": {
      "reported": 1,
@@ -1784,8 +1784,8 @@
      "sampled": 50
     },
     "validate_pm7_gui_fixtures": {
-     "reported": 4,
-     "sampled": 4
+     "reported": 3,
+     "sampled": 3
     },
     "validate_prd_planning_runtime_contracts": {
      "exported": 1240,
@@ -1793,13 +1793,13 @@
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 20,
-     "sampled": 20
+     "reported": 21,
+     "sampled": 21
     }
    }
   }
  },
- "commit": "511c288368076420d4d0085e7e57835d8dcc48a4",
+ "commit": "86d0fe8b3f7896c8215afdd45036b264bfc80d0c",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -3117,8 +3117,8 @@
   }
  ],
  "max_fingerprints_per_bucket": 200,
- "recorded_at_utc": "2026-10-10T22:14:39Z",
- "run_dir": "Plans/.plan_migration/pds-20261010-007-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-11T01:40:17Z",
+ "run_dir": "Plans/.plan_migration/pds-20261010-008-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": []
 }
