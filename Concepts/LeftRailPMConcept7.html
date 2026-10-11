@@ -35082,21 +35082,39 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
 .pmw-seg-opt { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 .pmw-seg-opt small { font-size: 11px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
 
-/* ---- The chosen fill (DL-162's tab ink, the one the rail's tab strips use: Concepts/leftrail-redesign 22-tabs and
-   90-themes). One grammar for every one-of-several control in the panels: the Debug Console's sub-tabs (22-tools.js),
-   every segmented toggle (PMW.frames.seg) and the artifact's Fit / Actual size / Source (44-artifact.js).
+/* ---- The chosen fill. One grammar for every one-of-several control in the panels: the Debug Console's sub-tabs
+   (22-tools.js), every segmented toggle (PMW.frames.seg) and the artifact's Fit / Actual size / Source (44-artifact.js).
+   Its box and its one moving ink are DL-162's tab ink (the rail's tab strips: Concepts/leftrail-redesign 22-tabs and
+   31-tabs); its colour is the look's neutral selection, below.
      .pmw-ink-row  the tablist or radiogroup. --pmw-ink-y is how far the fill sits in from an option's top and bottom
                    (4 px: a 21 px fill in a 29 px header row, 24 px in a 32 px body row).
      .pmw-ink-opt  an option. Its ::after is its own fill box: the chosen fill, or the quiet hover fill. Its ::before is
                    the focus ring, 2 px round the fill box with a 1 px gap, so the ring never touches the fill.
      .pmw-ink      the one ink that carries the fill from box to box on a change (PMW.frames.ink, 27-frames.js), in the
                    look's own tab-change voice; while it travels (data-moving on the row) the boxes' own fills wait.
-   The fill: a tint of the accent with a 1 px ring of it and a small shadow in Basic and Friendly dark, the raised
-   surface with the accent's ring in their light modes, the violet liquid ink in Glass, Retro's reverse video, and
-   solid ink with paper words in NieR Mode with or without the cursor part. The chosen words take the panel tab's
-   active ink (--pmw-tab-active); a count or state word beside them goes at 90 %. A hover is the quiet hover fill on
-   the same box, never the chosen fill, so only one option ever reads as chosen. ---- */
-.pmw-ink-row { position: relative; --pmw-ink-y: 4px; }
+   The fill (the Plans canon lead's ruling of 2026-10-11) is each look's NEUTRAL selection fill, never an accent:
+   --pmw-ink-fill on the row, flat (no ring, no shadow). Basic and Friendly take the surface their chosen rows use
+   (--pmw-press: the current row of the panels' menus and lists, the DevTools tree's selected row). In their light
+   modes that surface is too faint for a 21-24 px box (1.24:1 and 1.19:1 against the row), so they take the next step
+   of the same neutral ladder, the text colour at 17 % (Basic light) and 20 % (Friendly light). Glass takes its own
+   selection surface, the frost step its editor, bottom and settings tabs and its file tree are chosen with
+   (--pm6-glass-step-3), with its 1 px glass rim (--glass-edge) along the box's top edge, drawn as the panel plate
+   draws its rim (a 1 px background layer); in Glass light that frost is too faint (1.24:1), so it takes Glass's next
+   stronger neutral surface, its near-opaque reading plate (--pm6-glass-plate). Every fill reads at least 1.3:1
+   against its row. Retro keeps its reverse video and NieR its solid ink with paper words, with or without the cursor
+   part. The chosen words take the panel tab's active ink (--pmw-tab-active); a count or state word beside them goes
+   at 90 %. A hover is a quieter step on the same box (--pmw-ink-hover: the hover tint at 55 %, about the text colour
+   at 4 %; Glass's first frost step, its second in Glass light), about half the chosen fill's step, so a hovered
+   option never reads as a second chosen one. ---- */
+.pmw-ink-row { position: relative; --pmw-ink-y: 4px; --pmw-ink-fill: var(--pmw-press); --pmw-ink-hover: color-mix(in srgb, var(--pmw-hover) 55%, transparent); }
+html[data-theme="basic-light"]:not([data-o55-nier="on"]) .pmw-ink-row { --pmw-ink-fill: color-mix(in srgb, var(--pmw-text) 17%, transparent); }
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmw-ink-row { --pmw-ink-fill: color-mix(in srgb, var(--pmw-text) 20%, transparent); }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ink-row {
+  --pmw-ink-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-step-3);
+  --pmw-ink-hover: var(--pm6-glass-step-1); }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-row {
+  --pmw-ink-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-plate, var(--pm6-glass-step-3));
+  --pmw-ink-hover: var(--pm6-glass-step-2); }
 .pmw-ink-opt { position: relative; z-index: 1; isolation: isolate; transition: color var(--pmw-t-fast) var(--pmw-ease); }
 .pmw-ink-opt::after, .pmw-ink { content: ""; position: absolute; top: var(--pmw-ink-y, 4px); bottom: var(--pmw-ink-y, 4px); border-radius: 6px; pointer-events: none; }
 .pmw-ink-opt::after { z-index: -1; left: 0; right: 0; }
@@ -35104,33 +35122,15 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
 .pmw-ink-row[data-moving] > .pmw-ink { display: block; }
 .pmw-ink-row[data-moving] > .pmw-ink-opt::after { opacity: 0; }
 .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--pmw-text); }
-.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--pmw-hover); }
+.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--pmw-ink-hover, var(--pmw-hover)); }
 .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--pmw-tab-active, var(--pmw-text)); }
 .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: inherit; opacity: .9; }
-.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, .pmw-ink {
-  background: color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 16%, var(--surface-elevated, var(--pmw-surface-2)));
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 24%, transparent); }
-/* light looks: the ink is the raised surface with the accent's ring (DL-162's light ink) */
-html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
-html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink {
-  background: var(--surface-elevated, var(--pmw-surface-2));
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 30%, transparent); }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, .pmw-ink { background: var(--pmw-ink-fill, var(--pmw-press)); }
 /* the focus ring goes round the fill box with a 1 px gap; the option draws no outline or shadow of its own (two
    classes, so the page's own button focus rules stay off it) */
 .pmw-ink-opt.pmw-ink-opt:focus-visible { outline: none; box-shadow: none; }
 .pmw-ink-opt:focus-visible::before { content: ""; position: absolute; top: calc(var(--pmw-ink-y, 4px) - 3px); bottom: calc(var(--pmw-ink-y, 4px) - 3px); left: -3px; right: -3px;
   border: 2px solid var(--pmw-focus); border-radius: 9px; pointer-events: none; }
-/* Glass: the violet liquid ink (a lit top edge inside the fill, a soft violet glow) */
-html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink {
-  background: linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%);
-  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55); }
-html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink {
-  background: linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%);
-  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35); }
-html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #fff; }
-html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #2A1848; }
 /* Retro: the chosen option is the reverse-video cell on the fill box (square, no shadow); a hover lights the name on a
    phosphor tint; it changes in one step, as Retro's tabs snap */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt::after, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:focus-visible::before,
@@ -35363,8 +35363,10 @@ html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-
 html[data-theme="friendly-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-text-3: color-mix(in srgb, var(--text-muted) 55%, var(--text-primary));
   --pmw-tab-inactive: color-mix(in srgb, var(--text-primary) 94%, var(--text-muted));
-  /* the active tab's green read 3.1:1 on its plate (and the Debug Console's chosen sub-tab, 3.2:1 on its fill) */
-  --pmw-tab-active: color-mix(in srgb, var(--accent-lime) 66%, #000);
+  /* the active tab's green read 3.1:1 on its plate (and the Debug Console's chosen sub-tab, 3.2:1 on its fill); the
+     chosen fill's neutral box (45-frames.css, the canon lead's ruling of 2026-10-11) needs it deeper again: at 66 % it
+     read 4.0:1 on that box in a header row, at 56 % 5.3:1 there and 7.7:1 on its plate */
+  --pmw-tab-active: color-mix(in srgb, var(--accent-lime) 56%, #000);
   --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue)) 62%, #000);
   --pmw-ok: color-mix(in srgb, var(--accent-lime) 62%, #000);
   --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 60%, #000);
@@ -44798,6 +44800,15 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-landing, .p
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted]::before { box-shadow: var(--pmu-plate-lift); opacity: 1; transition: opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-settling]::before { box-shadow: var(--pmu-plate-lift); opacity: 0; transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-card[data-lifted]::before { transition-timing-function: steps(2, jump-start); }
+/* the lifted plate's look changes once, in the lift's own frame (40-board.js frameMove holds it at scale 1 for that frame):
+   what the board's data-op does to every plate an idle period later (tools out, head tools and title back) the lifted plate
+   does at once, and its lift shadow is a layer of its own while it is held, so the shadow's fade runs on the compositor
+   and never hands its paint back to the plate mid-carry. A paint change once the plate is scaled re-rastered it at the
+   lift's scale (P1000, 2026-10-11: the GPU programs for every mark in it compiled on a page's first drag, 300-600 ms). */
+:is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; transition: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted] .pmu-headtools { transform: none; transition: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted] .pmu-cardtitles { margin-right: 0; transition: none; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-lifted]::before { will-change: opacity; }
 /* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
    `*` part restyled the lifted card's whole subtree at pick-up and drop) */
 :is(#panel-usage,[data-pmu-host]) .pmu-card[data-lifted] { cursor: grabbing !important; }
@@ -56718,7 +56729,11 @@ var PMU_SERIES = {
    new dash-<n> starts empty (P13). The Usage board takes none of these paths. Then (2026-10-10): the pick-up draws its
    first held frame in the threshold's own frame (beginGesture, prep, setOpFlags, the pressed plate's warm layer), a
    dashboard lights a beat's lead in its own layer and tells its kind ('beat'), and Start from and a project change
-   forget the board's size picks. */
+   forget the board's size picks. Then (2026-10-11): the lift's paint lands in one frame at scale 1 and the lifted plate
+   never repaints while scaled (frameMove, 20-board.css), the first drag's pre-warm (prewarm: the lifted plate's marks
+   drawn once at the lift's scale, invisibly, at idle), and a dashboard's committed layout revision with the Undo after
+   Start from and Reset widgets (revision, restoreWhy, restoreRevision: one cmd.widget.reset_layout with
+   restore_revision, the lead's ruling of 2026-10-11). */
 (function () {
   /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
      boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
@@ -56751,6 +56766,8 @@ var PMU_SERIES = {
     var at = function (n, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(n))); };
     return { x: at(p[0], 0, 29), y: at(p[1], 0, 4000), w: at(p[2], 1, 30), h: at(p[3], 1, 40) };
   }
+  /* a dashboard envelope's committed_revision: a whole number of 0 or more (absent in an envelope written before it: 0) */
+  function revOf(env) { var n = env ? Number(env.committed_revision) : 0; return isFinite(n) && n >= 0 ? Math.min(Math.floor(n), 1e9) : 0; }
   function cfgRefs(cfg) { return Object.keys(cfg || {}).filter(function (k) { return cfg[k] != null && cfg[k] !== ''; }).map(function (k) { return k + '=' + cfg[k]; }); }
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
 
@@ -56883,6 +56900,8 @@ var PMU_SERIES = {
     var done = function () { el.hidden = true; el._pmuHiding = null; if (a) a.cancel(); };
     if (a) { el._pmuHiding = a; a.onfinish = done; } else done();
   }
+  /* the field PMH writes on a hovered plate (opus-5.5 18-hover.js setI / setPos), cleared from a plate as it lifts */
+  var PMH_PROPS = ['--pmh-i', '--pmh-x', '--pmh-y', '--pmh-px', '--pmh-py', '--pmh-dx', '--pmh-dy'];
   function liftScale() { var f = PMU.motion.family(); return f === 'retro' || f === 'nier' ? 1 : 1.04; }
   /* the velocity tilt's limit per voice (WOW-SPEC 3.11): Basic 1deg, Glass 1.5, Friendly 2, Retro and NieR none */
   function tiltMax() { var f = PMU.motion.family(); return f === 'friendly' ? 2 : f === 'glass' ? 1.5 : f === 'retro' || f === 'nier' ? 0 : 1; }
@@ -56913,6 +56932,9 @@ var PMU_SERIES = {
      the body's pm-resizing is (RESIZING_BY: its handle; setOpFlags, opSync) and the data epoch that tells a hidden hosted
      board to refresh when it is shown again ---- */
   var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, RESIZING_BY = null, EPOCH = 0, LAYER = null, CATALOG = null, FORGET_WARNED = {};
+  /* the first drag's pre-warm (createBoard prewarm): once per look and Reduce Motion state on the page, by whichever board
+     shows first; ?pmu-prewarm=0 leaves it out (A/B measurements) */
+  var PREWARMED = {}, PREWARM_OFF = /[?&]pmu-prewarm=0(?:&|#|$)/.test(location.search);
   /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
      and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
   var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
@@ -57131,6 +57153,11 @@ var PMU_SERIES = {
     var configs = {};       /* widget id -> {range?, scope?, <option id>: value} (the records' configuration_refs) */
     var parkedFrom = {};    /* room/class/widget -> the rect a hidden panel had before it was parked under the board */
     var revisions = {};     /* widget id -> committed_revision */
+    /* a dashboard's committed layout revision (its envelope's committed_revision; the Undo after Start from, Plans WS-030
+       restore_revision, the ruling of 2026-10-11): one more for every accepted command that changes its records. undoMark:
+       the revision the last Start from or Reset widgets came from and the one it made ({ rev, at }); a restore to rev runs
+       only while the board is still at `at`. The Usage board keeps neither. */
+    var boardRev = 0, undoMark = null;
     var landing = null, outline = null;
     /* a hosted board builds and refreshes only while its host shows it (D10 3.3 show / hide); the Usage board always shows */
     var shownFlag = !hosted || bo.shown !== false, dead = false, dirty = false, sizeDirty = false, seenEpoch = EPOCH;
@@ -57144,7 +57171,12 @@ var PMU_SERIES = {
        writes, how many beats a patch carries, and the board's own light layer */
     var liveLead = null, liveLeadRect = null, liveMerged = 0, flyEl = null;
 
-    function emit(evt, detail) { (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } }); }
+    function emit(evt, detail) {
+      (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } });
+      /* every mount and build of a shown board asks for the first drag's pre-warm (it waits for an idle period and for the
+         film, the held build and any gesture to be over; once per look and Reduce Motion state on the page) */
+      if (evt === 'mount' || evt === 'built') prewarmSoon();
+    }
     function say(text) {
       if (bo.announce) { try { bo.announce(text); } catch (error) {} return; }
       if (live) { live.textContent = ''; live.textContent = text; }
@@ -57257,6 +57289,7 @@ var PMU_SERIES = {
       if (hosted) {
         startSet = typeof envelope.set_id === 'string' && envelope.set_id && envelope.set_id !== 'default' ? envelope.set_id : null; startRows = null;
         envelope.project_id = projectId;
+        boardRev = revOf(envelope);
       }
       if (loaded.fresh || !loaded.env.records || (envelope.migration_receipt && !envelope.records.length)) persist();
     }
@@ -57308,7 +57341,7 @@ var PMU_SERIES = {
       savePending = false;
       envelope.view = { room: st.room, detail: st.detail, range: st.range, scope: st.scope, more: !!st.more };
       envelope.records = recordsNow();
-      if (hosted) { if (startSet) envelope.set_id = startSet; else delete envelope.set_id; envelope.project_id = projectId; }
+      if (hosted) { if (startSet) envelope.set_id = startSet; else delete envelope.set_id; envelope.project_id = projectId; envelope.committed_revision = boardRev; }
       STORE.set(storeKey, envelope);
     }
     function persist() {
@@ -57320,6 +57353,13 @@ var PMU_SERIES = {
     }
     /* the envelope written now, not after the debounce (destroy, a tour snapshot; D10 2.4) */
     function flushNow() { ensure(); if (dead) return false; clearTimeout(saveTimer); saveTimer = 0; writeNow(); return true; }
+    /* an accepted command changed the records: the board's revision steps (a dashboard's). The preset hold's resizes settle
+       the set a Start from just placed, so they carry an open Undo's revision along with them. */
+    function committed(source) {
+      if (!hosted) return;
+      if (undoMark && undoMark.at === boardRev && source === 'preset_hold') undoMark.at = boardRev + 1;
+      boardRev++;
+    }
 
     /* ---- defaults, projection ---- */
     function nearestEdited(room, cls) {
@@ -57811,6 +57851,7 @@ var PMU_SERIES = {
     }
     function mount(room, opts) {
       ensure();
+      prewarmEnd();
       opts = opts || {};
       if (!bo.rooms) room = st.room;   /* rooms off: the board's one room */
       if (dead) return;
@@ -58150,9 +58191,10 @@ var PMU_SERIES = {
        period after prep's frame, both after the drop in the one after the release, forced there so no frame pays for
        them; PM_DRAGEND runs when pm-resizing is cleared, a frame or two after the drop, which defers the flush for the
        magnet, PM_EDGE and the observers by as long and changes nothing they read in between (the drop's settle is a
-       transform). What data-op changes waits as long: the lifted plate's tools fade, the other plates stop answering
-       hover and their handles stop taking the pointer (the gesture holds the pointer meanwhile); the resizing plate's own
-       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with one board, page-wide (RESIZING_BY),
+       transform). What data-op changes waits as long: the other plates stop answering hover and their handles stop taking
+       the pointer (the gesture holds the pointer meanwhile); the lifted plate takes data-op's look in the lift's own
+       frame (its tools out, head tools and title back: 20-board.css [data-lifted], so it never repaints once scaled) and
+       the resizing plate's own lift does not wait for it either (20-board.css). Whose pm-resizing it is stays with one board, page-wide (RESIZING_BY),
        never with the attribute: a gesture's pick-up takes it over from another board that still holds it (a pointer
        drop on one board, then a keyboard pick-up on another before the first one's idle period), and only the board
        that holds it clears it and calls PM_DRAGEND (review 2026-10-10: the first board's idle period cleared it in the
@@ -58225,14 +58267,21 @@ var PMU_SERIES = {
     function frameMove(g, force) {
       var now = performance.now();
       var dx = g.px - g.sx + (scroll.scrollLeft - g.scrollL), dy = g.py - g.sy + (scroll.scrollTop - g.scrollT);
-      /* pick-up: 140 ms (.2,.8,.2,1) to scale 1.04 and 6 px up (Retro and NieR: no scale, no lift) */
+      /* pick-up: 140 ms (.2,.8,.2,1) to scale 1.04 and 6 px up (Retro and NieR: no scale, no lift; Reduce Motion: at once).
+         The lift's own frame holds the plate at scale 1 (it follows the pointer, nothing else): every paint change of the
+         lift (its shadow, its tools, PMH's light gone) lands in that frame, while the plate's layer still rasters at scale
+         1, and the scale comes from the next frame as a compositor-only change. A paint change while the plate is scaled
+         re-rastered it at the lift's scale: on a page's first drag that compiled the GPU programs for every kind of mark in
+         the plate, 300-600 ms on the P1000 (2026-10-11), and on every later drag it cost a raster. */
+      var first = !g.liftFrame;
+      g.liftFrame = (g.liftFrame || 0) + 1;
       if (!liftEase) liftEase = PMU.motion.curve('cubic-bezier(.2,.8,.2,1)');
-      var k = reduced() ? 1 : liftEase(Math.min(1, (now - g.liftAt) / (140 * speed())));
+      var k = first ? 0 : reduced() ? 1 : liftEase(Math.min(1, (now - g.liftAt) / (140 * speed())));
       var flat = liftScale() === 1;
       var s = 1 + (liftScale() - 1) * k, ly = flat ? 0 : -6 * k;
       /* velocity tilt: rotate = clamp(vx / 1200 px/s x 1deg), easing in while the pointer moves and back to 0 over about
          160 ms when it rests (the loop runs every frame, so a resting pointer reads as vx 0) */
-      var dt = g.lastT ? now - g.lastT : 0, max = reduced() ? 0 : tiltMax();
+      var dt = g.lastT ? now - g.lastT : 0, max = first || reduced() ? 0 : tiltMax();
       if (dt > 0) {
         var vx = (g.px - (g.lastPx == null ? g.px : g.lastPx)) / dt * 1000;
         g.vx = (g.vx || 0) * 0.55 + vx * 0.45;
@@ -58303,6 +58352,7 @@ var PMU_SERIES = {
        (setOpFlags). Anything that needs them first (a new slot, a key, the release) runs prep itself, so the carry, its
        previews, peers, auto-scroll, keyboard pick-up, Escape and the drop behave as before. */
     function beginGesture(g) {
+      prewarmEnd();
       if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
       g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
       claimGesture();
@@ -58327,6 +58377,9 @@ var PMU_SERIES = {
       if (g.card._pmuSettle) { g.card._pmuSettle.cancel(); g.card._pmuSettle = null; }
       g.card.removeAttribute('data-settling');
       if (g.type === 'move') {
+        /* PMH's light leaves the plate in the lift's frame (PMH clears it a frame later, which then changes nothing here;
+           see frameMove for why nothing may change on the plate once it is scaled) */
+        PMH_PROPS.forEach(function (p) { g.card.style.removeProperty(p); });
         g.card.setAttribute('data-lifted', '');
         g.card.setAttribute('aria-grabbed', 'true');
         g.liftAt = performance.now();
@@ -58334,7 +58387,8 @@ var PMU_SERIES = {
         g.card.setAttribute('data-resizing', g.edge);
       }
       if (g.kb) {
-        if (g.type === 'move') g.card.style.transform = 'scale(' + liftScale() + ')';
+        /* the keyboard's lift scales in the frame after its paint changes, as the pointer's does (frameMove) */
+        if (g.type === 'move') requestAnimationFrame(function () { requestAnimationFrame(function () { if (gesture === g && !g.done && g.card.hasAttribute('data-lifted')) g.card.style.transform = 'scale(' + liftScale() + ')'; }); });
         say(t(g.type === 'move' ? 'board.picked' : 'board.resizing', { name: cardTitle(g.id) }));
       } else {
         g.raf = requestAnimationFrame(function () { loop(g); });
@@ -58368,6 +58422,82 @@ var PMU_SERIES = {
        layer already (their backdrop). */
     function warm(g) { g.warm = true; g.card.style.willChange = 'transform'; }
     function unwarm(g) { if (!g.warm) return; g.warm = false; g.card.style.willChange = ''; }
+    /* the first drag's pre-warm (t3-usage-pm7's recipe, measured on the P1000 2026-10-11). A page's first drag drew what
+       the GPU had never drawn: a plate in a layer of its own with its lift shadow, then (in the drop, or mid-carry before
+       frameMove kept the lifted plate from repainting) the same plate repainted at the lift's scale, which compiled the
+       programs for every kind of mark in it, 300-600 ms of GPU, plus the landing's dashed slot and a slide. So once per
+       look (and per Reduce Motion state) and page, in an idle period after a shown board's build, a copy of a plate in view
+       (its content too, with no ids, inert and hidden from assistive tech) goes through a drag at 1 % opacity inside a
+       copy of the board's class (so the board's own rules draw it): pressed (hovered, in its own layer at scale 1), lifted
+       at scale 1, scaled, repainted as the drop repaints it, and slid once, while the landing shows on that plate's slot
+       at 1 %. Under Reduce Motion it does not slide, as a Reduce Motion lift's peers do not. Nothing visible changes,
+       nothing takes focus, nothing in the board moves (the copy is absolutely placed over its plate; the landing is a grid
+       item on that plate's own slot), and nothing runs on a hidden board, without a GPU, during a gesture, a held build or
+       a film. ?pmu-prewarm=0 leaves it out. */
+    var prewarmT = 0, prewarmTries = 0, prewarmEl = null;
+    function prewarmKey() { return lookKey() + (reduced() ? ':rm' : ''); }
+    function prewarmSoon(ms) {
+      if (PREWARM_OFF || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
+      prewarmT = setTimeout(function () {
+        prewarmT = 0;
+        if (window.requestIdleCallback) requestIdleCallback(prewarm, { timeout: 2000 }); else prewarm();
+      }, (ms || 1200) * speed());
+    }
+    function prewarm() {
+      var key = prewarmKey();
+      if (dead || prewarmEl || PREWARMED[key]) return;
+      var usageOff = !hosted && !(rootEl && rootEl.closest && rootEl.closest('#panel-usage.active'));
+      var busy = !!gesture || !!ACTIVE || !current.mounted || !shownFlag || usageOff || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap || document.hidden ||
+        !boardEl || boardEl.hasAttribute('data-held') || boardEl.hasAttribute('data-film') || !current.cls || (PMU.film && PMU.film.moment && PMU.film.moment()) ||
+        softGpu() || !scroll || !scroll.clientWidth;
+      var cards = busy ? [] : cardsNow().filter(function (c) { return inView(c) && !c.hasAttribute('data-pending') && c.getAttribute('data-head') !== 'band' && c.querySelector(':scope > .pmu-cardbody > *'); });
+      var card = cards.filter(function (c) { return c.getAttribute('data-head') === 'plate'; })[0] || cards[0];
+      if (!card) { if (++prewarmTries < 12) prewarmSoon(900); return; }
+      PREWARMED[key] = true;
+      var r = rectOfCard(card), p = px(r), rm = reduced(), s = liftScale();
+      var host = prewarmEl = document.createElement('div');
+      host.className = 'pmu-board'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('data-pmu-prewarm', ''); host.setAttribute('data-pm-hover-exempt', ''); host.inert = true;
+      host.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;padding:0;margin:0;border:0;background:none;overflow:visible;pointer-events:none';
+      var copy = card.cloneNode(true);
+      ['id', 'data-widget', 'tabindex', 'role', 'aria-label', 'aria-labelledby', 'aria-describedby', 'aria-grabbed'].forEach(function (a) { copy.removeAttribute(a); });
+      Array.prototype.forEach.call(copy.querySelectorAll('[id]'), function (n) { n.removeAttribute('id'); });
+      copy.classList.remove('pmh-out', 'pmh-near', 'pmh-mv');
+      /* as a plate is pressed: hovered (PMH's light at full, its Reduce Motion form under Reduce Motion), in a layer of its
+         own at scale 1 */
+      copy.classList.add('pmh-on');
+      copy.style.setProperty('--pmh-i', '1'); copy.style.setProperty('--pmh-x', (p.w / 2) + 'px'); copy.style.setProperty('--pmh-y', '24px');
+      copy.style.position = 'absolute'; copy.style.margin = '0'; copy.style.left = p.l + 'px'; copy.style.top = p.t + 'px';
+      copy.style.width = p.w + 'px'; copy.style.height = p.h + 'px'; copy.style.opacity = '0.01'; copy.style.willChange = 'transform';
+      copy.style.transform = 'translate3d(0px,0px,0)';
+      host.appendChild(copy);
+      boardEl.appendChild(host);
+      ensurePreviews();
+      var showLanding = landing && landing.hidden && !landing._pmuHiding;
+      if (showLanding) { gridPlace(landing, r); landing.style.opacity = '0.01'; landing.hidden = false; }
+      /* then frame by frame what a drag draws: the lift's paint at scale 1 (frameMove's lift frame), the lift's scale, the
+         drop's paint at that scale (the settle repaints the plate while it is still scaled), and one peer's slide */
+      var n = 0, slide = null, lifted = 'translate3d(0px,' + (s === 1 ? 0 : -6) + 'px,0) scale(' + s + ')';
+      var step = function () {
+        if (prewarmEl !== host) return;
+        n++;
+        if (n === 1) { PMH_PROPS.forEach(function (pp) { copy.style.removeProperty(pp); }); copy.classList.remove('pmh-on'); copy.setAttribute('data-lifted', ''); }
+        else if (n === 2) copy.style.transform = lifted;
+        else if (n === 3) { copy.removeAttribute('data-lifted'); copy.setAttribute('data-settling', ''); }
+        else if (n === 4 && !rm) slide = PMU.motion.animate(copy, [{ transform: 'translate3d(8px,2px,0) scale(' + s + ')' }, { transform: lifted }], { dur: 250, ease: 'slide' });
+        else if (n >= 6) { prewarmEnd(); return; }
+        requestAnimationFrame(step);
+      };
+      prewarmEnd = function () {
+        prewarmEnd = function () {};
+        if (slide) { try { slide.cancel(); } catch (e) {} }
+        if (host.parentNode) host.parentNode.removeChild(host);
+        if (prewarmEl === host) prewarmEl = null;
+        if (showLanding && landing) { landing.style.opacity = ''; if (!landing._pmuRect) landing.hidden = true; }
+      };
+      requestAnimationFrame(step);
+    }
+    /* a gesture, a mount or a teardown that comes first ends it at once */
+    var prewarmEnd = function () {};
     function cardTitle(id) { var d = PMU.widgets.get(id) || {}; try { return typeof d.title === 'function' ? d.title({ id: id, room: current.room, state: st }) : (d.title || id); } catch (e) { return id; } }
     /* release: commit (one command) or settle / glide back */
     function endGesture(g, how, instant) {
@@ -58415,6 +58545,7 @@ var PMU_SERIES = {
       if (changed) {
         saveLayout(current.room, g.final || g.preview);
         revisions[g.id] = (revisions[g.id] || 0) + 1;
+        committed(g.source);
         persist();
         var settleMs = g.type === 'move' ? settleMove(g, instant) : morphResize(g, instant);
         /* 60 ms after the settle the displaced cards float up (250 SLIDE, 30 apart in reading order) */
@@ -58732,7 +58863,7 @@ var PMU_SERIES = {
       if (!card) {
         /* not on the board (another level): commit the layout without motion */
         var receipt = cmd(type === 'move' ? 'cmd.widget.move' : 'cmd.widget.resize', { room: current.room, widget_id: id, from: me, to: rect, board_class: current.cls.name, source: g.source }, type === 'move' ? { moved: true } : { resized: true });
-        if (receipt.dispatch_accepted !== false) { saveLayout(current.room, g.preview); revisions[id] = (revisions[id] || 0) + 1; persist(); }
+        if (receipt.dispatch_accepted !== false) { saveLayout(current.room, g.preview); revisions[id] = (revisions[id] || 0) + 1; committed(g.source); persist(); }
         return receipt;
       }
       if (gesture) endGesture(gesture, 'cancel', true);
@@ -58835,6 +58966,7 @@ var PMU_SERIES = {
       if (movedPeers.length) payload.moved_peers = movedPeers;
       var receipt = cmd(visible ? 'cmd.widget.add' : 'cmd.widget.remove', payload, { visible: !!visible });
       revisions[id] = (revisions[id] || 0) + 1;
+      if (receipt.dispatch_accepted !== false) committed();
       if (current.mounted) {
         var rects = layoutFor(room);
         if (fin && receipt.dispatch_accepted !== false) { saveLayout(room, fin); rects = fin; }
@@ -58879,6 +59011,7 @@ var PMU_SERIES = {
       var accepted = placed;
       if (receipts.some(function (rc) { return rc.dispatch_accepted === false; })) { PMU.shell.toast(t('board.rejected')); return receipts; }
       if (receipts.length) {
+        receipts.forEach(function () { committed(); });
         saveLayout(room, accepted);
         persist();
         /* Tidy (WOW-SPEC 3.13): every card glides to its first-fit place, 420 SETTLE, 16 ms apart in reading order */
@@ -58894,8 +59027,9 @@ var PMU_SERIES = {
       var receipt = cmd('cmd.widget.reset_layout', { scope: scope || 'room', room: current.room || st.room }, { reset: true });
       /* a reset the dispatch rejects changes nothing, as Start from's does (review 2026-10-10) */
       if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
-      /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4) */
-      if (hosted) { startSet = null; startRows = null; }
+      /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4); its Undo may put back
+         the revision it came from */
+      if (hosted) { startSet = null; startRows = null; var from = boardRev; committed(); undoMark = { rev: from, at: boardRev }; }
       if (scope === 'all') { st.layout = {}; st.hidden = {}; configs = {}; }
       else {
         delete st.layout[current.room]; delete st.hidden[current.room];
@@ -58915,6 +59049,7 @@ var PMU_SERIES = {
       if (!Object.keys(c).length) delete configs[id];
       var receipt = cmd('cmd.widget.configure', { room: current.room, widget_id: id, configuration_refs: cfgRefs(c), source: 'gear' }, { configured: true });
       revisions[id] = (revisions[id] || 0) + 1;
+      if (receipt.dispatch_accepted !== false) committed();
       persist();
       var card = cardOf(id); if (card) PMU.cards.update(card, 'config');
       emit('change', { op: 'config', id: id, receipt: receipt });
@@ -59197,6 +59332,7 @@ var PMU_SERIES = {
       });
       st.layout[room][cls.name] = rects.concat([rect]).map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
       revisions[id] = (revisions[id] || 0) + 1;
+      committed();
       persist();
       if (current.mounted) reconcile(layoutFor(room));
       if (bo.onShell) bo.onShell();
@@ -59246,7 +59382,7 @@ var PMU_SERIES = {
     function reread() {
       if (gesture) endGesture(gesture, 'cancel', true);
       clearTimeout(saveTimer); saveTimer = 0; savePending = false;
-      loaded = null; envelope = null; configs = {}; revisions = {}; parkedFrom = {}; widgetRoom = null;
+      loaded = null; envelope = null; configs = {}; revisions = {}; parkedFrom = {}; widgetRoom = null; undoMark = null;
       ensure();
       if (current.mounted || current.pending) mount(st.room, { instant: true });
     }
@@ -59300,6 +59436,7 @@ var PMU_SERIES = {
       var room = st.room;
       var receipt = cmd('cmd.widget.reset_layout', { scope: 'room', room: room, set_id: setId }, { reset: true });
       if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
+      var from = boardRev; committed(); undoMark = { rev: from, at: boardRev };
       startSet = setId === 'default' ? null : setId; startRows = startSet ? set.rows : null;
       st.layout[room] = {};
       CLASSES.forEach(function (c) {
@@ -59320,6 +59457,39 @@ var PMU_SERIES = {
       else if (current.mounted) mount(room, { instant: true });   /* hidden: it mounts at its show */
       if (bo.onShell) bo.onShell();
       emit('change', { op: 'start', set_id: setId, receipt: receipt });
+      return receipt;
+    }
+    /* the Undo after Start from or Reset widgets (D10 P4; Plans WS-030 and UCC restore_revision, the lead's ruling of
+       2026-10-11). restoreWhy(rev, env): why a restore to rev is refused now, or null: 'stale' unless rev is the revision
+       the last Start from or Reset came from and nothing else has been committed on the board since (its preset hold
+       aside), 'envelope' unless env is the board's envelope at that revision, 'gone' for a board that has none.
+       restoreRevision(rev, env): one cmd.widget.reset_layout { scope: 'room', room: <board id>, restore_revision: rev },
+       never with set_id; accepted, the board's records are exactly env's again (written back as they were, under this
+       project) and the board reads them; refused, nothing is dispatched and { refused: true, reason } comes back. */
+    function restoreWhy(rev, env) {
+      if (!hosted || dead) return 'gone';
+      ensure();
+      if (!undoMark || rev !== undoMark.rev || boardRev !== undoMark.at) return 'stale';
+      if (env !== undefined && (!env || typeof env !== 'object' || env.schema_id !== 'pm.usage.widget_layout.v1' || !env.view || revOf(env) !== rev)) return 'envelope';
+      return null;
+    }
+    function restoreRevision(rev, env) {
+      var why = restoreWhy(rev, env === undefined ? null : env);
+      if (why) return { refused: true, reason: why };
+      completeStream();
+      if (gesture) endGesture(gesture, 'cancel', true);
+      var receipt = cmd('cmd.widget.reset_layout', { scope: 'room', room: st.room, restore_revision: rev }, { reset: true, restored_revision: rev });
+      if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
+      var back = JSON.parse(JSON.stringify(env));
+      if (back.project_id != null && back.project_id !== projectId) back.project_id = projectId;
+      clearTimeout(saveTimer); saveTimer = 0; savePending = false;
+      STORE.set(storeKey, back);
+      /* the set's size picks and holds go with it: the records read back hold their own */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
+      if (PMU.cards && PMU.cards.forgetHeld) PMU.cards.forgetHeld(null, api);
+      reread();
+      if (bo.onShell) bo.onShell();
+      emit('change', { op: 'restore', restore_revision: rev, receipt: receipt });
       return receipt;
     }
     /* a saved preset's content (PMU.boards.presets.save): the layout at every board class (the shown widgets only), the
@@ -59347,6 +59517,7 @@ var PMU_SERIES = {
        The Usage board is never destroyed. */
     function destroy() {
       if (dead || !hosted) return false;
+      prewarmEnd(); clearTimeout(prewarmT); prewarmT = 0;
       if (gesture) endGesture(gesture, 'cancel', true);
       if (ACTIVE === inner) ACTIVE = null;
       if (savePending) { clearTimeout(saveTimer); writeNow(); }
@@ -59419,6 +59590,10 @@ var PMU_SERIES = {
       details: bo.details || null, navigate: bo.navigate || null,
       /* D10 round two: Start from (P4), the project (P5), what the live beats did here (P12) */
       sets: sets, startFrom: startFrom, setProject: setProject, project: function () { return projectId; },
+      /* the Undo after Start from (the ruling of 2026-10-11): a dashboard's committed layout revision (null on the Usage
+         board), why a restore to a revision is refused now (null: it may run), and the restore itself */
+      revision: function () { if (!hosted || dead) return null; ensure(); return boardRev; },
+      restoreWhy: function (rev, env) { return restoreWhy(rev, env); }, restoreRevision: restoreRevision,
       liveStats: function () { return { beats: liveStat.beats, patched: liveStat.patched, held: liveStat.held, pending: liveKeys ? Object.keys(liveKeys).length : 0, running: !!liveQ, last: liveStat.last }; }
     });
     Object.defineProperty(api, 'DEFAULT_SET', { get: setVersion, enumerable: true, configurable: true });
@@ -61763,11 +61938,14 @@ var PMU_SERIES = {
      widget's config, view and card lookups inside it must not fall back to the Usage board */
   C.inBoard = function (el, fn) { return PMU.boards ? PMU.boards.run(C.boardOf(el), fn) : fn(); };
   C.bk = function (id) { var b = boardNow(); return !b || b === PMU.board ? id : b.id + '|' + id; };
-  /* a page-wide pass (the settled fit, the fonts pass, the reface) visits the Usage board's live cards as before, then
-     those of every hosted board its host shows; a hidden tab's board is left alone (it refreshes on its next show) */
+  /* a page-wide pass (the settled fit, the fonts pass, the reface) visits the Usage board's live cards while the Usage
+     page shows, then those of every hosted board its host shows; a hidden board is left alone (the Usage board mounts
+     again on the way back to Usage, a hidden tab's board refreshes on its next show), so a pass while Home shows never
+     reads the hidden Usage board's bodies */
   function hostedShown() { return PMU.boards ? PMU.boards.all().filter(function (b) { return b !== PMU.board && b.shown() && b.el(); }) : []; }
+  function usageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
   function shownBodies() {
-    var list = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+    var list = usageShown() ? Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody')) : [];
     hostedShown().forEach(function (b) { list = list.concat(Array.prototype.slice.call(b.el().querySelectorAll(':scope > .pmu-card > .pmu-cardbody'))); });
     return list;
   }
@@ -164793,14 +164971,15 @@ frames.meta = function (items) {
 /* The chosen fill's one ink (45-frames.css). The chosen option's fill is its own ::after, so at rest it is always
    exactly its box, through a resize, a font load or a look change. A change moves one ink from the box it leaves to the
    box it lands on, in the voice the rail's tab strips use for the same ink (DL-162, F3-621; Concepts/leftrail-redesign
-   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides with the liquid
-   stretch; Retro's reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it
-   at once (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
+   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides in its own
+   longer settle (a plain glide: the neutral frost never stretches; the canon lead's ruling of 2026-10-11); Retro's
+   reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it at once
+   (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
    so one fill is on screen in every frame; a second change mid-way starts from where the ink is; Animation speed
    scales it. `from` is the option left, or a client rect of it kept across a rebuild; boxes on different lines (a
    wrapped row) or a row out of view change at once. */
 var INK_VOICE = { basic: { dur: 220, ease: 'cubic-bezier(.2,.8,.2,1)' }, friendly: { dur: 420, spring: true },
-  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)', liquid: true } };
+  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)' } };
 /* Friendly's spring as keyframes of progress p (0 the old box, 1 the new): past the target once, back a little, home;
    the overshoot is explicit so it never carries the ink out of the row */
 var INK_SPRING = [[0, 0, 'cubic-bezier(.3,.7,.4,1)'], [0.55, 1, 'ease-in-out', 1], [0.8, 1, 'ease-in-out', -0.3], [1, 1]];
@@ -164812,7 +164991,7 @@ frames.ink = function (row) {
     if (el.parentNode !== row) row.appendChild(el);
     return el;
   }
-  function frame(b, extra) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)' + (extra || ''), width: b.w.toFixed(2) + 'px' }; }
+  function frame(b) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)', width: b.w.toFixed(2) + 'px' }; }
   /* a box in the ink's own coordinates: the row's padding box, scrolled with the row; y is the box's middle on screen */
   function box(x) {
     var r = x.nodeType === 1 ? x.getBoundingClientRect() : x, l = row.getBoundingClientRect(), k = row.offsetWidth ? l.width / row.offsetWidth : 1;
@@ -164833,13 +165012,7 @@ frames.ink = function (row) {
     if (Math.abs(b.y - a.y) > 1.5) return;
     if (Math.abs(d) < 0.5 && Math.abs(b.w - a.w) < 0.5) return;
     var kf;
-    if (g.liquid) {
-      // the leading edge runs ahead and the box thins a little, then it lands with one soft give
-      var s = Math.min(Math.abs(d) * 0.3, Math.max(a.w, b.w) * 0.4);
-      var mid = { x: a.x + d * 0.5 - (d >= 0 ? s * 0.35 : s * 0.65), w: (a.w + b.w) / 2 + s };
-      kf = [Object.assign({ offset: 0 }, frame(a)), Object.assign({ offset: 0.4 }, frame(mid, ' scale(1, .9)')),
-        Object.assign({ offset: 0.8 }, frame({ x: b.x - 1, w: b.w + 2 }, ' scale(1, 1.03)')), Object.assign({ offset: 1 }, frame(b, ' scale(1, 1)'))];
-    } else if (g.spring) {
+    if (g.spring) {
       // the overshoot: 8 % of the trip, at most the room left beyond the target inside the row
       var room = d >= 0 ? row.scrollWidth - (b.x + b.w) : b.x;
       var over = Math.abs(d) > 0.5 ? Math.max(0, Math.min(Math.abs(d) * 0.08, room)) / Math.abs(d) : 0;
@@ -177311,6 +177484,7 @@ function heldCommit(d) {
 }
 function onBoardEvent(rec, e, d) {
   if (rec.undo && (e === 'change' || (e === 'commit' && !heldCommit(d)))) dismissUndo(rec);
+  else if (rec.undo && e === 'commit') checkUndo(rec, rec.undo);
   if (e === 'change' && d && d.op === 'project') rec.seenLabel = tabUserLabel(rec);
   if (rec.paintLeft) rec.paintLeft();
 }
@@ -177366,13 +177540,13 @@ function setView(rec, patch) {
 function resetEngine(rec) {
   var b = rec.b;
   if (!b) return null;
-  var before = snapshotBoards([rec.board]);
+  var before = snapshotBoards([rec.board]), point = undoPoint(rec, before);
   var r = b.reset('room');
   var what = dashNumber(rec.board) ? nameOf(rec) + ' is empty again.' : nameOf(rec) + ' is back to its default widgets.';
   var changed = JSON.stringify(snapshotBoards([rec.board])) !== JSON.stringify(before);
-  if (changed && rec.wrap) {
+  if (changed && rec.wrap && !(r && r.dispatch_accepted === false)) {
     rec.api.announce(what + ' Undo is available for a few seconds.');
-    showUndo(rec, what, before, 'Undo Reset widgets');
+    showUndo(rec, what, point, 'Undo Reset widgets');
   } else {
     rec.api.announce(what);
     if (PMW.toast) PMW.toast(what);
@@ -177384,7 +177558,8 @@ function resetEngine(rec) {
 /* ---- Start from (P4): the sets a dashboard can start from (board.sets()), grouped: this dashboard's own default set,
    the dashboard starter, the 13 Usage rooms in room order, the user's saved presets. The set the widgets started from
    is checked. A pick is one cmd.widget.reset_layout with set_id (board.startFrom), and it replaces the widgets, so the
-   board is snapshotted first (the kind's snapshot path) and an Undo notice puts it back. ---- */
+   board's committed revision and its envelope at that revision are kept first (undoPoint) and an Undo notice puts them
+   back. ---- */
 var SET_GROUPS = [['default', 'This dashboard'], ['host', 'Dashboard starter'], ['room', 'Usage rooms'], ['user', 'Your presets']];
 function setsOf(rec) { try { return (rec.b && rec.b.sets()) || []; } catch (err) { logError('dashboard sets failed', err); return []; } }
 /* the second line: the engine's detail without the words the group's heading already says ("Usage room · 6 widgets"
@@ -177444,7 +177619,7 @@ function startedText(rec, s) {
 function startFrom(rec, s) {
   var b = rec.b;
   if (!b || !s) return null;
-  var before = snapshotBoards([rec.board]), r = null;
+  var point = undoPoint(rec, snapshotBoards([rec.board])), r = null;
   try { r = b.startFrom(s.id); } catch (err) { logError('dashboard start from failed', err); }
   if (!r) {
     // refused: a set that is gone (a preset deleted meanwhile) or a board that is gone
@@ -177456,27 +177631,42 @@ function startFrom(rec, s) {
   if (r.dispatch_accepted === false) return r;   // the engine says why in its own notice and leaves the board as it was
   var text = startedText(rec, s);
   rec.api.announce(text + ' Undo is available for a few seconds.');
-  showUndo(rec, text, before);
+  showUndo(rec, text, point);
   rec.paintLeft();
   return r;
+}
+/* what an Undo puts back (Plans WS-030 and UCC restore_revision, the lead's ruling of 2026-10-11): the board's committed
+   layout revision just before the change, and its envelope at that revision (snapshotBoards flushed the board, so the
+   two agree). The engine restores exactly that through one cmd.widget.reset_layout with restore_revision, never with
+   set_id (board.restoreRevision). */
+function undoPoint(rec, snap) {
+  var rev = null;
+  try { rev = rec.b && rec.b.revision ? rec.b.revision() : null; } catch (err) { logError('dashboard revision failed', err); }
+  return rev == null || !snap ? null : { rev: rev, env: snap[rec.board] || null };
 }
 
 /* ---- the Undo notice: one plate at the foot of the tab, in the package's popover look, for 8 s (held while the pointer
    or focus is on it); a change to the widgets ends it. It sits right after the header row in the reading order, so
-   Tab reaches Undo next. ---- */
+   Tab reaches Undo next. Undo is offered only while the notice is up; once the board's revision is no longer the one
+   the change made (something was committed since that did not end the notice), Undo is disabled and says why. ---- */
 var UNDO_MS = 8000;
-function showUndo(rec, text, snap, groupLabel) {
+var UNDO_WHY = {
+  stale: 'The widgets changed after this, so Undo can no longer put them back.',
+  envelope: 'What was there before is no longer known, so Undo cannot put it back.',
+  gone: 'This dashboard is not open now, so Undo cannot put it back.'
+};
+function showUndo(rec, text, point, groupLabel) {
   dismissUndo(rec, { instant: true });
-  if (!snap || !rec.wrap) return;
+  if (!point || !rec.wrap) return;
   var btn = h('button', { type: 'button', class: 'pmw-dash-undo-btn', 'data-pmh': 'icon', 'data-pm-hover-label': 'Undo',
     'data-pm-hover-detail': 'Put the widgets back as they were' }, [PMW.icon('reopen', { size: 14 }), h('span', { text: 'Undo' })]);
   var el = h('div', { class: 'pmw-dash-undo pmw-pop', role: 'group', 'aria-label': groupLabel || 'Undo Start from', 'data-pmh': 'off' }, [
     h('span', { class: 'pmw-dash-undo-t', text: text }), btn]);
-  var u = rec.undo = { el: el, snap: snap, timer: 0, held: false };
+  var u = rec.undo = { el: el, btn: btn, point: point, timer: 0, held: false, off: null };
   function arm(ms) { clearTimeout(u.timer); u.timer = setTimeout(function () { if (!u.held && rec.undo === u) dismissUndo(rec); }, ms); }
-  el.addEventListener('pointerenter', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('pointerenter', function () { u.held = true; clearTimeout(u.timer); checkUndo(rec, u); });
   el.addEventListener('pointerleave', function () { u.held = el.contains(doc.activeElement); if (!u.held) arm(3000); });
-  el.addEventListener('focusin', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('focusin', function () { u.held = true; clearTimeout(u.timer); checkUndo(rec, u); });
   el.addEventListener('focusout', function (e) { if (el.contains(e.relatedTarget)) return; u.held = el.matches(':hover'); if (!u.held) arm(3000); });
   el.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
@@ -177502,11 +177692,36 @@ function dismissUndo(rec, o) {
   var a = PMW.motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 160, easing: 'linear', fill: 'forwards' });
   if (a) a.onfinish = function () { el.remove(); }; else el.remove();
 }
+/* the engine's word on the Undo now: null while it may run, else why not (board.restoreWhy) */
+function undoWhy(rec, u) {
+  var b = rec.b;
+  if (!b || !b.restoreWhy) return 'gone';
+  try { return b.restoreWhy(u.point.rev, u.point.env); } catch (err) { logError('dashboard undo check failed', err); return 'gone'; }
+}
+/* a refused Undo stays in the notice, disabled, and the notice says why (the button keeps focus, so the reason is read) */
+function checkUndo(rec, u) {
+  if (!u || rec.undo !== u || u.off) return !!(u && u.off);
+  var why = undoWhy(rec, u);
+  if (!why) return false;
+  var text = UNDO_WHY[why] || UNDO_WHY.stale, t = u.el.querySelector('.pmw-dash-undo-t');
+  u.off = text;
+  u.btn.setAttribute('aria-disabled', 'true');
+  u.btn.setAttribute('data-disabled-reason', text);
+  u.btn.setAttribute('data-pm-hover-detail', text);
+  u.btn.style.opacity = '.5'; u.btn.style.cursor = 'default';
+  if (t) { t.textContent = text; t.title = text; }
+  rec.api.announce(text);
+  return true;
+}
 function undoStart(rec, u) {
   if (rec.undo !== u) return;
-  var snap = u.snap;
+  if (!u.off) checkUndo(rec, u);
+  if (u.off) { if (PMW.toast) PMW.toast(u.off); return; }
+  var b = rec.b, p = u.point, r = null;
   dismissUndo(rec, { instant: true });
-  if (!restoreBoards(snap)) return;
+  try { r = b.restoreRevision(p.rev, p.env); } catch (err) { logError('dashboard undo failed', err); }
+  // refused or rejected: the engine changed nothing (a rejection says so in its own notice)
+  if (!r || r.refused || r.dispatch_accepted === false) { if (r && r.refused) rec.api.announce(UNDO_WHY[r.reason] || UNDO_WHY.stale); return; }
   var t = nameOf(rec) + ' is back as it was.';
   rec.api.announce(t);
   rec.paintLeft();
