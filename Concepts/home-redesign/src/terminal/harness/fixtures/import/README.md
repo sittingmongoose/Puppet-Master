@@ -27,6 +27,11 @@ Dark: background `#002b36`, foreground `#839496`, cursor `#93a1a1`, cursor text 
 
 ## Files
 
+Two `.json` fixtures are meant not to parse as strict JSON (`settings.json` starts with a BOM and carries comments,
+`malformed-bad.json` is missing its brace). They are stored as `settings.json.in` and `malformed-bad.json.in` so the
+repository's JSON syntax check (`scripts/pm-plans-verify.py json-syntax`) does not read them, and `import.test.mjs`
+reads each one under its name without the `.in`.
+
 | File | Format | What it covers |
 | --- | --- | --- |
 | `solarized-dark.itermcolors` | iTerm2 | sRGB colour space, alpha 1, unknown keys (`Link Color`, `<true/>`), XML comment |

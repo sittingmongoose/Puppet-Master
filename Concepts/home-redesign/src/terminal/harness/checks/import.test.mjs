@@ -10,6 +10,9 @@ new Function('window', 'T', '"use strict";' + src)({}, T);
 const SI = T.SchemeImport;
 const FIX = path.join(here, '..', 'fixtures', 'import');
 const expected = JSON.parse(fs.readFileSync(path.join(FIX, 'expected.json'), 'utf8'));
+/* a fixture stored as <name>.in is read and parsed as <name>: the .json files that must not parse (malformed-bad.json,
+   the BOM in settings.json) are kept so, out of the repository's JSON syntax check (fixtures/import/README.md) */
+const stored = f => (fs.existsSync(path.join(FIX, f + '.in')) ? f + '.in' : f);
 
 let passed = 0;
 function test(name, fn) {
@@ -30,14 +33,14 @@ test('api shape', () => {
 
 /* every fixture is listed, and every listed fixture exists */
 test('fixture list', () => {
-  const files = fs.readdirSync(FIX).filter(f => f !== 'expected.json' && f !== 'README.md').sort();
+  const files = fs.readdirSync(FIX).filter(f => f !== 'expected.json' && f !== 'README.md').map(f => f.replace(/\.in$/, '')).sort();
   assert.deepEqual(files, Object.keys(expected).sort());
 });
 
 /* every fixture against its hand-written expectation */
 for (const [file, exp] of Object.entries(expected)) {
   test(file, () => {
-    const text = fs.readFileSync(path.join(FIX, file), 'utf8');
+    const text = fs.readFileSync(path.join(FIX, stored(file)), 'utf8');
     const r = SI.parse(text, file);
     if (!exp.ok) {
       assert.equal(r.ok, false, file + ' should fail');
@@ -67,7 +70,7 @@ for (const [file, exp] of Object.entries(expected)) {
 
 /* detection by content wins over a misleading or missing file name */
 test('detect without names', () => {
-  const read = f => fs.readFileSync(path.join(FIX, f), 'utf8');
+  const read = f => fs.readFileSync(path.join(FIX, stored(f)), 'utf8');
   assert.equal(SI.detect(read('solarized-dark.conf'), 'theme.txt'), 'kitty');
   assert.equal(SI.detect(read('ghostty-solarized-dark'), 'x.conf'), 'ghostty');
   assert.equal(SI.detect(read('solarized-dark.itermcolors')), 'iterm2');
