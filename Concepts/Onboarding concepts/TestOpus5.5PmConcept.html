@@ -42660,6 +42660,41 @@ SVG.toolGear = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 SVG.toolSize = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1-2.5 2.5h-12a2.5 2.5 0 0 1-2.5-2.5v-12a2.5 2.5 0 0 1 2.5-2.5zM13 17h4v-4M11 7H7v4"/></svg>';
 SVG.kebab = SVG.dots;
 
+/* The neon glyph set draws first (pm7-glyphs D44, rollout USAGE step 1; the left rail's 00-core.js is the worked
+   example). NEON maps each PM7 name to its glyph (the lead's table; it wins over map.json where they differ: list
+   is the list, resize and size the resize). PMU.icon asks window.PMG first and keeps the SVG table only as the
+   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, tidy, the brand marks and every name
+   the table does not list). SIZE is the static render size per icon class (never measured: PMU.icon runs on every
+   live-beat re-render): pmu-glyph and pmu-lglyph 14 (40-widgets.css), pmu-vs-glyph 13 (30-charts.css .pmu-vs .pmu-ico),
+   pmu-kpiarrow 12 (30-charts.css .pmu-kpidelta .pmu-ico), default 16. The card-head tools (toolGrip, toolSize, toolGear,
+   toolKebab) draw flat at 14 through PMG.flat: one path, no halo, ink-only hover (PERF-3); the kebab is the set's
+   more (horizontal dots, like every other menu). The neon svg string is cached per (glyph, size, role); no box size
+   changes (every svg keeps the CSS box it already had). */
+var NEON = {
+  refresh: 'refresh', 'export': 'outbox', chevron: 'chevron-down', chevronDown: 'chevron-down', chevronRight: 'chevron-right',
+  chevronLeft: 'chevron-left', close: 'close', gear: 'settings', toolGear: 'settings', checkCircle: 'check-circle',
+  alert: 'st-warning', hourglass: 'hourglass', key: 'key', lock: 'lock', link: 'link', arrowUp: 'arrow-up',
+  arrowDown: 'arrow-down', coin: 'coin', info: 'info', plus: 'plus', minus: 'minus', resize: 'resize', toolSize: 'resize',
+  size: 'resize', eye: 'eye', eyeOff: 'eye-off', search: 'search', clock: 'clock', clockCircle: 'clock', file: 'page',
+  user: 'user', briefcase: 'briefcase', pencil: 'edit', grip: 'grip', drag: 'grip', toolGrip: 'grip', kebab: 'more',
+  dots: 'more', toolKebab: 'more', grid: 'grid', list: 'list', wallet: 'wallet', gauge: 'gauge', pulse: 'pulse',
+  spark: 'sparkles', book: 'notebook'
+};
+var NEON_ROLE = {
+  refresh: 'control', 'export': 'concept', chevron: 'control', chevronDown: 'control', chevronRight: 'control',
+  chevronLeft: 'control', close: 'control', gear: 'control', toolGear: 'control', checkCircle: 'concept',
+  alert: 'concept', hourglass: 'concept', key: 'concept', lock: 'concept', link: 'control', arrowUp: 'control',
+  arrowDown: 'control', coin: 'concept', info: 'concept', plus: 'control', minus: 'control', resize: 'control',
+  toolSize: 'control', size: 'control', eye: 'concept', eyeOff: 'control', search: 'concept', clock: 'concept',
+  clockCircle: 'concept', file: 'concept', user: 'concept', briefcase: 'concept', pencil: 'control', grip: 'control',
+  drag: 'control', toolGrip: 'control', kebab: 'control', dots: 'control', toolKebab: 'control', grid: 'concept',
+  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept'
+};
+var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kpiarrow': 12 };
+var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
+var ICON_CACHE = Object.create(null);
+function roleFor(name) { return NEON_ROLE[name] || 'concept'; }
+
 var PMU = window.PMU = {
   version: 'pmu-b2-2026-10-02b',
   core: {
@@ -42667,8 +42702,21 @@ var PMU = window.PMU = {
     command: command, completeCommandReceipt: completeCommandReceipt, usageEvent: usageEvent, viewAction: viewAction
   },
   icons: SVG,
+  neonMap: NEON,
+  neonRole: NEON_ROLE,
   icon: function (name, cls) {
-    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + (SVG[name] || SVG.grid) + '</span>';
+    var G = window.PMG, g = (name && NEON[name]) || name, svg = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), size = flat ? 14 : NEON_SIZE[cls] || 16;
+      var key = (flat ? 'f|' : 'i|') + g + '|' + size + '|' + role;
+      svg = ICON_CACHE[key];
+      if (!svg) {
+        try { svg = flat ? G.flat(g, 14, 'nx-r-control') : G.icon(g, size, 'nx-r-' + role); } catch (error) { svg = ''; }
+        if (svg) ICON_CACHE[key] = svg;
+      }
+    }
+    if (!svg) svg = SVG[name] || SVG.grid;
+    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + svg + '</span>';
   }
 };
 
@@ -43516,7 +43564,38 @@ var PMU_SERIES = {
     }
   };
 
+  /* The state word -> status key table (pm7-glyphs D44, rollout USAGE step 2; the left rail's 00-d.js KEY and
+     STATE_WORDS are the worked example). Ordered [regex, key]: the first match wins. The resolutions are the spec's
+     parenthetical (it wins where status.json's per-key usage lists differ: signed out is offline, not warning; needs a
+     seat is off, not waiting); active/on -> working and unknown -> pending come from status.json itself. Short words
+     match whole words only (low, live, on), so a sentence that merely contains the letters never matches. It maps
+     words only and changes no copy. PMU.stateMark(word, size) is PMG.calm(key, size) (lit and still from the first
+     frame: no rhythm and no mount act; Reduce Motion is instant and only Live beats move) or '' when the word names no
+     key or PMG is missing; callers keep the old glyph as the fallback. */
+  var STATE_WORDS = [
+    [/exhausted/i, 'failed'],
+    [/cooldown/i, 'recovering'],
+    [/standby|paused/i, 'paused'],
+    [/signed[\s-]?out|unavailable/i, 'offline'],
+    [/needs[\s-]?a[\s-]?seat|needs[\s-]?seat/i, 'off'],
+    [/degraded|\blow\b/i, 'warning'],
+    [/\bactive\b|\blive\b|\bon\b/i, 'working'],
+    [/unknown/i, 'pending']
+  ];
+  function stateKey(word) {
+    var w = String(word || ''), i;
+    for (i = 0; i < STATE_WORDS.length; i++) if (STATE_WORDS[i][0].test(w)) return STATE_WORDS[i][1];
+    return null;
+  }
+  function stateMark(word, size) {
+    var G = window.PMG, key = stateKey(word);
+    if (!key || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(key)) return '';
+    try { return G.calm(key, size || 14); } catch (error) { return ''; }
+  }
+
   PMU.fmt = fmt;
+  PMU.stateKey = stateKey;
+  PMU.stateMark = stateMark;
   PMU.vs = vs;
   PMU.MARKS = MARKS;
   PMU.markOf = markOf;
@@ -57675,7 +57754,7 @@ var PMU_SERIES = {
     var rows = shown.map(function (a) {
       var hidden = !n || allHiddenP(a);
       var amountsLine = a.amounts.length && !hidden ? '<span class="pmu-amounts">' + esc(a.amounts[0].label) + ' <b>' + esc(a.amounts[0].value || a.amounts[0].word) + '</b>' + (a.amounts[0].suffix ? ' ' + esc(a.amounts[0].suffix) : '') + '</span>' : '';
-      var ident = '<span class="pmu-accid"' + identHover(p, a) + '><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
+      var ident = '<span class="pmu-accid"' + identHover(p, a) + '><span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span>' +
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         '<span class="pmu-identmeta">' + metaHtml(a) + '</span>' + amountsLine + '</span></span>';
       var cells;
@@ -57697,7 +57776,7 @@ var PMU_SERIES = {
       var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
       return '<div class="pmu-row pmu-accrow pmu-planline' + (lineOne(a) ? '' : ' is-two') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
         ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + C.hover(p.name + ' · ' + a.nickname + (a.effective ? ' · Active' : ''), foldLine(a) + ' · ' + (a.fresh ? a.fresh.source + ' · ' : '') + C.sampledText(a.sampledAt) + ' · select for Details') + '>' +
-        '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + nameCls(a) + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
+        '<span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + nameCls(a) + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         '<i class="pmu-dot"> · </i>' + stateHtmlP(a) + '</span><span class="pmu-plvals">' + right + '</span></div>';
     }).join('');
     var foldItems = folded.map(foldLine);
@@ -57905,7 +57984,7 @@ var PMU_SERIES = {
         : cap.value != null ? C.valHtml(cap.value, 'int', 'pmu-freecap', ctx.id + ':cap').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') + '<span class="pmu-freecapu">' + esc(cap.unit) + '</span>'
         : '<b class="pmu-freecap"><span class="pmu-num">' + esc(cap.text) + '</span></b><span class="pmu-freecapu">' + esc(cap.unit) + '</span>';
       var head = '<div class="pmu-freehero' + (ringPx ? '' : ' no-ring') + '">' + (ringPx ? '<div class="pmu-freering" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' : '') +
-        '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + C.glyph(m.stateGlyph) + esc(m.state) + '</span>' +
+        '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + (PMU.stateMark(m.state, 14) || C.glyph(m.stateGlyph)) + esc(m.state) + '</span>' +
         '<span class="pmu-freecapline"' + C.hover('Capacity', m.capacitySource) + '>' + capHtml + '</span>' +
         (provBelow ? '' : '<span class="pmu-freeprov">' + esc(m.provider) + '</span>') + '</div></div>' +
         (provBelow ? '<span class="pmu-freeprov is-below">' + esc(m.provider) + '</span>' : '');
@@ -58495,7 +58574,10 @@ var PMU_SERIES = {
   /* ------------------------------------------------------------------ pieces */
   function stateHtml(a, opts) {
     opts = opts || {};
-    return '<span class="pmu-acstate" data-state="' + a.shownState + '" data-tone="' + a.stateTone + '">' + (opts.glyph !== false && a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '<b>' + esc(a.stateWord) + '</b></span>';
+    /* pm7-glyphs D44: the state mark is PMG.calm beside the state word (the old glyph only when the word names no key
+       or PMG is missing) */
+    var mark = opts.glyph !== false ? (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) : '';
+    return '<span class="pmu-acstate" data-state="' + a.shownState + '" data-tone="' + a.stateTone + '">' + mark + '<b>' + esc(a.stateWord) + '</b></span>';
   }
   function metaLine(a, parts) {
     var bits = [stateHtml(a, { glyph: false })];
@@ -58978,7 +59060,7 @@ var PMU_SERIES = {
       var line1 = stateInAct ? (a.plan ? esc(a.plan) : '') : longState ? metaLine(a, []) : metaLine(a, ['plan']);
       var line2 = [!stateInAct && longState && a.plan ? esc(a.plan) : '', a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>');
       var amountsLine = a.amounts.length && !hidden && n ? '<span class="pmu-amounts">' + a.amounts.slice(0, 1).map(function (x) { return esc(x.label) + ' <b>' + esc(x.value || x.word) + '</b>' + (x.suffix ? ' ' + esc(x.suffix) : ''); }).join('') + '</span>' : '';
-      var ident = '<span class="pmu-accid"><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
+      var ident = '<span class="pmu-accid"><span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span>' +
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         (comfy ? (line1 ? '<span class="pmu-identmeta">' + line1 + '</span>' : '') + '<span class="pmu-identmeta is-2">' + line2 + '</span>' + amountsLine
           : '<span class="pmu-identmeta">' + (stateInAct ? esc(a.plan || '') : stateHtml(a, { glyph: false })) + '</span>') + '</span></span>';
@@ -58995,7 +59077,12 @@ var PMU_SERIES = {
       return '<div class="pmu-row pmu-accrow' + (comfy ? ' is-comfy' : ' is-compact') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '" data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' +
         ' style="grid-template-columns:' + tmpl + '"' + C.hover(a.nickname, a.identity + (a.routeRole ? ' · ' + a.routeRole : '') + ' · priority ' + a.priority) + '>' + parts + '</div>';
     }).join('');
-    var foot = footLines.slice(0, footCap).map(function (l) { return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + C.glyph(l.glyph) + '<span>' + l.html + '</span></span>'; }).join('');
+    /* pm7-glyphs D44: only the alert footline takes a calm mark (its sentence names the state, e.g. Usage
+       exhausted); info and refresh footlines keep C.glyph */
+    var foot = footLines.slice(0, footCap).map(function (l) {
+      var fm = l.glyph === 'alert' ? PMU.stateMark(String(l.html).replace(/<[^>]+>/g, ' '), 14) : '';
+      return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + (fm || C.glyph(l.glyph)) + '<span>' + l.html + '</span></span>';
+    }).join('');
     /* the accounts and foot notes the plate has no room for are listed in the "N more" line's hover tag, or the plate's
        (CONTENT-3) */
     var accFold = p.accounts.slice(shown.length).map(function (a) { return a.nickname + ' · ' + a.stateWord + (a.binding && a.binding.pct !== null ? ' · ' + a.binding.short + ' ' + C.fmt(a.binding.pct, 'pct') + ' used' : ''); })
