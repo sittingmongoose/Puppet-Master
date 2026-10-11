@@ -17,11 +17,11 @@ per state everywhere.
 
 1. `src/concepts/d/00-d.js`: add `KEY = { ok: 'complete', fail: 'failed', warn: 'warning', blocked: 'blocked',
    info: 'info', conflict: 'change-conflict', live: 'working', run: 'working', idle: 'idle', pending: 'pending',
-   unknown: 'pending', stale: 'skipped', orphan: 'skipped', dirty: 'change-modified', stash: 'archive',
+   unknown: 'pending', stale: 'skipped', orphan: 'skipped', dirty: 'change-modified', stash: 'stash',
    current: 'ring-dot' }` (Concepts/glyph-system/opus-5.5/src/registry/families/rail.js holds the reasons). `svgFor(st)`
    returns, when `window.PMG` exists and `KEY[st]` is a status key, the svg from `PMG.status(KEY[st], 12, cls)` (strip
    the `<span class="nx-st">` wrapper only if `.d-gl` must stay the host; better: let `.d-gl` hold the whole wrapper),
-   with `cls = ''` for `live`, `run` and `pending` (they move: the bead orbits, at the set's slow 9 s) and
+   with `cls = ''` for `live` and `run` (they move: the bead orbits, at the set's slow 9 s) and
    `cls = 'nx-still'` for every other state (lit, one mount act, no loop: a rail full of passed tests must not pulse).
    `stash` and `current` are concepts: `PMG.icon(KEY[st], 12, 'nx-r-concept')`. Keep `data-gl` and `data-d-st` on the
    span (the rail's tests and copy read them).
