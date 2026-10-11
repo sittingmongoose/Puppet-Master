@@ -209,8 +209,11 @@
       lastLit = hit;
       if (hit) hit.setAttribute('data-lg-lit', '');
     }
-    if (hit) setXY(hit, x, y);
-    [band, side].forEach(function (p) { if (p && p.isConnected) setXY(p, x, y); });
+    /* on the CPU path only the controls and the lens follow the pointer: re-lighting the band, the sidebar or a whole
+       card on every move repaints large areas, which the CPU cannot afford (tools/frametime.mjs) */
+    var cpu = root.getAttribute('data-lg-tier') === 'cpu';
+    if (hit && !(cpu && (hit.classList.contains('pmu-card') || hit.id === 'chatPanel'))) setXY(hit, x, y);
+    if (!cpu) [band, side].forEach(function (p) { if (p && p.isConnected) setXY(p, x, y); });
     lenses.forEach(function (L, strip) { if (L.rect && strip.contains(t)) setXY(L.lens, x, y); else { L.lens.style.removeProperty('--lg-mx'); L.lens.style.removeProperty('--lg-my'); } });
   }
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQueued) { ptrQueued = true; requestAnimationFrame(onPtr); } }, { passive: true });

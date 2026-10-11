@@ -58,7 +58,7 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
   --lg-step2: rgba(20, 24, 36, .52);
   --lg-step2-dense: rgba(17, 20, 30, .68);
   --lg-step3: rgba(255, 255, 255, .13);
-  --lg-plate: rgba(16, 19, 29, .93);
+  --lg-plate: rgba(16, 19, 29, .97);
   --lg-plate-head: rgba(18, 21, 32, .62);
   --lg-field: rgba(0, 0, 0, .26);
   --lg-hover: rgba(255, 255, 255, .065);
@@ -132,7 +132,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
   --lg-step2: rgba(255, 255, 255, .56);
   --lg-step2-dense: rgba(255, 255, 255, .70);
   --lg-step3: rgba(255, 255, 255, .90);
-  --lg-plate: rgba(251, 252, 255, .95);
+  --lg-plate: rgba(251, 252, 255, .985);
   --lg-plate-head: rgba(255, 255, 255, .62);
   --lg-field: rgba(255, 255, 255, .62);
   --lg-hover: rgba(18, 21, 28, .05);
@@ -574,6 +574,33 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep > i {
   position: absolute; top: -20%; bottom: -20%; left: 0; width: 34%;
   background: linear-gradient(100deg, transparent, var(--lg-spec-soft) 42%, var(--lg-spec-soft) 58%, transparent);
   transform: translateX(-120%) skewX(-12deg); opacity: 0;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   7b. The CPU path costs what today's Glass costs (tools/frametime.mjs on Nas1: today 0.198 of frames over 20 ms; this
+       path measured 0.191 in dark, from 0.736 before these rules). Same look in a still frame; four things change:
+       the big surfaces keep their light but no longer repaint under the pointer (controls and the lens still catch
+       it), the scroll edges stop dissolving (a mask is a render surface on the CPU), the card edge ring becomes two
+       inset shadows (light along the top and left, the return along the bottom and right), and the frost is painted
+       on the page itself instead of on its own full-window layer.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) #lg-band { background: linear-gradient(180deg, var(--lg-step2-dense), var(--lg-step2)); }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) #lg-sidebar {
+  background: linear-gradient(90deg, var(--lg-step1), var(--lg-step1) var(--lg-ab-w, 52px), transparent var(--lg-ab-w, 52px)), linear-gradient(180deg, var(--lg-step1), var(--lg-step1));
+}
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) .pmu-card { background: linear-gradient(180deg, var(--lg-step2), var(--lg-step2-dense)) !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) :is(#pmuScroll, #sidePanelSlot .sh-scroll) { -webkit-mask-image: none; mask-image: none; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) .lg-rim { display: none; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) .pmu-card,
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) .pmu-card[data-lg-lit] { box-shadow: inset 1px 1px 0 var(--lg-edge-a), inset -1px -1px 0 var(--lg-edge-c), var(--lg-rim-m) !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) #chatPanel { box-shadow: inset 1px 1px 0 var(--lg-edge-a), inset -1px -1px 0 var(--lg-edge-c), var(--lg-rim-l) !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) :is(#lg-paint, #lg-slab, #glass-bg) { display: none !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="cpu"]:not(#lgz) body {
+  background: linear-gradient(165deg,
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--lg-k1))),
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--lg-k2))) 40%,
+      rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--lg-k3)))),
+    var(--lg-frost) center / cover no-repeat, var(--background) !important;
 }
 
 /* ---------------------------------------------------------------------------------------------------------------
