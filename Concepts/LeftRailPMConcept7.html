@@ -50664,12 +50664,14 @@ var PMU = window.PMU = {
   },
   /* The bare svg for the raw-SVG call sites (rollout USAGE step 6: the card-head tools, the menu's icons, the [data-icon]
      fill): the same NEON lookup and cache as PMU.icon with no wrapper, so `.pmu-iconbtn > svg` and its siblings still
-     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat. '' when neither
-     PMG nor the SVG table has the name, so each caller keeps its own fallback. */
-  svg: function (name, size) {
+     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat; role overrides
+     the name's own (a menu's chosen-row check is a control: the row's ink, no concept bloom). '' when neither PMG nor
+     the SVG table has the name, so each caller keeps its own fallback. */
+  svg: function (name, size, role) {
     var G = window.PMG, g = name ? NEON[name] : '', out = '';
     if (g && G && typeof G.has === 'function' && G.has(g)) {
-      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), s = size || (flat ? 14 : 16);
+      var flat = !!NEON_FLAT[name], s = size || (flat ? 14 : 16);
+      role = flat ? 'control' : role || roleFor(name);
       var key = (flat ? 'f|' : 'i|') + g + '|' + s + '|' + role;
       out = ICON_CACHE[key];
       if (!out) {
@@ -64021,7 +64023,7 @@ var PMU_SERIES = {
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
   /* the neon glyph at the size this menu's CSS gives the svg (15-menu.css: 14 in rows, the back and the search, 16 on the
      rail), through PMU.svg; the SVG table without PMG */
-  function icon(name, size) { return PMU.svg ? PMU.svg(name, size || 14) : (SVG[name] || ''); }
+  function icon(name, size, role) { return PMU.svg ? PMU.svg(name, size || 14, role) : (SVG[name] || ''); }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
   /* a spec callback, in the menu's board */
   function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
@@ -64049,7 +64051,7 @@ var PMU_SERIES = {
     var role = r.toggle ? 'menuitemcheckbox' : r.radio === false || r.action ? 'menuitem' : 'menuitemradio';
     var sub = dis && r.reason ? r.reason : r.sub;
     var trail = r.submenu ? '<span class="pmu-mchev" aria-hidden="true">' + icon('chevronRight') + '</span>'
-      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check') + '</span>'
+      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check', 14, 'control') + '</span>'
       : r.toggle ? '<span class="pmu-mcheck pmu-mcheck-off" aria-hidden="true"></span>' : '';
     return '<button type="button" class="pmu-poprow pmu-mitem' + (on && !r.toggle ? ' active' : '') + (r.toggle ? ' is-toggle' + (on ? ' is-on' : '') : '') + (dis ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') +
       (sub ? ' has-sub' : '') + '" role="' + role + '"' + (role !== 'menuitem' ? ' aria-checked="' + (on ? 'true' : 'false') + '"' : '') +

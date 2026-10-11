@@ -285,12 +285,14 @@ var PMU = window.PMU = {
   },
   /* The bare svg for the raw-SVG call sites (rollout USAGE step 6: the card-head tools, the menu's icons, the [data-icon]
      fill): the same NEON lookup and cache as PMU.icon with no wrapper, so `.pmu-iconbtn > svg` and its siblings still
-     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat. '' when neither
-     PMG nor the SVG table has the name, so each caller keeps its own fallback. */
-  svg: function (name, size) {
+     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat; role overrides
+     the name's own (a menu's chosen-row check is a control: the row's ink, no concept bloom). '' when neither PMG nor
+     the SVG table has the name, so each caller keeps its own fallback. */
+  svg: function (name, size, role) {
     var G = window.PMG, g = name ? NEON[name] : '', out = '';
     if (g && G && typeof G.has === 'function' && G.has(g)) {
-      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), s = size || (flat ? 14 : 16);
+      var flat = !!NEON_FLAT[name], s = size || (flat ? 14 : 16);
+      role = flat ? 'control' : role || roleFor(name);
       var key = (flat ? 'f|' : 'i|') + g + '|' + s + '|' + role;
       out = ICON_CACHE[key];
       if (!out) {

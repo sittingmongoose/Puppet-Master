@@ -30,7 +30,7 @@
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
   /* the neon glyph at the size this menu's CSS gives the svg (15-menu.css: 14 in rows, the back and the search, 16 on the
      rail), through PMU.svg; the SVG table without PMG */
-  function icon(name, size) { return PMU.svg ? PMU.svg(name, size || 14) : (SVG[name] || ''); }
+  function icon(name, size, role) { return PMU.svg ? PMU.svg(name, size || 14, role) : (SVG[name] || ''); }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
   /* a spec callback, in the menu's board */
   function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
@@ -58,7 +58,7 @@
     var role = r.toggle ? 'menuitemcheckbox' : r.radio === false || r.action ? 'menuitem' : 'menuitemradio';
     var sub = dis && r.reason ? r.reason : r.sub;
     var trail = r.submenu ? '<span class="pmu-mchev" aria-hidden="true">' + icon('chevronRight') + '</span>'
-      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check') + '</span>'
+      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check', 14, 'control') + '</span>'
       : r.toggle ? '<span class="pmu-mcheck pmu-mcheck-off" aria-hidden="true"></span>' : '';
     return '<button type="button" class="pmu-poprow pmu-mitem' + (on && !r.toggle ? ' active' : '') + (r.toggle ? ' is-toggle' + (on ? ' is-on' : '') : '') + (dis ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') +
       (sub ? ' has-sub' : '') + '" role="' + role + '"' + (role !== 'menuitem' ? ' aria-checked="' + (on ? 'true' : 'false') + '"' : '') +
