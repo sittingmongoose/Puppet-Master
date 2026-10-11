@@ -1,7 +1,7 @@
 # Rollout record: toasts and notifications (pm7-glyphs, D44)
 
 Status: GATES PASSED; merged into concept/pm7-glyphs-20261010 (2107a86893) with the lead's ink fixes (141790bc20,
-cb314e3d33, 74b83ff1d4). Surface 4. The film is re-recorded on the final build before landing.
+cb314e3d33, 74b83ff1d4). Surface 4.
 
 ## Step 1: how the base renders toasts and the inbox
 
@@ -76,8 +76,9 @@ the median of the pixels rendered behind it with every glyph hidden (so Glass's 
 - Final run on 74b83ff1d4 (`results/final-toast-marks.json`, sha256 a50ca05a9ff40ae2...): 204 front-card marks, lowest
   3.16:1 (NieR Dark failed); dismiss lowest 3.83; empty bell lowest 4.24; 0 page errors. Frames:
   `results/stage-grid.png` (the four kinds arriving, every look) and `results/inbox-grid.png`.
-- Film (H.264, all ten looks then Reduced Motion in Basic Dark and Retro Dark): the four kinds arrive, join the stack,
+- Film (`films/toasts-film.mp4`, 3 min 26 s, H.264 1920x1080, sha256 8ad27032c17c108a..., on a3ce78ba49; all ten looks then
+  Reduced Motion in Basic Dark and Retro Dark): the four kinds arrive, join the stack,
   the inbox opens, each dismiss is hovered (the control ignites) and pressed. Frame review: marks and dismisses read in
-  every look; Reduced Motion still and lit. Seen in passing, not ours: Friendly draws the toast cards as capsules (told
-  pm7-no-pills).
+  every look; Reduced Motion still and lit. Seen in passing, not ours: Friendly drew the toast cards as capsules (told
+  pm7-no-pills, who squared them on their branch).
 

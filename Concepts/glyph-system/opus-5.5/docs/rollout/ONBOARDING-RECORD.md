@@ -1,7 +1,7 @@
 # Rollout record: onboarding and the guided tour (pm7-glyphs, D44)
 
-Status: GATES PASSED (the film is re-recorded on the final build before landing); merged into
-concept/pm7-glyphs-20261010 (6384da4929) with the lead's fixes (cfdd7f3919, a3ce78ba49). Surface 3. The art scenes wait for card
+Status: GATES PASSED; merged into
+concept/pm7-glyphs-20261010 (6384da4929) with the lead's fixes (cfdd7f3919, a3ce78ba49, 071cd7ad5b). Surface 3. The art scenes wait for card
 GLY-4 (share folder `2026-10-11-glyph-gly4-onboarding-art/`).
 
 ## Change
@@ -41,9 +41,15 @@ GLY-4 (share folder `2026-10-11-glyph-gly4-onboarding-art/`).
   only entrance animations (the promise list fading in) and NieR's sound-off button hovered: it kept its muted text on
   the hover's reverse-video fill (1.48:1; older than the set, the old icon followed the same colour). Fixed in
   25-glyphs.css: hovered, it takes the fill's paper like its neighbours.
-- Film (H.264, `scripts/film-onb.mjs`): the walk from Welcome to the AI step in all ten looks (look menu, sound, help,
-  check chips working then done, phases, cards hovered), the tour's bar and first steps in four looks, then Reduced
-  Motion in Basic Dark and Retro Light: RESULT_PENDING.
+- Hovered sound-off (`SOUND_OFF=1 scripts/hover-probe.mjs`, all ten looks): 7.94-12.55:1, NieR 8.61 / 11.47
+  (`results/hover-controls-sound-off.json`).
+- Film (`films/onboarding-film.mp4`, 7 min 8 s, H.264 1920x1080, sha256 e9e339bfbbd3fddc..., on 071cd7ad5b;
+  `scripts/film-onb.mjs`, chapters in `films/onboarding-film-chapters.json`): the walk from Welcome to Creating in all
+  ten looks (the head's look, sound and close hovered, cards hovered, the check chips working then done, the help
+  disclosure, the look menu, sound off and on, the phases), the tour's bar and first steps in Basic Dark, Glass Light,
+  Retro Dark and NieR Dark, then Reduced Motion in Basic Dark and Retro Light. Frame strips `films/*.png`: NieR's
+  reversed head buttons keep their glyph, the chips run working -> done, the phase list draws complete / working /
+  pending without discs; Reduced Motion lit and still. No page errors.
 
 ## Not changed here
 - The art scenes (GLY-4), the logo, the tour pointer, QR and identity art, the NieR pod.
