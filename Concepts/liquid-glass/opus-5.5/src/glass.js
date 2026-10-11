@@ -447,6 +447,13 @@
     if (!isGlass() || !visible(menu) || menu.__lgMorphed) return;
     menu.__lgMorphed = true;
     if (reduced()) { menu.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
+    /* the menu's own opening animation starts a moment after ours and would win: run ours on the next frame, after
+       cancelling it, holding the first keyframe so the menu never flashes at full size */
+    menu.style.opacity = '0';
+    requestAnimationFrame(function () { menu.style.opacity = ''; morphNow(menu, anchor); });
+  }
+  function morphNow(menu, anchor) {
+    menu.getAnimations().forEach(function (an) { an.cancel(); });
     var m = menu.getBoundingClientRect(), a = anchor && anchor.isConnected ? anchor.getBoundingClientRect() : { left: m.left, top: m.top, width: 40, height: 30 };
     var S = spring.apply(null, LIQUID), frames = [];
     var sx0 = a.width / m.width, sy0 = a.height / m.height, tx0 = a.left - m.left, ty0 = a.top - m.top;
@@ -455,7 +462,8 @@
       frames.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (tx0 * (1 - p)).toFixed(1) + 'px,' + (ty0 * (1 - p)).toFixed(1) + 'px,0) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
     }
     menu.style.transformOrigin = '0 0';
-    menu.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' });
+    menu.animate(frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
+    menu.animate([{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
     Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { k.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
   }
   function lensesUnder(menus) {
