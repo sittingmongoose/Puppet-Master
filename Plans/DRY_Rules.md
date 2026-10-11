@@ -2061,6 +2061,11 @@ kit. The panel and tab grammar is DR-065's, the overlay root DR-067's and the op
 module DR-071's. The ban on a second Home state machine and the one-change-set rule
 stand.
 
+Amended 2026-10-10 (DL-186): every dashboard tab's board is a board of the one Usage
+board engine, kept per project under `widget_layout:v1:<project_id>:<board_id>`
+(WS-030), so the widget board the panels share their gesture kit with is the same
+engine on the Usage page and in every dashboard tab, with one settlement (WS-019).
+
 `Plans/FinalGUISpec.md` owns Home shell composition, the panel model and its tab
 kinds (F3-630 to F3-639, the terminal tab F3-640 to F3-646), visible movement and
 resize behavior, and web/native capability disclosure.
@@ -2345,7 +2350,7 @@ architecture layer merely because the concept contains self-contained fixture ad
 | Usage data semantics and view state | `Plans/usage-feature.md` | PM7-local Usage service, provider-management service, or second Usage store |
 | Usage/Ledger drill-through | `Plans/Contracts_V0.md` plus `Plans/usage-feature.md`; event-primary callers use `usage_event`/`usage_event_ref`, while a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, retains `usage_event_ref` as correlation, and carries no `OpenSubject` | correlation or presentation identity substituted for the selected object id, current PMConcept7 aggregate-card route command, or unregistered object kind |
 | Usage/Dashboard widget layout | `Plans/Widget_System.md` plus `Plans/storage-plan.md` namespaces | PM7-local widget store, `dashboard_layout:v1` peer writes, per-frame preview persistence |
-| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own `widget_layout:v1:dashboard:<board_id>` namespace, WS-030), concept-only size command/store |
+| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own per-project `widget_layout:v1:<project_id>:<board_id>` key, WS-030, amended 2026-10-10 by DL-186), concept-only size command/store |
 | Command language | `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | PM7 command family, popup/hover commands, duplicate `size_surface` primary command |
 | Production wiring | `Plans/Wiring_Matrix.md` and `Plans/Wiring_Matrix.production.json` | concept report or demo event log as production wiring authority |
 | Shared Assistant/context | `Plans/assistant-chat-design.md` | second Assistant node, controller, transcript store, context store, or page-local clone |
@@ -2361,6 +2366,13 @@ Amended 2026-10-09 (DL-180): the Home shell surface layout row now names the v2 
 Several dashboard tabs are allowed, each showing one board whose widget layout lives in its own
 `widget_layout:v1:dashboard:<board_id>` namespace under WS-030; the Home record holds only the dashboard tab
 and its board reference.
+
+Amended 2026-10-10 (DL-186): a board's widget layout lives per project under
+`widget_layout:v1:<project_id>:<board_id>` (WS-030), as the table's row now says; the 2026-10-09 per-board key
+above was never written. The
+person's saved board presets live in the one per-user family `widget_presets:v1`. Dashboards run the one Usage
+board engine, so they add no widget-layout authority, store or settlement of their own, and the Home record still
+holds only the dashboard tab and its board id.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/assistant-chat-design.md
 
@@ -2387,15 +2399,21 @@ canonical_text: >-
   (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one
   Home layout schema is pm.home_workspace_layout.v2, its record home_workspace_layout.v2 (SP-330); the
   home_workspace_layout.v1 record is a read-only migration input, converted on first read and never reset.
+  Amended 2026-10-10 (DL-186): each board's widget layout lives per project in
+  widget_layout:v1:<project_id>:<board_id> (WS-030), and the 2026-10-09 widget_layout:v1:dashboard:<board_id> was
+  never written; widget_layout:v1:dashboard is converted into no board. Every dashboard board runs the one Usage
+  board engine, so dashboards add no widget-layout authority, store or settlement, and a person's saved board
+  presets live in the one per-user family widget_presets:v1.
 gui_related: true
 gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
 split_recommended: false
-depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012, DL-180]
+depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012, DL-180, DL-186]
 unblocks: [ACD-448]
 acceptance_criteria:
   - Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command, receipt, or domain event.
   - Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
   - Production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:dashboard:<board_id> namespace or to home_workspace_layout.v2, and no dashboard board's widget layout is written into the Home layout record.
+  - "Amended 2026-10-10 (DL-186): production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:<project_id>:<board_id> or to widget_presets:v1, and every dashboard board runs the one Usage board engine with no store or settlement of its own."
   - No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
   - No pointer-preview or unregistered context-compaction event family is admitted.
   - Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
@@ -2428,6 +2446,8 @@ preserved_exact_tokens:
   - chatResizer
   - widget_layout:v1:dashboard:<board_id>
   - home_workspace_layout.v2
+  - widget_layout:v1:<project_id>:<board_id>
+  - widget_presets:v1
 negative_constraints:
   - Do not create a second Usage store, widget-layout store, Home layout store, command language, Event Authority, or production wiring matrix.
   - Do not create a second Assistant node, controller, transcript store, context store, or page-local clone.
@@ -2436,6 +2456,7 @@ negative_constraints:
   - Do not store a dashboard board's widget layout inside the Home layout record or share one widget namespace between two boards.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): one widget namespace per dashboard board (widget_layout:v1:dashboard:<board_id>, WS-030) replaces the single widget_layout:v1:dashboard namespace, and the one Home layout schema is now the v2 record of SP-330 with v1 a read-only migration input."
+  - "Amended 2026-10-10 (DL-186): board keys are per project (widget_layout:v1:<project_id>:<board_id>), presets are one per-user family, and dashboards run the one Usage board engine."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/assistant-chat-design.md
@@ -2448,6 +2469,8 @@ Every capability touched by the Settings, Product Onboarding, Guided Tour, Docto
 Settings, Onboarding, Guided Tour, Doctor, and PMConcept7 remain consumers. They may cache and render owner projections, open exact owner routes, and observe `ObservableWork` and receipts, but they cannot duplicate Server, route, backup, Browser, capture, SCM, forge, plugin, Project, Named Plan, installation, authentication, update, storage, or repair state machines. `AuthBrowserSession` is outside agent, adapter, capture, inspection, replay, export, and restore authority. A concept simulation is not a native handler, production wiring receipt, runtime result, or Slint certification.
 
 Amended 2026-10-09 (DL-180): the layout owner's snapshot is now the v2 Home layout record (SP-330), which the tour's workspace chapter captures and restores (PWIZ-035); the dashboard is a tab, so the placement the tour never copies is a dashboard tab's, and the chat is a fixed column the tour never asks the learner to move.
+
+Amended 2026-10-10 (DL-186): the tour's widget step changes the Home dashboard's board, whose widgets live in that board's own per-project key, not in the v2 record (WS-030). The restoration basis therefore also holds the Home board's widgets, taken through the board owner's own snapshot and restored by it; the tour still keeps no copy of its own (PWIZ-035).
 
 The Guided Tour's restoration basis is the layout owner's snapshot, reached only through the bounded checkpoint's snapshot ref (PWIZ-023, PWIZ-035); the tour keeps no second copy of layout, dashboard tab placement, or Chat state, and never composer text. Settings' Run Onboarding Again, Resume Guided Tour, and Replay Guided Tour entries are the route-only consumers `settings.onboarding.run_again`, `settings.guided_tour.resume`, and `settings.guided_tour.replay` (SSYS-019), each with its own touch-closure row; the reset, resume, and replay semantics stay with the Onboarding and Guided Tour owners.
 
@@ -3427,16 +3450,23 @@ canonical_text: >-
   panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons stays inside the
   boundary of the shell's one hover grammar: no magnet, light or glow, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
   2026-08-04 Home owner boundary for panel and tab presentation.
+  Amended 2026-10-10 (DL-187): the Debug Console is one tab whose debug sessions are switched inside it by session
+  sub-tabs (D33), the way Output switches its channel inside its one tab: which session shows is view state, never a
+  panel tab, never in the strip and never a second tab model, and the row that switches it is the kind's own row,
+  recorded by its owner units (F3-635, F3-490). The terminal's sub-tabs stay retired. Terminal tabs carry no colour
+  or icon of the person's choosing on the strip until the neon glyph system redesigns them (D34); every tab keeps its
+  kind's bundled icon.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-631, F3-632, F3-633, F3-635]
+depends_on: [DL-180, DL-187, F3-630, F3-631, F3-632, F3-633, F3-635]
 unblocks: []
 acceptance_criteria:
   - "No tab kind or panel owner defines its own tab strip, tab overflow, \"+\" button, menu button, panel menu or header row, and every kind-specific row is justified in its owner unit."
   - "The dashboard, the terminal and the browser are tab kinds of F3-630's one panel model, with no second panel model, layout record, strip or placement rule."
   - "Every tab state mark comes from the one status set of F3-585 and every kind icon is a bundled SVG icon_id."
   - "One keyboard table and one web-client mapping rule serve every panel; no kind redefines a panel key."
+  - "Amended 2026-10-10 (DL-187): the Debug Console's session sub-tabs switch a view inside its one tab and never act as panel tabs; no terminal tab shows a colour or icon of the person's choosing on the strip."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3465,12 +3495,15 @@ negative_constraints:
   - "Do not give a tab kind its own strip, overflow, \"+\" or menu button, panel menu or header row."
   - "Do not build a second panel model, layout store or placement rule for the dashboard, the terminal or the browser."
   - "Do not add a tab status glyph outside the one status set or a kind icon outside the bundled icon registry."
+  - "Do not make a debug session its own panel tab or draw its sub-tabs as a second tab strip."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187): the Debug Console's session sub-tabs (D33) are view state inside its one tab, and terminal tab colours and icons stay off the strip (D34)."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
 
 ### DR-066 - One Gesture Kit For Panels And The Usage Board
 
@@ -3497,16 +3530,21 @@ canonical_text: >-
   (DR-058) and how panel previews look stays F3-630's and F3-647's. Under Reduced Motion every part of the kit is
   instant and every close path still works. This replaces the 2026-08-04 Home owner boundary's sentence that U10's
   interaction behaviour is "a reusable interaction vocabulary only".
+  Amended 2026-10-10 (DL-186): every dashboard tab's board is a board of the one Usage board engine (WS-030), so the
+  board's resolver, gravity, Tidy and previews are one and the same on the Usage page and on every dashboard
+  (WS-019): no dashboard keeps a settlement, gravity or resize rule of its own, and one widget gesture at a time
+  holds across every board on the page, a gesture started on one board ending any still running on another.
 gui_related: true
 gui_classification_reason: "Fixes one gesture kit for moving panels, tabs and Usage widgets."
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-503, WS-019]
+depends_on: [DL-180, DL-186, F3-630, F3-503, WS-019]
 unblocks: []
 acceptance_criteria:
   - "The panel split tree and the Usage widget board run one gesture kit; neither keeps its own pointer controller, preview transaction, keyboard move path or announcement scheme."
   - "No preview dispatches a command, writes storage or emits an event; a changed release commits one owner command and a cancel restores the exact earlier picture."
   - "The snapping widget grid lays out widgets only, and in the home centre only inside dashboard tabs; no panel is placed on widget tracks."
   - "The Home layout record holds no widget command, widget order, widget geometry or Dashboard widget state."
+  - "Amended 2026-10-10 (DL-186): gravity, Tidy and the move and resize previews are the same on every dashboard board as on the Usage page, no dashboard keeps its own settlement, and at most one widget gesture runs on the page at a time."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3537,8 +3575,10 @@ negative_constraints:
   - "Do not build a second gesture controller, preview transaction or keyboard move path for panels or for widgets."
   - "Do not lay out panels on the widget grid or widgets in the split tree."
   - "Do not write widget layout into the Home record or panel layout into a widget board."
+  - "Do not keep a second board engine, or a dashboard-only settlement, gravity or resize rule."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L13): Lost pointer capture cancels a gesture and restores the earlier picture without a commit."
+  - "Amended 2026-10-10 (DL-186): dashboards run the one Usage board engine, so its gravity, Tidy and previews are the same on every board."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

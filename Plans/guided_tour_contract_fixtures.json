@@ -32,7 +32,7 @@
         ],
         "scenes": [
           {"id": "chat_teacher", "purpose": "Open real Assistant Chat, select Teacher, send the supplied local question, and see the same answer in simple words as one extra, simpler reply."},
-          {"id": "workspace", "purpose": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and perform a real widget action through its mounted owner."},
+          {"id": "workspace", "purpose": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and add the Usage widget Upcoming resets to the Home dashboard and place it through its mounted owner."},
           {"id": "planning_wizard", "purpose": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}
         ],
         "continuity": "The story moves from Assistant Chat and Teacher to workspace practice and finishes at the real Planning Wizard.",
@@ -190,7 +190,7 @@
         "scene": "workspace",
         "owner_ref": "owner:widget",
         "owner_action_id": "cmd.widget.add",
-        "target_ref": "widget-catalog:activity:1",
+        "target_ref": "widget-catalog:ov-resets:home",
         "success_predicate_ref": "predicate:workspace:widget-added",
         "paths": ["manual", "show_me"],
         "manual_invokes_owner_handler": true,
@@ -202,7 +202,7 @@
         "observation": {
           "owner_ref": "owner:widget",
           "action_id": "cmd.widget.add",
-          "target_ref": "widget-catalog:activity:1",
+          "target_ref": "widget-catalog:ov-resets:home",
           "scene": "workspace",
           "mode": "show_me",
           "success_predicate_ref": "predicate:workspace:widget-added",
@@ -695,6 +695,7 @@
     {"name": "timer_cannot_complete_practice", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"show_me_choreography.timer_completes_predicate": true}, "expected_error": "timer cannot satisfy an owner predicate"},
     {"name": "look_alike_cannot_complete_practice", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"false_positive_controls.look_alike_control": true}, "expected_error": "look-alike controls cannot satisfy the mounted target predicate"},
     {"name": "applied_observation_requires_mounted_owner_result", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"observation.mounted_owner_result_observed": false}, "expected_error": "applied requires an observed mounted-owner result"},
+    {"name": "workspace_widget_practice_teaches_upcoming_resets_on_home", "definition": "guided_tour_practice_contract", "base_valid": "manual_and_show_me_share_workspace_owner_predicate", "patch": {"target_ref": "widget-catalog:activity:1"}, "expected_error": "the widget step adds Upcoming resets to the Home board; the old Home widgets are gone (DL-186)"},
     {"name": "show_me_request_requires_practice_action_ref", "definition": "guided_tour_action_request", "base_valid": "show_me_request_names_shared_practice_action", "remove": ["practice_action_ref"], "expected_error": "Show Me must name the shared action contract"},
     {"name": "finish_keep_requires_explicit_selection", "definition": "guided_tour_action_request", "base_valid": "finish_request_explicit_keep", "patch": {"finish_layout.selection_source": "default_restore"}, "expected_error": "Keep is never inferred"},
     {"name": "finish_restore_is_the_default", "definition": "guided_tour_action_request", "base_valid": "finish_request_defaults_restore", "patch": {"finish_layout.selection_source": "explicit_keep"}, "expected_error": "Restore uses the default source"},

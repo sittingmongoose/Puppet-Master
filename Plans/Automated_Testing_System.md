@@ -3544,21 +3544,26 @@ canonical_text: >-
   open-detail-drawer compaction preservation; settled-only Home and widget operations; no-preview effects; status
   layout; all-theme inventory; frame health; Dashboard wrapper/host ownership; pointer and keyboard widget
   manipulation parity; stable identity-based insertion intent; Usage pointer-only live occupied-neighbor resize-preview
-  displacement, Dashboard frozen resize peers, and live reorder-peer displacement; last-painted-intent commit
-  without release retarget; cancellation/no-op cleanup; and the exact
+  displacement, Dashboard frozen resize peers (retired 2026-10-10, DL-186), and live reorder-peer displacement;
+  last-painted-intent commit without release retarget; cancellation/no-op cleanup; and the exact
   workspace.layout_changed payload contract. It is a canonical fixture root; audit-harness and
   concept-runner artifacts remain additional evidence, not replacement owners. Fixture lists and
   `must`/`must_not` assertions are not runtime, visual, motion, or migration proof; those require fresh browser
   execution, raw receipts, and independent review.
+  Amended 2026-10-10 (DL-186): every dashboard board now runs the Usage board engine (Plans/Widget_System.md#WS-030),
+  so Dashboard frozen resize peers retire with the Dashboard's own settlement (WS-019): a dashboard board's resize
+  shows the Usage board's live displacement of obstructed peers, and the Dashboard wrapper/host that owns a widget's
+  mutations is that widget's board in its dashboard tab. Until the Home transaction and motion fixtures are updated
+  to say so, their frozen-peer assertions are lineage, not current canon.
 gui_related: true
 gui_classification_reason: This unit owns cross-page visible and interaction fixtures shared by PMConcept7 surfaces.
-depends_on: [F3-513, F3-515, F3-516, F3-517]
+depends_on: [F3-513, F3-515, F3-516, F3-517, DL-186]
 unblocks: [ATS-038, ATS-039, ATS-040]
 acceptance_criteria:
   - "The shared fixture root contains exactly the seven named fixture families and each names owner PlanUnits, surfaces, must assertions, and must-not assertions."
   - "Assistant/context fixtures statically encode one node/store identity, Home/global re-seating, active thread and transcript, draft, attachments, activity, detail-drawer identity/tab/scroll, focus continuity, failed/stale re-seat rollback, context metrics, Compact Now, More Details, and local noncommitted compaction feedback without events; those GUI fixtures alone do not prove a committed completion. The open-detail-drawer Compact Now fixture requires one existing cmd.chat.compact_context result and one receipt, a coherent ring/detail revision update, and preservation of drawer identity, selected tab, scroll position, and focus."
-  - "Home transaction fixtures statically encode Dashboard wrapper/host ownership rather than outer-grid mutation ownership, preview-spy emptiness, stable before/after insertion intent, measured placeholder footprint, pointer/keyboard move parity, frozen resize peers, live reorder displacement, last-painted-intent changed-only one-command commit without pointer-up retarget, Escape/pointercancel/lostpointercapture/blur/invalid/no-change rollback, settled persistence, and cleanup."
-  - "Usage interaction and motion fixtures statically encode a real target footprint, live deterministic displacement of only obstructed peers during held pointer resize, stable peer node/paint/DOM-order/entrance state, preview-spy emptiness, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), and exact rollback after cancellation, rejection, or adapter failure; Dashboard resize remains frozen-peer."
+  - "Home transaction fixtures statically encode Dashboard wrapper/host ownership rather than outer-grid mutation ownership, preview-spy emptiness, stable before/after insertion intent, measured placeholder footprint, pointer/keyboard move parity, a dashboard board's resize peers displaced live as on the Usage board (amended 2026-10-10, DL-186; this read 'frozen resize peers'), live reorder displacement, last-painted-intent changed-only one-command commit without pointer-up retarget, Escape/pointercancel/lostpointercapture/blur/invalid/no-change rollback, settled persistence, and cleanup."
+  - "Usage interaction and motion fixtures statically encode a real target footprint, live deterministic displacement of only obstructed peers during held pointer resize, stable peer node/paint/DOM-order/entrance state, preview-spy emptiness, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), and exact rollback after cancellation, rejection, or adapter failure; dashboard boards resize the same way (amended 2026-10-10, DL-186; this read 'Dashboard resize remains frozen-peer')."
   - "Status and theme fixtures statically encode full-width non-overlapping status with no bell plus stable functional inventory in all eight themes and supported desktop widths."
   - "Motion fixtures statically enumerate blank, black, white-until-hover, clipped, torn, or uniform transition frames and missing final settlement as conditions that fresh browser execution and independent review must reject."
   - "Workspace event fixtures validate against the current workspace_layout_changed schema and reject preview-bearing, non-persisted, or incomplete events; none of the seven fixture files or their must/must_not lists proves runtime, visual, motion, or migration behavior without fresh browser execution, raw receipts, and independent review."
@@ -3581,6 +3586,9 @@ preserved_exact_tokens: [surface_inventory, assistant_context_continuity, home_w
 negative_constraints:
   - "Do not treat audit evidence under Plans/.audits as the canonical root test suite."
   - "Do not add a second Assistant, layout store, command family, or event family for fixture convenience."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): Dashboard frozen resize peers retire; a dashboard board resizes with the Usage board's live preview, and the frozen-peer fixture assertions await their update."
+  - "Amended 2026-10-10 (DL-186): the two acceptance criteria that kept Dashboard resize frozen-peer now say a dashboard board resizes as the Usage board does, each quoting the words it replaced."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md]
 ```
 
@@ -3652,7 +3660,7 @@ canonical_text: >-
   PMConcept7 motion certification records and reviews drag, resize, reorder, reflow, page-tab, editor-tab,
   Usage-nav, menu, drawer, Context, hover, panel, and theme transition frame sequences. The audit watches the
   complete start-to-settle lifecycle, including pointer capture, measured-footprint placeholders, ghosts,
-  Usage pointer-only live occupied-neighbor resize-peer displacement, Dashboard frozen resize peers, live interruptible reorder-peer displacement, stable two-dimensional Usage candidates
+  Usage pointer-only live occupied-neighbor resize-peer displacement, Dashboard frozen resize peers (retired 2026-10-10, DL-186), live interruptible reorder-peer displacement, stable two-dimensional Usage candidates
   including empty same-footprint cavities and lower rows, ghost-anchor targeting with geometric hysteresis,
   stable before/after correlation, last-painted-intent commit without pointer-up retarget, clip paths, spring/velocity effects, target
   reconciliation, rollback, and cleanup. Usage reorder films also verify that preview retains the same mounted
@@ -3676,9 +3684,13 @@ canonical_text: >-
   When Product Onboarding is the active modal overlay, the hover campaign first proves a bound, visible tag on an
   actionable modal control, then closes the modal through its typed local action before exercising underlay fixtures;
   the harness never bypasses or misreports the modal's intentional pointer-event interception.
+  Amended 2026-10-10 (DL-186): every dashboard board runs the Usage board engine (Plans/Widget_System.md#WS-030), so
+  dashboard boards resize as the Usage board does (WS-019): their pointer and keyboard films show the Usage board's
+  resize, the live displacement of obstructed peers included, and no film shows frozen dashboard resize peers. The
+  Dashboard wrapper/host that owns a widget's mutations is that widget's board in its dashboard tab.
 gui_related: true
 gui_classification_reason: This unit governs the visible temporal behavior and transactional correctness of PMConcept7 interactions.
-depends_on: [ATS-037, F3-515, F3-517]
+depends_on: [ATS-037, F3-515, F3-517, DL-186]
 unblocks: []
 acceptance_criteria:
   - "Drag, resize, reorder, reflow, page, editor tab, Usage nav, menu, drawer, Context, hover, panel, and theme motion are sampled from start through stable settlement."
@@ -3686,7 +3698,7 @@ acceptance_criteria:
   - "The hover matrix proves an actionable Product Onboarding modal control while that modal legitimately owns pointer input, then releases the modal through its typed close action before underlay fixture checks; force-clicks, synthetic pointer bypasses, and click-through claims are forbidden."
   - "Frame health rejects black, blank, uniform, white-until-hover, clipped plate, torn layer, one-frame teardown, or excessively accelerated transition states."
   - "Hover motion (F3-465, DR-072) is filmed on the GPU and its entry and exit frames are watched frame by frame in every look, Basic, Friendly and Glass in dark and light, Retro dark and light, and NieR dark and light, including the hand-over across a gap and leaving the window; Retro's Raise and NieR's Lock-on show a stepped cadence that reads deliberate, each beat its own frame with no tween and never a glide; two seconds after the pointer leaves no hover-owned requestAnimationFrame or hover animation is running, a pointer resting still inside a box adds no driver frames once the spring has settled, and a hover writes no inherited property and restyles no subtree beyond the hovered box and its lit neighbours."
-  - "Usage and Home Dashboard pointer and keyboard films show measured pointer placeholder/ghost position, above-workspace ghost visibility, truthful keyboard pickup outline and aria-grabbed state, stable two-dimensional candidate choice including empty same-footprint cavities and lower rows, ghost-anchor targeting with geometric hysteresis, stable before/after correlation, live reorder-peer displacement, Usage pointer-only live occupied-neighbor resize displacement versus Dashboard frozen resize peers, clip path, target animation, and commit of the last painted intent without pointer-up re-hit-testing or retargeting; Usage resize treats the far-right edge as primary and also covers far-left/middle pointer and keyboard expand/contract with requested-axis advance and minimum companion drift, while obstructing-peer held preview, held-preview-to-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), stable peer node/opacity/entrance/child-list/scroll state, and cancel/rejection/adapter-failure preview rollback are pointer-only and keyboard resize remains atomic; edge-limited one-step travel and an in-viewport last-painted maximum after same-direction overshoot remain covered; repeated reorder preview retains identical peer nodes on a fully painted board with nonzero opacity, no empty peer rectangle, no entrance-animation restart, no preview child-list churn, and only one post-acceptance DOM-order reconciliation."
+  - "Usage and Home Dashboard pointer and keyboard films show measured pointer placeholder/ghost position, above-workspace ghost visibility, truthful keyboard pickup outline and aria-grabbed state, stable two-dimensional candidate choice including empty same-footprint cavities and lower rows, ghost-anchor targeting with geometric hysteresis, stable before/after correlation, live reorder-peer displacement, Usage pointer-only live occupied-neighbor resize displacement, the same on every dashboard board with no frozen dashboard resize peers (amended 2026-10-10, DL-186; this read 'versus Dashboard frozen resize peers'), clip path, target animation, and commit of the last painted intent without pointer-up re-hit-testing or retargeting; Usage resize treats the far-right edge as primary and also covers far-left/middle pointer and keyboard expand/contract with requested-axis advance and minimum companion drift, while obstructing-peer held preview, held-preview-to-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), stable peer node/opacity/entrance/child-list/scroll state, and cancel/rejection/adapter-failure preview rollback are pointer-only and keyboard resize remains atomic; edge-limited one-step travel and an in-viewport last-painted maximum after same-direction overshoot remain covered; repeated reorder preview retains identical peer nodes on a fully painted board with nonzero opacity, no empty peer rectangle, no entrance-animation restart, no preview child-list churn, and only one post-acceptance DOM-order reconciliation."
   - "Fast and slow approaches to both Usage move and resize controls acquire the intended existing controller directly with pointer capture, since the Usage plates carry no magnet (F3-465) and no translation attenuation, acquisition lease, or document-capture handoff exists, and reject other interactives and points outside the painted controls; a pointer-events-auto top-layer occluder receives pointerdown above a control and starts no widget operation, while an active resize/reorder rejects every second pointer, touch, pen, or keyboard controller before mutation and retains sole ownership until cleanup."
   - "Preview, Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, and popup dismissal produce zero command, result, receipt, event, and persistence deltas; an owner-rejected command or post-dispatch persistence-adapter failure restores authoritative layout and cleanup, retains exactly one attempted command and one rejected/failed receipt, produces zero settled events or successful owner-store writes, and reports attempted adapter calls separately from successful writes."
   - "A changed owner-accepted release produces exactly one existing command and no duplicate result, receipt, applicable event, or settled write; after commit, cancellation, or no-op there is no leaked capture, preview class, portal, ghost, placeholder, pending animation frame, transient listener, preview-only board minimum height, blank scroll tail, NotFound exception, stuck move state, or mutation through an outer presentation grid instead of the owning Dashboard wrapper/host, and repeated committed reorders do not compound scroll extent."
@@ -3713,6 +3725,8 @@ negative_constraints:
   - "Do not allow fixture code to emit a command or event during preview merely to make the test observable."
   - "Do not let pointer-up retarget a reorder away from its last painted stable intent or let an outer presentation grid become Dashboard widget mutation owner."
   - "The exact Build8 focused and film evidence binds only captured Chromium concept transactions and reviewed Usage/Home frames; uncaptured transitions, touch, pen, multi-touch, non-Chromium, assistive-technology, native Slint, and production-runtime behavior remain outside the claim, and it does not waive the protected Settings crop, P2 narrow overflow-menu keyboard residual, or PNC-019."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): Dashboard frozen resize peers retire; dashboard boards resize as the Usage board does, and the films show no frozen dashboard resize peers."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/FinalGUISpec.md]
 ```
 
@@ -3727,8 +3741,8 @@ canonical_text: >-
   Shared runtime command-contract fixtures include PM7 interaction traces for preview, changed commit,
   cancellation, no-change release, post-dispatch owner rejection, persistence-adapter failure, duplicate commit
   rejection, and Context compaction. The traces use existing command identities and distinguish local projection,
-  owner-accepted settlement, owner rejection, an attempted adapter call, and a successful owner-store write. The current
-  workspace.layout_changed schema is version 1.1.0, is settled-only and persisted, references the accepted
+  owner-accepted settlement, owner rejection, an attempted adapter call, and a successful owner-store write. The
+  workspace.layout_changed schema at version 1.1.0, current until 2026-10-10 (DL-188), is settled-only and persisted, references the accepted
   command result and exactly one dispatch receipt, carries interaction/command/correlation identities, prior/new layout
   revisions, mutation and final-target data, the required nullable semantic-size preset, and no preview state. Context
   compaction is represented by cmd.chat.compact_context result, receipt, revision, and compaction-history
@@ -3739,15 +3753,26 @@ canonical_text: >-
   Preview, cancellation, no-change, and noncommitted Assistant compaction are event-silent. The event-family registry
   contains exactly one workspace.layout_changed family and exactly one context.compaction.completed family;
   context.compaction.started and context.compaction.failed remain unregistered.
+  Amended 2026-10-10 (DL-188): Event Authority admitted workspace.layout_changed at family revision 2.0.0, so the
+  current payload is Plans/Contracts_V0.md#CV-361's, Plans/event_payloads/workspace_layout_changed_v2.schema.json:
+  settled-only and persisted with no preview state, the accepted command result and exactly one receipt, the
+  interaction, command and correlation identities, the prior and new layout revisions, and a `change` naming what
+  happened with the panels, tabs and splits it touched, in place of 1.1.0's mutation, final-target and
+  semantic-size-preset fields. Events already written at 1.1.0 stay readable through the 1.1.0 schema and are never
+  rewritten. The PM7 workspace-event fixtures and their validator move to the 2.0.0 payload (DL-188); the 1.1.0
+  description above and the invalid cases listed below are the 1.1.0 fixtures', and the invalid cases and their
+  count are re-pinned when the fixtures move.
 gui_related: true
 gui_classification_reason: This unit validates the command/event/receipt traces that drive visible PM7 settlement and context feedback.
-depends_on: [ATS-037, F3-515, F3-516, CS-068, UCC-147, WM-045]
+depends_on: [ATS-037, F3-515, F3-516, CS-068, UCC-147, WM-045, DL-188]
 unblocks: []
 acceptance_criteria:
   - "The shared schema admits PM7 settled-interaction and Context-compaction trace definitions without adding either trace-only command ids to the canonical 26-command shared-runtime census."
   - "Preview, cancellation, and no-change fixtures require null command identity, result_outcome=not_dispatched, dispatch_accepted=null, zero dispatch/result/receipt/event/write-attempt/successful-write counts, prior-state preservation, and completed cleanup."
   - "A changed settled commit fixture requires one existing command, one owner result, exactly one dispatch receipt, exactly one settled write, no duplicate dispatch, and an event list containing either the single applicable workspace.layout_changed event or no event when that family is not applicable; a post-dispatch owner-rejected fixture instead requires one existing command, one rejected result and receipt, dispatch_accepted=false, zero adapter attempts, zero successful writes, authoritative rollback, complete cleanup, and no event, while a persistence-adapter-failed fixture requires one existing command, one failed result and receipt, dispatch_accepted=true, one adapter attempt, zero successful writes, authoritative rollback, complete cleanup, and no event."
+  - "Amended 2026-10-10 (DL-188): valid workspace-event fixtures satisfy the 2.0.0 payload of Plans/event_payloads/workspace_layout_changed_v2.schema.json (CV-361): schema_version 2.0.0, settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted command_result_ref, exactly one receipt_ref, prior/new revisions and change; the criterion below describes the 1.1.0 fixtures and events already written at 1.1.0."
   - "workspace.layout_changed is the only allowed event type for a changed settled commit; valid fixtures satisfy schema_version 1.1.0, settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted command_result_ref, exactly one receipt_ref, prior/new revisions, mutation, final source/target/slot and settled-layout data, and required nullable semantic_size_preset_id."
+  - "Amended 2026-10-10 (DL-188): the 13 invalid cases below are the 1.1.0 fixtures'; when the fixtures move to the 2.0.0 payload, the invalid cases and their count are re-pinned with them."
   - "The currently supplied invalid workspace-event fixtures cover exactly 13 cases: preview_state_included=true; settled_only=false; persisted=false; missing command_result_ref; empty receipt_refs; missing project_id; missing new_layout_revision; an out-of-set mutation_kind; an out-of-set target_host; an out-of-set semantic_size_preset_id; a new_layout_revision that does not advance; a non-workspace command family; and more than one receipt_ref."
   - "Preview, cancellation, and no-change traces contain no event. Context compaction requires cmd.chat.compact_context result and receipt projection; a completed trace requires exactly one context.compaction.completed after successful commit, and every other outcome requires an empty event list. Fixtures reject missing or duplicate completion, a completion event on a failed or started outcome, and the historical started/failed spellings."
   - "Fixture validation establishes static representation only, so fresh browser execution, raw receipts, and independent review remain required for runtime behavior; the event registry, shared runtime command validator, PM7 GUI fixture validator, JSON syntax gate, and PlanUnit validation must also pass together."
@@ -3767,6 +3792,7 @@ implementation_surfaces:
   - Plans/shared_integration_runtime_expansion_contracts.schema.json
   - scripts/pm-shared-runtime-command-contracts.py
   - Plans/event_payloads/workspace_layout_changed.schema.json
+  - Plans/event_payloads/workspace_layout_changed_v2.schema.json
   - Plans/event_family_registry.json
   - tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json
 node_compile_hint: {mode: pm7_command_event_receipt_fixture_contract_only, create_worknodes: false, create_nodeseeds: false}
@@ -3776,11 +3802,15 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (T43 Usage pointer-resize preview transform)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
-preserved_exact_tokens: [pm.event.workspace_layout_changed.v1, schema_version, 1.1.0, settled_only, preview_state_included, persisted, command_result_ref, receipt_refs, semantic_size_preset_id, result_outcome, dispatch_accepted, persistence_write_attempt_count, persistence_write_count, owner_rejected, persistence_adapter_failed, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
+  - Plans/Decision_Log.md#DL-188
+  - Plans/Contracts_V0.md#CV-361
+preserved_exact_tokens: [pm.event.workspace_layout_changed.v1, schema_version, 1.1.0, 2.0.0, settled_only, preview_state_included, persisted, command_result_ref, receipt_refs, semantic_size_preset_id, result_outcome, dispatch_accepted, persistence_write_attempt_count, persistence_write_count, owner_rejected, persistence_adapter_failed, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
   - "Do not add a persisted event for pointer-preview or local working-animation frames."
   - "Do not register context.compaction.started or context.compaction.failed, or emit completion for a local working animation, failed, soft-deferred, no-op, or other noncommitted outcome. Command results and receipts remain required alongside the committed completion event."
   - "Do not expand the canonical shared-runtime command census for PM7 trace-only fixture definitions."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-188): the current workspace.layout_changed payload is 2.0.0 (CV-361); 1.1.0 describes events already written, and the invalid fixture cases are re-pinned when the fixtures move to 2.0.0."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Commands_System.md, Plans/event_family_registry.json]
 ```
 
@@ -5934,6 +5964,13 @@ owner units they cite and restate none of their rules. They are required future 
 passes: a missing runner or an unrun native client stays `not_run` with its reason, never an inferred pass. They create
 no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188): both units also certify Jared's answers of 2026-10-10. ATS-075 adds the
+dashboards on the Usage board engine (WS-030 as rewritten), the chat after a restart and its rail entry, the retired
+Chat Layout setting, the 400 px Usage board floor, one Debug Console tab with session sub-tabs, installed shells and
+SSH hosts in the "+" menu, the tour's Upcoming resets step and `workspace.layout_changed` at family revision 2.0.0.
+ATS-076 adds terminal tabs without chosen colours or icons, secrets scrubbed from saved scrollback, the 512 MiB total
+cap, terminal notifications with their per-tab mute, and the chat command card's finished words and actions.
+
 ### ATS-075 - Home Panels Certification
 
 ```yaml
@@ -6002,10 +6039,44 @@ canonical_text: >-
   Checks run against the panels concept and its harness are concept evidence only: they never certify the native
   desktop or web client, which needs its own run's receipts naming the revision, platform, toolkit and renderer
   (ATS-067). This supersedes ATS-029.
+  Amended 2026-10-10 (DL-186, DL-187, DL-188): the matrix also certifies Jared's answers of 2026-10-10. Dashboards
+  (Plans/Widget_System.md#WS-030, F3-638, Plans/Widget_System.md#WS-019): every board but Agents runs on the Usage
+  board engine with the Usage page's grid, size presets, gestures, gravity, Tidy and live previews and no settlement
+  of its own; each board restores from and writes to its project's `widget_layout:v1:<project_id>:<board_id>` with
+  `host_id` `home.dashboard`, a project switch re-keys every open board, an unscoped board key is adopted once, and
+  nothing is converted from or written to `widget_layout:v1:dashboard`; New dashboard opens an empty board named
+  "Dashboard <n>", Rename dashboard... and a tab rename set its stored name, Delete dashboard... asks first and
+  forgets the board, and Home, Metrics, Monitoring and Agents offer neither; Reset widgets and every Start from row
+  dispatch one cmd.widget.reset_layout with the right `set_id`, shown in Start from's four groups in F3-638's order;
+  presets are saved,
+  renamed and deleted with no command, follow the person across projects, never hold the view and apply through
+  set_id `user:<preset_id>`; range and scope are per board and dispatch nothing (ui.widget_board.set_view); Add widget
+  offers every Usage widget by room and no old Home widget; every widget command inside a dashboard tab names its
+  board in `room` and appends no `workspace.layout_changed`; a board's first show plays the reading-order entrance,
+  instant under Reduced Motion, a hidden board does no work, and live readings run per board (the lab-only Play the
+  next hour has no case, UF-107);
+  boards are drawn on Home's tab surface and every look's widget plates are checked on it; Details opens the Usage
+  page at the widget's home room with its inspector open; Agents keeps only its filter; a dashboard a person made
+  that leaves the reopen list while closed loses its key, set-aside copy and name; a named layout restores its
+  boards, and a save over 64 KB keeps the layout without them and says how many bytes it left out. The chat (F3-637,
+  F3-042, Plans/assistant-chat-design.md#ACD-500): a popped-out chat starts back in its column after a restart; the
+  left rail's Chat entry shows or hides the column on every page (cmd.panel.switch); a stored Chat Layout value of
+  Overlay or Detached is ignored and cleared on first read with no pop-out and no notice
+  (Plans/Settings_System.md#SSYS-050); Keep the chat open in narrow windows is on the chat's header menu, not in
+  Settings; and neither the chat's default width nor its drag ever leaves the Usage page's board narrower than 400 px.
+  The Debug Console (F3-635, F3-490): one `debug-console` tab whose session sub-tabs switch the session shown as view
+  state, an old per-session tab id folding into it in layouts, the reopen list, named layouts and opens. The "+" menu
+  (F3-632): the Terminal row lists the installed shells inline and the SSH hosts in one "SSH hosts" submenu row,
+  ungrouped sub-rows are not capped, and the empty-panel launcher shows the same. The tour's widget step
+  (Plans/Planning_Wizard.md#PWIZ-035): Upcoming resets added to the Home board and then moved or resized there, never
+  finished by a timer, with Back, Skip and Finish putting the board back. Event truth (DL-188, CV-361): each
+  structural commit appends one `workspace.layout_changed` at family revision 2.0.0 that validates against the 2.0.0
+  payload, events written at 1.1.0 stay readable and are never rewritten, and cmd.chat.plan.open_version appends the
+  event only when it adds a tab.
 gui_related: true
 gui_classification_reason: The certification exercises and captures every visible behaviour of the home panels across looks, widths, layouts, motion and failures.
 split_recommended: false
-depends_on: [DL-180, DL-184, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065, DR-067, DR-069]
+depends_on: [DL-180, DL-184, DL-186, DL-187, DL-188, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065, DR-067, DR-069, PWIZ-035]
 unblocks: [GRRC-040]
 acceptance_criteria:
   - "After every structural command the split tree satisfies each invariant listed, and the fit rule, the shares, the gaps, the divider target and keys, collapse, maximize, locking and last-tab closing each have a passing case that asserts rendered geometry."
@@ -6027,6 +6098,10 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
   - "In every look and in NieR, text and state colours (dim text, accent, ok, warn, bad and inactive tabs) mixed from the page's own colours reach 4.5:1 while the Settings accent flows through, and primary buttons choose black or white ink from fill luminance with at least 4.5:1 contrast."
+  - "Amended 2026-10-10 (DL-186): each dashboard behaviour of WS-030 as rewritten has a passing case: one engine and one settlement, per-project keys and re-keying, no conversion of widget_layout:v1:dashboard, custom dashboards made, renamed and deleted with the built-ins reset only, Reset and Start from with set_id in F3-638's group order, presets with no command across projects, per-board range and scope with no dispatch, the catalogue without old Home widgets, the entrance, idle hidden boards, live readings per board, Home's tab surface in every look, Details on the Usage page, Agents' filter, the reopen-list deletion and the 64 KB named-layout snapshot."
+  - "Amended 2026-10-10 (DL-187): a popped-out chat comes back in its column after a restart; the rail's Chat entry toggles the column on every page; a stored Overlay or Detached Chat Layout value is cleared on first read with no pop-out and no notice; the narrow-window pin is on the chat's header menu; the Usage page's board never drops under 400 px; one Debug Console tab switches sessions by its sub-tabs and absorbs old per-session ids; the Terminal row lists installed shells inline and SSH hosts in one submenu row, uncapped, and the launcher matches."
+  - "Amended 2026-10-10 (DL-186): the tour's widget step finishes only after Upcoming resets is added to the Home board and then moved or resized there, and Back, Skip and Finish restore the board."
+  - "Amended 2026-10-10 (DL-188): each structural commit's workspace.layout_changed validates against family revision 2.0.0, events written at 1.1.0 stay readable, and cmd.chat.plan.open_version appends the event only when it adds a tab."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6050,6 +6125,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 9, 13 and 14; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (the measured widths and the named layouts; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 3.7 and gap C19; audit lineage only)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "Plans/Decision_Log.md#DL-188"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40, D42)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (D32, D33, D39, D40 as built; concept lineage only)"
 preserved_exact_tokens:
   - "workspace.layout_changed"
   - "ui.*"
@@ -6058,6 +6138,10 @@ preserved_exact_tokens:
   - "not_run"
   - "zero console and page errors"
   - "artifact:<artifact_id>@v<n>"
+  - "widget_layout:v1:<project_id>:<board_id>"
+  - "set_id"
+  - "debug-console"
+  - "SSH hosts"
 negative_constraints:
   - "Do not certify Home with a dispatch count, a global marker or a screenshot alone."
   - "Do not substitute an internal API for a missing visible production control."
@@ -6070,6 +6154,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+  - "Amended 2026-10-10 (DL-186, DL-187, DL-188): certifies dashboards on the Usage board engine as WS-030 now says, the chat after a restart and its rail entry, Chat Layout's retirement, the narrow-window pin on the chat's header menu, the 400 px Usage board floor, one Debug Console tab with session sub-tabs, shells and SSH hosts in the \"+\" menu, the tour's Upcoming resets step and workspace.layout_changed 2.0.0."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
   - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-639, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065 and DR-067 own the behaviour."
@@ -6178,10 +6263,31 @@ canonical_text: >-
   terminal concept are concept evidence only, as ATS-075 says; native receipts name the revision, platform, toolkit,
   renderer and transport, and a missing runner stays `not_run`. This amends ATS-047, whose image exclusion DL-182
   replaces, and takes over ATS-029's terminal identity fixtures.
+  Amended 2026-10-10 (DL-187, DL-185): the matrix also certifies Jared's answers on the terminal and the chat's
+  finished command card, each case checking the owner's exact formats, labels and words rather than a copy of them
+  here. Tab marks (D34, F3-640, F3-631): no terminal tab shows a colour or icon of the person's choosing on the
+  strip. Secrets in saved scrollback (D36): every secret format Plans/storage-plan.md#SP-332 and SMPFS-183 list is
+  replaced in the saved copy before it is written, in place, so the line keeps its width and every image anchor and
+  mark stays put, with the label or mark SP-332 gives; a private key keeps its BEGIN and END lines; command lines and
+  link targets in the copy are scrubbed the same way; the live screen keeps the original; and the restore notice
+  counts the secrets left out in SP-332's words. The total cap (D37, lead ruling F4): 512 MiB for every terminal's
+  saved copy together, fixed and not a setting, trimmed in the order SP-332 gives, each terminal keeping its 64 MiB.
+  Notifications (D38, lead ruling F5): OSC 9, OSC 777 and OSC 99 notifications behave as F3-641 and SMPFS-183 say: a
+  system notification only while Puppet Master is in the background, at most one every 3 s per terminal, Mute
+  notifications as that tab's own state (ui.terminal.mute_notifications), absent where the platform has no system
+  notifications, and the web client's one inline permission notice after a notification arrived. The chat's
+  command card (Plans/assistant-chat-design.md#ACD-500, ACD-502): a stopped command reads "Failed · exited 101",
+  "Done · exited 0" or "Interrupted · exited 130", a failed command with no exit code reads Failed alone and a
+  command whose session ended while it ran reads Ended with the earlier session; the lines above the preview are
+  counted at the top as "N earlier lines"; Interrupted is muted and still; who ran it reads "You ran in <folder>" or
+  the agent mark and "<Agent> ran in <folder>"; Open in Terminal shows only with a live session, View output only
+  without one and Rerun in Terminal only once the command has stopped, as 24 px text buttons; at 360 px the failure
+  line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches
+  4.5:1 and marks 3:1 in every look and mode.
 gui_related: true
 gui_classification_reason: The certification exercises every visible behaviour of the terminal tab, its images, its appearance, its saved scrollback and its agent rows.
 split_recommended: false
-depends_on: [DL-181, DL-182, DL-183, SMPFS-180, SMPFS-181, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-643, F3-644, F3-645, F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042, WM-091, ATS-047, ATS-075]
+depends_on: [DL-181, DL-182, DL-183, DL-185, DL-187, SMPFS-180, SMPFS-181, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-643, F3-644, F3-645, F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042, WM-091, ATS-047, ATS-075, ACD-500, ACD-502]
 unblocks: [GRRC-040]
 acceptance_criteria:
   - "Moving, reordering, collapsing, maximizing, hiding, splitting beside, layout-applying and revealing a terminal tab keep one terminal_session_id with no restart, replayed input or second PTY; Split, close, Reopen closed tab and restore each behave as SMPFS-180 says, with the restored notice."
@@ -6203,6 +6309,11 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
   - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
+  - "Amended 2026-10-10 (DL-187): no terminal tab shows a colour or icon of the person's choosing on the strip."
+  - "Amended 2026-10-10 (DL-187): every secret format SP-332 lists is replaced in the saved copy before it is written, in place and at the same width, with SP-332's label or mark; a private key keeps its BEGIN and END lines; command lines and link targets are scrubbed too; the live screen is unchanged; and the restore notice counts the secrets left out."
+  - "Amended 2026-10-10 (DL-187): the saved copies of all terminals together never pass 512 MiB; past it, saved copies are trimmed in the order SP-332 gives, and each terminal keeps its 64 MiB."
+  - "Amended 2026-10-10 (DL-187): OSC 9, OSC 777 notify and OSC 99 raise a system notification only while Puppet Master is in the background, at most one every 3 s per terminal; in the foreground they are announced and mark an unfocused tab; Mute notifications is per tab, saved with it and absent without system notifications; the web client asks for permission once, inline, after a notification arrived."
+  - "Amended 2026-10-10 (DL-185): the chat's command card shows its status in words with the exit code after it, the earlier lines counted at the top, Interrupted muted and still, who ran it, only the actions its session supports, the narrow wrap at 360 px, no motion on first paint, only 120 ms fades under Reduced Motion, and 4.5:1 text and 3:1 marks in every look and mode."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6229,6 +6340,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36, D37, D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 1 notifications, section 7 secrets and the total cap, section 11 the chat command card; concept lineage only)"
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -6248,11 +6362,21 @@ preserved_exact_tokens:
   - "[<name> <W>×<H> · not kept]"
   - "ended with the earlier session"
   - "cmd.terminal.reveal"
+  - "512 MiB"
+  - "OSC 9"
+  - "OSC 777"
+  - "OSC 99"
+  - "Mute notifications"
+  - "ui.terminal.mute_notifications"
+  - "Failed · exited 101"
+  - "N earlier lines"
 negative_constraints:
   - "Do not certify a terminal case by a dispatch count or a screenshot alone, or report a concept result as native certification."
   - "Do not accept an image error reply that echoes program input or differs from SMPFS-181's fixed strings."
   - "Do not accept a stored Allow in this terminal grant, or a grant that lets a command skip its own approval."
   - "Do not accept a restored terminal that presents the old session as live, or a running command restored as done."
+  - "Do not accept a saved copy that keeps a listed secret format, or a scrub that shifts a line's width or an image anchor."
+  - "Do not accept a system notification while Puppet Master is in the foreground, more than one every 3 s per terminal, or from a muted terminal."
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
@@ -6262,6 +6386,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
+  - "Amended 2026-10-10 (DL-187, DL-185): certifies no chosen tab colours or icons on terminal tabs (D34), secrets scrubbed from saved scrollback (D36), the fixed 512 MiB total cap (D37), terminal notifications with the per-tab mute (D38), and the chat command card's finished words and actions (terminal SPEC section 11)."
 owner_boundary_notes:
   - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look and GPU frame measurements remain concept lineage; R34's adopted CPU budget, idle deadline and no-GPU rule are certified here."
 owner_hints:
