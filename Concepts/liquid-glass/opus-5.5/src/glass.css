@@ -84,7 +84,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #a
 /* ---------------------------------------------------------------------------------------------------------------
    3. The glass material. A sheet (title bar, sidebar, navigation, toolbar, card, chat, status bar) stacks, top to
       bottom: its specular rim (--lg-spec), its tint, its refracted rim ring (--lg-ring: the wallpaper under its bevel,
-      bent and split), and the frosted core (--lg-frost-*: the wallpaper blurred, fixed to the window so it lines up).
+      bent and split), and the frosted core (--lg-frost-*: the wallpaper blurred at the window's size, offset by the sheet's
+      layout position so it lines up; never background-attachment: fixed, which a moving board re-anchors).
       glass.js bakes the ring and the frost from the wallpaper, so a sheet runs no filter at all. Menus blur what is
       behind them live (they float over content), and lenses refract live. --lg-mat condenses the glass as it arrives.
    --------------------------------------------------------------------------------------------------------------- */
@@ -95,19 +96,19 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [d
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat)))),
-    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) 0 0 / 100vw 100vh no-repeat fixed !important;
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-sheet) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat)))),
-    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) 0 0 / 100vw 100vh no-repeat fixed !important;
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat)))),
-    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) 0 0 / 100vw 100vh no-repeat fixed !important;
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
@@ -129,14 +130,16 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine > i {
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .10); }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .45); }
 /* the arrival sweep: one band of light across the window as the glass condenses */
-#lg-sweep { display: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep { display: block; position: fixed; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+/* calm: no light bands cross the board or the cards when a room or page changes (Jared, 2026-10-11: "The usage page
+   animations are too busy... the side ways swipe across the whole screen when you change tabs can go away") */
+#lg-sweep, html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-film-refract, .pmu-film-glint, .pmu-film-sweep, .pmu-film-floor) { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep { display: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep > i {
   position: absolute; top: -30%; bottom: -30%; left: 0; width: 30%; opacity: 0; mix-blend-mode: plus-lighter;
   background: linear-gradient(100deg, transparent, var(--lg-shine-c) 45%, var(--lg-shine-c) 55%, transparent); will-change: transform;
 }
 .lg-lens, .lg-press, #lg-lenses { display: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 45; pointer-events: none; }   /* above the title bar (40) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens.lg-under { opacity: 0; transition: opacity 120ms ease; }
 /* the window is not focused: the glass recedes, its rims dim and its selection greys */
 html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-sel: rgba(150, 156, 170, .45); }
@@ -164,7 +167,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon { opacity: 1 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon:hover .symbol { background: var(--lg-fill-hover) !important; color: var(--text-primary) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--lg-on-sel) !important; background: transparent !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--accent-blue) !important; background: transparent !important; }   /* the active window's colour, under the lens */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-inactive] #activityBar .icon[data-lg-current] .symbol { color: var(--text-primary) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar :is(.d-abind) { opacity: 0 !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
@@ -205,7 +209,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn {
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn::before, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--lg-fill-hover) !important; color: var(--text-primary) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active * { color: var(--lg-on-sel) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active * { color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--accent-blue) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn.active { font-weight: 650; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
@@ -213,21 +218,77 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .s
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):is(.selected, .active, [aria-selected="true"]) { background: var(--lg-fill-press) !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored { opacity: 1 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored :is(.fm-name, .fm-count, .fm-gitbadge) { color: var(--text-muted) !important; }
-/* switches and meters on a sheet: the look's rectangle, a glass key; square bar ends (no-pills) */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) { border-radius: var(--pm-ctl-r) !important; }
+/* switches: a curved glass track and a round knob (Jared, 2026-10-11: curved, slower; switches are controls, so the
+   pill rule does not apply to them). While held the knob swells and goes clear, lensing the track under it; it lands
+   solid on the other side on a slower, springier slide. Square bar ends stay (no-pills). */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) {
+  width: 38px !important; height: 22px !important; border-radius: 11px !important;
+  background-color: var(--lg-switch-off) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .22), inset 0 0 0 .5px var(--lg-line) !important;
+  transition: background-color 420ms cubic-bezier(.2, .8, .2, 1) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on, .pmu-wswitch.on .pmu-wswitch-track) { background-color: var(--accent-blue) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-toggle::after,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-wswitch-track > i {
-  border-radius: var(--pm-ctl-r-in) !important; background: linear-gradient(180deg, #FFFFFF, #E6ECF6) !important;
-  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 0 rgba(20, 30, 60, .12), 0 1px 3px rgba(0, 8, 30, .4) !important;
+  top: 2px !important; left: 2px !important; width: 18px !important; height: 18px !important; border-radius: 50% !important;
+  background: radial-gradient(120% 90% at 35% 22%, #FFFFFF, #F1F4F9 55%, #DCE3EE) !important;
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 1px rgba(20, 30, 60, .14), 0 2px 5px rgba(0, 8, 30, .32), 0 0 0 .5px rgba(0, 8, 30, .12) !important;
+  transition: transform 560ms cubic-bezier(.3, 1.4, .45, 1), background 220ms ease, box-shadow 220ms ease, width 300ms cubic-bezier(.3, 1.3, .45, 1) !important;
 }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on)::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-wswitch.on .pmu-wswitch-track > i { transform: translateX(16px) !important; }
+/* held: the knob is a drop of clear glass, wider, lensing the track (one shared 18 px lens, #lg-knob) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-toggle[data-lg-held]::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-wswitch-track[data-lg-held] > i {
+  background: radial-gradient(120% 90% at 35% 20%, rgba(255, 255, 255, .55), rgba(255, 255, 255, .08) 60%) !important;
+  -webkit-backdrop-filter: url(#lg-knob) saturate(1.4); backdrop-filter: url(#lg-knob) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 1px rgba(255, 255, 255, .35), 0 4px 10px rgba(0, 8, 30, .28) !important;
+  transform: scale(1.28, 1.18) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on)[data-lg-held]::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-wswitch.on .pmu-wswitch-track[data-lg-held] > i { transform: translateX(16px) scale(1.28, 1.18) !important; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-switch-off: rgba(255, 255, 255, .16); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-switch-off: rgba(12, 15, 21, .14); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage :is(.pmu-toggle::after, .pmu-wswitch-track > i) { transition: background 160ms ease !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRoomTitle, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-rail h1 { color: var(--text-primary) !important; font-weight: 700; letter-spacing: -.015em; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-pop, .pmr-menu-list) :is(.pmu-poprow, .pmu-mitem, .pmr-menu-item, [role="menuitem"], [role="option"]) { border-radius: var(--pm-ctl-r) !important; }
 
+/* searches inside menus: one glass field; the input inside it has no fill, border or ring of its own */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearch { padding: 8px 8px 6px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchwrap {
+  border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; min-height: 32px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .10), inset 0 0 0 .5px var(--lg-line) !important; transition: box-shadow 160ms ease, background-color 160ms ease;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchwrap:focus-within { background: var(--lg-fill-hover) !important; box-shadow: inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .75), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchin { background: transparent !important; border: 0 !important; box-shadow: none !important; outline: none !important; color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchin::placeholder { color: var(--text-muted) !important; }
+/* the title-bar look menu, spaced as one glass menu: a joined Light/Dark/Auto row, then quiet rows (pm7-no-pills owns
+   its shapes in every look; this is Glass's material and spacing only) */
+/* a hover tag never sits on top of an open title-bar menu */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):has(.pm6-tb-menu.is-open) #pm-hover-tag-root { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu.is-open { padding: 8px !important; min-width: 236px; border: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes { display: flex; gap: 0; margin: 0 0 8px !important; padding: 2px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode { flex: 1; border: 0 !important; border-radius: var(--pm-ctl-r-in) !important; background: transparent !important; box-shadow: none !important; padding: 5px 8px !important; color: var(--text-secondary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: var(--lg-fill-press) !important; color: var(--text-primary) !important; font-weight: 650; box-shadow: inset 0 1px 0 var(--lg-edge-top) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { margin: 6px 4px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
+  min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
+  background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item.is-selected { background: var(--lg-fill-press) !important; font-weight: 650; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-chips { display: inline-flex; gap: 5px; margin-left: auto; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row { display: flex; align-items: center; gap: 6px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row > .pm6-tb-menu-item { flex: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust { margin: 0 !important; flex: none; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 6px 10px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust:hover { background: var(--lg-fill-hover) !important; }
+
 /* ---------------------------------------------------------------------------------------------------------------
-   6. The lens: clear glass over the chosen item. glass.js gives it refraction that bends at its rim and magnifies at
-      its centre, so the label under it swells; it moves on a spring, stretching with its speed. A standalone choice
-      (activity bar, Usage's navigation) is the macOS sidebar selection: accent glass, white ink, grey when unfocused.
+   6. The lens: clear glass over the chosen item, the same in every strip and list (page tabs, Usage's range and
+      navigation, the rail's tabs and activity bar). glass.js gives it refraction that magnifies the label under it and
+      bends softly at its rim, with the colour split only in the rim. It moves on a spring, stretching with its speed.
+      The bead is the same glass, lifting under the icon button the pointer is on.
    --------------------------------------------------------------------------------------------------------------- */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens {
   display: block; position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none;
@@ -235,7 +296,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens {
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 4px 12px -4px var(--lg-shadow), 0 1px 2px var(--lg-shadow-near);
   transform-origin: 50% 50%; will-change: transform;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-solo] { border-radius: var(--pm-ctl-r); background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-sel), var(--lg-sel)); z-index: 0; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens:is([data-lg-lens="lensRow"], [data-lg-lens="lensIcon"], [data-lg-lens="bead"]) { border-radius: var(--pm-ctl-r); }
+/* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 3px 8px -3px var(--lg-shadow); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 10px 24px -6px var(--lg-shadow), 0 2px 4px var(--lg-shadow-near); transition: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;

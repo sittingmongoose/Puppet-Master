@@ -105,36 +105,75 @@
     svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden'; svg.id = 'lg-optics';
     defs = document.createElementNS(SVGNS, 'defs'); svg.appendChild(defs); document.body.appendChild(svg); return defs;
   }
-  /* Live refraction is kept for the lenses only: small, and floating over labels that change under them. Chrome
-     re-runs an SVG backdrop filter every frame, which costs about 400 ms a frame on the P1000 across the sheets, so the
-     sheets bake theirs (below). The lens splits colour slightly at its rim. */
-  function filterFor(W, H, m, ca) {
-    var key = m.disp.length + ':' + W + 'x' + H + ':' + m.scale.toFixed(1) + ':' + ca;
+  /* ---- the lens -----------------------------------------------------------------------------------------------------
+     Live refraction is kept for lenses only (the chosen tab, the hover bead, a switch's knob while held): small, and
+     floating over labels that change under them. Chrome re-runs an SVG backdrop filter every frame, so the sheets bake
+     theirs instead (below).
+     A lens magnifies across its face and bends at its bevel. Two things keep it reading as glass, not as a glitch:
+       - the colour split happens only in the bevel. Each channel gets its own map in which only the bevel part of the
+         shift is scaled (red less, blue more), so the label in the middle stays one crisp image;
+       - the bevel band is softened by a sub-pixel blur, so the compressed surroundings at the rim read as a smooth
+         reflection rather than as broken letters. */
+  function buildLensMaps(W, H, R, B, T, mag, ca, lightK) {
+    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|');
+    if (mapCache.has(key)) return mapCache.get(key);
+    var n = W * H, ch = [new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n)];
+    var rimA = new Float32Array(n), sp = new Float32Array(n), hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
+    var cap = Math.min(3.5, B * 0.8), kR = 1 - ca, kB = 1 + ca;
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R), d = s0[0];
+      if (d <= 0) continue;
+      var mx = -px * (1 - 1 / mag), my = -py * (1 - 1 / mag), bx = 0, by = 0;
+      if (d < B) {
+        var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
+        var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
+        bx = -s0[1] * m; by = -s0[2] * m;
+        var face = s0[1] * L0 + s0[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
+        var line = Math.exp(-d / 1.1), glow = Math.exp(-d / Math.min(5, B * 0.5)) * 0.18;
+        sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.12);
+      }
+      var u = Math.min(1, Math.max(0, (d - 0.6) / 2.2)); rimA[i] = 1 - u * u * (3 - 2 * u);
+      ch[0][i] = mx + bx * kR; ch[1][i] = my + by * kR; ch[2][i] = mx + bx; ch[3][i] = my + by; ch[4][i] = mx + bx * kB; ch[5][i] = my + by * kB;
+      for (var c = 0; c < 6; c++) { var v = Math.abs(ch[c][i]); if (v > max) max = v; }
+    }
+    function img(fill) { var cv = document.createElement('canvas'); cv.width = W; cv.height = H; var g = cv.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return cv.toDataURL('image/png'); }
+    var k = max || 1;
+    function dmap(cx2, cy2) { return img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(cx2[i] / k * 127); D[o + 1] = 128 + Math.round(cy2[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }); }
+    var res = {
+      scale: max * 2, maps: [dmap(ch[0], ch[1]), dmap(ch[2], ch[3]), dmap(ch[4], ch[5])],
+      rim: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(rimA[i] * 255); } }),
+      spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
+    };
+    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
+    mapCache.set(key, res);
+    return res;
+  }
+  function lensFilter(W, H, m, rimBlur, id) {
+    var key = id || (m.maps[1].length + ':' + W + 'x' + H + ':' + m.scale.toFixed(2) + ':' + rimBlur);
     if (filterByKey.has(key)) return filterByKey.get(key);
-    var id = 'lgf' + (fid++), f = document.createElementNS(SVGNS, 'filter');
+    var f = document.createElementNS(SVGNS, 'filter'); id = id || ('lgf' + (fid++));
     f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', W); f.setAttribute('height', H);
     f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
-    var s = m.scale.toFixed(1);
-    var html = '<feImage href="' + m.disp + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="map"/>';
-    if (ca > 0) {
-      var rs = (m.scale * (1 - ca)).toFixed(1), bs = (m.scale * (1 + ca)).toFixed(1);
-      html += '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + rs + '" xChannelSelector="R" yChannelSelector="G" result="dr"/>' +
-        '<feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + s + '" xChannelSelector="R" yChannelSelector="G" result="dg"/>' +
-        '<feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + bs + '" xChannelSelector="R" yChannelSelector="G" result="db"/>' +
-        '<feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>' +
-        '<feComposite in="r" in2="g" operator="arithmetic" k2="1" k3="1" result="rg"/>' +
-        '<feComposite in="rg" in2="b" operator="arithmetic" k2="1" k3="1" result="D"/>';
-    } else {
-      html += '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + s + '" xChannelSelector="R" yChannelSelector="G" result="D"/>';
+    var sc = m.scale.toFixed(2), h = '', keep = ['1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0', '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0', '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0'];
+    for (var c = 0; c < 3; c++) {
+      h += '<feImage href="' + m.maps[c] + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="m' + c + '"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="m' + c + '" scale="' + sc + '" xChannelSelector="R" yChannelSelector="G" result="d' + c + '"/>' +
+        '<feColorMatrix in="d' + c + '" type="matrix" values="' + keep[c] + '" result="c' + c + '"/>';
     }
-    f.innerHTML = html;
+    h += '<feComposite in="c0" in2="c1" operator="arithmetic" k2="1" k3="1" result="c01"/><feComposite in="c01" in2="c2" operator="arithmetic" k2="1" k3="1" result="D"/>';
+    if (rimBlur > 0) {
+      h += '<feGaussianBlur in="D" stdDeviation="' + rimBlur + '" result="Db"/>' +
+        '<feImage href="' + m.rim + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="E"/>' +
+        '<feComposite in="Db" in2="E" operator="in" result="X"/><feComposite in="D" in2="E" operator="out" result="Y"/>' +
+        '<feComposite in="X" in2="Y" operator="arithmetic" k2="1" k3="1"/>';
+    }
+    f.innerHTML = h;
     ensureDefs().appendChild(f);
     var rec = { id: id, el: f, scale: m.scale };
     filterByKey.set(key, rec);
     return rec;
   }
+  function setLensScale(f, k) { f.el.querySelectorAll('feDisplacementMap').forEach(function (n) { n.setAttribute('scale', (f.scale * k).toFixed(2)); }); }
 
   /* ---- glass kinds -------------------------------------------------------------------------------------------------
      bezel and thickness in px; blur before the refraction; ca = chromatic split at the rim; mag = lens magnification;
@@ -144,8 +183,10 @@
     panel:   { bezel: 32, thick: 80, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.05, bake: true, ring: [3, 8] },
     card:    { bezel: 28, thick: 70, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.0,  bake: true, ring: [2, 5] },
     bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
-    lens:    { bezel: 4,  thick: 10, sat: 1.5, ca: 0.10, mag: 1.10, light: 1.35, live: true },
-    sel:     { bezel: 6,  thick: 12, sat: 1,   ca: 0,    mag: 1,    light: 1.1 },
+    lens:    { bezel: 4,  thick: 11, sat: 1.3, ca: 0.14, mag: 1.08, light: 1.3, rimBlur: 0.8, lens: true },
+    lensRow: { bezel: 5,  thick: 12, sat: 1.25, ca: 0.14, mag: 1.03, light: 1.2, rimBlur: 0.8, lens: true },
+    lensIcon:{ bezel: 6,  thick: 14, sat: 1.35, ca: 0.16, mag: 1.12, light: 1.3, rimBlur: 0.8, lens: true },
+    bead:    { bezel: 6,  thick: 14, sat: 1.35, ca: 0.14, mag: 1.08, light: 1.2, rimBlur: 0.8, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
   var glassSet = new Set();
@@ -173,6 +214,29 @@
     if (wallImg && wallUrl === u && wallImg.complete) { cb(wallImg); return; }
     var im = new Image(); im.decoding = 'async'; im.onload = function () { wallImg = im; wallUrl = u; cb(im); }; im.src = u;
   }
+  /* where an element sits when nothing is moving it: its layout position from the offset chain, which ignores
+     transforms (a board sliding in, a card leaning toward the pointer, a lifted card). The frost and the rim are
+     sampled from the wallpaper at that position, so a sheet carries its own glass with it while it moves and nothing
+     re-anchors or pops when it lands. */
+  function layoutPos(e) {
+    var x = 0, y = 0, n = e;
+    while (n && n !== document.body && n !== document.documentElement) {
+      x += n.offsetLeft; y += n.offsetTop;
+      var p = n.offsetParent;
+      for (var a = n.parentElement; a && a !== p; a = a.parentElement) { x -= a.scrollLeft; y -= a.scrollTop; }
+      if (!p) break;
+      x += p.clientLeft - p.scrollLeft; y += p.clientTop - p.scrollTop;
+      n = p;
+    }
+    return { x: x, y: y };
+  }
+  function anchor(e) {
+    var lp = layoutPos(e), fx = Math.round(-lp.x) + 'px', fy = Math.round(-lp.y) + 'px';
+    if (e.__lgFx !== fx) { e.__lgFx = fx; e.style.setProperty('--lg-fx', fx); }
+    if (e.__lgFy !== fy) { e.__lgFy = fy; e.style.setProperty('--lg-fy', fy); }
+    return lp;
+  }
+  function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } };
   function makeFrosts(im, done) {
@@ -196,8 +260,9 @@
     });
   }
   function bakeRing(e, kind, im) {
-    var k = KINDS[kind], r = e.getBoundingClientRect(), W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
-    if (W < 4 || H < 4 || r.width < 1) return;
+    var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
+    if (W < 4 || H < 4) return;
+    var r = anchor(e); r = { left: r.x, top: r.y };
     var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
     var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring), raw = m.raw, c = cover(im);
     var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
@@ -245,19 +310,20 @@
     if (!glassSet.has(e)) { glassSet.add(e); if (sizeWatch) sizeWatch.observe(e); }
     var R = radiusOf(e, W, H);
     if (k.bake) {
-      var sig = W + 'x' + H + '@' + Math.round(r.left) + ',' + Math.round(r.top) + ':' + R.toFixed(1) + ':' + kind + ':' + currentWallUrl().length + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
+      var lp = anchor(e);
+      var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + currentWallUrl().length + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
       if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
       return null;
     }
     var B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
     var sig2 = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind + ':' + gpu();
     if (e.__lgSig === sig2) return e.__lgF;
-    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
+    var m = k.lens ? buildLensMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.ca, k.light) : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     e.__lgSig = sig2; e.__lgF = null;
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
-    else if (gpu() && k.live) { var f = filterFor(W, H, m, k.ca); e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    else if (gpu() && k.lens) { var f = lensFilter(W, H, m, k.rimBlur); e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -265,7 +331,14 @@
   function unmountAll() {
     glassSet.forEach(function (e) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgSig = null; });
   }
-  document.addEventListener('scroll', function () { if (isGlass()) lazySync(); }, true);
+  /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
+  var scrollQ = false;
+  document.addEventListener('scroll', function (ev) {
+    if (!isGlass()) return;
+    var box = ev.target && ev.target.nodeType === 1 ? ev.target : document.documentElement;
+    if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () { scrollQ = false; glassSet.forEach(function (e) { if (e.isConnected && box.contains(e) && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake) anchor(e); }); }); }
+    lazySync();
+  }, true);
 
   /* ---- springs ------------------------------------------------------------------------------------------------------
      A damped spring from 0 to 1 sampled at 60 fps until it rests: the same curve every motion uses, so everything moves
@@ -284,11 +357,11 @@
 
   /* ---- lenses: the chosen item sits under a clear magnifying lens that moves like a drop -------------------------- */
   var STRIPS = [
-    { sel: 'nav.page-tabs', items: '.page-tab', scrub: true },
-    { sel: '#pmuRange', items: ':scope > button', scrub: true },
-    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, solo: true },
-    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true },
-    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, solo: true, pick: railIcon, box: function (i) { return i.querySelector('.symbol') || i; } },
+    { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
+    { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
+    { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
+    { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
+    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, box: function (i) { return i.querySelector('.symbol') || i; } },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -297,33 +370,30 @@
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
     if (icon) icon.setAttribute('data-lg-current', ''); return icon;
   }
-  /* A lens that refracts lives in its own layer above the strips (#lg-lenses), not inside them: Chrome hides a glass
-     element's backdrop from its children, so a lens nested in a glass bar could see only the bar's labels over black.
-     From outside it sees the bar, the wallpaper and the label together, and magnifies them as one. A standalone choice
-     (activity bar, Usage navigation) is an accent fill with a lit rim, kept inside its list. */
+  /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
+     the sheet, the wallpaper and the label together and magnifies them as one, and no sheet can cover it. */
   var lenses = new Map(), layer = null;
   function lensLayer() {
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
   }
-  function rectIn(strip, t, cfg) {
-    var r = t.getBoundingClientRect();
-    if (!cfg.solo) { var lr = lensLayer().getBoundingClientRect(); return { x: r.left - lr.left, y: r.top - lr.top, w: r.width, h: r.height }; }
-    var sr = strip.getBoundingClientRect();
-    return { x: r.left - sr.left - strip.clientLeft + strip.scrollLeft, y: r.top - sr.top - strip.clientTop + strip.scrollTop, w: r.width, h: r.height };
+  /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel: only the strip's
+     own edge and the surroundings bend at the rim, never the letters (they had split into coloured specks) */
+  function rectIn(strip, t, pad) {
+    var r = t.getBoundingClientRect(), lr = lensLayer().getBoundingClientRect(); pad = pad || 0;
+    return { x: r.left - lr.left - pad, y: r.top - lr.top - pad, w: r.width + 2 * pad, h: r.height + 2 * pad };
   }
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
     if (L && L.lens.isConnected) return L;
-    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true' });
-    if (cfg.solo) { lens.setAttribute('data-lg-solo', ''); if (getComputedStyle(strip).position === 'static') strip.style.position = 'relative'; strip.appendChild(lens); }
-    else lensLayer().appendChild(lens);
+    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind });
+    lensLayer().appendChild(lens);
     L = { lens: lens, rect: null, anim: null, cfg: cfg }; lenses.set(strip, L); return L;
   }
   function setLensBox(L, R) {
     var s = L.lens.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; L.rect = R;
-    mount(L.lens, L.cfg.solo ? 'sel' : 'lens');
+    mount(L.lens, L.cfg.kind);
   }
   /* travel from A to B: the drop lifts (grows a little and magnifies more), stretches along its path with its speed,
      thins across it, overshoots and wobbles once, all from one spring */
@@ -342,7 +412,8 @@
     }
     L.anim = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' });
     var f = L.lens.__lgF, base = f && f.scale;
-    if (f) { var t0 = performance.now(), dur = S[S.length - 1].t; (function tick() { var k = Math.min(1, (performance.now() - t0) / dur), boost = 1 + 0.6 * Math.sin(k * Math.PI); var dm = f.el.querySelectorAll('feDisplacementMap'); dm.forEach(function (n, j) { n.setAttribute('scale', (base * boost * (dm.length === 3 ? [0.9, 1, 1.1][j] : 1)).toFixed(1)); }); if (k < 1 && L.anim) requestAnimationFrame(tick); })(); }
+    /* while it travels the drop thickens a little: the refraction rises by up to 15 % and settles with it */
+    if (f) { var t0 = performance.now(), dur = S[S.length - 1].t; (function tick() { var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI)); if (k < 1 && L.anim) requestAnimationFrame(tick); else setLensScale(f, 1); })(); }
     L.anim.onfinish = function () { L.anim = null; };
   }
   function syncStrip(cfg, strip) {
@@ -350,7 +421,7 @@
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + '.active');
     if (!target || !visible(target) || !visible(strip)) { L.lens.style.opacity = '0'; L.rect = null; return; }
     L.lens.style.opacity = '';
-    var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg), A = L.rect;
+    var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
     if (!A || reduced() || !isGlass()) { if (A && reduced()) L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); setLensBox(L, R); return; }
     if (Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5) return;
@@ -440,6 +511,56 @@
     glow.animate([{ transform: 'translate(-50%,-50%) scale(.2)', opacity: 0.95 }, { transform: 'translate(-50%,-50%) scale(' + (Math.max(r.width, r.height) / 18).toFixed(1) + ')', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { glow.remove(); };
   }, true);
 
+  /* ---- the bead: a drop of glass that lifts under the icon button the pointer is on and flows to the next one, so the
+     icon swells inside it (the self-reflection Jared liked on the lenses, now on the rail's and toolbars' buttons) ---- */
+  var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev';
+  var bead = null, beadOn = null, beadRect = null, beadAnim = null, beadHide = 0;
+  function beadEl() { if (bead && bead.isConnected) return bead; bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
+  function beadTo(t) {
+    clearTimeout(beadHide);
+    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect();
+    var R = { x: r.left - lr.left - 2, y: r.top - lr.top - 2, w: r.width + 4, h: r.height + 4 }, A = beadRect;
+    var s = b.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; mount(b, 'bead');
+    if (beadAnim) beadAnim.cancel();
+    if (reduced()) { b.classList.add('on'); beadRect = R; return; }
+    if (A && b.classList.contains('on')) {
+      var S = spring.apply(null, LIQUID), dx = A.x - R.x, dy = A.y - R.y, dist = Math.hypot(dx, dy), fr = [];
+      for (var i = 0; i < S.length; i++) { var p = S[i].x, sp = Math.min(1, Math.abs(S[i].v) * dist / 2400), vert = Math.abs(dy) > Math.abs(dx);
+        fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.15 : 1 + sp * 0.4).toFixed(3) + ',' + (vert ? 1 + sp * 0.4 : 1 - sp * 0.15).toFixed(3) + ')' }); }
+      beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' });
+    } else {
+      b.classList.add('on');
+      beadAnim = b.animate([{ transform: 'scale(.55)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: 0.6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.3,1.3,.5,1)' });
+    }
+    beadRect = R;
+  }
+  function beadOff() {
+    clearTimeout(beadHide);
+    beadHide = setTimeout(function () { if (!bead || !bead.classList.contains('on')) return; beadAnim = bead.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim.onfinish = function () { bead.classList.remove('on'); beadRect = null; }; }, 140);
+  }
+  document.addEventListener('pointerover', function (e) {
+    if (!isGlass() || e.pointerType === 'touch') return;
+    var t = e.target.closest && e.target.closest(BEADS);
+    if (t === beadOn) return;
+    beadOn = t;
+    if (t && visible(t)) beadTo(t); else beadOff();
+  }, true);
+  document.addEventListener('pointerdown', function () { if (beadOn) beadOff(); beadOn = null; }, true);
+
+  /* ---- the switch's knob turns to liquid glass while it is held: it swells, goes clear and lenses the track under
+     it, then lands as a solid knob on the other side (iOS 27's switch); the slide itself is slower and springier ---- */
+  var SWITCHES = '#panel-usage .pmu-toggle, #panel-usage .pmu-wswitch-track, [role="switch"].pm-switch';
+  document.addEventListener('pointerdown', function (e) {
+    if (!isGlass() || e.button !== 0) return;
+    var sw = e.target.closest && e.target.closest('#panel-usage .pmu-toggle, #panel-usage .pmu-wswitch');
+    if (!sw) return;
+    var host = sw.classList.contains('pmu-wswitch') ? sw.querySelector('.pmu-wswitch-track') : sw;
+    if (!host) return;
+    host.setAttribute('data-lg-held', '');
+    var up = function () { document.removeEventListener('pointerup', up, true); document.removeEventListener('pointercancel', up, true); setTimeout(function () { host.removeAttribute('data-lg-held'); }, 160); };
+    document.addEventListener('pointerup', up, true); document.addEventListener('pointercancel', up, true);
+  }, true);
+
   /* ---- morph: a menu pours out of its control ------------------------------------------------------------------ */
   var lastPress = null;
   document.addEventListener('pointerdown', function (e) { lastPress = e.target.closest && e.target.closest('button, [role="button"], .pm6-tb-menu-trigger, .pmu-ctlbtn'); }, true);
@@ -468,25 +589,26 @@
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
-      if (L.cfg.solo || !L.rect) return;
+      if (!L.rect) return;
       var r = L.lens.getBoundingClientRect(), hit = menus.some(function (m) { return r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
       L.lens.classList.toggle('lg-under', hit);
     });
   }
   function scanMenus() {
-    var open = Array.prototype.slice.call(document.querySelectorAll('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open]')).filter(visible).map(function (m) { return m.getBoundingClientRect(); });
+    var open = Array.prototype.slice.call(document.querySelectorAll('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open')).filter(visible).map(function (m) { return m.getBoundingClientRect(); });
+    if (bead) bead.classList.toggle('lg-under', open.length > 0);
+    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else m.__lgMorphed = false; });
     lensesUnder(open);
     document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else m.__lgMorphed = false; });
     document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else m.__lgMorphed = false; });
   }
 
   /* ---- materialize: glass arrives by ramping its refraction and its frost, not by fading ---------------------------- */
-  var sweepEl = null;
+  /* glass condenses into place when Glass is switched on (never on a page or tab change: Jared, 2026-10-11, the Usage
+     page was too busy) */
   function materialize(list) {
     if (reduced()) return;
     list.forEach(function (e, i) { if (e.isConnected && /panel|card|bar/.test(e.getAttribute('data-lg-kind') || '')) e.animate([{ '--lg-mat': 0 }, { '--lg-mat': 1 }], { duration: 620, delay: i * 22, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }); });
-    if (!sweepEl || !sweepEl.isConnected) { sweepEl = el('div', { id: 'lg-sweep', 'aria-hidden': 'true' }); sweepEl.appendChild(el('i')); document.body.appendChild(sweepEl); }
-    sweepEl.firstChild.animate([{ transform: 'translateX(-120%) skewX(-14deg)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1, offset: 0.7 }, { transform: 'translateX(420%) skewX(-14deg)', opacity: 0 }], { duration: 1300, easing: 'cubic-bezier(.45,.05,.3,1)' });
   }
 
   /* ---- sync -------------------------------------------------------------------------------------------------------- */
@@ -509,7 +631,7 @@
     syncAll();
   }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
-  var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group';
+  var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu';
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var mo = new MutationObserver(function (recs) {
     var hot = false;
@@ -520,7 +642,7 @@
     }
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     if (hot && isGlass()) hotSync(); else lazySync();
-    if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(function () { syncAll(); materialize(Array.prototype.slice.call(document.querySelectorAll('#panel-usage .pmu-card[data-lg-kind], #panel-usage .pmu-rail[data-lg-kind]'))); }, 30); }
+    if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(syncAll, 30); }
   });
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
@@ -534,8 +656,13 @@
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });
 
+  function knobFilter() {   /* one shared lens for every switch knob (18 px) */
+    if (document.getElementById('lg-knob')) return;
+    var m = buildLensMaps(18, 18, 9, 7, 15, 1.16, 0.3, 1.2); lensFilter(18, 18, m, 0.6, 'lg-knob');
+  }
   function start() {
-    ensureDefs();
+    ensureDefs(); viewportVars(); knobFilter();
+    window.addEventListener('resize', viewportVars);
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'hidden', 'data-open'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(lazySync); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
