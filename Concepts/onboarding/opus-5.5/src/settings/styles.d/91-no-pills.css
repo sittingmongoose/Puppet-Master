@@ -72,3 +72,16 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::afte
 /* ── Segment rows inside Settings: the look's rectangle, the chosen cell with the inner corner ────────────────────── */
 html #panel-settings .segmented { border-radius: var(--pm-ctl-r); }
 html #panel-settings .segmented button { border-radius: var(--pm-ctl-r-in); }
+
+/* ── Square-ended bars (NP-BARS) ───────────────────────────────────────────────────────────────────────────────────
+   Meters get flat ends with a 1px corner at most, and a little more height so the end reads as meant; Retro and NieR
+   count in blocks, like a segment display. The space split's shares sit 2px apart (30-memory.js). The 2px lines
+   (waveform bars, tab ink, step connectors) are lines, not capsules, and keep their ends. */
+html #panel-settings .pm51-meter-track { height: 5px; border-radius: 1px; }
+html #panel-settings .pm51-meter-fill { border-radius: 1px; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .pm51-meter-track { height: 6px; border-radius: 0; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .pm51-meter-fill {
+  border-radius: 0;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+  mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+}
