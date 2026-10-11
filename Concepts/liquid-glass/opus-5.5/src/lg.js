@@ -318,6 +318,19 @@
     syncAll(); setTimeout(syncAll, 400); setTimeout(syncAll, 1500);
     setTimeout(frameCheck, 1200);
     if (isGlass()) setTimeout(doSweep, 600);
+    firstVisit();
+  }
+  /* the concept page opens on Glass Dark Usage the first time, whatever look this browser last used (a review copy only) */
+  function firstVisit() {
+    var KEY = 'pm-lg-concept-seen';
+    try { if (localStorage.getItem(KEY) || q.get('lgkeep') === '1') return; localStorage.setItem(KEY, '1'); } catch (e) { return; }
+    var tries = 0;
+    (function go() {
+      if (window.PM12_KIMI && window.PM_PAGES) {
+        if (!/^glass/.test(root.getAttribute('data-theme') || '')) window.PM12_KIMI.setSettingFromHost('general.visual.theme', 'Glass Dark');
+        window.PM_PAGES.go('usage');
+      } else if (++tries < 60) setTimeout(go, 250);
+    })();
   }
 
   /* ---- the concept's own control (status bar) ---------------------------------------------------------------- */

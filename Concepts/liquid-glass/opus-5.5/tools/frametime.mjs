@@ -3,20 +3,27 @@
  * script (a pointer sweep over the toolbar and cards, four range clicks, four navigation clicks, a menu opened and
  * closed twice) and records every animation-frame interval: today's Glass, Liquid Glass on its CPU path (the painted
  * frost, what Nas1 detects), and Liquid Glass with the live blur forced on (what the CPU path avoids).
+ * AB=1 runs the same script on the P1000's GPU through agent-browser (today against the live-blur path).
  */
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { writeFileSync } from 'node:fs';
-const require = createRequire('/home/sittingmongoose/pmt-dev/pw/noop.js');
+import { execFileSync } from 'node:child_process';
+const AB = !!process.env.AB;
+const require = createRequire(process.env.PW_DIR || '/home/sittingmongoose/pmt-dev/pw/noop.js');
 const { chromium } = require('playwright-core');
 const [pageFile, outFile] = process.argv.slice(2);
-const CONFIGS = [['today', 'lg=off'], ['liquid-glass-cpu-path', 'lgtier=cpu'], ['liquid-glass-live-blur-on-cpu', 'lgtier=gpu']];
+const CONFIGS = AB ? [['today', 'lg=off'], ['liquid-glass-gpu-path', 'lgtier=gpu']]
+  : [['today', 'lg=off'], ['liquid-glass-cpu-path', 'lgtier=cpu'], ['liquid-glass-live-blur-on-cpu', 'lgtier=gpu']];
 const results = [];
-const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true });
+let ab = null, browser;
+if (AB) { ab = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank']).toString()); browser = await chromium.connectOverCDP(ab.cdp_endpoint); }
+else browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', headless: true });
 for (const look of ['glass-dark', 'glass-light']) for (const [name, qs] of CONFIGS) {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
-  await page.route('**/*', r => /^(file:|data:|blob:)/.test(r.request().url()) ? r.continue() : r.abort());
+  const page = AB ? await browser.contexts()[0].newPage() : await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+  if (AB) await page.setViewportSize({ width: 1920, height: 1080 });   /* no interception over CDP: it stalls this page */
+  else await page.route('**/*', r => /^(file:|data:|blob:)/.test(r.request().url()) ? r.continue() : r.abort());
   await page.goto(pathToFileURL(resolve(pageFile)).href + '?o55=off&' + qs, { waitUntil: 'domcontentloaded', timeout: 120000 });
   await page.locator('#pm-settings-root').waitFor({ state: 'attached', timeout: 90000 });
   await page.waitForTimeout(1500);
@@ -37,4 +44,5 @@ for (const look of ['glass-dark', 'glass-light']) for (const [name, qs] of CONFI
   await page.close();
 }
 await browser.close();
-writeFileSync(outFile, JSON.stringify({ machine: 'Nas1 (no GPU, SwiftShader)', results }, null, 1));
+if (ab) execFileSync('agent-browser', ['stop', ab.id]);
+writeFileSync(outFile, JSON.stringify({ machine: AB ? 'P1000 VM (Quadro P1000, agent-browser)' : 'Nas1 (no GPU, SwiftShader)', results }, null, 1));
