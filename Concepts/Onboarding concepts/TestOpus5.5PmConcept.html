@@ -35063,6 +35063,10 @@ html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }
 .pmw-dash-undo-btn:hover { background: color-mix(in srgb, var(--pmw-accent) 24%, transparent); }
 .pmw-dash-undo-btn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
 .pmw-dash-undo-btn .pmw-ico { width: 14px; height: 14px; }
+/* a refused Undo (the notice's text says why; the button keeps focus and its hover tag): dimmed as every disabled panels
+   button is (.pmw-hbtn, .pmw-act), and the pointer no longer lights it as if it could run; focus still shows */
+.pmw-dash-undo-btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.pmw-dash-undo-btn[aria-disabled="true"]:hover:not(:focus-visible) { background: color-mix(in srgb, var(--pmw-accent) 14%, transparent); }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-dash-undo-btn { border-radius: min(var(--pmw-radius), 8px); }
 @container pmw-body (max-width: 419.98px) { .pmw-dash > .pmw-dash-undo { bottom: 10px; gap: 10px; padding-left: 12px; } }
 
@@ -35091,6 +35095,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dash-empty-sub, .pm
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-t { font-family: var(--pm-font-code); font-weight: 600; letter-spacing: .02em; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--accent-lime); color: var(--accent-lime); font-family: var(--pm-font-code); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn[aria-disabled="true"]:hover:not(:focus-visible) { background: transparent; color: var(--accent-lime); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live { gap: 3px; letter-spacing: .02em; color: var(--pmw-text); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-dot { order: 2; width: 6px; height: 11px; border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-ring { border-radius: 0; }
@@ -35105,6 +35110,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-dash-empty-tile
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-empty-t { text-transform: uppercase; letter-spacing: .1em; font-size: 13px; }
 html[data-o55-nier="on"] .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-dash-undo-btn[aria-disabled="true"]:hover:not(:focus-visible) { background: transparent; color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-dash-live { font-family: var(--pm-font-code); font-size: 11.5px; letter-spacing: .08em; color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-dash-live-dot { width: 6px; height: 6px; border-radius: 0; transform: rotate(45deg); }
 html[data-o55-nier="on"] .pmw-dash-live-ring { border-radius: 0; }
@@ -168984,8 +168990,7 @@ function checkUndo(rec, u) {
   u.off = text;
   u.btn.setAttribute('aria-disabled', 'true');
   u.btn.setAttribute('data-disabled-reason', text);
-  u.btn.setAttribute('data-pm-hover-detail', text);
-  u.btn.style.opacity = '.5'; u.btn.style.cursor = 'default';
+  u.btn.setAttribute('data-pm-hover-detail', text);   /* dimmed by 62-kind-dashboard.css [aria-disabled] */
   if (t) { t.textContent = text; t.title = text; }
   rec.api.announce(text);
   return true;
