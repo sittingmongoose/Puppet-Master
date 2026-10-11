@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32828-L33523
+Source lines: L33495-L34197
 
-Source SHA256: `e694dbfff9faff413e718e4b678e319b08c485422019a4c4e975e84e2b178622`
+Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
 
 ---
 
@@ -342,10 +342,12 @@ canonical_text: >-
   ui/<domain>/ path, both spellings denote one planned host surface, with the panels/
   spelling as the panel-occupant host. These paths are planned GUI host locations only;
   they create no implementation files and authorize no source tree.
+  Amended 2026-10-09 (DL-180): `panels/` here means the left rail's side panels; the home centre's panels, tab strips
+  and tab bodies are F3-206's as amended (F3-630, F3-635).
 gui_related: true
 gui_classification_reason: This unit names the planned Slint host files behind visible side-panel occupants.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The panels/ inventory lists host files for search, source control, Actions & Pipelines, testing, agents, and artifacts panels in addition to the existing file manager and docker manager entries."
@@ -378,6 +380,7 @@ compatibility_only_notes:
 - "Slint portability: host files are the planned mount points for opaque precomputed panel surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The prior panels/ inventory state that named only chat and file manager panel host files is superseded by this fuller inventory; the FABLE Slint Host File Inventory table remains findable lineage for its ui/<domain>/ spellings."
+- "Amended 2026-10-09 (DL-180): `panels/` names side-panel hosts only; home panels are F3-206's."
 owner_boundary_notes:
 - "This unit amends the host-file inventory only; panel behavior stays with each panel's owner units and docs."
 owner_hints:
@@ -671,10 +674,12 @@ canonical_text: >-
   copy authored after this date say left-hand; existing rows are corrected opportunistically
   as they are touched, and GATE-010 evidence must not fail a row solely for a stale
   right-hand location string authored before this date.
+  Amended 2026-10-10 (DL-187, D40): chat no longer occupies the panel slot. It stays an activity-bar entry that shows
+  or hides the chat column on every page (F3-042, F3-637), so the slot hosts the other occupants listed above.
 gui_related: true
 gui_classification_reason: This unit fixes the shell-level side on which every rail panel mounts.
 split_recommended: false
-depends_on: [F3-478]
+depends_on: [F3-478, DL-187]
 unblocks: []
 acceptance_criteria:
 - "The activity bar and panel slot render on the left shell edge in the Slint build."
@@ -694,11 +699,13 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (renders the rail left; source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
+- "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens: []
 negative_constraints:
 - "Do not cite pre-2026-07-27 right-hand slot prose as live placement authority."
 stale_retired_dispositions:
 - "Right-hand side-panel slot phrasing in sections 3.2/4.1 and older wiring-row ui_location strings become findable lineage superseded by this ruling."
+- "Amended 2026-10-10 (DL-187, D40): chat is no longer an occupant of the panel slot; its activity-bar entry shows or hides the chat column (F3-042, F3-637)."
 owner_boundary_notes:
 - "F3-478 recorded the deviation; this unit resolves it. Wiring-row string hygiene is owned by Plans/Wiring_Matrix.production.json maintenance."
 owner_hints:

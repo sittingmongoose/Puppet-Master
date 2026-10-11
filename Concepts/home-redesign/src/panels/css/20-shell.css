@@ -1,0 +1,188 @@
+/* Shell integration (keyed on html[data-pmw-home="on"], set by the early script; ?home=current leaves it off).
+   The layer's CSS is in <head>, ahead of the page's body-level blocks, so every override wins on specificity. */
+
+/* the old Home model no longer runs: its nodes are hidden, never removed (other code holds references) */
+html[data-pmw-home="on"] #pm-home-workspace,
+html[data-pmw-home="on"] #editorView,
+html[data-pmw-home="on"] #editorDashResizer,
+html[data-pmw-home="on"] #terminalResizer,
+html[data-pmw-home="on"] #bottomPanel,
+html[data-pmw-home="on"] #detachedTerminalWindow,
+html[data-pmw-home="on"] #floatingChat,
+html[data-pmw-home="on"] #panel-dashboard > :not(#pm-home-centre) { display: none !important; }
+
+/* the centre fills Home's page box (the same box the old workspace used) */
+html[data-pmw-home="on"] #pm-home-centre {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+html[data-pmw-home="on"] #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
+body.pmu-page-active #pm-home-centre { pointer-events: none !important; }
+
+/* The two pages whose engines keep running while another page is in front take no display lock (the room-change
+   blocker, 2026-10-10). The base gives every inactive page content-visibility: auto (.page:not(.active)), which on a
+   page that is display: none adds nothing but a display lock. Home's panels keep reading layout inside
+   #panel-dashboard while the Usage page shows (the terminals' frames and scrollbars, the editor's minimap colours, the
+   panels' paint and strip fit), and the Usage engine, which also draws Home's dashboards, fits the hidden Usage board's
+   cards while Home shows. Each read forces style and layout through the lock, and Chrome (154) can then leave the
+   style-recalc marks above it (.primary-content, a size container) stale: no later style change under .primary-content
+   is applied, so a Usage room change left the live board display: none and the hidden spare displayed. Without the
+   lock the same reads are reads of a display: none subtree (P1000, the first room change after the page switch: Retro
+   Light at 1920 froze in 3 of 10 fresh loads with the lock and 0 of 30 without it; traced, 9 of 12 and 0 of 12). */
+html[data-pmw-home="on"] :is(#panel-dashboard, #panel-usage):not(.active) { content-visibility: visible; }
+
+/* the chat column (D3): one width model on every page, from an inline custom property the ladder writes (the message
+   area plus pinned History's --pmw-chat-hist-w, which the ladder also writes; 0px while History is a flyout) */
+html[data-pmw-home="on"] body #chatPanel.chat-panel {
+  flex: 0 0 var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
+  width: var(--pmw-chat-w, clamp(400px, calc(26.667vw + 88px), 640px)) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  transition: flex-basis var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1), width var(--pmw-t-med, 180ms) cubic-bezier(.22, 1, .36, 1);
+}
+html[data-pmw-home="on"] body.pm-resizing #chatPanel.chat-panel { transition: none; }
+html[data-pmw-home="on"] #chatResizer:not(.hidden) { cursor: col-resize; }
+
+/* the rail side panel eases to 240, then folds to its icon bar (D4); the user's own width is never overwritten */
+/* keyed on the hook agreed with the rail lead (#sidePanelSlot[data-pm-rail-fold]). This layer only places the overlay
+   (position, width, stacking, dismiss); the rail's concept D gives it its look per family (plate, hairline, shadow,
+   entrance; 37de861164), so nothing here paints it */
+html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="eased"]:not(.hidden) { max-width: 240px !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > .left-panel { position: relative; z-index: 30; }
+html[data-pmw-home="on"] #sidePanelSlot[data-pm-rail-fold="overlay"] { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail="fold"] > #leftPanelResizer { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-rail-peek] #sidePanelSlot[data-pm-rail-fold="overlay"]:not(.hidden) {
+  display: flex !important;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  bottom: 0;
+  width: 280px !important;
+  max-width: none !important;
+  z-index: 31;
+}
+
+/* the chat folds to an edge strip below C 480 (unless pinned); its button sits over the strip */
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"] #chatPanel.chat-panel > * { visibility: hidden; }
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel {
+  /* the page's chat owner sets inset: auto !important (body.pm7-chat-global-owner), which left the peek at its static
+     place on the left; this selector is more specific, so each side is important here too */
+  position: absolute !important;
+  left: auto !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  /* 400 for the messages plus pinned History, never wider than the row less a 48 px margin to click out on */
+  width: min(calc(400px + var(--pmw-chat-hist-w, 0px)), calc(100% - 48px)) !important;
+  flex: none !important;
+  z-index: 60 !important;
+  box-shadow: -18px 0 40px -12px rgba(0, 0, 0, .45);
+}
+html[data-pmw-home="on"] .main-area[data-pmw-chat="strip"][data-pmw-chat-peek] #chatPanel.chat-panel > * { visibility: visible; }
+html[data-pmw-home="on"] .main-area { position: relative; }
+.pmw-chat-strip {
+  position: fixed;
+  width: 32px;
+  border: 0;
+  padding: 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  color: var(--pmw-text-2);
+  cursor: pointer;
+  z-index: 61;
+}
+.pmw-chat-strip[hidden] { display: none; }
+.pmw-chat-strip:hover { color: var(--pmw-text); background: var(--pmw-hover); }
+
+/* Pop out (the browser concept's stand-in for the native window): the chat floats over the page with Dock back */
+html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatResizer { display: none !important; }
+html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
+  position: fixed !important;
+  left: auto !important;   /* over the page's inset: auto !important, as for the peek above */
+  right: 24px !important;
+  bottom: 48px !important;
+  top: auto !important;
+  height: min(720px, calc(100vh - 140px)) !important;
+  /* 440 for the messages plus pinned History (the native window grows the same way) */
+  width: min(calc(440px + var(--pmw-chat-hist-w, 0px)), calc(100vw - 48px)) !important;
+  flex: none !important;
+  z-index: 70 !important;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 28px 70px -20px rgba(0, 0, 0, .55), 0 0 0 1px var(--border, rgba(255, 255, 255, .12));
+}
+/* Retro and NieR's square part keep the floating window square */
+html[data-pmw-home="on"][data-theme^="retro"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel,
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel { border-radius: 0; }
+
+/* the title bar's Home options button */
+.pmw-tb-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary, #a0a0a0);
+  cursor: pointer;
+}
+.pmw-tb-btn .pmw-ico { width: 15px; height: 15px; }
+.pmw-tb-btn:hover, .pmw-tb-btn.pmw-anchor-open { background: color-mix(in srgb, var(--text-primary, #fff) 8%, transparent); color: var(--text-primary, #fff); }
+
+/* the file menu's new rows */
+.pmw-ctx-item { cursor: pointer; }
+.pmw-ctx-sep { height: 1px; margin: 4px 6px; background: var(--border-light, rgba(255, 255, 255, .08)); }
+
+/* the concept demo widget docks into a slot at the status bar's left end (js/50-pageshell.js): one status item, no
+   capsule and no chip, covering nothing (the planner, 2026-10-10). Its menu still opens upward from it. */
+html[data-pmw-home="on"] #pm7GlobalStatusBar .pmw-demo-slot {
+  flex: none;
+  height: 100%;
+  border-right: 1px solid color-mix(in srgb, var(--border-light) 70%, transparent);
+}
+html[data-pmw-home="on"][data-o55-tour] #pm7GlobalStatusBar .pmw-demo-slot { display: none; }
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) {
+  left: var(--pmw-demo-x, 0px);
+  bottom: var(--pmw-demo-y, 0px);
+  height: var(--pmw-demo-h, 25px);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"] {
+  height: var(--pmw-demo-h, 25px);
+  padding: 0 10px;
+  gap: 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-secondary);
+  font-family: var(--pmw-sb-font, inherit);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"]:hover,
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) > button[data-demo="toggle"][aria-expanded="true"] {
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  color: var(--text-primary);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demoscn {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demoscn::before {
+  content: "\00b7";
+  margin-right: 6px;
+  color: var(--text-secondary);
+}
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demomenu { bottom: calc(var(--pmw-demo-h, 25px) + 6px); }
+
+/* the notice anchor (js/50-pageshell.js): the title bar's notification cards keep their place under the bell and drop
+   past the strip, header row or chat header below it; the drop is 0 on other pages */
+html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-drop, 0px)); }

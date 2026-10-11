@@ -65,7 +65,7 @@
   const settle=()=>new Promise(resolve=>setTimeout(resolve,170));a.busy=true;
   try{
    const p=plan();const name=step[2];
-   if(name==='open'){invoke('pd-info',{id:p.plan_id});}
+   if(name==='open'){invoke('pd-open-version',{id:p.plan_id});}
    if(name==='build'){invoke('pd-build',{id:p.plan_id});if(p.status!=='building')throw Error('Build was not admitted');}
    if(name==='todos'){
     invoke('pd-more-actions',{id:p.plan_id});await settle();if(active!==a)return;invoke('pd-open-todos',{id:p.plan_id});await settle();if(active!==a)return;invoke('pd-more-actions',{id:p.plan_id});

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30758-L31638
+Source lines: L31376-L32268
 
-Source SHA256: `e694dbfff9faff413e718e4b678e319b08c485422019a4c4e975e84e2b178622`
+Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
 
 ---
 
@@ -546,16 +546,18 @@ canonical_text: >-
   drives the glass composition layer and persists at `glass_background_mode:v1`; the glass
   alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at
   `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion
-  state; and the chat layout mode setting drives the chat mount layout. Each binding applies
+  state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
+  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored
+  Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies
   on change with no reload. The concept's interface-density live-apply hook had no consumer
   and is demo residue excluded from this canonical wiring map.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
-depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444]
+depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444, DL-187]
 unblocks: []
 acceptance_criteria:
-- "Changing theme, glass background mode, glass alpha, reduce-animations, or chat layout mode applies live to the theme engine, glass composition, --glass-alpha within clamps, reduced-motion state, and chat mount layout respectively, with no reload."
+- "Changing theme, glass background mode, glass alpha or reduce-animations applies live to the theme engine, glass composition, --glass-alpha within clamps and reduced-motion state respectively, with no reload; the retired chat layout mode binds nothing (amended 2026-10-10, DL-187)."
 - "The theme, glass background mode, and glass alpha bindings persist through theme:v1, glass_background_mode:v1, and glass_alpha:v1 respectively."
 - "The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -585,6 +587,7 @@ compatibility_only_notes:
 - "Slint portability: live-apply bindings map to typed state setters; theme switches swap precomputed per-variant token tables and glass alpha updates a single scalar, with no arbitrary-content backdrop blur, no SVG filters, and no runtime color math."
 stale_retired_dispositions:
 - "The concept's interface-density live-apply hook is demo residue with no consumer; it is excluded from the canonical wiring map and retired without replacement."
+- "Amended 2026-10-10 (DL-187, D32): the chat layout mode binding retires with general.visual.chat-layout-mode; the chat is a fixed column (F3-637) and a stored value never pops it out."
 owner_boundary_notes:
 - "Theme engine and token tables are owned by F3-425 and F3-426; glass composition and background modes by F3-427 and F3-428; glass alpha clamps by F3-429; storage-key registration by F3-444."
 owner_hints:
@@ -707,6 +710,15 @@ Settings > AI > Providers & Accounts and, for the toggle and the switch level, a
 provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,
 SSYS-044), and neither surface keeps a copy.
+
+Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
+`ai.accounts.account-threshold-override` is retired. An account's own switch level is `ai.accounts.hard-switch-level`
+at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
+most specific set value winning. The retired row stays in the registry marked superseded, as
+`general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
+`ai.accounts.hard-switch-level` at scope account; no surface reads or writes it after that, Settings offers no control
+for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
+own switch level, and the row count stays 916.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

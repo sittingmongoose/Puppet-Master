@@ -66,13 +66,10 @@ async function run(theme) {
       await callout('next');
     } else {
       if (id === 'same_answer_eli5') await until(() => window.O55.tour.chat.answered('a1'), 'answer before ELI5');
-      const stackedDock = id === 'move_or_dock_chat' && await ev(() => { const b = window.O55.tour.dockBand(); return !!(b && b.stacked); });
-      if (stackedDock) {
-        /* a stacked (narrow) workspace: the reachable version is the Move Chat to the top button */
-        await callout('moveChatTop');
-      } else if (id === 'move_or_dock_chat') {
-        /* a real drag, held over the left dock until the workspace adopts it, captured before letting go */
-        const a = await ev(() => { const r = document.querySelector('[data-pm-home-handle="chat"]').getBoundingClientRect(); const w = document.getElementById('pm-home-workspace').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, tx: w.left + 12, ty: w.top + w.height * 0.45 }; });
+      if (id === 'split_by_drag') {
+        /* a real drag of the tab to its panel's edge (the panels' tour hooks name the tab and the point), held until the
+           panels show the split zone, captured before letting go */
+        const a = await ev(() => { const d = window.PMW.tour.splitDrag(); const r = d.el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, tx: d.to.x, ty: d.to.y }; });
         await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x, y: a.y });
         await page.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: a.x, y: a.y, button: 'left', clickCount: 1 });
         const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);

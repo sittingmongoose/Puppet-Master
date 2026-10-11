@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L564-L3227
+Source lines: L568-L3239
 
-Source SHA256: `79b617d2d88be5533b0667255de5dc9644d0912f8aee855400e2c63302d46699`
+Source SHA256: `8828021b9b39d038cc0465d5dff5817a3d374afbe0bba5e83a0406be43f245f7`
 
 ---
 
@@ -859,17 +859,22 @@ canonical_text: >-
   Contracts_V0 owns event families and command/event envelopes, storage-plan
   owns persisted record families, projection joins, terminal_session_id,
   dev_session_id, and terminal continuity identity, FinalGUISpec owns shell
-  realization, and Section15 owns shell/session identities across Plans
-  consumers.
+  realization, the panel model that places every tab, a terminal tab included
+  (F3-630, F3-634, F3-635), and the terminal tab's presentation (F3-640), and
+  Section15 owns shell/session identities across Plans consumers, one session
+  per terminal tab (SMPFS-180). Since DL-181 terminal placement is the panel
+  model's, not Section15's, and terminal sections, workgroups and panes are
+  retired.
 gui_related: true
-gui_classification_reason: FinalGUISpec owns shell realization and terminal layout presentation.
+gui_classification_reason: FinalGUISpec owns shell realization, the panel model that places a terminal tab, and the terminal tab's presentation.
 split_recommended: false
-depends_on: [C-018]
+depends_on: [C-018, DL-180, DL-181]
 unblocks: [C-029, C-032]
 acceptance_criteria:
   - "Contracts_V0 owns event families and command/event envelopes."
   - "storage-plan owns persisted records, projection joins, and terminal continuity/restart identity."
   - "Consumer docs may extend display metadata but do not redefine terminal or event identity primitives."
+  - "Terminal placement belongs to the panel model (F3-630, F3-634); Section15 owns the session and its identity, one session per terminal tab (SMPFS-180)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -894,6 +899,9 @@ preserved_exact_tokens:
   - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
 negative_constraints:
   - "Consumer docs may extend display metadata but MUST NOT redefine terminal or event identity primitives."
+  - "Do not route terminal placement to Section15 or keep terminal sections, workgroups or panes as current placement."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180, DL-181): terminal placement moves from Section15 to the universal panel model (F3-630, F3-634), and FinalGUISpec's terminal layout presentation becomes the terminal tab's presentation (F3-640)."
 owner_hints:
   - Plans/Crosswalk.md
   - Plans/Contracts_V0.md

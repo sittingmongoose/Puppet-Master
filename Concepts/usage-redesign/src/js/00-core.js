@@ -90,7 +90,7 @@ function command(commandId, payload, result, options) {
     command_id: commandId,
     command_instance_id: 'usage-command-' + (++commandSequence),
     issued_at: new Date().toISOString(),
-    scope: { room: state.room, range: state.range, usage_scope: state.scope },
+    scope: options.scope || { room: state.room, range: state.range, usage_scope: state.scope },   /* a hosted board's record scope is its own view (D10 2.9) */
     payload: payload || {}
   };
   COMMANDS.push(record);

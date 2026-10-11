@@ -1,0 +1,237 @@
+/* The Dashboard tab kind (kinds/30-dashboard.js, D10 step two and round two). The engine dashboards (Home, Metrics,
+   Monitoring and each custom dashboard) are Usage boards: their DOM under the stage is made by the Usage engine and
+   styled by the Usage CSS, so this file gives them the stage (a column that fills the tab body under the header row)
+   and draws only what the kind adds around a board. Five parts:
+   1. the quiet note a dashboard shows when it cannot run (no Usage engine in the build, an id the kind does not run).
+   2. the Agents board, drawn here.
+   3. an empty board's invitation (round two P13: every new dashboard starts empty): a sketch, the words, Add widget and
+      Start from. The board stays laid out under it (visibility, not display), so its width and mount never change.
+   4. the Undo notice after a Start from (P4): the package's popover plate (.pmw-pop: each look's surface, line and
+      shadow) at the foot of the tab.
+   5. the Live mark and the demo time in the header facts (P12): the Usage page's Live indicator in each look's words
+      (Live, [LIVE], LIVE), one pulse per beat the board patches and none in between; static under Reduced Motion.
+   D10 round two (P1): the page's own Home widgets (#dashboardView) are no longer used by any tab. The node stays parked
+   and hidden in #panel-dashboard; no rule here names it.
+   Sizes key on the tab body (@container pmw-body), never the window. NieR touches beyond colour are gated by their
+   part (square corners: square; uppercase: headers). */
+
+.pmw-dash { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
+.pmw-dash-stage { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+
+/* ---- 1. the quiet note ---- */
+.pmw-dash-note { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 16px; overflow: auto; }
+.pmw-dash-note[hidden] { display: none; }
+.pmw-dash-note-col { max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.pmw-dash-note-ico { width: 16px; height: 16px; color: var(--pmw-text-3); margin-bottom: 2px; }
+.pmw-dash-note-t { margin: 0; font-size: 13px; line-height: 19px; font-weight: 550; color: var(--pmw-text); }
+.pmw-dash-note-sub { margin: 0 0 8px; font-size: 12px; line-height: 17px; color: var(--pmw-text-3); }
+@container pmw-body (max-height: 199px) { .pmw-dash-note-sub, .pmw-dash-note-ico { display: none; } }
+
+/* ---- 2. the Agents board ---- */
+.pmw-dash-agents { position: absolute; inset: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 12px 12px 16px; box-sizing: border-box; }
+.pmw-dash-agent-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; align-content: start; }
+@container pmw-body (max-width: 419.98px) {
+  .pmw-dash-agents { padding: 8px 8px 12px; }
+  .pmw-dash-agent-list { grid-template-columns: minmax(0, 1fr); }
+}
+.pmw-dash-agent-empty { margin: 24px 0 0; text-align: center; font-size: 12.5px; color: var(--pmw-text-3); }
+.pmw-dash-agent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--pmw-line);
+  border-radius: var(--pmw-radius);
+  background: var(--pmw-surface-2);
+  font-size: 12.5px;
+  line-height: 18px;
+}
+.pmw-dash-agent[hidden] { display: none; }
+.pmw-dash-agent-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pmw-dash-st { display: inline-flex; align-items: center; gap: 5px; min-width: 0; font-size: 12px; font-weight: 600; color: var(--pmw-text-2); }
+.pmw-dash-st-ico { flex: none; width: 13px; height: 13px; }
+.pmw-dash-agent[data-tone="accent"] .pmw-dash-st-ico { color: var(--pmw-accent); }
+.pmw-dash-agent[data-tone="ok"] .pmw-dash-st-ico { color: var(--pmw-ok); }
+.pmw-dash-agent[data-tone="warn"] .pmw-dash-st-ico { color: var(--pmw-warn); }
+.pmw-dash-agent[data-tone="bad"] .pmw-dash-st-ico { color: var(--pmw-bad); }
+.pmw-dash-agent[data-tone="dim"] .pmw-dash-st-ico { color: var(--pmw-text-3); }
+.pmw-dash-agent-time { margin-left: auto; flex: none; font-size: 11.5px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
+.pmw-dash-agent-name { margin: 0; font-size: 14px; line-height: 20px; font-weight: 620; color: var(--pmw-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-dash-agent-now { margin: 0; color: var(--pmw-text-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pmw-dash-agent-meta { margin: 0; font-size: 11.5px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-dash-agent-bar { display: block; height: 4px; border-radius: 1px; background: var(--pmw-line); overflow: hidden; }
+.pmw-dash-agent-fill { display: block; height: 100%; width: 0; background: var(--pmw-accent); transition: width var(--pmw-t-slow) var(--pmw-ease); }
+.pmw-dash-agent-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+
+/* Retro: square corners, the code face for facts, the bar as a stepped block */
+html[data-theme^="retro"] .pmw-dash-agent { border-radius: 0; }
+html[data-theme^="retro"] .pmw-dash-agent-bar, html[data-theme^="retro"] .pmw-dash-agent-acts .pmw-act { border-radius: 0; }
+html[data-theme^="retro"] .pmw-dash-agent-meta, html[data-theme^="retro"] .pmw-dash-agent-time { font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-agent-acts .pmw-act:hover { background: var(--pmw-text); color: var(--pmw-surface); }
+
+/* Glass: legible over the blur of the page behind, no blur of its own */
+html[data-theme^="glass"] .pmw-dash-agent { background: color-mix(in srgb, var(--pmw-surface) 82%, transparent); }
+
+/* NieR: ink and parchment, no glow; square corners with the square part, uppercase small headers with the headers part */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-dash-agent {
+  border-color: rgba(var(--o55-nier-ink-rgb), .45);
+  background: var(--o55-nier-raised, var(--pmw-surface-2));
+  box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .12);
+}
+html[data-o55-nier="on"] .pmw-dash-agent .pmw-dash-st-ico { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-agent[data-tone="bad"] .pmw-dash-st-ico { color: var(--o55-nier-error); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-st { text-transform: uppercase; letter-spacing: .12em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-agent-name { text-transform: uppercase; letter-spacing: .08em; font-size: 13px; }
+html[data-o55-nier="on"] .pmw-dash-agent-bar { background: rgba(var(--o55-nier-ink-rgb), .18); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-bar { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-dash-agent-fill { background: var(--o55-nier-ink); transition-timing-function: steps(4, end); }
+html[data-o55-nier="on"] .pmw-dash-agent-acts .pmw-act { border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-dash-agent-acts .pmw-act { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-note-t { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+
+/* Reduced Motion: nothing moves (the bar jumps to its value) */
+html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-dash-agent-fill { transition: none; } }
+
+/* ---- 3. an empty board ---- */
+.pmw-dash-stage[data-empty] > :not(.pmw-dash-empty) { visibility: hidden; }
+.pmw-dash-empty { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 24px 20px 32px; box-sizing: border-box; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.pmw-dash-empty[hidden] { display: none; }
+.pmw-dash-empty-col { max-width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+/* the sketch: five ghost plates on a three-track board (a number, a ring, bars, a number, and the slot Add widget fills) */
+.pmw-dash-empty-art {
+  --pmw-dash-ghost: color-mix(in srgb, var(--pmw-text-3) 50%, transparent);
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-auto-rows: 30px;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.pmw-dash-empty-tile {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border: 1px dashed color-mix(in srgb, var(--pmw-text-3) 55%, transparent);
+  border-radius: min(var(--pmw-radius), 6px);
+  background: color-mix(in srgb, var(--pmw-text) 3%, transparent);
+}
+.pmw-dash-empty-tile.is-wide { grid-column: span 2; }
+.pmw-dash-empty-tile.is-number { justify-items: start; padding: 0 7px; }
+.pmw-dash-empty-tile.is-number::before { content: ""; width: 24px; height: 2px; border-radius: 1px; background: var(--pmw-dash-ghost); }
+.pmw-dash-empty-tile.is-number::after { content: ""; width: 16px; height: 5px; border-radius: 1px; background: var(--pmw-dash-ghost); }
+.pmw-dash-empty-tile.is-wide.is-number::after { width: 38px; }
+.pmw-dash-empty-tile.is-ring::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pmw-dash-ghost); border-top-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
+.pmw-dash-empty-tile.is-bars::before {
+  content: "";
+  width: 18px;
+  height: 12px;
+  background:
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 0 100% / 4px 6px no-repeat,
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 7px 100% / 4px 12px no-repeat,
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 14px 100% / 4px 9px no-repeat;
+}
+.pmw-dash-empty-tile.is-add { border-style: solid; border-color: color-mix(in srgb, var(--pmw-accent) 55%, transparent); background: color-mix(in srgb, var(--pmw-accent) 9%, transparent); color: var(--pmw-accent); }
+.pmw-dash-empty-tile .pmw-ico { width: 12px; height: 12px; }
+.pmw-dash-empty-t { margin: 0; max-width: 100%; font-size: 15px; line-height: 21px; font-weight: 620; color: var(--pmw-text); overflow-wrap: anywhere; }
+.pmw-dash-empty-sub { margin: 6px 0 0; max-width: 360px; font-size: 12.5px; line-height: 18px; color: var(--pmw-text-2); text-wrap: balance; }
+.pmw-dash-empty-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+@container pmw-body (max-height: 319.98px) { .pmw-dash-empty-art { display: none; } }
+@container pmw-body (max-height: 219.98px) {
+  .pmw-dash-empty { padding: 8px 12px; }
+  .pmw-dash-empty-sub { display: none; }
+  .pmw-dash-empty-acts { margin-top: 10px; }
+}
+
+/* ---- 4. the Undo notice (one class more than .pmw-pop, which places menus in the overlay) ---- */
+.pmw-dash > .pmw-dash-undo {
+  position: absolute;
+  top: auto;
+  left: 50%;
+  bottom: 16px;
+  z-index: 6;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  min-width: 0;
+  max-width: calc(100% - 24px);
+  padding: 5px 5px 5px 14px;
+  overflow: visible;
+  font-size: 12.5px;
+  line-height: 18px;
+}
+.pmw-dash-undo-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmw-text); }
+.pmw-dash-undo-btn {
+  flex: none;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px 0 9px;
+  border: 0;
+  border-radius: min(var(--pmw-radius), 8px);
+  background: color-mix(in srgb, var(--pmw-accent) 14%, transparent);
+  color: var(--pmw-accent);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pmw-dash-undo-btn:hover { background: color-mix(in srgb, var(--pmw-accent) 24%, transparent); }
+.pmw-dash-undo-btn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
+.pmw-dash-undo-btn .pmw-ico { width: 14px; height: 14px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-dash-undo-btn { border-radius: min(var(--pmw-radius), 8px); }
+@container pmw-body (max-width: 419.98px) { .pmw-dash > .pmw-dash-undo { bottom: 10px; gap: 10px; padding-left: 12px; } }
+
+/* ---- 5. the Live mark and the demo time ---- */
+.pmw-dash { --pmw-dash-live: var(--pmw-ok); }
+.pmw-dash .pmw-hfact:is([data-id="live"], [data-id="hour"]) { flex: none; }
+.pmw-dash-live { display: inline-flex; align-items: center; gap: 6px; color: var(--pmw-text-2); font-weight: 550; }
+.pmw-dash-live-dot { position: relative; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--pmw-dash-live); }
+.pmw-dash-live-ring { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--pmw-dash-live); opacity: 0; pointer-events: none; }
+.pmw-dash .pmw-hfact[data-id="hour"] { color: var(--pmw-text); font-variant-numeric: tabular-nums; }
+.pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--pmw-accent); }
+
+/* Friendly: the Usage page's Live rose; Glass: the dot glows as the Usage page's does */
+html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #C2557A; }
+html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #E07BA0; }
+html[data-theme^="glass"] .pmw-dash-live-dot { box-shadow: 0 0 6px color-mix(in srgb, var(--pmw-dash-live) 70%, transparent); }
+/* the notice frosts what is under it as Glass frosts the package's menus (the same plate, blur and saturation) */
+html[data-theme^="glass"] .pmw-dash > .pmw-dash-undo { -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); }
+
+/* Retro: square plates and sketch, the code face, a block cursor after [LIVE] */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash { --pmw-dash-live: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dash-empty-tile, .pmw-dash-undo-btn, .pmw-dash > .pmw-dash-undo) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile::after { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile.is-add { background: transparent; border-color: var(--accent-lime); color: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dash-empty-sub, .pmw-dash-undo-t, .pmw-dash-live) { font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-t { font-family: var(--pm-font-code); font-weight: 600; letter-spacing: .02em; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--accent-lime); color: var(--accent-lime); font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live { gap: 3px; letter-spacing: .02em; color: var(--pmw-text); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-dot { order: 2; width: 6px; height: 11px; border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-ring { border-radius: 0; }
+
+/* NieR: ink and parchment; a diamond for the Live dot (the Usage page's), square corners with the square part */
+html[data-o55-nier="on"] .pmw-dash { --pmw-dash-live: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-empty-art { --pmw-dash-ghost: rgba(var(--o55-nier-ink-rgb), .38); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile { border-color: rgba(var(--o55-nier-ink-rgb), .45); background: rgba(var(--o55-nier-ink-rgb), .04); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile.is-add { border-color: var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .1); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile.is-ring::before { width: 8px; height: 8px; border-radius: 0; border-top-color: var(--o55-nier-ink); transform: rotate(45deg); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-dash-empty-tile, .pmw-dash-undo-btn, .pmw-dash > .pmw-dash-undo) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-empty-t { text-transform: uppercase; letter-spacing: .1em; font-size: 13px; }
+html[data-o55-nier="on"] .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-dash-live { font-family: var(--pm-font-code); font-size: 11.5px; letter-spacing: .08em; color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-live-dot { width: 6px; height: 6px; border-radius: 0; transform: rotate(45deg); }
+html[data-o55-nier="on"] .pmw-dash-live-ring { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--o55-nier-ink); }
+
+/* Reduced Motion: the Live mark never pulses (a static dot), the notice and the sketch appear without moving */
+html[data-motion="reduced"] .pmw-dash-live-ring { display: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-dash-live-ring { display: none; } }

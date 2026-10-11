@@ -965,19 +965,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Back_Seat_Driver.md
 canonical_text: >-
-  The BSD tool profile permits project and file search and read, grep and language-server diagnostics, diff and source-control
-  read inspection, test and build output inspection, artifact receipt and Usage lookup, ordinary internal browser DOM,
-  screenshot, console, and network inspection under browser policy, and external documentation and research retrieval under
-  the effective network policy. It forbids project writes, mutating shell, installation or MCP mutation, approval or
-  permission mutation, credential access, publish, deploy, merge, commit, tag, or push, any protected AuthBrowserSession
-  access, and direct control of the primary run including start, stop, pause, resume, retry, rewind, and queue manipulation.
-  The grant is not configurable upward: a configuration naming a mutating tool is rejected with the tool dropped and a
-  recorded warning, and an advisor turn requesting a tool outside the profile is quarantined before dispatch. BSD inherits and
-  cannot widen the primary run's effective permission posture.
+  The BSD tool profile permits project and file search and read, grep and language-server diagnostics, diff and
+  source-control read inspection, test and build output inspection, artifact receipt and Usage lookup, ordinary
+  internal browser DOM, screenshot, console, and network inspection under browser policy, and external documentation
+  and research retrieval under the effective network policy. It forbids project writes, mutating shell, installation
+  or MCP mutation, approval or permission mutation, credential access, publish, deploy, merge, commit, tag, or push,
+  any protected AuthBrowserSession access, and direct control of the primary run including start, stop, pause, resume,
+  retry, rewind, and queue manipulation. The grant is not configurable upward: a configuration naming a mutating tool
+  is rejected with the tool dropped and a recorded warning, and an advisor turn requesting a tool outside the profile
+  is quarantined before dispatch. BSD inherits and cannot widen the primary run's effective permission posture.
+  Amended 2026-10-09 (DL-181): BSD never drives a terminal, takes one over, holds an agent write grant
+  (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`) or reads a terminal's screen or saved scrollback; test
+  and build output inspection means the bounded, redacted tool-result deltas of BSD-005, and a terminal read tool
+  joins this profile only by an explicit owner decision.
 gui_related: true
 gui_classification_reason: The resolved tool profile and any rejected grant are shown in Context Details.
 depends_on:
   - BSD-004
+  - DL-181
 unblocks:
   - BSD-012
 acceptance_criteria:
@@ -985,6 +990,7 @@ acceptance_criteria:
   - A configuration naming a mutating tool drops it with a warning and never grants it.
   - An out-of-profile tool request is quarantined before dispatch rather than merely denied.
   - BSD cannot read anything the primary run is denied.
+  - "Amended 2026-10-09 (DL-181): a BSD request to read, type into, take over or hold a write grant on a terminal is quarantined before dispatch."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tool profile negative fixtures and protected-session denial fixtures
@@ -1005,6 +1011,9 @@ negative_constraints:
   - Do not grant a mutating tool to BSD under any configuration.
   - Do not give BSD access to protected authentication browser sessions.
   - Do not let BSD control the primary run directly.
+  - "Do not give BSD terminal input, take-over, write grants or terminal screen and scrollback reads."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): BSD's read-only profile excludes every terminal read, input, take-over and write grant."
 owner_hints:
   - Plans/Back_Seat_Driver.md
 ```

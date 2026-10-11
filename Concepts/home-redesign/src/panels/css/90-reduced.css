@@ -1,0 +1,12 @@
+/* Reduced Motion: every moving part off (instant), every gesture still works (1:1 drag follow stays: it is not motion,
+   it is the pointer). Both the page's switch and the system preference. */
+
+html[data-motion="reduced"] .pmw-scope, html[data-motion="reduced"] #pm-home-centre { --pmw-t-fast: 0ms; --pmw-t-med: 0ms; --pmw-t-slow: 0ms; }
+html[data-motion="reduced"] .pmw-panel, html[data-motion="reduced"] .pmw-divider, html[data-motion="reduced"] .pmw-divider-line,
+html[data-motion="reduced"] .pmw-menu, html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] #chatPanel.chat-panel { transition: none !important; }
+html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, html[data-motion="reduced"] .pmw-plate { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-scope, #pm-home-centre { --pmw-t-fast: 0ms; --pmw-t-med: 0ms; --pmw-t-slow: 0ms; }
+  .pmw-panel, .pmw-divider, .pmw-divider-line, .pmw-menu, .pmw-tab { transition: none !important; }
+  .pmw-tab, .pmw-tab *, .pmw-plate { animation: none !important; }
+}

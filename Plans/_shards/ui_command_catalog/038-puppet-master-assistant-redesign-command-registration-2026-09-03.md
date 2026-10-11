@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12485-L12781
+Source lines: L12581-L12881
 
-Source SHA256: `5d05b43508a60e88b53b21fa2a8645f08716d6f8b5ea6dbaf31c09c1b6f045bc`
+Source SHA256: `5258c8594defdcca2eb03557e1f2adcca4e4ffe26cc34f642a3b72a3dc3fc8d9`
 
 ---
 
@@ -46,8 +46,9 @@ These rows serve the six exact Plan strategies, the read-only Plan document, the
 | `cmd.chat.plan.cancel` | Cancel Build | Cancels an admitted or running Plan build; the Build control settles on Canceled and the Plan document is unchanged. | `plan_present && plan_status in {admitted, building}` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanCancelRequest` → `AssistantPlanCancelResult` | `handlers::assistant_plan::plan_cancel` |
 | `cmd.chat.plan.export` | Export Plan | Exports the exact Plan revision through the artifact owner. `content_kind` is `plan_document` (default) or `execution_report`; the existing format discriminator keeps PDF and Markdown. The execution report is a separate versioned artifact and exporting never alters `plan_hash` (PPROG-015..016, CDRY-005). | `plan_present && artifact_export_available` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanExportRequest` → `ArtifactExportResult` | `handlers::assistant_plan::plan_export` |
 | `cmd.chat.plan.open_details` | Open Plan Details | Navigates to Plan details, hidden ledger or scoped-PlanUnit information, and artifact lineage. | `plan_present` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_details` |
+| `cmd.chat.plan.open_version` | Open Plan Version | Opens the document of one exact Plan version in the editor: the Plan's own tab, deduplicated, while that version is still the Plan's version, otherwise that version's retained read-only document. Every Open plan button raises it with the version its surface names: the Plan card's action row and its Build-started and Plan-revised receipt lines (`plan_card`), a build schedule's row in the Scheduled manager (`schedule_manager`), and a bound Goal's Open exact Plan · Vn with the GoalPlanBinding's `assistant_plan_id`, `plan_version` and `plan_hash` (UCC-176, DL-157). It never opens Plan Details and never substitutes a newer version; a version that cannot be resolved returns a typed error and opens nothing. | `plan_present && exact_plan_version_retained` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanVersionRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_version` |
 
-Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
+Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `goal_activity`, `goal_hover`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. `goal_activity` and `goal_hover` raise only `cmd.chat.plan.open_version` and `cmd.chat.plan.request_revision`. Every Open plan button, on `plan_card`, `schedule_manager`, `goal_activity` or `goal_hover`, raises `cmd.chat.plan.open_version` (DL-157); the Plan title, Expand and Details links keep their existing route. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
 ### To-Do Runtime
 
@@ -197,7 +198,7 @@ Immediate-send rows use an isolated payload and can never send unrelated compose
 | `cmd.browser.component.add_to_composer` | Add Component To Composer List | Appends the selected component to the numbered composer component list and stores its hidden reference. | `component_selected && composer_available` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_add_to_composer` |
 | `cmd.browser.component.insert_at_cursor` | Insert Component At Cursor | Inserts a component chip at the composer caret position. | `component_selected && composer_available && caret_position_known` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_insert_at_cursor` |
 | `cmd.browser.component.mode.set_default` | Set Component Mode Default | Persists the last used component action as the initial mode for the next selection. | `settings_writable` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentModeRequest` → `SettingsTransactionResult` | `handlers::browser_runtime::component_mode_set_default` |
-| `cmd.browser.devtools.open` | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
+| `cmd.browser.devtools.open` (alias of `cmd.browser.open_devtools` from 2026-10-09, UCC-202) | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
 
 Source surfaces for this family: `browser_selection_bar`, `browser_toolbar`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
@@ -210,9 +211,10 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   The approved Puppet Master Assistant redesign registers eighty-four exact command IDs across simplified Goal, Assistant Plan, To-Do, collaborative workflow, Back Seat Driver, scheduling, attachment, composer, Teach, Planning Wizard intake, and browser-capture families. Each row names exactly one owner document, one request contract, one result contract, and one sole future target handler. An alias census over all live Plans ran before registration and identified exactly three pre-existing IDs -- cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set -- which are reconciled in place to their revised contracts and receive no duplicate row, peer control, or second handler. Every row remains handler_unavailable and its GUI controls remain disabled with command_not_registered until the central command contract layer, Event Authority, storage registration, and production wiring close for that row.
+  Amended 2026-10-09 (DL-180): cmd.browser.devtools.open is an alias of cmd.browser.open_devtools (UCC-202).
 gui_related: true
 gui_classification_reason: These rows are the reverse-consumer identity for every new Assistant mode menu, wand item, Plan card control, Activity control, workflow modal, BSD surface, scheduling modal, attachment control, and browser capture control.
-depends_on: [UCC-155, CS-077]
+depends_on: [UCC-155, CS-077, DL-180]
 unblocks: []
 acceptance_criteria:
   - All eighty-four IDs appear exactly once with label, description, preconditions, command_kind, owner, request/result contracts, and a single named future target handler.
@@ -253,6 +255,8 @@ negative_constraints:
   - Do not create a second catalog row, peer control, or alternate handler for a pre-existing command ID.
   - Do not claim a native dispatcher, handler, rendered control, receipt, or runtime from static catalog registration.
   - Do not let a page-local action ID, alias, or toast stand in for an unregistered command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): cmd.browser.devtools.open becomes an alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md

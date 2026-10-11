@@ -219,7 +219,7 @@
  const editBtn=(g,action,surface)=>'<button class="soft-button goal-edit-btn" data-action="'+action+'" aria-label="Edit objective"'+(surface==='panel'?' data-hover-key="goal-edit-objective" data-hover-tip="Edit objective&#10;Saving records a new revision in Objective history."':'')+(g.status==='completed'?' disabled':'')+'><span class="goal-lbl">Edit<span class="goal-lbl-more"> objective</span></span></button>';
  const cancelBtn=g=>'<button class="text-button danger goal-cancel-btn" data-action="goal-cancel" '+(g.status==='completed'?'disabled':'')+'>Cancel Goal</button>';
  function controlRow(g,editAction,surface){return '<div class="goal-actions" role="group" aria-label="Goal controls"><span class="goal-actions-safe">'+pauseBtn(g)+(editAction?editBtn(g,editAction,surface):'')+'</span>'+cancelBtn(g)+'</div>';}
- function boundRow(g){return g.binding?'<div class="goal-bound"><button class="text-button" data-action="goal-bound-open-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Open exact Plan · V'+g.binding.plan_version+'</button>'+(g.blockedReason?'<button class="text-button" data-action="goal-revise-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Revise Plan</button>':'')+'</div>':'';}
+ function boundRow(g){return g.binding?'<div class="goal-bound"><button class="text-button" data-action="goal-open-plan-version" data-id="'+esc(g.binding.assistant_plan_id)+'" data-version="'+g.binding.plan_version+'">Open exact Plan · V'+g.binding.plan_version+'</button>'+(g.blockedReason?'<button class="text-button" data-action="goal-revise-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Revise Plan</button>':'')+'</div>':'';}
  function historyToggle(c,g){return '<button class="pmap-route-action goal-history-toggle" data-action="goal-toggle-history" aria-expanded="'+!!ui.history+'"><span>Objective history</span><small>'+g.revisions.length+' revisions</small>'+c.icon('chevron',11)+'</button>';}
  function historyList(g){return ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'';}
  function renderEditor(c){const p=store.proposals[ui.proposal];if(!p||p.state!=='pending'||p.token.goalId!==get()?.id)return '';
@@ -257,7 +257,7 @@
   'goal-approve-proposal':c=>refresh(c,approve(ui.proposal)),
   'goal-deny-proposal':c=>refresh(c,deny(ui.proposal)),
   'goal-continue':c=>{const g=get();if(!g)return;const out=evaluate(g.id);if(out.ok){setTimeout(()=>refresh(context(),dispatch(out.ticket.id)),450);}ui.continuations=true;refresh(c,out);},
-  'goal-bound-open-plan':(c,b)=>window.PM56_PLANS?.openDetails(c,b.dataset.id),
+  'goal-open-plan-version':(c,b)=>{if(b.closest?.('.hover-card'))c.state.hover=null;window.PM56_PLANS?.openVersion(c,b.dataset.id,b.dataset.version);},
   'goal-revise-plan':(c,b)=>E._actions[window.PM56_PLANS?.get(b.dataset.id)?.status==='building'?'pd-stop-revise':'pd-revise']?.(c,{dataset:{id:b.dataset.id}})
  };
  for(const [name,fn] of Object.entries(actions))E.action(name,(c,b)=>{fn(c,b);return true;});

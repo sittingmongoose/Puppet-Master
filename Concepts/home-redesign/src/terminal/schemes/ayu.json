@@ -1,0 +1,26 @@
+{
+  "family": "Ayu",
+  "slug": "ayu",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-ayu.txt",
+  "copyright": "Copyright (c) 2016 Ike Kurghinyan",
+  "homepage": "https://github.com/ayu-theme/ayu-colors",
+  "schemes": [
+    {
+      "id": "ayu-mirage",
+      "name": "Ayu Mirage",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/ayu-theme/vscode-ayu/d676974ebb245fa5a7ae4444027f72801017f1b6/ayu-mirage.json",
+      "sourceSha256": "8ad0d5b3ea11c8bf55d6d0c9df907480cc2af552a5f19a9688675e588c4de265",
+      "colors": {
+        "background": "#1f2430",
+        "foreground": "#cccac2",
+        "cursor": null,
+        "cursorText": null,
+        "selectionBackground": null,
+        "selectionForeground": null,
+        "ansi": ["#171b24", "#f28273", "#87d96c", "#fcca60", "#6acdff", "#ddbbff", "#93e2c8", "#c7c7c7", "#686868", "#f28779", "#d5ff80", "#ffcd66", "#73d0ff", "#dfbfff", "#95e6cb", "#ffffff"]
+      }
+    }
+  ]
+}

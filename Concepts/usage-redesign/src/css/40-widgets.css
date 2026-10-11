@@ -506,12 +506,13 @@ html[data-theme$="-light"] #panel-usage .pmu-skycol[data-ramp="1"] { --c: color-
    30-charts.css paints ramps 0 and 1 by --v (indigo -> cyan -> mint) for every ramp host; the thresholds keep these tones */
 #panel-usage .pmu-skycol { --cb: color-mix(in srgb, #fff 55%, var(--c)); }
 html[data-theme$="-light"] #panel-usage .pmu-skycol { --cb: color-mix(in srgb, #fff 30%, var(--c)); }
-/* the heat layer of a live heat-up carries the column's previous colour (its own data-ramp and --v) */
+/* the heat layer of a live heat-up carries the column's previous colour (its own data-ramp and --v); the spectrum pair
+   below reads the flag on the Usage shell or a hosted board's (.pmu-hosted, D10 6.2) */
 #panel-usage .pmu-skyheat[data-ramp="0"] { --c: var(--pmu-calm); }
 #panel-usage .pmu-skyheat[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #3BB8F2); }
 html[data-theme$="-light"] #panel-usage .pmu-skyheat[data-ramp="1"] { --c: color-mix(in srgb, var(--pmu-calm) 50%, #0A76B6); }
-html:not([data-o55-nier="on"]) #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="0"] { --c: color-mix(in oklch, var(--pmu-l-r1, #27BEE8) calc(var(--v, 25) * 2%), var(--pmu-l-r0, #6F7BFF)); }
-html:not([data-o55-nier="on"]) #pmuApp:not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="1"] { --c: color-mix(in oklch, var(--pmu-l-r2, #34E0A6) calc((var(--v, 65) - 50) * 3.4%), var(--pmu-l-r1, #27BEE8)); }
+html:not([data-o55-nier="on"]) :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="0"] { --c: color-mix(in oklch, var(--pmu-l-r1, #27BEE8) calc(var(--v, 25) * 2%), var(--pmu-l-r0, #6F7BFF)); }
+html:not([data-o55-nier="on"]) :is(#pmuApp,.pmu-hosted):not([data-pmu-f-spectrum="0"]) .pmu-skyheat[data-ramp="1"] { --c: color-mix(in oklch, var(--pmu-l-r2, #34E0A6) calc((var(--v, 65) - 50) * 3.4%), var(--pmu-l-r1, #27BEE8)); }
 #panel-usage .pmu-skyheat[data-ramp="2"] { --c: var(--pmu-warn); }
 #panel-usage .pmu-skyheat[data-ramp="3"] { --c: var(--pmu-crit); }
 #panel-usage .pmu-skyheat[data-ramp="4"] { --c: var(--pmu-tone-exhausted, var(--pmu-crit)); }

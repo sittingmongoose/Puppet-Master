@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4839-L4962
+Source lines: L4847-L4976
 
-Source SHA256: `450f5c6700ad57ccc7bec8d90723b1d077b0b9d496e1c772293d9733ac406d78`
+Source SHA256: `723a65f8374bade06ec9e41622ed83809b03ea67224b28a7f30283c26f6e13a1`
 
 ---
 
@@ -23,6 +23,7 @@ The canonical dispositions are:
 |---|---|---|
 | Usage/Dashboard widget add, remove, configure, resize, move, reset | `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.configure`, `cmd.widget.resize`, `cmd.widget.move`, `cmd.widget.reset_layout` | One settled command updates the owner widget-layout store and records its command receipt; no pointer-preview frame is a domain event. |
 | Home shell surface move, resize, collapse, reset | `cmd.workspace_layout.move_surface`, `cmd.workspace_layout.resize_surface`, `cmd.workspace_layout.set_collapsed`, `cmd.workspace_layout.reset` | One changed release/activation commits `pm.home_workspace_layout.v1`; only that commit may produce the existing `workspace.layout_changed` effect. |
+| Home panel tabs and layout (amended 2026-10-09, DL-180) | `cmd.panel_tab.*` and the extended `cmd.workspace_layout.*` family (UCC-200); view state `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel` (CS-100) | One changed release or activation commits `pm.home_workspace_layout.v2` (SP-330) and emits `workspace.layout_changed`; the v1 row above is lineage. |
 | PM7 semantic Home size preset | Normalize the concept token `cmd.workspace_layout.size_surface` to `cmd.workspace_layout.resize_surface` after resolving `preset_id` to committed dimensions | `cmd.workspace_layout.size_surface` is concept/compatibility lineage only and is not a new primary registry row or handler. |
 | Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
 | Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
@@ -69,10 +70,12 @@ canonical_text: >-
   whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
   commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
   take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
+  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
+  Amended 2026-10-10 (DL-186): a dashboard tab's widget commits name the board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019); cmd.widget.reset_layout's optional set_id names the set a dashboard starts from (UCC-200).
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
-depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250]
+depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180, DL-186]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
@@ -127,6 +130,9 @@ negative_constraints:
   - Do not create a second Assistant command path or store.
   - Do not mint a command for Usage Tidy, board gravity, size presets, Live / Paused, or the Accounts room's in-place controls, and do not commit Tidy as one move per card.
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the v1 Home record and the Home rows here are superseded by UCC-200 on the v2 record."
+  - "Amended 2026-10-10 (DL-186): dashboard widget commits name the board in room and follow the Usage board's gravity and Tidy; cmd.widget.reset_layout gains set_id."
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md
