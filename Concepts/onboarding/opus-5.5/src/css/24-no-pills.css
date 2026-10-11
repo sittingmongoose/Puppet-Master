@@ -29,3 +29,7 @@ html[data-theme] .title-bar .search-bar, html[data-theme] .title-bar .pm6-tb-sea
 /* Friendly floats the title bar as a card with its large card corner (20px), which on a 40px bar is a capsule; it takes
    Glass's floating-bar corner instead, still soft and well under half its height. */
 html[data-theme^="friendly"] .title-bar { border-radius: 14px !important; }
+/* The title bar's notification stage and stack (#rsStage, #rsStack) draw their cards with the look's --border-radius,
+   which in Friendly and Glass rounds a 28px stacked card and a 44px stage card into capsules; they keep a soft card
+   corner instead (found by pm7-glyphs' toast gate). */
+html:is([data-theme^="friendly"], [data-theme^="glass"]) :is(.rs-card, .rs-clip) { border-radius: min(var(--border-radius, 10px), 10px) !important; }
