@@ -1,0 +1,19 @@
+# Combined reseal landing and bound baseline — 2026-10-11
+
+The reseal landed on both remotes at **`f2f61a803a92b76878e94c23cf9c04668390f27f`**. The first shared shard check passed; its landing check exited **1 with zero blockers and no timed-out subchecks**, against the existing baseline at `bf939041db`. All 15 ignored currentness hashes matched that old baseline before and after the aggregates. Its six new rows were only currentness source staleness for the refreshed Spec Lock, receipt and live evidence (three source paths in both aggregates); both growing buckets were staleness. No baseline or audit-input guard was bypassed.
+
+The first push preceded the in-place write. Under the same lock, the helper rechecked the backed-up old edition, replaced only the seven generated files and verified all 15 resulting files. All eight frozen files, the 252-row quarantine ledger and group manifest stayed byte-identical. Shared currentness then passed all 14 checks. Standalone shared readiness exited 1 with **23 findings and zero currentness source, registry or artifact findings**: 16 historical certification-source hashes, two denominator, two depth, one legacy fixture root, one inherited self-test and the retained buildability-cycle row. Those are reported, not recertified. Installed 15-file manifest SHA-256: **`d7d8d777624fb8a671dea911bb947161730304c3a2205a03178ad6e85545dd66`**.
+
+After that successful checked main push and shared validation, the full local T3 worktree remained at pushed main `f2f61a803a92b76878e94c23cf9c04668390f27f`. `snapshot-current` generated **`pds-20261011-004-current-planunit-snapshot`**, superseding `pds-20261011-003-current-planunit-snapshot`, from 96 direct Plans documents. Its validation passed and `conversion_performed` is false. The command allocated the next free run ID from the execution date; it did not rewrite historical runs.
+
+The baseline was recorded **after the snapshot**, at **2026-10-11T18:22:02Z**, with the default 600-second subcheck bound and no timeout. It records already pushed resealed main, uses the new pointer-named snapshot, and binds the installed currentness edition by the actual bytes of **all 15 files**. The local currentness path was absent before and after the checker's temporary link; the explicit audit root resolved to the same shared edition used by standalone readiness. The installed edition remained unchanged throughout recording.
+
+| Check | Previous recorded baseline | New bound baseline |
+|---|---:|---:|
+| `audit-governance` | 5,426 | 1,469 |
+| `plan-migration-validate` | 0 | 0 |
+| `run-gates` | 5,443 | 1,486 |
+
+The new baseline retains the inherited readiness, run-002 document-set, audit-closure, GUI-fixture, PRD-contract and raw-capture findings described in [reseal-record.md](reseal-record.md). Spec Lock, live evidence and plan graph are clear. New baseline SHA-256: **`e66018eef72eacaf3f7d4320a29a73eccb846275b487592b218c24162a5d7dc8`**. Its full failure keys, complete exports and currentness identities remain in `reports/landing-checks/baseline.json`; selected raw-output hashes are in [execution-evidence.json](execution-evidence.json).
+
+This is the separate follow-up commit required after a Plans landing. It combines the new snapshot, current pointer, bound baseline and these compact execution records. Its final shared shard/landing checks run before the second main push, with this same installed edition frozen. Their final reports are `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/landing/shard-check-followup.out` and `landing-check-followup.out`; the resulting main SHA is mailed to the planner after the push. Worktree/branch cleanup and release occur under the same lock after that result. This preparation record does not predict that later verdict or its self-referential commit SHA.
