@@ -44245,8 +44245,10 @@ SVG.kebab = SVG.dots;
 /* The neon glyph set draws first (pm7-glyphs D44, rollout USAGE step 1; the left rail's 00-core.js is the worked
    example). NEON maps each PM7 name to its glyph (the lead's table; it wins over map.json where they differ: list
    is the list, resize and size the resize). PMU.icon asks window.PMG first and keeps the SVG table only as the
-   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, tidy, the brand marks and every name
-   the table does not list). SIZE is the static render size per icon class (never measured: PMU.icon runs on every
+   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, the brand marks and every name
+   the table does not list; the notch stays identical to the meters' notch). Round 2 maps check, users, shield,
+   filter, ring, chart, layers and more to themselves, tool to the wrench and tidy to the layout. SIZE is the static
+   render size per icon class (never measured: PMU.icon runs on every
    live-beat re-render): pmu-glyph and pmu-lglyph 14 (40-widgets.css), pmu-vs-glyph 13 (30-charts.css .pmu-vs .pmu-ico),
    pmu-kpiarrow 12 (30-charts.css .pmu-kpidelta .pmu-ico), default 16. The card-head tools (toolGrip, toolSize, toolGear,
    toolKebab) draw flat at 14 through PMG.flat: one path, no halo, ink-only hover (PERF-3); the kebab is the set's
@@ -44260,7 +44262,8 @@ var NEON = {
   size: 'resize', eye: 'eye', eyeOff: 'eye-off', search: 'search', clock: 'clock', clockCircle: 'clock', file: 'page',
   user: 'user', briefcase: 'briefcase', pencil: 'edit', grip: 'grip', drag: 'grip', toolGrip: 'grip', kebab: 'more',
   dots: 'more', toolKebab: 'more', grid: 'grid', list: 'list', wallet: 'wallet', gauge: 'gauge', pulse: 'pulse',
-  spark: 'sparkles', book: 'notebook'
+  spark: 'sparkles', book: 'notebook', check: 'check', users: 'users', shield: 'shield', filter: 'filter', ring: 'ring',
+  chart: 'chart', layers: 'layers', more: 'more', tool: 'wrench', tidy: 'layout'
 };
 var NEON_ROLE = {
   refresh: 'control', 'export': 'concept', chevron: 'control', chevronDown: 'control', chevronRight: 'control',
@@ -44270,7 +44273,9 @@ var NEON_ROLE = {
   toolSize: 'control', size: 'control', eye: 'concept', eyeOff: 'control', search: 'concept', clock: 'concept',
   clockCircle: 'concept', file: 'concept', user: 'concept', briefcase: 'concept', pencil: 'control', grip: 'control',
   drag: 'control', toolGrip: 'control', kebab: 'control', dots: 'control', toolKebab: 'control', grid: 'concept',
-  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept'
+  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept',
+  check: 'concept', users: 'concept', shield: 'concept', filter: 'concept', ring: 'concept', chart: 'concept',
+  layers: 'concept', more: 'control', tool: 'control', tidy: 'control'
 };
 var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kpiarrow': 12 };
 var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
@@ -45137,12 +45142,19 @@ var PMU_SERIES = {
     settled: { glyph: 'check', word: 'Settled', tone: 'neutral' },
     pending_recheck: { glyph: 'refresh', word: 'Pending recheck', tone: 'neutral' }
   };
+  /* The value-state glyphs that stand for a state (pm7-glyphs D44 round 2): vs.html draws PMU.stateMark beside
+     the word (the word names the key: Usage unknown -> pending, Quota not exposed -> skipped, Disabled -> off,
+     Streaming partial -> mixed, Failed -> failed) and keeps the old SVG only when stateMark returns ''. The other
+     STATES glyphs (clockCircle, pencil, lock, check, refresh) are plain icons and draw through PMU.icon's NEON map. */
+  var STATE_GLYPHS = { dashedCircle: 1, slashCircle: 1, minusCircle: 1, halfCircle: 1, xCircle: 1 };
   var vs = {
     STATES: STATES,
     html: function (state, word) {
       var s = STATES[state] || STATES.unknown;
-      return '<span class="pmu-vs" data-vs="' + state + '" data-tone="' + s.tone + '">' + (s.glyph ? PMU.icon(s.glyph, 'pmu-vs-glyph') : '') +
-        '<span>' + esc(word || s.word) + '</span></span>';
+      var w = word || s.word;
+      var mark = (s.glyph && STATE_GLYPHS[s.glyph] && stateMark(w, 13)) || (s.glyph ? PMU.icon(s.glyph, 'pmu-vs-glyph') : '');
+      return '<span class="pmu-vs" data-vs="' + state + '" data-tone="' + s.tone + '">' + mark +
+        '<span>' + esc(w) + '</span></span>';
     }
   };
 
@@ -45153,14 +45165,21 @@ var PMU_SERIES = {
      match whole words only (low, live, on), so a sentence that merely contains the letters never matches. It maps
      words only and changes no copy. PMU.stateMark(word, size) is PMG.calm(key, size) (lit and still from the first
      frame: no rhythm and no mount act; Reduce Motion is instant and only Live beats move) or '' when the word names no
-     key or PMG is missing; callers keep the old glyph as the fallback. */
+     key or PMG is missing; callers keep the old glyph as the fallback. Round 2 adds the alert words (attention ->
+     warning, healthy -> complete, both whole-word) and the value-state words (failed; disabled -> off; not exposed and
+     not published -> skipped; streaming partial -> mixed), so vs.html's five state glyphs resolve to the lead's keys.
+     The specific rows sit above active/live/on, so a sentence naming a state ("Attention on …", "Healthy, based on …")
+     never falls through to working. */
   var STATE_WORDS = [
-    [/exhausted/i, 'failed'],
+    [/exhausted|\bfailed\b/i, 'failed'],
     [/cooldown/i, 'recovering'],
     [/standby|paused/i, 'paused'],
     [/signed[\s-]?out|unavailable/i, 'offline'],
-    [/needs[\s-]?a[\s-]?seat|needs[\s-]?seat/i, 'off'],
-    [/degraded|\blow\b/i, 'warning'],
+    [/needs[\s-]?a[\s-]?seat|needs[\s-]?seat|\bdisabled\b/i, 'off'],
+    [/degraded|\blow\b|\battention\b/i, 'warning'],
+    [/\bnot (exposed|published)\b/i, 'skipped'],
+    [/\bstreaming partial\b/i, 'mixed'],
+    [/\bhealthy\b/i, 'complete'],
     [/\bactive\b|\blive\b|\bon\b/i, 'working'],
     [/unknown/i, 'pending']
   ];
@@ -59511,7 +59530,7 @@ var PMU_SERIES = {
       }
       if (!m) { body.innerHTML = C.empty('This alert is not in the selected scope.', 'Scope filters alerts by provider'); return; }
       var bh = ctx.tier.bh, narrow = ctx.tier.bw < 300;
-      var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert') + '<b>' + esc(m.sevWord) + '</b></div>' +
+      var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + (PMU.stateMark(m.sevWord, 14) || C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert')) + '<b>' + esc(m.sevWord) + '</b></div>' +
         '<p class="pmu-alertdetail">' + esc(m.detail) + '</p>';
       /* the detail's lines from its measured width in the theme's face (Retro's mono runs wider), plus a word-wrap margin */
       var tw = PMU.charts && PMU.charts.textW ? PMU.charts.textW(m.detail, 13) * 1.1 : m.detail.length * 6.6;
@@ -60253,9 +60272,9 @@ var PMU_SERIES = {
   function polStepper(p) {
     var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
     return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + SVG.minus + '</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
       '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + SVG.plus + '</button></span><span class="pmu-swat">used</span>';
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
   }
   /* the level as one value that opens the level menu (the hero's cells) */
   function polValue(p) {
