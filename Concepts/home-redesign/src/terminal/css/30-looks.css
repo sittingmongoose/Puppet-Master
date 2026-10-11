@@ -75,12 +75,19 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-pop[data-pmt-look="glass"] { --pmt-radius: 10px; }
 .pmt-pop[data-pmt-look="retro"] { --pmt-radius: 0px; }
 :is(.pmt-root[data-pmt-look="friendly"] .pmt-pop, .pmt-pop[data-pmt-look="friendly"]) { border-radius: 14px; }
+/* Glass overlays take the app's Glass menu plate (--rg-menu, the one PM menus use): Glass's elevated surface is a
+   translucent tint meant to sit on a backdrop blur, and the terminal adds none (F3-431), so over it the terminal's own
+   text showed through the scheme list, crisp, between the rows */
 :is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]), .pmt-root[data-pmt-look="glass"] .pmt-findbar {
-  background: color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent); border-color: var(--glass-hairline, rgba(255,255,255,.16));
+  background: var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent)); border-color: var(--glass-hairline, rgba(255,255,255,.16));
 }
 :is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) { border-radius: 14px; }
 /* the sticky family names hold their own ground in Glass, so rows scrolling under them never show through */
-:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group { background: color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent); }
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group {
+  /* the menu plate is a little see-through: laid three deep it hides the row scrolling under the name */
+  background: linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)), linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)),
+    var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent));
+}
 :is(.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-pop[data-pmt-look="retro"]), .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
   border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
 }

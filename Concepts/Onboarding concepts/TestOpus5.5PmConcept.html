@@ -37042,7 +37042,9 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
 /* one scroll area: the list has no height cap or scrollbar of its own; it grows with the popover body, which scrolls
    and is capped by the room the popover has (76-popover.js place) */
 .pmt-schemes { margin: 0 -4px 8px; padding: 0 4px; border: 1px solid var(--pmw-line, var(--border-light)); border-radius: 4px; }
-.pmt-scheme-group { position: sticky; top: 0; z-index: 1; padding: 6px 6px 3px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
+/* sticky to the body's very top edge: the body's 4 px top padding would otherwise leave a band where the rows scrolling
+   under the family name peek out above it */
+.pmt-scheme-group { position: sticky; top: -4px; z-index: 1; padding: 6px 6px 3px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
 .pmt-scheme { display: flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 6px; border-radius: 3px; cursor: pointer; outline: none; }
 .pmt-scheme:hover, .pmt-scheme:focus { background: color-mix(in srgb, var(--pmw-text, currentColor) 8%, transparent); }
 .pmt-scheme[aria-selected="true"] { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
@@ -37133,12 +37135,19 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-pop[data-pmt-look="glass"] { --pmt-radius: 10px; }
 .pmt-pop[data-pmt-look="retro"] { --pmt-radius: 0px; }
 :is(.pmt-root[data-pmt-look="friendly"] .pmt-pop, .pmt-pop[data-pmt-look="friendly"]) { border-radius: 14px; }
+/* Glass overlays take the app's Glass menu plate (--rg-menu, the one PM menus use): Glass's elevated surface is a
+   translucent tint meant to sit on a backdrop blur, and the terminal adds none (F3-431), so over it the terminal's own
+   text showed through the scheme list, crisp, between the rows */
 :is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]), .pmt-root[data-pmt-look="glass"] .pmt-findbar {
-  background: color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent); border-color: var(--glass-hairline, rgba(255,255,255,.16));
+  background: var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent)); border-color: var(--glass-hairline, rgba(255,255,255,.16));
 }
 :is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) { border-radius: 14px; }
 /* the sticky family names hold their own ground in Glass, so rows scrolling under them never show through */
-:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group { background: color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent); }
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group {
+  /* the menu plate is a little see-through: laid three deep it hides the row scrolling under the name */
+  background: linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)), linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)),
+    var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent));
+}
 :is(.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-pop[data-pmt-look="retro"]), .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
   border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
 }
@@ -176585,6 +176594,7 @@ var T = {};
     this.charsets = s.charsets.slice(); this.gl = s.gl; this.modes.origin = s.origin; this.modes.autowrap = s.autowrap;
   };
   Terminal.prototype.fullReset = function () {
+    this.erases = (this.erases || 0) + 1;
     this.primary = new T.Buffer(this.cols, this.rows, { scrollback: this.primary.maxScrollback });
     this.alt = new T.Buffer(this.cols, this.rows, { alt: true });
     this.buf = this.primary;
@@ -176664,6 +176674,8 @@ var T = {};
 
   Terminal.prototype._eraseDisplay = function (mode) {
     var buf = this.buf, cur = buf.cursor, st = this._eraseStyle(), y;
+    /* a whole-screen erase (clear) counts, so the cursor trail never draws the jump home that comes with it */
+    if (mode === 2 || mode === 3) this.erases = (this.erases || 0) + 1;
     if (mode === 0) {
       buf.line(cur.y).clear(cur.x, buf.cols, st);
       for (y = cur.y + 1; y < buf.rows; y++) { buf.line(y).clear(0, buf.cols, st); buf.line(y).wrapped = false; }
@@ -177011,7 +177023,20 @@ var T = {};
     if (this.buf !== buf) return;
     var line = buf.line(buf.cursor.y), now = Date.now();
     if (kind === 'A') {
-      if (this.curCmd && !this.curCmd.end && this.curCmd.outputLine) this._endCmd(null);
+      var cur = this.curCmd;
+      /* the shell drew its prompt again for the same command line (Ctrl+L, a completion list printed above it): the
+         command's prompt moves to the new line, so its gutter mark stays beside the prompt the person sees, instead of
+         staying on the line the clear pushed into the scrollback */
+      if (cur && !cur.outputLine && (cur.state === 'prompt' || cur.state === 'input') && cur.promptLine) {
+        if (cur.promptLine !== line) {
+          if (cur.promptLine.mark && cur.promptLine.mark.cmd === cur) { cur.promptLine.mark = null; cur.promptLine.ver++; }
+          cur.promptLine = line; line.mark = { cmd: cur, kind: 'prompt' }; line.ver++;
+        }
+        cur.inputLine = null; cur.state = 'prompt';
+        this.emit('command', { type: 'prompt', cmd: cur });
+        return;
+      }
+      if (cur && !cur.end && cur.outputLine) this._endCmd(null);
       var cmd = { id: ++this.cmdSeq, cmdline: '', cwd: this.cwd || '', by: 'user', exit: null, start: 0, end: 0,
         promptLine: line, inputLine: null, inputCol: 0, outputLine: null, endLine: null, state: 'prompt' };
       line.mark = { cmd: cmd, kind: 'prompt' }; line.ver++;
@@ -182516,8 +182541,13 @@ var T = {};
   };
   Policy.prototype._trackCursor = function (now) {
     var v = this.view, cur = v.term.buf.cursor, m = v.metrics;
-    if (!m || !this.trail || this.trailStyle === 'off' || !v.focused) { this.lastCursor = null; return; }
-    var key = cur.x + ',' + cur.y;
+    /* a hidden cursor (DECTCEM off: cargo's progress bar, a full-screen program) leaves no trail: its moves are the
+       program redrawing, and a smear under a cursor nobody sees reads as a glitch at the end of the line */
+    if (!m || !this.trail || this.trailStyle === 'off' || !v.focused || !v.term.modes.cursorVisible) { this.lastCursor = null; return; }
+    var key = cur.x + ',' + cur.y, erases = v.term.erases || 0;
+    /* after a whole-screen erase (clear, a reset) the cursor's move home is not a jump to draw: under Full CRT it read as
+       a bright bar down the tube */
+    if (this.lastCursor && this.lastCursor.erases !== erases) this.lastCursor = null;
     if (this.lastCursor && this.lastCursor.key !== key) {
       var from = { x: this.lastCursor.x * m.cellW, y: this.lastCursor.y * m.cellH, w: m.cellW, h: m.cellH };
       var to = { x: cur.x * m.cellW, y: cur.y * m.cellH, w: m.cellW, h: m.cellH };
@@ -182525,7 +182555,7 @@ var T = {};
       var color = v.theme ? T.color.toHex(v.renderer.defaults().cursor) : '#ffffff';
       if (this.trail.jump(from, to, color, this.trailStyle, now)) this.kick(0);
     }
-    if (!this.lastCursor || this.lastCursor.key !== key) this.lastCursor = { key: key, x: cur.x, y: cur.y };
+    if (!this.lastCursor || this.lastCursor.key !== key) this.lastCursor = { key: key, x: cur.x, y: cur.y, erases: erases };
   };
   /* request another frame (delay 0 = next animation frame) */
   Policy.prototype.kick = function (delay) {
@@ -184932,9 +184962,13 @@ var T = {};
   };
   LineEditor.prototype.redrawPrompt = function () {
     var sh = this.sh;
+    /* the prompt drawn again carries its marks again, as a shell-integrated prompt does: the terminal moves the waiting
+       command's prompt to this line (14-terminal.js) */
+    sh.mark('A');
     sh.rawOut(sh.promptText());
     var pw = visibleWidth(sh.promptText());
     if (pw && pw % this.term.cols === 0) sh.rawOut(' \r');
+    sh.mark('B');
     this.startX = pw % this.term.cols; this.startOff = pw; this.curRow = 0;
   };
   LineEditor.prototype.histMove = function (d) {
@@ -188348,7 +188382,6 @@ var T = {};
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
     g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
-    var py = this.gridTop || 0;
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
       var c = cmds[i];
@@ -188378,10 +188411,16 @@ var T = {};
         r.kind = kind; r.agent = agent;
         if (cue) Motion.play(r.el, cue);
       }
-      var y = py + (abs - top) * m.cellH;
+      /* beside the row's first cell as it is shown: under Full CRT the case insets the picture and the tube bends it,
+         so the mark follows the curved row start instead of its flat grid position (the cell's centre: the screen's
+         very edge maps to nothing) */
+      var y = Math.round(this.cellToOverlay(0.5, abs - top + 0.5).top - m.cellH / 2);
       if (r.top !== y) { r.top = y; r.el.style.top = y + 'px'; }
       if (r.h !== m.cellH) { r.h = m.cellH; r.el.style.height = m.cellH + 'px'; }
-      if (r.label !== label) { r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label); }
+      if (r.label !== label) {
+        r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label);
+        r.el.setAttribute('data-pm-hover-detail', 'Copy, rerun or select this command and its output');
+      }
       if (!r.el.isConnected) g.appendChild(r.el);
     }
     marks.forEach(function (r, id) { if (!seen.has(id)) { r.el.remove(); marks.delete(id); } });
@@ -188972,14 +189011,14 @@ var T = {};
       bar.className = 'pmt-findbar pmt-calm';
       bar.setAttribute('role', 'search');
       bar.innerHTML =
-        '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find">' +
-        '<button type="button" class="pmt-find-toggle" data-k="caseSens" aria-pressed="false" data-pm-hover-label="Match case (Alt+C)" aria-label="Match case">Aa</button>' +
-        '<button type="button" class="pmt-find-toggle" data-k="word" aria-pressed="false" data-pm-hover-label="Whole word (Alt+W)" aria-label="Whole word"><u>ab</u></button>' +
-        '<button type="button" class="pmt-find-toggle" data-k="regex" aria-pressed="false" data-pm-hover-label="Regular expression (Alt+R)" aria-label="Regular expression">.*</button>' +
+        '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find" data-pm-hover-label="Find in terminal" data-pm-hover-detail="Enter goes up to the previous match, Shift+Enter down to the next" data-pm-hover-visual-suppressed="true">' +
+        '<button type="button" class="pmt-find-toggle" data-k="caseSens" aria-pressed="false" data-pm-hover-label="Match case" aria-keyshortcuts="Alt+C" aria-label="Match case">Aa</button>' +
+        '<button type="button" class="pmt-find-toggle" data-k="word" aria-pressed="false" data-pm-hover-label="Whole word" aria-keyshortcuts="Alt+W" aria-label="Whole word"><u>ab</u></button>' +
+        '<button type="button" class="pmt-find-toggle" data-k="regex" aria-pressed="false" data-pm-hover-label="Regular expression" aria-keyshortcuts="Alt+R" aria-label="Regular expression">.*</button>' +
         '<span class="pmt-find-count" aria-live="polite"></span>' +
-        '<button type="button" class="pmt-find-btn" data-a="prev" aria-label="Previous match, upward (Enter)" data-pm-hover-label="Previous match, upward (Enter)">' + ICON.prev + '</button>' +
-        '<button type="button" class="pmt-find-btn" data-a="next" aria-label="Next match, downward (Shift+Enter)" data-pm-hover-label="Next match, downward (Shift+Enter)">' + ICON.next + '</button>' +
-        '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find (Esc)" data-pm-hover-label="Close (Esc)">' + ICON.close + '</button>';
+        '<button type="button" class="pmt-find-btn" data-a="prev" aria-label="Previous match, upward" aria-keyshortcuts="Enter" data-pm-hover-label="Previous match, upward">' + ICON.prev + '</button>' +
+        '<button type="button" class="pmt-find-btn" data-a="next" aria-label="Next match, downward" aria-keyshortcuts="Shift+Enter" data-pm-hover-label="Next match, downward">' + ICON.next + '</button>' +
+        '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find" aria-keyshortcuts="Escape" data-pm-hover-label="Close find">' + ICON.close + '</button>';
       view.screen.appendChild(bar);
       view.findBar = bar;
       T.Motion.play(bar);
@@ -189603,18 +189642,24 @@ var T = {};
                    close button or a click outside.
      Both call onClose once when they close, and return { el, close, refresh }. The rows, controls and scheme list
      are shared, so both read the same, and the NieR paint (40-nier.css) reaches both through the same classes. */
+  /* the page's hover tags (PM7): a field sits beside its row label and a scheme row shows its name, so neither shows
+     the tag engine's generic tag ("Change this setting.", "Choose this option."), which covered the list as the pointer
+     or the keyboard moved through it. They stay bound to the tag engine (its census and the accessible description)
+     with the tag's paint suppressed, as the panels' menu rows are (36-menu.js); the buttons say what they do */
+  var QF = ' data-pm-hover-visual-suppressed="true"', QM = QF;
+  function tag(label, detail) { return ' data-pm-hover-label="' + esc(label) + '" data-pm-hover-detail="' + esc(detail) + '"'; }
   function row(label, ctl) { return '<div class="pmt-pop-row"><span class="pmt-pop-label">' + esc(label) + '</span><span class="pmt-pop-ctl">' + ctl + '</span></div>'; }
   function fieldLabel(key) { return A().FIELDS[key] ? A().FIELDS[key].label : key; }
   function select(key, value, opts, label) {
-    return '<select data-key="' + key + '" aria-label="' + esc(label || fieldLabel(key)) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
+    return '<select data-key="' + key + '"' + QF + ' aria-label="' + esc(label || fieldLabel(key)) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
   }
-  function check(key, value, label) { return '<label class="pmt-check"><input type="checkbox" data-key="' + key + '"' + (value ? ' checked' : '') + '><span>' + esc(label) + '</span></label>'; }
-  function range(key, value, min, max, step, text) { return '<input type="range" data-key="' + key + '" min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '" aria-label="' + esc(fieldLabel(key)) + '"><output>' + esc(text) + '</output>'; }
+  function check(key, value, label) { return '<label class="pmt-check"><input type="checkbox" data-key="' + key + '"' + QF + (value ? ' checked' : '') + '><span>' + esc(label) + '</span></label>'; }
+  function range(key, value, min, max, step, text) { return '<input type="range" data-key="' + key + '"' + QF + ' min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '" aria-label="' + esc(fieldLabel(key)) + '"><output>' + esc(text) + '</output>'; }
   function stepper(key, value, min, max, step) {
-    return '<span class="pmt-stepper"><button type="button" class="pmt-step" data-step="-' + step + '" data-key="' + key + '" aria-label="Smaller">−</button><output>' + value + ' px</output><button type="button" class="pmt-step" data-step="' + step + '" data-key="' + key + '" aria-label="Bigger">+</button></span>';
+    return '<span class="pmt-stepper"><button type="button" class="pmt-step" data-step="-' + step + '" data-key="' + key + '" aria-label="Smaller"' + tag('Smaller', 'Text size ' + step + ' px smaller') + '>−</button><output>' + value + ' px</output><button type="button" class="pmt-step" data-step="' + step + '" data-key="' + key + '" aria-label="Bigger"' + tag('Bigger', 'Text size ' + step + ' px bigger') + '>+</button></span>';
   }
   function seg(key, value, opts) {
-    return '<span class="pmt-seg" role="radiogroup">' + opts.map(function (o) { return '<button type="button" role="radio" data-key="' + key + '" data-value="' + o[0] + '" aria-checked="' + (String(value) === String(o[0])) + '">' + esc(o[1]) + '</button>'; }).join('') + '</span>';
+    return '<span class="pmt-seg" role="radiogroup">' + opts.map(function (o) { return '<button type="button" role="radio"' + QF + ' data-key="' + key + '" data-value="' + o[0] + '" aria-checked="' + (String(value) === String(o[0])) + '">' + esc(o[1]) + '</button>'; }).join('') + '</span>';
   }
   function swatch(sch) {
     var c = sch.colors, a = c.ansi;
@@ -189625,7 +189670,7 @@ var T = {};
   function schemeOptions(sid, follow, q) {
     var list = A().schemes(), out = [], fam = null, ql = q.toLowerCase();
     if (!ql || follow.label.toLowerCase().indexOf(ql) >= 0 || (follow.meta || '').toLowerCase().indexOf(ql) >= 0) {
-      out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
+      out.push('<div class="pmt-scheme" role="option" tabindex="-1"' + QM + ' data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
         '<span class="pmt-scheme-name">' + esc(follow.label) + '</span><span class="pmt-scheme-meta">' + esc(follow.meta || '') + '</span></div>');
     }
     /* each family in its own box, so its sticky name scrolls away with it instead of piling up under the next one */
@@ -189636,7 +189681,7 @@ var T = {};
         fam = sch.family;
         out.push('<div class="pmt-scheme-fam" role="presentation"><div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>');
       }
-      out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
+      out.push('<div class="pmt-scheme" role="option" tabindex="-1"' + QM + ' data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
         '<span class="pmt-scheme-name">' + esc(sch.name) + '</span><span class="pmt-scheme-meta">' + (sch.appearance === 'light' ? 'Light' : 'Dark') + '</span></div>');
     });
     if (fam !== null) out.push('</div>');
@@ -189741,17 +189786,17 @@ var T = {};
       var html = '';
       html += '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
         '<span class="pmt-seg" role="radiogroup" aria-label="Apply to">' +
-        '<button type="button" role="radio" data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
-        '<button type="button" role="radio" data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
-        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
+        '<button type="button" role="radio"' + QF + ' data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
+        '<button type="button" role="radio"' + QF + ' data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
+        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" aria-keyshortcuts="Escape" data-pm-hover-label="Close appearance"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
       html += '<div class="pmt-pop-body pmt-calm">';
       /* scheme */
       html += '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
-        '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
+        '<input class="pmt-pop-search" type="search"' + QF + ' placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
         '<div class="pmt-schemes" role="listbox" aria-label="Colour schemes">' + schemeOptions(sid, follow(sid), v._apQuery || '') + '</div>' +
         row('Light and dark', check('schemePair', val('schemePair'), 'Switch with the app\'s light and dark mode')) +
         row('Minimum contrast', select('minContrast', val('minContrast'), [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']])) +
-        '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import">Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
+        '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import"' + tag('Import scheme', 'Adds a colour scheme from a file; it stays on this machine') + '>Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
         '</section>';
       /* font */
       var fonts = [['follow', 'Follow look (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
@@ -189778,7 +189823,7 @@ var T = {};
       if (bgk === 'solid') html += row('Colour', '<input type="color" class="pmt-pop-color" data-key="bgColor" value="' + esc(val('bgColor') || T.color.toHex(R.theme.bg)) + '" aria-label="Background colour">');
       if (bgk === 'gradient') html += row('Gradient', select('bgGradient', val('bgGradient'), [['dusk', 'Dusk'], ['dawn', 'Dawn'], ['deep', 'Deep'], ['paper', 'Paper']]));
       if (bgk === 'image') {
-        html += row('Image', select('bgImage', val('bgImage'), [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your image']]) + '<button type="button" class="pmt-textbtn" data-act="upload">Choose…</button>');
+        html += row('Image', select('bgImage', val('bgImage'), [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your image']]) + '<button type="button" class="pmt-textbtn" data-act="upload"' + tag('Choose an image', 'PNG, JPEG or WebP from this computer') + '>Choose…</button>');
         html += row('Dim', range('bgDim', val('bgDim'), 0, 0.9, 0.05, Math.round(val('bgDim') * 100) + '%'));
         html += row('Blur', range('bgBlur', val('bgBlur'), 0, 24, 1, val('bgBlur') + ' px'));
       }
@@ -189800,7 +189845,7 @@ var T = {};
           row('Full CRT', check('crt', fx.crt, 'Curvature, bezel, burn-in and noise')) +
           (fx.crt ? row('Curvature', range('curvature', val('curvature'), 0, 0.2, 0.01, String(val('curvature')))) + row('Burn-in', check('burnIn', val('burnIn'), 'Afterglow when text moves')) + row('Noise', range('noise', val('noise'), 0, 0.12, 0.005, String(val('noise')))) : '') +
           row('Flicker', check('flicker', fxMode === 'custom' && !!val('flicker'), 'Flicker (at most 3% brightness change, below the WCAG flash threshold)')) +
-          (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss">Degauss</button></div>' : '');
+          (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss"' + tag('Degauss', 'The tube wobbles and settles once, as a CRT does when you press its degauss button') + '>Degauss</button></div>' : '');
       }
       var notes = [];
       if (fx.reduced) notes.push('Reduced Motion is on: nothing moves; static looks stay.');
@@ -189808,7 +189853,7 @@ var T = {};
       if (eff.curvature && /not drawn/.test(eff.curvature)) notes.push('No GPU on this machine: curvature, burn-in and noise are not drawn; scanlines and glow use the flat fallback.');
       if (notes.length) html += '<p class="pmt-pop-note">' + notes.map(esc).join(' ') + '</p>';
       html += '</section></div>';
-      html += '<div class="pmt-pop-foot"><button type="button" class="pmt-textbtn" data-act="reset">' + (scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals') + '</button><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
+      html += '<div class="pmt-pop-foot"><button type="button" class="pmt-textbtn" data-act="reset"' + (scope === 'tab' ? tag('Reset this terminal', 'This terminal follows the defaults again') : tag('Reset all terminals', 'Every terminal goes back to the look\'s defaults')) + '>' + (scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals') + '</button><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close"' + tag('Done', 'Closes Appearance; every change is already applied') + '>Done</button></div>';
       pop.innerHTML = html;
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
@@ -189873,21 +189918,33 @@ var T = {};
     /* live preview on hover and keyboard focus in the list */
     /* the recolour starts from the scheme that caused it (Friendly's bloom pours out of that row) */
     function from(o) { var r = o.getBoundingClientRect(); v.recolorFrom(r.left, r.top + r.height / 2); }
-    pop.addEventListener('mouseover', function (e) {
-      var o = e.target.closest('.pmt-scheme'); if (!o) return;
+    /* a preview waits until the pointer rests on a row, or the arrow keys stop (hover intent): a pointer sweeping
+       across the list, or a held arrow key, would otherwise recolour the terminal through every scheme it passes,
+       light and dark in turn, a strobe of half-finished recolours. Moving back onto the scheme already shown cancels
+       a preview still waiting */
+    var INTENT_MS = 110, intent = 0;
+    function previewSoon(o, ms) {
+      clearTimeout(intent);
       var id = o.getAttribute('data-id');
       if (v._previewId === id) return;
-      v._previewId = id; from(o); A().preview(v, { scheme: id });
+      intent = setTimeout(function () {
+        if (!pop.isConnected || !o.isConnected || v.pop !== pop) return;
+        v._previewId = id; from(o); A().preview(v, { scheme: id });
+      }, ms);
+    }
+    pop.addEventListener('mouseover', function (e) {
+      var o = e.target.closest('.pmt-scheme'); if (o) previewSoon(o, INTENT_MS);
     });
     pop.addEventListener('mouseout', function (e) {
       var list = pop.querySelector('.pmt-schemes');
-      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
+      if (list && !list.contains(e.relatedTarget)) { clearTimeout(intent); v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
     });
+    pop.addEventListener('click', function () { clearTimeout(intent); }, true);
     pop.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
+      if (e.key === 'Escape') { clearTimeout(intent); e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
       var o = e.target.closest && e.target.closest('.pmt-scheme');
       var n = listStep(pop, e);
-      if (n) { v._previewId = n.getAttribute('data-id'); from(n); A().preview(v, { scheme: v._previewId }); }
+      if (n) previewSoon(n, e.repeat ? INTENT_MS : 0);
       if (e.key === 'Enter' && o) { e.preventDefault(); o.click(); }
       e.stopPropagation();
     });
@@ -190005,16 +190062,16 @@ var T = {};
       pop.setAttribute('data-pmt-look', A().lookKey(T.look()));
       var fonts = [['follow', 'Follow look']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
       pop.innerHTML = '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
-        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +
+        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" aria-keyshortcuts="Escape" data-pm-hover-label="Close appearance"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +
         '<div class="pmt-pop-body">' +
         '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
-        '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(query) + '">' +
+        '<input class="pmt-pop-search" type="search"' + QF + ' placeholder="Search schemes" aria-label="Search schemes" value="' + esc(query) + '">' +
         '<div class="pmt-schemes" role="listbox" aria-label="Colour schemes">' + schemeOptions(c.scheme, follow(), query) + '</div></section>' +
         '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', c.font, fonts, 'Font')) +
         row('Size', stepper('size', shownSize(c), 8, 32, 0.5)) +
         '</section></div>' +
-        '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
+        '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close"' + tag('Done', 'Closes Appearance; every change is already applied') + '>Done</button></div>';
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
       slide(pop, before);
@@ -190128,23 +190185,25 @@ var T = {};
     if (st.mode === 'driving') {
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> is driving this terminal' +
         (st.steps ? ' · step ' + st.step + ' of ' + st.steps : '') + (st.label ? ' · ' + T.util.esc(st.label) : '') + '</span>';
-      acts = [['takeover', 'Take over'], ['interrupt', 'Interrupt'], ['stop', 'Stop']];
+      acts = [['takeover', 'Take over', 'You type here; ' + nm + ' pauses and is told'], ['interrupt', 'Interrupt', 'Sends Ctrl+C to the running program'],
+        ['stop', 'Stop', 'Ends ' + nm + '\'s run and gives the terminal back to you']];
     } else if (st.mode === 'paused') {
       html = SQ + '<span class="pmt-agent-text">You took over. <b>' + nm + '</b> is paused and has been told.</span>';
-      acts = [['handback', 'Hand back'], ['stop', 'Stop ' + nm]];
+      acts = [['handback', 'Hand back', nm + ' carries on with its run'], ['stop', 'Stop ' + nm, 'Ends ' + nm + '\'s run here']];
     } else if (st.mode === 'permission') {
       /* the command exactly as it would be typed: a control key shows as ^X, never as a space or nothing */
       var shown = st.cmd ? String(st.cmd).replace(/[\x00-\x1f\x7f]/g, function (c) { return '^' + String.fromCharCode(c.charCodeAt(0) ^ 64); }) : '';
       html = SQ + '<span class="pmt-agent-text"><b>' + nm + '</b> wants to type in this terminal' + (shown ? ': <code>' + T.util.esc(shown) + '</code>' : '') + '</span>';
       acts = [['allow', 'Allow once', nm + ' types this one command'],
         ['terminal', 'Allow in this terminal', nm + ' may type here until its run ends or you take over. Each command still needs its own approval.'],
-        ['deny', 'Deny']];
+        ['deny', 'Deny', nm + ' does not type this command']];
     } else if (st.mode === 'secret') {
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
-      acts = [['focus', 'Type it']];
+      acts = [['focus', 'Type it', 'Puts the keyboard in this terminal']];
     }
     var actsHtml = '<span class="pmt-agent-acts">' + acts.map(function (a) {
-      return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '"' + (a[2] ? ' data-pm-hover-label="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
+      /* the hover tag names the action and says what it does (a label alone gets the tag engine's generic line) */
+      return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '" data-pm-hover-label="' + a[1] + '"' + (a[2] ? ' data-pm-hover-detail="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
     }).join('') + '</span>';
     row.setAttribute('role', st.mode === 'permission' || st.mode === 'secret' ? 'alert' : 'status');
     row.onclick = function (e) { var b = e.target.closest('.pmt-agent-in:not(.pmt-agent-old) button'); if (b) self.act(b.getAttribute('data-act')); };

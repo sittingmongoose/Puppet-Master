@@ -608,7 +608,6 @@
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
     g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
-    var py = this.gridTop || 0;
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
       var c = cmds[i];
@@ -638,10 +637,16 @@
         r.kind = kind; r.agent = agent;
         if (cue) Motion.play(r.el, cue);
       }
-      var y = py + (abs - top) * m.cellH;
+      /* beside the row's first cell as it is shown: under Full CRT the case insets the picture and the tube bends it,
+         so the mark follows the curved row start instead of its flat grid position (the cell's centre: the screen's
+         very edge maps to nothing) */
+      var y = Math.round(this.cellToOverlay(0.5, abs - top + 0.5).top - m.cellH / 2);
       if (r.top !== y) { r.top = y; r.el.style.top = y + 'px'; }
       if (r.h !== m.cellH) { r.h = m.cellH; r.el.style.height = m.cellH + 'px'; }
-      if (r.label !== label) { r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label); }
+      if (r.label !== label) {
+        r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label);
+        r.el.setAttribute('data-pm-hover-detail', 'Copy, rerun or select this command and its output');
+      }
       if (!r.el.isConnected) g.appendChild(r.el);
     }
     marks.forEach(function (r, id) { if (!seen.has(id)) { r.el.remove(); marks.delete(id); } });

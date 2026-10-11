@@ -136,8 +136,13 @@
   };
   Policy.prototype._trackCursor = function (now) {
     var v = this.view, cur = v.term.buf.cursor, m = v.metrics;
-    if (!m || !this.trail || this.trailStyle === 'off' || !v.focused) { this.lastCursor = null; return; }
-    var key = cur.x + ',' + cur.y;
+    /* a hidden cursor (DECTCEM off: cargo's progress bar, a full-screen program) leaves no trail: its moves are the
+       program redrawing, and a smear under a cursor nobody sees reads as a glitch at the end of the line */
+    if (!m || !this.trail || this.trailStyle === 'off' || !v.focused || !v.term.modes.cursorVisible) { this.lastCursor = null; return; }
+    var key = cur.x + ',' + cur.y, erases = v.term.erases || 0;
+    /* after a whole-screen erase (clear, a reset) the cursor's move home is not a jump to draw: under Full CRT it read as
+       a bright bar down the tube */
+    if (this.lastCursor && this.lastCursor.erases !== erases) this.lastCursor = null;
     if (this.lastCursor && this.lastCursor.key !== key) {
       var from = { x: this.lastCursor.x * m.cellW, y: this.lastCursor.y * m.cellH, w: m.cellW, h: m.cellH };
       var to = { x: cur.x * m.cellW, y: cur.y * m.cellH, w: m.cellW, h: m.cellH };
@@ -145,7 +150,7 @@
       var color = v.theme ? T.color.toHex(v.renderer.defaults().cursor) : '#ffffff';
       if (this.trail.jump(from, to, color, this.trailStyle, now)) this.kick(0);
     }
-    if (!this.lastCursor || this.lastCursor.key !== key) this.lastCursor = { key: key, x: cur.x, y: cur.y };
+    if (!this.lastCursor || this.lastCursor.key !== key) this.lastCursor = { key: key, x: cur.x, y: cur.y, erases: erases };
   };
   /* request another frame (delay 0 = next animation frame) */
   Policy.prototype.kick = function (delay) {

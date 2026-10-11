@@ -63,18 +63,24 @@
                    close button or a click outside.
      Both call onClose once when they close, and return { el, close, refresh }. The rows, controls and scheme list
      are shared, so both read the same, and the NieR paint (40-nier.css) reaches both through the same classes. */
+  /* the page's hover tags (PM7): a field sits beside its row label and a scheme row shows its name, so neither shows
+     the tag engine's generic tag ("Change this setting.", "Choose this option."), which covered the list as the pointer
+     or the keyboard moved through it. They stay bound to the tag engine (its census and the accessible description)
+     with the tag's paint suppressed, as the panels' menu rows are (36-menu.js); the buttons say what they do */
+  var QF = ' data-pm-hover-visual-suppressed="true"', QM = QF;
+  function tag(label, detail) { return ' data-pm-hover-label="' + esc(label) + '" data-pm-hover-detail="' + esc(detail) + '"'; }
   function row(label, ctl) { return '<div class="pmt-pop-row"><span class="pmt-pop-label">' + esc(label) + '</span><span class="pmt-pop-ctl">' + ctl + '</span></div>'; }
   function fieldLabel(key) { return A().FIELDS[key] ? A().FIELDS[key].label : key; }
   function select(key, value, opts, label) {
-    return '<select data-key="' + key + '" aria-label="' + esc(label || fieldLabel(key)) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
+    return '<select data-key="' + key + '"' + QF + ' aria-label="' + esc(label || fieldLabel(key)) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
   }
-  function check(key, value, label) { return '<label class="pmt-check"><input type="checkbox" data-key="' + key + '"' + (value ? ' checked' : '') + '><span>' + esc(label) + '</span></label>'; }
-  function range(key, value, min, max, step, text) { return '<input type="range" data-key="' + key + '" min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '" aria-label="' + esc(fieldLabel(key)) + '"><output>' + esc(text) + '</output>'; }
+  function check(key, value, label) { return '<label class="pmt-check"><input type="checkbox" data-key="' + key + '"' + QF + (value ? ' checked' : '') + '><span>' + esc(label) + '</span></label>'; }
+  function range(key, value, min, max, step, text) { return '<input type="range" data-key="' + key + '"' + QF + ' min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '" aria-label="' + esc(fieldLabel(key)) + '"><output>' + esc(text) + '</output>'; }
   function stepper(key, value, min, max, step) {
-    return '<span class="pmt-stepper"><button type="button" class="pmt-step" data-step="-' + step + '" data-key="' + key + '" aria-label="Smaller">−</button><output>' + value + ' px</output><button type="button" class="pmt-step" data-step="' + step + '" data-key="' + key + '" aria-label="Bigger">+</button></span>';
+    return '<span class="pmt-stepper"><button type="button" class="pmt-step" data-step="-' + step + '" data-key="' + key + '" aria-label="Smaller"' + tag('Smaller', 'Text size ' + step + ' px smaller') + '>−</button><output>' + value + ' px</output><button type="button" class="pmt-step" data-step="' + step + '" data-key="' + key + '" aria-label="Bigger"' + tag('Bigger', 'Text size ' + step + ' px bigger') + '>+</button></span>';
   }
   function seg(key, value, opts) {
-    return '<span class="pmt-seg" role="radiogroup">' + opts.map(function (o) { return '<button type="button" role="radio" data-key="' + key + '" data-value="' + o[0] + '" aria-checked="' + (String(value) === String(o[0])) + '">' + esc(o[1]) + '</button>'; }).join('') + '</span>';
+    return '<span class="pmt-seg" role="radiogroup">' + opts.map(function (o) { return '<button type="button" role="radio"' + QF + ' data-key="' + key + '" data-value="' + o[0] + '" aria-checked="' + (String(value) === String(o[0])) + '">' + esc(o[1]) + '</button>'; }).join('') + '</span>';
   }
   function swatch(sch) {
     var c = sch.colors, a = c.ansi;
@@ -85,7 +91,7 @@
   function schemeOptions(sid, follow, q) {
     var list = A().schemes(), out = [], fam = null, ql = q.toLowerCase();
     if (!ql || follow.label.toLowerCase().indexOf(ql) >= 0 || (follow.meta || '').toLowerCase().indexOf(ql) >= 0) {
-      out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
+      out.push('<div class="pmt-scheme" role="option" tabindex="-1"' + QM + ' data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
         '<span class="pmt-scheme-name">' + esc(follow.label) + '</span><span class="pmt-scheme-meta">' + esc(follow.meta || '') + '</span></div>');
     }
     /* each family in its own box, so its sticky name scrolls away with it instead of piling up under the next one */
@@ -96,7 +102,7 @@
         fam = sch.family;
         out.push('<div class="pmt-scheme-fam" role="presentation"><div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>');
       }
-      out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
+      out.push('<div class="pmt-scheme" role="option" tabindex="-1"' + QM + ' data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
         '<span class="pmt-scheme-name">' + esc(sch.name) + '</span><span class="pmt-scheme-meta">' + (sch.appearance === 'light' ? 'Light' : 'Dark') + '</span></div>');
     });
     if (fam !== null) out.push('</div>');
@@ -201,17 +207,17 @@
       var html = '';
       html += '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
         '<span class="pmt-seg" role="radiogroup" aria-label="Apply to">' +
-        '<button type="button" role="radio" data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
-        '<button type="button" role="radio" data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
-        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
+        '<button type="button" role="radio"' + QF + ' data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
+        '<button type="button" role="radio"' + QF + ' data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
+        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" aria-keyshortcuts="Escape" data-pm-hover-label="Close appearance"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
       html += '<div class="pmt-pop-body pmt-calm">';
       /* scheme */
       html += '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
-        '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
+        '<input class="pmt-pop-search" type="search"' + QF + ' placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
         '<div class="pmt-schemes" role="listbox" aria-label="Colour schemes">' + schemeOptions(sid, follow(sid), v._apQuery || '') + '</div>' +
         row('Light and dark', check('schemePair', val('schemePair'), 'Switch with the app\'s light and dark mode')) +
         row('Minimum contrast', select('minContrast', val('minContrast'), [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']])) +
-        '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import">Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
+        '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import"' + tag('Import scheme', 'Adds a colour scheme from a file; it stays on this machine') + '>Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
         '</section>';
       /* font */
       var fonts = [['follow', 'Follow look (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
@@ -238,7 +244,7 @@
       if (bgk === 'solid') html += row('Colour', '<input type="color" class="pmt-pop-color" data-key="bgColor" value="' + esc(val('bgColor') || T.color.toHex(R.theme.bg)) + '" aria-label="Background colour">');
       if (bgk === 'gradient') html += row('Gradient', select('bgGradient', val('bgGradient'), [['dusk', 'Dusk'], ['dawn', 'Dawn'], ['deep', 'Deep'], ['paper', 'Paper']]));
       if (bgk === 'image') {
-        html += row('Image', select('bgImage', val('bgImage'), [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your image']]) + '<button type="button" class="pmt-textbtn" data-act="upload">Choose…</button>');
+        html += row('Image', select('bgImage', val('bgImage'), [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your image']]) + '<button type="button" class="pmt-textbtn" data-act="upload"' + tag('Choose an image', 'PNG, JPEG or WebP from this computer') + '>Choose…</button>');
         html += row('Dim', range('bgDim', val('bgDim'), 0, 0.9, 0.05, Math.round(val('bgDim') * 100) + '%'));
         html += row('Blur', range('bgBlur', val('bgBlur'), 0, 24, 1, val('bgBlur') + ' px'));
       }
@@ -260,7 +266,7 @@
           row('Full CRT', check('crt', fx.crt, 'Curvature, bezel, burn-in and noise')) +
           (fx.crt ? row('Curvature', range('curvature', val('curvature'), 0, 0.2, 0.01, String(val('curvature')))) + row('Burn-in', check('burnIn', val('burnIn'), 'Afterglow when text moves')) + row('Noise', range('noise', val('noise'), 0, 0.12, 0.005, String(val('noise')))) : '') +
           row('Flicker', check('flicker', fxMode === 'custom' && !!val('flicker'), 'Flicker (at most 3% brightness change, below the WCAG flash threshold)')) +
-          (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss">Degauss</button></div>' : '');
+          (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss"' + tag('Degauss', 'The tube wobbles and settles once, as a CRT does when you press its degauss button') + '>Degauss</button></div>' : '');
       }
       var notes = [];
       if (fx.reduced) notes.push('Reduced Motion is on: nothing moves; static looks stay.');
@@ -268,7 +274,7 @@
       if (eff.curvature && /not drawn/.test(eff.curvature)) notes.push('No GPU on this machine: curvature, burn-in and noise are not drawn; scanlines and glow use the flat fallback.');
       if (notes.length) html += '<p class="pmt-pop-note">' + notes.map(esc).join(' ') + '</p>';
       html += '</section></div>';
-      html += '<div class="pmt-pop-foot"><button type="button" class="pmt-textbtn" data-act="reset">' + (scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals') + '</button><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
+      html += '<div class="pmt-pop-foot"><button type="button" class="pmt-textbtn" data-act="reset"' + (scope === 'tab' ? tag('Reset this terminal', 'This terminal follows the defaults again') : tag('Reset all terminals', 'Every terminal goes back to the look\'s defaults')) + '>' + (scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals') + '</button><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close"' + tag('Done', 'Closes Appearance; every change is already applied') + '>Done</button></div>';
       pop.innerHTML = html;
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
@@ -333,21 +339,33 @@
     /* live preview on hover and keyboard focus in the list */
     /* the recolour starts from the scheme that caused it (Friendly's bloom pours out of that row) */
     function from(o) { var r = o.getBoundingClientRect(); v.recolorFrom(r.left, r.top + r.height / 2); }
-    pop.addEventListener('mouseover', function (e) {
-      var o = e.target.closest('.pmt-scheme'); if (!o) return;
+    /* a preview waits until the pointer rests on a row, or the arrow keys stop (hover intent): a pointer sweeping
+       across the list, or a held arrow key, would otherwise recolour the terminal through every scheme it passes,
+       light and dark in turn, a strobe of half-finished recolours. Moving back onto the scheme already shown cancels
+       a preview still waiting */
+    var INTENT_MS = 110, intent = 0;
+    function previewSoon(o, ms) {
+      clearTimeout(intent);
       var id = o.getAttribute('data-id');
       if (v._previewId === id) return;
-      v._previewId = id; from(o); A().preview(v, { scheme: id });
+      intent = setTimeout(function () {
+        if (!pop.isConnected || !o.isConnected || v.pop !== pop) return;
+        v._previewId = id; from(o); A().preview(v, { scheme: id });
+      }, ms);
+    }
+    pop.addEventListener('mouseover', function (e) {
+      var o = e.target.closest('.pmt-scheme'); if (o) previewSoon(o, INTENT_MS);
     });
     pop.addEventListener('mouseout', function (e) {
       var list = pop.querySelector('.pmt-schemes');
-      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
+      if (list && !list.contains(e.relatedTarget)) { clearTimeout(intent); v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
     });
+    pop.addEventListener('click', function () { clearTimeout(intent); }, true);
     pop.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
+      if (e.key === 'Escape') { clearTimeout(intent); e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
       var o = e.target.closest && e.target.closest('.pmt-scheme');
       var n = listStep(pop, e);
-      if (n) { v._previewId = n.getAttribute('data-id'); from(n); A().preview(v, { scheme: v._previewId }); }
+      if (n) previewSoon(n, e.repeat ? INTENT_MS : 0);
       if (e.key === 'Enter' && o) { e.preventDefault(); o.click(); }
       e.stopPropagation();
     });
@@ -465,16 +483,16 @@
       pop.setAttribute('data-pmt-look', A().lookKey(T.look()));
       var fonts = [['follow', 'Follow look']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
       pop.innerHTML = '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
-        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +
+        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" aria-keyshortcuts="Escape" data-pm-hover-label="Close appearance"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +
         '<div class="pmt-pop-body">' +
         '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
-        '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(query) + '">' +
+        '<input class="pmt-pop-search" type="search"' + QF + ' placeholder="Search schemes" aria-label="Search schemes" value="' + esc(query) + '">' +
         '<div class="pmt-schemes" role="listbox" aria-label="Colour schemes">' + schemeOptions(c.scheme, follow(), query) + '</div></section>' +
         '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', c.font, fonts, 'Font')) +
         row('Size', stepper('size', shownSize(c), 8, 32, 0.5)) +
         '</section></div>' +
-        '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
+        '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close"' + tag('Done', 'Closes Appearance; every change is already applied') + '>Done</button></div>';
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
       slide(pop, before);

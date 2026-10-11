@@ -85,14 +85,14 @@
       bar.className = 'pmt-findbar pmt-calm';
       bar.setAttribute('role', 'search');
       bar.innerHTML =
-        '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find">' +
-        '<button type="button" class="pmt-find-toggle" data-k="caseSens" aria-pressed="false" data-pm-hover-label="Match case (Alt+C)" aria-label="Match case">Aa</button>' +
-        '<button type="button" class="pmt-find-toggle" data-k="word" aria-pressed="false" data-pm-hover-label="Whole word (Alt+W)" aria-label="Whole word"><u>ab</u></button>' +
-        '<button type="button" class="pmt-find-toggle" data-k="regex" aria-pressed="false" data-pm-hover-label="Regular expression (Alt+R)" aria-label="Regular expression">.*</button>' +
+        '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find" data-pm-hover-label="Find in terminal" data-pm-hover-detail="Enter goes up to the previous match, Shift+Enter down to the next" data-pm-hover-visual-suppressed="true">' +
+        '<button type="button" class="pmt-find-toggle" data-k="caseSens" aria-pressed="false" data-pm-hover-label="Match case" aria-keyshortcuts="Alt+C" aria-label="Match case">Aa</button>' +
+        '<button type="button" class="pmt-find-toggle" data-k="word" aria-pressed="false" data-pm-hover-label="Whole word" aria-keyshortcuts="Alt+W" aria-label="Whole word"><u>ab</u></button>' +
+        '<button type="button" class="pmt-find-toggle" data-k="regex" aria-pressed="false" data-pm-hover-label="Regular expression" aria-keyshortcuts="Alt+R" aria-label="Regular expression">.*</button>' +
         '<span class="pmt-find-count" aria-live="polite"></span>' +
-        '<button type="button" class="pmt-find-btn" data-a="prev" aria-label="Previous match, upward (Enter)" data-pm-hover-label="Previous match, upward (Enter)">' + ICON.prev + '</button>' +
-        '<button type="button" class="pmt-find-btn" data-a="next" aria-label="Next match, downward (Shift+Enter)" data-pm-hover-label="Next match, downward (Shift+Enter)">' + ICON.next + '</button>' +
-        '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find (Esc)" data-pm-hover-label="Close (Esc)">' + ICON.close + '</button>';
+        '<button type="button" class="pmt-find-btn" data-a="prev" aria-label="Previous match, upward" aria-keyshortcuts="Enter" data-pm-hover-label="Previous match, upward">' + ICON.prev + '</button>' +
+        '<button type="button" class="pmt-find-btn" data-a="next" aria-label="Next match, downward" aria-keyshortcuts="Shift+Enter" data-pm-hover-label="Next match, downward">' + ICON.next + '</button>' +
+        '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find" aria-keyshortcuts="Escape" data-pm-hover-label="Close find">' + ICON.close + '</button>';
       view.screen.appendChild(bar);
       view.findBar = bar;
       T.Motion.play(bar);
