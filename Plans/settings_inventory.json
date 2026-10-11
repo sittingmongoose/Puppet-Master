@@ -748,19 +748,12 @@
   {
    "id": "general.visual.chat-layout-mode",
    "label": "Chat Layout",
-   "desc": "Where the assistant chat lives: Docked to the right edge of the window, Overlay sliding above your work, or Detached as its own floating window. Applies instantly. (Superseded by the chat column of the Home layout record and the chat's Pop out, cmd.panel.undock, DL-180)",
+   "desc": "Where the assistant chat lived: Docked to the right edge of the window, Overlay sliding above your work, or Detached as its own floating window. Retired with no options: a stored Overlay or Detached value is ignored and cleared on first read, with no pop-out and no notice, and the chat always starts in its column. (Superseded by the chat's fixed column and its Pop out, cmd.panel.undock, which lasts only while the app runs, DL-180, DL-187)",
    "type": "select",
-   "options": [
-    "Docked",
-    "Overlay",
-    "Detached"
-   ],
-   "default": "Docked",
    "scope": [
     "global"
    ],
    "tier": "simple",
-   "recommended": "Docked",
    "search": [
     "chat panel",
     "floating chat",
@@ -1562,7 +1555,7 @@
   {
    "id": "general.interaction.dashboard-widgets",
    "label": "Dashboard Widgets",
-   "desc": "Choose widgets for the Home dashboard: opens that dashboard tab's own widget picker where the tab is. Every dashboard tab keeps its own widgets and layout; this row is a route only: its stored list is unused and nothing reads it.",
+   "desc": "Choose widgets for the Home dashboard: opens that dashboard tab's own Add widget list where the tab is. Every dashboard tab keeps its own widgets, range, scope and layout, saved per project, and Home starts from its own set of Usage widgets; this row is a route only: its stored list is unused and nothing reads it.",
    "type": "list",
    "default": [
     "Default widget set"
@@ -2037,7 +2030,7 @@
   {
    "id": "general.interaction.chat-keep-open",
    "label": "Keep the Chat Open in Narrow Windows",
-   "desc": "When the room left for your panels drops below 480 px, the chat folds to a thin strip at the edge so the panels stay usable. On keeps the chat open instead. The title bar's Home menu has the same switch.",
+   "desc": "When the room left for your panels drops below 480 px, the chat folds to a thin strip at the edge so the panels stay usable. On keeps the chat open instead. Retired before it shipped: the switch is the chat's own, in its header menu and the title bar's Home menu, not a Settings row. (Superseded by Keep the chat open in narrow windows in the chat's header menu, ui.chat_column.keep_open, DL-187)",
    "type": "toggle",
    "default": false,
    "scope": [
@@ -7073,7 +7066,7 @@
   {
    "id": "code.terminal.transcript-retention",
    "label": "Saved Terminal Output",
-   "desc": "Keep Saved Scrollback keeps each terminal tab's past output, its images included, so a restored or reopened terminal shows it again: on this computer only, never in backups, exports or sync, within 64 MiB per terminal tab, and for a closed tab only while it can be reopened and at most 7 days (SP-332). Session Only saves none, so a restored or reopened terminal starts without its earlier output. Was Keep Terminal History For, whose 24 Hours, 7 Days, 30 Days and Forever choices the saved scrollback rule replaces.",
+   "desc": "Keep Saved Scrollback keeps each terminal tab's past output, its images included, so a restored or reopened terminal shows it again: on this computer only, never in backups, exports or sync, within 64 MiB per terminal tab and 512 MiB across every terminal, the oldest going first, with well-known secrets such as API keys and private keys left out of the saved copy, and for a closed tab only while it can be reopened and at most 7 days (SP-332). Session Only saves none, so a restored or reopened terminal starts without its earlier output. Was Keep Terminal History For, whose 24 Hours, 7 Days, 30 Days and Forever choices the saved scrollback rule replaces.",
    "type": "select",
    "options": [
     "Keep Saved Scrollback",
@@ -7189,7 +7182,7 @@
   {
    "id": "code.terminal.allowed-profiles",
    "label": "Allowed Shell Profiles",
-   "desc": "Which shell profiles this project offers when you open a terminal: the shells on this computer, your own named profiles and the SSH computers saved under Remote Machines (SSH). They are listed in the \"+\" menu's Terminal row and the terminal's New terminal menu.",
+   "desc": "Which shell profiles this project offers when you open a terminal: the shells on this computer, your own named profiles and the SSH computers saved under Remote Machines (SSH). The shells are listed, every one, in the \"+\" menu's Terminal row and the terminal's New terminal menu, and the SSH computers in their own SSH hosts submenu.",
    "type": "multiselect",
    "options": [
     "System Default",
