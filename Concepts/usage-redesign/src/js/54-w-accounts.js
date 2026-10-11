@@ -192,7 +192,8 @@
   /* ================================================================== an account's own switch level (Jared 2026-10-10 D43,
      "account cards get switches"; USG-1: ai.accounts.hard-switch-level at scope account, the account step of the one
      ladder; SSYS-044). Every account of a provider that switches carries one value button: the level it switches at (%
-     used), with a notch glyph where the level is its own and a link glyph where it follows its provider. The button opens
+     used), with the meters' notch as its glyph where the level is its own and the provider's own mark where it follows
+     the provider, so even the folded button says whose level it is (the column's word, in a mark). The button opens
      the level menu (Follow <provider>, then the levels; a level at or past the warn level that applies to the account is
      dim, with the reason) and writes through PMU.settings.setAccount (one Settings transaction at scope account; the
      Settings owner holds the level under the warn level). Where the plate has the room the values get their own column
@@ -212,12 +213,12 @@
     var pol = a.policy || polOf(p), own = accSwOwn(a), at = accSwAt(a, p), ok = pol.available !== false;
     return '<button type="button" class="pmu-accsw" data-pmu-act="acc-sw" data-value="' + esc(a.key) + '" aria-haspopup="menu"' + (own ? ' data-own' : '') + (pol.auto ? '' : ' data-off') + (ok ? '' : ' disabled') +
       ' aria-label="' + esc(a.nickname + ' switches at ' + at + '% used, ' + (own ? 'its own level' : 'following ' + p.name)) + '"' + C.hover('Switch level · ' + a.nickname, ok ? accSwDetail(a, p) : 'Settings is not available') + '>' +
-      '<span class="pmu-accswi" aria-hidden="true"><i class="is-link">' + SVG.link + '</i><i class="is-own">' + SVG.notch + '</i></span><span class="pmu-accswv">' + at + '%</span></button>';
+      '<span class="pmu-accswi" aria-hidden="true"><i class="is-link">' + PMU.mark(p.id, 12) + '</i><i class="is-own">' + SVG.notch + '</i></span><span class="pmu-accswv">' + at + '%</span></button>';
   }
-  /* the button's width with its glyph box (10 px) and the widest value in the theme's face at its weight, 3 px between
+  /* the button's width with its glyph box (12 px, the provider's mark) and the widest value in the theme's face at its weight, 3 px between
      them and 4 px each side, so the column that holds it never re-lays when the account takes its own level or follows
      again */
-  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
+  function accSwW() { return Math.ceil(12 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
   /* what the buttons of a plate show, as one string (a plate whose accounts' levels changed is patched, never left stale) */
   function accSwSig(p) { return switchable(p) ? p.accounts.map(function (a) { return a.key + ':' + accSwAt(a, p) + (accSwOwn(a) ? 'o' : '') + ((a.policy || polOf(p)).auto ? '' : 'x'); }).join(',') : ''; }
   /* every switch-level button under root takes its account's state in place: the value rolls (odometer 220; NieR decodes),
@@ -246,10 +247,12 @@
     });
   }
   /* Open in Settings from an account's level (SSYS-044, UF-107: cmd.settings.open with target_type setting), landing on
-     that account's own switch level in Providers & Accounts; the route is the switch level's own (pol-shared's) */
+     that account's own switch level in Providers & Accounts; the route is the switch level's own (pol-shared's), its
+     setting target naming the provider and the account (SSYS-019: settings_route_request.target provider_id, account_id) */
   function accSwOpen(a) {
-    var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-switch-level', target: { target_type: 'setting', setting_id: 'ai.accounts.hard-switch-level', manager_id: null, detail_id: null },
-      origin_surface: 'usage', origin_route: 'usage/accounts', provider_id: a.providerId, account_id: a.id }, { opened: true });
+    var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-switch-level',
+      target: { target_type: 'setting', setting_id: 'ai.accounts.hard-switch-level', manager_id: null, detail_id: null, provider_id: a.providerId, account_id: a.id },
+      origin_surface: 'usage', origin_route: 'usage/accounts' }, { opened: true });
     if (receipt.dispatch_accepted !== false) PMU.settings.open(a.providerId, null, a.id);
     return receipt;
   }
@@ -577,12 +580,12 @@
          cell with its spend); a narrow plate puts the binding meter under the identity. Each line's height comes from
          its own wrapped text (a fixed 66 px row let a wrapped meta line run under the plate's foot) */
       /* D43: a stacked action cell is the action word over the 20 px switch-level button, 2 px apart: a button makes it 50 px
-         in a comfortable row (28 px) and 48 in a compact one (24 px, 1 px above and below), "Active" 16 px a line, no word
+         in a comfortable row (28 px) and 46 in a compact one (22 px, 1 px above and below), "Active" 16 px a line, no word
          only the button */
       var stackHOf = function (a, compact) {
         if (swForm !== 'stack') return 0;
         var x = actText(a, fullAct);
-        return x.btn ? (compact ? 48 : 50) : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
+        return x.btn ? (compact ? 46 : 50) : (x.t ? 16 * Math.min(2, C.wrapLines(x.t, actW, 12.5, 640)) + 2 : 0) + 20;
       };
       var comfyHOf = function (a) {
         var mt = metaOf(a);
@@ -635,7 +638,7 @@
     if (P.form === 'col') { var Q = plan('stack'); if (Q.shownN > P.shownN || (Q.shownN === P.shownN && (Q.comfyN > P.comfyN || (Q.comfyN === P.comfyN && Q.footCap > P.footCap)))) P = Q; }
     var swForm = P.form, tmpl = P.tmpl, band = P.band, winW = P.winW, footCap = P.footCap, shownN = P.shownN, isComfy = P.isComfy;
     actW = P.actW; fullAct = P.fullAct;
-    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 46 px: its compact row is 48 */
+    /* a stacked action cell whose action is a button (Use, Sign in, Set up) needs 44 px: its compact row is 46 */
     var swBtnRow = function (a) { return swForm === 'stack' && actText(a, fullAct).btn; };
     var shown = p.accounts.slice(0, shownN);
     var sizeOf = function (a) { return isComfy(a) ? 'c' : 'k'; };
@@ -1394,8 +1397,11 @@
       } else if (row) C.flashRow(row);
       return receipt;
     },
+    /* the provider's row in Providers & Accounts, or the account's inside it (SSYS-019's setting target) */
     openSettings: function (providerId, accountId) {
-      var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.provider-connections', provider_id: providerId || null, account_id: accountId || null }, { opened: true });
+      var target = { target_type: 'setting', setting_id: 'ai.accounts.provider-connections', manager_id: null, detail_id: null };
+      if (providerId) { target.provider_id = providerId; if (accountId) target.account_id = accountId; }
+      var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-provider-settings', target: target, origin_surface: 'usage', origin_route: 'usage/accounts' }, { opened: true });
       PMU.settings.open(providerId, null, accountId || null);
       return receipt;
     },
@@ -1485,7 +1491,7 @@
     /* the typed route target (UF Accounts room: "Open in Settings dispatches cmd.settings.open with target_type=setting";
        settings_route_request.target, as openSetup sends it) */
     var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-switch-level', target: { target_type: 'setting', setting_id: 'ai.accounts.hard-switch-level', manager_id: null, detail_id: null },
-      origin_surface: 'usage', origin_route: 'usage/accounts', provider_id: null, account_id: null }, { opened: true });
+      origin_surface: 'usage', origin_route: 'usage/accounts' }, { opened: true });
     if (receipt.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.hard-switch-level');
   });
   C.act('acct-use', function (el) { PMU.accounts.askUse(el.getAttribute('data-value'), el); });

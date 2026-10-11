@@ -1122,18 +1122,26 @@
            account (GPU trace 2026-10-11). At most about 2 s; if the row is still out of view after the glide, once more. */
         const scrollerOf = f => { for (let e = f.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) return e; } return document.scrollingElement; };
         const opened = f => { for (let it = f.closest('.pm51-acc-item'); it; it = it.parentElement && it.parentElement.closest('.pm51-acc-item')) { const i = it.querySelector(':scope > .pm51-acc-body > .pm51-acc-inner'); if (!it.classList.contains('is-open') || (i && i.getBoundingClientRect().height < i.scrollHeight - 1)) return false; } return true; };
+        /* the account's header lands in view with its row, so the name says whose level it is (D43 review: with the row
+           centred, the header sat 80 to 560 px above the view): the stretch from the header to the row is centred, 16 px
+           clear of each edge; only where the two cannot be shown together is the row centred alone */
+        const view = f => { const sc = scrollerOf(f), b = sc && sc !== document.scrollingElement ? sc.getBoundingClientRect() : { top: 0, bottom: window.innerHeight }; return { sc, top: Math.max(0, b.top), bottom: Math.min(window.innerHeight, b.bottom) }; };
+        const headOf = f => { const it = f.closest('.pm51-acc-item'); return (it && it.querySelector(':scope > .pm51-acc-head')) || f; };
+        const shown = f => { const v = view(f), fr = f.getBoundingClientRect(), hr = headOf(f).getBoundingClientRect(); return fr.top >= v.top && fr.bottom <= v.bottom && (fr.bottom - hr.top > v.bottom - v.top - 32 || hr.top >= v.top); };
+        const place = f => {
+          const v = view(f), fr = f.getBoundingClientRect(), hr = headOf(f).getBoundingClientRect(), behavior = o55Still() ? 'auto' : 'smooth';
+          if (fr.bottom - hr.top > v.bottom - v.top - 32) { f.scrollIntoView({ block: 'center', behavior }); return; }
+          const dy = Math.round((hr.top + fr.bottom) / 2 - (v.top + v.bottom) / 2);
+          if (v.sc === document.scrollingElement) window.scrollBy({ top: dy, behavior }); else v.sc.scrollBy({ top: dy, behavior });
+        };
         let lastH = -1, still = 0, frames = 0;
         const settle = () => {
           const f = root.querySelector(sel); if (!f) { if (++frames < 120) window.requestAnimationFrame(settle); return; }
           const sc = scrollerOf(f), hgt = sc ? sc.scrollHeight : 0;
           still = opened(f) && hgt === lastH ? still + 1 : 0; lastH = hgt;
           if (still < 3 && ++frames < 120) { window.requestAnimationFrame(settle); return; }
-          f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
-          window.setTimeout(() => {
-            const g = root.querySelector(sel); if (!g) return;
-            const r = g.getBoundingClientRect(), s2 = scrollerOf(g), box = s2 && s2 !== document.scrollingElement ? s2.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
-            if (r.top < Math.max(0, box.top) || r.bottom > Math.min(window.innerHeight, box.bottom)) g.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
-          }, o55Still() ? 60 : 700);
+          place(f);
+          window.setTimeout(() => { const g = root.querySelector(sel); if (g && !shown(g)) place(g); }, o55Still() ? 60 : 700);
         };
         window.requestAnimationFrame(settle);
       };
