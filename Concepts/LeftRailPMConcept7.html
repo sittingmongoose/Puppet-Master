@@ -63479,7 +63479,7 @@ var PMU_SERIES = {
       if (!!was.active !== !!r.active) {
         el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
         var ck = el.querySelector('.pmu-mcheck');
-        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + (SVG.check || '') + '</span>');
+        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + PMU.svg('check', 14, 'control') + '</span>');
         else if (!r.active && ck) ck.remove();
       }
     });
@@ -64483,7 +64483,10 @@ var PMU_SERIES = {
       var d = 60 + 18 * Math.min(i, 9);
       PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }],
         { dur: 110, delay: d, easing: nier ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
-      var path = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg path, .pmu-mcheck svg polyline') : null;
+      /* the neon check's visible tube (.nx-c; its halo .nx-h is hidden at rest and must not take the draw), or the old
+         drawing's path without PMG; a control glyph plays no act as it mounts, so this draw is its one motion */
+      var ck = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg') : null;
+      var path = ck ? ck.querySelector('.nx-c') || ck.querySelector('path, polyline') : null;
       if (path) {
         path.setAttribute('pathLength', '1'); path.style.strokeDasharray = '1';
         PMU.motion.animate(path, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { dur: 160, delay: d + 60, easing: nier ? 'steps(3,jump-start)' : POP, fill: 'backwards' });
@@ -66613,7 +66616,7 @@ var PMU_SERIES = {
             var v = C.view(id, 'f-' + f.key, 'all'), o = f.options.filter(function (x) { return x.value === v; })[0];
             return '<button type="button" class="pmu-tfilter" data-pmu-act="tfilter" data-key="' + esc(f.key) + '" aria-haspopup="menu">' + esc(f.label) + ' <b>' + esc(o ? o.label : 'All') + '</b>' + C.glyph('chevronDown') + '</button>';
           }).join('') + '<span class="pmu-tcount">' + (rows.length ? esc((pageStarts[page] + 1) + '-' + (pageStarts[page] + shown.length) + ' of ' + rows.length) : '0 of 0') + '</span>' +
-          (m.toolbar.export ? '<button type="button" class="pmu-iconbtn pmu-texport" data-pmu-act="texport" aria-label="Export" data-pm-hover-label="Export these records">' + SVG['export'] + '</button>' : '') + '</div>';
+          (m.toolbar.export ? '<button type="button" class="pmu-iconbtn pmu-texport" data-pmu-act="texport" aria-label="Export" data-pm-hover-label="Export these records">' + PMU.svg('export', 16) + '</button>' : '') + '</div>';
       }
       var head = '<div class="pmu-trow pmu-thead" style="grid-template-columns:' + tmpl + '">' + cols.map(function (c) { return '<span class="pmu-cap"' + (c.align === 'right' ? ' data-align="r"' : '') + '>' + esc(c.label) + '</span>'; }).join('') + '</div>';
       var bodyRows = shown.length ? shown.map(function (r, i) {
@@ -67943,7 +67946,7 @@ var PMU_SERIES = {
           if (used + headH > budget) { hiddenRows += g.rows.length; g.rows.forEach(function (r) { hiddenNames.push(g.name + ' · ' + r.account.nickname + (r.main && r.main.pct !== null ? ' ' + C.fmt(r.main.pct, 'pct') + ' used' : '')); }); return; }
           used += headH;
           out.push('<button type="button" class="pmu-qgroup" data-reveal data-pmu-act="qgroup" data-value="' + esc(g.providerId) + '" aria-expanded="' + !isCol + '" data-prov="' + esc(g.providerId) + '">' +
-            '<span class="pmu-qchev' + (isCol ? ' is-col' : '') + '">' + SVG.chevronDown + '</span>' + PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b><span>' + esc(g.rows.length + ' accounts · ' + g.windowLabel) + '</span></button>');
+            '<span class="pmu-qchev' + (isCol ? ' is-col' : '') + '">' + PMU.svg('chevronDown', 14) + '</span>' + PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b><span>' + esc(g.rows.length + ' accounts · ' + g.windowLabel) + '</span></button>');
         }
         if (isCol && !single) return;
         g.rows.forEach(function (r) {
@@ -67964,7 +67967,7 @@ var PMU_SERIES = {
           out.push('<div class="pmu-qrow pmu-row' + (single ? ' is-single' : '') + (isOpen ? ' is-open' : '') + '" data-reveal data-flash-key="' + esc(key) + '" data-flash-sig="' + esc(String(pct) + '|' + a.effective) + '" data-prov="' + esc(g.providerId) + '" data-pmu-act="qrow" data-value="' + esc(key) + '" role="button" tabindex="0" aria-expanded="' + isOpen + '" style="grid-template-columns:' + tmpl + '"' +
             C.hover(a.nickname, a.identity) + '><span class="pmu-qident">' + ident + meta + '</span><span class="pmu-qline" data-key="' + esc(key) + '"' + (main ? C.shareAttr('win:' + key + '/' + main.key) : '') + '></span><span class="pmu-qusedcell" data-align="r"' + (main ? ' data-share-v="win:' + esc(key + '/' + main.key) + '"' : '') + '>' + usedHtml +
             (mid ? '' : '<em>' + esc(nextTxt) + '</em>') + '</span>' + (mid ? '<span class="pmu-qnext" data-align="r"' + C.hover('Next reset', nextHover) + '>' + esc(nextTxt) + '</span>' : '') +
-            '<span class="pmu-qchev pmu-qrowchev' + (isOpen ? ' is-open' : '') + '">' + SVG.chevronDown + '</span></div>');
+            '<span class="pmu-qchev pmu-qrowchev' + (isOpen ? ' is-open' : '') + '">' + PMU.svg('chevronDown', 14) + '</span></div>');
           rowsDrawn.push(r);
           if (isOpen) out.push('<div class="pmu-qfocus" data-key="' + esc(key) + '">' + (cmpG ? '<div class="pmu-qfocustools">' + C.switchBtn('qcompare', cmpOn, 'Compare ' + cmpG.label + ' across ' + cmpG.g.name + ' accounts',
             'One line per account, never added or averaged; the open account is the solid line and its active time runs along the top') + '</div>' : '') + '<div class="pmu-qfocushost"></div></div>');
@@ -68501,7 +68504,7 @@ var PMU_SERIES = {
         if (!h || !Array.isArray(h.flat)) return;
         var i = h.flat.length; h.flat.push(openRow);
         c.innerHTML = '<div class="pmu-mdiv" role="separator"></div><button type="button" class="pmu-poprow pmu-mitem has-sub" role="menuitem" tabindex="-1" data-mi="' + i + '" data-pm-hover-exempt="menu">' +
-          '<span class="pmu-mlead pmu-micon" aria-hidden="true">' + SVG.gear + '</span><span class="pmu-mcopy"><b>' + esc(openRow.label) + '</b><span>' + esc(openRow.sub) + '</span></span></button>';
+          '<span class="pmu-mlead pmu-micon" aria-hidden="true">' + PMU.svg('gear', 14) + '</span><span class="pmu-mcopy"><b>' + esc(openRow.label) + '</b><span>' + esc(openRow.sub) + '</span></span></button>';
       },
       onPick: function (v, r, h) {
         if (v === 'open') { accSwOpen(a); return; }
@@ -71938,12 +71941,20 @@ function projectedAttempts() {
 /* Widget ids of a room at the current detail level, in board order (the board engine owns layout and levels). */
 function roomWidgets(room) { return PMU.board ? PMU.board.visible(room || state.room) : []; }
 
+var DATA_ICON_SIZE = { 'pmu-ctlchev': 14, 'pmu-ctlicon': 14 };
+function dataIconSize(element) {
+  if (element.closest('.pmu-livechev')) return 12;
+  for (var i = 0; i < element.classList.length; i++) if (DATA_ICON_SIZE[element.classList[i]]) return DATA_ICON_SIZE[element.classList[i]];
+  return 16;
+}
 function injectIcons() {
   if (!app) return;
   $$('[data-icon]', app).forEach(function (element) {
     var name = element.getAttribute('data-icon');
-    /* the neon glyph at the 16 px the shell's CSS gives every [data-icon] svg (rollout USAGE step 6) */
-    element.innerHTML = (PMU.svg ? PMU.svg(name, 16) : SVG[name]) || SVG.grid;
+    /* the neon glyph at the size the shell's CSS gives this host (10-shell.css: .pmu-ico and .pmu-navicon 16, .pmu-ctlchev
+       and .pmu-ctlicon 14, the Live readings chevron .pmu-livechev .pmu-ico 12), so its stroke is the catalog's drawing
+       at that size (rollout USAGE step 6) */
+    element.innerHTML = (PMU.svg ? PMU.svg(name, dataIconSize(element)) : SVG[name]) || SVG.grid;
   });
 }
 
