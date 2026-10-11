@@ -161,7 +161,38 @@
     }
   };
 
+  /* The state word -> status key table (pm7-glyphs D44, rollout USAGE step 2; the left rail's 00-d.js KEY and
+     STATE_WORDS are the worked example). Ordered [regex, key]: the first match wins. The resolutions are the spec's
+     parenthetical (it wins where status.json's per-key usage lists differ: signed out is offline, not warning; needs a
+     seat is off, not waiting); active/on -> working and unknown -> pending come from status.json itself. Short words
+     match whole words only (low, live, on), so a sentence that merely contains the letters never matches. It maps
+     words only and changes no copy. PMU.stateMark(word, size) is PMG.calm(key, size) (lit and still from the first
+     frame: no rhythm and no mount act; Reduce Motion is instant and only Live beats move) or '' when the word names no
+     key or PMG is missing; callers keep the old glyph as the fallback. */
+  var STATE_WORDS = [
+    [/exhausted/i, 'failed'],
+    [/cooldown/i, 'recovering'],
+    [/standby|paused/i, 'paused'],
+    [/signed[\s-]?out|unavailable/i, 'offline'],
+    [/needs[\s-]?a[\s-]?seat|needs[\s-]?seat/i, 'off'],
+    [/degraded|\blow\b/i, 'warning'],
+    [/\bactive\b|\blive\b|\bon\b/i, 'working'],
+    [/unknown/i, 'pending']
+  ];
+  function stateKey(word) {
+    var w = String(word || ''), i;
+    for (i = 0; i < STATE_WORDS.length; i++) if (STATE_WORDS[i][0].test(w)) return STATE_WORDS[i][1];
+    return null;
+  }
+  function stateMark(word, size) {
+    var G = window.PMG, key = stateKey(word);
+    if (!key || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(key)) return '';
+    try { return G.calm(key, size || 14); } catch (error) { return ''; }
+  }
+
   PMU.fmt = fmt;
+  PMU.stateKey = stateKey;
+  PMU.stateMark = stateMark;
   PMU.vs = vs;
   PMU.MARKS = MARKS;
   PMU.markOf = markOf;
