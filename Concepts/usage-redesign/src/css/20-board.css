@@ -353,7 +353,7 @@ html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transiti
    compositor and out with the drop's settle. Measured on the P1000 (2026-10-11, pm7-glyphs' review): the mean of an empty
    strip of the carried plate over its landing with ?pmu-frost=0, glass-dark 38 33 64, glass-light 217 226 230, the same
    in every Glass background. Re-measure the same way when the plate tint (--pmu-card), the landing's fill or the Glass
-   wallpaper changes, or the carried plate drifts from the live look. */
+   wallpaper changes (Liquid Glass's restyle does all three), or the carried plate drifts from the live look. */
 html[data-theme^="glass"][data-lg-frost="painted"] #panel-usage .pmu-board > .pmu-card:is([data-lifted], [data-settling]):not([data-head="band"])::before {
   z-index: -1; background-color: var(--pmu-frost-plate); background-image: inherit; }
 html[data-theme="glass-dark"] { --pmu-frost-plate: rgb(38, 33, 64); }
