@@ -382,10 +382,13 @@ def validate() -> dict[str, Any]:
     motion_contract = load(SHARED_ROOT / "motion_frame_matrix.json")
     if motion_contract.get("schema_id") != "pm.pm7.motion_frame_matrix.v1":
         failures.append({"error": "pm7_motion_frame_schema_id"})
+    # DL-186 (2026-10-10): dashboard tabs run on the Usage board engine, so a dashboard board resizes as the Usage
+    # board does (WS-019, ATS-037, ATS-039) and no dashboard keeps frozen resize peers. The retired token
+    # dashboard_resize_peers_frozen_during_preview is no longer required; motion_frame_matrix.json still lists it
+    # and is due to drop it.
     required_motion_must = {
         "usage_pointer_resize_peers_visibly_repack_only_when_obstructed_during_preview",
         "usage_pointer_resize_preview_matches_accepted_settlement_topology",
-        "dashboard_resize_peers_frozen_during_preview",
     }
     motion_must = set(motion_contract.get("must", []))
     if not required_motion_must.issubset(motion_must):
@@ -411,21 +414,17 @@ def validate() -> dict[str, Any]:
         or normalized_size.get("cross_basis_px") != source_size.get("basis_px")
     ):
         failures.append({"error": "home_cross_basis_legacy_migration_fixture"})
+    # DL-186: dashboard_resize_frozen_peer_geometry is retired with the frozen dashboard resize peers (see above);
+    # home_workspace_transaction.json still lists it and is due to drop it.
     required_home_must = {
         "cross_basis_px_required_after_normalization",
         "preset_id_closed_to_compact_standard_wide_tall_focus",
-        "dashboard_resize_frozen_peer_geometry",
     }
     home_must = set(home_transaction.get("must", []))
     if not required_home_must.issubset(home_must):
         failures.append({"error": "home_size_and_resize_contract_missing", "missing": sorted(required_home_must - home_must)})
-    live_dashboard_resize_tokens = sorted(
-        token for token in home_must | motion_must
-        if "dashboard" in token and "resize" in token
-        and any(word in token for word in ("live", "repack", "displace"))
-    )
-    if live_dashboard_resize_tokens:
-        failures.append({"error": "live_dashboard_resize_preview_contract_forbidden", "tokens": live_dashboard_resize_tokens})
+    # DL-186 retires the rule that forbade live dashboard resize previews: a dashboard board now repacks obstructed
+    # peers during a resize exactly as the Usage board does, so those tokens are no longer forbidden.
     home_schema = load(HOME_LAYOUT_SCHEMA)
     Draft202012Validator.check_schema(home_schema)
     home_size_def = home_schema.get("$defs", {}).get("size", {})
