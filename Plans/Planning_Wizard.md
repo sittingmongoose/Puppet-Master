@@ -2784,6 +2784,9 @@ canonical_text: >-
   requires an editor tab created since the step began; the drag step requires an applied cmd.panel_tab.move
   with a split and increased panel count, with the menu alternative above retained. Back and Skip/Finish use
   their respective restore paths.
+  A legacy checkpoint from before the panels that has no step-order stamp is read against the published
+  18-step order, then follows the same saved-id and retired-chapter resume rules; only when its step and
+  chapter are both gone does it start fresh with the notice.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -2852,6 +2855,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186): the tour contract's predicate:workspace:widget-added keeps its name and now means the add followed by a move or resize."
   - "Amended 2026-10-10 (lead ruling): Home's default set already holds Upcoming resets, so the widget step always first takes it off the Home board as part of the captured practice layout, and Back, Skip and Finish restore that layout quietly (DL-153)."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The tour estimate is the measured 5 minutes and its widget step waits for the Home board."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Legacy unstamped tour checkpoints are interpreted against the earlier 18-step order."
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json
