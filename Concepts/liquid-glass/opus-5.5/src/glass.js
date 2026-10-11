@@ -57,16 +57,17 @@
     return [d, nx, ny];
   }
   function profile(t) { return Math.pow(1 - Math.pow(1 - t, 4), 0.25); }
-  function buildMaps(W, H, R, B, T, mag, lightK) {
-    var key = [W, H, R, B, T, mag, lightK].join('|');
+  function buildMaps(W, H, R, B, T, mag, lightK, ring) {
+    ring = ring || [3, 8];
+    var key = [W, H, R, B, T, mag, lightK, ring].join('|');
     if (mapCache.has(key)) return mapCache.get(key);
     var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), rim = new Float32Array(n), edge = new Float32Array(n);
     var hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
       var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R), d = s[0];
-      if (d <= 0) { edge[i] = 1; continue; }
+      if (d <= 0) continue;
       /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
-      var sharp = Math.min(3, B * 0.3), soft = Math.min(8, B * 0.8), u = Math.min(1, Math.max(0, (d - sharp) / (soft - sharp)));
+      var sharp = Math.min(ring[0], B * 0.3), soft = Math.min(ring[1], B * 0.8), u = Math.min(1, Math.max(0, (d - sharp) / (soft - sharp)));
       edge[i] = 1 - u * u * (3 - 2 * u);
       var vx = 0, vy = 0;
       if (mag > 1) { vx = -px * (1 - 1 / mag); vy = -py * (1 - 1 / mag); }
@@ -87,13 +88,11 @@
     function img(fill) { var c = document.createElement('canvas'); c.width = W; c.height = H; var g = c.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return c.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
-      scale: max * 2,
+      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge },
       disp: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
-      rim: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(rim[i] * 255); } }),
-      edge: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(edge[i] * 255); } }),
     };
-    if (mapCache.size > 160) mapCache.delete(mapCache.keys().next().value);
+    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
     mapCache.set(key, res);
     return res;
   }
@@ -106,11 +105,11 @@
     svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden'; svg.id = 'lg-optics';
     defs = document.createElementNS(SVGNS, 'defs'); svg.appendChild(defs); document.body.appendChild(svg); return defs;
   }
-  /* The rim stays sharp and the core is frosted, as in real glass: the backdrop is refracted unblurred, then blurred,
-     and the two are blended through the edge mask, so the wallpaper's crisp lines visibly bend along the rim while the
-     middle stays calm for text. Small controls and lenses are clear (no frost) and split colour slightly at the rim. */
-  function filterFor(W, H, m, ca, blur) {
-    var key = m.disp.length + ':' + W + 'x' + H + ':' + m.scale.toFixed(1) + ':' + ca + ':' + blur;
+  /* Live refraction is kept for the lenses only: small, and floating over labels that change under them. Chrome
+     re-runs an SVG backdrop filter every frame, which costs about 400 ms a frame on the P1000 across the sheets, so the
+     sheets bake theirs (below). The lens splits colour slightly at its rim. */
+  function filterFor(W, H, m, ca) {
+    var key = m.disp.length + ':' + W + 'x' + H + ':' + m.scale.toFixed(1) + ':' + ca;
     if (filterByKey.has(key)) return filterByKey.get(key);
     var id = 'lgf' + (fid++), f = document.createElementNS(SVGNS, 'filter');
     f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', W); f.setAttribute('height', H);
@@ -130,13 +129,6 @@
     } else {
       html += '<feDisplacementMap in="SourceGraphic" in2="map" scale="' + s + '" xChannelSelector="R" yChannelSelector="G" result="D"/>';
     }
-    if (blur > 0) {
-      html += '<feGaussianBlur in="D" stdDeviation="' + blur + '" result="Bl"/>' +
-        '<feImage href="' + m.edge + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="E"/>' +
-        '<feComposite in="D" in2="E" operator="in" result="Dr"/>' +
-        '<feComposite in="Bl" in2="E" operator="out" result="Bc"/>' +
-        '<feComposite in="Dr" in2="Bc" operator="arithmetic" k2="1" k3="1"/>';
-    }
     f.innerHTML = html;
     ensureDefs().appendChild(f);
     var rec = { id: id, el: f, scale: m.scale };
@@ -149,14 +141,12 @@
      light = specular strength. Panels and cards are frosted so text on them reads; controls are clearer; lenses are clear
      and magnify. */
   var KINDS = {
-    panel:   { bezel: 32, thick: 80, blur: 22, sat: 1.7, ca: 0,    mag: 1,    light: 1.05 },
-    card:    { bezel: 28, thick: 70, blur: 26, sat: 1.6, ca: 0,    mag: 1,    light: 1.0 },
-    control: { bezel: 13, thick: 40, blur: 5,  sat: 1.8, ca: 0.07, mag: 1,    light: 1.1 },
-    track:   { bezel: 12, thick: 34, blur: 7,  sat: 1.7, ca: 0.05, mag: 1,    light: 1.0 },
-    lens:    { bezel: 4,  thick: 10, blur: 0,  sat: 1.5, ca: 0.10, mag: 1.10, light: 1.35 },
-    sel:     { bezel: 6,  thick: 12, blur: 0,  sat: 1,   ca: 0,    mag: 1,    light: 1.1, flat: true },
-    menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95 },
-    bar:     { bezel: 14, thick: 34, blur: 16, sat: 1.6, ca: 0,    mag: 1,    light: 0.95 },
+    panel:   { bezel: 32, thick: 80, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.05, bake: true, ring: [3, 8] },
+    card:    { bezel: 28, thick: 70, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.0,  bake: true, ring: [2, 5] },
+    bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
+    lens:    { bezel: 4,  thick: 10, sat: 1.5, ca: 0.10, mag: 1.10, light: 1.35, live: true },
+    sel:     { bezel: 6,  thick: 12, sat: 1,   ca: 0,    mag: 1,    light: 1.1 },
+    menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
   var glassSet = new Set();
   /* every glass element's optics are sized to it: when the board or a panel resizes one, it is measured again */
@@ -164,31 +154,116 @@
     entries.forEach(function (en) { var e = en.target, k = e.getAttribute('data-lg-kind'); if (k && isGlass() && e.isConnected) mount(e, k); });
   }) : null;
   function radiusOf(e, W, H) { var r = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0; return Math.max(0, Math.min(r, W / 2 - 0.5, H / 2 - 0.5)); }
-  /* mount or refresh one glass element at its current size; returns the filter record (null on the CPU path) */
+  /* ---- baked optics -------------------------------------------------------------------------------------------------
+     A sheet floats over the wallpaper only, and the wallpaper is a known still image. So its optics are computed from
+     that image instead of from a live backdrop:
+       - the frosted core: one shared copy of the wallpaper, blurred and saturated at the window's size, painted as a
+         fixed background so it lines up with the wallpaper behind it;
+       - the rim: the wallpaper under the sheet's bevel, refracted through the same squircle and Snell map as a lens,
+         sharp, with a slight red-blue split; a ring image, transparent inside.
+     Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
+     and draw the same with or without a GPU. */
+  var wallImg = null, wallUrl = '', frosts = {}, frostKey = '', bakeQ = new Set(), bakeT = 0;
+  function currentWallUrl() {
+    var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
+    return m ? m[1] : '';
+  }
+  function withWall(cb) {
+    var u = currentWallUrl(); if (!u) return;
+    if (wallImg && wallUrl === u && wallImg.complete) { cb(wallImg); return; }
+    var im = new Image(); im.decoding = 'async'; im.onload = function () { wallImg = im; wallUrl = u; cb(im); }; im.src = u;
+  }
+  function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
+  var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } };
+  function makeFrosts(im, done) {
+    var c = cover(im), key = wallUrl.length + ':' + c.vw + 'x' + c.vh + ':' + root.getAttribute('data-theme');
+    if (frostKey === key) { done(); return; }
+    var pending = 0;
+    Object.keys(FROST).forEach(function (name) {
+      var F = FROST[name], pad = F.blur * 3, W = c.vw + pad * 2, H = c.vh + pad * 2;
+      var src = document.createElement('canvas'); src.width = W; src.height = H; var g = src.getContext('2d');
+      /* fill the margin with a slightly larger copy, so the blur has real colour to pull from at the window's edges */
+      g.save(); g.translate(W / 2, H / 2); g.scale(1.12, 1.12); g.translate(-W / 2, -H / 2); g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s); g.restore();
+      g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
+      var out = document.createElement('canvas'); out.width = c.vw; out.height = c.vh; var o = out.getContext('2d');
+      o.filter = 'blur(' + F.blur + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad, -pad); o.filter = 'none';
+      pending++;
+      out.toBlob(function (b) {
+        if (frosts[name]) URL.revokeObjectURL(frosts[name]);
+        frosts[name] = URL.createObjectURL(b); root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')');
+        if (--pending === 0) { frostKey = key; done(); }
+      }, 'image/png');
+    });
+  }
+  function bakeRing(e, kind, im) {
+    var k = KINDS[kind], r = e.getBoundingClientRect(), W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
+    if (W < 4 || H < 4 || r.width < 1) return;
+    var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring), raw = m.raw, c = cover(im);
+    var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
+    var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d');
+    g.filter = 'saturate(' + k.sat + ')';
+    g.setTransform(c.s, 0, 0, c.s, c.ox - (r.left - p), c.oy - (r.top - p)); g.drawImage(im, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
+    var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(W, H), O = out.data, ca = k.ca || 0;
+    function at(x, y, ch) {   /* bilinear sample of one channel */
+      x = Math.max(0, Math.min(SW - 1.001, x)); y = Math.max(0, Math.min(SH - 1.001, y));
+      var x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0, i00 = (y0 * SW + x0) * 4 + ch, i10 = i00 + 4, i01 = i00 + SW * 4, i11 = i01 + 4;
+      return (S[i00] * (1 - fx) + S[i10] * fx) * (1 - fy) + (S[i01] * (1 - fx) + S[i11] * fx) * fy;
+    }
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var i = y * W + x, a = raw.edge[i]; if (a < 0.004) continue;
+      var vx = raw.dx[i], vy = raw.dy[i], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
+      O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
+    }
+    var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d').putImageData(out, 0, 0);
+    e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
+    oc.toBlob(function (b) {
+      if (!e.isConnected) return;
+      if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
+      e.__lgRing = URL.createObjectURL(b); e.style.setProperty('--lg-ring', 'url(' + e.__lgRing + ')');
+    }, 'image/png');
+  }
+  function flushBakes() {
+    bakeT = 0; if (!isGlass() || !bakeQ.size) return;
+    withWall(function (im) {
+      makeFrosts(im, function () {
+        var list = Array.from(bakeQ); bakeQ.clear();
+        (function step() { var t0 = performance.now(); while (list.length && performance.now() - t0 < 12) { var it = list.shift(); if (it[0].isConnected) bakeRing(it[0], it[1], im); } if (list.length) requestAnimationFrame(step); })();
+      });
+    });
+  }
+  function queueBake(e, kind) { bakeQ.add([e, kind]); if (!bakeT) bakeT = setTimeout(flushBakes, 60); }
+
+  /* mount or refresh one glass element; sheets bake, menus blur live (fast CSS blur), lenses refract live */
   function mount(e, kind) {
     var k = KINDS[kind] || KINDS.panel, r = e.getBoundingClientRect();
     var W = Math.round(e.offsetWidth || r.width), H = Math.round(e.offsetHeight || r.height);
     if (W < 4 || H < 4) return null;
-    var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
-    var sig = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind;
     e.classList.add('lg-g'); e.setAttribute('data-lg-kind', kind);
     if (!glassSet.has(e)) { glassSet.add(e); if (sizeWatch) sizeWatch.observe(e); }
-    if (e.__lgSig === sig && (gpu() ? e.__lgF : true)) return e.__lgF;
+    var R = radiusOf(e, W, H);
+    if (k.bake) {
+      var sig = W + 'x' + H + '@' + Math.round(r.left) + ',' + Math.round(r.top) + ':' + R.toFixed(1) + ':' + kind + ':' + currentWallUrl().length + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
+      if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
+      return null;
+    }
+    var B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    var sig2 = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind + ':' + gpu();
+    if (e.__lgSig === sig2) return e.__lgF;
     var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
-    /* the rim is a background layer of the glass itself (never a child: hosts like the title bar measure their
-       children to fit), drawn over the tint and under the content */
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
-    e.__lgSig = sig;
-    if (!gpu() || k.flat) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgF = null; return null; }
-    var f = filterFor(W, H, m, k.ca, k.blur);
-    var bf = 'url(#' + f.id + ') saturate(' + k.sat + ')';
-    e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important');
-    e.__lgF = f;
-    return f;
+    e.__lgSig = sig2; e.__lgF = null;
+    var bf = null;
+    if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
+    else if (gpu() && k.live) { var f = filterFor(W, H, m, k.ca); e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
+    else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
+    return e.__lgF;
   }
   function unmountAll() {
     glassSet.forEach(function (e) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgSig = null; });
   }
+  document.addEventListener('scroll', function () { if (isGlass()) lazySync(); }, true);
 
   /* ---- springs ------------------------------------------------------------------------------------------------------
      A damped spring from 0 to 1 sampled at 60 fps until it rests: the same curve every motion uses, so everything moves
@@ -331,19 +406,24 @@
   }
 
   /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
-  var ptr = null, ptrQ = false, lit = null;
+  var ptr = null, ptrQ = false, lit = null, shine = null;
+  function shineEl() {
+    if (shine && shine.isConnected) return shine;
+    shine = el('div', { id: 'lg-shine', 'aria-hidden': 'true' }); shine.appendChild(el('i')); document.body.appendChild(shine); return shine;
+  }
   function onPtr() {
     ptrQ = false; if (!ptr || !isGlass()) return;
-    var g = ptr.t && ptr.t.closest ? ptr.t.closest('.lg-g') : null;
-    if (g !== lit) { if (lit) lit.removeAttribute('data-lg-lit'); lit = g; if (g) g.setAttribute('data-lg-lit', ''); }
-    if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) return;
-    glassSet.forEach(function (e) {
-      if (!e.isConnected) { glassSet.delete(e); return; }
-      var r = e.getBoundingClientRect();
-      if (ptr.x < r.left - 160 || ptr.x > r.right + 160 || ptr.y < r.top - 160 || ptr.y > r.bottom + 160) { if (e.__lgNear) { e.__lgNear = false; e.style.setProperty('--lg-shine', '0'); } return; }
-      e.__lgNear = true;
-      e.style.setProperty('--lg-mx', (ptr.x - r.left).toFixed(0) + 'px'); e.style.setProperty('--lg-my', (ptr.y - r.top).toFixed(0) + 'px'); e.style.setProperty('--lg-shine', '1');
-    });
+    var g = ptr.t && ptr.t.closest ? ptr.t.closest('.lg-g') : null, sh = shineEl();
+    if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
+    if (g !== lit) {
+      if (lit) lit.removeAttribute('data-lg-lit'); lit = g;
+      if (g) {   /* clip the light to this sheet's shape, once per sheet */
+        g.setAttribute('data-lg-lit', ''); var r = g.getBoundingClientRect(), cs = getComputedStyle(g);
+        sh.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;border-radius:' + cs.borderRadius;
+        sh.__r = r; sh.classList.add('on');
+      } else sh.classList.remove('on');
+    }
+    if (g && sh.__r) sh.firstChild.style.transform = 'translate3d(' + (ptr.x - sh.__r.left).toFixed(0) + 'px,' + (ptr.y - sh.__r.top).toFixed(0) + 'px,0)';
   }
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
   document.addEventListener('pointerdown', function (e) {
@@ -391,19 +471,12 @@
   }
 
   /* ---- materialize: glass arrives by ramping its refraction and its frost, not by fading ---------------------------- */
+  var sweepEl = null;
   function materialize(list) {
-    if (!gpu() || reduced()) return;
-    var t0 = performance.now(), recs = [];
-    list.forEach(function (e, i) { var f = e.__lgF; if (f) recs.push({ f: f, e: e, delay: i * 28 }); });
-    (function tick() {
-      var now = performance.now(), live = false;
-      recs.forEach(function (r) {
-        var k = Math.max(0, Math.min(1, (now - t0 - r.delay) / 520)), e2 = 1 - Math.pow(1 - k, 3);
-        r.f.el.querySelectorAll('feDisplacementMap').forEach(function (n, j, all) { n.setAttribute('scale', (r.f.scale * (1.8 - 0.8 * e2) * e2 * (all.length === 3 ? [0.9, 1, 1.1][j] : 1)).toFixed(1)); });
-        if (k < 1) live = true;
-      });
-      if (live) requestAnimationFrame(tick);
-    })();
+    if (reduced()) return;
+    list.forEach(function (e, i) { if (e.isConnected && /panel|card|bar/.test(e.getAttribute('data-lg-kind') || '')) e.animate([{ '--lg-mat': 0 }, { '--lg-mat': 1 }], { duration: 620, delay: i * 22, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }); });
+    if (!sweepEl || !sweepEl.isConnected) { sweepEl = el('div', { id: 'lg-sweep', 'aria-hidden': 'true' }); sweepEl.appendChild(el('i')); document.body.appendChild(sweepEl); }
+    sweepEl.firstChild.animate([{ transform: 'translateX(-120%) skewX(-14deg)', opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1, offset: 0.7 }, { transform: 'translateX(420%) skewX(-14deg)', opacity: 0 }], { duration: 1300, easing: 'cubic-bezier(.45,.05,.3,1)' });
   }
 
   /* ---- sync -------------------------------------------------------------------------------------------------------- */

@@ -49,7 +49,12 @@ for (const look of LOOKS) for (const clar of CLAR) {
         if (!n.nodeValue.trim()) continue;
         const e = n.parentElement; if (!e || seen.has(e)) continue; seen.add(e);
         const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
-        const rg = document.createRange(); rg.selectNodeContents(n); const r = rg.getBoundingClientRect();
+        const rg = document.createRange(); rg.selectNodeContents(n); const r0 = rg.getBoundingClientRect();
+        /* measure the ink, not the line box: inset by the leading and the empty space above the cap height */
+        const fs = parseFloat(cs.fontSize) || 14, lh = cs.lineHeight === 'normal' ? fs * 1.2 : parseFloat(cs.lineHeight) || fs * 1.2;
+        const lines = Math.max(1, Math.round(r0.height / lh)), padY = Math.max(0, (lh - fs) / 2) + fs * 0.12;
+        const r = { left: r0.left, right: r0.right, width: r0.width, top: r0.top + padY, bottom: r0.bottom - Math.max(0, (lh - fs) / 2), height: Math.max(1, r0.height - padY - Math.max(0, (lh - fs) / 2)) };
+        void lines;
         if (r.width < 2 || r.height < 4 || r.right < 0 || r.bottom < 0 || r.left > innerWidth || r.top > innerHeight) continue;
         let op = 1; for (let a = e; a; a = a.parentElement) op *= +getComputedStyle(a).opacity;
         if (op < 0.05) continue;
