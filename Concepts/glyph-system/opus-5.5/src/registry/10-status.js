@@ -66,4 +66,15 @@
   G.def('change-deleted', { family: 'status', role: 'status', act: 'none', meaning: 'Deleted: removed.', replaces: ['editor Deleted', 'git D', 'document deleted'], parts: [SQ, '<path d="M8.7 12h6.6"/>'] });
   G.def('change-conflict', { family: 'status', role: 'status', act: 'none', meaning: 'Conflict: two changes collide and someone must choose.', replaces: ['rail conflict (a diamond with a cross)', 'git C and U'], parts: [SQ, '<path d="M12 8.2v4.6"/>', '<path d="M12 15.7v.1"/>'] });
   G.def('change-renamed', { family: 'status', role: 'status', act: 'none', meaning: 'Renamed or moved.', replaces: ['editor Renamed', 'git R'], parts: [SQ, '<path d="M8.4 12h6.6M12.6 9.3 15.3 12l-2.7 2.7"/>'] });
+
+  /* the vocabulary's PMG keys, so PMG.status(key) draws them like the chat's 13 (tone: the wrapper's backlight and ink) */
+  G.statusDef('warning', 'st-warning', 'attention');
+  G.statusDef('offline', 'st-offline', 'attention');
+  G.statusDef('off', 'st-off', 'paused');
+  G.statusDef('info', 'st-info', 'idle');
+  G.statusDef('change-added', 'change-added', 'done');
+  G.statusDef('change-modified', 'change-modified', 'changed');
+  G.statusDef('change-deleted', 'change-deleted', 'blocked');
+  G.statusDef('change-renamed', 'change-renamed', 'changed');
+  G.statusDef('change-conflict', 'change-conflict', 'blocked');
 })();

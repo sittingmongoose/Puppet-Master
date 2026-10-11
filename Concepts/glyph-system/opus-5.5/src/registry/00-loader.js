@@ -150,13 +150,25 @@
   }
   /* a calm status mark: lit and still from the first frame, no list rhythm and no mount act (Usage: b-motion's room
      entrance owns arrival motion). The wrapper takes nx-still and pmg-calm (pm7-bridge.css). */
-  function calm(key, size, cls) { return N.status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
+  /* PMG's own statuses (warning, offline, off, info, the change marks: 10-status.js) in the chat's status wrapper, so
+     PMG.status(key) draws every key of the vocabulary; the chat's own keys and aliases go to PM56_NEON.status. */
+  var EXTRA_ST = Object.create(null);
+  function statusDef(key, glyph, tone) { EXTRA_ST[key] = { glyph: glyph, tone: tone }; }
+  function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function status(key, size, cls) {
+    var x = EXTRA_ST[key];
+    if (!x) return N.status(key, size, cls);
+    return '<span class="nx-st nx-st-' + esc(key) + ' nx-tn-' + x.tone + (cls ? ' ' + esc(cls) : '') + '" data-k="st:' + esc(key) + '" aria-hidden="true">' +
+      N.icon(x.glyph, size, 'nx-r-status nx-t-' + x.tone) + '</span>';
+  }
+  function hasStatus(key) { return !!EXTRA_ST[key] || !!(N.STATUS[key] || Object.keys(N.STATUS).some(function (k) { return (N.STATUS[k].aliases || []).indexOf(key) >= 0; })); }
+  function calm(key, size, cls) { return status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
 
   window.PMG = {
     version: 1,
     ACTS: ACTS, ROLES: ROLES,
     def: def, map: map,
-    icon: N.icon, status: N.status, has: N.has, alias: N.alias, flat: flat, calm: calm,
+    icon: N.icon, status: status, statusDef: statusDef, hasStatus: hasStatus, has: N.has, alias: N.alias, flat: flat, calm: calm,
     records: function () { return order.map(function (k) { return records[k]; }); },
     record: function (k) { return records[N.alias(k)] || records[k] || records[aliasOf[k]] || null; },
     /* true for a name PMG drew or aliased (the catalog keeps those out of the chat set's lists) */
