@@ -220,14 +220,15 @@ uses deliberate fixtures; it does not certify native execution, protected authen
 ## Review and composition handoff
 
 No visual, copy, or design change is needed for these fixes. `pm7-glyphs` accepted the initial product and fixture
-fixes; the harness follow-up is ready for its final review. The only product JS edit is the Ready reentrancy fix in
-source68, outside its glyph call sites. Preserve glyph helpers
+fixes, then approved final harness delta `a624f74b17` in mailbox record `1011100208-8bee` on 2026-10-11. The only
+product JS edit is the Ready reentrancy fix in source68, outside its glyph call sites. Preserve glyph helpers
 and status marks during composition; the harness does not depend on spinner classes, icon paths, or status text.
 `pm7-no-pills`' CSS changes do not overlap this product fix.
 
 The planner owns landing order. The publish rebase, generated publication/check, full 69-case run, and three
-complete tour repetitions are finished. Glyph and no-pills composition remains with their owners and the planner;
-preserve this branch’s source changes and regenerate during that composition. No landing was attempted.
+complete tour repetitions are finished. Glyph and no-pills composition remains with their owners and the planner.
+`pm7-glyphs` confirmed its branch already carries main `62f37f65df` and lands second; it owns merging this repair,
+regenerating the pages, and rerunning the 69 plus tours during that composition. No landing was attempted.
 All test browsers and their profiles are stopped/removed, and local scratch is deleted. The initial 171 and final
 90 uncited screenshots were deleted; requested evidence and the three posted diagnostic screenshots remain outside
 the repository. Keep this unlanded branch/worktree for the planner’s handoff.
