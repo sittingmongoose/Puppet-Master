@@ -19,6 +19,15 @@ const SC = [];
 const def = (id, scenario, title, fn) => SC.push({ id, scenario, title, fn });
 const until = (d, js, what, timeout) => d.until(new Function('return ' + js), { what, timeout: timeout || 15000 });
 const readyPrimary = (d) => d.until(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; }, { what: 'primary enabled', timeout: 15000 });
+async function connectRoutes(d) {
+  // Discovery grows the list above More ways and can move it between a geometry probe and real input.
+  await d.until(() => {
+    const S = window.O55.S, op = (S.sess.ops || {})['discover:connect:' + (S.env.here.vpn ? 'vpn' : 'lan')];
+    return S.sess.screen === 'c-route' && op && op.state === 'done';
+  }, { what: 'network discovery finished before opening route choices', timeout: 8000 });
+  await d.act('more');
+  await d.untilElement('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="route"][data-arg="reverse_proxy"]', 'connection route choices');
+}
 async function toName(d) { await d.primary(); await d.primary(); await d.primary(); await d.primary(); } /* welcome→look→where→begin→name */
 async function reviewAndCreate(d) { await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done' || window.O55.S.sess.commit.state === 'failed'", 'commit settled', 25000); }
 async function githubAttempt(d, A, failure) {
@@ -220,7 +229,7 @@ def('c2', 'fresh', 'Connect by code, with a wrong code first', async (d, A) => {
 });
 def('c3', 'fresh', 'Connect through My own web address', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
-  await d.act('more'); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
+  await connectRoutes(d); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
   const dr = await d.draft('connect'); A.eq(dr.server_connection_mode, 'manual', 'manual connection (#22)'); A.eq(dr.proxy_kind, null, 'no proxy setup on this device (#22)');
   A.capture('c3 proxy', dr);
 });
@@ -474,7 +483,7 @@ def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this devic
   A.ok(await d.state(() => !document.querySelector('.o55-layer:not(.o55-out) [data-o55-do="vpn"]')), 'no VPN switch');
   A.ok(await d.state(() => /connect through a VPN too/.test(document.body.textContent)), 'the VPN line');
   A.eq((await d.draft('connect')).include_vpn_networks, true, 'the draft records that the VPN was included');
-  await d.act('more'); await d.act('route', 'tailscale'); A.eq((await d.draft('connect')).include_vpn_networks, false, 'not on another route');
+  await connectRoutes(d); await d.act('route', 'tailscale'); A.eq((await d.draft('connect')).include_vpn_networks, false, 'not on another route');
 });
 def('n7', 'keyRefused', 'Key refused once: one clear fix', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
@@ -751,7 +760,7 @@ def('x5', 'fresh', 'The look can be changed at any point from beside the sound b
 /* ---------------------------------------------------------------------------------------------- logic crawl findings */
 def('lc1', 'fresh', 'C24: switching the Connect route back does not keep a Server found through the old route', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
-  await d.act('more'); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
+  await connectRoutes(d); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
   await until(d, "window.O55.S.sess.drafts.connect.server_ref === 'pm:home'", 'web address resolved Home NAS');
   A.eq(await d.state(() => window.O55.S.sess.drafts.connect.server_ref), 'pm:home', 'the web address found Home NAS');
   await d.act('route', 'local_or_vpn');
