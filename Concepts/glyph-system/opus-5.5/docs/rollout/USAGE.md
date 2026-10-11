@@ -78,7 +78,8 @@ t3-usage-pm7, 2026-10-11. The control adds `.pmu-accsw` (button), `.pmu-accswi` 
 `<i class=is-link>` = PMU.icons.link, "follows provider", and `<i class=is-own>` = PMU.icons.notch, "own level"),
 `.pmu-accswv`, the SWITCH AT column (`.pmu-accswcell` / `.pmu-accsww` / `.pmu-accswcap`), the stacked form
 (`.pmu-accactcell.is-stack` / `.pmu-accactw`), row class `.pmu-accrow.is-swbtn` and plate `.pmu-acc[data-sw]`.
-- `is-link` -> the set's `link` (concept role, 14 px, through PMU.icon like every other name).
+- `is-link`: no glyph. Since 1f9962a880 (t3-usage-pm7, 2026-10-11) the 'follows the provider' slot holds the
+  provider's own brand mark (`PMU.mark(provider, 12)`); brand marks are never redrawn or recoloured. Leave it.
 - `is-own` -> keep PMU.icons.notch exactly: it must stay identical to the meters' own notch (not a glyph).
 - The menu's "Open in Settings" row: gear -> `settings`.
 If the rollout runs before D43 lands, leave a note in the D43 branch's files instead of editing them.
