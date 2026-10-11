@@ -400,7 +400,7 @@
       }
       if (!m) { body.innerHTML = C.empty('This alert is not in the selected scope.', 'Scope filters alerts by provider'); return; }
       var bh = ctx.tier.bh, narrow = ctx.tier.bw < 300;
-      var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert') + '<b>' + esc(m.sevWord) + '</b></div>' +
+      var top = '<div class="pmu-alerttop" data-tone="' + (m.sev === 'ok' ? 'good' : 'warn') + '">' + (PMU.stateMark(m.sevWord, 14) || C.glyph(m.sev === 'ok' ? 'checkCircle' : 'alert')) + '<b>' + esc(m.sevWord) + '</b></div>' +
         '<p class="pmu-alertdetail">' + esc(m.detail) + '</p>';
       /* the detail's lines from its measured width in the theme's face (Retro's mono runs wider), plus a word-wrap margin */
       var tw = PMU.charts && PMU.charts.textW ? PMU.charts.textW(m.detail, 13) * 1.1 : m.detail.length * 6.6;
