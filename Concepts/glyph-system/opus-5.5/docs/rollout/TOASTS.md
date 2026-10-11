@@ -28,3 +28,10 @@ info) pushed through `toast.important`.
 - A P1000 GPU check: push one toast of each kind (`toast.important(...)`, read the base for the call) in all ten looks,
   screenshot each, and measure each mark's contrast against its toast's field (>= 3:1); a short H.264 film of the four
   kinds arriving and being dismissed, plus Reduced Motion.
+
+## Notes from the step (2026-10-11)
+- The live toasts are the title-bar notify (`#rsStage`, `#rsStack`, `#rsPanel`); `#pmToastStack` / `.pm-toast` is retired
+  in the base. The base spells the warning severity `warn`.
+- The gate measures marks on the toasts' own severity-tinted cards; the inks are fitted to those fields too
+  (`src/data/ink-fields.json`). Record: TOASTS-RECORD.md.
+

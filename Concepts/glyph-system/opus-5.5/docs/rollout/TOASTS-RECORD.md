@@ -1,7 +1,7 @@
 # Rollout record: toasts and notifications (pm7-glyphs, D44)
 
-Status: NON-BROWSER GATES PASSED on concept/pm7-glyphs-toasts-20261011. Surface 4. GPU gate (lead, P1000)
-not run yet: one toast of each kind in all ten looks, contrast >= 3:1, arrival/dismiss film, Reduced Motion.
+Status: GATES PASSED; merged into concept/pm7-glyphs-20261010 (2107a86893) with the lead's ink fixes (141790bc20,
+cb314e3d33, 74b83ff1d4). Surface 4. The film is re-recorded on the final build before landing.
 
 ## Step 1: how the base renders toasts and the inbox
 
@@ -57,3 +57,27 @@ regenerated into the built pages (23 lines each, patch hunks only):
 - Node smoke test (/tmp, not committed): the real glyph layer loads with zero registry problems;
   success/warn/error/info render `nx-still` marks in tones done/attention/blocked/idle, unknown
   severities fall back to info, and the no-PMG fallbacks are byte-exact base markup.
+
+## GPU gate (lead, P1000 Quadro P1000; /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/toasts-gate/)
+
+`scripts/toasts.mjs` pushes one `toast.important` of each kind (success, warn, error, info) in all ten looks and
+measures every neon glyph in the stage, the stack and the inbox: its computed ink (times its rendered opacity) against
+the median of the pixels rendered behind it with every glyph hidden (so Glass's blur and the severity tints count).
+
+- Run 1 (the worker's build): the info mark read 2.1-3.0:1 on its blue-tinted card (it was the idle tone, the quiet
+  just-over-the-gate grey); four live marks read 2.8-3.0 on cards tinted their own hue; the dismiss (the base's x at .72
+  of the muted ink) 1.4-2.7; the empty bell 1.9-3.6. The deck's back cards (opacity .37-.84) are faded on purpose and are
+  not counted.
+- Fixes (lead): info takes the paused tone (a notice to read, still an unlit grey); `tools/tune_inks.py` also fits each
+  tone to the toast fields its tokens do not name, measured in run 1 (`src/data/ink-fields.json`, to 3.2:1 there, since a
+  toast's arrival and Glass's blur move them); a quiet tone lifts past its window only as far as a toast needs (Glass
+  Dark's paused); NieR Dark's paused alpha .6; the dismiss takes the secondary ink at full strength and the empty bell
+  the primary ink (pm7-bridge.css).
+- Final run on 74b83ff1d4 (`results/final-toast-marks.json`, sha256 a50ca05a9ff40ae2...): 204 front-card marks, lowest
+  3.16:1 (NieR Dark failed); dismiss lowest 3.83; empty bell lowest 4.24; 0 page errors. Frames:
+  `results/stage-grid.png` (the four kinds arriving, every look) and `results/inbox-grid.png`.
+- Film (H.264, all ten looks then Reduced Motion in Basic Dark and Retro Dark): the four kinds arrive, join the stack,
+  the inbox opens, each dismiss is hovered (the control ignites) and pressed. Frame review: marks and dismisses read in
+  every look; Reduced Motion still and lit. Seen in passing, not ours: Friendly draws the toast cards as capsules (told
+  pm7-no-pills).
+
