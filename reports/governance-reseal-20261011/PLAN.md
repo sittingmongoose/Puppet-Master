@@ -23,6 +23,8 @@ Chain update from the planner, mailbox `1011065727-3387` (2026-10-11): **panels+
 
 Landing receipt `1011092907-6431` (2026-10-11): the panels+terminal publish is on main at **`62f37f65df4399c3de1f7fbaf654f3baea1cb287`**, with no `Plans/` paths changed, as reported by the planner. The receipt SHA was verified as an ancestor of fetched `origin/main`; its commit diff contains only four terminal harness/fixture paths under `Concepts/`. **One prerequisite is complete. Rail answers, D43 and hpt's small round remain pending; no reseal go has been received.**
 
+Additional landing receipt `1011101650-3fee` (2026-10-11): the onboarding scenario repair is on main at **`3ad5e84b71bdf6abe6b5b9c1d1be5898615fe12f`**. This SHA was verified against fetched `origin/main`; the entire range after `62f37f65df` changes only Concepts and its onboarding result report, with no `Plans/` paths. It does not complete another reseal prerequisite. The planner now permits Usage D43 before rail answers if the rail landing misses 10:30 UTC; both landings and hpt's small round remain required before the explicit go. Rebase on the final main before Phase 2, without merging or regenerating Concepts in this thread.
+
 | Landing | Additional inputs to inventory after it lands |
 |---|---|
 | `home-panels`: combined panels and terminal publish into PMConcept7 — **LANDED `62f37f65df`** | The published panels and terminal integration in `Concepts/PMConcept7.html` and companions. Planner receipt `1011092907-6431` confirms no `Plans/` paths changed. Concepts-only changes require no invented governance hashes. Inventory any separately landed locked or inventoried inputs against the final main at go. |
