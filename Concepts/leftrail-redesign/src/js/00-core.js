@@ -47,7 +47,8 @@ PMR.append = append;
    the layout never jumps. The neon glyph set (pm7-glyphs, RAIL) draws first: NEON maps each rail name to its glyph
    (the map's "Rail and Settings bridge" group, T-bridge, plus T-jj's undo/oplog, which reach icon() through
    menus). SIZE is the static render size per icon class (never measured: the boxes stay exactly as the CSS sizes
-   them) and ROLE the glyph's own role. Names PMG cannot draw (the file-type icons, alert) keep the old drawing. */
+   them) and ROLE the glyph's own role. The file-type icons draw as the page, alert as the warning mark; a name
+   PMG cannot draw keeps the old drawing. */
 const NEON = {
   folder: 'folder', chevL: 'chevron-left', scissors: 'scissors', clipboard: 'clipboard', eyeOff: 'eye-off',
   compose: 'compose', chat: 'chat', files: 'folder', search: 'search', source: 'branch', actions: 'pipeline',
@@ -61,7 +62,8 @@ const NEON = {
   book: 'notebook', camera: 'camera', file: 'page', arrowUp: 'arrow-up', arrowDn: 'arrow-down', grip: 'grip',
   edit: 'edit', filePlus: 'file-plus', folderPlus: 'folder-plus', boxMinus: 'minus', boxPlus: 'plus',
   pause: 'pause', stepOver: 'step-over', stepInto: 'step-into', stepOut: 'step-out', bpLine: 'bp-line',
-  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history',
+  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history', alert: 'st-warning',
+  rust: 'page', svelte: 'page', sql: 'page', md: 'page', ts: 'page', toml: 'page', yml: 'page', xml: 'page',
 };
 const NEON_ROLE = {
   folder: 'concept', chevL: 'control', scissors: 'concept', clipboard: 'concept', eyeOff: 'control',
@@ -77,7 +79,9 @@ const NEON_ROLE = {
   arrowUp: 'control', arrowDn: 'control', grip: 'control', edit: 'control', filePlus: 'control',
   folderPlus: 'control', boxMinus: 'control', boxPlus: 'control', pause: 'control', stepOver: 'control',
   stepInto: 'control', stepOut: 'control', bpLine: 'concept', bpCond: 'concept', bpLog: 'concept',
-  undo: 'control', oplog: 'concept',
+  undo: 'control', oplog: 'concept', alert: 'concept',
+  rust: 'concept', svelte: 'concept', sql: 'concept', md: 'concept', ts: 'concept', toml: 'concept',
+  yml: 'concept', xml: 'concept',
 };
 /* the review switcher's own classes are not listed: rail_layer keeps their prefix out of the published page,
    so the switcher (review-only) takes the default size */
