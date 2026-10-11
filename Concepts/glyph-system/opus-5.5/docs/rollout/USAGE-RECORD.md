@@ -38,3 +38,34 @@ Gates (P1000; /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/usage-
   step (told t3-usage-pm7).
 - Room films on 358a18a8e6, H.264: `films/usage-rooms-step6-{glass-dark,nier}-h264.mp4` (rooms, the card-head tools
   hovered, an account row).
+
+## Step 6 review fixes (home-terminal REQUEST_CHANGES; lead, 2026-10-11, 6d3b0bd481, republished 65e832fa63)
+Base: main 2f91e7a622 merged at f278a22282. D43 rewrote 42-cards.js, 45-menu.js, 54-w-accounts.js and 90-api.js on
+main; the merge had no conflict and the glyph call sites were read line by line against D43's code.
+- F1: the size picker's in-place update (42-cards.js settleRows) inserts PMU.svg('check', 14, 'control'), the same neon
+  check as the menu's first render.
+- F2: the menu's chosen-row check draws itself as its row lands (45-menu.js materialize) on the neon tube .nx-c, never on
+  its hidden halo .nx-h, falling back to the old drawing's path. A control glyph plays no act when it mounts, so this
+  draw is its one motion.
+- F3: the records table's Export (50-w-common.js) is PMU.svg('export', 16), the same glyph as the header's.
+- F4: every [data-icon] takes its own host's size (90-api.js dataIconSize: .pmu-ico and .pmu-navicon 16, .pmu-ctlchev
+  and .pmu-ctlicon 14, the Live readings chevron 12). Before, all were 16, so the 14 px control chevrons were affected
+  too, not only the Live readings chevron.
+- Also: the Atlas rows' expand chevrons (53-w-atlas.js, 14) and D43's Open in Settings gear (54-w-accounts.js, settings
+  at 14, per the D43 note above). Only the notch and the no-PMG fallbacks still draw the SVG table.
+
+G1, the menu film (P1000, normal admission, H.264, 3 min 9 s; evidence
+/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/usage-step6-review/, SHA256SUMS there): Glass Dark, Basic
+Light, Retro Dark, NieR, then Basic Dark in Reduced Motion. Each run opens the Scope menu (its rows, the chosen-row check
+drawing itself, the rail, the search), a card's gear and kebab menus (a kebab submenu and its back), and a fit-preset
+card's size picker (acct-switch), before and after a preset is picked. In-page checks, every run: F4 sizes 12/14/16;
+the F2 draw targets .nx-c (none in Reduced Motion, as designed); Scope menu icons 7/7 neon, gear 2/2, kebab 9/9, the back
+neon; F1 every size-picker check neon at the open, after the settle and after a pick and reopen (the chosen row moves
+between presets); F3 the records Export neon (Ledger). 0 page errors. The picker's rows were already measured at the open
+in this session, so the film does not catch the in-place check insertion itself; its call is now the first render's.
+
+Gates on the final composition (main 2f91e7a622 vs the branch at 65e832fa63, P1000):
+- walk/cmp: 0 page errors and 0 overflowX on both. 6 differences: +-1 overview cards in both directions (the pre-warm's
+  1 % copy, home-panels' finding) and textOverflow swings. That's noise.
+- flick2 Glass Dark and NieR: 0 show-hide-show.
+- usage_boot --page (the branch): ok, newErrors [] (its Home check, fixed on main 0d33a0c4d0, passes).
