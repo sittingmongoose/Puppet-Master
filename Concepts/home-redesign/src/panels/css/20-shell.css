@@ -20,6 +20,18 @@ html[data-pmw-home="on"] #pm-home-centre {
 html[data-pmw-home="on"] #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
 body.pmu-page-active #pm-home-centre { pointer-events: none !important; }
 
+/* The two pages whose engines keep running while another page is in front take no display lock (the room-change
+   blocker, 2026-10-10). The base gives every inactive page content-visibility: auto (.page:not(.active)), which on a
+   page that is display: none adds nothing but a display lock. Home's panels keep reading layout inside
+   #panel-dashboard while the Usage page shows (the terminals' frames and scrollbars, the editor's minimap colours, the
+   panels' paint and strip fit), and the Usage engine, which also draws Home's dashboards, fits the hidden Usage board's
+   cards while Home shows. Each read forces style and layout through the lock, and Chrome (154) can then leave the
+   style-recalc marks above it (.primary-content, a size container) stale: no later style change under .primary-content
+   is applied, so a Usage room change left the live board display: none and the hidden spare displayed. Without the
+   lock the same reads are reads of a display: none subtree (P1000, the first room change after the page switch: Retro
+   Light at 1920 froze in 3 of 10 fresh loads with the lock and 0 of 30 without it; traced, 9 of 12 and 0 of 12). */
+html[data-pmw-home="on"] :is(#panel-dashboard, #panel-usage):not(.active) { content-visibility: visible; }
+
 /* the chat column (D3): one width model on every page, from an inline custom property the ladder writes (the message
    area plus pinned History's --pmw-chat-hist-w, which the ladder also writes; 0px while History is a flyout) */
 html[data-pmw-home="on"] body #chatPanel.chat-panel {
