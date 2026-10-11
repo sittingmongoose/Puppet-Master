@@ -620,6 +620,35 @@ PATCHES = [
      "        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });\n"
      "        bloomHost = null;   /* radius may change with the theme */\n",
      'magnet tokens: re-read at the next frame'),
+    # Terminal output and ordinary text rewrites insert nodes throughout the page. The density observer only needs
+    # to enroll new surfaces, not search the entire document after every child-list mutation. Preserve the initial
+    # scan, WeakSet enrollment, ResizeObserver and synchronous density update; inspect inserted subtrees thereafter.
+    ("    function enroll() {\n"
+     "      $$('.pm-home-surface').forEach(function (surface) {\n"
+     "        if (observed.has(surface)) return;\n"
+     "        observed.add(surface); resizeObserver.observe(surface); syncHomeSurface(surface);\n"
+     "      });\n"
+     "    }\n"
+     "    enroll();\n"
+     "    new MutationObserver(enroll).observe(document.body, { childList: true, subtree: true });\n",
+     "    function enrollSurface(surface) {\n"
+     "      if (observed.has(surface) || !surface.isConnected) return;\n"
+     "      observed.add(surface); resizeObserver.observe(surface); syncHomeSurface(surface);\n"
+     "    }\n"
+     "    function enroll(root) {\n"
+     "      root = root || document;\n"
+     "      if (root.nodeType === 1 && root.matches('.pm-home-surface')) enrollSurface(root);\n"
+     "      if (root === document || root.childElementCount) {\n"
+     "        root.querySelectorAll('.pm-home-surface').forEach(enrollSurface);\n"
+     "      }\n"
+     "    }\n"
+     "    enroll();\n"
+     "    new MutationObserver(function (mutations) {\n"
+     "      mutations.forEach(function (mutation) {\n"
+     "        mutation.addedNodes.forEach(function (node) { if (node.nodeType === 1) enroll(node); });\n"
+     "      });\n"
+     "    }).observe(document.body, { childList: true, subtree: true });\n",
+     'home density: enroll only inserted surfaces'),
 ]
 
 
