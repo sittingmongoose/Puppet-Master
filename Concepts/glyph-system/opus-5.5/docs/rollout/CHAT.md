@@ -13,7 +13,8 @@ The planner assigned this step to pm7-glyphs (c56 is finished and idle); c56-cha
 
 - The chat's own `neon-verify.mjs`, on the P1000 GPU (Quadro P1000), all ten looks: **145 PASS, 0 FAIL, 0 SKIP**,
   zero page errors. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/chat-step/verify.json` and `verify.log` (SHA-256 in `SHA256SUMS` there).
-- The same suite with `--reduced`: see the addendum line below once it finishes.
+- The same suite with `--reduced`: **132 PASS, 0 FAIL, 3 SKIP**; the three skips are the motion checks the suite skips by
+  design when motion is off (3 satellite moves, 7 hover card keeps animations, 13 salience). `verify-reduced.json`/`.log`.
 - GPU film (P1000, H.264, 2 min 20 s): the failed thread ("Recovery · artifact rendering") in all ten looks, then
   Basic dark and Retro dark in Reduced Motion, with hovers over the chat's controls: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/chat-step/chat-d44-h264.mp4` (+ `.log`).
   Frame check: `strip-chat-failed.png` (the header's failed mark in Basic dark, Friendly light, Retro dark, NieR light).
