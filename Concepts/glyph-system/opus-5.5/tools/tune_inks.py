@@ -23,6 +23,7 @@ OUT = HERE.parent / 'src' / 'bridge' / 'pm7-glyph-inks.css'
 REPORT = HERE.parent / 'src' / 'data' / 'ink-report.json'
 EXTRA = HERE.parent / 'src' / 'data' / 'ink-fields.json'
 TARGET = 3.1          # 3:1 gate plus a little room for antialiasing at 12 px
+TARGET_EXTRA = 3.2    # on a measured field: a little more, for what moves under a toast (its arrival, Glass's blur)
 FIELDS = ('--background', '--surface', '--surface-elevated', '--surface-alt')
 # tone -> the PM7 token it starts from (neon tone: blocked=danger, attention=warning, working=accent,
 # changed=accent-2, done=positive, paused=muted, idle=subtle; concept = the default ink for concept glyphs)
@@ -139,7 +140,9 @@ def fields(t: dict):
 
 
 def worst(c, fs, extra=()):
-    return min([ratio(c, f) for f in fs.values()] + [ratio(c, f) for f in extra])
+    """The lowest contrast on the look's fields, with each extra field counted at TARGET / TARGET_EXTRA of its
+    ratio (so reaching TARGET here means TARGET_EXTRA on a measured field)."""
+    return min([ratio(c, f) for f in fs.values()] + [ratio(c, f) * TARGET / TARGET_EXTRA for f in extra])
 
 
 def fit(c, fs, light: bool, extra=()):
@@ -223,7 +226,7 @@ def main() -> int:
                         notes.append(f'{look} {tone} above its quiet window ({worst(c2, fs):.2f}) to reach {TARGET} on a toast')
             after = worst(c2, fs, extra)
             rows[tone] = {'token': tok, 'pm7': t[tok], 'designed': DESIGNED.get(look, {}).get(tone, ''), 'before': round(before, 2), 'ink': hexs(c2), 'after': round(after, 2), 'moved': moved,
-                          'extra_fields': len(extra), 'on_extra': round(worst(c2, {}, extra), 2) if extra else None}
+                          'extra_fields': len(extra), 'on_extra': round(min(ratio(c2, f) for f in extra), 2) if extra else None}
             if moved is None:
                 failed.append(f'{look} {tone}')
             decl.append(f'--pmg-ink-{tone}: {hexs(c2)};')
