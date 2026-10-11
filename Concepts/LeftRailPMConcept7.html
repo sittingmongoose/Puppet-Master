@@ -132852,15 +132852,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         scopeEl = c;
         if (mo) mo.disconnect();
         if (c && typeof MutationObserver === 'function') {
-          /* only elements added or removed count: a live widget that rewrites its text (the dashboard's counters, a
-             few times a second) cannot add a target, and a box its new text moves is caught by the read after the
-             next frame */
+          /* only elements added, removed, moved or shown/hidden count: a live widget that rewrites its text (the
+             dashboard's counters, a few times a second) cannot add a target, and a box its new text moves is caught by
+             the read after the next frame. A structural change can put another box under a resting pointer (a search
+             field filtering the Projects grid re-appends the cards and hides some, from a typed character that starts
+             no frame of its own): re-measure and look again under the pointer */
           mo = mo || new MutationObserver(function (ms) {
             for (var i = 0; i < ms.length; i++) {
-              if (hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) { scopeDirty = rectsDirty = geomDirty = true; if (proxyShown()) start(); return; }
+              if (ms[i].type === 'attributes' || hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) {
+                scopeDirty = rectsDirty = geomDirty = true;
+                if (have || proxyShown()) recheckSoon();
+                return;
+              }
             }
           });
-          mo.observe(c, { childList: true, subtree: true });
+          mo.observe(c, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
         }
       }
       scopeMode = gap ? 'gap' : 'hover'; scopeScan = scan;
@@ -133011,7 +133017,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
              entering, pending or settling) may have resolved nothing for it */
           if (under) { hit = under; want = under.closest && under.closest(POPUP) ? null : resolve(under); lastHitEl = under; lastHitT = want; lastHitAt = now; }
         }
-        if (hover && !hover.getClientRects().length) want = null;   /* its page went away */
+        /* the target under the pointer comes from elementFromPoint above; a resolved target without a box (its page
+           went away while the pointer was outside or over a menu) never stays: only the wanted one is tested, so a hover
+           left on a box that was hidden never cancels the new target that took its place */
+        if (want && !want.getClientRects().length) want = null;
       }
       var next = rest || !have || popupOpen ? null : (calm ? hover : want);
       if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
