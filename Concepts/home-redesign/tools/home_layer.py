@@ -248,6 +248,9 @@ def blank_comments(code: str) -> str:
     return re.sub(r'/\*[\s\S]*?\*/', lambda m: re.sub(r'[^\n]', ' ', m.group()), code)
 
 
+CHOSEN_STATE = re.compile(r'\[aria-(?:selected|checked|pressed)="true"\]|\[aria-current|\[data-active\]|\.(?:is-on|is-chosen|is-active|pmw-chosen)\b')
+
+
 def lint() -> list[str]:
     build = _opus_build()
     problems: list[str] = []
@@ -273,6 +276,17 @@ def lint() -> list[str]:
             for m in re.finditer(r'box-shadow\s*:\s*inset\s+(-?\d+(?:\.\d+)?)px\s+0', code):
                 if abs(float(m.group(1))) >= 2:
                     problems.append(f'inset side bar in {rel}: {m.group(0).strip()}')
+            # a chosen state marked with a line under or over it (DR-069, F3-648, D5; the lead's ruling of 2026-10-11):
+            # the chosen fill (45-frames.css) is the grammar, never an underline
+            for m in re.finditer(r'([^{}]+)\{([^{}]*)\}', code):
+                sel, body = m.group(1), m.group(2)
+                if not CHOSEN_STATE.search(sel):
+                    continue
+                if re.search(r'::?(?:after|before)', sel) and re.search(r'(?<![\w-])height\s*:\s*[0-3](?:\.\d+)?px', body) \
+                        and re.search(r'(?<![\w-])(?:bottom|top)\s*:', body):
+                    problems.append(f'chosen-state underline in {rel}: {sel.strip()[:90]}')
+                if re.search(r'border-(?:bottom|top)(?:-width)?\s*:\s*[1-9]', body) or re.search(r'box-shadow\s*:\s*inset\s+0\s+-?[1-9]', body):
+                    problems.append(f'chosen-state line in {rel}: {sel.strip()[:90]}')
             for sel in re.findall(r'([^{}]+)\{', code):
                 for cls in CSS_CLASS.findall(sel):
                     if 'pill' in cls.lower():

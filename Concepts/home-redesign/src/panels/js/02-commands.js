@@ -1,7 +1,9 @@
 /* Commands: the one table of command ids (names agreed with the Plans thread, 2026-10-09) and the commit pipeline.
    A committed structural change is exactly one command: the draft layout is built on a copy, normalized and validated,
-   then swapped in, rendered and persisted; a rejection or a failed write rolls back to the previous layout. View-state
-   actions (ui.*) change the layout's view block without a receipt or an event. Previews dispatch nothing. */
+   then swapped in, rendered and persisted; a rejection or a failed write rolls back to the previous layout (the chat
+   column's width is one too: resize_surface { surface: 'chat', width }). View-state actions (ui.*) change the layout's
+   view block or its chat column's pins (keep_open, history_pinned) without a receipt or an event. Previews dispatch
+   nothing. */
 
 var CMD = PMW.CMD = {
   open: 'cmd.panel_tab.open',
@@ -29,7 +31,13 @@ var CMD = PMW.CMD = {
 var UI = PMW.UI = {
   activate: 'ui.panel_tab.activate',
   maximize: 'ui.workspace_layout.maximize',
-  focus: 'ui.workspace_layout.focus_panel'
+  focus: 'ui.workspace_layout.focus_panel',
+  // D4's pin, "Keep the chat open in narrow windows": the layout record's chat column keep_open (46-chat.js); a typed
+  // local action like activate, never a Settings row (the lead's ruling, 2026-10-10)
+  keepChatOpen: 'ui.chat_column.keep_open',
+  // the chat History pinned beside the messages or a flyout: the chat column's history_pinned (46-chat.js, UCC-203);
+  // never a Settings row (SSYS-050). The column's width is a commit instead: resize_surface { surface: 'chat', width }
+  pinHistory: 'ui.chat_column.pin_history'
 };
 /* Aliases other surfaces already dispatch; each resolves to one command above. */
 var CMD_ALIASES = PMW.CMD_ALIASES = {
@@ -125,7 +133,8 @@ function dispatchReceipt(receipt) {
   try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: receipt })); } catch (_) {}
 }
 
-/* View-state actions: change the view block (focus, active tab, maximize); persisted quietly, no receipt, no event. */
+/* View-state actions: change the view block (focus, active tab, maximize) or the chat column's pins (keep_open,
+   history_pinned); persisted quietly with the layout, no receipt, no event, no revision. */
 function viewAction(id, mutate, opts) {
   opts = opts || {};
   var layout = PMW.state.layout;

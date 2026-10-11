@@ -1,14 +1,16 @@
 /* The narrow ladder (D4), keyed on the centre's width C (window minus rail minus chat), never on the window, and never
    saved. Order (Jared: "Rail, then chat"): C < 960 the rail side panel eases to 240 and then folds to its icon bar
    below 760 (it then opens as an overlay), then the chat eases toward its minimum (400); one panel column below 600
-   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user pinned it.
+   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user keeps it open
+   (the layout record's chat column keep_open, ui.chat_column.keep_open, 46-chat.js).
    Each step has 48 px of hysteresis. It measures what is applied now, so theme paddings, resizers and the activity bar
    need no constants. The only file allowed to read the window size (the chat's default width scales with it).
-   Pinned History (D3, settings 'chat.history' = 'pinned'): the column grows by the History width instead of squeezing
-   the messages. chatMin, chatMax and the saved chat.width are the message area; the History adds chatHistoryW on top
-   (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which only a squeezed or
-   capped column reaches). The widening is part of the chat width the ladder solves, so it counts in the centre budget
-   and eases like the rest of the column; it is never saved. */
+   Pinned History (D3, the layout record's chat column history_pinned, ui.chat_column.pin_history): the column grows by
+   the History width instead of squeezing the messages. chatMin, chatMax and the saved width (the chat column's
+   width_px, cmd.workspace_layout.resize_surface { surface: 'chat', width }) are the message area; the History adds
+   chatHistoryW on top (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which
+   only a squeezed or capped column reaches). The widening is part of the chat width the ladder solves, so it counts in
+   the centre budget and eases like the rest of the column; the widening itself is never saved. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
@@ -19,7 +21,10 @@ function slotEl() { return qs('#sidePanelSlot'); }
 /* the chat's default width scales with the window: about 480 at 1470, 600 at 1920, at most 640 (D3) */
 function chatDefault() { return Math.round(clamp(window.innerWidth * 0.26667 + 88, LADDER.chatMin, 640)); }
 narrow.chatDefault = chatDefault;
-function chatUser() { var w = PMW.settings.get('chat.width'); return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault(); }
+function chatUser() {
+  var w = PMW.chatCol && PMW.chatCol.widthPx ? PMW.chatCol.widthPx() : null;
+  return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault();
+}
 narrow.chatUser = chatUser;
 /* the width pinned History adds to the column now (0 unless it is pinned and the chat on screen draws it) */
 function historyW() { return PMW.chatCol && PMW.chatCol.historyShown && PMW.chatCol.historyShown() ? LADDER.chatHistoryW : 0; }
@@ -130,7 +135,7 @@ narrow.update = function () {
   var m = narrow.measure();
   if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev, m.hist);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -219,9 +224,9 @@ narrow.install = function () {
   if (chat) new MutationObserver(narrow.schedule).observe(chat, { attributes: true, attributeFilter: ['class'] });
   var ab = qs('#activityBar');
   if (ab) new MutationObserver(narrow.schedule).observe(ab, { attributes: true, attributeFilter: ['class'] });
-  PMW.settings.on('chat.width', narrow.schedule);
-  PMW.settings.on('chat.pinOpen', narrow.schedule);
-  PMW.settings.on('chat.history', narrow.schedule);
+  // the chat column (width_px, history_pinned, keep_open) lives in the layout record: a project switch or a restored
+  // layout can change it (the width's commit emits layout too; the two pins' actions schedule the ladder themselves)
+  bus.on('layout', narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };

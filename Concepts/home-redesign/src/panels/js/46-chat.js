@@ -4,7 +4,10 @@
    (--pmw-chat-w) that the narrow ladder writes; the default scales with the window (about 480 at 1470, 600 at 1920,
    at most 640); the user drags 400-760 on the existing resizer, taken over in the capture phase so the legacy resizer
    (which writes inline !important widths up to 1200) never starts. One command per committed change.
-   Pinned History (D3): the 400-760 range and the saved chat.width are the message area; while the chat on screen
+   The column's saved state is the layout record's chat column (canon's v2 chat_column, 10-model.js; none of it is a
+   Settings value, SSYS-050): width_px, history_pinned and keep_open. A project switch shows that project's own; a named
+   layout and Restore home layout keep it.
+   Pinned History (D3): the 400-760 range and the saved width_px are the message area; while the chat on screen
    draws its History pinned, the column is that much wider (LADDER.chatHistoryW, 44-narrow.js) and the drag moves the
    same edge over the same message range. The chat surface that draws the History (the stand-in today, the 5.6 Pro
    chat after the port) registers itself as chatCol.surface (below). */
@@ -41,10 +44,51 @@ chatCol.setVisible = function (visible, commandId) {
   return { ok: true, command: record, receipt: receipt };
 };
 
+/* the layout record's chat column (10-model.js), read through one place */
+function chatColumn() { var l = state.layout; return l && l.chat_column ? l.chat_column : model.chatColumn(null); }
+
+/* The width (D3): the message area's width the user dragged, the record's width_px (400-760), or null for the default
+   for the window (44-narrow.js chatDefault). Written only by the one structural command
+   cmd.workspace_layout.resize_surface { surface: 'chat', width } (a number, or null to go back to the default): one
+   commit with its pm:command-dispatch, its receipt and the one workspace.layout_changed event, rolled back on a
+   cancelled dispatch or a failed write. A drag commits once on release, the resizer's double-click once with null. */
+chatCol.widthPx = function () { return chatColumn().width_px; };
+chatCol.setWidth = function (w) {
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (w != null && (typeof w !== 'number' || !isFinite(w))) return { ok: false, reason: 'invalid' };
+  var width = w == null ? null : model.chatWidth(w);
+  var res = commit(CMD.resize, { surface: 'chat', width: width }, function (d) {
+    d.chat_column = Object.assign(model.chatColumn(d.chat_column), { width_px: width });
+    return {};
+  }, { animate: false });
+  narrow.schedule();
+  return { ok: res.ok, no_change: !!res.noChange, reason: res.reason, width_px: chatCol.widthPx() };
+};
+
+/* History pinned beside the messages, or a flyout (D3): the record's history_pinned, the typed local UI action
+   ui.chat_column.pin_history (UCC-203), written like view state with the layout and no receipt, event or revision, as
+   keep_open is; never a Settings row. The chat surface that draws the History (the stand-in's History button, its pin
+   and its More menu's "Keep History open") dispatches it; chat:column on the bus tells it to repaint. */
+chatCol.historyPinned = function () { return chatColumn().history_pinned; };
+chatCol.setHistoryPinned = function (on) {
+  on = !!on;
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (chatCol.historyPinned() === on) return { ok: true, no_change: true, history_pinned: on };
+  viewAction(UI.pinHistory, function (lay) { lay.chat_column = Object.assign(model.chatColumn(lay.chat_column), { history_pinned: on }); }, { animate: false });
+  bus.emit('chat:column', { history_pinned: on });
+  narrow.schedule();
+  announce(on ? 'History stays open' : 'History opens as a flyout');
+  return { ok: true, history_pinned: on };
+};
+/* { history_pinned: true | false }; without it the action toggles */
+COMMAND_HANDLERS[UI.pinHistory] = function (a) {
+  return chatCol.setHistoryPinned(a && typeof a.history_pinned === 'boolean' ? a.history_pinned : !chatCol.historyPinned());
+};
+
 /* pinned History widens the column only while a chat surface on screen draws it (the stand-in's layer; never the
    page's own chat, which has no History list) */
 chatCol.historyShown = function () {
-  if (PMW.settings.get('chat.history') !== 'pinned') return false;
+  if (!chatCol.historyPinned()) return false;
   var sf = chatCol.surface;
   try { return !!(sf && sf.drawsHistory && sf.drawsHistory()); } catch (_) { return false; }
 };
@@ -90,14 +134,14 @@ chatCol.beginDrag = function (e, handle) {
     try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
     if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); render.flushResizes(true); return; }
     var w = clamp(Math.round(last) - hist, LADDER.chatMin, LADDER.chatMax);   // the message area; the History is never saved
-    pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.resize, args: { surface: 'chat', width: w }, at: Date.now() });
-    pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.resize, outcome: 'applied' });
-    try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: { command_id: CMD.resize, status: 'applied', payload: { surface: 'chat', width: w } } })); } catch (_) {}
-    PMW.settings.set('chat.width', w);
+    // one commit on release; a cancelled dispatch or a failed write leaves the saved width, which the ladder puts back
+    var res = chatCol.setWidth(w);
     // say the width the ladder applies, never a width that is not on screen
     narrow.update();
-    var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
-    announce('Chat width ' + applied + ' pixels');
+    if (res.ok) {
+      var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
+      announce('Chat width ' + applied + ' pixels');
+    }
     render.flushResizes(true);
   }
   function up(ev) { end(ev, false); }
@@ -108,10 +152,11 @@ chatCol.beginDrag = function (e, handle) {
   handle.addEventListener('pointercancel', cxl);
   doc.addEventListener('keydown', esc, true);
 };
+/* the resizer's double-click: back to the default for the window, one commit with width null */
 chatCol.resetWidth = function () {
-  PMW.settings.set('chat.width', null);
-  announce('Chat width reset');
-  narrow.schedule();
+  var res = chatCol.setWidth(null);
+  if (res.ok) announce('Chat width reset');
+  return res;
 };
 
 /* Pop out (D3). In the native app the chat moves to its own window; the browser concept shows it floating over the
@@ -148,6 +193,30 @@ chatCol.dockBack = function () {
    row, whose saved value used to replay a pop out at start, is retired (opus-5.5 build.py: the paint sends no
    chat.layout, and a stored value is cleared on first read). */
 chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-float')); };
+
+/* Keep the chat open in narrow windows (D4's pin; the lead's ruling of 2026-10-10). It is the typed local UI action
+   ui.chat_column.keep_open, saved in the layout record's chat column as keep_open (default false) and written like view
+   state, with the layout and no receipt, event or revision, as ui.panel_tab.activate is; never a Settings row. With it on
+   the narrow ladder never folds the chat to its strip (44-narrow.js). Two menus carry it as the same checked row,
+   keepOpenRow(), which dispatches the action: the title bar's Home options (49-titlebar.js) and the chat's own header
+   menu (the stand-in's More, kinds/95-standin-chat.js). */
+chatCol.keepOpen = function () { var l = state.layout; return !!(l && l.chat_column && l.chat_column.keep_open); };
+chatCol.setKeepOpen = function (on) {
+  on = !!on;
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (chatCol.keepOpen() === on) return { ok: true, no_change: true, keep_open: on };
+  viewAction(UI.keepChatOpen, function (lay) { lay.chat_column = Object.assign(model.chatColumn(lay.chat_column), { keep_open: on }); }, { animate: false });
+  narrow.schedule();
+  announce(on ? 'The chat stays open in narrow windows' : 'The chat folds to a strip in narrow windows');
+  return { ok: true, keep_open: on };
+};
+chatCol.keepOpenRow = function () {
+  var on = chatCol.keepOpen();
+  return { id: 'chat-keep-open', label: 'Keep the chat open in narrow windows', sub: 'Instead of folding to a strip at the edge',
+    action: UI.keepChatOpen, checked: on, run: function () { PM_HOME.command(UI.keepChatOpen, { keep_open: !on }); } };
+};
+/* { keep_open: true | false }; without it the action toggles */
+COMMAND_HANDLERS[UI.keepChatOpen] = function (a) { return chatCol.setKeepOpen(a && typeof a.keep_open === 'boolean' ? a.keep_open : !chatCol.keepOpen()); };
 
 /* the folded chat strip (D4, C < 480): a button opens the chat over the centre until Escape or a click outside */
 function peeking() { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-peek')); }

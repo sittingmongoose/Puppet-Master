@@ -33023,6 +33023,18 @@ html[data-pmw-home="on"] #pm-home-centre {
 html[data-pmw-home="on"] #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
 body.pmu-page-active #pm-home-centre { pointer-events: none !important; }
 
+/* The two pages whose engines keep running while another page is in front take no display lock (the room-change
+   blocker, 2026-10-10). The base gives every inactive page content-visibility: auto (.page:not(.active)), which on a
+   page that is display: none adds nothing but a display lock. Home's panels keep reading layout inside
+   #panel-dashboard while the Usage page shows (the terminals' frames and scrollbars, the editor's minimap colours, the
+   panels' paint and strip fit), and the Usage engine, which also draws Home's dashboards, fits the hidden Usage board's
+   cards while Home shows. Each read forces style and layout through the lock, and Chrome (154) can then leave the
+   style-recalc marks above it (.primary-content, a size container) stale: no later style change under .primary-content
+   is applied, so a Usage room change left the live board display: none and the hidden spare displayed. Without the
+   lock the same reads are reads of a display: none subtree (P1000, the first room change after the page switch: Retro
+   Light at 1920 froze in 3 of 10 fresh loads with the lock and 0 of 30 without it; traced, 9 of 12 and 0 of 12). */
+html[data-pmw-home="on"] :is(#panel-dashboard, #panel-usage):not(.active) { content-visibility: visible; }
+
 /* the chat column (D3): one width model on every page, from an inline custom property the ladder writes (the message
    area plus pinned History's --pmw-chat-hist-w, which the ladder also writes; 0px while History is a flyout) */
 html[data-pmw-home="on"] body #chatPanel.chat-panel {
@@ -33434,8 +33446,9 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
 }
 /* ---- panels/css/45-frames.css ---- */
 /* The shared document and run frames (27-frames.js). Sizes key on the tab body (@container pmw-body), never the window.
-   No pills: meta is a plain text row with dot separators; toggles are text options on a hairline; notices are a full
-   1 px box or a plain line, never a coloured side border. */
+   No pills: meta is a plain text row with dot separators; toggles are text options on a hairline whose chosen option
+   is filled on its own box (the chosen fill below, never an underline); notices are a full 1 px box or a plain line,
+   never a coloured side border. */
 
 .pmw-frame { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
 .pmw-frame-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
@@ -33477,14 +33490,99 @@ html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-dro
 .pmw-sec-head h2 { margin: 0; font-size: 15px; line-height: 21px; font-weight: 620; }
 .pmw-fine { font-size: 11.5px; color: var(--pmw-text-3); }
 
-.pmw-seg { display: flex; align-items: stretch; gap: 18px; border-bottom: 1px solid var(--pmw-line); min-height: 32px; overflow-x: auto; scrollbar-width: none; }
+/* Segmented toggles (PMW.frames.seg): text options in a row on a hairline. The chosen option takes the chosen fill
+   below on its own box, never an underline (the Plans canon lead's ruling of 2026-10-11: DR-069 and F3-648 count a
+   one-sided coloured line as a side stripe, and D5 bans underline markers); weight and size never change with the
+   choice, so the options never move. The row keeps 3 px inside each end, so its scroll box never clips the first or
+   the last option's focus ring. */
+.pmw-seg { display: flex; align-items: stretch; gap: 4px; padding: 0 3px; border-bottom: 1px solid var(--pmw-line); min-height: 32px; overflow-x: auto; scrollbar-width: none; }
 .pmw-seg::-webkit-scrollbar { display: none; }
-.pmw-seg-opt { position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 2px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; }
+.pmw-seg-opt { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 .pmw-seg-opt small { font-size: 11px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
-.pmw-seg-opt:hover { color: var(--pmw-text); }
-.pmw-seg-opt[aria-selected="true"] { color: var(--pmw-text); font-weight: 600; }
-.pmw-seg-opt[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--pmw-text); }
-.pmw-seg-opt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; border-radius: 4px; }
+
+/* ---- The chosen fill (DL-162's tab ink, the one the rail's tab strips use: Concepts/leftrail-redesign 22-tabs and
+   90-themes). One grammar for every one-of-several control in the panels: the Debug Console's sub-tabs (22-tools.js),
+   every segmented toggle (PMW.frames.seg) and the artifact's Fit / Actual size / Source (44-artifact.js).
+     .pmw-ink-row  the tablist or radiogroup. --pmw-ink-y is how far the fill sits in from an option's top and bottom
+                   (4 px: a 21 px fill in a 29 px header row, 24 px in a 32 px body row).
+     .pmw-ink-opt  an option. Its ::after is its own fill box: the chosen fill, or the quiet hover fill. Its ::before is
+                   the focus ring, 2 px round the fill box with a 1 px gap, so the ring never touches the fill.
+     .pmw-ink      the one ink that carries the fill from box to box on a change (PMW.frames.ink, 27-frames.js), in the
+                   look's own tab-change voice; while it travels (data-moving on the row) the boxes' own fills wait.
+   The fill: a tint of the accent with a 1 px ring of it and a small shadow in Basic and Friendly dark, the raised
+   surface with the accent's ring in their light modes, the violet liquid ink in Glass, Retro's reverse video, and
+   solid ink with paper words in NieR Mode with or without the cursor part. The chosen words take the panel tab's
+   active ink (--pmw-tab-active); a count or state word beside them goes at 90 %. A hover is the quiet hover fill on
+   the same box, never the chosen fill, so only one option ever reads as chosen. ---- */
+.pmw-ink-row { position: relative; --pmw-ink-y: 4px; }
+.pmw-ink-opt { position: relative; z-index: 1; isolation: isolate; transition: color var(--pmw-t-fast) var(--pmw-ease); }
+.pmw-ink-opt::after, .pmw-ink { content: ""; position: absolute; top: var(--pmw-ink-y, 4px); bottom: var(--pmw-ink-y, 4px); border-radius: 6px; pointer-events: none; }
+.pmw-ink-opt::after { z-index: -1; left: 0; right: 0; }
+.pmw-ink { z-index: 0; left: 0; width: 0; display: none; will-change: transform; }
+.pmw-ink-row[data-moving] > .pmw-ink { display: block; }
+.pmw-ink-row[data-moving] > .pmw-ink-opt::after { opacity: 0; }
+.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--pmw-text); }
+.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--pmw-hover); }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--pmw-tab-active, var(--pmw-text)); }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: inherit; opacity: .9; }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, .pmw-ink {
+  background: color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 16%, var(--surface-elevated, var(--pmw-surface-2)));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 24%, transparent); }
+/* light looks: the ink is the raised surface with the accent's ring (DL-162's light ink) */
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink {
+  background: var(--surface-elevated, var(--pmw-surface-2));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 30%, transparent); }
+/* the focus ring goes round the fill box with a 1 px gap; the option draws no outline or shadow of its own (two
+   classes, so the page's own button focus rules stay off it) */
+.pmw-ink-opt.pmw-ink-opt:focus-visible { outline: none; box-shadow: none; }
+.pmw-ink-opt:focus-visible::before { content: ""; position: absolute; top: calc(var(--pmw-ink-y, 4px) - 3px); bottom: calc(var(--pmw-ink-y, 4px) - 3px); left: -3px; right: -3px;
+  border: 2px solid var(--pmw-focus); border-radius: 9px; pointer-events: none; }
+/* Glass: the violet liquid ink (a lit top edge inside the fill, a soft violet glow) */
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink {
+  background: linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%);
+  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55); }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink {
+  background: linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%);
+  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35); }
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #fff; }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #2A1848; }
+/* Retro: the chosen option is the reverse-video cell on the fill box (square, no shadow); a hover lights the name on a
+   phosphor tint; it changes in one step, as Retro's tabs snap */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt::after, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:focus-visible::before,
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--accent-lime); }
+/* light Retro's phosphor green read 3.7:1 as a hovered name on its tint: the same green, darker */
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: color-mix(in srgb, var(--accent-lime) 72%, #000); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: color-mix(in srgb, var(--accent-lime) 14%, transparent); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--accent-lime); box-shadow: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--surface); opacity: 1; }
+/* NieR: solid ink with paper words on the chosen option's own box (DL-162's NieR tab ink, the ink block of the cursor
+   part), no shadow, square with the square part. A hover is NieR's hover tint with or without the cursor part, as on
+   the panel's own tabs: an inked hover read as a second chosen option. The change is a cut (no fade). */
+html[data-o55-nier="on"] .pmw-ink-opt { transition: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink-opt::after, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink-opt:focus-visible::before,
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10)); }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--o55-nier-on-ink); opacity: 1; }
+/* Reduced Motion: the fill changes at once (the ink never travels: PMW.motion.animate draws nothing) */
+html[data-motion="reduced"] .pmw-ink-opt { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-ink-opt { transition: none; } }
+
+/* A toggle in the shared header row (28-hrow.js marks its fact .is-ink and the row .has-ink, and .is-ink-lead when the
+   toggle comes first): it takes the row's full height, so its fill is the Debug sub-tabs' 21 px box, and a leading
+   toggle starts its fill 4 px from the panel's edge, so its first word sits on the row's 12 px text column. */
+.pmw-hrow.has-ink > .pmw-hrow-left, .pmw-hrow-left > .pmw-hfact.is-ink { align-self: stretch; }
+.pmw-hrow.is-ink-lead { padding-left: 1px; }
+.pmw-hrow.is-ink-lead > .pmw-hrow-left > .pmw-hfact.is-ink:first-child { margin-left: 3px; }
+.pmw-hfact.is-ink > .pmw-ink-row { height: 100%; min-height: 0; }
+.pmw-hfact.is-ink > .pmw-seg { padding: 0; border-bottom: 0; overflow: visible; }
+.pmw-hfact.is-ink > .pmw-seg > .pmw-seg-opt { height: 100%; font-size: 12px; }
 
 .pmw-notice { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0; padding: 9px 11px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); font-size: 12.5px; color: var(--pmw-text-2); }
 .pmw-notice.is-warn { border-color: color-mix(in srgb, var(--pmw-warn) 55%, transparent); }
@@ -33683,6 +33781,8 @@ html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-strip.is-dragging .pmw-
 html[data-theme="friendly-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-text-3: color-mix(in srgb, var(--text-muted) 55%, var(--text-primary));
   --pmw-tab-inactive: color-mix(in srgb, var(--text-primary) 94%, var(--text-muted));
+  /* the active tab's green read 3.1:1 on its plate (and the Debug Console's chosen sub-tab, 3.2:1 on its fill) */
+  --pmw-tab-active: color-mix(in srgb, var(--accent-lime) 66%, #000);
   --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue)) 62%, #000);
   --pmw-ok: color-mix(in srgb, var(--accent-lime) 62%, #000);
   --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 60%, #000);
@@ -34249,11 +34349,11 @@ html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }
 .pmw-br[data-dock="below"] .pmw-br-dock { height: var(--pmw-br-dock, 42%); }
 
 .pmw-br-dhead { flex: none; display: flex; align-items: flex-end; gap: 6px; padding: 0 6px 0 12px; border-bottom: 1px solid var(--pmw-line); }
-.pmw-br-dseg { flex: 1 1 auto; min-width: 0; border-bottom: 0; gap: 16px; }
+.pmw-br-dseg { flex: 1 1 auto; min-width: 0; border-bottom: 0; }
 .pmw-br .pmw-br-dclose { align-self: center; width: 24px; padding: 0; }
 .pmw-br-dbody { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 10px 12px 16px; font-size: 12.5px; line-height: 18px; scrollbar-width: thin; }
 .pmw-br-sec > * + * { margin-top: 10px; }
-.pmw-br-tseg { min-height: 28px; gap: 14px; }
+.pmw-br-tseg { min-height: 28px; }
 .pmw-br-tseg .pmw-seg-opt { height: 28px; font-size: 12px; }
 .pmw-br-quiet { margin: 0; color: var(--pmw-text-2); font-size: 12.5px; line-height: 18px; }
 .pmw-br-dtitle { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
@@ -34599,31 +34699,28 @@ html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }
   .pmw-tool-acts { grid-area: acts; }
 }
 
-/* Debug Console (D33): one tab, a sub-tab per debug session in the header row. The sub-tabs are the Plan viewer's
-   header toggle grammar (text options whose underline rides the row's hairline), each the session's state dot, its
-   name and its state in words; one underline (.pmw-tool-sind) glides to the chosen one (22-tools.js). The first
-   sub-tab's dot lines up with the console's glyph column. Words go below 460 px of body, names shorten last; the
-   paused-at reference goes below 640 px; the buttons lose their words below 820 px (the row's labelsAt). */
-.pmw-tool-dbg .pmw-hrow-left { align-self: stretch; }
-.pmw-tool-dbg .pmw-hfact[data-id="sessions"] { align-self: stretch; margin-left: -8px; }
-.pmw-tool-stabs { position: relative; display: flex; align-items: stretch; gap: 2px; height: 100%; min-width: 0; }
-.pmw-tool-stab { position: relative; flex: 0 1 auto; min-width: 44px; display: inline-flex; align-items: center; gap: 7px; height: 100%; padding: 0 8px;
-  border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer;
-  transition: color var(--pmw-t-fast) var(--pmw-ease); }
-.pmw-tool-stab:hover, .pmw-tool-stab[aria-selected="true"] { color: var(--pmw-text); }
-/* the focus ring sits inside the row, clear of the underline under it */
-.pmw-tool-stab:focus-visible { outline: none; }
-.pmw-tool-stab:focus-visible::before { content: ""; position: absolute; inset: 5px 2px 7px; border-radius: 5px; box-shadow: 0 0 0 2px var(--pmw-focus); pointer-events: none; }
+/* Debug Console (D33): one tab, a sub-tab per debug session in the header row, each the session's state dot, its name
+   and its state in words. The chosen sub-tab is filled on its own box, never underlined (the lead's ruling of
+   2026-10-10: DR-069 and F3-648 count a one-sided coloured line as a side stripe, and D5 bans underline markers): the
+   chosen fill in 45-frames.css (.pmw-ink-row, .pmw-ink-opt, .pmw-ink), which every segmented toggle shares, in each
+   look's own ink and tab-change voice (PMW.frames.ink). Weight and size never change with the choice, so the boxes
+   never move. The fill box is 21 px tall in the 29 px row: the focus ring goes round it with a 1 px gap and still
+   stays inside the row, clear of the fill. As the row's leading toggle it starts 4 px in (28-hrow.js marks it), so the
+   first sub-tab's fill and ring are never clipped, and the first sub-tab's dot still lines up with the console's
+   glyph column. Words go below 460 px of body, names shorten last; the paused-at reference goes below 640 px; the
+   buttons lose their words below 820 px (the row's labelsAt). */
+.pmw-tool-stabs { display: flex; align-items: stretch; gap: 4px; min-width: 0; padding-right: 3px; }
+.pmw-tool-stab { flex: 0 1 auto; min-width: 44px; display: inline-flex; align-items: center; gap: 7px; height: 100%;
+  padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; white-space: nowrap; cursor: pointer; }
 .pmw-tool-sname { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 .pmw-tool-sword { flex: none; font-size: 11px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+.pmw-tool-stab[aria-selected="true"] .pmw-tool-sword { color: inherit; opacity: .9; }
 /* the dot sits where the console's glyph column has its marks and the name starts on the console's text column */
 .pmw-tool-sdot { flex: none; width: 7px; height: 7px; margin: 0 3px 0 2.5px; border-radius: 50%; background: currentColor; }
 .pmw-tool-sdot.is-warn { color: var(--pmw-warn); }
 .pmw-tool-sdot.is-ok { color: var(--pmw-ok); }
 .pmw-tool-sdot.is-dim { color: var(--pmw-text-3); }
 .pmw-tool-stab:not([aria-selected="true"]):not(:hover) .pmw-tool-sdot { opacity: .8; }
-/* the underline takes the look's active-tab ink (Friendly's accent, Glass dark's white): it answers the strip */
-.pmw-tool-sind { position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: var(--pmw-tab-active, var(--pmw-text)); transform-origin: 0 0; pointer-events: none; }
 .pmw-tool-dat { flex: none; font-size: inherit; }
 .pmw-tool-dpanes { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
 .pmw-tool-dpane { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
@@ -34657,7 +34754,7 @@ html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }
    above and turned the channel picker into a capsule and every full-width row's hover and focus plate into one. These
    restate each button's own radius at that weight (CONTRACT 13), in Friendly only, so the two-class state rules above
    still win and NieR's square part keeps its square corners. Rows that span the body stay square, as in every look. */
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-tool-stab, button.pmw-br-pbtn,
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-br-pbtn,
   button.pmw-br-tb-signin, button.pmw-br-tb-cta, button.pmw-br-sso-btn) { border-radius: 6px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-file, button.pmw-tool-prow, button.pmw-br-prow, button.pmw-br-ttw) { border-radius: 0; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-flink, button.pmw-br-back) { border-radius: 2px; }
@@ -34675,14 +34772,8 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-addr, .pmw-br-pr
   .pmw-tool-chan, .pmw-tool-btn) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-dbody, .pmw-tool-list, .pmw-tool-ptable, .pmw-tool-count, .pmw-tool-stab, .pmw-tool-chan) { font-family: var(--pm-font-code); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sdot { border-radius: 0; }
-/* the debug sub-tabs: the chosen session is the reverse-video cell (no underline), a hover lights the name */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:hover { color: var(--accent-lime); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] { background: var(--accent-lime); color: var(--surface); }
+/* the debug sub-tabs take Retro's reverse video from the chosen fill (45-frames.css); their word and dot go with it */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--surface); opacity: 1; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab:focus-visible::before { border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--surface); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sind { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap:not(.is-refused), .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) {
   background: var(--accent-lime); color: var(--surface); outline: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap, .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark, .pmw-br-ttag, .pmw-br-tattr, .pmw-br-ttext) {
@@ -34700,13 +34791,8 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-view.is-loading::aft
 
 /* NieR: ink and parchment, square corners, no glow; small headers go uppercase with the headers part */
 html[data-o55-nier="on"] :is(.pmw-br-addr, .pmw-br-prompt, .pmw-br-pbtn, .pmw-br-tpick, .pmw-br-cap, .pmw-br-thumb, .pmw-br-hltag, .pmw-br-rhint, .pmw-br-rsize, .pmw-tool-chan, .pmw-tool-btn, .pmw-tool-sdot) { border-radius: 0; }
-/* the debug sub-tabs: ink underline; with the cursor part the chosen session is the ink block (the selected item) */
-html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tool-stab::before { border-radius: 0; }
-html[data-o55-nier="on"] .pmw-tool-sind { background: var(--o55-nier-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--o55-nier-on-ink); }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-sind { display: none; }
+/* the debug sub-tabs take NieR's ink from the chosen fill (45-frames.css); their word and dot go with it */
+html[data-o55-nier="on"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
 /* The session names shorten last in every look (the dot keeps the state when the words go). The headers part sets the
    row in spaced capitals, about a third wider, so in NieR the words go below 600 px of body (not 460), the paused-at
    reference below 680 (not 640) and the buttons' words below 920 (not the row's 820); Retro's code face and Friendly's
@@ -34998,12 +35084,8 @@ html[data-motion="reduced"] .pmw-dash-live-ring { display: none; }
 .pmw-plan .pmw-frame-scroll:focus, .pmw-docu .pmw-frame-scroll:focus { outline: none; }
 .pmw-plan-clip, .pmw-docu-clip { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
 
-/* the Rich Text / Markdown toggle lives in the header row: text options whose underline sits on the row's hairline */
-.pmw-plan .pmw-hrow-left { align-self: stretch; }
-.pmw-plan .pmw-hfact[data-id="view"] { align-self: stretch; }
-.pmw-plan-hseg.pmw-seg { height: 100%; min-height: 0; border-bottom: 0; gap: 14px; }
-.pmw-plan-hseg .pmw-seg-opt { height: 100%; font-size: 12px; }
-.pmw-plan-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
+/* the Rich Text / Markdown toggle lives in the header row as its leading toggle: the chosen fill on the chosen
+   option's own box, the Debug sub-tabs' 21 px fill (45-frames.css, the header-row toggle rules) */
 
 /* ---- shared text ---- */
 /* the frame gives top-level blocks their 12 px rhythm and sections their 24 px (45-frames.css); a heading's own bottom
@@ -35431,9 +35513,7 @@ html[data-motion="reduced"] .pmw-dash-live-ring { display: none; }
 @container pmw-body (max-width: 899.98px) { .pmw-docu-aside { padding-top: 12px; border-top: 1px solid var(--pmw-line); } }
 
 /* ---- looks: Retro (reverse video for what is chosen, square marks) ---- */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"] { background: var(--accent-lime); color: var(--surface); padding: 0 6px; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"]::after { display: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"] small { color: var(--surface); }
+/* the toggles' chosen option is Retro's reverse-video cell from the chosen fill (45-frames.css) */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :is(span, b, .pmw-docu-note-mark) { color: var(--surface); }
@@ -35475,13 +35555,10 @@ html[data-motion="reduced"] .pmw-plan-busy { animation: none; }
 .pmw-art { position: absolute; inset: 0; display: flex; flex-direction: column; }
 .pmw-art-stage { position: relative; flex: 1 1 auto; min-height: 0; }
 
-/* Fit / Actual size / Source: text options in the header row, the active one underlined in text colour */
-.pmw-hfact .pmw-art-hseg { display: inline-flex; align-items: stretch; gap: 2px; height: 24px; }
-.pmw-art-hopt { position: relative; height: 24px; padding: 0 7px; border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap; }
-.pmw-art-hopt:hover { background: var(--pmw-hover); color: var(--pmw-text); }
-.pmw-art-hopt[aria-checked="true"] { color: var(--pmw-text); font-weight: 600; }
-.pmw-art-hopt[aria-checked="true"]::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: 1px; height: 2px; background: var(--pmw-text); }
-.pmw-art-hopt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
+/* Fit / Actual size / Source: a radiogroup leading the header row; the chosen option is filled on its own box like
+   the Debug sub-tabs (the chosen fill and the header-row toggle rules, 45-frames.css) */
+.pmw-hfact .pmw-art-hseg { display: inline-flex; align-items: stretch; gap: 4px; }
+.pmw-art-hopt { height: 100%; padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 @container pmw-body (max-width: 519.98px) { .pmw-art .pmw-hfact[data-id="path"] { display: none; } }
 .pmw-art .pmw-hfact[data-id="path"] { min-width: 0; }
 
@@ -35553,7 +35630,7 @@ html[data-motion="reduced"] .pmw-plan-busy { animation: none; }
   .pmw-art-xl { margin-left: 40px; }
   .pmw-art-chart.is-line .pmw-art-xl span:nth-child(even) { visibility: hidden; }
   /* the metric switch wraps instead of hiding its last options behind a scroll with no bar */
-  .pmw-seg.pmw-art-metric { flex-wrap: wrap; gap: 0 12px; overflow: visible; }
+  .pmw-seg.pmw-art-metric { flex-wrap: wrap; gap: 0 4px; overflow: visible; }
 }
 /* the forecast line: a stretched path with round dots in HTML so they stay round */
 .pmw-art-linesvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -35965,10 +36042,8 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 /* Retro: square corners (the tokens), the code face for figures, reverse video for what is chosen */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-art-bar, .pmw-art-hbar, .pmw-art-dot, .pmw-art-progbar, .pmw-art-progress, .pmw-run-meter, .pmw-run-meter span, .pmw-run-hubdot, .pmw-run-chdot) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-art-tick, .pmw-art-val, .pmw-art-hval, .pmw-art-gcount, .pmw-run-tcost, .pmw-art-sym) { font-family: var(--pm-font-code); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-hopt[aria-checked="true"],
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-choice.is-chosen,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-option.is-lead .pmw-run-optl { background: var(--pmw-accent); color: var(--pmw-surface); border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-hopt[aria-checked="true"]::after { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-choice.is-chosen .pmw-art-choicek { background: transparent; color: var(--pmw-surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-box { stroke-width: 1.4; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-table tbody tr:hover td,
@@ -35979,7 +36054,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(b, s
 
 /* Friendly: its page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) would turn these 24-32 px
    buttons into capsules (the pill ban); restated at that weight, Friendly only, so NieR's square part stays square */
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-hopt, button.pmw-art-tocl, button.pmw-run-back, button.pmw-run-picker) { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-tocl, button.pmw-run-back, button.pmw-run-picker) { border-radius: 6px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-choice, button.pmw-run-seat, button.pmw-run-trow) { border-radius: min(var(--pmw-radius), 8px); }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-art-sort { border-radius: 0; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-run-link { border-radius: 3px; }
@@ -36147,10 +36222,9 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-ctx-col.pmw-doc { max-width: 720px; }
 @container pmw-body (min-width: 960px) { .pmw-ctx-col.pmw-doc { max-width: 960px; } }
 
-/* Curated / Raw in the header row: the shared text toggle, sized for a 30 px row */
-.pmw-hrow .pmw-ctx-hseg { flex: none; min-height: 24px; gap: 12px; border-bottom: 0; overflow: visible; }
-.pmw-hrow .pmw-ctx-hseg .pmw-seg-opt { height: 24px; padding: 0 2px; font-size: 12px; }
-.pmw-hrow .pmw-ctx-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
+/* Curated / Raw in the header row: the shared toggle as the row's leading toggle, the chosen option filled on its own
+   box like the Debug sub-tabs (45-frames.css, the header-row toggle rules) */
+.pmw-hrow .pmw-ctx-hseg { flex: none; }
 .pmw-ctx .pmw-hfact:is([data-id="ctx-view"], [data-id="ctx-used"]) { flex: none; }
 @container pmw-body (max-width: 379.98px) { .pmw-ctx .pmw-hfact[data-id="ctx-used"] { display: none; } }
 
@@ -152511,8 +152585,10 @@ PMW.keyLabel = keyLabel;
 /* ---- panels/js/02-commands.js ---- */
 /* Commands: the one table of command ids (names agreed with the Plans thread, 2026-10-09) and the commit pipeline.
    A committed structural change is exactly one command: the draft layout is built on a copy, normalized and validated,
-   then swapped in, rendered and persisted; a rejection or a failed write rolls back to the previous layout. View-state
-   actions (ui.*) change the layout's view block without a receipt or an event. Previews dispatch nothing. */
+   then swapped in, rendered and persisted; a rejection or a failed write rolls back to the previous layout (the chat
+   column's width is one too: resize_surface { surface: 'chat', width }). View-state actions (ui.*) change the layout's
+   view block or its chat column's pins (keep_open, history_pinned) without a receipt or an event. Previews dispatch
+   nothing. */
 
 var CMD = PMW.CMD = {
   open: 'cmd.panel_tab.open',
@@ -152540,7 +152616,13 @@ var CMD = PMW.CMD = {
 var UI = PMW.UI = {
   activate: 'ui.panel_tab.activate',
   maximize: 'ui.workspace_layout.maximize',
-  focus: 'ui.workspace_layout.focus_panel'
+  focus: 'ui.workspace_layout.focus_panel',
+  // D4's pin, "Keep the chat open in narrow windows": the layout record's chat column keep_open (46-chat.js); a typed
+  // local action like activate, never a Settings row (the lead's ruling, 2026-10-10)
+  keepChatOpen: 'ui.chat_column.keep_open',
+  // the chat History pinned beside the messages or a flyout: the chat column's history_pinned (46-chat.js, UCC-203);
+  // never a Settings row (SSYS-050). The column's width is a commit instead: resize_surface { surface: 'chat', width }
+  pinHistory: 'ui.chat_column.pin_history'
 };
 /* Aliases other surfaces already dispatch; each resolves to one command above. */
 var CMD_ALIASES = PMW.CMD_ALIASES = {
@@ -152636,7 +152718,8 @@ function dispatchReceipt(receipt) {
   try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: receipt })); } catch (_) {}
 }
 
-/* View-state actions: change the view block (focus, active tab, maximize); persisted quietly, no receipt, no event. */
+/* View-state actions: change the view block (focus, active tab, maximize) or the chat column's pins (keep_open,
+   history_pinned); persisted quietly with the layout, no receipt, no event, no revision. */
 function viewAction(id, mutate, opts) {
   opts = opts || {};
   var layout = PMW.state.layout;
@@ -152708,11 +152791,11 @@ registerSettings('editor', {
   'diff.layout': 'auto',
   'wordWrap': false
 });
-registerSettings('chat', {
-  'width': { type: 'number', min: 400, max: 760, label: 'Chat width' },
-  'history': { type: 'enum', values: ['flyout', 'pinned'], label: 'Thread history' },
-  'pinOpen': { type: 'boolean', label: 'Keep the chat open in narrow windows' }
-}, { 'width': null, 'history': 'flyout', 'pinOpen': false });
+/* The chat column registers no settings (the Plans canon lead's rulings of 2026-10-10 and 2026-10-11: canon's v2
+   chat_column keeps width_px, history_pinned and keep_open, SP-330 and DL-180, and none of them is a Settings value,
+   SSYS-050). They live in the layout record's chat column (10-model.js, 46-chat.js), so no Settings row can show them.
+   The stored 'chat.width', 'chat.history' and 'chat.pinOpen' from before are carried into the record once and dropped
+   (persist.migrateChatColumn, 16-persist.js). */
 
 var settings = PMW.settings = PM_HOME.settings = {
   get: function (key) {
@@ -153011,6 +153094,7 @@ motion.flip = function (els, mutate, o) {
      root: Node,
      tabs: { <tabId>: { id, kind, label, title, icon, state, pinned, preview, userLabel } },
      view: { focus: <panelId>, maximized: <panelId>|null, mru: [<tabId>] },   // view state (ui.* actions)
+     chat_column: { width_px: null, history_pinned: false, keep_open: false },  // the chat column (canon's v2 chat_column)
      closed: [ { tab, panelId, index } ],                                      // reopen stack, newest last
      named: 'home' | 'build' | 'terminals' | 'focus' | <saved name> | null
    }
@@ -153035,7 +153119,24 @@ model.same = function (a, b) {
   return JSON.stringify(x) === JSON.stringify(y);
 };
 model.empty = function () {
-  return { schema: SCHEMA, revision: 0, seq: 0, root: null, tabs: {}, view: { focus: null, maximized: null, mru: [] }, closed: [], named: null };
+  return { schema: SCHEMA, revision: 0, seq: 0, root: null, tabs: {}, view: { focus: null, maximized: null, mru: [] },
+    chat_column: model.chatColumn(null), closed: [], named: null };
+};
+
+/* The chat column (canon's v2 chat_column, SP-330 and DL-180; none of its fields is a Settings value, SSYS-050):
+   width_px is the message area's width the user dragged (400-760; null = the default for the window, 44-narrow.js),
+   committed by cmd.workspace_layout.resize_surface { surface: 'chat', width }; history_pinned (History pinned beside the
+   messages, else a flyout) and keep_open (D4's pin) are view state, ui.chat_column.pin_history and
+   ui.chat_column.keep_open (46-chat.js). A record written before a field existed reads as its default; a width that is
+   not a finite number is null, any other is rounded into 400-760; anything but true is false. */
+model.CHAT_W_MIN = 400;
+model.CHAT_W_MAX = 760;
+model.chatWidth = function (w) {
+  return typeof w === 'number' && isFinite(w) ? Math.min(model.CHAT_W_MAX, Math.max(model.CHAT_W_MIN, Math.round(w))) : null;
+};
+model.chatColumn = function (c) {
+  c = c && typeof c === 'object' ? c : {};
+  return { width_px: model.chatWidth(c.width_px), history_pinned: c.history_pinned === true, keep_open: c.keep_open === true };
 };
 
 function nextId(l, prefix) { l.seq = (l.seq || 0) + 1; return prefix + l.seq; }
@@ -153248,6 +153349,7 @@ model.setSizes = function (l, splitId, sizes) {
 model.normalize = function (l, opts) {
   opts = opts || {};
   if (!l.view) l.view = { focus: null, maximized: null, mru: [] };
+  l.chat_column = model.chatColumn(l.chat_column);
   if (!l.closed) l.closed = [];
   if (!l.tabs) l.tabs = {};
   var seen = {};
@@ -153880,6 +153982,54 @@ var persist = PMW.persist = {
     return false;
   },
   clear: function () { store.remove(persist.key()); },
+
+  /* 'chat.width', 'chat.history' and 'chat.pinOpen' were panels settings until 2026-10-11 and 2026-10-10; they are now
+     the layout record's chat column (canon's v2 chat_column, SSYS-050: none is a Settings value): width_px (committed
+     by resize_surface { surface: 'chat', width }), history_pinned (ui.chat_column.pin_history) and keep_open
+     (ui.chat_column.keep_open), 46-chat.js. Once, at boot: a stored width (a finite number, rounded into 400-760),
+     'pinned' and true are carried into this project's layout and into every other project's saved layout (the settings
+     were one for all projects), each only where that record still holds the field's default, so a value written since
+     is never overwritten; only when this project's layout is written are the keys dropped from pm.home.settings:v1, so
+     nothing is carried twice or lost to a failed write. While this project's unreadable record waits to be set aside
+     nothing is carried or dropped (next time). A stored default (null, 'flyout', false) or a value of the wrong kind is
+     just dropped. Returns the fields carried ({} when none). */
+  migrateChatColumn: function () {
+    var OLD = [
+      ['chat.width', 'width_px', function (v) { return model.chatWidth(v); }],
+      ['chat.history', 'history_pinned', function (v) { return v === 'pinned' ? true : null; }],
+      ['chat.pinOpen', 'keep_open', function (v) { return v === true ? true : null; }]
+    ];
+    var present = OLD.filter(function (o) { return Object.prototype.hasOwnProperty.call(settingsValues, o[0]); });
+    if (!present.length) return {};
+    var carry = {};
+    present.forEach(function (o) { var v = o[2](settingsValues[o[0]]); if (v != null) carry[o[1]] = v; });
+    var fields = Object.keys(carry);
+    function fill(l) {
+      var cc = model.chatColumn(l.chat_column), changed = false;
+      fields.forEach(function (f) { if (cc[f] === model.chatColumn(null)[f]) { cc[f] = carry[f]; changed = true; } });
+      l.chat_column = cc;
+      return changed;
+    }
+    if (fields.length) {
+      if (!state.layout) return {};
+      // this project's unreadable record could not be set aside yet, so it is not written now: carry them next time
+      if (pendingQuarantine) return {};
+      fill(state.layout);
+      try {
+        var keys = [];
+        for (var i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
+        keys.forEach(function (k) {
+          if (!k || k.indexOf(LAYOUT_KEY_PREFIX) !== 0 || k === persist.key()) return;
+          var rec = store.get(k);
+          if (!rec || !rec.layout || rec.layout.schema !== model.SCHEMA) return;
+          if (fill(rec.layout)) store.set(k, rec);
+        });
+      } catch (_) {}
+      if (!persist.save()) return {};
+    }
+    present.forEach(function (o) { settings.set(o[0], null); });
+    return carry;
+  },
 
   /* Saved named layouts name their tabs by id (14-layouts.js, SAVED_KEY): an id a kind folds now
      (debug-console:<session>, D33) is rewritten, once at boot, to the one tab it names, so that tab still goes back to
@@ -155242,8 +155392,12 @@ PMW.applyNamed = function (name, opts) {
   if (!built) return false;
   var res = commit(opts.reset ? CMD.reset : CMD.applyNamed, { name: name }, function (d) {
     built.revision = d.revision;
+    // the chat column is not part of a layout's shape: a named layout or Restore home layout keeps it (width_px,
+    // history_pinned, keep_open)
+    var chatColumn = d.chat_column;
     for (var k in d) delete d[k];
     Object.assign(d, model.clone(built));
+    if (chatColumn) d.chat_column = model.clone(chatColumn);
     return {};
   });
   if (res.ok) {
@@ -155294,7 +155448,11 @@ COMMAND_HANDLERS[CMD.move] = function (a) {
 COMMAND_HANDLERS[CMD.reopen] = function () { return PMW.reopenClosed(); };
 COMMAND_HANDLERS[CMD.split] = function (a) { return PMW.splitPanel(a.panelId, a.direction === 'down' ? 'bottom' : a.direction === 'right' ? 'right' : a.direction, a.spec); };
 COMMAND_HANDLERS[CMD.movePanel] = function (a) { return PMW.movePanel(a.panelId, a.target.panelId, a.target.edge); };
-COMMAND_HANDLERS[CMD.resize] = function (a) { return PMW.resizeSplit(a.splitId, a.sizes); };
+/* { splitId, sizes } resizes a split; { surface: 'chat', width } the chat column (46-chat.js, null = the default) */
+COMMAND_HANDLERS[CMD.resize] = function (a) {
+  if (a.surface === 'chat') return PMW.chatCol.setWidth(a.width);
+  return PMW.resizeSplit(a.splitId, a.sizes);
+};
 COMMAND_HANDLERS[CMD.collapse] = function (a) { return PMW.setCollapsed(a.panelId, a.collapsed); };
 COMMAND_HANDLERS[CMD.closePanel] = function (a) { return PMW.closePanel(a.panelId); };
 COMMAND_HANDLERS[CMD.lock] = function (a) { return PMW.lockPanel(a.panelId, a.locked); };
@@ -155306,11 +155464,13 @@ COMMAND_HANDLERS[UI.maximize] = function (a) { return PMW.toggleMaximize(a.panel
 /* ---- panels/js/27-frames.js ---- */
 /* Shared body frames (DRY): one rendering grammar for every document-like kind (plan, document, artifact, record,
    context, transcript) and every run view, so they read as one system in every look. Replaces the chat's pills with a
-   plain meta row, its boxed chips with text, its accent-underlined toggles with text options on a hairline.
+   plain meta row, its boxed chips with text, its accent-underlined toggles with text options on a hairline whose chosen
+   option is filled on its own box (the chosen fill, 45-frames.css; never an underline).
      PMW.frames.doc({ title, meta: [..] | 'a · b', aside, body: el | [els], actions: [btn specs], footer: el }) -> el
      PMW.frames.run({ title, kind: { icon, word }, status: [..], actions, more, plate, tabs: { items, value, onChange }, main, aside }) -> el
      PMW.frames.meta(items) -> <p>    items: strings, or { text, state: 'ok'|'warn'|'bad', mono }
-     PMW.frames.seg(options, value, onChange, { label }) -> el    options: [{ value, label, count }]
+     PMW.frames.seg(options, value, onChange, { label, cls }) -> el    options: [{ value, label, count }]
+     PMW.frames.ink(row) -> { move(from, to), stop() }    the chosen fill's one moving ink for any .pmw-ink-row
      PMW.frames.section(title, meta, body) -> <section>
      PMW.frames.notice(text, { state, icon }) -> <p>
      PMW.frames.tiles([{ label, value, sub, state }]) -> el
@@ -155334,29 +155494,117 @@ frames.meta = function (items) {
   return p;
 };
 
+/* The chosen fill's one ink (45-frames.css). The chosen option's fill is its own ::after, so at rest it is always
+   exactly its box, through a resize, a font load or a look change. A change moves one ink from the box it leaves to the
+   box it lands on, in the voice the rail's tab strips use for the same ink (DL-162, F3-621; Concepts/leftrail-redesign
+   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides with the liquid
+   stretch; Retro's reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it
+   at once (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
+   so one fill is on screen in every frame; a second change mid-way starts from where the ink is; Animation speed
+   scales it. `from` is the option left, or a client rect of it kept across a rebuild; boxes on different lines (a
+   wrapped row) or a row out of view change at once. */
+var INK_VOICE = { basic: { dur: 220, ease: 'cubic-bezier(.2,.8,.2,1)' }, friendly: { dur: 420, spring: true },
+  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)', liquid: true } };
+/* Friendly's spring as keyframes of progress p (0 the old box, 1 the new): past the target once, back a little, home;
+   the overshoot is explicit so it never carries the ink out of the row */
+var INK_SPRING = [[0, 0, 'cubic-bezier(.3,.7,.4,1)'], [0.55, 1, 'ease-in-out', 1], [0.8, 1, 'ease-in-out', -0.3], [1, 1]];
+frames.ink = function (row) {
+  if (row._pmwInk) return row._pmwInk;
+  var seq = 0, el = null;
+  function inkEl() {
+    if (!el) el = h('span', { class: 'pmw-ink', 'aria-hidden': 'true' });
+    if (el.parentNode !== row) row.appendChild(el);
+    return el;
+  }
+  function frame(b, extra) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)' + (extra || ''), width: b.w.toFixed(2) + 'px' }; }
+  /* a box in the ink's own coordinates: the row's padding box, scrolled with the row; y is the box's middle on screen */
+  function box(x) {
+    var r = x.nodeType === 1 ? x.getBoundingClientRect() : x, l = row.getBoundingClientRect(), k = row.offsetWidth ? l.width / row.offsetWidth : 1;
+    return { x: (r.left - l.left) / k - row.clientLeft + row.scrollLeft, w: r.width / k, y: r.top + r.height / 2 };
+  }
+  function stop() {
+    seq += 1;
+    if (el) el.getAnimations().forEach(function (a) { a.cancel(); });
+    row.removeAttribute('data-moving');
+  }
+  function move(from, to) {
+    var moving = row.hasAttribute('data-moving') && el && el.getAnimations().length > 0;
+    var a = moving ? box(el) : from && (from.nodeType !== 1 || from.offsetWidth) ? box(from) : null;
+    stop();
+    var g = INK_VOICE[PMW.motion.family()];
+    if (!a || !g || !to || !to.offsetWidth || !row.isConnected || PMW.motion.reduced()) return;
+    var b = box(to), d = b.x - a.x;
+    if (Math.abs(b.y - a.y) > 1.5) return;
+    if (Math.abs(d) < 0.5 && Math.abs(b.w - a.w) < 0.5) return;
+    var kf;
+    if (g.liquid) {
+      // the leading edge runs ahead and the box thins a little, then it lands with one soft give
+      var s = Math.min(Math.abs(d) * 0.3, Math.max(a.w, b.w) * 0.4);
+      var mid = { x: a.x + d * 0.5 - (d >= 0 ? s * 0.35 : s * 0.65), w: (a.w + b.w) / 2 + s };
+      kf = [Object.assign({ offset: 0 }, frame(a)), Object.assign({ offset: 0.4 }, frame(mid, ' scale(1, .9)')),
+        Object.assign({ offset: 0.8 }, frame({ x: b.x - 1, w: b.w + 2 }, ' scale(1, 1.03)')), Object.assign({ offset: 1 }, frame(b, ' scale(1, 1)'))];
+    } else if (g.spring) {
+      // the overshoot: 8 % of the trip, at most the room left beyond the target inside the row
+      var room = d >= 0 ? row.scrollWidth - (b.x + b.w) : b.x;
+      var over = Math.abs(d) > 0.5 ? Math.max(0, Math.min(Math.abs(d) * 0.08, room)) / Math.abs(d) : 0;
+      kf = INK_SPRING.map(function (k) {
+        var p = k[1] + (k[3] || 0) * over, f = frame({ x: a.x + d * p, w: a.w + (b.w - a.w) * Math.min(p, 1) });
+        f.offset = k[0]; if (k[2]) f.easing = k[2];
+        return f;
+      });
+    } else kf = [frame(a), frame(b)];
+    var anim = PMW.motion.animate(inkEl(), kf, { dur: g.dur, easing: g.spring ? 'linear' : g.ease });
+    if (!anim) return;
+    var mine = seq;
+    row.setAttribute('data-moving', '');
+    var done = function () { if (mine === seq) row.removeAttribute('data-moving'); };
+    anim.finished.then(done, done);
+  }
+  return (row._pmwInk = { move: move, stop: stop });
+};
+
+/* A kind that draws its body again on a change builds a new toggle in the same place: the toggle it replaces hands the
+   box it left to the new one (same label and class, built inside the change), so the fill still travels. */
+var segHandoff = null;
 frames.seg = function (options, value, onChange, o) {
   o = o || {};
-  var wrap = h('div', { class: 'pmw-seg' + (o.cls ? ' ' + o.cls : ''), role: 'tablist', 'aria-label': o.label || 'View' });
+  var key = (o.label || 'View') + '|' + (o.cls || '');
+  var wrap = h('div', { class: 'pmw-seg pmw-ink-row' + (o.cls ? ' ' + o.cls : ''), role: 'tablist', 'aria-label': o.label || 'View' });
+  var ink = frames.ink(wrap);
+  function opts() { return Array.prototype.filter.call(wrap.children, function (b) { return b.classList.contains('pmw-seg-opt'); }); }
+  function chosen() { return opts().filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || null; }
   function paint(v) {
-    Array.prototype.forEach.call(wrap.children, function (b) {
+    opts().forEach(function (b) {
       var on = b._v === v;
       b.setAttribute('aria-selected', on ? 'true' : 'false');
       b.tabIndex = on ? 0 : -1;
     });
   }
   options.forEach(function (op) {
-    var b = h('button', { type: 'button', class: 'pmw-seg-opt', role: 'tab' }, [h('span', { text: op.label })]);
+    var b = h('button', { type: 'button', class: 'pmw-seg-opt pmw-ink-opt', role: 'tab' }, [h('span', { text: op.label })]);
     if (op.count != null) b.appendChild(h('small', { text: String(op.count) }));
     b._v = op.value;
-    b.addEventListener('click', function () { paint(op.value); if (onChange) onChange(op.value); });
+    b.addEventListener('click', function () {
+      var prev = chosen();
+      paint(op.value);
+      var hand = prev && prev !== b && prev.offsetWidth ? { key: key, rect: prev.getBoundingClientRect(), taken: false } : null;
+      segHandoff = hand;
+      try { if (onChange) onChange(op.value); } finally { segHandoff = null; }
+      if (hand && !hand.taken && wrap.isConnected) ink.move(prev, b);
+    });
     b.addEventListener('keydown', function (e) {
-      var opts = Array.prototype.slice.call(wrap.children), i = opts.indexOf(b);
-      var go = e.key === 'ArrowRight' ? opts[(i + 1) % opts.length] : e.key === 'ArrowLeft' ? opts[(i - 1 + opts.length) % opts.length] : null;
+      var all = opts(), i = all.indexOf(b);
+      var go = e.key === 'ArrowRight' ? all[(i + 1) % all.length] : e.key === 'ArrowLeft' ? all[(i - 1 + all.length) % all.length] : null;
       if (go) { e.preventDefault(); go.focus(); go.click(); }
     });
     wrap.appendChild(b);
   });
   paint(value);
+  if (segHandoff && segHandoff.key === key && !segHandoff.taken) {
+    var hand = segHandoff;
+    hand.taken = true;
+    requestAnimationFrame(function () { var t = chosen(); if (t && wrap.isConnected) ink.move(hand.rect, t); });
+  }
   wrap.setValue = paint;
   return wrap;
 };
@@ -155550,6 +155798,8 @@ PMW.headerRow = function (entry, spec) {
       setText(node, it.text);
     }
     setContent(el, node);
+    // a one-of-several toggle (the chosen fill's .pmw-ink-row, 45-frames.css) takes the row's full height
+    el.classList.toggle('is-ink', !!(node.classList && node.classList.contains('pmw-ink-row')));
   }
   function fillLeft(items) {
     var next = {}, els = [];
@@ -155565,6 +155815,8 @@ PMW.headerRow = function (entry, spec) {
     reconcile(left, els, factList);
     factEls = next;
     factList = els;
+    row.classList.toggle('has-ink', els.some(function (el) { return el.classList.contains('is-ink'); }));
+    row.classList.toggle('is-ink-lead', !!(els[0] && els[0].classList.contains('is-ink')));
   }
 
   /* ---- actions ---- */
@@ -157370,7 +157622,8 @@ retro.dragOn = function () { return rfxOn(); };
    row:  { id, label, sub, right, icon, kind (a kind icon), checked (true|false: a check slot), danger, disabled, reason,
            run(info) (info = { alt, row }), alt: { label, icon, run } (the trailing cell: "Open in new panel"),
            links: [{ label, title, run }] (an inline sub-row of plain links), submenu: spec | () => spec,
-           keywords, keepOpen, close(row) (renders a close cell instead of alt; may return a Promise) }
+           keywords, keepOpen, close(row) (renders a close cell instead of alt; may return a Promise),
+           action (the typed action id the row dispatches, written to the item as data-ui-action-id) }
    Keyboard: Up/Down (rows and links in reading order), Home/End, Enter/Space picks, Alt+Enter the trailing cell,
    Right opens a submenu, Left or Escape goes back, Escape closes and returns focus, Tab closes, printable keys go to
    the search field (else type-ahead), Delete on a row with a close cell closes that item.
@@ -157481,6 +157734,7 @@ menu.open = function (anchor, spec) {
     var main = h('button', { type: 'button', class: 'pmw-mitem pmw-cur' + (r.disabled ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') + (r.submenu ? ' has-sub' : '') + (r.current ? ' is-current' : ''),
       role: r.checked != null ? 'menuitemcheckbox' : 'menuitem', tabindex: '-1' });
     if (r.checked != null) main.setAttribute('aria-checked', r.checked ? 'true' : 'false');
+    if (r.action) main.setAttribute('data-ui-action-id', r.action);
     if (r.disabled) main.setAttribute('aria-disabled', 'true');
     if (r.icon || r.kind) {
       var lead = h('span', { class: 'pmw-mlead' });
@@ -158775,14 +159029,16 @@ mru.cancel = function () {
 /* The narrow ladder (D4), keyed on the centre's width C (window minus rail minus chat), never on the window, and never
    saved. Order (Jared: "Rail, then chat"): C < 960 the rail side panel eases to 240 and then folds to its icon bar
    below 760 (it then opens as an overlay), then the chat eases toward its minimum (400); one panel column below 600
-   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user pinned it.
+   (the tree is untouched: it is a render mode); below 480 the chat folds to an edge strip unless the user keeps it open
+   (the layout record's chat column keep_open, ui.chat_column.keep_open, 46-chat.js).
    Each step has 48 px of hysteresis. It measures what is applied now, so theme paddings, resizers and the activity bar
    need no constants. The only file allowed to read the window size (the chat's default width scales with it).
-   Pinned History (D3, settings 'chat.history' = 'pinned'): the column grows by the History width instead of squeezing
-   the messages. chatMin, chatMax and the saved chat.width are the message area; the History adds chatHistoryW on top
-   (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which only a squeezed or
-   capped column reaches). The widening is part of the chat width the ladder solves, so it counts in the centre budget
-   and eases like the rest of the column; it is never saved. */
+   Pinned History (D3, the layout record's chat column history_pinned, ui.chat_column.pin_history): the column grows by
+   the History width instead of squeezing the messages. chatMin, chatMax and the saved width (the chat column's
+   width_px, cmd.workspace_layout.resize_surface { surface: 'chat', width }) are the message area; the History adds
+   chatHistoryW on top (the chat draws it at chatHistoryWNarrow while its whole column is under chatHistoryAt, which
+   only a squeezed or capped column reaches). The widening is part of the chat width the ladder solves, so it counts in
+   the centre budget and eases like the rest of the column; the widening itself is never saved. */
 
 var LADDER = PMW.LADDER = { railEase: 960, railFold: 760, chatEase: 960, oneColumn: 600, chatStrip: 480, hyst: 48, railEased: 240, chatMin: 400, chatMax: 760, chatStripW: 32,
   chatHistoryW: 240, chatHistoryWNarrow: 200, chatHistoryAt: 540, usageBoardMin: 400 };
@@ -158793,7 +159049,10 @@ function slotEl() { return qs('#sidePanelSlot'); }
 /* the chat's default width scales with the window: about 480 at 1470, 600 at 1920, at most 640 (D3) */
 function chatDefault() { return Math.round(clamp(window.innerWidth * 0.26667 + 88, LADDER.chatMin, 640)); }
 narrow.chatDefault = chatDefault;
-function chatUser() { var w = PMW.settings.get('chat.width'); return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault(); }
+function chatUser() {
+  var w = PMW.chatCol && PMW.chatCol.widthPx ? PMW.chatCol.widthPx() : null;
+  return w ? clamp(w, LADDER.chatMin, LADDER.chatMax) : chatDefault();
+}
 narrow.chatUser = chatUser;
 /* the width pinned History adds to the column now (0 unless it is pinned and the chat on screen draws it) */
 function historyW() { return PMW.chatCol && PMW.chatCol.historyShown && PMW.chatCol.historyShown() ? LADDER.chatHistoryW : 0; }
@@ -158904,7 +159163,7 @@ narrow.update = function () {
   var m = narrow.measure();
   if (!m) { if (!narrow.usageFloor()) narrow.plainChat(); return; }
   var prev = narrow.state;
-  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev, m.hist);
+  var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!(PMW.chatCol && PMW.chatCol.keepOpen()), prev, m.hist);
   narrow.apply(next, prev);
 };
 /* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
@@ -158993,9 +159252,9 @@ narrow.install = function () {
   if (chat) new MutationObserver(narrow.schedule).observe(chat, { attributes: true, attributeFilter: ['class'] });
   var ab = qs('#activityBar');
   if (ab) new MutationObserver(narrow.schedule).observe(ab, { attributes: true, attributeFilter: ['class'] });
-  PMW.settings.on('chat.width', narrow.schedule);
-  PMW.settings.on('chat.pinOpen', narrow.schedule);
-  PMW.settings.on('chat.history', narrow.schedule);
+  // the chat column (width_px, history_pinned, keep_open) lives in the layout record: a project switch or a restored
+  // layout can change it (the width's commit emits layout too; the two pins' actions schedule the ladder themselves)
+  bus.on('layout', narrow.schedule);
   narrow.installRailPeek();
   narrow.update();
 };
@@ -159006,7 +159265,10 @@ narrow.install = function () {
    (--pmw-chat-w) that the narrow ladder writes; the default scales with the window (about 480 at 1470, 600 at 1920,
    at most 640); the user drags 400-760 on the existing resizer, taken over in the capture phase so the legacy resizer
    (which writes inline !important widths up to 1200) never starts. One command per committed change.
-   Pinned History (D3): the 400-760 range and the saved chat.width are the message area; while the chat on screen
+   The column's saved state is the layout record's chat column (canon's v2 chat_column, 10-model.js; none of it is a
+   Settings value, SSYS-050): width_px, history_pinned and keep_open. A project switch shows that project's own; a named
+   layout and Restore home layout keep it.
+   Pinned History (D3): the 400-760 range and the saved width_px are the message area; while the chat on screen
    draws its History pinned, the column is that much wider (LADDER.chatHistoryW, 44-narrow.js) and the drag moves the
    same edge over the same message range. The chat surface that draws the History (the stand-in today, the 5.6 Pro
    chat after the port) registers itself as chatCol.surface (below). */
@@ -159043,10 +159305,51 @@ chatCol.setVisible = function (visible, commandId) {
   return { ok: true, command: record, receipt: receipt };
 };
 
+/* the layout record's chat column (10-model.js), read through one place */
+function chatColumn() { var l = state.layout; return l && l.chat_column ? l.chat_column : model.chatColumn(null); }
+
+/* The width (D3): the message area's width the user dragged, the record's width_px (400-760), or null for the default
+   for the window (44-narrow.js chatDefault). Written only by the one structural command
+   cmd.workspace_layout.resize_surface { surface: 'chat', width } (a number, or null to go back to the default): one
+   commit with its pm:command-dispatch, its receipt and the one workspace.layout_changed event, rolled back on a
+   cancelled dispatch or a failed write. A drag commits once on release, the resizer's double-click once with null. */
+chatCol.widthPx = function () { return chatColumn().width_px; };
+chatCol.setWidth = function (w) {
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (w != null && (typeof w !== 'number' || !isFinite(w))) return { ok: false, reason: 'invalid' };
+  var width = w == null ? null : model.chatWidth(w);
+  var res = commit(CMD.resize, { surface: 'chat', width: width }, function (d) {
+    d.chat_column = Object.assign(model.chatColumn(d.chat_column), { width_px: width });
+    return {};
+  }, { animate: false });
+  narrow.schedule();
+  return { ok: res.ok, no_change: !!res.noChange, reason: res.reason, width_px: chatCol.widthPx() };
+};
+
+/* History pinned beside the messages, or a flyout (D3): the record's history_pinned, the typed local UI action
+   ui.chat_column.pin_history (UCC-203), written like view state with the layout and no receipt, event or revision, as
+   keep_open is; never a Settings row. The chat surface that draws the History (the stand-in's History button, its pin
+   and its More menu's "Keep History open") dispatches it; chat:column on the bus tells it to repaint. */
+chatCol.historyPinned = function () { return chatColumn().history_pinned; };
+chatCol.setHistoryPinned = function (on) {
+  on = !!on;
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (chatCol.historyPinned() === on) return { ok: true, no_change: true, history_pinned: on };
+  viewAction(UI.pinHistory, function (lay) { lay.chat_column = Object.assign(model.chatColumn(lay.chat_column), { history_pinned: on }); }, { animate: false });
+  bus.emit('chat:column', { history_pinned: on });
+  narrow.schedule();
+  announce(on ? 'History stays open' : 'History opens as a flyout');
+  return { ok: true, history_pinned: on };
+};
+/* { history_pinned: true | false }; without it the action toggles */
+COMMAND_HANDLERS[UI.pinHistory] = function (a) {
+  return chatCol.setHistoryPinned(a && typeof a.history_pinned === 'boolean' ? a.history_pinned : !chatCol.historyPinned());
+};
+
 /* pinned History widens the column only while a chat surface on screen draws it (the stand-in's layer; never the
    page's own chat, which has no History list) */
 chatCol.historyShown = function () {
-  if (PMW.settings.get('chat.history') !== 'pinned') return false;
+  if (!chatCol.historyPinned()) return false;
   var sf = chatCol.surface;
   try { return !!(sf && sf.drawsHistory && sf.drawsHistory()); } catch (_) { return false; }
 };
@@ -159092,14 +159395,14 @@ chatCol.beginDrag = function (e, handle) {
     try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
     if (cancel || !moved) { c.style.setProperty('--pmw-chat-w', Math.round(startW) + 'px'); narrow.schedule(); render.flushResizes(true); return; }
     var w = clamp(Math.round(last) - hist, LADDER.chatMin, LADDER.chatMax);   // the message area; the History is never saved
-    pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.resize, args: { surface: 'chat', width: w }, at: Date.now() });
-    pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.resize, outcome: 'applied' });
-    try { window.dispatchEvent(new CustomEvent('pm:dispatch-receipt', { detail: { command_id: CMD.resize, status: 'applied', payload: { surface: 'chat', width: w } } })); } catch (_) {}
-    PMW.settings.set('chat.width', w);
+    // one commit on release; a cancelled dispatch or a failed write leaves the saved width, which the ladder puts back
+    var res = chatCol.setWidth(w);
     // say the width the ladder applies, never a width that is not on screen
     narrow.update();
-    var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
-    announce('Chat width ' + applied + ' pixels');
+    if (res.ok) {
+      var applied = narrow.state.chat != null ? Math.round(narrow.state.chat) : w + hist;
+      announce('Chat width ' + applied + ' pixels');
+    }
     render.flushResizes(true);
   }
   function up(ev) { end(ev, false); }
@@ -159110,10 +159413,11 @@ chatCol.beginDrag = function (e, handle) {
   handle.addEventListener('pointercancel', cxl);
   doc.addEventListener('keydown', esc, true);
 };
+/* the resizer's double-click: back to the default for the window, one commit with width null */
 chatCol.resetWidth = function () {
-  PMW.settings.set('chat.width', null);
-  announce('Chat width reset');
-  narrow.schedule();
+  var res = chatCol.setWidth(null);
+  if (res.ok) announce('Chat width reset');
+  return res;
 };
 
 /* Pop out (D3). In the native app the chat moves to its own window; the browser concept shows it floating over the
@@ -159150,6 +159454,30 @@ chatCol.dockBack = function () {
    row, whose saved value used to replay a pop out at start, is retired (opus-5.5 build.py: the paint sends no
    chat.layout, and a stored value is cleared on first read). */
 chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-float')); };
+
+/* Keep the chat open in narrow windows (D4's pin; the lead's ruling of 2026-10-10). It is the typed local UI action
+   ui.chat_column.keep_open, saved in the layout record's chat column as keep_open (default false) and written like view
+   state, with the layout and no receipt, event or revision, as ui.panel_tab.activate is; never a Settings row. With it on
+   the narrow ladder never folds the chat to its strip (44-narrow.js). Two menus carry it as the same checked row,
+   keepOpenRow(), which dispatches the action: the title bar's Home options (49-titlebar.js) and the chat's own header
+   menu (the stand-in's More, kinds/95-standin-chat.js). */
+chatCol.keepOpen = function () { var l = state.layout; return !!(l && l.chat_column && l.chat_column.keep_open); };
+chatCol.setKeepOpen = function (on) {
+  on = !!on;
+  if (!state.layout) return { ok: false, reason: 'not_ready' };
+  if (chatCol.keepOpen() === on) return { ok: true, no_change: true, keep_open: on };
+  viewAction(UI.keepChatOpen, function (lay) { lay.chat_column = Object.assign(model.chatColumn(lay.chat_column), { keep_open: on }); }, { animate: false });
+  narrow.schedule();
+  announce(on ? 'The chat stays open in narrow windows' : 'The chat folds to a strip in narrow windows');
+  return { ok: true, keep_open: on };
+};
+chatCol.keepOpenRow = function () {
+  var on = chatCol.keepOpen();
+  return { id: 'chat-keep-open', label: 'Keep the chat open in narrow windows', sub: 'Instead of folding to a strip at the edge',
+    action: UI.keepChatOpen, checked: on, run: function () { PM_HOME.command(UI.keepChatOpen, { keep_open: !on }); } };
+};
+/* { keep_open: true | false }; without it the action toggles */
+COMMAND_HANDLERS[UI.keepChatOpen] = function (a) { return chatCol.setKeepOpen(a && typeof a.keep_open === 'boolean' ? a.keep_open : !chatCol.keepOpen()); };
 
 /* the folded chat strip (D4, C < 480): a button opens the chat over the centre until Escape or a click outside */
 function peeking() { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-peek')); }
@@ -159572,7 +159900,8 @@ menus.home = function (anchor) {
     PMW.chatCol.isFloating()
       ? { id: 'chat-dock', label: 'Dock the chat back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); } }
       : { id: 'chat-pop', label: 'Pop out the chat', icon: 'popOut', sub: 'The only way to move it', run: function () { PMW.chatCol.popOut(); } },
-    { id: 'chat-pin', label: 'Keep the chat open in narrow windows', checked: !!PMW.settings.get('chat.pinOpen'), run: function () { PMW.settings.set('chat.pinOpen', !PMW.settings.get('chat.pinOpen')); } }
+    // D4's pin: the typed UI action, the same row as the chat's own header menu (46-chat.js keepOpenRow)
+    PMW.chatCol.keepOpenRow()
   ];
   if (PMW.standIn) chatRows.push({ id: 'stand-in', label: PMW.standIn.isOn() ? 'Show the current chat' : 'Show the stand-in chat', sub: 'The stand-in exercises every way the chat opens tabs', icon: 'transcript', run: function () { PMW.standIn.toggle(); } });
   var other = [
@@ -160155,6 +160484,7 @@ PM_HOME.boot = function () {
   DEAD_PORTALS.forEach(function (id) { var el = doc.getElementById(id); if (el) el.remove(); });
   bus.emit('boot:kinds', {});
   state.layout = firstLayout();
+  try { persist.migrateChatColumn(); } catch (err) { try { console.error('[pm-home] the chat column settings could not be carried over', err); } catch (_) {} }
   try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {
@@ -166869,8 +167199,9 @@ PM_HOME.registerKind('ports', {
    screen is its view state (serialize: session), switched inside the tab the way Output (D31) switches its channel: a
    row of sub-tabs in the header row, one per debug session, each the session's name and its state in plain words with
    the state dot. It is a real tablist (roving tabindex; Left, Right, Home and End move and choose; Enter and Space
-   choose) whose underline rides the row's hairline and glides to the chosen session (a cut in NieR, reverse video in
-   Retro, instant under Reduced Motion). The header row's actions and the input line act on the chosen session; each
+   choose) whose chosen sub-tab is filled on its own box (the lead's ruling of 2026-10-10: no underline, which DR-069,
+   F3-648 and D5 ban): DL-162's tab ink, Retro's reverse video, NieR's ink block, and the fill moves in the look's own
+   tab-change voice (instant under Reduced Motion). The header row's actions and the input line act on the chosen session; each
    session keeps its own console and its own state while another one is on screen. PM_HOME.open({ kind:
    'debug-console', session }) reveals the tab and switches it (reveal). The ids of the old one-tab-per-session shape,
    'debug-console:<session>', fold into this tab with that session chosen wherever they turn up (opens, saved and named
@@ -167030,14 +167361,14 @@ PM_HOME.registerKind('debug-console', {
 
     /* one record per session: its sub-tab, its console (a tabpanel) and its live state */
     var recs = {};
-    var tabsEl = h('div', { class: 'pmw-tool-stabs', role: 'tablist', 'aria-label': 'Debug sessions' });
-    var indEl = h('span', { class: 'pmw-tool-sind', 'aria-hidden': 'true' });
+    var tabsEl = h('div', { class: 'pmw-tool-stabs pmw-ink-row', role: 'tablist', 'aria-label': 'Debug sessions' });
+    var ink = PMW.frames.ink(tabsEl);
     var panes = h('div', { class: 'pmw-tool-dpanes' });
     SESSIONS.forEach(function (s) {
       var r = recs[s.id] = { s: s, mode: s.mode, where: s.mode === 'paused' ? (s.bp || s.pauseAt) : null, timers: [], stream: 0, loopAt: 0, follow: true, top: 0 };
       r.dot = h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' });
       r.word = h('span', { class: 'pmw-tool-sword' });
-      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab', tabindex: '-1', 'aria-selected': 'false',
+      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab pmw-ink-opt', tabindex: '-1', 'aria-selected': 'false',
         'aria-controls': base + '-' + s.id + '-pane', 'data-session': s.id, 'data-pmh': 'icon', 'data-pmh-tag': 'literal' },
         [r.dot, h('span', { class: 'pmw-tool-sname', text: s.name }), r.word]);
       r.tab.addEventListener('click', function () { select(s.id, { user: true }); });
@@ -167048,7 +167379,6 @@ PM_HOME.registerKind('debug-console', {
       r.log.addEventListener('click', function (e) { if (!e.target.closest('button') && !window.getSelection().toString()) input.focus({ preventScroll: true }); });
       panes.appendChild(r.pane);
     });
-    tabsEl.appendChild(indEl);
     /* Left and Right (wrapping), Home and End move to a session and choose it (automatic activation: the console is
        already drawn); Enter and Space choose the one with focus */
     tabsEl.addEventListener('keydown', function (e) {
@@ -167105,21 +167435,9 @@ PM_HOME.registerKind('debug-console', {
     var inRow = h('label', { class: 'pmw-tool-inrow' }, [h('span', { class: 'pmw-tool-prompt', 'aria-hidden': 'true', text: '›' }), input]);
     root.appendChild(inRow);
 
-    /* the underline under the chosen sub-tab; it glides from the one before (a cut in NieR; Retro draws the chosen
-       sub-tab in reverse video instead; Reduced Motion places it at once) */
-    function placeInd(from) {
-      var t = recs[cur].tab;
-      if (!t.offsetWidth) return;
-      var x = t.offsetLeft, w = t.offsetWidth;
-      indEl.style.width = w + 'px';
-      indEl.style.transform = 'translateX(' + x + 'px)';
-      var fam = PMW.motion.family();
-      if (!from || from === t || !from.offsetWidth || fam === 'nier' || fam === 'retro') return;
-      PMW.motion.animate(indEl, [
-        { transform: 'translateX(' + from.offsetLeft + 'px) scaleX(' + (from.offsetWidth / w) + ')' },
-        { transform: 'translateX(' + x + 'px) scaleX(1)' }
-      ], { dur: 260, easing: PMW.motion.ease('slide') });
-    }
+    /* The chosen sub-tab's fill is its own box and one ink carries it from box to box on a change, in the look's own
+       tab-change voice (the chosen fill: 45-frames.css and PMW.frames.ink in 27-frames.js, shared with every segmented
+       toggle). The ink only travels while the tab is on screen. */
     function paintTab(r) {
       r.tab.setAttribute('data-mode', r.mode);
       r.dot.className = 'pmw-tool-sdot ' + DBG_DOT[r.mode];
@@ -167137,7 +167455,6 @@ PM_HOME.registerKind('debug-console', {
       root.setAttribute('data-mode', r.mode);
       var busy = SESSIONS.some(function (s) { return recs[s.id].mode === 'running'; });
       api.update({ busy: busy, title: 'Debug Console: ' + r.s.name + ', ' + DBG_WORD[r.mode].toLowerCase() });
-      placeInd(null);
     }
     /* choose a session: its sub-tab, its console and the actions; the console comes back where it was left */
     function select(sid, o) {
@@ -167157,7 +167474,7 @@ PM_HOME.registerKind('debug-console', {
       if (o.focus) r.tab.focus({ preventScroll: true });
       refresh();
       if (!changed) return true;
-      placeInd(o.instant ? null : prev.tab);
+      if (o.instant || !shown) ink.stop(); else ink.move(prev.tab, r.tab);
       if (!o.instant) PMW.motion.animate(r.pane, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: PMW.motion.ease('out') });
       api.saveSoon();
       if (!o.user) api.announce('Debug Console shows ' + r.s.name);
@@ -167249,8 +167566,8 @@ PM_HOME.registerKind('debug-console', {
     SESSIONS.forEach(function (s) { s.seed.forEach(function (l) { line(recs[s.id], l[0], l[1]); }); });
     select(cur, { instant: true, user: true });
     api.update({ label: 'Debug Console' });
-    // a look changes the sub-tabs' face (NieR's caption, Retro's code face): the underline is measured again
-    offs.push(api.on('look', function () { placeInd(null); }));
+    // a look changes the sub-tabs' face and voice (NieR's caption, Retro's code face): a move in flight ends at once
+    offs.push(api.on('look', ink.stop));
 
     return {
       focus: function () { input.focus({ preventScroll: true }); },
@@ -167258,10 +167575,10 @@ PM_HOME.registerKind('debug-console', {
       /* an open of this tab with a session (the catalog, an old 'debug-console:<session>' id): switch to it */
       reveal: function (f) { if (f && f.session != null && sessionOf(String(f.session))) select(String(f.session), {}); },
       serialize: function () { return { session: cur, history: hist.slice(-20) }; },
-      onResize: function () { placeInd(null); },
-      onShow: function () { shown = true; placeInd(null); SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
-      onHide: function () { shown = false; SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
-      unmount: function () { SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
+      onResize: function () { ink.stop(); },
+      onShow: function () { shown = true; SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
+      onHide: function () { shown = false; ink.stop(); SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
+      unmount: function () { ink.stop(); SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
     };
   }
 });
@@ -171314,9 +171631,11 @@ function mountArtifact(host, state, api) {
   var viewOpts = [{ value: 'fit', label: 'Fit' }];
   if (art && VISUAL[art.kind]) viewOpts.push({ value: 'actual', label: 'Actual size' });
   viewOpts.push({ value: 'source', label: 'Source' });
-  var seg = h('div', { class: 'pmw-art-hseg', role: 'radiogroup', 'aria-label': 'View' });
+  // the chosen option is filled on its own box and one ink carries the fill on a change (the chosen fill, 45-frames.css)
+  var seg = h('div', { class: 'pmw-art-hseg pmw-ink-row', role: 'radiogroup', 'aria-label': 'View' });
+  var segInk = PMW.frames.ink(seg);
   viewOpts.forEach(function (op) {
-    var b = h('button', { type: 'button', class: 'pmw-art-hopt', role: 'radio', 'data-v': op.value, 'data-pmh': 'icon',
+    var b = h('button', { type: 'button', class: 'pmw-art-hopt pmw-ink-opt', role: 'radio', 'data-v': op.value, 'data-pmh': 'icon',
       'data-pm-hover-label': op.label, 'data-pm-hover-detail': op.value === 'source' ? 'The artifact as written' : op.value === 'actual' ? 'At its own size; scroll to see all of it' : 'Drawn to fit this panel' }, [op.label]);
     b.addEventListener('click', function () { setView(op.value); });
     b.addEventListener('keydown', function (e) {
@@ -171331,14 +171650,19 @@ function mountArtifact(host, state, api) {
     seg.appendChild(b);
   });
   function paintSeg() {
-    Array.prototype.forEach.call(seg.children, function (b) {
+    Array.prototype.forEach.call(seg.querySelectorAll('.pmw-art-hopt'), function (b) {
       var on = b.getAttribute('data-v') === st.view;
       b.setAttribute('aria-checked', on ? 'true' : 'false');
       b.tabIndex = on ? 0 : -1;
       b.classList.toggle('pmw-chosen', on);
     });
   }
-  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); api.saveSoon(); }
+  function setView(v) {
+    if (st.view === v) return;
+    var prev = seg.querySelector('.pmw-art-hopt[aria-checked="true"]');
+    st.view = v; paintSeg(); render(); api.saveSoon();
+    segInk.move(prev, seg.querySelector('.pmw-art-hopt[data-v="' + v + '"]'));
+  }
 
   function versionRows() {
     var rows = [];
@@ -173720,7 +174044,7 @@ function mountContext(host, state, api) {
   labels();
 
   var seg = PMW.frames.seg([{ value: 'curated', label: 'Curated' }, { value: 'raw', label: 'Raw' }], view, function (v) { view = v; paint(); }, { cls: 'pmw-ctx-hseg', label: 'Context view' });
-  Array.prototype.forEach.call(seg.children, function (b) {
+  Array.prototype.forEach.call(seg.querySelectorAll('.pmw-seg-opt'), function (b) {
     b.setAttribute('data-pmh', 'icon');
     b.setAttribute('data-pm-hover-label', b._v === 'raw' ? 'Raw' : 'Curated');
     b.setAttribute('data-pm-hover-detail', b._v === 'raw' ? 'The redacted projection, as recorded' : 'Read for people: numbers, sources, limits');
@@ -175046,28 +175370,33 @@ function syncPop() {
 }
 function moreMenu(anchor) {
   var floating = !!(PMW.chatCol && PMW.chatCol.isFloating());
-  var pinned = PM_HOME.settings.get('chat.history') === 'pinned';
+  var pinned = histSetting();
   PMW.menu.open(anchor, { id: 'pmw-sc-more', title: 'Chat', align: 'end', width: 280, rows: [
     { id: 'current', label: 'Show the current chat', sub: 'The stand-in comes back from Home options', icon: 'chat', run: function () { toggle(); } },
     floating ? { id: 'dock', label: 'Dock back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); syncPop(); } }
       : { id: 'pop', label: 'Pop out', sub: 'The only way to move the chat', icon: 'popOut', run: function () { PMW.chatCol.popOut(); syncPop(); } },
-    { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, run: function () { setPinned(!pinned); } },
+    { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, action: PMW.UI.pinHistory, run: function () { setPinned(!pinned); } },
+    // D4's pin: the same row as the title bar's Home options, dispatching ui.chat_column.keep_open (46-chat.js)
+    PMW.chatCol.keepOpenRow(),
     { id: 'clear', label: 'Clear what you sent', sub: 'In this thread', icon: 'reopen', disabled: !(S.sent[S.thread] || []).length, run: function () { resetThread(); } }
   ] });
 }
-/* History is drawn pinned while the setting says so and the narrow ladder has not given its width back (44-narrow.js:
-   below the strip threshold the column falls back to the flyout before the chat folds to its strip; never saved) */
+/* History pinned or a flyout is the layout record's chat column history_pinned (46-chat.js chatCol.historyPinned), set
+   by the typed UI action ui.chat_column.pin_history: the History button (while pinned it unpins), the list's pin and
+   More's "Keep History open" all dispatch it. It is drawn pinned while the record says so and the narrow ladder has not
+   given its width back (44-narrow.js: below the strip threshold the column falls back to the flyout before the chat
+   folds to its strip; never saved) */
+function histSetting() { return !!(PMW.chatCol && PMW.chatCol.historyPinned && PMW.chatCol.historyPinned()); }
 function histPinned() {
-  return PM_HOME.settings.get('chat.history') === 'pinned' && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
+  return histSetting() && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
 }
 function setPinned(on) {
-  PM_HOME.settings.set('chat.history', on ? 'pinned' : 'flyout');
-  paintHistoryMode();
-  PMW.announce(on ? 'History stays open' : 'History opens as a flyout');
+  // the action repaints this layer (chat:column) and announces the change
+  PM_HOME.command(PMW.UI.pinHistory, { history_pinned: !!on });
 }
 function paintHistoryMode() {
   if (!S.layer) return;
-  var setting = PM_HOME.settings.get('chat.history') === 'pinned', pinned = histPinned();
+  var setting = histSetting(), pinned = histPinned();
   S.layer.toggleAttribute('data-pmw-sc-pinned', pinned);
   if (pinned) { S.hist.hidden = false; S.histOpen = false; S.layer.removeAttribute('data-pmw-sc-hist'); S.histBtn.setAttribute('aria-expanded', 'true'); }
   else if (!S.histOpen) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
@@ -175101,7 +175430,8 @@ function history() {
   search.addEventListener('input', function () { fill(search.value); });
   S.fillHistory = function () { fill(search.value); };
   fill('');
-  var pin = iconBtn('pin', 'Pin History', 'Keep the list open; the chat grows by its width', function () { setPinned(PM_HOME.settings.get('chat.history') !== 'pinned'); });
+  var pin = iconBtn('pin', 'Pin History', 'Keep the list open; the chat grows by its width', function () { setPinned(!histSetting()); });
+  pin.setAttribute('data-ui-action-id', PMW.UI.pinHistory);
   S.pinBtn = pin;
   var panel = h('nav', { id: 'pmw-sc-hist', class: 'pmw-sc-hist', 'aria-label': 'Threads', hidden: true }, [
     h('div', { class: 'pmw-sc-hhead' }, [h('span', { class: 'pmw-sc-htitle', text: 'Threads' }), pin]),
@@ -175478,7 +175808,9 @@ function install() {
   ['activate', 'close', 'open', 'layout'].forEach(function (ev) { PM_HOME.on(ev, queueRecompute); });
   PM_HOME.on('chat', function (e) { if (!e || e.type == null) syncPop(); });
   PM_HOME.settings.on(SC_KEY, apply);
-  PM_HOME.settings.on('chat.history', paintHistoryMode);
+  // pinned or a flyout: its own action (chat:column), or a project switch or a restored layout bringing another record
+  PMW.bus.on('chat:column', paintHistoryMode);
+  PM_HOME.on('layout', paintHistoryMode);
   PM_HOME.on('narrow', paintHistoryMode);   // the ladder gives pinned History's width back, or takes it again
   PMW.bus.on('browser:capture', onCapture);
   PMW.bus.on('browser:send', onSend);

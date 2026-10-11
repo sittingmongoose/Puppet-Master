@@ -9,12 +9,8 @@
 .pmw-plan .pmw-frame-scroll:focus, .pmw-docu .pmw-frame-scroll:focus { outline: none; }
 .pmw-plan-clip, .pmw-docu-clip { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
 
-/* the Rich Text / Markdown toggle lives in the header row: text options whose underline sits on the row's hairline */
-.pmw-plan .pmw-hrow-left { align-self: stretch; }
-.pmw-plan .pmw-hfact[data-id="view"] { align-self: stretch; }
-.pmw-plan-hseg.pmw-seg { height: 100%; min-height: 0; border-bottom: 0; gap: 14px; }
-.pmw-plan-hseg .pmw-seg-opt { height: 100%; font-size: 12px; }
-.pmw-plan-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
+/* the Rich Text / Markdown toggle lives in the header row as its leading toggle: the chosen fill on the chosen
+   option's own box, the Debug sub-tabs' 21 px fill (45-frames.css, the header-row toggle rules) */
 
 /* ---- shared text ---- */
 /* the frame gives top-level blocks their 12 px rhythm and sections their 24 px (45-frames.css); a heading's own bottom
@@ -442,9 +438,7 @@
 @container pmw-body (max-width: 899.98px) { .pmw-docu-aside { padding-top: 12px; border-top: 1px solid var(--pmw-line); } }
 
 /* ---- looks: Retro (reverse video for what is chosen, square marks) ---- */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"] { background: var(--accent-lime); color: var(--surface); padding: 0 6px; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"]::after { display: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-plan, .pmw-docu) .pmw-seg-opt[aria-selected="true"] small { color: var(--surface); }
+/* the toggles' chosen option is Retro's reverse-video cell from the chosen fill (45-frames.css) */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-phase.is-now { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-docu-note.is-chosen :is(span, b, .pmw-docu-note-mark) { color: var(--surface); }

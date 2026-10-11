@@ -23,7 +23,8 @@ menus.home = function (anchor) {
     PMW.chatCol.isFloating()
       ? { id: 'chat-dock', label: 'Dock the chat back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); } }
       : { id: 'chat-pop', label: 'Pop out the chat', icon: 'popOut', sub: 'The only way to move it', run: function () { PMW.chatCol.popOut(); } },
-    { id: 'chat-pin', label: 'Keep the chat open in narrow windows', checked: !!PMW.settings.get('chat.pinOpen'), run: function () { PMW.settings.set('chat.pinOpen', !PMW.settings.get('chat.pinOpen')); } }
+    // D4's pin: the typed UI action, the same row as the chat's own header menu (46-chat.js keepOpenRow)
+    PMW.chatCol.keepOpenRow()
   ];
   if (PMW.standIn) chatRows.push({ id: 'stand-in', label: PMW.standIn.isOn() ? 'Show the current chat' : 'Show the stand-in chat', sub: 'The stand-in exercises every way the chat opens tabs', icon: 'transcript', run: function () { PMW.standIn.toggle(); } });
   var other = [

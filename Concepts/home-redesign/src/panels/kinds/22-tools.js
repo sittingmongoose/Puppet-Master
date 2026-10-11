@@ -600,8 +600,9 @@ PM_HOME.registerKind('ports', {
    screen is its view state (serialize: session), switched inside the tab the way Output (D31) switches its channel: a
    row of sub-tabs in the header row, one per debug session, each the session's name and its state in plain words with
    the state dot. It is a real tablist (roving tabindex; Left, Right, Home and End move and choose; Enter and Space
-   choose) whose underline rides the row's hairline and glides to the chosen session (a cut in NieR, reverse video in
-   Retro, instant under Reduced Motion). The header row's actions and the input line act on the chosen session; each
+   choose) whose chosen sub-tab is filled on its own box (the lead's ruling of 2026-10-10: no underline, which DR-069,
+   F3-648 and D5 ban): DL-162's tab ink, Retro's reverse video, NieR's ink block, and the fill moves in the look's own
+   tab-change voice (instant under Reduced Motion). The header row's actions and the input line act on the chosen session; each
    session keeps its own console and its own state while another one is on screen. PM_HOME.open({ kind:
    'debug-console', session }) reveals the tab and switches it (reveal). The ids of the old one-tab-per-session shape,
    'debug-console:<session>', fold into this tab with that session chosen wherever they turn up (opens, saved and named
@@ -761,14 +762,14 @@ PM_HOME.registerKind('debug-console', {
 
     /* one record per session: its sub-tab, its console (a tabpanel) and its live state */
     var recs = {};
-    var tabsEl = h('div', { class: 'pmw-tool-stabs', role: 'tablist', 'aria-label': 'Debug sessions' });
-    var indEl = h('span', { class: 'pmw-tool-sind', 'aria-hidden': 'true' });
+    var tabsEl = h('div', { class: 'pmw-tool-stabs pmw-ink-row', role: 'tablist', 'aria-label': 'Debug sessions' });
+    var ink = PMW.frames.ink(tabsEl);
     var panes = h('div', { class: 'pmw-tool-dpanes' });
     SESSIONS.forEach(function (s) {
       var r = recs[s.id] = { s: s, mode: s.mode, where: s.mode === 'paused' ? (s.bp || s.pauseAt) : null, timers: [], stream: 0, loopAt: 0, follow: true, top: 0 };
       r.dot = h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' });
       r.word = h('span', { class: 'pmw-tool-sword' });
-      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab', tabindex: '-1', 'aria-selected': 'false',
+      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab pmw-ink-opt', tabindex: '-1', 'aria-selected': 'false',
         'aria-controls': base + '-' + s.id + '-pane', 'data-session': s.id, 'data-pmh': 'icon', 'data-pmh-tag': 'literal' },
         [r.dot, h('span', { class: 'pmw-tool-sname', text: s.name }), r.word]);
       r.tab.addEventListener('click', function () { select(s.id, { user: true }); });
@@ -779,7 +780,6 @@ PM_HOME.registerKind('debug-console', {
       r.log.addEventListener('click', function (e) { if (!e.target.closest('button') && !window.getSelection().toString()) input.focus({ preventScroll: true }); });
       panes.appendChild(r.pane);
     });
-    tabsEl.appendChild(indEl);
     /* Left and Right (wrapping), Home and End move to a session and choose it (automatic activation: the console is
        already drawn); Enter and Space choose the one with focus */
     tabsEl.addEventListener('keydown', function (e) {
@@ -836,21 +836,9 @@ PM_HOME.registerKind('debug-console', {
     var inRow = h('label', { class: 'pmw-tool-inrow' }, [h('span', { class: 'pmw-tool-prompt', 'aria-hidden': 'true', text: '›' }), input]);
     root.appendChild(inRow);
 
-    /* the underline under the chosen sub-tab; it glides from the one before (a cut in NieR; Retro draws the chosen
-       sub-tab in reverse video instead; Reduced Motion places it at once) */
-    function placeInd(from) {
-      var t = recs[cur].tab;
-      if (!t.offsetWidth) return;
-      var x = t.offsetLeft, w = t.offsetWidth;
-      indEl.style.width = w + 'px';
-      indEl.style.transform = 'translateX(' + x + 'px)';
-      var fam = PMW.motion.family();
-      if (!from || from === t || !from.offsetWidth || fam === 'nier' || fam === 'retro') return;
-      PMW.motion.animate(indEl, [
-        { transform: 'translateX(' + from.offsetLeft + 'px) scaleX(' + (from.offsetWidth / w) + ')' },
-        { transform: 'translateX(' + x + 'px) scaleX(1)' }
-      ], { dur: 260, easing: PMW.motion.ease('slide') });
-    }
+    /* The chosen sub-tab's fill is its own box and one ink carries it from box to box on a change, in the look's own
+       tab-change voice (the chosen fill: 45-frames.css and PMW.frames.ink in 27-frames.js, shared with every segmented
+       toggle). The ink only travels while the tab is on screen. */
     function paintTab(r) {
       r.tab.setAttribute('data-mode', r.mode);
       r.dot.className = 'pmw-tool-sdot ' + DBG_DOT[r.mode];
@@ -868,7 +856,6 @@ PM_HOME.registerKind('debug-console', {
       root.setAttribute('data-mode', r.mode);
       var busy = SESSIONS.some(function (s) { return recs[s.id].mode === 'running'; });
       api.update({ busy: busy, title: 'Debug Console: ' + r.s.name + ', ' + DBG_WORD[r.mode].toLowerCase() });
-      placeInd(null);
     }
     /* choose a session: its sub-tab, its console and the actions; the console comes back where it was left */
     function select(sid, o) {
@@ -888,7 +875,7 @@ PM_HOME.registerKind('debug-console', {
       if (o.focus) r.tab.focus({ preventScroll: true });
       refresh();
       if (!changed) return true;
-      placeInd(o.instant ? null : prev.tab);
+      if (o.instant || !shown) ink.stop(); else ink.move(prev.tab, r.tab);
       if (!o.instant) PMW.motion.animate(r.pane, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: PMW.motion.ease('out') });
       api.saveSoon();
       if (!o.user) api.announce('Debug Console shows ' + r.s.name);
@@ -980,8 +967,8 @@ PM_HOME.registerKind('debug-console', {
     SESSIONS.forEach(function (s) { s.seed.forEach(function (l) { line(recs[s.id], l[0], l[1]); }); });
     select(cur, { instant: true, user: true });
     api.update({ label: 'Debug Console' });
-    // a look changes the sub-tabs' face (NieR's caption, Retro's code face): the underline is measured again
-    offs.push(api.on('look', function () { placeInd(null); }));
+    // a look changes the sub-tabs' face and voice (NieR's caption, Retro's code face): a move in flight ends at once
+    offs.push(api.on('look', ink.stop));
 
     return {
       focus: function () { input.focus({ preventScroll: true }); },
@@ -989,10 +976,10 @@ PM_HOME.registerKind('debug-console', {
       /* an open of this tab with a session (the catalog, an old 'debug-console:<session>' id): switch to it */
       reveal: function (f) { if (f && f.session != null && sessionOf(String(f.session))) select(String(f.session), {}); },
       serialize: function () { return { session: cur, history: hist.slice(-20) }; },
-      onResize: function () { placeInd(null); },
-      onShow: function () { shown = true; placeInd(null); SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
-      onHide: function () { shown = false; SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
-      unmount: function () { SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
+      onResize: function () { ink.stop(); },
+      onShow: function () { shown = true; SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
+      onHide: function () { shown = false; ink.stop(); SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
+      unmount: function () { ink.stop(); SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
     };
   }
 });

@@ -49,11 +49,11 @@ registerSettings('editor', {
   'diff.layout': 'auto',
   'wordWrap': false
 });
-registerSettings('chat', {
-  'width': { type: 'number', min: 400, max: 760, label: 'Chat width' },
-  'history': { type: 'enum', values: ['flyout', 'pinned'], label: 'Thread history' },
-  'pinOpen': { type: 'boolean', label: 'Keep the chat open in narrow windows' }
-}, { 'width': null, 'history': 'flyout', 'pinOpen': false });
+/* The chat column registers no settings (the Plans canon lead's rulings of 2026-10-10 and 2026-10-11: canon's v2
+   chat_column keeps width_px, history_pinned and keep_open, SP-330 and DL-180, and none of them is a Settings value,
+   SSYS-050). They live in the layout record's chat column (10-model.js, 46-chat.js), so no Settings row can show them.
+   The stored 'chat.width', 'chat.history' and 'chat.pinOpen' from before are carried into the record once and dropped
+   (persist.migrateChatColumn, 16-persist.js). */
 
 var settings = PMW.settings = PM_HOME.settings = {
   get: function (key) {

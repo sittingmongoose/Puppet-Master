@@ -69,6 +69,7 @@ PM_HOME.boot = function () {
   DEAD_PORTALS.forEach(function (id) { var el = doc.getElementById(id); if (el) el.remove(); });
   bus.emit('boot:kinds', {});
   state.layout = firstLayout();
+  try { persist.migrateChatColumn(); } catch (err) { try { console.error('[pm-home] the chat column settings could not be carried over', err); } catch (_) {} }
   try { persist.foldSaved(); } catch (err) { try { console.error('[pm-home] saved layouts could not be folded', err); } catch (_) {} }
   try { persist.watchProject(); } catch (err) { try { console.error('[pm-home] project watch failed', err); } catch (_) {} }
   if (typeof ResizeObserver === 'function') {

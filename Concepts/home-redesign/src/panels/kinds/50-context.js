@@ -211,7 +211,7 @@ function mountContext(host, state, api) {
   labels();
 
   var seg = PMW.frames.seg([{ value: 'curated', label: 'Curated' }, { value: 'raw', label: 'Raw' }], view, function (v) { view = v; paint(); }, { cls: 'pmw-ctx-hseg', label: 'Context view' });
-  Array.prototype.forEach.call(seg.children, function (b) {
+  Array.prototype.forEach.call(seg.querySelectorAll('.pmw-seg-opt'), function (b) {
     b.setAttribute('data-pmh', 'icon');
     b.setAttribute('data-pm-hover-label', b._v === 'raw' ? 'Raw' : 'Curated');
     b.setAttribute('data-pm-hover-detail', b._v === 'raw' ? 'The redacted projection, as recorded' : 'Read for people: numbers, sources, limits');
