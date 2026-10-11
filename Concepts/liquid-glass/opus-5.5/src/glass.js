@@ -239,7 +239,9 @@
     var k = KINDS[kind] || KINDS.panel, r = e.getBoundingClientRect();
     var W = Math.round(e.offsetWidth || r.width), H = Math.round(e.offsetHeight || r.height);
     if (W < 4 || H < 4) return null;
-    e.classList.add('lg-g'); e.setAttribute('data-lg-kind', kind);
+    /* marked by our own attribute only: app code owns its elements' class lists (the Usage menus rewrite theirs, and a
+       class added here started an endless observer ping-pong that froze the page) */
+    if (e.getAttribute('data-lg-kind') !== kind) e.setAttribute('data-lg-kind', kind);
     if (!glassSet.has(e)) { glassSet.add(e); if (sizeWatch) sizeWatch.observe(e); }
     var R = radiusOf(e, W, H);
     if (k.bake) {
@@ -413,7 +415,7 @@
   }
   function onPtr() {
     ptrQ = false; if (!ptr || !isGlass()) return;
-    var g = ptr.t && ptr.t.closest ? ptr.t.closest('.lg-g') : null, sh = shineEl();
+    var g = ptr.t && ptr.t.closest ? ptr.t.closest('[data-lg-kind]') : null, sh = shineEl();
     if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
     if (g !== lit) {
       if (lit) lit.removeAttribute('data-lg-lit'); lit = g;
@@ -428,7 +430,7 @@
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0) return;
-    var g = e.target.closest && e.target.closest('.lg-g[data-lg-kind="control"], .lg-g[data-lg-kind="track"], .page-tab, #pmuRange > button, .pmu-navbtn, #activityBar .icon, .pm-segtab-item');
+    var g = e.target.closest && e.target.closest('.page-tab, #pmuRange > button, .pmu-navbtn, #activityBar .icon, .pm-segtab-item, .pmu-ctlbtn, .pmu-iconbtn');
     if (!g || reduced()) return;
     var r = g.getBoundingClientRect(), glow = el('i', { class: 'lg-press', 'aria-hidden': 'true' });
     glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
@@ -489,6 +491,15 @@
     scanMenus();
   }
   function queueSync() { if (!syncQ) { syncQ = true; requestAnimationFrame(syncAll); } }
+  /* a hot change (a tab chosen, a menu opened) syncs at once so the lens and the morph start in the next frame; more
+     than three in one frame means something is answering our own changes, so the rest wait for the frame */
+  var hotN = 0, hotFrame = 0;
+  function hotSync() {
+    var f = Math.floor(performance.now() / 16);
+    if (f !== hotFrame) { hotFrame = f; hotN = 0; }
+    if (++hotN > 3) { queueSync(); return; }
+    syncAll();
+  }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
   var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group';
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
@@ -500,8 +511,8 @@
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; break; } }
     }
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
-    if (hot && isGlass()) syncAll(); else lazySync();
-    if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(function () { syncAll(); materialize(Array.prototype.slice.call(document.querySelectorAll('#panel-usage .pmu-card.lg-g, #panel-usage .pmu-rail.lg-g'))); }, 30); }
+    if (hot && isGlass()) hotSync(); else lazySync();
+    if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(function () { syncAll(); materialize(Array.prototype.slice.call(document.querySelectorAll('#panel-usage .pmu-card[data-lg-kind], #panel-usage .pmu-rail[data-lg-kind]'))); }, 30); }
   });
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');

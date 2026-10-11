@@ -89,29 +89,29 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #a
       behind them live (they float over content), and lenses refract live. --lg-mat condenses the glass as it arrives.
    --------------------------------------------------------------------------------------------------------------- */
 @property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g { border: 0 !important; isolation: isolate; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g:is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] { border: 0 !important; isolation: isolate; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="panel"] {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) 0 0 / 100vw 100vh no-repeat fixed !important;
   border-radius: var(--lg-r-sheet) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="card"] {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) 0 0 / 100vw 100vh no-repeat fixed !important;
   border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="bar"] {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) 0 0 / 100vw 100vh no-repeat fixed !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g[data-lg-kind="menu"] {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="menu"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
 }
@@ -153,7 +153,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { 
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-board > .pmu-card { border-radius: var(--lg-r-card) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm7GlobalStatusBar { margin: 0 8px 4px; border-radius: 10px !important; border: 0 !important; }
 /* inside a sheet nothing paints its own plate: the sheet is the material */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-g :is(.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar, .fm-filter, .pm7-scm-context, .sh-foot, .pmu-cardhead, .pmu-cardbody, .pmu-brand, .pmu-nav) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] :is(.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar, .fm-filter, .pm7-scm-context, .sh-foot, .pmu-cardhead, .pmu-cardbody, .pmu-brand, .pmu-nav) {
   background: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: transparent !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card :is(.pmu-film-glint) { display: none !important; }
