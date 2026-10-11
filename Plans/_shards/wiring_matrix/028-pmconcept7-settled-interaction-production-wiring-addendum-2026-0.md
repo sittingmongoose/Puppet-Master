@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3940-L4066
+Source lines: L3945-L4084
 
-Source SHA256: `2878b35a859b2b7fbcf938fa968707184a733a13c04c6a56749b5efdc368fe26`
+Source SHA256: `1949b9b3de3ac86875fd1f5e2e6856cf2b60a2e5004e17bab0464682e123814b`
 
 ---
 
@@ -19,13 +19,24 @@ below now covers every panel and tab commit (`cmd.panel_tab.*` and `cmd.workspac
 `pm.home_workspace_layout.v2`, SP-330); Collapse Bottom Terminal retires and any panel folds to its strip. The Chat row
 no longer re-seats the chat: show and hide stay `cmd.panel.switch`, the width is
 `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`, and Pop out and Dock back are `cmd.panel.undock`
-and `cmd.panel.redock` with `chat` (UCC-203). Dashboard widgets live in dashboard tabs, each board in its own
-`widget_layout:v1:dashboard:<board_id>` (WS-030).
+and `cmd.panel.redock` with `chat` (UCC-203). Dashboard widgets live in dashboard tabs, each board kept per project as
+`widget_layout:v1:<project_id>:<board_id>` (WS-030; amended 2026-10-10, DL-186; it read: each board in its own
+`widget_layout:v1:dashboard:<board_id>`).
+
+Amended 2026-10-10 (DL-186): every dashboard tab is its own board on the Usage board engine. The rows below that say
+Usage now hold on every dashboard board too: a dashboard's resize and reorder preview and settle exactly as the Usage
+page's, with gravity at settle and no frozen peers (the clause "Dashboard resize peers remain frozen" and
+"Dashboard reflows after commit" are retired), and Tidy on a dashboard is the same one `cmd.widget.move` with
+`arrange` (`detail` `diagnostics`, `Plans/Widget_System.md#WS-019`). A dashboard's widget commands name the board in
+their existing `room` field, not `board_id`, and each board is kept per project as
+`widget_layout:v1:<project_id>:<board_id>` (`Plans/Widget_System.md#WS-030`); the wave 1 key
+`widget_layout:v1:dashboard:<board_id>` was never written. A dashboard's own Live readings is the Usage page's one
+Live / Paused choice (the Live / Paused row). The dashboard tab's own controls are WM-090's Dashboard tab table.
 
 | Producer | Command/disposition | Handler/reducer and owner state | Persistence/effect | Consumer | Cancel/error path |
 |---|---|---|---|---|---|
-| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row, addressed by `board_id` in a dashboard tab (amended 2026-10-09) | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` or `widget_layout:v1:dashboard` (per board `widget_layout:v1:dashboard:<board_id>` from 2026-10-09, WS-030); dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
-| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers in the held preview and apply Usage board gravity only at settle, Dashboard resize peers remain frozen | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once, with gravity applied at settle; Dashboard reflows after commit | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
+| Usage/Dashboard widget add/remove/configure | existing `cmd.widget.*` row, naming the board in its existing `room` field in a dashboard tab (amended 2026-10-09; amended 2026-10-10, DL-186: it read addressed by `board_id`) | `handlers::widget::*`; Widget System owner | settled `widget_layout:v1:usage` on the Usage page, or in a dashboard tab that board's per-project `widget_layout:v1:<project_id>:<board_id>` (amended 2026-10-10, DL-186, WS-030; it read: `widget_layout:v1:usage` or `widget_layout:v1:dashboard`, per board `widget_layout:v1:dashboard:<board_id>` from 2026-10-09, a key never written); dispatch receipt; no persisted domain event | current widget host and saved layout projection | disabled/rejected/stale result leaves owner state unchanged |
+| Usage/Dashboard resize or reorder | `cmd.widget.resize` / `cmd.widget.move` on changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation; preview is `view_only` | `handlers::widget::resize` / `handlers::widget::move`; surface-specific local draft: Usage pointer resize and pointer/keyboard reorder visibly repack affected peers in the held preview and apply Usage board gravity only at settle, Dashboard resize peers remain frozen (retired 2026-10-10, DL-186: every dashboard board previews and settles as the Usage board does) | one settled write and receipt for the whole room, gravity included; no pointer-preview event | Usage retains the accepted last-painted pointer-preview topology once, with gravity applied at settle; Dashboard reflows after commit (retired 2026-10-10, DL-186: a dashboard board keeps its last-painted preview the same way) | Escape, `pointercancel`, invalid/no-change release/drop/activation restores prior geometry/order and dispatches nothing |
 | Usage Tidy (card menu or Customize panel) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for the whole repacked room | `handlers::widget::move`; Widget System owner (`Plans/Widget_System.md#WS-019`) | one settled layout transaction: one write of `widget_layout:v1:usage` and one receipt; no per-card move, no Tidy command | current Usage room and saved layout projection | a Tidy that moves nothing dispatches nothing; rejection leaves the pre-Tidy layout |
 | Usage size picker preset | `cmd.widget.resize` with the preset's geometry | `handlers::widget::resize`; settled record stores `preset_id` (`Plans/Widget_System.md#WS-020`) | one settled write and receipt, gravity included; picker open and row-hover preview are `view_only` | current Usage card and saved layout projection | dismissing the picker or an unchanged choice dispatches nothing |
 | Home move/resize/collapse/reset (amended 2026-10-09: every panel and tab commit) | `cmd.workspace_layout.*` and `cmd.panel_tab.*` rows (WM-090) | `handlers::workspace_layout::*`, `handlers::panel_tab::*`; `pm.home_workspace_layout.v2` owner (`pm.home_workspace_layout.v1` is a read-only migration input) | one revision-checked commit; existing `workspace.layout_changed` effect with its v2 payload (CV-361); no preview effect | Home panels: split tree, tabs, sizes and folded panels | cancel/invalid/stale revision restores prior layout and emits no command/effect; error projects owner reason |
@@ -61,7 +72,8 @@ canonical_text: >-
   settled persistence or declared effect, dispatch receipt, consumer, cancel path, and
   error path. Pointer/hover/popup previews never dispatch or persist; Usage pointer resize may locally advance
   its target footprint and visibly repack only obstructed peers, with Usage board gravity applied at settle and
-  never previewed, while Dashboard resize peers remain frozen; one changed
+  never previewed, while Dashboard resize peers remain frozen (amended 2026-10-10, DL-186: retired, every dashboard
+  board previews and settles as the Usage board does, gravity included); one changed
   pointer release, keyboard reorder drop, or atomic keyboard-resize activation commits through cmd.widget.* or
   cmd.workspace_layout.*, and on Usage that one command carries the whole settled room, gravity included. Usage
   Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
@@ -131,6 +143,7 @@ negative_constraints:
   - Do not route aggregate Usage cards, dispatch cmd.nav.open_usage_subject without the branch's stable selector, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use correlation identity as the PMConcept7 Ledger object_id.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the chat's in-window re-seat across Home and global docks retires (Pop out and Dock back remain), and Home commits move to the v2 record. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; WM-090 depends on this unit instead. Pop out's command is Plans/UI_Command_Catalog.md#UCC-203."
+  - "Amended 2026-10-10 (DL-186): the frozen Dashboard resize peers retire; every dashboard board runs the Usage board engine, so its resize, reorder, gravity and Tidy wire exactly as the Usage page's, its widget commands name the board in room, and each board is kept per project (WS-030). DL-186 is cited here and not in depends_on for the same loop reason as DL-180."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json

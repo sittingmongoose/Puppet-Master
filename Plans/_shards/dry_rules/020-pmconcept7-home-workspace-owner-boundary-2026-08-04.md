@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2052-L2093
+Source lines: L2052-L2098
 
-Source SHA256: `fef6c1c17802f543c0abaf13deb262b81c43b0da0f4423c8521c3d0176744df4`
+Source SHA256: `42728733152ab43044573b47f71b7786b83f9ef829f311046dca8f1541bb0082`
 
 ---
 
@@ -19,6 +19,11 @@ only" is replaced by DR-066: the panels and the Usage widget board share one ges
 kit. The panel and tab grammar is DR-065's, the overlay root DR-067's and the opening
 module DR-071's. The ban on a second Home state machine and the one-change-set rule
 stand.
+
+Amended 2026-10-10 (DL-186): every dashboard tab's board is a board of the one Usage
+board engine, kept per project under `widget_layout:v1:<project_id>:<board_id>`
+(WS-030), so the widget board the panels share their gesture kit with is the same
+engine on the Usage page and in every dashboard tab, with one settlement (WS-019).
 
 `Plans/FinalGUISpec.md` owns Home shell composition, the panel model and its tab
 kinds (F3-630 to F3-639, the terminal tab F3-640 to F3-646), visible movement and

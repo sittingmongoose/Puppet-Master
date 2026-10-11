@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34126-L35223
+Source lines: L34199-L35322
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -644,15 +644,33 @@ canonical_text: >-
   occupant" read as the Debug tab; its three states, session chrome, Console and Process panes stand. The Debug tab is a
   tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals by
   F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
+  Amended 2026-10-10 (DL-187, D33): there is one Debug Console tab, `debug-console`, holding a sub-tab for each debug
+  session, and the sub-tab shown is view state with no command (lead ruling F6); an older `debug-console:<session>`
+  id folds into it with that session shown (F3-635). The sub-tabs sit in the tab's shared header row (F3-635) as an
+  ARIA tab list with a roving focus: Left and Right move and choose at once and wrap, Home and End go to the first
+  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
+  name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
+  warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
+  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
+  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
+  in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
+  strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
+  in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
+  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px with a 5 px radius,
+  square in Retro and with NieR's square part. Its hover tag names the session, how it runs and its state, and a
+  paused session's location shows as a file reference beside the tab's buttons (F3-634). Below 460 px of body the
+  state words go, below 640 px the paused-at reference goes, and below 820 px the buttons lose their words. Each
+  session keeps its own console, state and frame.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
-depends_on: [F3-483, F3-489, DL-180]
+depends_on: [F3-483, F3-489, DL-180, DL-187]
 unblocks: []
 acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
 - "ATTACHED shows per-session sub-tabs per F3-484, the session chrome row (adapter identity, mirrored state chip, elapsed time, Terminate/Disconnect), the CONSOLE pane with stream tags and session-gated REPL input with per-session history, and the PROCESS pane only under integrated_terminal routing."
 - "TERMINATED shows exit code plus Restart and retains console scrollback."
+- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (the tab ink filling its box in Friendly, Glass, Basic and NieR Mode without the cursor part, reverse video in Retro, the ink block in NieR Mode with the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
 - "The §7.20.2 'Debug Console' entry and the locked-decision 'classical debugger surface' entry both resolve to this tab."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -673,6 +691,9 @@ source_lineage:
 - "Plans/FinalGUISpec.md:1787 (§7.20.2 Debug, Problems, Output, and Ports pane list)"
 - "Plans/Section15_MVP_Promoted_Features_Spec.md (Debug Console pane ownership; referenced)"
 - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; Polish presentation of the remaining rail panels)"
+- "Plans/Decision_Log.md#DL-187"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console sub-tabs; concept lineage only)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -680,6 +701,7 @@ preserved_exact_tokens:
 - "Restart"
 - "integrated_terminal"
 - "Debug Console"
+- "debug-console"
 negative_constraints:
 - "Do not re-own Debug Console REPL/evaluation versus stdout separation semantics; Plans/Section15_MVP_Promoted_Features_Spec.md owns them and this unit references them."
 - "Do not destroy console scrollback on session end."
@@ -687,9 +709,13 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
+- "The panels concept marks the chosen Debug Console sub-tab in Friendly, Glass and Basic, and in NieR Mode without the cursor part, with a 2 px underline in the look's active-tab ink that glides 260 ms (a cut in NieR Mode); a 2 px line on one side of the sub-tab is what F3-648's side-border check flags (DR-069), so canon keeps DL-162's tab ink filling the sub-tab's box, and the underline and its glide are concept lineage only (lead ruling, 2026-10-10: the lead asks home-panels to change the concept to the fill). Its demo sessions (tastebook-api, import-worker) and timings are demo data."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
 - "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
+- "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
+- "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
+- "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:

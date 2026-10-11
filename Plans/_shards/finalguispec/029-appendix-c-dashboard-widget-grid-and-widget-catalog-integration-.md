@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4317-L4407
+Source lines: L4333-L4425
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
 
 Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
+
+Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine, one board each (F3-638). The old Home widgets, C.2's run progress, lanes and results among them, have left Home until Orchestrator widgets join after that page's redesign, so C.2's default layout is no board's default and C.1's line that the existing Dashboard card types remain as default widgets no longer holds; each board's contents are kept per project (WS-030), so the key C.5's migration writes is no board's key: `widget_layout:v1:dashboard` stays only a read-only record and rollback backup that nothing writes now (`Plans/Widget_System.md#WS-009`), and C.5's write into it is lineage.
 
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
@@ -26,7 +28,7 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 - Widget gutters: 8px (MD spacing token) between widgets.
 
 **What stays the same from section 7.2:**
-- All existing Dashboard card types remain as default widgets.
+- All existing Dashboard card types remain as default widgets (amended 2026-10-10, DL-186: no longer; the old Home widgets have left Home, F3-638).
 - The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards (the accent-left-border is retired, amended 2026-10-09, DL-184; F3-648).
 - CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).

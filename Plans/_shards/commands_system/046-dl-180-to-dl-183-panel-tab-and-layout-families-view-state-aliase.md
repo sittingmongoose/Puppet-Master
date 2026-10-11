@@ -2,15 +2,17 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7635-L7850
+Source lines: L7637-L7881
 
-Source SHA256: `cfdea69b67361f5f310f87e9aff085fcd3d9f3143c034918e27e4b4f73f175df`
+Source SHA256: `723a65f8374bade06ec9e41622ed83809b03ea67224b28a7f30283c26f6e13a1`
 
 ---
 
 ## DL-180 to DL-183 — Panel Tab And Layout Families, View State, Aliases And Retired Ids (2026-10-09)
 
 Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `#DL-183`) gives Home one universal panel system and the terminal one session per tab. The catalog rows are `Plans/UI_Command_Catalog.md#UCC-200` to `#UCC-203`; this addendum is their central registration. CS-100 reserves the `cmd.panel_tab.` and `cmd.workspace_layout.` prefixes, registers the `ui.panel_tab.`, `ui.workspace_layout.` and `ui.terminal.` typed local action prefixes, and rules which panel actions are view state. CS-101 is the register of aliases and retired ids with their replacements, and amends the Run & Debug reveal rows that assumed a bottom Debug tab. It amends CS-060, CS-061 and CS-068 in place; it does not edit CS-088 to CS-093.
+
+Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6): Jared's answers of 2026-10-10 add two typed local action prefixes, `ui.widget_board.` and `ui.widget_preset.`, and four members to the view-state list (a dashboard board's range and scope, a person's presets, a terminal's notification mute and the chat's narrow-window pin); the Debug Console becomes one tab whose session sub-tab dispatches nothing; `cmd.dashboard.add_widget`'s board is the one `cmd.widget.add` carries in its existing `room` field. Renaming and deleting a custom dashboard reuse `cmd.panel_tab.rename` and `cmd.panel_tab.close`, so no command prefix is reserved for dashboards.
 
 ### CS-100 - Panel Tab And Layout Command Families, Local Action Prefixes And The View-State Ruling
 
@@ -23,7 +25,9 @@ The name `panel_tab` keeps panel tabs apart from `workspace_tab_id` (project tab
 
 **Typed local action prefixes.** `ui.panel_tab.`, `ui.workspace_layout.` and `ui.terminal.` are typed local action prefixes in the pattern of `ui.guided_tour.focus_route` (CS-072): an action under them has no catalog command row, no central registration, no handler of the command bus, no receipt and no event, and is never also a `cmd.*` id. Their members are UCC-200's and UCC-201's tables: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`, and the `ui.terminal.*` actions. A `ui.terminal.mark.*` action that runs a command (Rerun, Insert command, Open output in an editor tab) dispatches that catalog command, which carries its own receipt.
 
-Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): `ui.output.` and `ui.chat_column.` are typed local action prefixes too, under the same rule. Their members are `ui.output.select_channel` (UCC-200: the Output tab's channel, view state of the one `output` tab) and `ui.chat_column.pin_history` (UCC-203: the History list's pin, saved as the v2 record's chat column `history_pinned` with no `workspace.layout_changed` event, revision advance or receipt).
+Amended 2026-10-10 (D31; lead ruling L9, corrected to view state with no event): `ui.output.` and `ui.chat_column.` are typed local action prefixes too, under the same rule. Their members are `ui.output.select_channel` (UCC-200: the Output tab's channel, view state of the one `output` tab) and `ui.chat_column.pin_history` (UCC-203: the History list's pin, saved as the v2 record's chat column `history_pinned` with no `workspace.layout_changed` event, revision advance or receipt).
+
+Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6): `ui.widget_board.` and `ui.widget_preset.` are typed local action prefixes too, under the same rule, and six members join: four under the two new prefixes and two under the registered `ui.terminal.` and `ui.chat_column.` prefixes. `ui.widget_board.set_view` sets one dashboard board's own range or scope, view state kept in that board's record (UCC-200). `ui.widget_preset.save`, `ui.widget_preset.rename` and `ui.widget_preset.delete` save, rename and delete one of the person's own presets, which are kept per person across projects (UCC-200, `Plans/Widget_System.md#WS-030`); using a preset is not a typed local action but the catalog command `cmd.widget.reset_layout` with `set_id: user:<preset_id>`. `ui.terminal.mute_notifications` turns one terminal's notifications off or on, that tab's own state (UCC-201). `ui.chat_column.keep_open` keeps the chat open in narrow windows, the chat's own preference that is no Settings row (UCC-203). Choosing the Debug Console's session sub-tab dispatches nothing and has no action id: the session shown is view state of the one `debug-console` tab (DL-187, D33).
 
 **The view-state ruling** (the decision CDRY-006 left open for panel tabs):
 - Choosing a tab (a click, the "+N" list, the every-tab and recent-tab lists, the tab keys), maximizing or restoring a panel, and focusing a panel are view state: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`. They are written with the layout record's view state (active tab, focused panel, maximized panel, recent-tab order, `Plans/storage-plan.md#SP-330`) and emit no receipt and no event.
@@ -49,6 +53,12 @@ canonical_text: >-
   ui.workspace_layout.maximize and ui.workspace_layout.focus_panel, written with the layout record's view state;
   selecting Output's channel is ui.output.select_channel, view state of the one output tab, never part of its id;
   pinning the chat's History list is ui.chat_column.pin_history, view state saved in the layout record's chat column;
+  amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6): ui.widget_board. and ui.widget_preset. are
+  typed local action prefixes too; a dashboard board's range and scope are ui.widget_board.set_view, saving, renaming
+  and deleting a preset are ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, a terminal's
+  mute is ui.terminal.mute_notifications and the chat's narrow-window pin is ui.chat_column.keep_open, each with no
+  receipt and no event; using a preset stays the catalog command cmd.widget.reset_layout with set_id; choosing the
+  Debug Console's session sub-tab dispatches nothing;
   opening any menu, list, picker or prompt, hovering, drag previews and the narrow ladder's states dispatch nothing
   and are never saved. Every committed structural change is one shell_view catalog command with a receipt that emits
   workspace.layout_changed; an open that only reveals emits nothing; a failed commit rolls back; no event family is
@@ -56,7 +66,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Registers the command families and local action prefixes behind every universal panel and terminal control and rules which of them are view state."
 split_recommended: false
-depends_on: [DL-180, DL-181, CS-060, CS-061, CS-062, CS-068, CS-072, UCC-200, UCC-201]
+depends_on: [DL-180, DL-181, DL-186, DL-187, CS-060, CS-061, CS-062, CS-068, CS-072, UCC-200, UCC-201]
 unblocks: [WM-090, WM-091, UIW-040, UIW-041]
 acceptance_criteria:
   - "The reserved-prefix registry names cmd.panel_tab. and cmd.workspace_layout. with Plans/UI_Command_Catalog.md as the only minter, and no User Command can be created under them."
@@ -64,6 +74,8 @@ acceptance_criteria:
   - "Choosing a tab, maximizing or restoring and focusing a panel emit no receipt and no event; every committed structural change emits exactly one workspace.layout_changed."
   - "Menu, list, picker and prompt openings, hover, drag previews and narrow-ladder states dispatch nothing and write nothing."
   - "Selecting the Output channel uses ui.output.select_channel with no command, receipt or event and never changes the output tab id."
+  - "ui.widget_board.set_view, ui.widget_preset.save, ui.widget_preset.rename, ui.widget_preset.delete, ui.terminal.mute_notifications and ui.chat_column.keep_open have no catalog row, receipt or event, and applying a preset dispatches cmd.widget.reset_layout with set_id."
+  - "Choosing the Debug Console's session sub-tab dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -79,13 +91,20 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; section 8; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens:
+  - "ui.widget_board."
+  - "ui.widget_preset."
+  - "ui.widget_board.set_view"
+  - "ui.terminal.mute_notifications"
+  - "ui.chat_column.keep_open"
   - "output"
   - "ui.output.select_channel"
   - "cmd.panel_tab."
@@ -103,9 +122,10 @@ negative_constraints:
   - "Do not add an event family for panel or tab changes."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
-  - "Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): Registers ui.output. and ui.chat_column. as typed local action prefixes and adds the History pin, ui.chat_column.pin_history, to the view-state list."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31; lead ruling L9, corrected to view state with no event): Registers ui.output. and ui.chat_column. as typed local action prefixes and adds the History pin, ui.chat_column.pin_history, to the view-state list."
   - "Amended 2026-10-09 (DL-180): CDRY-006's local-tab rule now covers panel tab activation explicitly; CS-060's registry gains two prefixes."
+  - "Amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6): ui.widget_board. and ui.widget_preset. become typed local action prefixes; ui.widget_board.set_view, the three preset actions, ui.terminal.mute_notifications and ui.chat_column.keep_open join the view-state list; the Debug Console's session sub-tab dispatches nothing."
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md
@@ -120,7 +140,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/UI_Co
 | Alias | Canonical id | Source |
 |---|---|---|
 | `cmd.editor.close_tab` | `cmd.panel_tab.close` | UCC-200 |
-| `cmd.dashboard.add_widget` (its `dashboard_id` read as `board_id`) | `cmd.widget.add` | UCC-202 |
+| `cmd.dashboard.add_widget` (its `dashboard_id` read as the board id `cmd.widget.add` carries in `room`; amended 2026-10-10, DL-186) | `cmd.widget.add` | UCC-202 |
 | `cmd.browser.devtools.open` | `cmd.browser.open_devtools` | UCC-202 |
 | `cmd.terminal.focus_session` | `cmd.terminal.focus` | UCC-202 |
 | `cmd.panel.detach` | `cmd.panel.undock` | CS-061, unchanged |
@@ -145,7 +165,7 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/UI_Co
 | `cmd.terminal.pin_tab` | `cmd.panel_tab.pin` / `cmd.panel_tab.unpin` |
 | `cmd.terminal.reattach_section`, `cmd.terminal.detach_section`, `cmd.terminal.detach` | none: no tab pops out (only the chat does, UCC-203); a terminal tab moves with `cmd.panel_tab.move` |
 
-**The Run & Debug reveal rows.** `cmd.run_debug.console.reveal` and `cmd.run_debug.terminal.reveal` (section 7.2's table) keep their ids, labels and availability, but no longer assume a bottom-zone Debug tab: Reveal Debug Tab reveals the Debug Console tab (`debug_console`) wherever it is, and Reveal Process Pane reveals the tab that hosts the debuggee's integrated terminal wherever it is, each by the one opening module's reveal rule (activate it, pull it out of "+N", expand its collapsed panel). Neither opens a second tab for the same id.
+**The Run & Debug reveal rows.** `cmd.run_debug.console.reveal` and `cmd.run_debug.terminal.reveal` (section 7.2's table) keep their ids, labels and availability, but no longer assume a bottom-zone Debug tab: Reveal Debug Tab reveals the Debug Console tab (`debug_console`) wherever it is, and Reveal Process Pane reveals the tab that hosts the debuggee's integrated terminal wherever it is, each by the one opening module's reveal rule (activate it, pull it out of "+N", expand its collapsed panel). Neither opens a second tab for the same id. Amended 2026-10-10 (DL-187, D33): the Debug Console is one tab, `debug-console`, with a sub-tab per debug session, so Reveal Debug Tab opens or reveals that one tab with the session's sub-tab shown; a tab id `debug-console:<session>` from before folds into `debug-console` with that session shown (`Plans/FinalGUISpec.md#F3-635`) and is never a second tab.
 
 **Shortcuts.** Close tab stays Ctrl+W in the native app and is answered as Alt+W in the web client, dispatching `cmd.panel_tab.close`; CS-086's text-field clash with Ctrl+W is unchanged and still the Commands and Shortcuts owner's to decide.
 
@@ -156,7 +176,8 @@ status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The redesign's aliases are recorded metadata only: cmd.editor.close_tab to cmd.panel_tab.close,
-  cmd.dashboard.add_widget to cmd.widget.add (dashboard_id read as board_id), cmd.browser.devtools.open to
+  cmd.dashboard.add_widget to cmd.widget.add (dashboard_id read as the board id carried in room; amended 2026-10-10,
+  DL-186), cmd.browser.devtools.open to
   cmd.browser.open_devtools and cmd.terminal.focus_session to cmd.terminal.focus, beside the unchanged
   cmd.panel.detach and cmd.workspace_layout.size_surface. cmd.file.open, cmd.nav.open_subject,
   cmd.browser.open_workspace_preview and cmd.terminal.open are not aliases: they keep their ids as domain open routes
@@ -168,16 +189,19 @@ canonical_text: >-
   cmd.terminal.reattach_section, cmd.terminal.detach_section and cmd.terminal.detach with no replacement because no
   tab pops out. cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal keep their ids and reveal the Debug
   Console tab and the debuggee's terminal tab wherever they are, never a bottom-zone Debug tab. Close tab is Ctrl+W
-  natively and Alt+W in the web client; CS-086's text-field clash is unchanged.
+  natively and Alt+W in the web client; CS-086's text-field clash is unchanged. Amended 2026-10-10 (DL-187, D33): the
+  Debug Console reveal opens or reveals the one debug-console tab with that session's sub-tab shown, and an older
+  debug-console:<session> tab id folds into it.
 gui_related: true
 gui_classification_reason: "Names, for every caller, the one id each retired or aliased panel and terminal action now dispatches."
 split_recommended: false
-depends_on: [DL-180, DL-181, CS-100, CS-061, CS-063, CS-068, CS-086, UCC-200, UCC-201, UCC-202, UCC-203]
+depends_on: [DL-180, DL-181, DL-186, DL-187, CS-100, CS-061, CS-063, CS-068, CS-086, UCC-200, UCC-201, UCC-202, UCC-203]
 unblocks: [WM-090, WM-091, WM-092]
 acceptance_criteria:
   - "Every alias resolves to one canonical id with no handler, production row of its own or event."
   - "No production wiring row dispatches a retired id; each caller dispatches the replacement this unit names."
   - "cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal never assume a bottom-zone Debug tab and never open a second tab for an id already open."
+  - "The Debug Console reveal lands in the one debug-console tab with the session's sub-tab shown, and no debug-console:<session> tab is ever opened beside it."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -198,7 +222,10 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md (SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3; the Commands_System section 7.2 reveal row)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
 preserved_exact_tokens:
+  - "debug-console"
   - "cmd.editor.close_tab"
   - "cmd.dashboard.add_widget"
   - "cmd.browser.devtools.open"
@@ -217,6 +244,8 @@ compatibility_only_notes:
   - "The four aliases are compatibility metadata for callers that still name them."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): section 7.2's Reveal Debug Tab and Reveal Process Pane rows lose their bottom-zone wording."
+  - "Amended 2026-10-10 (DL-186): cmd.dashboard.add_widget's dashboard_id is read as the board id that cmd.widget.add carries in room."
+  - "Amended 2026-10-10 (DL-187, D33): the Debug Console reveal opens or reveals the one debug-console tab with the session shown; debug-console:<session> folds into it."
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md

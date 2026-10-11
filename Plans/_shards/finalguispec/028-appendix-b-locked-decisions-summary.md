@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4293-L4315
+Source lines: L4309-L4331
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -28,6 +28,6 @@ These decisions are final and must not be revisited during implementation:
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
 
-Amended 2026-10-10 (Addendum 2 D28, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
+Amended 2026-10-10 (D31, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md

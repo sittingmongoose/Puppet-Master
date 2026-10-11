@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32205-L32715
+Source lines: L32270-L32784
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -266,10 +266,12 @@ canonical_text: >-
   with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
   marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
   a coloured border or stripe (DR-069).
+  Amended 2026-10-10 (DL-187, D34): Jared confirmed this: terminal tab colours and icons stay off the strip for now
+  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system.
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
-depends_on: [DL-181, F3-640, F3-631]
+depends_on: [DL-181, DL-187, F3-640, F3-631]
 unblocks: []
 acceptance_criteria:
 - "A terminal tab can be renamed from its tab menu through cmd.panel_tab.rename, and clearing the label restores the terminal's own label."
@@ -290,6 +292,7 @@ source_lineage:
 - "Plans/FinalGUISpec.md:6892"
 - "Plans/FinalGUISpec.md:6945"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)"
 preserved_exact_tokens:
 - "8"
 - "20"
@@ -300,6 +303,7 @@ compatibility_only_notes:
 - "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are not drawn on the strip."
+- "Amended 2026-10-10 (DL-187, D34): Jared kept terminal tab colours and icons off the strip until the neon glyph system redesigns them."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

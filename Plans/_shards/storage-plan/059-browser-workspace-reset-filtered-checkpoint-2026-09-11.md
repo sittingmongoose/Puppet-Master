@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21260-L22034
+Source lines: L21305-L22086
 
-Source SHA256: `8499a8f850cceaa717d74cd23d9586ce4754d5e5a58eef1171ceff92b8c9183e`
+Source SHA256: `7301c4c3a8faa26aa16665273999dbac84142a1e6b0e1a806b2bb87f1c54734f`
 
 ---
 
@@ -467,7 +467,9 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-270, ContractName:Plans/stora
 <a id="workspace-layout-changed-producer-custody-and-read-contract"></a>
 ### Workspace layout changed producer, custody and read contract
 
-Amended 2026-10-09 (DL-180, DL-181): the selected layout is now `pm.home_workspace_layout.v2` (SP-330) and the event payload moves, once Event Authority admits it, to `workspace_layout_changed` 2.0.0 (`Plans/event_payloads/workspace_layout_changed_v2.schema.json`, `Plans/Contracts_V0.md#CV-361`; until then the registered family stays 1.1.0), whose `change` discriminator names every structural change and whose compatibility reader keeps 1.1.0 events readable. The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes, and the slot's prior and candidate bytes for a v2 write are v2 records. The existing slot and receipt schemas stay the v1 readers; the v2 writer's slot and receipt schema is an open item of SP-330. Where the text below says the layout is v1, keeps the 1.1.0 payload or its 26 fields, or keeps the four limits, it describes v1 records and 1.1.0 events only. `home.workspace_layout_terminal_presentation.v1` becomes the reader for terminal tabs in any panel and never creates or restarts a session. The v1-to-v2 conversion is the one migration that appends this event (`change` `migrated_from_v1`, actor `system`). `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule; `panel.undocked` and `panel.redocked` apply to the chat's pop-out only. Payload validation still dispatches on each stored record's own `payload_schema_id` (section 2.2.5): an event that names `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0` is validated on read and replay by `Plans/event_payloads/workspace_layout_changed.schema.json`, which stays in place as that reader (the v2 schema's `$defs/workspace_layout_changed_v1_compatibility_reader` references it by `$id`). The family's registry row names 2.0.0 only, so append admission takes 2.0.0 alone for new events.
+Amended 2026-10-09 (DL-180, DL-181): the selected layout is now `pm.home_workspace_layout.v2` (SP-330) and the event payload moves to `workspace_layout_changed` 2.0.0 (`Plans/event_payloads/workspace_layout_changed_v2.schema.json`, `Plans/Contracts_V0.md#CV-361`), whose `change` discriminator names every structural change and whose compatibility reader keeps 1.1.0 events readable. The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes, and the slot's prior and candidate bytes for a v2 write are v2 records. The existing slot and receipt schemas stay the v1 readers; the v2 writer's slot and receipt schema is an open item of SP-330. Where the text below says the layout is v1, keeps the 1.1.0 payload or its 26 fields, or keeps the four limits, it describes v1 records and 1.1.0 events only. `home.workspace_layout_terminal_presentation.v1` becomes the reader for terminal tabs in any panel and never creates or restarts a session. The v1-to-v2 conversion is the one migration that appends this event (`change` `migrated_from_v1`, actor `system`). `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule; `panel.undocked` and `panel.redocked` apply to the chat's pop-out only. Payload validation still dispatches on each stored record's own `payload_schema_id` (section 2.2.5): an event that names `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0` is validated on read and replay by `Plans/event_payloads/workspace_layout_changed.schema.json`, which stays in place as that reader (the v2 schema's `$defs/workspace_layout_changed_v1_compatibility_reader` references it by `$id`). The family's registry row names 2.0.0 only, so append admission takes 2.0.0 alone for new events.
+
+Amended 2026-10-10 (DL-188): Event Authority admitted the move on 2026-10-10 (Jared's D42): `Plans/event_family_registry.json` registers `workspace.layout_changed` at family revision 2.0.0, registry revision `2026-10-09.1`, still 43 families, and the PNC-019 checkpoint constant in `scripts/pm_pnc019_currentness.py` names that revision. The paragraph above said the move waited "once Event Authority admits it" with the family kept at 1.1.0 "until then"; that condition is met. Where the next paragraph speaks of `event-family-workspace-layout-changed@1.1.0` and its 26 required fields, it describes the 1.1.0 events already written, which stay readable and are never rewritten.
 
 This is a new technical binding under DL-045 for the existing `event-family-workspace-layout-changed@1.1.0`. Keep `project_only`, payload schema `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0`, its exact 26 required fields and closed enums, and `RP-AUTHORITY-INDEFINITE@1.0.0`. The event is not a new admission. F3-515 owns applicable settled interaction; CV-323 owns truthful Home event/result/receipt joins; SP-245 owns the sole layout record's transaction/readback/recovery; UCC-144/UCC-147 retain command IDs. SP-273 owns this technical Storage supplement; no competing Home product owner is created.
 
@@ -688,12 +690,14 @@ canonical_text: >-
   SP-278 event/token. Complete original activation/source/value pins survive dependent helpers through final
   Home publication and disclosure; lawful shared effects survive local refusal. Exact Home1 and frozen
   external Home2 readers remain separate, with no pending conversion or deployment inference.
-  Amended 2026-10-09 (DL-180, DL-181): the selected layout is pm.home_workspace_layout.v2 (SP-330) and the payload moves to workspace_layout_changed 2.0.0 (CV-361) once Event Authority admits it, whose compatibility reader keeps 1.1.0 events readable; this custody,
+  Amended 2026-10-09 (DL-180, DL-181): the selected layout is pm.home_workspace_layout.v2 (SP-330) and the payload moves to workspace_layout_changed 2.0.0 (CV-361), whose compatibility reader keeps 1.1.0 events readable; this custody,
   transaction, crash, retention and read contract carries over to v2 writes, whose slot and receipt schema is an
   open item of SP-330; the four-editor, four-terminal-section and four-visible-pane limits describe v1 records
   only; terminal.workgroup_moved is withdrawn under SMPFS-170's rule; panel.undocked and panel.redocked apply to
   the chat's pop-out only. A stored event's own payload_schema_id dispatches its validation, so a 1.1.0 event is
-  read by the 1.1.0 schema, which stays in place, and after that admission append admission takes 2.0.0 alone.
+  read by the 1.1.0 schema, which stays in place, and append admission takes 2.0.0 alone.
+  Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the registry names it at revision
+  2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -712,6 +716,7 @@ depends_on:
 - CV-339
 - DL-180
 - DL-181
+- DL-188
 unblocks: []
 acceptance_criteria:
 - Preserve exact registered family/payload version, project scope, enums and retention objects; no admission
@@ -774,11 +779,13 @@ source_lineage:
 - Plans/Contracts_V0.md#CV-323
 - Plans/storage-plan.md#SP-245
 - Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-188
 negative_constraints:
 - No event admission, sibling terminal/panel closure, retention value change, runtime claim, global accounting
   change, readiness or seal.
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180): the event moves to payload 2.0.0 once Event Authority admits it, and the selected layout to v2; v1 slot and receipt schemas stay the v1 readers."
+- "Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42, registry revision 2026-10-09.1); the admission condition is met and removed from the canonical text."
 
 ```
 

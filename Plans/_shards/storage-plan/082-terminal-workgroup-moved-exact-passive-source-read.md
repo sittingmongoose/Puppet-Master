@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26788-L26985
+Source lines: L26840-L27037
 
-Source SHA256: `8499a8f850cceaa717d74cd23d9586ce4754d5e5a58eef1171ceff92b8c9183e`
+Source SHA256: `7301c4c3a8faa26aa16665273999dbac84142a1e6b0e1a806b2bb87f1c54734f`
 
 ---
 

@@ -4,7 +4,7 @@ Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
 Source lines: L131-L171
 
-Source SHA256: `6ac65ed7c4e46451cfc734ca49c952019eb09ca55e7981de8533e69227790748`
+Source SHA256: `f57313869fe5d26f48b940911b0c428d591b856d15b5c54b6278b507959459e6`
 
 ---
 

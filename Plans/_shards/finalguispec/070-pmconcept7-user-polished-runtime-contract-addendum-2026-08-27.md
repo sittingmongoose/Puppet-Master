@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35471-L35927
+Source lines: L35570-L36049
 
-Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
+Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
 
 ---
 
@@ -205,16 +205,22 @@ canonical_text: >-
   operation before focus, capture, class, or DOM mutation. The compatibility-only
   cmd.workspace_layout.size_surface token resolves a semantic preset to dimensions and dispatches
   cmd.workspace_layout.resize_surface; it is not a second registered command.
+  Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine (F3-638), so a dashboard board's preview,
+  resize, gravity and Tidy follow the Usage rules above (WS-019); the Dashboard frozen resize-peer geometry named above
+  described the old Home widget grid, which has left Home, and no surface uses it now.
+  Amended 2026-10-10 (DL-188): Event Authority admitted workspace.layout_changed 2.0.0 (Jared, D42), so the v2 Home
+  record's committed structural changes emit payload 2.0.0 (Plans/Contracts_V0.md#CV-361); events already written at
+  1.1.0 stay readable and are never rewritten.
 gui_related: true
 gui_classification_reason: This unit governs visible drag, resize, reorder, preset, cancellation, and cleanup behavior.
 split_recommended: false
-depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
+depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012, DL-186, DL-188]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out (amended 2026-10-10, DL-186: dashboard boards resize the same way, and no surface keeps the frozen Dashboard resize peers), and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
-  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: once Event Authority admits it, every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180, and 2026-10-10, DL-188: Event Authority admitted payload 2.0.0 (D42), so every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361; the 1.1.0 fields above describe the v1 record only, and events already written at 1.1.0 stay readable and are never rewritten)."
   - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -226,6 +232,7 @@ context_scope: pm7_transactional_direct_manipulation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/event_payloads/workspace_layout_changed.schema.json
+  - Plans/event_payloads/workspace_layout_changed_v2.schema.json
   - Plans/event_family_registry.json
   - Plans/shared_runtime_command_contracts.schema.json
   - Plans/shared_runtime_command_contract_fixtures.json
@@ -240,12 +247,17 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-186
+  - Plans/Decision_Log.md#DL-188
 preserved_exact_tokens: [workspace.layout_changed, cmd.workspace_layout.size_surface, cmd.workspace_layout.resize_surface, Escape, pointercancel, lostpointercapture, no-change release, last painted intent]
 negative_constraints:
   - "Do not persist or emit pointer-preview frames."
   - "Do not dispatch a command merely because a pointer moved, a hover changed, or a popup opened."
   - "Do not re-hit-test or retarget a reorder at pointer-up after a different stable intent was last painted."
   - "Do not treat cancellation acknowledgement as successful cleanup without rollback evidence."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): dashboard boards run the Usage board engine, so their preview, resize, gravity and Tidy follow the Usage rules (WS-019); the Dashboard frozen resize-peer geometry applies to no surface, in the canonical text and the first acceptance criterion."
+  - "Amended 2026-10-10 (DL-188): Event Authority admitted workspace.layout_changed 2.0.0 (D42); the v2 Home record's committed structural changes emit payload 2.0.0 (CV-361), and events already written at 1.1.0 stay readable."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -347,17 +359,22 @@ canonical_text: >-
   kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
   composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
   "Home editor and terminal surfaces" read as panel tabs (F3-635).
+  Amended 2026-10-10 (DL-186): every dashboard tab's board runs the Usage board engine (F3-638), so a dashboard board's
+  move, resize, gravity and Tidy follow the Usage page's rules (WS-019, F3-515): its resize preview shows the Usage
+  board's live displacement of obstructed peers, and the settled change takes the Usage board's gravity. The
+  "Dashboard-frozen resize peers" above are retired, and the wrapper or host that owns a dashboard card's mutations is
+  that card's board in its dashboard tab.
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516, DL-180]
+depends_on: [F3-513, F3-514, F3-516, DL-180, DL-186]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
-  - "Home editor/terminal surfaces and Dashboard widgets preserve stable identities, tabs, move/options/resize affordances, semantic sizes, and settled-state continuity; Panel 1 retains the Browser Preview and Automation owner sessions without duplication in the stable `Preview -> Automation -> overflow/actions anchor` group order, owner refresh is idempotent and produces no recurring child-list reseat loop once that group is settled, only the active session participates in layout or focus order, and legacy overflow fitting cannot reveal inactive Automation; Dashboard cards remain owned by their tab/category wrapper or host even when that wrapper participates presentation-only in the outer grid, and pointer/keyboard move and resize have parity for the dedicated handle, truthful aria-grabbed state, measured placeholder and ghost, stable before/after insertion intent, live reorder-peer displacement versus Dashboard-frozen resize peers, last-painted-intent changed-only commit, rollback, and complete cancellation/no-op cleanup without NotFound or a stuck move state."
+  - "Home editor/terminal surfaces and Dashboard widgets preserve stable identities, tabs, move/options/resize affordances, semantic sizes, and settled-state continuity; Panel 1 retains the Browser Preview and Automation owner sessions without duplication in the stable `Preview -> Automation -> overflow/actions anchor` group order, owner refresh is idempotent and produces no recurring child-list reseat loop once that group is settled, only the active session participates in layout or focus order, and legacy overflow fitting cannot reveal inactive Automation; Dashboard cards remain owned by their tab/category wrapper or host even when that wrapper participates presentation-only in the outer grid, and pointer/keyboard move and resize have parity for the dedicated handle, truthful aria-grabbed state, measured placeholder and ghost, stable before/after insertion intent, live reorder-peer displacement and, on dashboard boards as on the Usage page, live displacement of obstructed resize peers, last-painted-intent changed-only commit, rollback, and complete cancellation/no-op cleanup without NotFound or a stuck move state (amended 2026-10-10, DL-186: the Dashboard-frozen resize peers this criterion named are retired, WS-019, F3-515)."
   - "Search, Source Control, Artifacts, Tests, Actions, Agents, Debug & Run, Docker, Files, and related Cozy Shelves panels retain recovered spacing, indentation, readable rows, and working controls."
   - "Title bar, page tabs, theme picker, left rail, menus, portals, bottom surfaces, and status remain inside viewport bounds at supported desktop widths; Planning Wizard, Home, Orchestrator, and Projects use physical-width-aware one-column or scrollable narrow composition with no empty tracks or application/page horizontal overflow; a narrow title-bar page overflow picker remains visually above and owns hit testing across its painted rectangle, disables the ancestor edge-fade mask only through opening/open/closing, restores the mask afterward, and never exposes an underlying page control to the same click."
-  - "Page, tab, menu, drawer, hover, drag, resize, and reflow motion has no black, blank, white-until-hover, clipped, or one-frame teardown state; Usage reorder and pointer-only live resize-repack preview keep every peer mounted and nonzero-opacity with no restarted entrance animation, while Dashboard resize retains frozen peers."
+  - "Page, tab, menu, drawer, hover, drag, resize, and reflow motion has no black, blank, white-until-hover, clipped, or one-frame teardown state; Usage reorder and pointer-only live resize-repack preview keep every peer mounted and nonzero-opacity with no restarted entrance animation, on the Usage page and on every dashboard board alike (amended 2026-10-10, DL-186: Dashboard resize no longer retains frozen peers)."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
@@ -385,15 +402,18 @@ source_lineage:
   - Concepts/pm7-tools/home_workspace_source.py (authored Home owner projection; Browser Preview and Automation inactive-state repair)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-186
 preserved_exact_tokens: [Basic, Friendly, Retro, Glass, liquid-ink, Home, Dashboard, Cozy Shelves, aria-grabbed]
 negative_constraints:
   - "Do not let theme overlays alter functional ownership or control identity."
-  - "Do not replace the custom Home editor or Dashboard tab models with a generic tab implementation."
+  - "Do not give the Home editor or a dashboard a strip or tab model of its own; both are tabs in the one strip of F3-631 (amended 2026-10-10 under DL-180: the earlier constraint against replacing their custom tab models with a generic tab implementation is lineage)."
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
+  - "Amended 2026-10-10 (DL-186): Dashboard-frozen resize peers are retired; dashboard boards run the Usage board engine and move, resize, settle under gravity and Tidy as on the Usage page (WS-019, F3-515, F3-638), in the canonical text and the second and fifth acceptance criteria."
+  - "Amended 2026-10-10 (DL-180 leftover): the negative constraint against replacing the custom Home editor or Dashboard tab models with a generic tab implementation now forbids a strip or tab model of their own (F3-631)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -427,13 +447,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines how visible PMConcept7 acceptance evidence is owned and reviewed.
 split_recommended: false
-depends_on: [F3-514, F3-515, F3-516, F3-517]
+depends_on: [F3-514, F3-515, F3-516, F3-517, DL-186]
 unblocks: [ATS-036, ATS-037, ATS-038, ATS-039, ATS-040]
 acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -458,10 +478,13 @@ source_lineage:
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md#DL-186
 preserved_exact_tokens: [tests/fixtures/usage_gui, tests/fixtures/pm7_shared, actual pixels, frame-by-frame, accessibility]
 negative_constraints:
   - "Do not call concept reports or screenshots alone a canonical fixture suite."
   - "Do not claim final visual completion from geometry-only checks."
   - "Do not add accessibility bootstrap acceptance work."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): motion certification no longer asks for Dashboard-frozen resize peers; dashboard boards show the Usage board's live resize displacement (F3-517, ATS-037)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md]
 ```

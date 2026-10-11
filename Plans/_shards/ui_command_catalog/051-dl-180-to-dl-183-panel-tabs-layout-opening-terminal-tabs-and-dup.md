@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14945-L15701
+Source lines: L14960-L15871
 
-Source SHA256: `ac5db31a609655be0a1d4a235a2791c59416f2fa023b205df2947fb49e42b72a`
+Source SHA256: `5258c8594defdcca2eb03557e1f2adcca4e4ffe26cc34f642a3b72a3dc3fc8d9`
 
 ---
 
@@ -14,13 +14,15 @@ Jared's home redesign (`Plans/Decision_Log.md#DL-180` to `Plans/Decision_Log.md#
 
 Every row below that commits a structural change (an open that adds a tab, close, move, keep, pin, unpin, rename, split, move a panel, resize, collapse, close a panel, lock, apply, save or restore a layout) emits the one existing event `workspace.layout_changed`, with the v2 payload that names the change (`Plans/Contracts_V0.md#CV-361`); an open that only reveals an existing tab emits nothing, and no new event family is added. Typed local actions (`ui.panel_tab.*`, `ui.workspace_layout.*`, `ui.terminal.*`) are view state: no catalog command, no receipt, no event (`Plans/Commands_System.md#CS-100`). Opening a menu, the "+" menu, the "+N" list or a picker, hovering, and dragging dispatch nothing; a changed release commits once; a cancelled or unchanged release dispatches nothing; a failed commit rolls back and emits nothing.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 change these tables in place, each change dated where it stands. Dashboards (`Plans/Decision_Log.md#DL-186`; D10 P1 to P13 and D35): every dashboard tab is its own board on the Usage board engine; the "+" menu's Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this project's custom dashboards and New dashboard; a dashboard tab's Add widget, Board menu, Start from, presets, rename and delete map as "Dashboard tab controls" below says. Widget commands name the board in their existing `room` field (`Plans/Widget_System.md#WS-030`), never in a `board_id` field; `cmd.widget.reset_layout` gains the optional field `set_id` naming the set a board starts from; a board's range and scope (`ui.widget_board.set_view`, lead ruling F1) and saving, renaming and deleting a preset (`ui.widget_preset.save`, `ui.widget_preset.rename`, `ui.widget_preset.delete`, lead ruling F2) are typed local actions; renaming and deleting a custom dashboard reuse `cmd.panel_tab.rename` and `cmd.panel_tab.close`, so no command family is added. The chat, the Debug Console and the terminal (`Plans/Decision_Log.md#DL-187`; D32 to D40): the left rail's Chat entry shows or hides the column with `cmd.panel.switch` on every page (D40); a popped-out chat is never saved and starts in its column after a restart (D32); Keep the chat open in narrow windows is the chat's own preference, the typed local action `ui.chat_column.keep_open`, and no longer a Settings write (the planning thread's ruling under D4); the Debug Console is one tab, `debug-console`, whose session sub-tab is view state that dispatches nothing (D33, lead ruling F6); the "+" menu lists every installed shell and SSH hosts in their own submenu (D39); a terminal's Mute notifications is the typed local action `ui.terminal.mute_notifications` (D38, lead ruling F5); terminal tabs have no colour or icon control (D34). Open routes (lead ruling F8): `cmd.chat.plan.open_details` and `cmd.chat.plan.open_version` (DL-157) join the open-routes table, and the event every route that adds a tab emits, `workspace.layout_changed`, is admitted at family revision 2.0.0 with its v2 payload (`Plans/Decision_Log.md#DL-188`).
+
 Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*` row also carries `project_id`, `workspace_tab_id`, `expected_layout_revision` and `idempotency_key`, as UCC-144's rows did. A panel tab is named by `panel_tab_id` (opaque and stable, its prefix naming its kind, `Plans/FinalGUISpec.md#F3-635`), never by route `tab_id`, which stays page-tab focus (UCC-013), and never by `workspace_tab_id`, which stays the project tab. A home panel is named by `panel_id`, which is not the rail's `cmd.panel.switch` vocabulary (CS-061). Availability classes are the Cozy Shelves legend (`always`, `selection`, `live_subject`, `record_only`, `capability`); disabled reasons come only from the closed set (`unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, `permission_required`), with the owner's detail in the typed response: `narrow_centre` (the centre is in its one-column narrow state, `Plans/FinalGUISpec.md#F3-636`), `no_room` (the fit rule offers no split, `Plans/FinalGUISpec.md#F3-630`), `only_panel`, `only_tab`, `no_closed_tab`. The visible wording of each reason is FinalGUISpec's. Keys are listed native first, then the web client's stand-in where the browser owns the native chord (`Plans/FinalGUISpec.md#F3-630`, DL-180).
 
 ### Panel tab commands
 
 | command_id | Label | Arguments | Availability and disabled reasons | command_kind | Event | Keys |
 |---|---|---|---|---|---|---|
-| `cmd.panel_tab.open` | Open tab | An open spec: `kind`, `panel_tab_id?`, the kind's own fields (a buffer's `text` and `title`; a terminal's `profile` and `cwd`; a browser's `url`; a dashboard's `board_id`), and the placement fields `where`, `mode`, `by`, `background` whose contract is `Plans/Contracts_V0.md#CV-360` | `always`; `unsupported` for an unknown kind. In the narrow centre a new panel is not created: the tab opens in the next panel of the switcher and the announcement says so (`Plans/FinalGUISpec.md#F3-636`) | `shell_view` | `workspace.layout_changed` when a tab is added; nothing when an existing tab is only revealed | Ctrl+T new tab of the panel's usual kind (web client Alt+T); Ctrl+Shift+\` new terminal; Ctrl+Shift+B new browser |
+| `cmd.panel_tab.open` | Open tab | An open spec: `kind`, `panel_tab_id?`, the kind's own fields (a buffer's `text` and `title`; a terminal's `profile` and `cwd`; a browser's `url`; a dashboard's `board_id`), and the placement fields `where`, `mode`, `by`, `background` whose contract is `Plans/Contracts_V0.md#CV-360` | `always`; `unsupported` for an unknown kind. In the narrow centre a new panel is not created: the tab opens in the next panel of the switcher and the announcement says so (`Plans/FinalGUISpec.md#F3-636`). A dashboard spec without `board_id` makes a new, empty custom dashboard (`dashboard:dash-<n>`, "Dashboard <n>"; amended 2026-10-10, DL-186, D35) | `shell_view` | `workspace.layout_changed` when a tab is added; nothing when an existing tab is only revealed | Ctrl+T new tab of the panel's usual kind (web client Alt+T); Ctrl+Shift+\` new terminal; Ctrl+Shift+B new browser |
 | `cmd.panel_tab.close` | Close tab | `panel_tab_ids` (one or more, all from one panel). Close others and Close to the right resolve the set when dispatched and leave pinned tabs out | `selection`. Each kind's close check answers first (a dirty buffer, a running terminal: confirmation class `two_step`, inline, `Plans/FinalGUISpec.md#F3-635`); a tab whose check declines stays open and the rest close in the same commit. Closing a panel's last tab follows `Plans/FinalGUISpec.md#F3-630`'s panel lifecycle | `shell_view` | `workspace.layout_changed` | Ctrl+W (web client Alt+W); Delete on a focused tab; middle click |
 | `cmd.panel_tab.rename` | Rename tab | `panel_tab_id`, `label` (an empty label restores the kind's own label) | `selection` | `shell_view` | `workspace.layout_changed` | none (tab menu Rename...) |
 | `cmd.panel_tab.move` | Move tab | `panel_tab_id`, then either `panel_id` and `index` (reorder, move to another panel, drop on "+N") or `split: { panel_id, edge }` (drop on a panel edge, Move to new panel, Split right or down with this tab) | `selection`; `blocked_state_required` with `narrow_centre` or `no_room` for a split, `only_tab` for Move to new panel on a panel's only tab. Moving a preview tab also keeps it, in the same commit | `shell_view` | `workspace.layout_changed` | Ctrl+Shift+PgUp / Ctrl+Shift+PgDn move left or right; Alt+Shift+arrows move to the panel in that direction (a split that way when there is none and it fits) |
@@ -40,7 +42,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
-| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always` | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
 
 `cmd.workspace_layout.reset` keeps its two producers, the title-bar Home menu row and the Settings Startup & Recovery row `general.startup.reset-home-layout`, both dispatching the same command. The concept token `cmd.workspace_layout.size_surface` still normalizes to `cmd.workspace_layout.resize_surface` (CS-068) and is not a row.
@@ -53,6 +55,12 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
 | `ui.workspace_layout.focus_panel` | `panel_id`, or `direction` | Moves focus to a panel | Alt+arrows; Alt+Shift+1..9; a panel chosen in the narrow panel switcher |
 | `ui.output.select_channel` | `channel` | Switches the channel shown in `output`; channel is view state, never part of its tab id, with no receipt or event | Output channel picker; channel opened from elsewhere follows F3-634 |
+| `ui.widget_board.set_view` | the board (`room`, its board id) and the changed `range` or `scope`, with the Usage page's own values (`Plans/FinalGUISpec.md#F3-638`) | Sets one dashboard's own range or scope, independent of the Usage page's and of every other board; view state kept in that board's record, with no receipt and no event (DL-186, P2; lead ruling F1) | A dashboard tab's Board menu > This dashboard > Range or Scope |
+| `ui.widget_preset.save` | the board (`room`) and `name?` (trimmed, spaces collapsed, at most 80 characters; "Preset <n>" when none) | Saves the board's widgets as one of the person's own presets, kept across projects (`Plans/Widget_System.md#WS-030`); no receipt, no event (lead ruling F2) | Board menu > Save as preset...; Start from > Your presets > Save this dashboard as a preset... |
+| `ui.widget_preset.rename` | `preset_id`, `name` | Renames one of the person's presets; no receipt, no event (lead ruling F2) | Start from > Your presets > Rename or delete presets > a preset > Rename preset... |
+| `ui.widget_preset.delete` | `preset_id` | Deletes one of the person's presets after its confirm; a dashboard that started from it keeps its widgets; no receipt, no event (lead ruling F2) | Start from > Your presets > Rename or delete presets > a preset > Delete preset... > Delete preset |
+
+Amended 2026-10-10 (DL-186): the last four rows are the dashboard tab's typed local actions. Using a preset is not one of them: it is `cmd.widget.reset_layout` with `set_id: user:<preset_id>` (the dashboard tab section below). The Debug Console's session sub-tab is view state that dispatches nothing, not a typed local action (DL-187, D33; lead ruling F6).
 
 ### Aliases and the open routes that keep their ids
 
@@ -79,30 +87,35 @@ The rule that decides which id an open uses: where a domain id exists for the th
 | `cmd.git.diff_open`, `cmd.source_control.open_merge_editor`, `cmd.docker.compose.open_file`, `cmd.run_debug.config.open_file` | `editor` (diff mode for diffs) | placement through CV-360's fields only, never private arguments |
 | `cmd.search.open_result` | the result's kind | its `disposition?` resolves to CV-360's placement fields |
 | `cmd.nav.open_subject` | `plan`, `document`, `artifact` | placement fields added |
+| `cmd.chat.plan.open_details`, `cmd.chat.plan.open_version` | `plan` | placement fields added (amended 2026-10-10, lead ruling F8). `cmd.chat.plan.open_version` opens the exact version its surface names: the Plan's own tab, revealed rather than duplicated, while that version is current, otherwise that version's retained read-only document, never Plan Details and never a newer version (`Plans/Decision_Log.md#DL-157`, `Plans/UI_Command_Catalog.md#UCC-176`) |
+| `cmd.chat.attachment.open` | the attachment's `document` or `artifact` tab | opens the attachment's document or artifact tab through the one opening module; an open that adds a tab emits `workspace.layout_changed` (`Plans/Contracts_V0.md#CV-361`), a reveal of a tab already open emits nothing (added 2026-10-10, lead ruling: the table now matches CV-361 and its production wiring row, which declares the event) |
 | `cmd.collaboration.open` | `run` | the run view is a `run` tab |
 | `cmd.agents.open_thread`, when it opens a read-only live transcript | `transcript` | unchanged identity (UCC-188); the transcript is a tab |
 | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | `context` | open adds or reveals the thread's context tab, focus reveals it, close closes it (UCC-060) |
 | `cmd.chat.open_working_notebook` | `document` | stays a candidate with UCC-158's disposition; placement fields when admitted |
-| `cmd.browser.open_workspace_preview`, `cmd.browser.focus_browser_tab` | `browser` | the editor-panel targets retire; focus reveals the tab that hosts the session |
+| `cmd.browser.open_workspace_preview`, `cmd.browser.focus_browser_tab` | `browser` | the editor-panel targets retire; focus reveals the tab that hosts the session. `cmd.browser.focus_browser_tab` is layout-only and declares no event; when the tab it focuses sits in a collapsed panel, the host expands that panel through `cmd.workspace_layout.set_collapsed`, which records the `panel_expanded` under its own id (amended 2026-10-10, lead ruling) |
 | `cmd.terminal.open`, `cmd.terminal.show`, `cmd.terminal.focus`, `cmd.terminal.reveal` | `terminal` | UCC-201 |
 | `cmd.terminal.open_retained_output` | `editor` (a buffer) | stays a DL-035 candidate (UCC-160); UCC-201 says how the command mark's Open output relates to it |
 | `cmd.dev.show_output`, `cmd.dev.show_problems`, `cmd.dev.show_ports` | `output`, `problems`, `ports` | reveal or open the tool tab by its kind affinity |
-| `cmd.run_debug.console.reveal`, `cmd.run_debug.terminal.reveal` | `debug_console`, `terminal` | `Plans/Commands_System.md#CS-101` amends their placement wording |
+| `cmd.run_debug.console.reveal`, `cmd.run_debug.terminal.reveal` | `debug_console`, `terminal` | `Plans/Commands_System.md#CS-101` amends their placement wording; the Debug Console reveal opens or reveals the one `debug-console` tab with that session's sub-tab shown (amended 2026-10-10, DL-187, D33) |
 
 ### The "+" menu and the empty-panel launcher
 
 The "+" opens the menu and never creates a tab by itself; opening the menu, typing in its filter field and opening a submenu dispatch nothing. A row's body opens its item as a new tab in this panel (`where: tab`); the row's trailing cell, Alt+click or Alt+Enter opens it as a new panel by the fit rule (`where: panel`). The empty-panel launcher shows the same rows and dispatches the same ids.
 
+Amended 2026-10-10 (DL-186, DL-187; D35, D39): the Terminal row lists every installed shell, uncapped, and the SSH hosts move to their own row with a submenu; the Dashboard sub-row lists the custom dashboards and New dashboard; the empty-panel launcher shows each row's sub-row as links under it, each link dispatching exactly what that sub-row dispatches in the menu as a new tab in this panel (`where: tab`), and the SSH hosts row opens its submenu from the launcher row (`Plans/FinalGUISpec.md#F3-632`).
+
 | Row | Body (`where: tab`) and trailing cell (`where: panel`) | Sub-rows |
 |---|---|---|
 | Filter field "Open anything: kinds, files, URLs" | typing is view-local; a kind it finds behaves as that kind's row | a file found: `cmd.file.open` with `mode: keep`; an address: `cmd.browser.open_workspace_preview` |
-| Terminal | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile | each shell profile and SSH host: the same with its `profile` |
+| Terminal | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile | each installed shell: the same with its `profile` (amended 2026-10-10, D39: every installed shell, uncapped; SSH hosts moved to the next row) |
+| SSH hosts (only when the terminal kind knows SSH hosts; added 2026-10-10, D39) | opens its submenu (view-local) | each host: `cmd.panel_tab.open` with `{ kind: terminal }` and that host's `profile`, its body here and its trailing cell in a new panel; a host found by typing in the menu's filter field is the same row |
 | Browser | `cmd.panel_tab.open` with `{ kind: browser }`, a blank browser | each recent address: `cmd.browser.open_workspace_preview` |
 | File... | opens Quick Open (view-local); Enter there dispatches `cmd.file.open` with `mode: keep` | each of the three recent files: `cmd.file.open` with `mode: keep` |
-| Dashboard | `cmd.panel_tab.open` opens or reveals `dashboard:home` | each sub-row opens or reveals one of the other starting boards by its `board_id`; no board is created, renamed or deleted in wave 1 |
+| Dashboard | `cmd.panel_tab.open` opens or reveals `dashboard:home` | Home, Metrics, Monitoring, Agents and each of this project's custom dashboards: `cmd.panel_tab.open` with its `board_id`, opening or revealing it; New dashboard: `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`, which makes a new, empty custom dashboard (amended 2026-10-10, DL-186, D35: wave 1's "no board is created, renamed or deleted" is answered) |
 | Plan or document... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` | none |
 | Artifact... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` with the artifact subject | none |
-| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Output opens or reveals `output`; Problems and Ports reveal their one tab) |
+| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Output opens or reveals `output`; Problems and Ports reveal their one tab; Debug Console opens or reveals its one tab, `debug-console`, amended 2026-10-10, DL-187, D33) |
 | Split right | `cmd.workspace_layout.split` with `direction: right` | none |
 | Split down | `cmd.workspace_layout.split` with `direction: down` | none |
 | Reopen closed tab | `cmd.panel_tab.reopen_closed` | none |
@@ -135,6 +148,8 @@ Opening any of them (a click on "+N", Ctrl+Shift+A for every tab, the panel menu
 
 A kind's own rows come first and dispatch that kind's own commands (UCC-201 lists the terminal's). Then:
 
+Amended 2026-10-10 (DL-187, D38; `Plans/FinalGUISpec.md#F3-631` as amended): a kind's own rows now sit at the end of the tab menu, after a hairline, and do what that kind registers for them, which need not be a command: the terminal's one row is Mute notifications, the typed local action `ui.terminal.mute_notifications` (UCC-201). On a custom dashboard's tab, Rename... also renames the dashboard, and clearing the label gives back "Dashboard <n>"; on Home, Metrics, Monitoring and Agents a label names that tab only (DL-186, D35).
+
 | Leaf | Dispatch |
 |---|---|
 | Close | `cmd.panel_tab.close` |
@@ -157,7 +172,7 @@ A click on a tab is `ui.panel_tab.activate`; a double click on a preview tab is 
 | A named or saved layout | `cmd.workspace_layout.apply_named` |
 | Show the chat / Hide the chat | `cmd.panel.switch` with `chat` (UCC-203) |
 | Pop out the chat / Dock the chat back | `cmd.panel.undock` / `cmd.panel.redock` with `chat` (UCC-203) |
-| Keep the chat open in narrow windows | a Settings write: `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over its row (`Plans/Settings_System.md#SSYS-050`) |
+| Keep the chat open in narrow windows | `ui.chat_column.keep_open` (UCC-203), the chat's own preference (amended 2026-10-10, DL-187: the planning thread's ruling under D4 makes it no Settings row, so the Settings transaction over `general.interaction.chat-keep-open` retires; `Plans/Settings_System.md#SSYS-050`) |
 | Save this layout... | the prompt is view-local; Save dispatches `cmd.workspace_layout.save_named` |
 | Restore home layout | `cmd.workspace_layout.reset` |
 | Run Onboarding Again | `ui.onboarding.start` (unchanged, UCC-106) |
@@ -185,13 +200,48 @@ A click on a tab is `ui.panel_tab.activate`; a double click on a preview tab is 
 | Resize | Tab to a divider, then the divider keys | same | `cmd.workspace_layout.resize_surface` |
 | Tab menu / Move panel | Shift+F10 on a tab / Enter on a panel grip | same | view-local; a leaf dispatches as above |
 
+Amended 2026-10-10 (DL-186, D35): in a panel whose usual kind is the dashboard, Ctrl+T and a split make a new, empty custom dashboard (`cmd.panel_tab.open` or `cmd.workspace_layout.split` with a dashboard spec and no `board_id`; `Plans/FinalGUISpec.md#F3-638`).
+
 The shell keeps Ctrl+1..9 (pages) and Ctrl+K (the command palette), so the panels use neither and there are no Ctrl+K chords. There are no bare letters or digits, pin is in the tab menu only, and Escape stays scoped to the innermost open thing. Every label shows the key that works where the app runs. A focused terminal keeps the shell's keys and gives back the host keys UCC-201 lists.
 
 ### The dashboard tab
 
 Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards; wave 1 creates, renames and deletes no board.
 
-A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens or reveals `dashboard:home`, while its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
+Amended 2026-10-10 (DL-186; D10 P1 to P13, D35): L10's interim rule is answered. Every dashboard tab is its own board on the Usage board engine (`Plans/FinalGUISpec.md#F3-638`, `Plans/Widget_System.md#WS-030`): the built-in boards Home (`dashboard:home`), Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`, drawn by the dashboard kind with no board record, lead ruling F7), and the custom dashboards a person makes (`dashboard:dash-<n>`). New dashboard makes a custom one, which starts empty; Rename dashboard... and Delete dashboard... rename and delete a custom one; Home, Metrics, Monitoring and Agents can be reset but never renamed through the Board menu or deleted. The widget command payloads do not change: inside a dashboard tab the widget commands name the board in their existing `room` field, whose value is the board id (which never equals a Usage room id), and there is no `board_id` payload field. The only field added is `set_id` on `cmd.widget.reset_layout` (section 2.3). The table below maps every control of a dashboard tab. The sentences of the next paragraph that said no board is created, renamed or deleted, and that the widget commands are addressed by `board_id`, are amended in place.
+
+A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens or reveals `dashboard:home`, while its sub-rows open or reveal the other boards, and its New dashboard sub-row makes a new custom dashboard (amended 2026-10-10, DL-186; it read: no board is created, renamed or deleted in wave 1). Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, naming the board in their existing `room` field (`Plans/Widget_System.md#WS-030`; amended 2026-10-10, DL-186, P3; it read: addressed by `board_id`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
+
+#### Dashboard tab controls
+
+Added 2026-10-10 (DL-186; lead rulings F1, F2 and F7). The controls are `Plans/FinalGUISpec.md#F3-638`'s; the boards, sets, presets and their records are `Plans/Widget_System.md#WS-030`'s. Opening the Add widget list, the Board menu, Start from, a submenu, a name prompt or a confirm dispatches nothing.
+
+| Control | Dispatch |
+|---|---|
+| Header row > Add widget; the empty board's Add widget | opens the "Find a widget" list (view-local) |
+| Add widget list > a widget | `cmd.widget.add` with the board in `room` and the `widget_id`; a widget already on the board is disabled with "Already on this dashboard" |
+| Header row > Board | opens the Board menu (view-local) |
+| Header row > Maximize / Restore | `ui.workspace_layout.maximize` |
+| Board > Dashboards > a dashboard | `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`, opening or revealing it |
+| Board > Dashboards > New dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new, empty custom dashboard |
+| Board > This dashboard > Range > a range; Scope > a scope | `ui.widget_board.set_view` (lead ruling F1) |
+| Board > This dashboard > Start from > a set (This dashboard, Dashboard starter, a Usage room, a preset); the empty board's Start from... | the list is view-local; a set dispatches one `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, set_id }` |
+| Board > This dashboard > Save as preset...; Start from > Your presets > Save this dashboard as a preset... | the name prompt is view-local; Save is `ui.widget_preset.save` (lead ruling F2) |
+| Start from > Your presets > Rename or delete presets > a preset > Start from this preset | `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, set_id: user:<preset_id> }` |
+| ... > Rename preset... | the prompt is view-local; Rename is `ui.widget_preset.rename` |
+| ... > Delete preset... | the confirm is view-local; Delete preset is `ui.widget_preset.delete`; Keep it dispatches nothing |
+| Board > This dashboard > Tidy | one `cmd.widget.move` carrying `arrange { mode: tidy, detail: diagnostics }` (`Plans/Widget_System.md#WS-019`: on a dashboard every placed widget shows at `diagnostics`); disabled on an empty board ("Nothing to tidy yet") |
+| Board > This dashboard > Reset widgets | `cmd.widget.reset_layout` with `{ scope: room, room: <board_id> }` and no `set_id`: Home, Metrics and Monitoring go back to their default sets, a custom dashboard to empty |
+| Board > Live > Live readings | the Usage page's one Live / Paused choice, view state with no command (`Plans/usage-feature.md#UF-107`) |
+| Board > Rename dashboard... (custom dashboards only) | the name prompt is view-local; Rename is `cmd.panel_tab.rename` on that dashboard's tab with the name, which is kept per project with the board (WS-030); an empty name gives back "Dashboard <n>" |
+| Board > Delete dashboard... (custom dashboards only) | the confirm ("Delete <name>?") is view-local; Delete dashboard is `cmd.panel_tab.close` on that tab, after which the dashboard leaves the reopen list and its board, its quarantine and its name are forgotten (WS-030); Keep it dispatches nothing |
+| The Undo notice after Start from > Undo | one `cmd.widget.reset_layout` with `{ scope: room, room: <board_id>, restore_revision }`, `restore_revision` being the board's committed layout revision just before that Start from; one receipt, no `workspace.layout_changed`; offered only while the notice is up (8 s, held while the pointer or focus is on it, F3-638); never with `set_id`; refused with a disabled reason when that revision is no longer the board's previous one (amended 2026-10-10, lead ruling; it read: no id yet: open for the lead's ruling (as built the concept writes the board's earlier record back with no command); not certified until ruled) |
+| A widget card's gestures, size picker, card menu and gear | the Usage board's own `cmd.widget.*` rows (UCC-036, `Plans/Widget_System.md#WS-019`), naming the board in `room` |
+| A widget card > Details | the Usage page opens at that widget's room with its inspector (P8): a page change and the Usage page's own inspector, view state with no command |
+| Agents > Show > a filter | that tab's own view state, with no command (lead ruling F7) |
+| Agents > an agent's card; Alt+click | `cmd.agents.open_thread` (the open-routes table) as a kept transcript tab; Alt+click with `where: panel` |
+
+Play the next hour, Back to now and the Demo time, which the concept also runs on dashboards, are the lab-only demo controls of `Plans/usage-feature.md#UF-107` in the one Demo Studio (`Plans/FinalGUISpec.md#F3-649`): no row. A custom dashboard closed as a tab keeps its board while it is in the reopen list and is forgotten when it leaves it unless it is open (P6); that forgetting is storage housekeeping that dispatches nothing (WS-030). Renaming a custom dashboard's tab from the tab menu is the same `cmd.panel_tab.rename` and renames the dashboard too.
 
 ### Home producer dispositions (for the wiring owner)
 
@@ -238,17 +288,53 @@ canonical_text: >-
   dispatched directly only for a new terminal, a blank browser, a dashboard tab, an editor buffer and the tool tabs.
   cmd.editor.close_tab is an alias of cmd.panel_tab.close. cmd.editor.open_panel, cmd.editor.close_panel and the
   never-registered cmd.artifacts.open_panel retire, and target_editor_panel_id, target_editor_group_id and
-  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1; widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
+  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other boards, and New dashboard makes a custom one (amended 2026-10-10, DL-186; it read: no board is created, renamed or deleted in wave 1); widget commands inside it stay cmd.widget.* naming the board in their existing room field (WS-030; amended 2026-10-10, DL-186; it read: addressed by board_id) and emit no
   workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
   in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
   This unit supersedes UCC-144.
   Output opens or reveals `output`; its channel picker switches the channel with `ui.output.select_channel`, a
   view action with no command, receipt or event. "Open in new tab" dispatches `cmd.panel_tab.open` with
   `output:<channel>` and shows only that channel. Other channel opens follow F3-634.
+  Amended 2026-10-10 (DL-186; D10 P1 to P13, D35; lead rulings F1, F2, F3 and F7): every dashboard tab is its own
+  board on the Usage board engine. The "+" menu's Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this
+  project's custom dashboards and New dashboard; New dashboard, and Ctrl+T or a split in a panel whose usual kind is
+  the dashboard, dispatch cmd.panel_tab.open (or cmd.workspace_layout.split) with a dashboard spec and no board_id,
+  which makes a new, empty custom dashboard. A dashboard tab's controls map as the Dashboard tab controls table
+  says: Add widget is cmd.widget.add; Start from, a preset's Start from this preset and Reset widgets are one
+  cmd.widget.reset_layout with scope room and the board in room, Start from naming its set in the new optional
+  set_id (default, room:<room_id>, host:dashboard or user:<preset_id>) and Reset widgets naming none; Tidy is one
+  cmd.widget.move carrying arrange with detail diagnostics (WS-019); Range and Scope are the typed local action
+  ui.widget_board.set_view, and saving, renaming and deleting a preset are ui.widget_preset.save,
+  ui.widget_preset.rename and ui.widget_preset.delete, each with no receipt and no event; Live readings is the
+  Usage page's Live / Paused view state; Rename dashboard... is cmd.panel_tab.rename and Delete dashboard..., after
+  its confirm, cmd.panel_tab.close, both for custom dashboards only, so no command family is added; Agents is drawn
+  by the kind, its Show filter view state. Widget payloads do not change: a dashboard board is named in their
+  existing room field, never in a board_id field. A named layout's save keeps the boards of its dashboard tabs up to
+  64 KB, and its apply puts them back, with no argument added. The Undo in the notice that follows Start from
+  dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
+  being the board's committed layout revision just before that Start from, with one receipt and only while the
+  notice is up (8 s, held on pointer or focus, F3-638); restore_revision and set_id never travel together; the owner
+  puts back exactly that revision's records, and a restore whose revision is no longer the board's previous one is
+  refused with a disabled reason; like every widget command it emits no workspace.layout_changed (CV-361) (amended
+  2026-10-10, lead ruling; it read: The Undo that follows Start from has no id yet and waits for the lead's ruling.)
+  Amended 2026-10-10 (DL-187; D33, D38, D39, D40, lead rulings F5 and F6): the Terminal row lists every installed
+  shell, uncapped, and an SSH hosts row opens a submenu of hosts that dispatch cmd.panel_tab.open with that host's
+  profile; the empty-panel launcher's sub-row links dispatch what the menu's sub-rows dispatch; the Debug Console
+  row opens or reveals the one debug-console tab, whose session sub-tab is view state that dispatches nothing; a
+  kind's own tab-menu rows sit at the end after a hairline and do what the kind registers, the terminal's Mute
+  notifications being ui.terminal.mute_notifications; the title bar's Keep the chat open in narrow windows is the
+  typed local action ui.chat_column.keep_open, no longer a Settings write.
+  Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_details and cmd.chat.plan.open_version join the
+  open routes as plan tabs carrying the placement fields, open_version opening the exact version (DL-157); every
+  route that adds a tab emits workspace.layout_changed, admitted at family revision 2.0.0.
+  Amended 2026-10-10 (lead ruling): cmd.chat.attachment.open joins the table of routes that open or reveal a tab;
+  it opens the attachment's document or artifact tab through the one opening module, and an open that adds a tab
+  emits workspace.layout_changed (CV-361). cmd.browser.focus_browser_tab is layout-only with no event, and a
+  collapsed host panel expands through cmd.workspace_layout.set_collapsed.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false
-depends_on: [DL-180, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, CV-360, CV-361, DR-071, WS-030, UCC-013, UCC-108, UCC-135, UCC-147]
+depends_on: [DL-180, DL-186, DL-187, DL-188, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-638, CV-360, CV-361, DR-071, WS-030, UCC-013, UCC-108, UCC-135, UCC-147]
 unblocks: [WM-090, WM-092, UIW-040, UIW-041, ATS-075]
 acceptance_criteria:
   - "Every control of the universal panels (strip, tab, \"+\" menu row and trailing cell, empty-panel launcher row, \"+N\" list, panel menu, tab menu, grip, divider, title-bar Home menu and key) maps to exactly one command or typed local action in this addendum's tables, and no action has two ids."
@@ -257,7 +343,14 @@ acceptance_criteria:
   - "cmd.panel_tab.close closes a set from one panel in one commit after each kind's close check; a declined check leaves only that tab open."
   - "cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview and cmd.terminal.open carry where, mode, by and background and reach the same opening module as cmd.panel_tab.open; an id already open anywhere is revealed where it is and never opened twice or moved."
   - "No row or route selects a home panel through target_editor_panel_id, target_editor_group_id or target_group, and cmd.file.open_with keeps exactly its five values."
-  - "A dashboard tab's widget commands are cmd.widget.* addressed by board_id and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
+  - "A dashboard tab's widget commands are cmd.widget.* naming the board in their existing room field (amended 2026-10-10, DL-186; it read: addressed by board_id) and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
+  - "Every control of a dashboard tab maps as the Dashboard tab controls table says: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, the Undo after Start from one cmd.widget.reset_layout with restore_revision and no set_id while its notice is up, refused with a disabled reason once that revision is no longer the board's previous one, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event (amended 2026-10-10, lead ruling; it read: Every control of a dashboard tab maps as the Dashboard tab controls table says, except the Undo after Start from, which has no id until the lead rules: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event)."
+  - "New dashboard, and Ctrl+T or a split in a dashboard panel, make a new empty custom dashboard through cmd.panel_tab.open or cmd.workspace_layout.split with no board_id; Rename dashboard... and Delete dashboard... appear only on a custom dashboard and dispatch cmd.panel_tab.rename and, after the confirm, cmd.panel_tab.close; no other command family exists for dashboards."
+  - "The Terminal row lists every installed shell and the SSH hosts row opens their submenu; the empty-panel launcher's sub-row links dispatch exactly what the menu's sub-rows dispatch."
+  - "The Debug Console row opens or reveals the one debug-console tab, and choosing its session sub-tab dispatches nothing."
+  - "The terminal's tab-menu row Mute notifications dispatches ui.terminal.mute_notifications, and the title bar's Keep the chat open in narrow windows dispatches ui.chat_column.keep_open; neither writes a Settings row."
+  - "cmd.chat.plan.open_details and cmd.chat.plan.open_version resolve through the one opening module with the placement fields and emit workspace.layout_changed only when they add a tab."
+  - "cmd.chat.attachment.open is a row of the table of routes that open or reveal a tab and emits workspace.layout_changed only when it adds a tab; cmd.browser.focus_browser_tab emits nothing, and its collapsed host panel expands through cmd.workspace_layout.set_collapsed (amended 2026-10-10, lead ruling)."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and every label shows the key that works where the app runs."
   - "The channel picker switches output with ui.output.select_channel as view state, with no command, receipt or event; Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
   - "F6 and Shift+F6 cycle the rail, panels and chat composer from every region, as Plans/FinalGUISpec.md#F3-635 requires."
@@ -279,12 +372,32 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D1, D2, D5 to D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-186"
+  - "Plans/Decision_Log.md#DL-187"
+  - "Plans/Decision_Log.md#DL-188"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33, D35, D38, D39, D40, D42)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; design lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console; concept lineage only)"
+  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id and its set ids, presets, rename and delete through the tab commands"
 preserved_exact_tokens:
+  - "set_id"
+  - "restore_revision"
+  - "cmd.chat.attachment.open"
+  - "ui.widget_board.set_view"
+  - "ui.widget_preset.save"
+  - "ui.widget_preset.rename"
+  - "ui.widget_preset.delete"
+  - "ui.terminal.mute_notifications"
+  - "ui.chat_column.keep_open"
+  - "New dashboard"
+  - "SSH hosts"
+  - "debug-console"
+  - "cmd.chat.plan.open_version"
   - "Open in new tab"
   - "output:<channel>"
   - "output"
@@ -322,8 +435,14 @@ compatibility_only_notes:
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the chat composer in the F6 region cycle table."
-  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (lead ruling L10): The Dashboard row opens or reveals dashboard:home and its sub-rows the other starting boards, without board creation, rename or deletion."
+  - "Amended 2026-10-10 (DL-186, D35): L10's interim rule is answered: New dashboard makes custom dashboards, Rename dashboard... and Delete dashboard... reuse cmd.panel_tab.rename and cmd.panel_tab.close, and the dashboard tab's controls are mapped."
+  - "Amended 2026-10-10 (DL-186, P3 and P4; lead rulings F1 and F2): widget commands name a dashboard board in their existing room field, not board_id; cmd.widget.reset_layout gains set_id; range, scope and the preset save, rename and delete are typed local actions."
+  - "Amended 2026-10-10 (DL-187; D33, D38, D39; lead rulings F5 and F6): installed shells and an SSH hosts submenu in the \"+\" menu, launcher sub-row links, one debug-console tab, a kind's tab-menu rows at the end, Mute notifications and Keep the chat open in narrow windows as typed local actions."
+  - "Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_details and cmd.chat.plan.open_version join the open-routes table; workspace.layout_changed is admitted at 2.0.0."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo dispatches cmd.widget.reset_layout with restore_revision; the dashboard tab controls table, this unit's text and its criterion no longer hold it open."
+  - "Amended 2026-10-10 (lead ruling): cmd.chat.attachment.open joins the open-routes table, and cmd.browser.focus_browser_tab's row records that it is layout-only with no event."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
 owner_hints:
@@ -390,6 +509,7 @@ The terminal is now an ordinary tab kind with one session per tab (`Plans/Sectio
 | `ui.terminal.a11y_buffer` | Opens the plain-text buffer for screen readers | More menu Plain-text buffer; Alt+F2 |
 | `ui.terminal.zoom` | Text size Bigger, Smaller or Reset for this terminal, a view zoom over the appearance size; Reset returns to the appearance size | More menu Text size; Ctrl+= / Ctrl+- / Ctrl+0 (Cmd+= / Cmd+- / Cmd+0) |
 | `ui.terminal.degauss` | Runs the on-demand Retro degauss once (`Plans/FinalGUISpec.md#F3-643`); nothing under Reduced Motion | Appearance popover Degauss, Retro only |
+| `ui.terminal.mute_notifications` | Turns this terminal's notifications off or on: that tab's own state, saved with the tab (`Plans/FinalGUISpec.md#F3-641`); a muted terminal raises no system notification. Absent where the platform has no system notifications (added 2026-10-10, DL-187, D38; lead ruling F5) | More menu Mute notifications (a check); the tab menu's Mute notifications, after a hairline; the notification permission notice's Mute this terminal |
 
 Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ctrl+Shift+Home / Ctrl+Shift+End) and the find bar's own keys are scrolling and input inside the terminal (SMPFS-183), not actions.
 
@@ -401,7 +521,7 @@ Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ct
 | Header row | Split | `cmd.workspace_layout.split` with `{ kind: terminal, profile, cwd }` and `direction: auto`; Ctrl+Shift+5 (Cmd+D) |
 | Header row | Maximize / Restore | `ui.workspace_layout.maximize` |
 | Header row | More (the ⋮ menu) | view-local |
-| More menu | New terminal, then a profile (zsh, bash, pwsh, an SSH host) | `cmd.panel_tab.open` with `{ kind: terminal, profile }` and `where: tab` |
+| More menu | New terminal, then a profile (zsh, bash, pwsh, an SSH host) | `cmd.panel_tab.open` with `{ kind: terminal, profile }` and `where: tab` (amended 2026-10-10, DL-187, D39: the submenu lists every installed shell, then, after a hairline, an SSH hosts submenu whose hosts dispatch the same with that host's `profile`) |
 | More menu | Split down | `cmd.workspace_layout.split` with the terminal spec and `direction: down` |
 | More menu | Appearance... | opens the popover (view-local) |
 | More menu | Text size: Bigger, Smaller, Reset | `ui.terminal.zoom` |
@@ -411,6 +531,10 @@ Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ct
 | More menu | Plain-text buffer | `ui.terminal.a11y_buffer` |
 | More menu | Agent input: Ask each time | a state row; dispatches nothing |
 | More menu | Agent input: an allowed agent's row | `cmd.terminal.revoke_agent_input` |
+| More menu | Mute notifications (a check, between Agent input and Send signal; absent where the platform has no system notifications) | `ui.terminal.mute_notifications` (added 2026-10-10, DL-187, D38) |
+| Tab menu | Mute notifications, the terminal kind's row after a hairline | `ui.terminal.mute_notifications` (added 2026-10-10, DL-187, D38) |
+| A system notification a program raised (OSC 9, OSC 777 `notify`, OSC 99) | a click | brings the app and that terminal forward: `ui.panel_tab.activate` with `focus: true` on that terminal (added 2026-10-10, DL-187, D38) |
+| The notification permission notice (where the platform asks, once, after a notification arrived) | Allow / Mute this terminal / Not now | Allow asks the platform's own permission and dispatches no command; Mute this terminal is `ui.terminal.mute_notifications`; Not now dispatches nothing (added 2026-10-10, DL-187, D38) |
 | More menu | Send signal: Interrupt (SIGINT) | `cmd.terminal.interrupt` |
 | More menu | Send signal: Terminate (SIGTERM), Kill (SIGKILL) | `cmd.terminal.send_signal` |
 | More menu | Restart session | `cmd.terminal.restart_replace` |
@@ -502,10 +626,16 @@ canonical_text: >-
   ui.terminal.degauss. Every control of the header row, the More menu, the context menu, the command-mark menu, the
   agent row, the ended and closing rows, links and the Appearance popover maps to one of these as the mapping table
   says, and a focused terminal gives the host keys back as that table lists.
+  Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, in the More menu and at the end of
+  the tab's menu, is the typed local action ui.terminal.mute_notifications, that tab's own state saved with the tab,
+  absent where the platform has no system notifications; the permission notice's Mute this terminal dispatches it
+  too, its Allow asks the platform and Not now dispatches nothing; a click on a system notification brings the
+  terminal forward with ui.panel_tab.activate. New terminal lists every installed shell, then an SSH hosts submenu,
+  each a cmd.panel_tab.open with its profile. No command sets a terminal tab's colour or icon (D34).
 gui_related: true
 gui_classification_reason: "Owns the command ids and local actions of every terminal tab control and retires the section, workgroup and pane commands."
 split_recommended: false
-depends_on: [DL-181, DL-183, SMPFS-180, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-646, CV-362, UCC-160, UCC-200]
+depends_on: [DL-181, DL-183, DL-187, SMPFS-180, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-646, CV-362, UCC-160, UCC-200]
 unblocks: [WM-091, UIW-042, ATS-076]
 acceptance_criteria:
   - "No catalog row, wiring row or producer addresses a terminal section, workgroup, sub-tab, pane or editor terminal stack; each retired id resolves to the replacement in the retired-id table."
@@ -515,6 +645,8 @@ acceptance_criteria:
   - "cmd.terminal.allow_agent_input never bypasses the Tools policy engine or a secret prompt, and an agent's write after a human keystroke is refused as preempted."
   - "The appearance All terminals choice composes the Settings transaction pair and never dispatches cmd.terminal.appearance.set."
   - "No terminal command adds an event family; only commands that add, close or move a tab emit workspace.layout_changed."
+  - "Mute notifications in the More menu, the tab menu and the permission notice dispatches only ui.terminal.mute_notifications, with no command, receipt or event, and is absent where the platform has no system notifications."
+  - "No command or control sets a terminal tab's colour or icon."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -539,7 +671,11 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md (SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b; sections 1 to 3 and 8; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md (SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3; Catalog vs wiring)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md (SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d; R36; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 2: notifications, the More menu, the \"+\" menu's shells; concept lineage only)"
 preserved_exact_tokens:
+  - "ui.terminal.mute_notifications"
+  - "Mute notifications"
   - "cmd.terminal.take_over"
   - "cmd.terminal.hand_back"
   - "cmd.terminal.interrupt"
@@ -573,6 +709,7 @@ stale_retired_dispositions:
   - "Retired 2026-10-09 (DL-181): the section, workgroup, sub-tab, pane, detach and editor-terminal-stack ids and the five Home terminal producers, each with the replacement in this addendum's retired-id table."
   - "Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, replacing UCC-115's bottom panel."
   - "Amended 2026-10-10 (lead ruling L16): the popover's All terminals is enabled and writes the project layer through the Settings transaction, so the cmd.terminal.appearance.set row says only the Settings transaction writes the project layer (it said only Settings)."
+  - "Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications is the typed local action ui.terminal.mute_notifications in the More menu, the tab menu and the permission notice; a notification's click brings its terminal forward; New terminal lists every installed shell and an SSH hosts submenu; no terminal tab colour or icon control exists."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
@@ -588,7 +725,7 @@ Four pairs of ids named one action each. Each pair now has one canonical id; the
 
 | Pair | Canonical | The other | Reason |
 |---|---|---|---|
-| `cmd.dashboard.add_widget` / `cmd.widget.add` | `cmd.widget.add`, addressed by `board_id` inside a dashboard tab (WS-030) and by `page` on the Usage page | `cmd.dashboard.add_widget`: alias of `cmd.widget.add` (`normalization.kind` `alias`, its `dashboard_id` read as `board_id`) | The dashboard tab runs on the Usage board engine (DL-180), whose family is `cmd.widget.*`; one add serves every board. The alias emits nothing of its own: the production row's `dashboard.widget_added` is withdrawn, and the add is a change to that board's widget layout. |
+| `cmd.dashboard.add_widget` / `cmd.widget.add` | `cmd.widget.add`, naming the board in its existing `room` field inside a dashboard tab (WS-030; amended 2026-10-10, DL-186; it read: addressed by `board_id`) and by `page` on the Usage page | `cmd.dashboard.add_widget`: alias of `cmd.widget.add` (`normalization.kind` `alias`, its `dashboard_id` read as the board id carried in `room`; amended 2026-10-10, DL-186) | The dashboard tab runs on the Usage board engine (DL-180), whose family is `cmd.widget.*`; one add serves every board. The alias emits nothing of its own: the production row's `dashboard.widget_added` is withdrawn, and the add is a change to that board's widget layout. |
 | `cmd.browser.devtools.open` / `cmd.browser.open_devtools` | `cmd.browser.open_devtools` | `cmd.browser.devtools.open`: alias of `cmd.browser.open_devtools` | The older id is the one Section15, the Wiring_Matrix and UCC-063 use, and UCC-156's alias census missed the pair. The canonical row takes the UCC-156 row's preconditions (`browser_runtime_available && !protected_auth_browser && devtools_policy_allows`: the protected authentication browser is excluded), its `BrowserDevToolsOpenRequest` to `RouteResult` contract and its sole handler `handlers::browser_runtime::devtools_open`. |
 | `cmd.terminal.restart_session` / `cmd.terminal.restart_replace` | `cmd.terminal.restart_replace` | `cmd.terminal.restart_session`: retired spelling, not an alias | UCC-115 already called it owner-doc lineage and the production exclusions already exclude it; the Wiring_Matrix toolbar row that dispatched it must dispatch `cmd.terminal.restart_replace` instead (the wiring owner makes that change, WM-092). |
 | `cmd.terminal.focus_session` / `cmd.terminal.focus` | `cmd.terminal.focus` | `cmd.terminal.focus_session`: alias of `cmd.terminal.focus` | The 2026-07-02 aliases table allowed exactly this normalization through explicit alias metadata; the Output, Problems and Ports "Show Terminal" link that dispatched it must carry the alias record (the wiring owner makes that change, WM-092). |
@@ -604,7 +741,8 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   Four duplicate pairs each keep one canonical id. cmd.widget.add is canonical and cmd.dashboard.add_widget is its
-  alias (dashboard_id read as board_id); the add is addressed by board_id inside a dashboard tab (WS-030) and by page
+  alias (dashboard_id read as the board id; amended 2026-10-10, DL-186); the add names the board in its existing room
+  field inside a dashboard tab (WS-030; amended 2026-10-10, DL-186; it read: is addressed by board_id) and uses page
   on the Usage page, and the alias's dashboard.widget_added event is withdrawn. cmd.browser.open_devtools is
   canonical and cmd.browser.devtools.open is its alias; the canonical row takes UCC-156's preconditions (the
   protected authentication browser is excluded), its request and result contract and its sole handler.
@@ -614,7 +752,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Settles which id a visible control dispatches where two ids named one action."
 split_recommended: false
-depends_on: [DL-180, DL-181, UCC-036, UCC-063, UCC-108, UCC-115, UCC-156, WS-030]
+depends_on: [DL-180, DL-181, DL-186, UCC-036, UCC-063, UCC-108, UCC-115, UCC-156, WS-030]
 unblocks: [WM-092]
 acceptance_criteria:
   - "Each of the four actions has exactly one handler, under its canonical id."
@@ -659,6 +797,7 @@ compatibility_only_notes:
   - "cmd.dashboard.add_widget, cmd.browser.devtools.open and cmd.terminal.focus_session are compatibility aliases only."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): UCC-108's cmd.dashboard.add_widget row and UCC-156's cmd.browser.devtools.open row become aliases; UCC-115's restart_session lineage becomes a retired spelling."
+  - "Amended 2026-10-10 (DL-186): the add names a dashboard board in its existing room field, and the alias's dashboard_id is read as that board id; there is no board_id payload field."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md
@@ -678,13 +817,16 @@ The chat is fixed on the right, from the title bar to the status bar; it is neve
 | `cmd.panel.redock` | Dock the chat back | `panel_id: chat`, `window_id`, `target_host` (the chat column), `expected_layout_revision`, `idempotency_key` | `selection`: the chat is popped out | `shell_view` | `panel.redocked` |
 | `cmd.workspace_layout.resize_surface` | Resize the chat | `{ surface: chat, width }`, one commit on release, within the drag range F3-637 sets | `always` | `shell_view` | `workspace.layout_changed` |
 
-Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`Plans/FinalGUISpec.md#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table).
+Amended 2026-10-10 (DL-187; D32, D40, the planning thread's ruling under D4): the left rail's Chat entry shows or hides the column with `cmd.panel.switch` on every page, never changing the page in front (`Plans/FinalGUISpec.md#F3-042`); a popped-out chat lasts only while the app runs: it is never saved, and after a restart the chat starts in its column, so no `cmd.panel.redock` is dispatched at start; Keep the chat open in narrow windows is the chat's own preference, in the chat header's menu and the title bar's Home options menu, the typed local action `ui.chat_column.keep_open` below, and no longer a Settings write.
+
+Pop out is the chat's only way to move, and it returns to its column. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. From the home layout `cmd.panel.undock` is dispatched with `chat` and nothing else: no panel, tab or dashboard pops out. The chat is never a `cmd.panel_tab.*` target and never a `cmd.workspace_layout.move_surface`, `split` or `set_collapsed` target; such a dispatch refuses with `invalid_target`. Folding the chat to its edge strip in a narrow window and opening it from there are narrow-ladder states that are never saved (`Plans/FinalGUISpec.md#F3-636`) and dispatch nothing. "Keep the chat open in narrow windows" is a Settings write (UCC-200's Home menu table). Amended 2026-10-10 (DL-187): it is the typed local action `ui.chat_column.keep_open` instead.
 
 Amended 2026-10-10 (lead ruling L9): the History pin is the typed local action below.
 
 | Action id | Arguments | Effect | Producers and keys |
 |---|---|---|---|
 | `ui.chat_column.pin_history` | `history_pinned` | Saves the v2 record's chat column `history_pinned` as view state with no `workspace.layout_changed` event, like `ui.workspace_layout.maximize` | The History list's pin |
+| `ui.chat_column.keep_open` | `keep_open` (on or off) | Keeps the chat open below a centre width of 480 px instead of folding it to its edge strip (`Plans/FinalGUISpec.md#F3-636`, `#F3-637`); the chat's own preference, view state with no receipt, no event and no Settings row; where it is kept is `Plans/storage-plan.md`'s (added 2026-10-10, DL-187) | The chat header's menu; the title bar's Home options menu > Keep the chat open in narrow windows |
 
 Retired chat rows: the chat grab (`home.chat.grab`), dragging the chat into a dock, the dock-left, dock-right, dock-top and dock-bottom targets, the in-canvas float and its corner resize (`home.drop_target.*`, `home.resizer.floating_corner`), and UCC-144's Pop Out into the in-canvas float layer. `home.chat.pop_out` stays as the Pop out producer of `cmd.panel.undock` with `chat`, into a window; `home.resizer.chat` stays as the width producer of `cmd.workspace_layout.resize_surface` with `{ surface: chat, width }`; `home.chat.activity_toggle` stays `cmd.panel.switch` with `chat`.
 
@@ -709,16 +851,23 @@ canonical_text: >-
   resize, and UCC-144's Pop Out into the in-canvas float layer retire. Folding the chat to its narrow edge strip and
   opening it from there dispatch nothing and are never saved.
   ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
+  Amended 2026-10-10 (DL-187; D32, D40, the planning thread's ruling under D4): the left rail's Chat entry shows or
+  hides the column with cmd.panel.switch on every page without changing the page; the pop-out is never saved, so
+  after a restart the chat starts in its column and nothing is redocked at start; Keep the chat open in narrow
+  windows, in the chat header's menu and the title bar's Home options menu, is the typed local action
+  ui.chat_column.keep_open, view state with no receipt, no event and no Settings row.
 gui_related: true
 gui_classification_reason: "Owns the chat column's visible commands and retires the chat docking and floating controls."
 split_recommended: false
-depends_on: [DL-180, F3-637, F3-636, UCC-108, UCC-138, CS-061, UCC-200]
+depends_on: [DL-180, DL-187, F3-637, F3-636, UCC-108, UCC-138, CS-061, UCC-200]
 unblocks: [WM-090, UIW-040, PWIZ-035]
 acceptance_criteria:
   - "The chat's show and hide dispatch cmd.panel.switch with chat; Pop out and Dock back dispatch cmd.panel.undock and cmd.panel.redock with chat; a width drag dispatches one cmd.workspace_layout.resize_surface with surface chat on release."
   - "No producer moves the chat inside the window, docks it to another side or floats it inside the window."
   - "A cmd.panel_tab.*, move_surface, split or set_collapsed dispatch that names the chat refuses with invalid_target."
   - "No home panel, tab or dashboard dispatches cmd.panel.undock."
+  - "The left rail's Chat entry dispatches one cmd.panel.switch with chat on every page and never changes the page; after a restart the chat shows in its column and no pop-out state is restored."
+  - "Keep the chat open in narrow windows dispatches only ui.chat_column.keep_open from the chat header's menu and the Home options menu, with no receipt, no event and no Settings transaction."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -739,7 +888,12 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D3)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys, Chat; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage only)"
+  - "The planning thread's ruling of 2026-10-10 (pm-mail 1010211322-7b6c): the narrow-window pin lives on the chat's header menu, not in Settings"
 preserved_exact_tokens:
+  - "ui.chat_column.keep_open"
   - "ui.chat_column.pin_history"
   - "history_pinned"
   - "workspace.layout_changed"
@@ -757,6 +911,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (lead ruling L9): Registers the History pin as ui.chat_column.pin_history, writing history_pinned as view state without a workspace.layout_changed event."
+  - "Amended 2026-10-10 (DL-187; D32, D40, the planning thread's ruling under D4): the rail's Chat entry toggles the column on every page, the pop-out is never saved, and Keep the chat open in narrow windows becomes the typed local action ui.chat_column.keep_open instead of a Settings write."
   - "Retired 2026-10-09 (DL-180): the chat grab, the dock drop targets, the in-canvas float and its corner resize, and UCC-144's Pop Out generalization to editor panels, Chat and Dashboard."
 owner_hints:
   - Plans/UI_Command_Catalog.md

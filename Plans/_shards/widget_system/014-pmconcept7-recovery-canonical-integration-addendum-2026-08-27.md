@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1229-L1686
+Source lines: L1250-L1743
 
-Source SHA256: `ae1a346a95abc142404430e55e5bd909f9f0be7eeacc6831cfbb0a4c39092a5e`
+Source SHA256: `9572a88139c37c5eb4fe22b053754299de9f535b4f3066bb05214f490f7b3413`
 
 ---
 
@@ -213,7 +213,11 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Usage and Dashboard widgets share one transactional direct-manipulation contract. Pickup snapshots the
+  Usage and Dashboard widgets share one transactional direct-manipulation contract. Amended 2026-10-10 (DL-186):
+  every dashboard board is a board of the Usage board engine (WS-030), so wherever this unit says Usage board, Usage
+  move, Usage resize, Usage board gravity or the current Usage room, it holds alike on the Usage page's board and on
+  every dashboard board, whose one room is the board itself; the Dashboard-only rules below, its frozen-peer resize
+  and its own settlement, are retired. Pickup snapshots the
   stable widget identity, committed order, and measured painted physical column/row footprint. Usage pointer resize
   installs a real in-flow placeholder initialized from that footprint, lifts a fixed-position preview, and then
   advances both the placeholder and lifted card to each last-painted supported footprint while visibly and
@@ -232,8 +236,9 @@ canonical_text: >-
   name, or custom size, and its width x height in tracks and rows, while obstructed peers reflow live; on release
   the card morphs into place without overshoot and the cards gravity moves then float up into their settled
   places; every cancel path glides the card and its peers back to the snapshot. Under reduced
-  motion each of these moves is instant. Dashboard resize retains its measured-footprint
-  placeholder and frozen peers. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
+  motion each of these moves is instant. Dashboard resize retained its measured-footprint
+  placeholder and frozen peers until 2026-10-10, when DL-186 retired it: a dashboard board resizes as the Usage
+  board does. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
   measured-footprint in-flow placeholder, and derives stable two-dimensional slot candidates from the frozen
   grid plus the stable before/after widget identities in the committed-order snapshot. Candidate coverage includes
   empty same-footprint cavities and lower rows rather than only positions adjacent in DOM order. Pointer targeting
@@ -258,7 +263,8 @@ canonical_text: >-
   gravity moved, written once under its one receipt, with no per-peer command and no second gravity commit. Every Usage commit path applies the same
   gravity inside its own single command: pointer and keyboard move and resize, a size-picker preset (WS-017), and
   hiding or showing a card through `cmd.widget.remove` or `cmd.widget.add`. Tidy, chosen from a card's menu or the
-  Customize panel, is the explicit full repack of the current Usage room: the cards shown at the current disclosure
+  Customize panel, is the explicit full repack of the current Usage room (on a dashboard, its board, where every
+  widget placed is shown at the deepest level, `diagnostics`): the cards shown at the current disclosure
   level take their first-fit places upward in reading order (their columns may change), then the cards of other
   levels and hidden cards take places below them. Tidy commits as one settled layout transaction through exactly
   one existing `cmd.widget.move` that carries the optional typed `arrange` field `{ mode: "tidy", detail }`
@@ -270,8 +276,10 @@ canonical_text: >-
   `arrange` is an ordinary move. The settled result carries every card Tidy moved, under one receipt, one settled
   write, and one board settlement; there is no per-card move command and no Tidy command. A Tidy that would move
   nothing, which the surface knows by computing the same deterministic repack, dispatches nothing, and an owner
-  rejection leaves the pre-Tidy layout in place. Gravity and Tidy are Usage board behaviour; Dashboard keeps its
-  own settlement. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
+  rejection leaves the pre-Tidy layout in place. Gravity and Tidy are Usage board behaviour, and since 2026-10-10
+  (DL-186) every dashboard board is a Usage board, so gravity and Tidy apply on every board, the Usage page's and
+  each dashboard's, each in one settled transaction as stated above; the earlier line that Dashboard keeps its own
+  settlement is retired. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
   target, a pre-dispatch validation failure, or an unchanged release/drop restores the committed state and
   dispatches nothing. Once a changed action has dispatched, owner rejection or persistence-adapter failure retains
   exactly that one attempted command and its rejected/failed receipt, restores the authoritative visual state, and
@@ -285,20 +293,24 @@ canonical_text: >-
   resize, pointer reorder, or keyboard pickup is rejected before focus, capture, class, or DOM mutation and cannot
   clear the first owner's active-operation state. A Dashboard widget remains owned by
   its Home Dashboard wrapper/host even when that wrapper participates presentation-only in an outer grid; the
-  outer presentation grid never becomes the widget mutation owner.
+  outer presentation grid never becomes the widget mutation owner. Amended 2026-10-10 (DL-186): that owner is the
+  widget's board in its dashboard tab, and the panel holding the tab is the outer frame that never owns a widget
+  mutation; one widget transaction at a time holds across every board on the page, so starting a gesture on one
+  board first cancels any gesture still running on another.
 gui_related: true
 gui_classification_reason: This unit defines the complete pointer and keyboard lifecycle for visible widget resize and reorder.
-depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018]
+depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018, DL-186]
 unblocks: [WS-020]
 acceptance_criteria:
-  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Dashboard resize retains its measured placeholder and frozen peers.
+  - "Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Amended 2026-10-10 (DL-186): a dashboard board's resize is the Usage board's, live preview included; no board keeps a frozen-peer resize."
   - Command, receipt, event, and persistence spies remain empty until a changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation.
-  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology with Usage board gravity applied at settle, while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen. Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent.
+  - "Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology with Usage board gravity applied at settle, while Usage keyboard resize remains atomic (amended 2026-10-10, DL-186: on every board alike; no dashboard board keeps frozen resize peers). Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent."
   - A changed pointer release commits the last painted pointer intent without pointer-up re-hit-testing or retargeting, a changed keyboard reorder drop commits its selected insertion intent, and each supported keyboard-resize activation settles atomically; each changed terminal path emits exactly one existing `cmd.widget.resize` or `cmd.widget.move`, writes settled state once, triggers one board settlement, and emits no persisted domain event, including no `workspace.layout_changed`.
   - Escape, pointercancel, `lostpointercapture`, blur, invalid target, pre-dispatch validation failure, and unchanged release/drop restore the original state, emit no command, receipt, event, or persistence write, release capture, and remove every listener, class, ghost, placeholder, lifted state, preview style, and pending animation frame; an owner-rejected command or post-dispatch persistence-adapter failure instead retains exactly one attempted command and one rejected/failed receipt, restores authoritative geometry/order, emits no settled event or successful owner-store write, and performs the same complete transient cleanup.
   - Successful pointer and keyboard reorder restore the board's pre-transaction inline minimum-height value and leave scroll extent bounded to settled card geometry so repeated moves do not accumulate a blank tail; while one pointer or keyboard resize/reorder owns the board, every competing pointer, touch, pen, or keyboard acquisition is rejected before focus, capture, transient DOM, or class mutation, and cancelling the owner clears exactly that owner without leaving an operation flag.
   - Keyboard reorder supports pickup, directional move, drop, Escape, and blur; `aria-grabbed` is true only while pickup is active and returns to false after drop or cancellation, the picked card has a visible focus/outline state, and its two-dimensional candidate choice, live peer displacement, changed-only commit, rollback, and cleanup match pointer reorder without requiring a cloned pointer ghost or placeholder.
-  - The contract applies to Usage widgets and widgets owned by the Home Dashboard wrapper/host, even when that wrapper participates presentation-only in an outer grid; the outer grid does not own widget mutations, and moving or resizing the Dashboard surface itself remains Home workspace authority.
+  - "The contract applies to Usage widgets and widgets owned by the Home Dashboard wrapper/host, even when that wrapper participates presentation-only in an outer grid; the outer grid does not own widget mutations, and moving or resizing the Dashboard surface itself remains Home workspace authority. Amended 2026-10-10 (DL-186): the owner is the widget's board in its dashboard tab, the panel never owns a widget mutation, and moving or sizing the tab or its panel is the home panels' (F3-630)."
+  - "Amended 2026-10-10 (DL-186): on every dashboard board gravity, Tidy and the live move and resize previews behave exactly as on the Usage page, each changed action committing one settled transaction under one receipt; no dashboard board keeps its own settlement or a frozen-peer resize, and a gesture started on one board cancels a gesture still running on another."
   - "Usage board gravity: after any changed Usage move, resize, preset, hide, or show, no shown card other than the one the action placed has an empty hole directly above it that it could float into, reading order is unchanged among the cards gravity moved, cards of deeper disclosure levels and hidden cards move only to step down from a floated card, no unobstructed peer moves during the held preview, the active card settles where the preview showed it, the committed layout equals the last-painted layout with gravity applied, and exactly one command and one receipt carry the whole settled room."
   - "Usage move and resize previews: a move lifts the card and follows the pointer one to one with a landing placeholder in the exact target slot; a resize from every edge and corner shows a live snapped outline labelled with the preset name or custom size and its width x height; only obstructed peers slide or reflow live; release morphs into place without overshoot and the cards gravity moves then float up; every cancel path glides card and peers back to the snapshot; reduced motion makes each of these instant; and none of it dispatches or writes before release."
   - "Tidy repacks the current Usage room first-fit upward in reading order, shown cards first, and commits through exactly one existing cmd.widget.move carrying arrange { mode: tidy, detail }, whose instance_id is the card Tidy was chosen from (or the room's first card from Customize) at its committed place, whose repack the owner computes from the committed layout, and whose settled result carries every moved card, with one receipt, one settled write, and one board settlement; a Tidy that moves nothing dispatches nothing, and command, receipt, and persistence spies show no per-card move and no other command."
@@ -348,12 +360,21 @@ negative_constraints:
   - Do not commit Usage board gravity or Tidy as per-card commands, as a second commit after the gesture's own, or through a new command.
   - Do not let gravity change the reading order of the cards it moves or float a card of a deeper disclosure level or a hidden card into view.
   - Do not move an unobstructed peer during a held Usage preview, and do not let a Tidy request carry or dictate the repacked layout; the owner computes it.
-  - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize.
+  - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview.
+  - Do not keep a dashboard-only settlement, gravity rule, Tidy rule or frozen-peer resize beside the Usage board's (DL-186).
   - Do not remount reorder peers, replay their entrance animation, or black out the board during preview.
   - Do not retain preview-only board minimum height after either commit or rollback, or allow simultaneous widget-operation controllers.
   - Do not derive reorder placement from stale nominal spans, persist a measured preview footprint, or re-hit-test and retarget at pointer-up.
   - Do not let an outer presentation grid replace the Home Dashboard wrapper as widget mutation owner.
   - Do not claim the protected generated artifact passes this interaction contract without fresh browser execution and raw receipts.
+compatibility_only_notes:
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (canonical text): Dashboard resize retains its measured-footprint placeholder and frozen peers."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (canonical text): Gravity and Tidy are Usage board behaviour; Dashboard keeps its own settlement."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (end of the first acceptance criterion): Dashboard resize retains its measured placeholder and frozen peers."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (end of the reorder acceptance criterion): while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (negative constraint): Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): dashboard boards run the Usage board engine, so gravity, Tidy and the live previews apply on every board; the line that Dashboard keeps its own settlement, the frozen-peer Dashboard resize and the negative constraint against generalizing the Usage live resize to Dashboard resize are retired."
 owner_hints:
   - Plans/Widget_System.md
   - Plans/UI_Command_Catalog.md
@@ -374,6 +395,11 @@ or null; `preset_id` is a non-empty supported-preset string or null;
 and `committed_revision` is a non-negative integer. No field other than
 `slot_id` and `preset_id` is nullable. The record is versioned before this
 closed field set changes.
+
+Amended 2026-10-10 (DL-186): a dashboard board writes the same closed record,
+field for field. On the Usage page `host_id` is `usage`; on a dashboard board it
+is `home.dashboard`, and `room_id` is the board id, which never equals a Usage
+room id (WS-030). The field set is unchanged, so the record keeps its version.
 
 ### WS-020 - Widget Layout Namespace And Semantic Size Identity
 
@@ -413,18 +439,24 @@ canonical_text: >-
   with `host_id` `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2`
   (Plans/storage-plan.md#SP-330), and `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as
   migration inputs (WS-030).
+  Amended 2026-10-10 (DL-186): a dashboard board is a board of the Usage board engine and writes this record family
+  per project under `widget_layout:v1:<project_id>:<board_id>`; its envelope's `host_id` is `home.dashboard`, its
+  `project_id` is the board's real project, and each record's `room_id` is the board id. The 2026-10-09
+  `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>` was never written, and
+  `widget_layout:v1:dashboard` is converted into no board (WS-030).
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
-depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
+depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019, DL-186]
 unblocks: []
 acceptance_criteria:
-  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v2 (amended 2026-10-09, DL-180: Plans/storage-plan.md#SP-330 reads home_workspace_layout.v1 only as a migration input).
+  - "Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v2 (amended 2026-10-09, DL-180: Plans/storage-plan.md#SP-330 reads home_workspace_layout.v1 only as a migration input)."
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
   - Migration rejects, quarantines, or deterministically maps unsupported old geometry before it can override corrected current defaults.
   - "A settled size equal to one of the kind's presets stores that preset_id whatever path produced it, any other size stores null, a size-picker choice commits one cmd.widget.resize with the preset's geometry, a retired saved preset_id restores to the same-geometry preset or to null with snapped geometry, and a default_set_version change resets saved Usage geometry once while keeping visibility and configuration."
   - "A stored preset_id is the preset's table id, never its display name; a chosen preset, including one a keyboard resize landed on, keeps its preset_id after a reload and after a look change that moves the pitch or a fit height, re-resolving to that preset's current geometry rather than to a custom size."
+  - "Amended 2026-10-10 (DL-186): a dashboard board's records have the same closed field set, host_id home.dashboard and room_id the board id, under its project's widget_layout:v1:<project_id>:<board_id>; the Usage page's records keep host_id usage under widget_layout:v1:usage."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -457,11 +489,15 @@ preserved_exact_tokens:
   - committed revision
   - semantic tier
   - preset
+  - widget_layout:v1:<project_id>:<board_id>
+  - home.dashboard
 negative_constraints:
   - Do not create a second Widget layout store or a PM7-only persistence namespace.
   - Do not serialize transient interaction state.
   - Do not admit preview rectangles, pointers, ghosts, placeholders, animation, or drafts into UsageWidgetLayoutRecord.
   - Do not store a presentation label such as custom, or a preset's display name, as a preset_id, or restore a preset the kind no longer offers.
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): a dashboard board writes widget_layout:v1:<project_id>:<board_id> with host_id home.dashboard and room_id the board id; the 2026-10-09 per-board key and host_id were never written."
 owner_hints:
   - Plans/Widget_System.md
   - Plans/storage-plan.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8129-L8297
+Source lines: L8140-L8310
 
-Source SHA256: `ac5db31a609655be0a1d4a235a2791c59416f2fa023b205df2947fb49e42b72a`
+Source SHA256: `5258c8594defdcca2eb03557e1f2adcca4e4ffe26cc34f642a3b72a3dc3fc8d9`
 
 ---
 
@@ -56,6 +56,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
 
 Amended 2026-10-09 (DL-180): `cmd.dashboard.add_widget` is an alias of `cmd.widget.add` (its `dashboard_id` read as `board_id`) and its `dashboard.widget_added` effect is withdrawn (UCC-202). From the home layout `cmd.panel.undock` and `cmd.panel.redock` take only `chat`, into a window (UCC-203).
+
+Amended 2026-10-10 (DL-186): the alias's `dashboard_id` is read as the board id that `cmd.widget.add` carries in its existing `room` field; there is no `board_id` payload field (UCC-202, `Plans/Widget_System.md#WS-030`).
 
 ### Retained Product Onboarding command-era row lineage
 

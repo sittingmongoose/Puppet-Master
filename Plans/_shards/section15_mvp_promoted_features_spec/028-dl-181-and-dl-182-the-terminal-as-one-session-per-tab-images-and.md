@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12362-L13000
+Source lines: L12362-L13045
 
-Source SHA256: `c7daba5e9de471f9cc7f0ae04e3b552fa456af6f574dffc401dcdec300410e74`
+Source SHA256: `7f882b7d7cb54e4d79964c3a42af4deed1ade3ad6cfec681e0d228d619a46255`
 
 ---
 
@@ -42,6 +42,8 @@ SHA-256 `4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b`, and 
 settled rules and numbers, never its code names. Numbers the concept has not settled (native performance targets,
 effect parameters per look) are not set here. This compile is planning only: it creates no WorkNodes, NodeSeeds,
 executable queues, implementation files or runtime, security, visual or performance acceptance.
+
+Amended 2026-10-10 (DL-187): Jared's answers of 2026-10-10 (D36 to D39, `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9`) reach three of these units, with the terminal concept's build of them as source lineage only (`terminal-SPEC-01c5e78c42.md` in the same folder, SHA-256 `a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc`, sections 1, 2 and 7). SMPFS-180: a restored tab's notice says how many secrets were left out of its saved copy (D36), and the shell profiles are the shells installed on the computer plus SSH hosts (D39). SMPFS-181: saved images also give way under the total cap across terminals (D37). SMPFS-183: a program's notification raises a system notification while Puppet Master is in the background, at most one every 3 s per terminal, with a mute per terminal (D38). What is scrubbed from saved scrollback and how the 512 MiB total is trimmed are storage rules, `Plans/storage-plan.md#SP-332`.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-640, ContractName:Plans/storage-plan.md#SP-332, ContractName:Plans/Contracts_V0.md#CV-362
 
@@ -86,11 +88,17 @@ canonical_text: >-
   action. Explaining commands is the Teacher persona's job in the chat (`Plans/Personas.md` section 11.8), and
   `code.terminal.explanations` retires.
   Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  Amended 2026-10-10 (DL-187): when the saved copy left secrets out (D36, Plans/storage-plan.md#SP-332), the
+  restore notice ends "N secrets were left out of the saved copy."; the restored lines show each left-out secret's
+  label, while a program's output in the new session is shown as printed. The shell profiles a terminal can start
+  are the shells installed on the computer and the SSH hosts (D39); the "+" menu lists them
+  (Plans/FinalGUISpec.md#F3-632).
 gui_related: true
 gui_classification_reason: Owns the terminal's session and tab model that every visible terminal surface presents.
 split_recommended: false
 depends_on:
 - DL-181
+- DL-187
 - SMPFS-015
 - SMPFS-022
 - SMPFS-024
@@ -110,6 +118,7 @@ acceptance_criteria:
 - "The earlier session's restore outcome is restored_live only for a verified reattach, and otherwise restored_exited, restored_disconnected or restored_without_history; for local profiles in each of those three the tab has a new live session below the restored scrollback and is never left review-only."
 - "No active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the editor terminal stack, the Quadrant layout, the pane layout families or the four-section and four-pane caps."
 - "The terminal surface offers no AI action and no broadcast input; code.terminal.tab-role and code.terminal.explanations are retired."
+- "A restored tab whose saved copy left N secrets out ends its notice with N secrets were left out of the saved copy., and one whose copy left none out does not."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -131,8 +140,12 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11, D19)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 and 7; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (worklist)"
+- Plans/Decision_Log.md#DL-187
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D39)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 7: the restore notice's secrets sentence, the shell list; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-180"
+- "N secrets were left out of the saved copy."
 - "terminal:<session>"
 - "terminal_session_id"
 - "Close this terminal? <process> is still running and will be stopped."
@@ -155,6 +168,7 @@ compatibility_only_notes:
 - "Section 1.6's section, tab-pane grid, layout-family and bottom-default rules, SMPFS-138 and SMPFS-170 remain only as lineage."
 - "terminal_section_id, terminal_workgroup_id and terminal_pane_id survive only as read-only migration inputs (Plans/storage-plan.md#SP-332)."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (DL-187): the restore notice says how many secrets the saved copy left out (D36); shell profiles are the installed shells and SSH hosts (D39)."
 - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore waits for Reconnect / Close tab and never reconnects by itself."
 - "Amended 2026-10-10 (lead ruling L14, scope): L14 covers restore only; a session verified live is reattached whatever its profile (reattaching a live session reconnects to no remote host, SSYS-050), and Reopen closed tab, a user action, opens a new session in the same folder and profile with no Reconnect / Close tab prompt."
 - "Supersedes 2026-10-09 (DL-181): section 1.6's four-section, one-to-four-pane, quadrant, layout-family and bottom-default rules, SMPFS-138, the Pane Layout Family Transform and SMPFS-170's producer."
@@ -224,11 +238,16 @@ canonical_text: >-
   is the decision DL-035 left out, and DL-035's own-engine rule stands: an image decoder is not a terminal
   emulator, terminal parser or PTY-abstraction library, while every protocol parser, placement model and image
   store is Puppet Master's own code (SMPFS-184).
+  Amended 2026-10-10 (DL-187, D37): saved images also count toward the 512 MiB total of every terminal's saved
+  copy together (Plans/storage-plan.md#SP-332). When deleting other terminals' saved copies cannot make room for
+  a full per-terminal quota, the terminal being saved keeps fewer of its images, dropped oldest first by the rule
+  above and leaving their placeholder labels; text still never gives way to images.
 gui_related: true
 gui_classification_reason: Admits the image protocols the terminal tab draws and sets the limits and refusals users see.
 split_recommended: false
 depends_on:
 - DL-182
+- DL-187
 - SMPFS-180
 - SMPFS-061
 - SMPFS-109
@@ -247,6 +266,7 @@ acceptance_criteria:
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
 - "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
+- "When the 512 MiB total cannot be met by deleting other terminals' saved copies, the terminal being saved drops its oldest images first, each leaving its placeholder label, and keeps all of its text."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -269,6 +289,9 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+- Plans/Decision_Log.md#DL-187
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D37)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7, the total cap's last step; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-181"
 - "kitty graphics protocol"
@@ -305,6 +328,7 @@ compatibility_only_notes:
 - "The concept SPEC's section 7 sentence that images never enter saved scrollback does not hold for canon; the planning thread's rule of 2026-10-09 replaces it."
 - "The concept caps one transmission at 64 MiB of decoded payload; the native cap comes with the next SPEC installment."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (DL-187, D37): saved images count toward the 512 MiB total across terminals, and the terminal being saved gives up its oldest images when other copies cannot make room."
 - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds the placement limits, at most 4,096 placements per screen buffer (the oldest placements nothing hangs from drop first) and at most 10,000 cells per placement."
 - "Amended 2026-10-10 (lead ruling L15): Under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
 - "Replaces 2026-10-09 (DL-182): the image sentence of the DL-035 addendum's P3 row and SMPFS-158's negative constraint that image protocols are not approved."
@@ -492,11 +516,23 @@ canonical_text: >-
   degrade honestly when backing is pruned (SMPFS-023). Effects idle stop: the effects, their frame budget and the
   idle rule are `Plans/FinalGUISpec.md#F3-643`'s; on the engine side every effect goes idle within 10 s of the last
   output or keystroke, after which the engine draws no effect frame until the next output or keystroke (SMPFS-073).
+  Amended 2026-10-10 (DL-187, D38): system notifications. An OSC 9, OSC 777 notify or OSC 99 notification from a
+  terminal raises a system notification while Puppet Master is in the background; in the foreground it is
+  announced and an unfocused tab gets its attention mark, as above. At most one notification every 3 s per
+  terminal reaches the system; clicking one brings that terminal forward. Each terminal can be muted: the mute is
+  that tab's state, set by the typed local action ui.terminal.mute_notifications with no receipt and no event, and
+  kept with the tab (Plans/storage-plan.md#SP-330); a muted terminal raises no system notification. Where the
+  platform has no system notifications there is no mute and nothing is raised. Where the platform asks the user's
+  permission first (the web client's browser, for example), it is asked only after a notification has arrived, once, in an
+  inline notice when the user is back: Allow, Mute this terminal, Not now. The notification's text is the
+  program's text, shown as plain text, and a system notification is still no new notification family. The menu
+  rows and the notice's look are Plans/FinalGUISpec.md#F3-641's.
 gui_related: true
 gui_classification_reason: Owns the engine behaviour behind the terminal's visible marks, links, find, copy mode, bell and accessible buffer.
 split_recommended: false
 depends_on:
 - DL-181
+- DL-187
 - SMPFS-180
 - SMPFS-020
 - SMPFS-021
@@ -515,6 +551,8 @@ acceptance_criteria:
 - "OSC 8 link text never replaces the target: the hover tag shows the target, only Ctrl+click (Cmd+click) or a menu action opens it, file:// targets and detected paths pass FileSafe's path checks and open through the opening module, and a file:// link naming another host never opens as a local path."
 - "A detected path:line:col link passes FileSafe's path checks before it opens; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
 - "A bell or an OSC 9, OSC 777 or OSC 99 notification in an unseen terminal tab sets its attention mark and a polite announcement, creates no new notification family, and never also counts as OSC 9;4 progress."
+- "While Puppet Master is in the background, an OSC 9, OSC 777 notify or OSC 99 notification from an unmuted terminal raises one system notification, at most one every 3 s per terminal, and clicking it brings that terminal forward; a muted terminal raises none; the mute moves and reopens with its tab and takes no receipt or event; where the platform has none, there is no mute row and nothing is raised."
+- "Where the platform asks permission, the request comes only after a notification arrived, once, as an inline notice with Allow, Mute this terminal and Not now, never at startup."
 - "Copy mode offers character, line and block selection by keyboard while pointer selection stays linear; quick select copies, inserts or opens the labelled item."
 - "The accessible buffer shows the scrollback as plain text with each command as a heading and images as their text descriptions."
 - "Every effect, the Full CRT tier's ambient noise and flicker included, goes idle within 10 s of the last output or keystroke, and no effect frame is drawn after that until the next output or keystroke."
@@ -540,8 +578,13 @@ source_lineage:
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1 to 3 and 8; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (section 3, shell integration; concept lineage only)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (the 10 s effects idle stop, adopted by the lead as R34; concept lineage only)"
+- Plans/Decision_Log.md#DL-187
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 2: notifications, the 3 s limit, the mute and the permission notice; concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-183"
+- "ui.terminal.mute_notifications"
+- "Mute this terminal"
 - "OSC 133"
 - "OSC 8"
 - "OSC 7"
@@ -558,9 +601,11 @@ negative_constraints:
 - "Do not open a link from its visible text, from a plain click, or a file:// link naming another host as a local path."
 - "Do not create a new notification family from terminal output."
 - "Do not add an audible bell."
+- "Do not raise more than one system notification every 3 s per terminal, raise one from a muted terminal, or ask notification permission before a notification has arrived."
 compatibility_only_notes:
 - "The OSC 6973 sequences and the pmn parameter are the concept's lineage, not product names; the native engine chooses its own private sequence."
 stale_retired_dispositions:
+- "Amended 2026-10-10 (DL-187, D38): terminal notifications raise system notifications while Puppet Master is in the background, at most one every 3 s per terminal, with a per-terminal mute (lead ruling F5)."
 - "Closes 2026-10-09 (DL-181) the terminal audit's Section 15 gaps on OSC 8, bell and OSC 9, 777 and 99 notifications that SMPFS-162 cited as an existing policy."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md

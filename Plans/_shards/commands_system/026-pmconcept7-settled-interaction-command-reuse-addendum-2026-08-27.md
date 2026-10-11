@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4847-L4974
+Source lines: L4847-L4976
 
-Source SHA256: `cfdea69b67361f5f310f87e9aff085fcd3d9f3143c034918e27e4b4f73f175df`
+Source SHA256: `723a65f8374bade06ec9e41622ed83809b03ea67224b28a7f30283c26f6e13a1`
 
 ---
 
@@ -71,10 +71,11 @@ canonical_text: >-
   commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
   take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
+  Amended 2026-10-10 (DL-186): a dashboard tab's widget commits name the board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy commit as on the Usage page (WS-019); cmd.widget.reset_layout's optional set_id names the set a dashboard starts from (UCC-200).
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
-depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180]
+depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180, DL-186]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
@@ -131,6 +132,7 @@ negative_constraints:
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the v1 Home record and the Home rows here are superseded by UCC-200 on the v2 record."
+  - "Amended 2026-10-10 (DL-186): dashboard widget commits name the board in room and follow the Usage board's gravity and Tidy; cmd.widget.reset_layout gains set_id."
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md
