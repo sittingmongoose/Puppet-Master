@@ -3,58 +3,68 @@
   "owner_plan_units": [
     "F3-515",
     "ATS-037",
-    "ATS-040"
+    "ATS-040",
+    "CV-361"
   ],
   "source_lineage": [
     "Plans/FinalGUISpec.md#F3-515",
     "Plans/Automated_Testing_System.md#ATS-037",
     "Plans/Automated_Testing_System.md#ATS-040",
-    "Plans/event_payloads/workspace_layout_changed.schema.json"
+    "Plans/Contracts_V0.md#CV-361",
+    "Plans/Decision_Log.md#DL-188",
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
+    "Plans/event_payloads/workspace_layout_changed.schema.json (the 1.1.0 reader; the fixtures before 2026-10-10 used it)"
   ],
   "surfaces": [
     "Home workspace",
     "Usage widget grid"
   ],
-  "payload_schema": "Plans/event_payloads/workspace_layout_changed.schema.json",
+  "payload_schema": "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
   "valid": [
     {
-      "schema_id": "pm.event.workspace_layout_changed.v1",
-      "schema_version": "1.1.0",
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
       "project_id": "project:pm7",
       "workspace_tab_id": "home",
-      "command_id": "cmd.workspace_layout.move_surface",
-      "interaction_transaction_id": "interaction:move:1",
+      "change": "tab_opened",
+      "command_id": "cmd.panel_tab.open",
+      "actor": "user",
+      "interaction_transaction_id": "interaction:open:1",
       "origin": "home_workspace",
-      "correlation_id": "correlation:move:1",
-      "command_result_ref": "result:workspace:move:1",
+      "correlation_id": "correlation:open:1",
+      "command_result_ref": "result:workspace:open:1",
       "receipt_refs": [
-        "receipt:workspace:move:1"
+        "receipt:workspace:open:1"
       ],
       "prior_layout_revision": 41,
       "new_layout_revision": 42,
-      "mutation_kind": "move",
-      "affected_surface_instance_ids": [
-        "surface:editor:1"
+      "affected_tab_ids": [
+        "terminal:s1"
       ],
-      "source_host": "home_main",
-      "target_host": "dock_right",
-      "target_slot_index": 0,
-      "target_surface_instance_id": null,
-      "insertion_edge": "inside",
-      "commit_origin": "pointer_release",
-      "semantic_size_preset_id": null,
+      "affected_panel_ids": [
+        "panel:tools"
+      ],
+      "affected_split_ids": [],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [],
+      "commit_origin": "direct_control",
+      "migration_source_schema_id": null,
       "settled_layout_ref": "layout:home:42",
-      "settled_at_utc": "2026-08-27T00:00:00Z",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
       "settled_only": true,
       "preview_state_included": false,
       "persisted": true
     },
     {
-      "schema_id": "pm.event.workspace_layout_changed.v1",
-      "schema_version": "1.1.0",
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
       "project_id": "project:pm7",
       "workspace_tab_id": "home",
+      "change": "panel_resized",
       "command_id": "cmd.workspace_layout.resize_surface",
+      "actor": "user",
       "interaction_transaction_id": "interaction:size:1",
       "origin": "home_workspace",
       "correlation_id": "correlation:size:1",
@@ -64,19 +74,163 @@
       ],
       "prior_layout_revision": 42,
       "new_layout_revision": 43,
-      "mutation_kind": "resize_commit",
-      "affected_surface_instance_ids": [
-        "surface:dashboard:1"
+      "affected_tab_ids": [],
+      "affected_panel_ids": [
+        "panel:docs",
+        "panel:tools"
       ],
-      "source_host": "dock_right",
-      "target_host": "dock_right",
-      "target_slot_index": 0,
-      "target_surface_instance_id": "surface:dashboard:1",
-      "insertion_edge": null,
-      "commit_origin": "semantic_preset",
-      "semantic_size_preset_id": "wide",
+      "affected_split_ids": [
+        "split:root"
+      ],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [],
+      "commit_origin": "pointer_release",
+      "migration_source_schema_id": null,
       "settled_layout_ref": "layout:home:43",
-      "settled_at_utc": "2026-08-27T00:00:01Z",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    },
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "change": "chat_column_changed",
+      "command_id": "cmd.workspace_layout.resize_surface",
+      "actor": "user",
+      "interaction_transaction_id": "interaction:chat:1",
+      "origin": "home_workspace",
+      "correlation_id": "correlation:chat:1",
+      "command_result_ref": "result:workspace:chat:1",
+      "receipt_refs": [
+        "receipt:workspace:chat:1"
+      ],
+      "prior_layout_revision": 43,
+      "new_layout_revision": 44,
+      "affected_tab_ids": [],
+      "affected_panel_ids": [],
+      "affected_split_ids": [],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [
+        "width_px"
+      ],
+      "commit_origin": "pointer_release",
+      "migration_source_schema_id": null,
+      "settled_layout_ref": "layout:home:44",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    },
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "change": "tab_renamed",
+      "command_id": "cmd.panel_tab.rename",
+      "actor": "user",
+      "interaction_transaction_id": "interaction:rename:1",
+      "origin": "home_workspace",
+      "correlation_id": "correlation:rename:1",
+      "command_result_ref": "result:workspace:rename:1",
+      "receipt_refs": [
+        "receipt:workspace:rename:1"
+      ],
+      "prior_layout_revision": 44,
+      "new_layout_revision": 45,
+      "affected_tab_ids": [
+        "dashboard:dash-1"
+      ],
+      "affected_panel_ids": [
+        "panel:dash"
+      ],
+      "affected_split_ids": [],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [],
+      "commit_origin": "direct_control",
+      "migration_source_schema_id": null,
+      "settled_layout_ref": "layout:home:45",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    },
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "change": "tab_opened",
+      "command_id": "cmd.chat.plan.open_version",
+      "actor": "user",
+      "interaction_transaction_id": "interaction:plan:1",
+      "origin": "home_workspace",
+      "correlation_id": "correlation:plan:1",
+      "command_result_ref": "result:workspace:plan:1",
+      "receipt_refs": [
+        "receipt:workspace:plan:1"
+      ],
+      "prior_layout_revision": 45,
+      "new_layout_revision": 46,
+      "affected_tab_ids": [
+        "plan:plan-7"
+      ],
+      "affected_panel_ids": [
+        "panel:docs"
+      ],
+      "affected_split_ids": [],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [],
+      "commit_origin": "direct_control",
+      "migration_source_schema_id": null,
+      "settled_layout_ref": "layout:home:46",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
+      "settled_only": true,
+      "preview_state_included": false,
+      "persisted": true
+    },
+    {
+      "schema_id": "pm.event.workspace_layout_changed.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:pm7",
+      "workspace_tab_id": "home",
+      "change": "migrated_from_v1",
+      "command_id": null,
+      "actor": "system",
+      "interaction_transaction_id": null,
+      "origin": "home_workspace",
+      "correlation_id": "correlation:migrate:1",
+      "command_result_ref": "result:workspace:migrate:1",
+      "receipt_refs": [
+        "receipt:workspace:migrate:1"
+      ],
+      "prior_layout_revision": 40,
+      "new_layout_revision": 41,
+      "affected_tab_ids": [],
+      "affected_panel_ids": [
+        "editor_panel_1",
+        "dashboard"
+      ],
+      "affected_split_ids": [],
+      "created_panel_ids": [],
+      "removed_panel_ids": [],
+      "named_layout_id": null,
+      "chat_column_fields": [],
+      "commit_origin": "migration",
+      "migration_source_schema_id": "pm.home_workspace_layout.v1",
+      "settled_layout_ref": "layout:home:41",
+      "settled_at_utc": "2026-10-10T00:00:00Z",
       "settled_only": true,
       "preview_state_included": false,
       "persisted": true
@@ -133,24 +287,26 @@
       ]
     },
     {
-      "name": "mutation_kind_is_closed",
+      "name": "change_is_closed",
       "base_valid": 0,
       "patch": {
-        "mutation_kind": "preview_move"
+        "change": "preview_move"
       }
     },
     {
-      "name": "target_host_is_closed",
-      "base_valid": 0,
-      "patch": {
-        "target_host": "usage_overlay"
-      }
-    },
-    {
-      "name": "semantic_size_preset_is_closed",
+      "name": "v1_host_fields_forbidden",
       "base_valid": 1,
       "patch": {
-        "semantic_size_preset_id": "giant"
+        "target_host": "dock_right"
+      }
+    },
+    {
+      "name": "chat_column_fields_closed",
+      "base_valid": 2,
+      "patch": {
+        "chat_column_fields": [
+          "popped_out"
+        ]
       }
     },
     {
@@ -172,9 +328,30 @@
       "base_valid": 0,
       "patch": {
         "receipt_refs": [
-          "receipt:workspace:move:1",
-          "receipt:workspace:move:2"
+          "receipt:workspace:open:1",
+          "receipt:workspace:open:2"
         ]
+      }
+    },
+    {
+      "name": "actor_is_closed",
+      "base_valid": 0,
+      "patch": {
+        "actor": "robot"
+      }
+    },
+    {
+      "name": "schema_version_is_2_0_0",
+      "base_valid": 0,
+      "patch": {
+        "schema_version": "1.1.0"
+      }
+    },
+    {
+      "name": "change_command_mismatch",
+      "base_valid": 3,
+      "patch": {
+        "command_id": "cmd.panel_tab.close"
       }
     }
   ],

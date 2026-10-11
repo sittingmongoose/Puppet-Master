@@ -16,7 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 USAGE_ROOT = ROOT / "tests/fixtures/usage_gui"
 SHARED_ROOT = ROOT / "tests/fixtures/pm7_shared"
 USAGE_MATRIX = USAGE_ROOT / "golden/usage_gui_acceptance_fixtures.json"
-EVENT_SCHEMA = ROOT / "Plans/event_payloads/workspace_layout_changed.schema.json"
+# DL-188 (Jared, 2026-10-10, D42): workspace.layout_changed is registered at family revision 2.0.0, so the
+# PM7 fixtures validate against the 2.0.0 payload (Plans/Contracts_V0.md#CV-361). The 1.1.0 schema stays in place
+# as the reader of events already written, referenced by the v2 schema's compatibility reader.
+EVENT_SCHEMA = ROOT / "Plans/event_payloads/workspace_layout_changed_v2.schema.json"
+EVENT_V1_READER_SCHEMA = ROOT / "Plans/event_payloads/workspace_layout_changed.schema.json"
+# Aliases keep their own ids in the event (UCC-200, CS-101) but have no production wiring row of their own.
+WORKSPACE_EVENT_COMMAND_ALIASES = {"cmd.editor.close_tab"}
 EVENT_REGISTRY = ROOT / "Plans/event_family_registry.json"
 WIRING_MATRIX = ROOT / "Plans/Wiring_Matrix.production.json"
 COMMAND_FIXTURES = ROOT / "Plans/shared_runtime_command_contract_fixtures.json"
@@ -79,13 +85,18 @@ EXPECTED_USAGE_LAYOUT_FIELD_CONTRACT = {
     "configuration_refs": "sorted_unique_non_secret_string_array",
     "committed_revision": "integer>=0",
 }
+# Re-pinned 2026-10-10 for the 2.0.0 payload (DL-188): the ten 1.1.0 cases whose fields 2.0.0 keeps stay;
+# mutation_kind_is_closed, target_host_is_closed and semantic_size_preset_is_closed named 1.1.0 fields that 2.0.0
+# drops, and become change_is_closed, v1_host_fields_forbidden and chat_column_fields_closed; three cases are new:
+# actor_is_closed, schema_version_is_2_0_0 and change_command_mismatch (16 in all).
 EXPECTED_WORKSPACE_EVENT_INVALIDS = {
     "preview_state_forbidden", "settled_only_required", "persisted_required",
     "result_ref_required", "receipt_ref_required", "project_id_required",
-    "new_layout_revision_required", "mutation_kind_is_closed",
-    "target_host_is_closed", "semantic_size_preset_is_closed",
+    "new_layout_revision_required", "change_is_closed",
+    "v1_host_fields_forbidden", "chat_column_fields_closed",
     "layout_revision_must_advance", "workspace_command_family_required",
-    "exactly_one_receipt_required",
+    "exactly_one_receipt_required", "actor_is_closed", "schema_version_is_2_0_0",
+    "change_command_mismatch",
 }
 EXPECTED_TINY_CHART_FAMILIES = [
     {
@@ -472,7 +483,12 @@ def validate() -> dict[str, Any]:
 
     event_schema = load(EVENT_SCHEMA)
     Draft202012Validator.check_schema(event_schema)
-    workspace_command_enum = event_schema.get("properties", {}).get("command_id", {}).get("enum", [])
+    command_id_schema = event_schema.get("properties", {}).get("command_id", {})
+    workspace_command_enum = command_id_schema.get("enum", [])
+    for branch in command_id_schema.get("anyOf", []):
+        if isinstance(branch, dict) and isinstance(branch.get("enum"), list):
+            workspace_command_enum = branch["enum"]
+    workspace_command_enum = sorted(set(workspace_command_enum) - WORKSPACE_EVENT_COMMAND_ALIASES)
     wiring_entries = load(WIRING_MATRIX).get("entries", {})
     workspace_event_producers = sorted({
         entry.get("ui_command_id")
@@ -514,6 +530,12 @@ def validate() -> dict[str, Any]:
         failures.append({"error": "workspace_event_family_count", "actual": len(workspace_families)})
     elif workspace_families[0].get("payload_schema_id") != event_schema.get("$id"):
         failures.append({"error": "workspace_event_schema_registry_mismatch"})
+    elif workspace_families[0].get("family_revision") != event_schema.get("properties", {}).get("schema_version", {}).get("const"):
+        failures.append({"error": "workspace_event_family_revision_mismatch"})
+    v1_reader = load(EVENT_V1_READER_SCHEMA)
+    reader_ref = event_schema.get("$defs", {}).get("workspace_layout_changed_v1_compatibility_reader", {}).get("$ref")
+    if reader_ref != v1_reader.get("$id"):
+        failures.append({"error": "workspace_event_v1_reader_missing", "expected": v1_reader.get("$id"), "actual": reader_ref})
     if compaction:
         failures.append({"error": "forbidden_context_compaction_event_family", "events": compaction})
 
