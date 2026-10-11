@@ -2112,6 +2112,10 @@
     var info = null;
     try { info = PMU.data.live.hourStep(overlay, PMU.clock.now(), H.step); } catch (error) { console.error('[pm-usage] demo hour', error); }
     hosted((info && info.shares) || [], info && info.lead);   /* a shown dashboard patches every step (D10 P12) */
+    /* the Usage page hidden keeps nothing for it, as a hosted beat does (advance(null, true)): its next arrival builds
+       from the overlay as it is then, so a step queued here was patched and pulsed again on its first beat (review
+       2026-10-10) */
+    if (!usageShown()) { syncHead(); return; }
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     ((info && info.shares) || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = ((info && info.lead) || []).concat(p.lead);

@@ -962,6 +962,13 @@
       var n = 0, mine = bk(''), keys = ids == null ? Object.keys(picked).filter(function (k) { return mine ? k.indexOf(mine) === 0 : k.indexOf('|') < 0; }) : [].concat(ids).map(bk);
       keys.forEach(function (k) { if (picked[k]) { delete picked[k]; n++; } });
       return n;
+    }); },
+    /* a board's held preset ids forgotten (40-board.js setProject, review 2026-10-10), the same way: the old project's
+       holds of widgets the new project's records lack would size them when they are added there. Returns how many. */
+    forgetHeld: function (ids, b) { return inBoard(b, function () {
+      var n = 0, mine = bk(''), keys = ids == null ? Object.keys(held).filter(function (k) { return mine ? k.indexOf(mine) === 0 : k.indexOf('|') < 0; }) : [].concat(ids).map(bk);
+      keys.forEach(function (k) { if (held[k]) { delete held[k]; n++; } });
+      return n;
     }); }
   };
 
