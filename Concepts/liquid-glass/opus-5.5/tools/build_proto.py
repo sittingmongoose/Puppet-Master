@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+"""build_proto.py - the Liquid Glass concept page: published PMConcept7 plus src/lg.css, src/lg.js and the baked wallpapers.
+
+    python3 build_proto.py --out <path.html> [--base Concepts/PMConcept7.html]
+
+Writes only --out (never into Concepts/: the concept page is a review copy for the share folder, PMConcept7 itself is
+published only by opus-5.5 build.py). Adds <style id="lg-css"> before </head> and <script id="lg-js"> before </body>,
+each exactly once, and stamps data-concept-model="Opus 5.5" on the page as the concept rules ask.
+"""
+import argparse
+import hashlib
+import json
+import pathlib
+import subprocess
+import sys
+
+HERE = pathlib.Path(__file__).resolve().parent
+PKG = HERE.parent
+CONCEPTS = PKG.parent.parent
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--out', required=True)
+    ap.add_argument('--base', default=str(CONCEPTS / 'PMConcept7.html'))
+    a = ap.parse_args()
+    base = pathlib.Path(a.base).read_text(encoding='utf-8')
+    for mark in ('id="lg-css"', 'id="lg-js"'):
+        if mark in base:
+            sys.exit(f'base already carries {mark}')
+    walls = json.loads((PKG / 'src' / 'wallpapers.json').read_text())['images']
+    css = (PKG / 'src' / 'lg.css').read_text(encoding='utf-8')
+    js = (PKG / 'src' / 'lg.js').read_text(encoding='utf-8')
+    chk = subprocess.run(['node', '--check', str(PKG / 'src' / 'lg.js')], capture_output=True, text=True)
+    if chk.returncode:
+        sys.exit('lg.js: ' + chk.stderr)
+    vars_ = ''.join(f"  --lg-{k.replace('_', '-')}: url({v['data_uri']});\n" for k, v in sorted(walls.items()))
+    style = f'<style id="lg-css">\nhtml {{\n{vars_}}}\n{css}</style>\n'
+    script = f'<script id="lg-js">\n{js}</script>\n'
+    if base.count('</head>') != 1 or base.count('</body>') != 1:
+        sys.exit('base: expected one </head> and one </body>')
+    out = base.replace('</head>', style + '</head>', 1).replace('</body>', script + '</body>', 1)
+    out = out.replace('<html lang="en"', '<html lang="en" data-concept-model="Opus 5.5"', 1)
+    p = pathlib.Path(a.out)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(out, encoding='utf-8')
+    print(f'{p} {len(out):,} bytes (+{len(out) - len(base):,}) sha256 {hashlib.sha256(out.encode()).hexdigest()[:16]}')
+
+
+if __name__ == '__main__':
+    main()
