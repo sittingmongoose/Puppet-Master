@@ -31,6 +31,8 @@ The editable fix is a guarded `PATCHES` entry in `Concepts/onboarding/opus-5.5/t
 
 The measured review fixture is built from `origin/concept/home-terminal-20261009` at `dbffa7a1b20838b04b9b66badf1835d2bc206296` using its `Concepts/home-redesign/tools/build_home.py --out` pipeline. The after fixture copies only the three changed source files from the fix into that same snapshot and rebuilds. The two resulting inputs differ only in the `pm7-t23-shell-adjustments` and `pm-rail-js` script blocks. All non-script HTML and all 36 style blocks are byte-identical. The rail patch also passes `git apply --check` against the source files at the coordinator's rail answers pin, `a25b885a3e1dc9052eb8c1c8dd15fced12489406`.
 
+This terminal review fixture replaces the original workspace and has zero `.pm-home-surface` nodes at boot. Its density timing measures the repeated document search during typing, with no new surface to enroll. The inserted-surface behavior cases and the direct base-page check below provide separate enrollment coverage.
+
 Chrome `155.0.8059.39` runs on Nas1 through `agent-browser start --url` and Playwright `chromium.connectOverCDP`. Each of the six alternating before/after trials owns a fresh Chrome profile, so persisted terminal history cannot affect the comparison. The viewport is 1400 × 900, `?o55=off`, dark mode, normal motion. The page loads at normal CPU speed; CDP applies 4× CPU emulation during the recorded interaction. The first running PMT terminal receives `ls -la`, `cat Cargo.toml`, and `git log --oneline -10`, with 15 ms typing delay and a 900 ms wait after each Enter. All trials execute exactly those three commands successfully, exit 0, and record no page errors.
 
 The harness captures DevTools timeline/stack events and a separate 200 µs CPU profile. The retained tools record categories, throttle, browser version, command receipts, input hashes and long-task entries. Nas1 uses intentional software rendering; no video or GPU performance measurement was taken. These figures are not directly comparable to a P1000 timing run.
@@ -60,6 +62,10 @@ The remaining differences are low-level raster changes around blurred surfaces, 
 
 The paired behavior check passes **23/23 cases** with identical recorded state and animation calls, and no page errors. It covers direct/subtree count insertion; character-data, child-list and nested text changes; numeric/non-numeric transitions; nested count order; unmount/remount; surface insertion; compact/expanded/tall resizing; reparent/reinsert; and preset-triggered density updates. This verifies the dynamic paths that reduced-motion stills cannot show.
 
+The later `home-panels` reply (`1011084726-4ac2`) confirms that workspace `applySurface` can add the surface class to an already-connected base node without inserting it. A direct browser boot probe verifies the required ordering: the workspace's earlier `DOMContentLoaded` listener completes `renderLayout` before the shell-adjustments listener calls `installHomeDensity`. The fix retains that initial full scan. On both base inputs it enrolls all five connected surfaces (`bottomPanel`, `chatPanel`, `dashboardView`, `editorPane1`, `editorPane2`), including the hidden second editor, with zero missed targets and identical density state. The source patch needs no change for this path.
+
+An additional **10-pair base-page matrix is fully pixel-exact**, covering Basic, Friendly, Glass, Retro and NieR in light/dark. It uses the same viewport, reduced-motion, settled-font and viewport-refit procedure. Eight pairs match in the first pass. The two initial NieR exceptions affect only the live `pm6DashCooldown` glyphs; recapturing with that specific demo interval paused on both inputs makes both pairs exact. No text normalization, mask or RGB tolerance is used. The base inputs also have identical non-script markup and all 33 style blocks. The before input is generated PMConcept7 at main `618fd35e0e`, SHA-256 `3486e2ee39a40d0b9942d3ca50926bea985e2b6a1f1b3935d6527afc55d89fbb`; the after input is the fix's generated PMConcept7, SHA-256 `27ad7191eb445b628750b6c0a7ef1b241b918ebae62e9a9322e768050a3c36a3`. The original 110-pair terminal review matrix retains its four explicit raster exceptions.
+
 The branch's generated outputs were produced by the documented commands, never hand-edited:
 
 ```sh
@@ -69,7 +75,7 @@ python3 Concepts/leftrail-redesign/tools/build_rail.py
 
 Both corresponding `--check` commands and `git diff --check` pass. Generated `Concepts/PMConcept7.html` and `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` have SHA-256 `27ad7191eb445b628750b6c0a7ef1b241b918ebae62e9a9322e768050a3c36a3`; `Concepts/LeftRailPMConcept7.html` has `579f89832da80debe49f6dbda741c458261739def3f9f437b4dcdf349a15f984`. These branch outputs are distinct from the retained terminal review inputs used for the paired traces.
 
-Raw evidence is retained under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/`. The [SHA256SUMS manifest](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/SHA256SUMS) binds all 38 retained files; its own SHA-256 is `47fffb0dbc6232680a9b82086207b01d6454d603cadd2554268dd39edb419b88`.
+Raw evidence is retained under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/`. The [SHA256SUMS manifest](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/SHA256SUMS) binds the original 38-file bundle; its own SHA-256 is `47fffb0dbc6232680a9b82086207b01d6454d603cadd2554268dd39edb419b88`. The boot follow-up has a separate manifest below. All original evidence is unchanged.
 
 | DevTools raw trace path | SHA-256 |
 |---|---|
@@ -92,4 +98,12 @@ Raw evidence is retained under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-long
 
 The decompressed before input has SHA-256 `acc418e933946d69f2d0b04133ea232068467852dab7cc1f9e54cf1d0d880787`; the after input has `8f3539b750e90b734eee35d92d28f30855e83145f580ac34c42e1a7351b93349`. CPU profiles, per-trial metadata and exact replay tools are covered by the manifest. All experiment runtime and raw captures remain outside the repository.
 
-All eight owned browser sessions are stopped and their profiles removed. The temporary experiment snapshot, environments, discarded runs, scratch captures and browser logs are deleted. The mailbox waiter remains armed for the coordinator's publish notice.
+| Boot follow-up evidence path | SHA-256 |
+|---|---|
+| [boot-followup/SHA256SUMS](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/boot-followup/SHA256SUMS) | `77f76156bca09c9e948cd9be3f0187fd4c7692b5783a1f4f6cc85e182fcdbce9` |
+| [boot-followup/boot-check.json](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/boot-followup/boot-check.json) | `04a53971eb78c721365f617e7f86f99c8b75a40ef3f93754c200b131723d388a` |
+| [boot-followup/base-source-proof.json](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/boot-followup/base-source-proof.json) | `80d822729c2cd0f110372838bb229486ee9a132f2d27b8c19bebae68cb4bcb47` |
+| [boot-followup/base-visual-final.json](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/boot-followup/base-visual-final.json) | `e2c695eb35aab16ed0430d880962fa5b9929d57c998e27d2a25e1559f1cc3865` |
+| [boot-followup/base-screenshots.tar.gz](/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-longtask-perf-20261011/boot-followup/base-screenshots.tar.gz) | `733703178f27c91ea37831df2080b68cc89ce7daf3764ee3c9dc0da1594644b5` |
+
+All owned browser sessions are stopped and their profiles removed. The temporary experiment snapshots, environments, discarded runs, scratch captures and browser logs are deleted. The mailbox waiter remains armed for the coordinator's publish notice.
