@@ -1,0 +1,16 @@
+/* No pills outside Settings' own panel (Jared 2026-10-10; cards NP-CHOICE and NP-SCOPE, approved as presented; the rule
+   is DL-184 / F3-648). Settings' panel is in src/settings/styles.d/91-no-pills.css; corners in 06-corners.css. */
+
+/* ── Joined choice row: the title-bar theme menu's Light / Dark / Auto ─────────────────────────────────────────────
+   The cells share one rectangle with thin dividers; the chosen cell is filled on its own box with the inner corner.
+   Retro and NieR show the chosen cell in reverse video. role=radio and the menu's keys are unchanged. */
+html[data-theme] .pm6-tt-modes { gap: 0; padding: 2px; border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .pm6-tt-mode { position: relative; border-radius: var(--pm-ctl-r-in) !important; }
+.pm6-tt-mode + .pm6-tt-mode::before {
+  content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border-light);
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+.pm6-tt-mode[aria-checked="true"]::before, .pm6-tt-mode[aria-checked="true"] + .pm6-tt-mode::before { opacity: 0; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-tt-mode[aria-checked="true"] { background: var(--text-primary); color: var(--surface); }
+/* the theme menu's family rows and the other title-bar menu rows: Friendly drew them as wide capsules */
+html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) !important; }

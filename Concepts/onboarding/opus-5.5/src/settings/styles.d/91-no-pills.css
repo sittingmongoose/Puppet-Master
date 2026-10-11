@@ -68,3 +68,7 @@ html[data-o55-nier="on"] #panel-settings .toggle.on::after { background-color: v
 html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { clip-path: none; opacity: 0; transition: opacity 160ms ease; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle.on::before { opacity: 1; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::after { transition: background-color 160ms ease; scale: none; }
+
+/* ── Segment rows inside Settings: the look's rectangle, the chosen cell with the inner corner ────────────────────── */
+html #panel-settings .segmented { border-radius: var(--pm-ctl-r); }
+html #panel-settings .segmented button { border-radius: var(--pm-ctl-r-in); }
