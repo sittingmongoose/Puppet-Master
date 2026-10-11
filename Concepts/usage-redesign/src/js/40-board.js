@@ -221,9 +221,25 @@
      the body's pm-resizing is (RESIZING_BY: its handle; setOpFlags, opSync) and the data epoch that tells a hidden hosted
      board to refresh when it is shown again ---- */
   var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, RESIZING_BY = null, EPOCH = 0, LAYER = null, CATALOG = null, FORGET_WARNED = {};
-  /* the first drag's pre-warm (createBoard prewarm): once per look and Reduce Motion state on the page, by whichever board
-     shows first; ?pmu-prewarm=0 leaves it out (A/B measurements) */
-  var PREWARMED = {}, PREWARM_OFF = /[?&]pmu-prewarm=0(?:&|#|$)/.test(location.search);
+  /* the first drag's pre-warm (createBoard prewarm): once per board, look and Reduce Motion state on the page (a board's
+     own plates are what its first drag repaints: Home's dashboard warming at load left the Usage page's first drop cold,
+     P1000 2026-10-11); ?pmu-prewarm=0 leaves it out (A/B measurements) */
+  var PREWARM_OFF = /[?&]pmu-prewarm=0(?:&|#|$)/.test(location.search);
+  /* the pre-warm is for a GPU: a software-rendered page has no programs to compile and would only raster the copy on the
+     CPU. The page asks once, off the main thread, at load (O55.motion.softwareRendered: a worker's WebGL context; it reads
+     false while it is still asking, and PMH asks it again at 2.5 and 6.5 s and marks html[data-pmh-soft]); the Usage page's
+     own answer is html[data-pmu-soft], set once Usage shows. So the pre-warm waits until the page is 7 s old, when that
+     answer is in, and runs only where neither mark is set and the answer is a GPU (a second WebGL context of our own, made
+     and lost in a worker, left the next first drop cold on the P1000: 2026-10-11). null: not known yet. */
+  function gpuNow() {
+    var root = document.documentElement;
+    if (/[?&]pmu-soft=1\b/.test(location.search) || root.hasAttribute('data-pmu-soft') || root.hasAttribute('data-pmh-soft')) return false;
+    if (performance.now() < 7000) return null;
+    try {
+      if (window.O55 && O55.motion && typeof O55.motion.softwareRendered === 'function') return !O55.motion.softwareRendered();
+      return typeof softwareRendered === 'function' ? !softwareRendered() : false;
+    } catch (error) { return false; }
+  }
   /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
      and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
   var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
@@ -447,6 +463,7 @@
        the revision the last Start from or Reset widgets came from and the one it made ({ rev, at }); a restore to rev runs
        only while the board is still at `at`. The Usage board keeps neither. */
     var boardRev = 0, undoMark = null;
+    var PREWARMED = {};     /* look (+ ':rm') -> true: this board's first-drag pre-warm ran (prewarm) */
     var landing = null, outline = null;
     /* a hosted board builds and refreshes only while its host shows it (D10 3.3 show / hide); the Usage board always shows */
     var shownFlag = !hosted || bo.shown !== false, dead = false, dirty = false, sizeDirty = false, seenEpoch = EPOCH;
@@ -1715,7 +1732,7 @@
        the GPU had never drawn: a plate in a layer of its own with its lift shadow, then (in the drop, or mid-carry before
        frameMove kept the lifted plate from repainting) the same plate repainted at the lift's scale, which compiled the
        programs for every kind of mark in it, 300-600 ms of GPU, plus the landing's dashed slot and a slide. So once per
-       look (and per Reduce Motion state) and page, in an idle period after a shown board's build, a copy of a plate in view
+       look (and per Reduce Motion state) and board, in an idle period after a shown board's build, a copy of a plate in view
        (its content too, with no ids, inert and hidden from assistive tech) goes through a drag at 1 % opacity inside a
        copy of the board's class (so the board's own rules draw it): pressed (hovered, in its own layer at scale 1), lifted
        at scale 1, scaled, repainted as the drop repaints it, and slid once, while the landing shows on that plate's slot
@@ -1726,7 +1743,7 @@
     var prewarmT = 0, prewarmTries = 0, prewarmEl = null;
     function prewarmKey() { return lookKey() + (reduced() ? ':rm' : ''); }
     function prewarmSoon(ms) {
-      if (PREWARM_OFF || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
+      if (PREWARM_OFF || gpuNow() === false || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
       prewarmT = setTimeout(function () {
         prewarmT = 0;
         if (window.requestIdleCallback) requestIdleCallback(prewarm, { timeout: 2000 }); else prewarm();
@@ -1736,7 +1753,9 @@
       var key = prewarmKey();
       if (dead || prewarmEl || PREWARMED[key]) return;
       var usageOff = !hosted && !(rootEl && rootEl.closest && rootEl.closest('#panel-usage.active'));
-      var busy = !!gesture || !!ACTIVE || !current.mounted || !shownFlag || usageOff || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap || document.hidden ||
+      var gpu = gpuNow();
+      if (gpu === false) return;
+      var busy = gpu !== true || !!gesture || !!ACTIVE || !current.mounted || !shownFlag || usageOff || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap || document.hidden ||
         !boardEl || boardEl.hasAttribute('data-held') || boardEl.hasAttribute('data-film') || !current.cls || (PMU.film && PMU.film.moment && PMU.film.moment()) ||
         softGpu() || !scroll || !scroll.clientWidth;
       var cards = busy ? [] : cardsNow().filter(function (c) { return inView(c) && !c.hasAttribute('data-pending') && c.getAttribute('data-head') !== 'band' && c.querySelector(':scope > .pmu-cardbody > *'); });
