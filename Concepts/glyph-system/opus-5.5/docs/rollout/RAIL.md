@@ -1,7 +1,9 @@
 # Rollout spec: the left rail adopts the neon glyph set (pm7-glyphs, D44, GLY-3)
 
-Status: DRAFT for leftrail-polish-lead's review; the first surface of the rollout. Written against main's
-`Concepts/leftrail-redesign/`; rebased onto the rail lead's branch before a worker runs it if that lands first.
+Status: READY (Jared's GLY-3 decides the change; leftrail-polish-lead reviews the worker's diff). The first surface.
+Work in the worktree `~/pm-worktrees/pm7-glyphs-rail-20261011` (branch `concept/pm7-glyphs-rail-20261011`): it is the
+glyph branch plus the rail lead's `concept/leftrail-rail-answers-20261010`, which lands before the glyph rollout, so
+build on its versions of the rail files. Commit there with a clear message per step; never push; never edit main.
 
 ## What changes
 
@@ -29,7 +31,9 @@ per state everywhere.
    "Left rail" groups in `Concepts/glyph-system/opus-5.5/src/data/map.json`) to `PMG.icon(glyph, SIZE, role)`; a static
    size per class, no layout reads; fall back to the old drawing when `PMG.has` is false. `15-jj.js`'s own glyphs
    (the undo arrow and the jj marks) map the same way (`oplog` -> history).
-4. `src/concepts/d/d.css`: remove the rules that only style the old badges (`.d-gl .d-spin`, the masks,
+4. CSS: `d.css` is GENERATED: edit `src/concepts/d/css/*.src.css` (the status rules are in `50-status.src.css`, with
+   panel-specific ones in 74-search, 75-run, 76-git, 77-artifacts, 78-testing and 90-themes), then run
+   `python3 Concepts/leftrail-redesign/tools/build_d_css.py` (and `--check`). Remove the rules that only style the old badges (`.d-gl .d-spin`, the masks,
    `.d-gl[data-pulse]::after`) and the `data-d-st` colour rules that colour a glyph (the tone ink comes from the mark);
    keep every `data-d-st` rule that colours a word or a row. Keep `.d-gl` at 12 px.
 5. NieR (`src/css/40-nier.css`, kit 19-nier-parts.js hooks `.pmr-cur`, `.pmr-lock`): keep; the neon set's NieR
@@ -45,8 +49,12 @@ per state everywhere.
 
 ## Gates
 
-- `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7`, `--check`; the rail's own tools
-  (`Concepts/leftrail-redesign/tools/build_rail.py` and its checks) pass.
+- Regenerate, never text-edit, the generated pages: `python3 Concepts/leftrail-redesign/tools/build_d_css.py`,
+  `python3 Concepts/leftrail-redesign/tools/build_rail.py` (the review copy `Concepts/LeftRailPMConcept7.html`), then
+  `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7` and `--check`; `build_d_css.py --check`.
+- The rail's own checks in `Concepts/leftrail-redesign/tools/` (`parity.py`, `rail_boot.mjs`, `rail_perf.py`: read each
+  header for how to run it; browser checks run on the P1000, never more than one browser at a time on Nas1), before
+  and after; report every difference.
 - The rail lead's GPU acceptance on the P1000, before and after.
 - A GPU film (P1000, `agent-browser --record --codec h264`) of every rail panel (files, search, source, git, docker,
   testing, run, agents, artifacts) in all ten looks plus Reduced Motion, hovering items; frame strips of a live row
