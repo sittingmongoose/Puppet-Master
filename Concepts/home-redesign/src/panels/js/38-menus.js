@@ -31,7 +31,8 @@ function openIn(panelId, spec, newPanel) {
    Typing in the "+" field lists the matching entries themselves (by label and detail). An entry whose group the table
    does not know stays an inline link. Another kind groups its entries by adding a line here. */
 var SUB_GROUPS = PMW.SUB_GROUPS = {
-  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' }
+  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' },
+  dash: { label: 'Your dashboards', icon: 'dashboard', one: 'Your dashboard', keywords: 'dashboard board widgets custom', search: 'Find a dashboard' }
 };
 function subGroupRow(k, p, panelId, g) {
   var def = SUB_GROUPS[g.id];
@@ -315,10 +316,16 @@ menus.tab = function (tabId, anchor, at) {
     { id: 'split-down', label: 'Split down with this tab', icon: 'splitDown', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'bottom'); } }
   ].filter(Boolean);
   /* a kind's own rows (CONTRACT 3: tabMenu(state, tabId) -> items in api.menu's shape; missing or [] adds nothing) go
-     last, after a hairline: the terminal's notification mute (D38) */
+     last, after a hairline: the terminal's notification mute (D38). The state is the tab's as its serialize() gives it
+     now (the layout record keeps the state the tab opened with until the next load, so a mute toggled from this menu
+     would show unchecked the next time); a tab that is not mounted, or has no serialize, gives its saved state */
   var k = kindDef(rec.kind);
   if (k && typeof k.tabMenu === 'function') {
-    try { var extra = kindRows(k.tabMenu(rec.state || {}, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
+    var tabState = rec.state || {}, live = PMW.instances && PMW.instances[tabId];
+    if (live && live.instance && typeof live.instance.serialize === 'function') {
+      try { var now = live.instance.serialize(); if (now && typeof now === 'object') tabState = now; } catch (_) {}
+    }
+    try { var extra = kindRows(k.tabMenu(tabState, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
     catch (err) { try { console.error('[pm-home] the ' + rec.kind + ' tab menu rows failed', err); } catch (_) {} }
   }
   return menu.open(anchor, { id: 'tab:' + tabId, title: tabLabel(rec), rows: rows, width: 270, at: at || null });

@@ -350,9 +350,28 @@ function queueRecompute() {
 function commandCard() {
   var lines = ['     Running benches/analytics.rs', 'tenant_read/composite_index  time: [68.9 ms 71.2 ms 73.8 ms]', 'tenant_read/created_at_only  time: [471 ms 482 ms 495 ms]',
     '                             change: -85.2% (p = 0.00 < 0.05)'];
+  var openSpec = { kind: 'terminal', id: 'terminal:cmd-bench', session: 'cmd-bench', cwd: CWD, invocation: 'cargo bench' };
+  /* with the terminal in the build, the chat shows the terminal's own command card (PMT.card, DECISIONS.md D27); the
+     card below is the stand-in's fallback without it */
+  var T = window.PMT;
+  if (T && typeof T.card === 'function') {
+    try {
+      return T.card({ command: 'cargo bench', cwd: CWD, status: 'ok', exitCode: 0, elapsedMs: 45000, lines: lines, totalLines: 214, by: 'user',
+        onOpen: function (sp, el, e) {
+          goHome();
+          PM_HOME.open(Object.assign({}, openSpec, { label: 'cargo bench · api', by: 'user', where: e && e.altKey ? 'panel' : 'auto', background: !!(e && (e.ctrlKey || e.metaKey)) }));
+        },
+        onRerun: function (sp, el, e) {
+          goHome();
+          S.rerunN += 1;
+          PM_HOME.open(Object.assign({}, openSpec, { label: 'cargo bench · api', by: 'user', rerun: true, state: { rerun: S.rerunN }, where: e && e.altKey ? 'panel' : 'auto' }));
+          if (el && typeof el.update === 'function') el.update({ status: 'running', startedAt: Date.now(), exitCode: null, elapsedMs: 0 });
+          PMW.announce('Running cargo bench again in its terminal tab');
+        } });
+    } catch (err) { try { console.error('[pm-home] the terminal command card failed; the stand-in card shows', err); } catch (_) {} }
+  }
   var pre = h('pre', { class: 'pmw-sc-cmd-out', 'data-pmh': 'off', 'aria-label': 'Last lines of the output' }, lines.join('\n'));
   var status = h('p', { class: 'pmw-sc-cmd-exit is-ok' }, [stateMark('ok'), h('span', { text: 'Exit code 0' }), h('span', { class: 'pmw-sc-dim', text: ' · ran in 45s' })]);
-  var openSpec = { kind: 'terminal', id: 'terminal:cmd-bench', session: 'cmd-bench', cwd: CWD, invocation: 'cargo bench' };
   return card({ icon: 'terminal', kicker: 'Command · ' + CWD, cls: 'is-cmd', aria: 'Command cargo bench',
     titleEl: h('p', { class: 'pmw-sc-cmd-line' }, [h('span', { class: 'pmw-sc-dim', 'aria-hidden': 'true', text: '$ ' }), h('code', { text: 'cargo bench' })]),
     body: [pre, status],

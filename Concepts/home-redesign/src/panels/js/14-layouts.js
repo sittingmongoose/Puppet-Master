@@ -172,6 +172,7 @@ PMW.buildNamed = buildNamed;
 /* Saved layouts: the user's own trees (shape, sizes, each panel's tabs, lock and collapse). Applied, each tab still
    open goes back to its own panel; the rest are distributed like a named layout. */
 var SAVED_KEY = 'pm.home.panels.saved:v1';
+var NAMED_BOARDS_MAX = 64 * 1024;
 PMW.savedLayouts = function () { return store.get(SAVED_KEY) || {}; };
 PMW.saveNamed = function (name, layout) {
   function shape(n) {
@@ -199,7 +200,12 @@ PMW.saveNamed = function (name, layout) {
     if (PMW.dashboard && typeof PMW.dashboard.snapshot === 'function') {
       var bids = Object.keys(layout.tabs || {}).filter(function (id) { return id.indexOf('dashboard:') === 0; })
         .map(function (id) { return id.slice('dashboard:'.length); });
-      if (bids.length) all[name].boards = PMW.dashboard.snapshot(bids);
+      if (bids.length) {
+        /* at most 64 KB of board contents per named layout (canon, hpt-plans-lead 2026-10-10): a larger save keeps the
+           layout without them, and the save says so */
+        var boards = PMW.dashboard.snapshot(bids), bytes = JSON.stringify(boards).length;
+        if (bytes <= NAMED_BOARDS_MAX) all[name].boards = boards; else all[name].boardsSkipped = bytes;
+      }
     }
   } catch (_) {}
   return store.set(SAVED_KEY, all);

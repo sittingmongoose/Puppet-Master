@@ -121,8 +121,10 @@ model.removeTab = function (l, tabId, opts) {
     l.closed.push({ tab: model.stripLive(model.clone(rec)), panelId: p.id, index: i });
     if (l.closed.length > CLOSED_MAX) {
       var dropped = l.closed.splice(0, l.closed.length - CLOSED_MAX).map(function (c) { return c && c.tab && c.tab.id; }).filter(Boolean);
+      // removeTab runs on a commit's draft: the event goes out after the commit has landed (a microtask), so a listener
+      // reads the committed layout, and an entry still in the reopen list then (a rejected commit) is skipped there
       if (dropped.length && typeof bus !== 'undefined' && bus && bus.emit) {
-        try { bus.emit('closed-dropped', { ids: dropped }); } catch (_) {}
+        Promise.resolve().then(function () { try { bus.emit('closed-dropped', { ids: dropped }); } catch (_) {} });
       }
     }
   }

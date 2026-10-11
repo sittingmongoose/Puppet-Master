@@ -1587,10 +1587,14 @@
     var r = el.getBoundingClientRect(), a = app.getBoundingClientRect();
     return r.width > 0 && r.height > 0 ? { x: r.left - a.left, y: r.top - a.top, w: r.width, h: r.height } : null;
   }
+  /* o.layer: a layer of the caller's own instead of #pmuFlight (a dashboard's, 40-board.js: #pmuApp, and with it the
+     Usage page's flight layer, is hidden on Home), r measured from it; o.calm: under Reduce Motion the calm light
+     (calmAt) instead of none. The Usage page passes neither. */
   function lightAt(r, o) {
     o = o || {};
-    if (!r || reduced()) return null;
-    var layer = flightLayer(); if (!layer) return null;
+    if (!r) return null;
+    if (reduced()) return o.calm ? calmAt(r, o) : null;
+    var layer = o.layer || flightLayer(); if (!layer) return null;
     var box = H('i', 'pmu-film-at', layer);
     box.style.cssText = 'left:' + (r.x - 3).toFixed(1) + 'px;top:' + (r.y - 2).toFixed(1) + 'px;width:' + (r.w + 6).toFixed(1) + 'px;height:' + (r.h + 4).toFixed(1) + 'px';
     var a = flash(box, { tone: o.tone, noSweep: true, dur: o.dur });
@@ -1599,6 +1603,21 @@
     var b = !o.noSweep && !soft() ? (fam() === 'glass' ? glint(box, (o.delay || 0) + 120) : sweep(box, { delay: (o.delay || 0) + 120, dur: 650 })) : null;
     var lastA = b || a;
     if (lastA) lastA.finished.then(function () { later(function () { box.remove(); }); }, function () { box.remove(); }); else box.remove();
+    return box;
+  }
+  /* the calm light (Reduce Motion on a dashboard): the voice's own flash tint (Friendly warm, NieR's ink, a warn or crit
+     tone) rises to the flash's own strength and fades once over 1.2 s, opacity only: no sweep, no glint, nothing moves.
+     Element.animate directly, since PMU.motion.animate makes nothing under Reduce Motion; the Animation speed still
+     scales it (the look sheet's wrapper). */
+  function calmAt(r, o) {
+    var layer = o.layer || flightLayer(); if (!layer) return null;
+    var box = H('i', 'pmu-film-at', layer);
+    box.style.cssText = 'left:' + (r.x - 3).toFixed(1) + 'px;top:' + (r.y - 2).toFixed(1) + 'px;width:' + (r.w + 6).toFixed(1) + 'px;height:' + (r.h + 4).toFixed(1) + 'px';
+    box.setAttribute('data-voice', voice().name);
+    var g = H('i', 'pmu-film-flash', box), a = null;
+    if (o.tone) g.setAttribute('data-tone', o.tone);
+    try { a = g.animate([{ opacity: 0 }, { opacity: fam() === 'nier' ? 0.3 : 0.55, offset: 0.4 }, { opacity: 0 }], { duration: o.dur || 1200, easing: 'ease-in-out', fill: 'both' }); } catch (error) { a = null; }
+    if (a) a.finished.then(function () { later(function () { box.remove(); }); }, function () { box.remove(); }); else box.remove();
     return box;
   }
   /* the landing: target and flyer swap in one task (one frame), then the landing light on the target */
@@ -1842,7 +1861,9 @@
    Reduce Motion: every change final at once, no pulse. The viewer's choice (Live / Paused) is remembered; ?pmu-live=off
    pauses for one load (harnesses).
    Dashboards (D10 P12): every beat's share keys also go to the Home dashboards (PMU.boards.live.beat); a shown one patches
-   only the cards they match, a hidden one keeps them for its show. While the Usage page is hidden the beats go on, one
+   only the cards they match, a hidden one keeps them for its show; with the beat's lead keys it lights the lead in its
+   own layer (lightAt with o.layer, the calm light under Reduce Motion) and tells its kind, whose Live mark can pulse
+   (PMU.live.pulse). While the Usage page is hidden the beats go on, one
    per 3 ticks, only while a shown dashboard holds a Usage widget (and the tab shows): the deltas apply and the dashboards
    patch; the Usage board is left alone, since its next arrival builds it from the overlay as it is then. */
 (function () {
@@ -1910,10 +1931,11 @@
     S.hostTicks = 0;
     advance(null, true);
   }
-  /* a beat's share keys to the dashboards: a shown one patches the cards they match, a hidden one keeps them */
-  function hosted(keys) {
+  /* a beat's share keys to the dashboards: a shown one patches the cards they match, a hidden one keeps them; its lead
+     keys light the lead change on a dashboard as they do here */
+  function hosted(keys, lead) {
     var B = PMU.boards && PMU.boards.live;
-    if (B && keys && keys.length) { try { B.beat(keys); } catch (error) { console.error('[pm-usage] live boards', error); } }
+    if (B && keys && keys.length) { try { B.beat(keys, lead || []); } catch (error) { console.error('[pm-usage] live boards', error); } }
   }
   /* one step of the script: the deltas apply now; the dashboards hear it; the page patches now or, while held, at the end
      of the hold (hostedOnly: the Usage page is hidden and keeps nothing for it) */
@@ -1924,7 +1946,7 @@
     var info = null;
     try { info = L.apply(overlay, i); } catch (error) { console.error('[pm-usage] live apply', error); return null; }
     if (!info) return null;
-    hosted(info.shares);
+    hosted(info.shares, info.lead);
     if (hostedOnly) return info;
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     (info.shares || []).forEach(function (k) { p.shares[k] = true; });
@@ -1999,9 +2021,15 @@
   function pulse() {
     if (M.reduced()) return;
     var ring = document.querySelector('#pmuLiveCtl .pmu-livepulse'); if (!ring || !ring.getClientRects().length) return;
+    pulseRing(ring);
+  }
+  /* the pulse on a ring element: the Usage indicator's, or a dashboard kind's own Live mark (PMU.live.pulse, on the
+     board's 'beat' event); none under Reduce Motion */
+  function pulseRing(ring) {
+    if (!ring || M.reduced()) return null;
     var f = M.family();
-    if (f === 'retro' || f === 'nier') M.animate(ring, [{ opacity: 1 }, { opacity: 0 }], { dur: 240, easing: 'steps(2,jump-none)' });
-    else M.animate(ring, [{ transform: 'scale(.6)', opacity: 0.5 }, { transform: 'scale(2.2)', opacity: 0 }], { dur: 600, easing: 'cubic-bezier(.22,.8,.28,1)' });
+    if (f === 'retro' || f === 'nier') return M.animate(ring, [{ opacity: 1 }, { opacity: 0 }], { dur: 240, easing: 'steps(2,jump-none)' });
+    return M.animate(ring, [{ transform: 'scale(.6)', opacity: 0.5 }, { transform: 'scale(2.2)', opacity: 0 }], { dur: 600, easing: 'cubic-bezier(.22,.8,.28,1)' });
   }
 
   /* ---- the control in the rail head (8.5): dot + "Live" / ring + "Paused"; click toggles, the chevron opens the menu ---- */
@@ -2083,7 +2111,7 @@
     PMU.clock.advance(120000);
     var info = null;
     try { info = PMU.data.live.hourStep(overlay, PMU.clock.now(), H.step); } catch (error) { console.error('[pm-usage] demo hour', error); }
-    hosted((info && info.shares) || []);   /* a shown dashboard patches every step (D10 P12) */
+    hosted((info && info.shares) || [], info && info.lead);   /* a shown dashboard patches every step (D10 P12) */
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     ((info && info.shares) || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = ((info && info.lead) || []).concat(p.lead);
@@ -2124,6 +2152,10 @@
     sync: syncCtl,
     /* the tick subscription, asked for by a dashboard as it shows (40-board.js show): the demo engine boots after this
        script, and Usage may never be opened (D10 P12) */
-    wake: subscribe
+    wake: subscribe,
+    /* a dashboard's lead light and Live mark (D10 round two): the elements a lead key's reading sits in (the lead's
+       light fills the nearest of them, as here), and the indicator's pulse on a ring of the kind's own */
+    LEAD_HOST: LEAD_HOST,
+    pulse: pulseRing
   };
 })();

@@ -83,7 +83,11 @@ function visibleIn(root, sel) {
   for (var i = 0; i < els.length; i++) if (els[i].offsetParent !== null && els[i].getClientRects().length) return els[i];
   return null;
 }
-/* how far below its own place the stage has to start so that a card covers no strip, header row or chat header */
+/* the overlays a person works in that sit in a panel's top area: the terminal's Appearance popover and find bar, the
+   editor's find bar, the panels' own open menus, and anything a kind marks data-pmw-overlay while it is open */
+var OVERLAY_SEL = '.pmt-pop, .pmt-findbar, .pmw-ed-find:not([hidden]), [data-pmw-overlay]';
+/* how far below its own place the stage has to start so that a card covers no strip, header row, chat header or open
+   overlay in its column */
 function noticeDrop(host) {
   if (!homeIsPage() || !state.centre) return 0;
   var hr = host.getBoundingClientRect();
@@ -94,7 +98,17 @@ function noticeDrop(host) {
     if (!pr.width || x < pr.left || x > pr.right || pr.bottom < top || pr.top > top + 140) continue;
     var strip = visibleIn(panels[i], '.pmw-strip'), row = visibleIn(panels[i], '.pmw-hrow');
     var clear = Math.max(strip ? strip.getBoundingClientRect().bottom : pr.top, row ? row.getBoundingClientRect().bottom : 0);
+    var ovs = panels[i].querySelectorAll(OVERLAY_SEL);
+    for (var j = 0; j < ovs.length; j++) {
+      var orr = ovs[j].getClientRects().length ? ovs[j].getBoundingClientRect() : null;
+      if (orr && orr.width && x >= orr.left && x <= orr.right && orr.top < top + 140) clear = Math.max(clear, orr.bottom);
+    }
     want = Math.max(want, clear + 8);
+  }
+  var menus = doc.querySelectorAll('#pmw-overlay .pmw-pop');
+  for (var k = 0; k < menus.length; k++) {
+    var mr = menus[k].getClientRects().length ? menus[k].getBoundingClientRect() : null;
+    if (mr && mr.width && x >= mr.left && x <= mr.right && mr.top < top + 140) want = Math.max(want, mr.bottom + 8);
   }
   var chat = doc.getElementById('chatPanel');
   if (chat && !chat.classList.contains('hidden')) {
@@ -122,6 +136,14 @@ shell.installNotices = function () {
   new MutationObserver(function (list) {
     for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
   }).observe(stage, { childList: true });
+  // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
+  // later, once it has opened, and only while a card shows
+  var pending = 0;
+  function later() {
+    if (pending || !stage.firstElementChild) return;
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+  }
+  ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   applyDrop();
   return true;
 };

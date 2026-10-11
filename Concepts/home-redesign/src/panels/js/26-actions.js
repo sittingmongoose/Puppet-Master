@@ -114,11 +114,28 @@ PMW.updateTab = function (tabId, fields) {
   if (fields.dirty && rec.preview) PMW.keepTab(tabId);
   if (changed) {
     var p = model.panelOf(L(), tabId);
-    var el = p && render.panelEl(p.id);
-    if (el) PMW.strip.render(el, p, L(), { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() });
+    if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
   }
 };
+/* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
+   panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
+   which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */
+var stripDue = {}, stripRaf = 0;
+function stripSoon(panelId) {
+  stripDue[panelId] = true;
+  if (stripRaf) return;
+  stripRaf = requestAnimationFrame(function () {
+    stripRaf = 0;
+    var ids = Object.keys(stripDue), l = L();
+    stripDue = {};
+    var o = { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() };
+    ids.forEach(function (id) {
+      var p = model.panel(l, id), el = p && render.panelEl(id);
+      if (el) PMW.strip.render(el, p, l, o);
+    });
+  });
+}
 PM_HOME.update = function (tabId, fields) { PMW.updateTab(tabId, fields); };
 
 PMW.closeTab = function (tabId, opts) {
@@ -377,6 +394,23 @@ PMW.reopenClosed = function () {
   }
   return res.ok;
 };
+/* the boards a saved named layout puts back (P6): each board it saved, except a custom dashboard (dash-<n>) that the
+   applied layout does not hold (deleted since, whose Delete said its widgets cannot be brought back, or closed) or that
+   was saved in another project (the envelope's project_id: the same dash-<n> names another board here, which the
+   restore would overwrite). Home, Metrics and Monitoring come back as saved. */
+function namedBoards(boards) {
+  var l = L(), p = null, out = {};
+  try { p = PMW.dashboard.project ? PMW.dashboard.project() : null; } catch (_) { p = null; }
+  Object.keys(boards).forEach(function (id) {
+    var env = boards[id];
+    // board contents are per project (P5): an envelope saved in another project is never written here, a built-in
+    // board's included (that project's Home stays that project's); a custom one only while the layout holds its tab
+    if (env && env.project_id && p && env.project_id !== p) return;
+    if (/^dash-\d+$/.test(id) && !l.tabs['dashboard:' + id]) return;
+    out[id] = env;
+  });
+  return out;
+}
 PMW.applyNamed = function (name, opts) {
   opts = opts || {};
   var built = PMW.buildNamed(name, opts.fresh ? null : L());
@@ -391,7 +425,7 @@ PMW.applyNamed = function (name, opts) {
     PMW.settings.set('panels.layout.named', name);
     var def = PMW.NAMED[name] || PMW.savedLayouts()[name];
     if (def && def.boards && PMW.dashboard && typeof PMW.dashboard.restore === 'function') {
-      try { PMW.dashboard.restore(def.boards); } catch (_) {}
+      try { PMW.dashboard.restore(namedBoards(def.boards)); } catch (_) {}
     }
     announce((def && def.label ? def.label : name) + ' layout');
   }
@@ -404,7 +438,8 @@ PMW.saveNamedLayout = function (name) {
   var ok = PMW.saveNamed(name, L());
   pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.saveNamed, args: { name: name }, at: Date.now() });
   pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.saveNamed, outcome: ok ? 'applied' : 'rejected' });
-  if (ok) announce('Layout saved as ' + name);
+  var skipped = ok && (PMW.savedLayouts()[name] || {}).boardsSkipped;
+  if (ok) announce('Layout saved as ' + name + (skipped ? '. Its dashboards hold too much to keep with it, so applying it leaves their widgets as they are' : ''));
   return ok;
 };
 

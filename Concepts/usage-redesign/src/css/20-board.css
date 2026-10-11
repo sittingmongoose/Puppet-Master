@@ -333,10 +333,16 @@ html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transiti
 #panel-usage .pmu-board > .pmu-card[data-settling] { z-index: 20; }
 /* grabbing an edge (WOW-SPEC 3.12): the card lifts 2 px onto its hover shadow while the outline shows the snapped size */
 #panel-usage .pmu-board > .pmu-card[data-resizing] { z-index: 6; }
-#panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: translateY(-2px); transition: transform calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1); }
-#panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted])::before { opacity: 1; }
-html[data-theme^="retro"] #panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]),
-html[data-o55-nier="on"] #panel-usage .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: none; }
+/* the resizing plate's own lift reads only its data-resizing, not the board's data-op, which comes in the idle period
+   after the press (40-board.js setOpFlags), so the 2 px lift starts in the press's own frame. [data-cls] (every mounted
+   board has it) keeps the weight these rules had with [data-op], so they still win over the hover and Reduce Motion
+   rules they won over; the plate the pointer is on keeps z-index auto, as the board's hover rule above gave it (the
+   keyboard's resize, off the pointer, takes 6) */
+#panel-usage .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]):hover { z-index: auto; }
+#panel-usage .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]) { transform: translateY(-2px); transition: transform calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1); }
+#panel-usage .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted])::before { opacity: 1; }
+html[data-theme^="retro"] #panel-usage .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]),
+html[data-o55-nier="on"] #panel-usage .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]) { transform: none; }
 /* the resize release (E-3): the card's own surface steps aside for the morph surface; its content stays opaque */
 #panel-usage .pmu-board > .pmu-card[data-morphing] { background: transparent; border-color: transparent; box-shadow: none; transition: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
 #panel-usage .pmu-board > .pmu-card[data-morphing]::before, #panel-usage .pmu-board > .pmu-card[data-morphing]::after { opacity: 0; transition: none; }

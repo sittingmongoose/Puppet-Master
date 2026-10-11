@@ -401,7 +401,7 @@ PMW.tidyLinkRows = tidyLinkRows;
 menu.prompt = function (anchor, o) {
   var hnd = menu.open(anchor, { id: 'prompt', title: o.title, rows: [], width: 280, className: 'pmw-mprompt' });
   if (!hnd) return;
-  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off', 'data-pm-hover-visual-suppressed': 'true' });
+  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off', maxlength: o.maxLength || null, 'data-pm-hover-visual-suppressed': 'true' });
   var row = h('div', { class: 'pmw-mpromptrow' }, [input]);
   var btns = h('div', { class: 'pmw-mpromptbtns' }, [
     h('button', { type: 'button', class: 'pmw-btn', text: 'Cancel', onclick: function () { hnd.close({}); } }),

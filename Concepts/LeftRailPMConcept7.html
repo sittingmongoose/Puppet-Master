@@ -36289,6 +36289,17 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-sele
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--o55-nier-on-ink); opacity: 1; }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-stab[aria-selected="true"]:focus-visible::before { box-shadow: 0 0 0 2px var(--o55-nier-on-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-tool-sind { display: none; }
+/* The session names shorten last in every look (the dot keeps the state when the words go). The headers part sets the
+   row in spaced capitals, about a third wider, so in NieR the words go below 600 px of body (not 460), the paused-at
+   reference below 680 (not 640) and the buttons' words below 920 (not the row's 820); Retro's code face and Friendly's
+   face are a little wider, so their words go below 500. Measured on the two demo sessions at every 20 px. */
+@container pmw-body (max-width: 599.98px) { html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-sword { display: none; } }
+@container pmw-body (max-width: 679.98px) { html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg .pmw-hfact[data-id="at"] { display: none; } }
+@container pmw-body (max-width: 919.98px) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg > .pmw-hrow > .pmw-hrow-actions > .pmw-hbtn { padding: 0; width: 24px; }
+  html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tool-dbg > .pmw-hrow > .pmw-hrow-actions > .pmw-hbtn .pmw-hbtn-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@container pmw-body (max-width: 499.98px) { html:is([data-theme^="retro"], [data-theme^="friendly"]):not([data-o55-nier="on"]) .pmw-tool-sword { display: none; } }
 html[data-o55-nier="on"] .pmw-br-prompt { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmw-br-pbtn:first-child { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] :is(.pmw-br-hl, .pmw-br-hl.is-picked) { outline-color: var(--o55-nier-ink); }
@@ -36320,11 +36331,18 @@ html[data-motion="reduced"] .pmw-tool-list { transition: none; }
   .pmw-tool-list { transition: none; }
 }
 /* ---- panels/css/62-kind-dashboard.css ---- */
-/* The Dashboard tab kind (kinds/30-dashboard.js, D10 step two). The engine dashboards (Home, Metrics, Monitoring and
-   each Dashboard n) are Usage boards: their DOM under the stage is made by the Usage engine and styled by the Usage CSS,
-   so this file only gives them the stage (a column that fills the tab body under the header row). Two parts:
+/* The Dashboard tab kind (kinds/30-dashboard.js, D10 step two and round two). The engine dashboards (Home, Metrics,
+   Monitoring and each custom dashboard) are Usage boards: their DOM under the stage is made by the Usage engine and
+   styled by the Usage CSS, so this file gives them the stage (a column that fills the tab body under the header row)
+   and draws only what the kind adds around a board. Five parts:
    1. the quiet note a dashboard shows when it cannot run (no Usage engine in the build, an id the kind does not run).
    2. the Agents board, drawn here.
+   3. an empty board's invitation (round two P13: every new dashboard starts empty): a sketch, the words, Add widget and
+      Start from. The board stays laid out under it (visibility, not display), so its width and mount never change.
+   4. the Undo notice after a Start from (P4): the package's popover plate (.pmw-pop: each look's surface, line and
+      shadow) at the foot of the tab.
+   5. the Live mark and the demo time in the header facts (P12): the Usage page's Live indicator in each look's words
+      (Live, [LIVE], LIVE), one pulse per beat the board patches and none in between; static under Reduced Motion.
    D10 round two (P1): the page's own Home widgets (#dashboardView) are no longer used by any tab. The node stays parked
    and hidden in #panel-dashboard; no rule here names it.
    Sizes key on the tab body (@container pmw-body), never the window. NieR touches beyond colour are gated by their
@@ -36410,6 +36428,146 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-note-t { text
 /* Reduced Motion: nothing moves (the bar jumps to its value) */
 html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }
 @media (prefers-reduced-motion: reduce) { .pmw-dash-agent-fill { transition: none; } }
+
+/* ---- 3. an empty board ---- */
+.pmw-dash-stage[data-empty] > :not(.pmw-dash-empty) { visibility: hidden; }
+.pmw-dash-empty { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 24px 20px 32px; box-sizing: border-box; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.pmw-dash-empty[hidden] { display: none; }
+.pmw-dash-empty-col { max-width: 400px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+/* the sketch: five ghost plates on a three-track board (a number, a ring, bars, a number, and the slot Add widget fills) */
+.pmw-dash-empty-art {
+  --pmw-dash-ghost: color-mix(in srgb, var(--pmw-text-3) 50%, transparent);
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-auto-rows: 30px;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.pmw-dash-empty-tile {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border: 1px dashed color-mix(in srgb, var(--pmw-text-3) 55%, transparent);
+  border-radius: min(var(--pmw-radius), 6px);
+  background: color-mix(in srgb, var(--pmw-text) 3%, transparent);
+}
+.pmw-dash-empty-tile.is-wide { grid-column: span 2; }
+.pmw-dash-empty-tile.is-number { justify-items: start; padding: 0 7px; }
+.pmw-dash-empty-tile.is-number::before { content: ""; width: 24px; height: 2px; border-radius: 1px; background: var(--pmw-dash-ghost); }
+.pmw-dash-empty-tile.is-number::after { content: ""; width: 16px; height: 5px; border-radius: 1px; background: var(--pmw-dash-ghost); }
+.pmw-dash-empty-tile.is-wide.is-number::after { width: 38px; }
+.pmw-dash-empty-tile.is-ring::before { content: ""; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--pmw-dash-ghost); border-top-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
+.pmw-dash-empty-tile.is-bars::before {
+  content: "";
+  width: 18px;
+  height: 12px;
+  background:
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 0 100% / 4px 6px no-repeat,
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 7px 100% / 4px 12px no-repeat,
+    linear-gradient(var(--pmw-dash-ghost), var(--pmw-dash-ghost)) 14px 100% / 4px 9px no-repeat;
+}
+.pmw-dash-empty-tile.is-add { border-style: solid; border-color: color-mix(in srgb, var(--pmw-accent) 55%, transparent); background: color-mix(in srgb, var(--pmw-accent) 9%, transparent); color: var(--pmw-accent); }
+.pmw-dash-empty-tile .pmw-ico { width: 12px; height: 12px; }
+.pmw-dash-empty-t { margin: 0; max-width: 100%; font-size: 15px; line-height: 21px; font-weight: 620; color: var(--pmw-text); overflow-wrap: anywhere; }
+.pmw-dash-empty-sub { margin: 6px 0 0; max-width: 360px; font-size: 12.5px; line-height: 18px; color: var(--pmw-text-2); text-wrap: balance; }
+.pmw-dash-empty-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+@container pmw-body (max-height: 319.98px) { .pmw-dash-empty-art { display: none; } }
+@container pmw-body (max-height: 219.98px) {
+  .pmw-dash-empty { padding: 8px 12px; }
+  .pmw-dash-empty-sub { display: none; }
+  .pmw-dash-empty-acts { margin-top: 10px; }
+}
+
+/* ---- 4. the Undo notice (one class more than .pmw-pop, which places menus in the overlay) ---- */
+.pmw-dash > .pmw-dash-undo {
+  position: absolute;
+  top: auto;
+  left: 50%;
+  bottom: 16px;
+  z-index: 6;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  min-width: 0;
+  max-width: calc(100% - 24px);
+  padding: 5px 5px 5px 14px;
+  overflow: visible;
+  font-size: 12.5px;
+  line-height: 18px;
+}
+.pmw-dash-undo-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmw-text); }
+.pmw-dash-undo-btn {
+  flex: none;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px 0 9px;
+  border: 0;
+  border-radius: min(var(--pmw-radius), 8px);
+  background: color-mix(in srgb, var(--pmw-accent) 14%, transparent);
+  color: var(--pmw-accent);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pmw-dash-undo-btn:hover { background: color-mix(in srgb, var(--pmw-accent) 24%, transparent); }
+.pmw-dash-undo-btn:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
+.pmw-dash-undo-btn .pmw-ico { width: 14px; height: 14px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-dash-undo-btn { border-radius: min(var(--pmw-radius), 8px); }
+@container pmw-body (max-width: 419.98px) { .pmw-dash > .pmw-dash-undo { bottom: 10px; gap: 10px; padding-left: 12px; } }
+
+/* ---- 5. the Live mark and the demo time ---- */
+.pmw-dash { --pmw-dash-live: var(--pmw-ok); }
+.pmw-dash .pmw-hfact:is([data-id="live"], [data-id="hour"]) { flex: none; }
+.pmw-dash-live { display: inline-flex; align-items: center; gap: 6px; color: var(--pmw-text-2); font-weight: 550; }
+.pmw-dash-live-dot { position: relative; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--pmw-dash-live); }
+.pmw-dash-live-ring { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--pmw-dash-live); opacity: 0; pointer-events: none; }
+.pmw-dash .pmw-hfact[data-id="hour"] { color: var(--pmw-text); font-variant-numeric: tabular-nums; }
+.pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--pmw-accent); }
+
+/* Friendly: the Usage page's Live rose; Glass: the dot glows as the Usage page's does */
+html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #C2557A; }
+html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #E07BA0; }
+html[data-theme^="glass"] .pmw-dash-live-dot { box-shadow: 0 0 6px color-mix(in srgb, var(--pmw-dash-live) 70%, transparent); }
+/* the notice frosts what is under it as Glass frosts the package's menus (the same plate, blur and saturation) */
+html[data-theme^="glass"] .pmw-dash > .pmw-dash-undo { -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); }
+
+/* Retro: square plates and sketch, the code face, a block cursor after [LIVE] */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash { --pmw-dash-live: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dash-empty-tile, .pmw-dash-undo-btn, .pmw-dash > .pmw-dash-undo) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile::after { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-tile.is-add { background: transparent; border-color: var(--accent-lime); color: var(--accent-lime); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dash-empty-sub, .pmw-dash-undo-t, .pmw-dash-live) { font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-empty-t { font-family: var(--pm-font-code); font-weight: 600; letter-spacing: .02em; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--accent-lime); color: var(--accent-lime); font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live { gap: 3px; letter-spacing: .02em; color: var(--pmw-text); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-dot { order: 2; width: 6px; height: 11px; border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dash-live-ring { border-radius: 0; }
+
+/* NieR: ink and parchment; a diamond for the Live dot (the Usage page's), square corners with the square part */
+html[data-o55-nier="on"] .pmw-dash { --pmw-dash-live: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-empty-art { --pmw-dash-ghost: rgba(var(--o55-nier-ink-rgb), .38); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile { border-color: rgba(var(--o55-nier-ink-rgb), .45); background: rgba(var(--o55-nier-ink-rgb), .04); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile.is-add { border-color: var(--o55-nier-ink); background: rgba(var(--o55-nier-ink-rgb), .1); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-empty-tile.is-ring::before { width: 8px; height: 8px; border-radius: 0; border-top-color: var(--o55-nier-ink); transform: rotate(45deg); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmw-dash-empty-tile, .pmw-dash-undo-btn, .pmw-dash > .pmw-dash-undo) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-dash-empty-t { text-transform: uppercase; letter-spacing: .1em; font-size: 13px; }
+html[data-o55-nier="on"] .pmw-dash-undo-btn { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-undo-btn:is(:hover, :focus-visible) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-dash-live { font-family: var(--pm-font-code); font-size: 11.5px; letter-spacing: .08em; color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-dash-live-dot { width: 6px; height: 6px; border-radius: 0; transform: rotate(45deg); }
+html[data-o55-nier="on"] .pmw-dash-live-ring { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--o55-nier-ink); }
+
+/* Reduced Motion: the Live mark never pulses (a static dot), the notice and the sketch appear without moving */
+html[data-motion="reduced"] .pmw-dash-live-ring { display: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-dash-live-ring { display: none; } }
 /* ---- panels/css/63-kind-docs.css ---- */
 /* The Plan viewer (pmw-plan-) and Document (pmw-docu-) kinds: kinds/40-plan.js, kinds/42-document.js. They sit on the
    shared frames (45-frames.css) and the --pmw-* tokens, so every look follows; per-look rules at the end only where a
@@ -44563,10 +44721,16 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-card[data-lifte
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-settling] { z-index: 20; }
 /* grabbing an edge (WOW-SPEC 3.12): the card lifts 2 px onto its hover shadow while the outline shows the snapped size */
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-resizing] { z-index: 6; }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: translateY(-2px); transition: transform calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1); }
-:is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted])::before { opacity: 1; }
-html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]),
-html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-board[data-op] > .pmu-card[data-resizing]:not([data-lifted]) { transform: none; }
+/* the resizing plate's own lift reads only its data-resizing, not the board's data-op, which comes in the idle period
+   after the press (40-board.js setOpFlags), so the 2 px lift starts in the press's own frame. [data-cls] (every mounted
+   board has it) keeps the weight these rules had with [data-op], so they still win over the hover and Reduce Motion
+   rules they won over; the plate the pointer is on keeps z-index auto, as the board's hover rule above gave it (the
+   keyboard's resize, off the pointer, takes 6) */
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]):hover { z-index: auto; }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]) { transform: translateY(-2px); transition: transform calc(160ms * var(--pmu-speed, 1)) cubic-bezier(.22,.8,.28,1); }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted])::before { opacity: 1; }
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]),
+html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-board[data-cls] > .pmu-card[data-resizing]:not([data-lifted]) { transform: none; }
 /* the resize release (E-3): the card's own surface steps aside for the morph surface; its content stays opaque */
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-morphing] { background: transparent; border-color: transparent; box-shadow: none; transition: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-morphing]::before, :is(#panel-usage,[data-pmu-host]) .pmu-board > .pmu-card[data-morphing]::after { opacity: 0; transition: none; }
@@ -50231,10 +50395,14 @@ var PMU_SERIES = {
     var r = el.getBoundingClientRect(), a = app.getBoundingClientRect();
     return r.width > 0 && r.height > 0 ? { x: r.left - a.left, y: r.top - a.top, w: r.width, h: r.height } : null;
   }
+  /* o.layer: a layer of the caller's own instead of #pmuFlight (a dashboard's, 40-board.js: #pmuApp, and with it the
+     Usage page's flight layer, is hidden on Home), r measured from it; o.calm: under Reduce Motion the calm light
+     (calmAt) instead of none. The Usage page passes neither. */
   function lightAt(r, o) {
     o = o || {};
-    if (!r || reduced()) return null;
-    var layer = flightLayer(); if (!layer) return null;
+    if (!r) return null;
+    if (reduced()) return o.calm ? calmAt(r, o) : null;
+    var layer = o.layer || flightLayer(); if (!layer) return null;
     var box = H('i', 'pmu-film-at', layer);
     box.style.cssText = 'left:' + (r.x - 3).toFixed(1) + 'px;top:' + (r.y - 2).toFixed(1) + 'px;width:' + (r.w + 6).toFixed(1) + 'px;height:' + (r.h + 4).toFixed(1) + 'px';
     var a = flash(box, { tone: o.tone, noSweep: true, dur: o.dur });
@@ -50243,6 +50411,21 @@ var PMU_SERIES = {
     var b = !o.noSweep && !soft() ? (fam() === 'glass' ? glint(box, (o.delay || 0) + 120) : sweep(box, { delay: (o.delay || 0) + 120, dur: 650 })) : null;
     var lastA = b || a;
     if (lastA) lastA.finished.then(function () { later(function () { box.remove(); }); }, function () { box.remove(); }); else box.remove();
+    return box;
+  }
+  /* the calm light (Reduce Motion on a dashboard): the voice's own flash tint (Friendly warm, NieR's ink, a warn or crit
+     tone) rises to the flash's own strength and fades once over 1.2 s, opacity only: no sweep, no glint, nothing moves.
+     Element.animate directly, since PMU.motion.animate makes nothing under Reduce Motion; the Animation speed still
+     scales it (the look sheet's wrapper). */
+  function calmAt(r, o) {
+    var layer = o.layer || flightLayer(); if (!layer) return null;
+    var box = H('i', 'pmu-film-at', layer);
+    box.style.cssText = 'left:' + (r.x - 3).toFixed(1) + 'px;top:' + (r.y - 2).toFixed(1) + 'px;width:' + (r.w + 6).toFixed(1) + 'px;height:' + (r.h + 4).toFixed(1) + 'px';
+    box.setAttribute('data-voice', voice().name);
+    var g = H('i', 'pmu-film-flash', box), a = null;
+    if (o.tone) g.setAttribute('data-tone', o.tone);
+    try { a = g.animate([{ opacity: 0 }, { opacity: fam() === 'nier' ? 0.3 : 0.55, offset: 0.4 }, { opacity: 0 }], { duration: o.dur || 1200, easing: 'ease-in-out', fill: 'both' }); } catch (error) { a = null; }
+    if (a) a.finished.then(function () { later(function () { box.remove(); }); }, function () { box.remove(); }); else box.remove();
     return box;
   }
   /* the landing: target and flyer swap in one task (one frame), then the landing light on the target */
@@ -50486,7 +50669,9 @@ var PMU_SERIES = {
    Reduce Motion: every change final at once, no pulse. The viewer's choice (Live / Paused) is remembered; ?pmu-live=off
    pauses for one load (harnesses).
    Dashboards (D10 P12): every beat's share keys also go to the Home dashboards (PMU.boards.live.beat); a shown one patches
-   only the cards they match, a hidden one keeps them for its show. While the Usage page is hidden the beats go on, one
+   only the cards they match, a hidden one keeps them for its show; with the beat's lead keys it lights the lead in its
+   own layer (lightAt with o.layer, the calm light under Reduce Motion) and tells its kind, whose Live mark can pulse
+   (PMU.live.pulse). While the Usage page is hidden the beats go on, one
    per 3 ticks, only while a shown dashboard holds a Usage widget (and the tab shows): the deltas apply and the dashboards
    patch; the Usage board is left alone, since its next arrival builds it from the overlay as it is then. */
 (function () {
@@ -50554,10 +50739,11 @@ var PMU_SERIES = {
     S.hostTicks = 0;
     advance(null, true);
   }
-  /* a beat's share keys to the dashboards: a shown one patches the cards they match, a hidden one keeps them */
-  function hosted(keys) {
+  /* a beat's share keys to the dashboards: a shown one patches the cards they match, a hidden one keeps them; its lead
+     keys light the lead change on a dashboard as they do here */
+  function hosted(keys, lead) {
     var B = PMU.boards && PMU.boards.live;
-    if (B && keys && keys.length) { try { B.beat(keys); } catch (error) { console.error('[pm-usage] live boards', error); } }
+    if (B && keys && keys.length) { try { B.beat(keys, lead || []); } catch (error) { console.error('[pm-usage] live boards', error); } }
   }
   /* one step of the script: the deltas apply now; the dashboards hear it; the page patches now or, while held, at the end
      of the hold (hostedOnly: the Usage page is hidden and keeps nothing for it) */
@@ -50568,7 +50754,7 @@ var PMU_SERIES = {
     var info = null;
     try { info = L.apply(overlay, i); } catch (error) { console.error('[pm-usage] live apply', error); return null; }
     if (!info) return null;
-    hosted(info.shares);
+    hosted(info.shares, info.lead);
     if (hostedOnly) return info;
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     (info.shares || []).forEach(function (k) { p.shares[k] = true; });
@@ -50643,9 +50829,15 @@ var PMU_SERIES = {
   function pulse() {
     if (M.reduced()) return;
     var ring = document.querySelector('#pmuLiveCtl .pmu-livepulse'); if (!ring || !ring.getClientRects().length) return;
+    pulseRing(ring);
+  }
+  /* the pulse on a ring element: the Usage indicator's, or a dashboard kind's own Live mark (PMU.live.pulse, on the
+     board's 'beat' event); none under Reduce Motion */
+  function pulseRing(ring) {
+    if (!ring || M.reduced()) return null;
     var f = M.family();
-    if (f === 'retro' || f === 'nier') M.animate(ring, [{ opacity: 1 }, { opacity: 0 }], { dur: 240, easing: 'steps(2,jump-none)' });
-    else M.animate(ring, [{ transform: 'scale(.6)', opacity: 0.5 }, { transform: 'scale(2.2)', opacity: 0 }], { dur: 600, easing: 'cubic-bezier(.22,.8,.28,1)' });
+    if (f === 'retro' || f === 'nier') return M.animate(ring, [{ opacity: 1 }, { opacity: 0 }], { dur: 240, easing: 'steps(2,jump-none)' });
+    return M.animate(ring, [{ transform: 'scale(.6)', opacity: 0.5 }, { transform: 'scale(2.2)', opacity: 0 }], { dur: 600, easing: 'cubic-bezier(.22,.8,.28,1)' });
   }
 
   /* ---- the control in the rail head (8.5): dot + "Live" / ring + "Paused"; click toggles, the chevron opens the menu ---- */
@@ -50727,7 +50919,7 @@ var PMU_SERIES = {
     PMU.clock.advance(120000);
     var info = null;
     try { info = PMU.data.live.hourStep(overlay, PMU.clock.now(), H.step); } catch (error) { console.error('[pm-usage] demo hour', error); }
-    hosted((info && info.shares) || []);   /* a shown dashboard patches every step (D10 P12) */
+    hosted((info && info.shares) || [], info && info.lead);   /* a shown dashboard patches every step (D10 P12) */
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     ((info && info.shares) || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = ((info && info.lead) || []).concat(p.lead);
@@ -50768,7 +50960,11 @@ var PMU_SERIES = {
     sync: syncCtl,
     /* the tick subscription, asked for by a dashboard as it shows (40-board.js show): the demo engine boots after this
        script, and Usage may never be opened (D10 P12) */
-    wake: subscribe
+    wake: subscribe,
+    /* a dashboard's lead light and Live mark (D10 round two): the elements a lead key's reading sits in (the lead's
+       light fills the nearest of them, as here), and the indicator's pulse on a ring of the kind's own */
+    LEAD_HOST: LEAD_HOST,
+    pulse: pulseRing
   };
 })();
 
@@ -56432,7 +56628,10 @@ var PMU_SERIES = {
    D10 round two (Jared, 2026-10-10): widget sources (PMU.boards.sources, P3); Start from and the user's saved presets
    (board.sets, board.startFrom, PMU.boards.presets, P4); dashboard keys per project (board.setProject,
    PMU.boards.forgetKey, P5); live beats and Play the next hour on dashboards (PMU.boards.live, PMU.boards.hour, P12); a
-   new dash-<n> starts empty (P13). The Usage board takes none of these paths. */
+   new dash-<n> starts empty (P13). The Usage board takes none of these paths. Then (2026-10-10): the pick-up draws its
+   first held frame in the threshold's own frame (beginGesture, prep, setOpFlags, the pressed plate's warm layer), a
+   dashboard lights a beat's lead in its own layer and tells its kind ('beat'), and Start from and a project change
+   forget the board's size picks. */
 (function () {
   /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
      boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
@@ -56697,9 +56896,29 @@ var PMU_SERIES = {
     var s = STORE.get(PRESET_KEY, null);
     return s && typeof s === 'object' && Array.isArray(s.presets) ? s : { schema_id: 'pm.usage.widget_presets.v1', presets: [] };
   }
-  function presetById(id) { return presetStore().presets.filter(function (p) { return p && p.id === id; })[0] || null; }
-  function presetOut(p) { return { id: p.id, name: p.name, created: p.created, sourceBoard: p.source_board || null }; }
+  /* a stored preset is read as presets.save writes it, and only so: an entry without a string id is skipped, a name that
+     is not a string reads 'Saved preset', and its rows, preset ids and configuration refs keep only what has the saved
+     shape (a corrupt or older store, review 2026-10-10: one preset with { L: 'x' } made sets() throw, so Start from lost
+     every row, the board's own default and the rooms too, and a row whose size was not a number hung the page) */
+  function presetOk(p) { return !!p && typeof p === 'object' && typeof p.id === 'string' && !!p.id; }
+  function presetById(id) { return presetStore().presets.filter(function (p) { return presetOk(p) && p.id === id; })[0] || null; }
+  function presetLabel(p) { return presetName(typeof p.name === 'string' ? p.name : '') || 'Saved preset'; }
+  function presetOut(p) { return { id: p.id, name: presetLabel(p), created: typeof p.created === 'string' ? p.created : null, sourceBoard: typeof p.source_board === 'string' ? p.source_board : null }; }
   function presetName(name) { return String(name == null ? '' : name).replace(/\s+/g, ' ').trim().slice(0, 80); }
+  /* a preset's set (setRows): its rows per board class ([widget, x, y, w, h] in the grid's bounds: x 0-29, y 0-4000, w 1-30,
+     h 1-40; a row with a size that is not a number made firstFitInto loop for good, and the page hung on Start from), its
+     preset id per widget (strings) and its configuration refs per widget (lists of strings) */
+  function presetSet(p) {
+    var L = p.layout && typeof p.layout === 'object' ? p.layout : {}, rows = {}, pids = {}, cfgs = {};
+    var within = function (n, lo, hi) { return typeof n === 'number' && isFinite(n) && n >= lo && n <= hi; };
+    CLASSES.forEach(function (c) {
+      var list = (Array.isArray(L[c.name]) ? L[c.name] : []).filter(function (e) { return Array.isArray(e) && typeof e[0] === 'string' && e[0] && within(e[1], 0, 29) && within(e[2], 0, 4000) && within(e[3], 1, 30) && within(e[4], 1, 40); });
+      if (list.length) rows[c.name] = list.map(function (e) { return [e[0], Math.round(e[1]), Math.round(e[2]), Math.round(e[3]), Math.round(e[4])]; });
+    });
+    if (p.presets && typeof p.presets === 'object') Object.keys(p.presets).forEach(function (id) { if (typeof p.presets[id] === 'string' && p.presets[id]) pids[id] = p.presets[id]; });
+    if (p.configs && typeof p.configs === 'object') Object.keys(p.configs).forEach(function (id) { var v = p.configs[id]; if (Array.isArray(v)) cfgs[id] = v.filter(function (x) { return typeof x === 'string'; }); });
+    return { rows: rows, presets: pids, configs: cfgs };
+  }
 
   /* ---- board keys per project (D10 P5, dashboards only): widget_layout:v1:<project>:<board>; the Usage page keeps
      widget_layout:v1:usage. A board's unscoped key from before (widget_layout:v1:<board>) becomes the first project's that
@@ -56824,6 +57043,9 @@ var PMU_SERIES = {
     /* live beats (D10 P12): the share keys a dashboard has not patched yet (hidden or held), the cards of a patch still
        running in slices, and what it did (liveStats) */
     var liveKeys = null, liveQ = null, liveRaf = 0, liveStat = { beats: 0, patched: 0, held: null, last: null };
+    /* the lead light (D10 round two): the kept beats' lead keys (newest first), the lead's rect read before a patch
+       writes, how many beats a patch carries, and the board's own light layer */
+    var liveLead = null, liveLeadRect = null, liveMerged = 0, flyEl = null;
 
     function emit(evt, detail) { (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } }); }
     function say(text) {
@@ -57035,7 +57257,7 @@ var PMU_SERIES = {
       if (m[1] === 'room') return own(ROOM, m[2]) && PMU_BOARDS.rooms[m[2]] ? { rows: roomRows(m[2]), presets: {}, configs: {} } : null;
       if (m[1] === 'host') { var H = hostsTable(); return m[2] === 'dashboard' && H && H.dashboard ? { rows: H.dashboard, presets: rowPresets(H.dashboard, clsName), configs: {} } : null; }
       var p = presetById(m[2]);
-      return p ? { rows: p.layout || {}, presets: p.presets || {}, configs: p.configs || {} } : null;
+      return p ? presetSet(p) : null;
     }
     /* a set's rects at a board class: its own rows there, else projected (XL from L) as the Usage page does; the Accounts
        room's set takes the providers with accounts, as the Usage page's Accounts room does */
@@ -57501,14 +57723,15 @@ var PMU_SERIES = {
       if (hosted && (bo.entrance === 'none' || current.mounted) && !opts.instant) opts = Object.assign({}, opts, { instant: true });
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }   /* the new room renders with the current view anyway */
       if (!boardEl || !scroll) return;
-      if (gesture) endGesture(gesture, 'cancel', true);
+      /* a gesture cut short by a mount takes its flags with it now, before the board element may become the ghost */
+      if (gesture) { endGesture(gesture, 'cancel', true); opCancel(); opSync(); }
       if (PMU.menu && (!hosted || menuOwned())) PMU.menu.close();
       /* a room change reads no layout (PERF-3 rule 12): the board width is the last one measured while the scroll's
          ResizeObserver has seen no change since; anything else measures */
       var W = opts.transition && current.mounted && current.cls && view.w && Math.abs(view.w - (current.wSeen || -1)) < 0.5 ? current.cls.W : boardWidth();
       if (W <= 0) { current.pending = true; current.room = room; return; }
       current.pending = false;
-      if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; }   /* the mount renders the latest readings */
+      if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; liveLead = null; liveMerged = 0; }   /* the mount renders the latest readings */
       flushGravity();
       var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
       var roomChanged = current.room !== room;
@@ -57815,19 +58038,49 @@ var PMU_SERIES = {
        holder's handle while its gesture runs, so the document listeners act on it */
     function claimGesture() { if (ACTIVE && ACTIVE !== inner) ACTIVE.drop(); ACTIVE = inner; }
     function releaseGesture() { if (!gesture && ACTIVE === inner) ACTIVE = null; }
-    /* body flags for a gesture: pmu-pointer-op (no text selection), pm7u-pointer-op (the PM8 magnet stands down) and the
-       app's drag convention pm-resizing (the magnet loop idles and PM_EDGE defers its band geometry; flushed by
-       PM_DRAGEND on release, exactly as the Home dashboard drags do) */
-    function setOpFlags(on, op) {
+    /* the page's flags for a gesture: pmu-pointer-op (no text selection) and pm7u-pointer-op (the PM8 magnet stands
+       down) on the body, the app's drag convention pm-resizing on the body (the magnet loop idles, PM_EDGE defers its band
+       geometry, the side panels' observers defer their refits, Home hides the hover tags and stills the chat's
+       transition; PM_DRAGEND flushes them on release, exactly as the Home dashboard drags do) and the board's own data-op
+       (its rules restyle every plate's head, tools and resize handles).
+       Pick-up profile (P1000, 2026-10-10): pmu-pointer-op and pm7u-pointer-op are read by no style rule; a body class
+       change restyles only the body and the side panels' views (a class-attribute rule), about 1 ms. pm-resizing costs
+       2-3 ms to set where Home reads it and 13-19 ms to clear (#pm-hover-tag-root leaves and re-enters layout); data-op
+       costs 233-252 elements of style on Overview (12-18 ms to set, 11-13 ms to clear), and a selection read forced it
+       into the pick-up's task. The body flags are set in the gesture's first task, as before: the magnet's loop stands
+       down from the lift frame on (it costs about 10 ms a frame while it runs) and PM_EDGE and the observers defer from
+       the first frame. pm-resizing is cleared, and data-op set and cleared, in idle time (opSync): data-op in the idle
+       period after prep's frame, both after the drop in the one after the release, forced there so no frame pays for
+       them; PM_DRAGEND runs when pm-resizing is cleared, a frame or two after the drop, which defers the flush for the
+       magnet, PM_EDGE and the observers by as long and changes nothing they read in between (the drop's settle is a
+       transform). What data-op changes waits as long: the lifted plate's tools fade, the other plates stop answering
+       hover and their handles stop taking the pointer (the gesture holds the pointer meanwhile); the resizing plate's own
+       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with the board that added it
+       (resizingMine), never with the attribute. */
+    var opOn = false, opT = 0, resizingMine = false;
+    function setOpFlags(on) {
       var cl = document.body.classList;
       cl.toggle('pmu-pointer-op', on); cl.toggle('pm7u-pointer-op', on);
-      var mine = boardEl.hasAttribute('data-op');
-      if (on && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); boardEl._pmuResizingFlag = true; }
-      if (on) boardEl.setAttribute('data-op', op); else boardEl.removeAttribute('data-op');
-      if (!on && mine && boardEl._pmuResizingFlag) {
-        boardEl._pmuResizingFlag = false; cl.remove('pm-resizing');
-        try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {}
-      }
+      opOn = !!on;
+      if (on && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; }
+      if (!on) opLater();   /* on: prep asks for it, after the frame that follows the lift */
+    }
+    function opLater() {
+      if (opT || dead) return;
+      opT = window.requestIdleCallback ? requestIdleCallback(opSync, { timeout: 120 }) : setTimeout(opSync, 32);
+    }
+    function opCancel() { if (!opT) return; if (window.requestIdleCallback && window.cancelIdleCallback) cancelIdleCallback(opT); else clearTimeout(opT); opT = 0; }
+    /* pm-resizing and data-op take the state the gesture has now (a gesture that ended before its idle period sets
+       nothing; a new one on this board keeps them) */
+    function opSync() {
+      opT = 0;
+      if (!boardEl) return;
+      var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
+      if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; wrote = true; }
+      else if (!live && resizingMine) { resizingMine = false; cl.remove('pm-resizing'); ended = wrote = true; }
+      if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
+      if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
+      if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
     }
     function sizeLabel(id, r) {
       var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id, api);
@@ -57858,6 +58111,9 @@ var PMU_SERIES = {
       else if (g.py > r.bottom - SCROLL_BAND) v = 3 + 11 * Math.min(1, (g.py - (r.bottom - SCROLL_BAND)) / SCROLL_BAND);
       /* never scroll a move past the row under the other cards: the landing cannot go lower than that */
       if (v > 0 && g.type === 'move' && g.target && g.target.y >= g.maxY) v = 0;
+      /* a pane already at its top has nowhere to go: no read and no write (the pair forced a layout in every frame of a
+         carry that began near the top edge) */
+      if (v < 0 && view.top <= 0) v = 0;
       if (v) { var before = scroll.scrollTop; scroll.scrollTop = Math.max(0, before + v); if (scroll.scrollTop !== before) g.dirty = true; }
     }
     function loop(g) {
@@ -57909,6 +58165,7 @@ var PMU_SERIES = {
        resolver and then the post-gesture gravity on the candidate layout, and the peers slide there live, so the release
        only settles the active card */
     function previewTo(g, rect) {
+      prep(g, true);   /* the board is whole and the preview elements exist before anything slides */
       /* back on its own slot the release changes nothing, so the preview is the snapshot itself */
       g.preview = sameRect(rect, g.me) ? g.snapshot : gravity(resolve(g.snapshot, g.id, rect), g.id, g.me, g.snapshot, current.cls.tracks);
       g.previewFinal = true;
@@ -57937,9 +58194,17 @@ var PMU_SERIES = {
       }
       if (!sameRect(r, g.target)) { g.target = r; previewTo(g, r); }
     }
+    /* the pick-up (Jared, 2026-10-10: the press must feel instant). The threshold's task does only what the first held
+       frame shows: the claim, the snapshot and its rects (pure: no layout), the body flags and the plate's own lift or
+       resize mark, and the carry's first frame runs in that same frame. The two reads come before any write, so they
+       flush only what the pointer itself changed (the selection's clear, last before, forced the board's whole data-op
+       restyle into this task: 16 ms of its 20 on the P1000). The rest follows in prep, in the next frame: a build still
+       streaming, a pending gravity, the preview elements, the landing or the outline; the board's data-op in idle time
+       (setOpFlags). Anything that needs them first (a new slot, a key, the release) runs prep itself, so the carry, its
+       previews, peers, auto-scroll, keyboard pick-up, Escape and the drop behave as before. */
     function beginGesture(g) {
-      completeStream();
-      flushGravity();
+      if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
+      g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
       claimGesture();
       gesture = g;
       if (PMU.menu) PMU.menu.close();
@@ -57955,21 +58220,18 @@ var PMU_SERIES = {
       g.cards = cardsNow();
       var gp = px(g.me);
       g.cardL = gp.l; g.cardT = gp.t; g.cardW = gp.w; g.cardH = gp.h;
-      g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
-      ensurePreviews();
-      setOpFlags(true, g.type);
+      /* a drop's float-up still pending: this plate takes its floated place now (it moves from there), the rest in prep */
+      if (gravityMap && gravityMap[g.id]) place(g.card, gravityMap[g.id]);
+      setOpFlags(true);
       if (g.card._pmuSlide) { g.card._pmuSlide.cancel(); g.card._pmuSlide = null; }
       if (g.card._pmuSettle) { g.card._pmuSettle.cancel(); g.card._pmuSettle = null; }
       g.card.removeAttribute('data-settling');
-      if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
       if (g.type === 'move') {
         g.card.setAttribute('data-lifted', '');
         g.card.setAttribute('aria-grabbed', 'true');
         g.liftAt = performance.now();
-        glide(landing, g.target, 'landing');
       } else {
         g.card.setAttribute('data-resizing', g.edge);
-        showOutline(g, g.target);
       }
       if (g.kb) {
         if (g.type === 'move') g.card.style.transform = 'scale(' + liftScale() + ')';
@@ -57977,14 +58239,43 @@ var PMU_SERIES = {
       } else {
         g.raf = requestAnimationFrame(function () { loop(g); });
       }
+      /* two frames: a rAF asked for in the input's own frame runs in that frame (input is dispatched at its start) */
+      g.prepRaf = requestAnimationFrame(function () { g.prepRaf = requestAnimationFrame(function () { g.prepRaf = 0; if (gesture === g && !g.done) prep(g, true); }); });
       return true;
     }
+    /* the frame after the lift: the room's build finished and a pending gravity placed (every plate at its rect before
+       anything slides), the preview elements made, and the landing (a move) or the outline (a resize) shown on the slot.
+       Once per gesture; show false (a release that came first) skips the preview. */
+    function prep(g, show) {
+      if (g.prepped) return;
+      g.prepped = true;
+      if (g.prepRaf) { cancelAnimationFrame(g.prepRaf); g.prepRaf = 0; }
+      var whole = !streaming && !lateHeld && !refreshQ && !pendingOld;
+      completeStream();
+      flushGravity();
+      if (!whole) g.cards = cardsNow();
+      ensurePreviews();
+      opLater();   /* the board's data-op, in the idle period after this frame */
+      if (show === false) return;
+      if (g.type === 'move') glide(landing, g.target, 'landing'); else showOutline(g, g.target);
+    }
+    /* a press on a head (or the grip) pre-warms its plate: the plate takes its own compositor layer as it is pressed, so
+       its raster (and in a fresh browser the GPU's first programs for it) is under way before the 4 px threshold, and the
+       lift has nothing new to raster but its shadow. The lift took that layer anyway, so text shows the same once the
+       plate lifts; a press that ends without a drag gives the layer back. P1000, Basic Dark, Overview, the pre-warm alone
+       on the old pick-up: threshold to the first lifted frame on screen 102 -> 57-61 ms on a second drag, 470-810 ->
+       150-340 ms on a first one (with the rest of the pick-up: about 110 -> 23 ms, 811 -> 24 ms). Glass plates have a
+       layer already (their backdrop). */
+    function warm(g) { g.warm = true; g.card.style.willChange = 'transform'; }
+    function unwarm(g) { if (!g.warm) return; g.warm = false; g.card.style.willChange = ''; }
     function cardTitle(id) { var d = PMU.widgets.get(id) || {}; try { return typeof d.title === 'function' ? d.title({ id: id, room: current.room, state: st }) : (d.title || id); } catch (e) { return id; } }
     /* release: commit (one command) or settle / glide back */
     function endGesture(g, how, instant) {
       if (!g || g.done) return;
+      prep(g, false);   /* a release before the frame after the lift: the board is made whole first, nothing is shown */
       g.done = true;
       cancelAnimationFrame(g.raf);
+      unwarm(g);
       if (gesture === g) gesture = null;
       releaseGesture();
       window.removeEventListener('pointermove', g.onMove, true);
@@ -58040,7 +58331,7 @@ var PMU_SERIES = {
         if (how === 'rejected') PMU.shell.toast(t('board.rejected'));
         if (how !== 'drop') { say(t('board.cancelled', { name: cardTitle(g.id) })); emit('cancel', { op: g.type, id: g.id, reason: how }); }
       }
-      if (g.kb && card.isConnected) card.focus({ preventScroll: true });
+      if (g.kb && !g.api && card.isConnected) card.focus({ preventScroll: true });
       if (!g.kb && g.started) suppressClick();
     }
     /* the drop (WOW-SPEC 3.11): the card settles from the pointer into its slot on a physical spring (k 520 c 38, about
@@ -58211,6 +58502,7 @@ var PMU_SERIES = {
       var ctl = event.target.closest('button, a, input, select, textarea, label, [role="button"], [data-nodrag], .pmu-headtools');
       if (ctl && !ctl.classList.contains('pmu-grip')) return;
       g.type = 'move';
+      warm(g);
       attach(g);
     }
     function attach(g) {
@@ -58220,6 +58512,7 @@ var PMU_SERIES = {
       window.addEventListener('blur', g.onBlur);
     }
     function detach(g) {
+      unwarm(g);
       window.removeEventListener('pointermove', g.onMove, true);
       window.removeEventListener('pointerup', g.onUp, true);
       window.removeEventListener('pointercancel', g.onCancel, true);
@@ -58330,7 +58623,9 @@ var PMU_SERIES = {
       var card = cardOf(id);
       var snap = snapshotNow(), me = snap.filter(function (r) { return r.id === id; })[0];
       if (!me) return null;
-      var g = { id: id, card: card, type: type, kb: true, started: true, source: source || 'api', snapshot: snap, me: me, target: rect };
+      /* api: a commit nobody's key or pointer made (the preset hold, the tour, a reload's fit, PM7_USAGE) leaves keyboard
+         focus where it is; only the card's own size menu, a person's choice on that card, hands focus back to it */
+      var g = { id: id, card: card, type: type, kb: true, api: source !== 'size_menu', started: true, source: source || 'api', snapshot: snap, me: me, target: rect };
       if (sameRect(rect, me)) return null;
       g.preview = gravity(resolve(snap, id, rect), id, me, snap, current.cls.tracks);
       g.previewFinal = true;
@@ -58628,7 +58923,7 @@ var PMU_SERIES = {
       var fresh = !current.mounted;
       if (fresh || current.pending || sizeDirty) { sizeDirty = false; readView(); onWidth(); }
       if (!fresh && current.mounted && (dirty || seenEpoch !== EPOCH)) {
-        dirty = false; seenEpoch = EPOCH; liveKeys = null;
+        dirty = false; seenEpoch = EPOCH; liveKeys = null; liveLead = null; liveMerged = 0;
         if (PMU.settings && PMU.settings.invalidate) PMU.settings.invalidate('page');
         if (PMU.roster && PMU.roster.invalidate) PMU.roster.invalidate();
         refresh('page', { sliced: true });
@@ -58644,7 +58939,7 @@ var PMU_SERIES = {
     }
     inner.touch = function (reason) {
       if (!hosted || dead) return;
-      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; liveKeys = null; refresh(reason || 'data', { sliced: true }); } else dirty = true;
+      if (shownFlag && current.mounted && !current.pending) { seenEpoch = EPOCH; liveKeys = null; liveLead = null; liveMerged = 0; refresh(reason || 'data', { sliced: true }); } else dirty = true;
     };
     /* ---- live beats (D10 P12): a beat's share keys reach every dashboard (PMU.boards.live.beat, from the live film). A
        shown one patches the cards they match, as the Usage page's beat does (15-film.js flush): in slices of about 6 ms, in
@@ -58667,11 +58962,17 @@ var PMU_SERIES = {
       if (!liveKeys || dead || !shownFlag || !current.mounted || current.pending) return false;
       liveStat.held = liveHeld();
       if (liveStat.held) return false;
-      var keys = Object.keys(liveKeys); liveKeys = null;
+      var keys = Object.keys(liveKeys), lead = liveLead || [], merged = liveMerged; liveKeys = null; liveLead = null; liveMerged = 0;
       var hit = cardsNow().filter(function (c) { return liveHit(c, keys); });
       var order = readingOrder(hit.filter(inView)).concat(readingOrder(hit.filter(function (c) { return !inView(c); })));
       liveStat.beats++;
       liveStat.last = { at: Math.round(performance.now()), shares: keys.length, cards: order.map(function (c) { return c.getAttribute('data-widget'); }) };
+      /* the lead's place is read before anything is written (one read, clean layout); its light comes with the first
+         slice */
+      liveLeadRect = order.length ? leadRect(order, lead) : null;
+      liveStat.last.lead = liveLeadRect ? liveLeadRect.id : null;
+      /* the kind's Live mark pulses on it (the Usage page's indicator pulses on every beat; PMU.live.pulse draws it) */
+      emit('beat', { at: liveStat.last.at, cards: liveStat.last.cards.slice(), shares: keys.length, beats: Math.max(1, merged), lead: liveStat.last.lead, reduced: reduced() });
       if (!order.length) return true;
       /* a patch still running takes the new cards at its end (each reads the latest readings when its turn comes) */
       if (liveQ) { order.forEach(function (c) { if (liveQ.indexOf(c) < 0) liveQ.push(c); }); return true; }
@@ -58689,13 +58990,50 @@ var PMU_SERIES = {
           if (c.isConnected) { try { PMU.cards.update(c, 'live'); liveStat.patched++; } catch (error) { console.error('[pm-usage] live patch', error); } }
         }
       });
+      if (liveLeadRect) { var lr = liveLeadRect; liveLeadRect = null; liveLight(lr); }
       if (q.length && liveQ === q) liveRaf = requestAnimationFrame(liveStep); else if (liveQ === q) liveQ = null;
     }
+    /* the board's own light layer: in its scroll pane, above the plates (05-film.css .pmu-flight, z-index 45), so the
+       light scrolls with its reading and the pane clips it; made at the first light (the Usage page's #pmuFlight lives in
+       #pmuApp, which Home hides) */
+    function flyLayer() {
+      if (!scroll) return null;
+      if (!flyEl || flyEl.parentNode !== scroll) { flyEl = document.createElement('div'); flyEl.className = 'pmu-flight'; flyEl.setAttribute('aria-hidden', 'true'); scroll.appendChild(flyEl); }
+      return flyEl;
+    }
+    /* the lead (15-film.js lead): the first lead key a patched card in view shows, lit in the nearest reading host it
+       sits in (PMU.live.LEAD_HOST: a KPI cell, a row, a column), measured from the board's light layer */
+    function leadRect(cards, keys) {
+      var layer = keys.length && PMU.film && PMU.film.lightAt ? flyLayer() : null;
+      if (!layer) return null;
+      var host = PMU.live && PMU.live.LEAD_HOST, seen = {}, o = null;
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i]; if (seen[k]) continue; seen[k] = true;
+        for (var j = 0; j < cards.length; j++) {
+          if (!inView(cards[j])) continue;
+          var el = cards[j].querySelector('[data-share="' + cssq(k) + '"], [data-share-v="' + cssq(k) + '"]');
+          if (!el) continue;
+          var at = (host && el.closest(host)) || el; if (!cards[j].contains(at)) at = el;
+          var r = at.getBoundingClientRect(); o = o || layer.getBoundingClientRect();
+          if (r.width > 0 && r.height > 0) return { x: r.left - o.left, y: r.top - o.top, w: r.width, h: r.height, id: cards[j].getAttribute('data-widget') };
+        }
+      }
+      return null;
+    }
+    /* the light in the look's own voice (PMU.film.lightAt: the flash, with a GPU the sweep or Glass's glint); under
+       Reduce Motion its calm version (one slow opacity rise and fall of the flash tint) */
+    function liveLight(r) {
+      var layer = flyLayer(); if (!layer || !shownFlag) return;
+      try { PMU.film.lightAt(r, { layer: layer, calm: true }); } catch (error) { console.error('[pm-usage] live light', error); }
+    }
     if (hosted) {
-      inner.live = function (keys) {
+      inner.live = function (keys, lead) {
         if (dead) return;
         liveKeys = liveKeys || {};
         keys.forEach(function (k) { liveKeys[k] = true; });
+        /* the newest beat's lead first, as the Usage page orders the leads it keeps */
+        if (lead && lead.length) liveLead = lead.concat(liveLead || []).slice(0, 24);
+        liveMerged++;
         liveTry();
       };
       inner.liveTry = liveTry;
@@ -58820,6 +59158,9 @@ var PMU_SERIES = {
       if (loaded) flushNow();
       perProject = true; projectId = pid; storeKey = boardKey(boardId, pid); api.STORE_KEY = storeKey;
       adoptKey(boardId, pid);
+      /* the session's size picks were the old project's: none may apply to the new project's panels (the write above
+         took their preset ids) */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
       reread();
       emit('change', { op: 'project', project: pid });
       return true;
@@ -58836,7 +59177,7 @@ var PMU_SERIES = {
       push('default', 'Default widgets', 'default', widgetCount(count('default', ownSet())));
       Object.keys(ROOM).forEach(function (room) { if (PMU_BOARDS.rooms[room]) push('room:' + room, ROOM[room].label, 'room', 'Usage room · ' + widgetCount(count('room:' + room, roomRows(room)))); });
       var H = hostsTable(); if (H && H.dashboard) push('host:dashboard', 'Dashboard', 'host', widgetCount(count('host:dashboard', H.dashboard)));
-      presetStore().presets.forEach(function (p) { if (p && p.id) push('user:' + p.id, p.name, 'user', 'Saved preset · ' + widgetCount(count('user:' + p.id, p.layout))); });
+      presetStore().presets.forEach(function (p) { if (presetOk(p)) push('user:' + p.id, presetLabel(p), 'user', 'Saved preset · ' + widgetCount(count('user:' + p.id, presetSet(p).rows))); });
       return out;
     }
     /* startFrom(setId): the board's widgets become the set's at every board class (its rows, else projected as the Usage
@@ -58867,6 +59208,8 @@ var PMU_SERIES = {
       /* every widget of the set is held at the set's preset, or at none (a hold left from before the set would resize it) */
       var held = {}; Object.keys(st.layout[room]).forEach(function (cn) { st.layout[room][cn].forEach(function (r) { held[r.id] = true; }); });
       if (PMU.cards && PMU.cards.holdStored) Object.keys(held).forEach(function (id) { PMU.cards.holdStored(id, (set.presets || {})[id] || null, null, api); });
+      /* and no size picked before the set (this session's picks, every widget of the board's) applies to it */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
       persist();
       if (current.mounted && shownFlag) { reconcile(layoutFor(room), { dur: 'morph', ease: 'settle' }); refresh('reset'); scheduleHold(400); }
       else if (current.mounted) mount(room, { instant: true });   /* hidden: it mounts at its show */
@@ -58902,13 +59245,14 @@ var PMU_SERIES = {
       if (gesture) endGesture(gesture, 'cancel', true);
       if (ACTIVE === inner) ACTIVE = null;
       if (savePending) { clearTimeout(saveTimer); writeNow(); }
+      opCancel(); opSync();   /* the flags it holds go with it, now */
       dead = true; shownFlag = false;
       clearTimeout(saveTimer); clearTimeout(holdT); clearTimeout(gravityT); clearTimeout(filmEndT); clearTimeout(roTimer);
       saveTimer = holdT = gravityT = filmEndT = roTimer = 0; gravityMap = null;
       if (roPending) { cancelAnimationFrame(roPending); roPending = 0; }
       buildToken++; streaming = null; lateHeld = null;
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
-      liveStop(); liveKeys = null;
+      liveStop(); liveKeys = null; liveLead = null;
       if (ro) { ro.disconnect(); ro = null; }
       if (scroll) {
         scroll.removeEventListener('scroll', onScrollView, { passive: true });
@@ -59037,7 +59381,7 @@ var PMU_SERIES = {
     },
     /* the user's saved presets (D10 P4), shown in every dashboard's Start from; applied by board.startFrom('user:<id>') */
     presets: {
-      list: function () { return presetStore().presets.filter(function (p) { return p && p.id; }).map(presetOut); },
+      list: function () { return presetStore().presets.filter(presetOk).map(presetOut); },
       save: function (board, name) {
         var b = typeof board === 'string' ? (own(REG, board) ? REG[board].api : null) : board;
         var h = b && own(REG, b.id) && REG[b.id].api === b ? REG[b.id] : null, snap = h && h.snapshot ? h.snapshot() : null;
@@ -59051,7 +59395,7 @@ var PMU_SERIES = {
         return presetOut(p);
       },
       rename: function (id, name) {
-        var s = presetStore(), p = s.presets.filter(function (x) { return x && x.id === id; })[0], nm = presetName(name);
+        var s = presetStore(), p = s.presets.filter(function (x) { return presetOk(x) && x.id === id; })[0], nm = presetName(name);
         if (!p || !nm) return null;
         p.name = nm; STORE.set(PRESET_KEY, s);
         return presetOut(p);
@@ -59073,14 +59417,15 @@ var PMU_SERIES = {
       return true;
     },
     /* live beats on dashboards (D10 P12), for the live film (15-film.js): wanted() while a shown dashboard holds a Usage
-       widget; beat(keys) hands a beat's share keys to every dashboard; flush() lets a dashboard whose hold ended patch;
-       hit(card, keys) is the match both use. on() / set(on): the viewer's Live choice (the Usage page's, one for the page). */
+       widget; beat(keys, lead) hands a beat's share keys and its lead keys (the lead light) to every dashboard; flush()
+       lets a dashboard whose hold ended patch; hit(card, keys) is the match both use. on() / set(on): the viewer's Live choice (the Usage page's, one for the page). */
     live: {
       wanted: function () { return ORDER.some(function (h) { return !!h.liveWanted && h.liveWanted(); }); },
-      beat: function (keys) {
+      beat: function (keys, lead) {
         var list = [].concat(keys || []).filter(function (k) { return typeof k === 'string' && k; });
         if (!list.length) return;
-        ORDER.slice().forEach(function (h) { try { if (h.live) h.live(list); } catch (error) { console.error('[pm-usage] boards.live', error); } });
+        var leads = [].concat(lead || []).filter(function (k) { return typeof k === 'string' && k; });
+        ORDER.slice().forEach(function (h) { try { if (h.live) h.live(list, leads); } catch (error) { console.error('[pm-usage] boards.live', error); } });
       },
       flush: function () { ORDER.slice().forEach(function (h) { try { if (h.liveTry) h.liveTry(); } catch (error) { console.error('[pm-usage] boards.live', error); } }); },
       hit: function (card, keys) { return !!card && !!liveHit(card, [].concat(keys || [])); },
@@ -60066,7 +60411,16 @@ var PMU_SERIES = {
     /* the preset id a card is held at but not yet seen at the board's class (another room): kept as it is by a save */
     heldId: function (id, b) { return inBoard(b, function () { var k = bk(id); return typeof held[k] === 'string' ? held[k] : null; }); },
     /* the preset a card was set to at a board class, while its size there is still w x h */
-    pickedId: function (id, cls, w, h, b) { return inBoard(b, function () { var k = bk(id), pk = picked[k] && picked[k][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }); }
+    pickedId: function (id, cls, w, h, b) { return inBoard(b, function () { var k = bk(id), pk = picked[k] && picked[k][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }); },
+    /* a board's picks forgotten (40-board.js startFrom and setProject, D10 round two): the presets its panels were set
+       to in this session, at every class, for these widget ids (null: every widget of the board). A dashboard that
+       starts from a set or changes project takes its sizes from the set or the new project's records (holdStored), so a
+       pick made before can never apply to a panel that happens to have the old pick's size. Returns how many it forgot. */
+    forgetPicks: function (ids, b) { return inBoard(b, function () {
+      var n = 0, mine = bk(''), keys = ids == null ? Object.keys(picked).filter(function (k) { return mine ? k.indexOf(mine) === 0 : k.indexOf('|') < 0; }) : [].concat(ids).map(bk);
+      keys.forEach(function (k) { if (picked[k]) { delete picked[k]; n++; } });
+      return n;
+    }); }
   };
 
   /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----
@@ -162024,8 +162378,10 @@ model.removeTab = function (l, tabId, opts) {
     l.closed.push({ tab: model.stripLive(model.clone(rec)), panelId: p.id, index: i });
     if (l.closed.length > CLOSED_MAX) {
       var dropped = l.closed.splice(0, l.closed.length - CLOSED_MAX).map(function (c) { return c && c.tab && c.tab.id; }).filter(Boolean);
+      // removeTab runs on a commit's draft: the event goes out after the commit has landed (a microtask), so a listener
+      // reads the committed layout, and an entry still in the reopen list then (a rejected commit) is skipped there
       if (dropped.length && typeof bus !== 'undefined' && bus && bus.emit) {
-        try { bus.emit('closed-dropped', { ids: dropped }); } catch (_) {}
+        Promise.resolve().then(function () { try { bus.emit('closed-dropped', { ids: dropped }); } catch (_) {} });
       }
     }
   }
@@ -162421,6 +162777,15 @@ PM_HOME.catalog = {
     });
     bus.emit('catalog', { kind: kind });
   },
+  /* drop items by id (a deleted custom dashboard, one from the project left behind) */
+  remove: function (kind, ids) {
+    var list = CATALOG[kind]; if (!list) return;
+    var gone = {}; [].concat(ids || []).forEach(function (id) { gone[id] = true; });
+    var kept = list.filter(function (x) { return !gone[x.id]; });
+    if (kept.length === list.length) return;
+    CATALOG[kind] = kept;
+    bus.emit('catalog', { kind: kind });
+  },
   list: function (kind) { return (CATALOG[kind] || []).slice(); },
   all: function () { var out = []; Object.keys(CATALOG).forEach(function (k) { out = out.concat(CATALOG[k]); }); return out; },
   find: function (id) { var all = PM_HOME.catalog.all(); for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i]; return null; },
@@ -162630,6 +162995,7 @@ PMW.buildNamed = buildNamed;
 /* Saved layouts: the user's own trees (shape, sizes, each panel's tabs, lock and collapse). Applied, each tab still
    open goes back to its own panel; the rest are distributed like a named layout. */
 var SAVED_KEY = 'pm.home.panels.saved:v1';
+var NAMED_BOARDS_MAX = 64 * 1024;
 PMW.savedLayouts = function () { return store.get(SAVED_KEY) || {}; };
 PMW.saveNamed = function (name, layout) {
   function shape(n) {
@@ -162657,7 +163023,12 @@ PMW.saveNamed = function (name, layout) {
     if (PMW.dashboard && typeof PMW.dashboard.snapshot === 'function') {
       var bids = Object.keys(layout.tabs || {}).filter(function (id) { return id.indexOf('dashboard:') === 0; })
         .map(function (id) { return id.slice('dashboard:'.length); });
-      if (bids.length) all[name].boards = PMW.dashboard.snapshot(bids);
+      if (bids.length) {
+        /* at most 64 KB of board contents per named layout (canon, hpt-plans-lead 2026-10-10): a larger save keeps the
+           layout without them, and the save says so */
+        var boards = PMW.dashboard.snapshot(bids), bytes = JSON.stringify(boards).length;
+        if (bytes <= NAMED_BOARDS_MAX) all[name].boards = boards; else all[name].boardsSkipped = bytes;
+      }
     }
   } catch (_) {}
   return store.set(SAVED_KEY, all);
@@ -163820,11 +164191,28 @@ PMW.updateTab = function (tabId, fields) {
   if (fields.dirty && rec.preview) PMW.keepTab(tabId);
   if (changed) {
     var p = model.panelOf(L(), tabId);
-    var el = p && render.panelEl(p.id);
-    if (el) PMW.strip.render(el, p, L(), { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() });
+    if (p) stripSoon(p.id);
     PMW.persist.saveSoon();
   }
 };
+/* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
+   panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
+   which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */
+var stripDue = {}, stripRaf = 0;
+function stripSoon(panelId) {
+  stripDue[panelId] = true;
+  if (stripRaf) return;
+  stripRaf = requestAnimationFrame(function () {
+    stripRaf = 0;
+    var ids = Object.keys(stripDue), l = L();
+    stripDue = {};
+    var o = { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() };
+    ids.forEach(function (id) {
+      var p = model.panel(l, id), el = p && render.panelEl(id);
+      if (el) PMW.strip.render(el, p, l, o);
+    });
+  });
+}
 PM_HOME.update = function (tabId, fields) { PMW.updateTab(tabId, fields); };
 
 PMW.closeTab = function (tabId, opts) {
@@ -164083,6 +164471,23 @@ PMW.reopenClosed = function () {
   }
   return res.ok;
 };
+/* the boards a saved named layout puts back (P6): each board it saved, except a custom dashboard (dash-<n>) that the
+   applied layout does not hold (deleted since, whose Delete said its widgets cannot be brought back, or closed) or that
+   was saved in another project (the envelope's project_id: the same dash-<n> names another board here, which the
+   restore would overwrite). Home, Metrics and Monitoring come back as saved. */
+function namedBoards(boards) {
+  var l = L(), p = null, out = {};
+  try { p = PMW.dashboard.project ? PMW.dashboard.project() : null; } catch (_) { p = null; }
+  Object.keys(boards).forEach(function (id) {
+    var env = boards[id];
+    // board contents are per project (P5): an envelope saved in another project is never written here, a built-in
+    // board's included (that project's Home stays that project's); a custom one only while the layout holds its tab
+    if (env && env.project_id && p && env.project_id !== p) return;
+    if (/^dash-\d+$/.test(id) && !l.tabs['dashboard:' + id]) return;
+    out[id] = env;
+  });
+  return out;
+}
 PMW.applyNamed = function (name, opts) {
   opts = opts || {};
   var built = PMW.buildNamed(name, opts.fresh ? null : L());
@@ -164097,7 +164502,7 @@ PMW.applyNamed = function (name, opts) {
     PMW.settings.set('panels.layout.named', name);
     var def = PMW.NAMED[name] || PMW.savedLayouts()[name];
     if (def && def.boards && PMW.dashboard && typeof PMW.dashboard.restore === 'function') {
-      try { PMW.dashboard.restore(def.boards); } catch (_) {}
+      try { PMW.dashboard.restore(namedBoards(def.boards)); } catch (_) {}
     }
     announce((def && def.label ? def.label : name) + ' layout');
   }
@@ -164110,7 +164515,8 @@ PMW.saveNamedLayout = function (name) {
   var ok = PMW.saveNamed(name, L());
   pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.saveNamed, args: { name: name }, at: Date.now() });
   pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.saveNamed, outcome: ok ? 'applied' : 'rejected' });
-  if (ok) announce('Layout saved as ' + name);
+  var skipped = ok && (PMW.savedLayouts()[name] || {}).boardsSkipped;
+  if (ok) announce('Layout saved as ' + name + (skipped ? '. Its dashboards hold too much to keep with it, so applying it leaves their widgets as they are' : ''));
   return ok;
 };
 
@@ -166607,7 +167013,7 @@ PMW.tidyLinkRows = tidyLinkRows;
 menu.prompt = function (anchor, o) {
   var hnd = menu.open(anchor, { id: 'prompt', title: o.title, rows: [], width: 280, className: 'pmw-mprompt' });
   if (!hnd) return;
-  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off', 'data-pm-hover-visual-suppressed': 'true' });
+  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off', maxlength: o.maxLength || null, 'data-pm-hover-visual-suppressed': 'true' });
   var row = h('div', { class: 'pmw-mpromptrow' }, [input]);
   var btns = h('div', { class: 'pmw-mpromptbtns' }, [
     h('button', { type: 'button', class: 'pmw-btn', text: 'Cancel', onclick: function () { hnd.close({}); } }),
@@ -166671,7 +167077,8 @@ function openIn(panelId, spec, newPanel) {
    Typing in the "+" field lists the matching entries themselves (by label and detail). An entry whose group the table
    does not know stays an inline link. Another kind groups its entries by adding a line here. */
 var SUB_GROUPS = PMW.SUB_GROUPS = {
-  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' }
+  ssh: { label: 'SSH hosts', icon: 'remote', one: 'SSH host', keywords: 'ssh remote host server', search: 'Find a host' },
+  dash: { label: 'Your dashboards', icon: 'dashboard', one: 'Your dashboard', keywords: 'dashboard board widgets custom', search: 'Find a dashboard' }
 };
 function subGroupRow(k, p, panelId, g) {
   var def = SUB_GROUPS[g.id];
@@ -166955,10 +167362,16 @@ menus.tab = function (tabId, anchor, at) {
     { id: 'split-down', label: 'Split down with this tab', icon: 'splitDown', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'bottom'); } }
   ].filter(Boolean);
   /* a kind's own rows (CONTRACT 3: tabMenu(state, tabId) -> items in api.menu's shape; missing or [] adds nothing) go
-     last, after a hairline: the terminal's notification mute (D38) */
+     last, after a hairline: the terminal's notification mute (D38). The state is the tab's as its serialize() gives it
+     now (the layout record keeps the state the tab opened with until the next load, so a mute toggled from this menu
+     would show unchecked the next time); a tab that is not mounted, or has no serialize, gives its saved state */
   var k = kindDef(rec.kind);
   if (k && typeof k.tabMenu === 'function') {
-    try { var extra = kindRows(k.tabMenu(rec.state || {}, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
+    var tabState = rec.state || {}, live = PMW.instances && PMW.instances[tabId];
+    if (live && live.instance && typeof live.instance.serialize === 'function') {
+      try { var now = live.instance.serialize(); if (now && typeof now === 'object') tabState = now; } catch (_) {}
+    }
+    try { var extra = kindRows(k.tabMenu(tabState, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
     catch (err) { try { console.error('[pm-home] the ' + rec.kind + ' tab menu rows failed', err); } catch (_) {} }
   }
   return menu.open(anchor, { id: 'tab:' + tabId, title: tabLabel(rec), rows: rows, width: 270, at: at || null });
@@ -168517,7 +168930,11 @@ function visibleIn(root, sel) {
   for (var i = 0; i < els.length; i++) if (els[i].offsetParent !== null && els[i].getClientRects().length) return els[i];
   return null;
 }
-/* how far below its own place the stage has to start so that a card covers no strip, header row or chat header */
+/* the overlays a person works in that sit in a panel's top area: the terminal's Appearance popover and find bar, the
+   editor's find bar, the panels' own open menus, and anything a kind marks data-pmw-overlay while it is open */
+var OVERLAY_SEL = '.pmt-pop, .pmt-findbar, .pmw-ed-find:not([hidden]), [data-pmw-overlay]';
+/* how far below its own place the stage has to start so that a card covers no strip, header row, chat header or open
+   overlay in its column */
 function noticeDrop(host) {
   if (!homeIsPage() || !state.centre) return 0;
   var hr = host.getBoundingClientRect();
@@ -168528,7 +168945,17 @@ function noticeDrop(host) {
     if (!pr.width || x < pr.left || x > pr.right || pr.bottom < top || pr.top > top + 140) continue;
     var strip = visibleIn(panels[i], '.pmw-strip'), row = visibleIn(panels[i], '.pmw-hrow');
     var clear = Math.max(strip ? strip.getBoundingClientRect().bottom : pr.top, row ? row.getBoundingClientRect().bottom : 0);
+    var ovs = panels[i].querySelectorAll(OVERLAY_SEL);
+    for (var j = 0; j < ovs.length; j++) {
+      var orr = ovs[j].getClientRects().length ? ovs[j].getBoundingClientRect() : null;
+      if (orr && orr.width && x >= orr.left && x <= orr.right && orr.top < top + 140) clear = Math.max(clear, orr.bottom);
+    }
     want = Math.max(want, clear + 8);
+  }
+  var menus = doc.querySelectorAll('#pmw-overlay .pmw-pop');
+  for (var k = 0; k < menus.length; k++) {
+    var mr = menus[k].getClientRects().length ? menus[k].getBoundingClientRect() : null;
+    if (mr && mr.width && x >= mr.left && x <= mr.right && mr.top < top + 140) want = Math.max(want, mr.bottom + 8);
   }
   var chat = doc.getElementById('chatPanel');
   if (chat && !chat.classList.contains('hidden')) {
@@ -168556,6 +168983,14 @@ shell.installNotices = function () {
   new MutationObserver(function (list) {
     for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
   }).observe(stage, { childList: true });
+  // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
+  // later, once it has opened, and only while a card shows
+  var pending = 0;
+  function later() {
+    if (pending || !stage.firstElementChild) return;
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+  }
+  ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   applyDrop();
   return true;
 };
@@ -176103,19 +176538,31 @@ try {
 'use strict';
 if (!PM_HOME || !PMW) return;
 /* ---- panels/kinds/30-dashboard.js ---- */
-/* The Dashboard tab kind (D10 step two, decision A1; D10-DESIGN-per-instance-boards.md section 4).
+/* The Dashboard tab kind (D10 step two, decision A1; D10-DESIGN-per-instance-boards.md section 4; D10 round two).
 
    Dashboards run on the Usage board engine: each dashboard tab holds one board of its own, made with
-   PMU.boards.create (lane A, Concepts/usage-redesign/src/js/40-board.js) inside the tab's stage. Board ids, tab ids and
-   store keys:
-     home        dashboard:home (the pinned Home tab)   widget_layout:v1:home
-     metrics     dashboard:metrics                      widget_layout:v1:metrics
-     monitoring  dashboard:monitoring                   widget_layout:v1:monitoring
-     dash-<n>    dashboard:dash-<n> ("Dashboard n")     widget_layout:v1:dash-<n>
-   No other id gets an engine board (the engine accepts more, so this kind restricts). The tab serializes { board } only:
-   the layout, the view and the widget settings live in the board's own key, written by the engine. A dashboard has its
-   own range and scope (Board menu), no "Start from" (Reset only), the plain entrance on its first show and none under
-   Reduced Motion; Details on a card opens it in Usage. Live readings stay on the Usage page.
+   PMU.boards.create (Concepts/usage-redesign/src/js/40-board.js) inside the tab's stage. Board ids, tab ids and store
+   keys, where <project> is the project the panels' layout is bound to (PMW.persist.boundId; round two P5):
+     home        dashboard:home (the pinned Home tab)   widget_layout:v1:<project>:home
+     metrics     dashboard:metrics                      widget_layout:v1:<project>:metrics
+     monitoring  dashboard:monitoring                   widget_layout:v1:<project>:monitoring
+     dash-<n>    dashboard:dash-<n> (its name)          widget_layout:v1:<project>:dash-<n>
+   A board's unscoped key from before (widget_layout:v1:<board>) is adopted once, by the first project that shows that
+   board (the engine does it). No other id gets an engine board (the engine accepts more, so this kind restricts). The
+   tab serializes { board } only: the layout, the view and the widget settings live in the board's own key, written by
+   the engine. A project switch re-keys every mounted board, hidden ones too (board.setProject).
+
+   Custom dashboards (D35, PLN-4): New dashboard makes one, and it starts empty (P13); Rename dashboard... names it;
+   Delete dashboard... deletes it. The name belongs to the board: it is kept per project in pm.home.dashboards:v1:<project>
+   beside the board's key, follows a rename of its tab both ways, and shows on the tab, in the Board menu's dashboards,
+   in the "+" menu's Dashboard sub-row and in the catalog. A project lists only its own custom dashboards. Home, Metrics,
+   Monitoring and Agents can be reset but never deleted.
+
+   The Board menu: the dashboards; this dashboard's range, scope, Start from (its default set, the dashboard starter,
+   the 13 Usage rooms and the user's saved presets; P4), Save as preset..., Tidy and Reset widgets; Live readings and
+   Play the next hour (P12); Rename and Delete on a custom dashboard. Start from replaces the widgets, so it offers Undo
+   for a few seconds. The header facts carry the Live mark (one pulse per beat the board patches) and the demo time
+   while the demo hour runs. An empty board shows the kind's own invitation: Add widget and Start from.
 
    One board is not on the engine: agents (dashboard:agents) is drawn here: one card per agent at work, opening
    its transcript.
@@ -176146,19 +176593,21 @@ function h(tag, attrs, kids) {
   return el;
 }
 function byId(id) { return doc.getElementById(id); }
+function setText(el, text) { text = String(text == null ? '' : text); if (el.textContent !== text) el.textContent = text; }
+function logError(what, err) { try { console.error('[pm-home] ' + what, err); } catch (_) {} }
 
 /* ---- boards, ids and labels ---- */
 var FIXED = {
   home: { label: 'Home', sub: 'Usage widgets at a glance' },
   metrics: { label: 'Metrics', sub: 'Quota, budget and token trends' },
   monitoring: { label: 'Monitoring', sub: 'Tool health, alerts and probes' },
-  agents: { label: 'Agents', sub: 'Every agent at work and what it is doing' }
+  agents: { label: 'Agents', sub: 'Every agent at work right now' }
 };
 var FIXED_IDS = ['home', 'metrics', 'monitoring', 'agents'];
 var ENGINE_ID = /^(home|metrics|monitoring|dash-[1-9][0-9]{0,3})$/;
 var DASH_TAB = /^dashboard:dash-([1-9][0-9]{0,3})$/;
-var DASH_KEY = /^widget_layout:v1:dash-([1-9][0-9]{0,3})$/;
 var KEY_PREFIX = 'widget_layout:v1:';
+var NAMES_PREFIX = 'pm.home.dashboards:v1:';
 var NEW_SUB = 'An empty board for widgets you pick';
 
 function isEngineId(b) { return typeof b === 'string' && ENGINE_ID.test(b); }
@@ -176170,32 +176619,95 @@ function boardOf(id, st) {
   if (!b && st && typeof st.board === 'string') b = st.board;
   return b || 'home';
 }
-function labelOf(b) { return FIXED[b] ? FIXED[b].label : dashNumber(b) ? 'Dashboard ' + dashNumber(b) : 'Dashboard'; }
-/* the name a person sees: their rename of the tab, else the board's label */
+function engineReady() { return !!(window.PMU && PMU.boards && typeof PMU.boards.create === 'function'); }
+
+/* the project a board's contents belong to (P5): the one the panels' layout is bound to (16-persist.js), so a board is
+   always written beside the layout it sits in. The engine takes up to 64 characters without spaces or colons. */
+function boardProject() {
+  var p = '';
+  try { p = String((PMW.persist && PMW.persist.boundId) || PMW.projectId() || ''); } catch (_) { p = ''; }
+  p = p.replace(/[\s:]+/g, '-').slice(0, 64);
+  return p || 'tastebook';
+}
+function keyFor(board, project) { return KEY_PREFIX + (project || boardProject()) + ':' + board; }
+/* the n of the dash-<n> a store key names: this project's key, or the old unscoped one (until a project adopts it) */
+function dashOfKey(k, project) {
+  if (typeof k !== 'string' || k.indexOf(KEY_PREFIX) !== 0) return 0;
+  var rest = k.slice(KEY_PREFIX.length);
+  if (rest.indexOf(project + ':') === 0) rest = rest.slice(project.length + 1);
+  return dashNumber(rest);
+}
+/* the engine boards this project has a store for (from their keys) */
+function storedIds(project) {
+  var out = [], pre = KEY_PREFIX + (project || boardProject()) + ':';
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf(pre) === 0 && isEngineId(k.slice(pre.length))) out.push(k.slice(pre.length));
+    }
+  } catch (_) {}
+  return out;
+}
+
+/* ---- custom dashboard names (D35): one record per project, { schema_id, names: { 'dash-<n>': name } }. A name equal
+   to the board's default ("Dashboard n") is not stored. ---- */
+function namesOf(project) {
+  var s = PMW.store.get(NAMES_PREFIX + (project || boardProject()));
+  return s && typeof s === 'object' && s.names && typeof s.names === 'object' ? s.names : {};
+}
+function cleanName(v) { return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 80); }
+function defaultLabel(b) { return FIXED[b] ? FIXED[b].label : dashNumber(b) ? 'Dashboard ' + dashNumber(b) : 'Dashboard'; }
+function setName(board, name, project) {
+  if (!dashNumber(board)) return false;
+  var p = project || boardProject(), names = Object.assign({}, namesOf(p));
+  name = cleanName(name);
+  if (!name || name === defaultLabel(board)) delete names[board]; else names[board] = name;
+  if (!Object.keys(names).length) { PMW.store.remove(NAMES_PREFIX + p); return true; }
+  return PMW.store.set(NAMES_PREFIX + p, { schema_id: 'pm.home.dashboards.v1', names: names });
+}
+/* a board's name: the fixed label, a custom dashboard's own name, else "Dashboard n" */
+function labelOf(b) {
+  if (dashNumber(b)) { var n = namesOf()[b]; if (typeof n === 'string' && n) return n; }
+  return defaultLabel(b);
+}
+/* the name a person sees on a tab: their rename of the tab (a custom dashboard's name follows it), else the board's */
 function nameOf(rec) {
   var l = PMW.state && PMW.state.layout, t = l && l.tabs[rec.id];
   return (t && t.userLabel) || labelOf(rec.board);
 }
-function engineReady() { return !!(window.PMU && PMU.boards && typeof PMU.boards.create === 'function'); }
+/* this project's custom dashboards, by number: the open tabs, the stored boards (a closed one keeps its key while it can
+   be reopened, P6) and the named ones */
+function customBoards() {
+  var seen = {}, p = boardProject();
+  function add(b) { if (dashNumber(b)) seen[b] = true; }
+  try { PM_HOME.tabs().forEach(function (t) { if (DASH_TAB.test(t.tabId)) add(boardOf(t.tabId)); }); } catch (_) {}
+  storedIds(p).forEach(add);
+  Object.keys(namesOf(p)).forEach(add);
+  return Object.keys(seen).sort(function (a, c) { return dashNumber(a) - dashNumber(c); });
+}
 
-/* a new dashboard's id: one more than the largest n over the open tabs, the reopen stack, the stored boards and the
-   live ones (like the browser kind's nextBrowserId), so a closed dashboard's widgets are never handed to a new one */
+/* a new dashboard's id: one more than the largest n over the open tabs, the reopen stack, this project's stored boards
+   and the old unscoped ones not adopted yet, the names and the live boards (like the browser kind's nextBrowserId),
+   so a closed dashboard's widgets, or an unscoped board another project may still adopt, are never handed to a new one */
 function mintId() {
-  var max = 0;
-  function see(s, rx) { var m = rx.exec(s || ''); if (m) max = Math.max(max, +m[1]); }
-  try { PM_HOME.tabs().forEach(function (t) { see(t.tabId, DASH_TAB); }); } catch (_) {}
-  try { var l = PMW.state && PMW.state.layout; ((l && l.closed) || []).forEach(function (c) { see(c && c.tab && c.tab.id, DASH_TAB); }); } catch (_) {}
-  try { for (var i = 0; i < localStorage.length; i++) see(localStorage.key(i), DASH_KEY); } catch (_) {}
-  try { if (engineReady()) PMU.boards.all().forEach(function (b) { see('dashboard:' + b.id, DASH_TAB); }); } catch (_) {}
+  var max = 0, p = boardProject();
+  function see(n) { if (n > max) max = n; }
+  try { PM_HOME.tabs().forEach(function (t) { var m = DASH_TAB.exec(t.tabId); if (m) see(+m[1]); }); } catch (_) {}
+  try { var l = PMW.state && PMW.state.layout; ((l && l.closed) || []).forEach(function (c) { var m = DASH_TAB.exec((c && c.tab && c.tab.id) || ''); if (m) see(+m[1]); }); } catch (_) {}
+  try { for (var i = 0; i < localStorage.length; i++) see(dashOfKey(localStorage.key(i), p)); } catch (_) {}
+  try { Object.keys(namesOf(p)).forEach(function (b) { see(dashNumber(b)); }); } catch (_) {}
+  try { if (engineReady()) PMU.boards.all().forEach(function (b) { see(dashNumber(b.id)); }); } catch (_) {}
   return max >= 9999 ? 'dashboard:home' : 'dashboard:dash-' + (max + 1);
 }
 
 /* ---- tabs of this kind ---- */
 var recs = {};          // tabId -> rec
+var curProject = null;  // the project the mounted boards are keyed to
 function recList() { return Object.keys(recs).map(function (id) { return recs[id]; }); }
 function engineRecs() { return recList().filter(function (r) { return !r.gone && r.b; }); }
 function visible(rec) { return !!rec && !rec.gone && rec.api.isVisible(); }
 function repaintAll() { recList().forEach(function (r) { if (!r.gone && r.paintLeft) r.paintLeft(); }); }
+function boardBtn(rec) { return rec.row ? rec.row.action('board') : null; }
 
 /* D10 round two (P1): the adopted node is gone. The page's own Home widgets (#dashboardView) stay parked and
    hidden in #panel-dashboard; no tab moves them, seats their button, follows their boards, counts, resets, refits or
@@ -176369,6 +176881,7 @@ var KIND_WORDS = {
   ranked: 'Ranked list', setup: 'Setup', skyline: 'Skyline', switch: 'Switch', table: 'Table', trend: 'Trend chart',
   windows: 'Windows'
 };
+function widgetCount(n) { return n ? n + (n === 1 ? ' widget' : ' widgets') : 'Empty'; }
 
 /* Details on a dashboard card, and a card's "open in Usage" rows (P8): the Usage page, at the widget's home room, with
    the details open there. The details a card asked for (its spec: the widget's, or a row's such as one attempt) open
@@ -176399,9 +176912,13 @@ function homeRoomOf(b, id) {
 }
 
 function mountEngine(rec) {
+  var project = boardProject();
   var opts = {
     id: rec.board, hostId: 'home.dashboard', mount: rec.stage, overlay: PMW.overlay(),
     rooms: false, film: false, resize: 'host', shown: false,
+    /* P5: the board's contents are this project's (widget_layout:v1:<project>:<board>); never a storeKey, which would
+       turn the per-project keys off */
+    projectId: project,
     announce: function (text) { rec.api.announce(text); },
     details: function (spec, opener) { var id = widgetOf(spec, opener); openInUsage(id, id && rec.b ? homeRoomOf(rec.b, id) : null, spec); },
     navigate: function (room) { openInUsage(null, room); }
@@ -176409,29 +176926,52 @@ function mountEngine(rec) {
   /* P7: the plain reading-order entrance on a board's first show, none under Reduced Motion (read when it mounts) */
   Object.defineProperty(opts, 'entrance', { enumerable: true, get: function () { return PMW.reduced() ? 'none' : 'plain'; } });
   var b = null;
-  try { b = PMU.boards.create(opts); } catch (err) { try { console.error('[pm-home] dashboard board failed', err); } catch (_) {} }
+  try { b = PMU.boards.create(opts); } catch (err) { logError('dashboard board failed', err); }
   if (!b) { showNote(rec, 'This dashboard could not be shown', 'Close it and open it again from +.'); return; }
   rec.b = b;
-  rec.offs = ['mount', 'commit', 'change', 'class'].map(function (e) { return b.on(e, function () { rec.paintLeft(); }); });
+  if (curProject == null) curProject = project;
+  rec.offs = ['mount', 'commit', 'change', 'class'].map(function (e) { return b.on(e, function (d) { onBoardEvent(rec, e, d); }); });
+  /* the Live mark pulses once per beat this board patches (the engine's 'beat' event; without it the mark is steady),
+     and during the demo hour the demo time moves with the cards it patched. A beat of an hour this tab did not start
+     (PMU.boards.hour.play() from elsewhere) paints too, so the demo time and its 2 s ticker start on the first one */
+  rec.offs.push(b.on('beat', function () { pulseLive(rec); if (rec.paintLeft && (rec.hourTimer || hourRunning())) rec.paintLeft(); }));
+}
+/* a change to the widgets ends the Undo of a Start from (Undo would throw the change away); the preset hold's own resizes
+   (a set's widgets settling at their presets' fit heights, right after the Start from) are not a change; everything
+   repaints */
+function heldCommit(d) {
+  var id = d && d.receipt && d.receipt.command_instance_id, log = window.PM7_USAGE && PM7_USAGE.command_log;
+  if (!id || !Array.isArray(log)) return false;
+  for (var i = log.length - 1; i >= 0 && i >= log.length - 60; i--) {
+    if (log[i] && log[i].command_instance_id === id) return !!(log[i].payload && log[i].payload.source === 'preset_hold');
+  }
+  return false;
+}
+function onBoardEvent(rec, e, d) {
+  if (rec.undo && (e === 'change' || (e === 'commit' && !heldCommit(d)))) dismissUndo(rec);
+  if (e === 'change' && d && d.op === 'project') rec.seenLabel = tabUserLabel(rec);
+  if (rec.paintLeft) rec.paintLeft();
 }
 
-/* Add widget: every Usage widget the board can be given, by Usage room in room order; one on the board already is
-   checked and disabled. A pick adds it (cmd.widget.add), scrolls to it and moves focus onto it. */
+/* Add widget: every widget the board can be given. Usage widgets by Usage room in room order, then another source's
+   widgets (P3: their ids carry the source's prefix, and they have no home room) under that source's name. One on the
+   board already is checked and disabled. A pick adds it (cmd.widget.add), scrolls to it and moves focus onto it. */
 function addPicker(rec, anchor) {
   var b = rec.b;
   if (!b) return null;
   var list = [];
-  try { list = b.catalog() || []; } catch (err) { try { console.error('[pm-home] dashboard catalog failed', err); } catch (_) {} }
-  var sections = [], byRoom = {};
+  try { list = b.catalog() || []; } catch (err) { logError('dashboard catalog failed', err); }
+  var sections = [], byKey = {};
   list.forEach(function (e) {
-    var key = e.homeRoom || '';
-    var sec = byRoom[key];
-    if (!sec) { sec = byRoom[key] = { label: e.homeRoomLabel || 'More widgets', rows: [] }; sections.push(sec); }
+    var other = !!e.source, where = other ? e.sourceLabel : e.homeRoomLabel;
+    var key = other ? 'source:' + e.source : 'room:' + (e.homeRoom || '');
+    var sec = byKey[key];
+    if (!sec) { sec = byKey[key] = { label: where || 'More widgets', rows: [] }; sections.push(sec); }
     var word = KIND_WORDS[e.kind] || '';
     sec.rows.push({
-      id: 'w-' + e.id, label: e.title, sub: [e.homeRoomLabel, word].filter(Boolean).join(' · '),
+      id: 'w-' + e.id, label: e.title, sub: [where, word].filter(Boolean).join(' · '),
       checked: !!e.on, disabled: !!e.on, reason: 'Already on this dashboard',
-      keywords: [e.id, e.kind, word, e.homeRoomLabel].filter(Boolean).join(' '),
+      keywords: [e.id, e.kind, word, where].filter(Boolean).join(' '),
       run: function () { addWidget(rec, e.id, e.title); }
     });
   });
@@ -176446,7 +176986,7 @@ function addWidget(rec, id, title) {
   var r = b.add(id);
   if (!r || r.status === 'rejected' || r.dispatch_accepted === false) return r;
   var card = b.card(id);
-  if (card && card.focus) { try { card.focus({ preventScroll: true }); } catch (_) {} }
+  if (card && card.focus) { try { focusCard(function () { card.focus({ preventScroll: true }); }); } catch (_) {} }
   rec.api.announce((title || 'The widget') + ' added to ' + nameOf(rec) + '.');
   return r;
 }
@@ -176459,24 +176999,350 @@ function setView(rec, patch) {
   if (patch.range || String(b.state.scope).indexOf('provider:') !== 0) what = what.charAt(0).toLowerCase() + what.slice(1);
   rec.api.announce(nameOf(rec) + ' shows ' + what + '.');
 }
+/* Reset widgets replaces the widgets as a Start from does (a custom dashboard loses all of them), so it offers the same
+   Undo when it changed anything; a reset that changed nothing only says so */
 function resetEngine(rec) {
   var b = rec.b;
   if (!b) return null;
+  var before = snapshotBoards([rec.board]);
   var r = b.reset('room');
-  var what = nameOf(rec) + ' is back to its starting widgets.';
-  rec.api.announce(what);
-  if (PMW.toast) PMW.toast(what);
+  var what = dashNumber(rec.board) ? nameOf(rec) + ' is empty again.' : nameOf(rec) + ' is back to its default widgets.';
+  var changed = JSON.stringify(snapshotBoards([rec.board])) !== JSON.stringify(before);
+  if (changed && rec.wrap) {
+    rec.api.announce(what + ' Undo is available for a few seconds.');
+    showUndo(rec, what, before, 'Undo Reset widgets');
+  } else {
+    rec.api.announce(what);
+    if (PMW.toast) PMW.toast(what);
+  }
+  if (rec.paintLeft) rec.paintLeft();
   return r;
+}
+
+/* ---- Start from (P4): the sets a dashboard can start from (board.sets()), grouped: this dashboard's own default set,
+   the dashboard starter, the 13 Usage rooms in room order, the user's saved presets. The set the widgets started from
+   is checked. A pick is one cmd.widget.reset_layout with set_id (board.startFrom), and it replaces the widgets, so the
+   board is snapshotted first (the kind's snapshot path) and an Undo notice puts it back. ---- */
+var SET_GROUPS = [['default', 'This dashboard'], ['host', 'Dashboard starter'], ['room', 'Usage rooms'], ['user', 'Your presets']];
+function setsOf(rec) { try { return (rec.b && rec.b.sets()) || []; } catch (err) { logError('dashboard sets failed', err); return []; } }
+/* the second line: the engine's detail without the words the group's heading already says ("Usage room · 6 widgets"
+   under Usage rooms reads "6 widgets"); a preset adds the day it was saved */
+function setDetail(s, saved) {
+  var d = String(s.detail || '');
+  if (s.kind === 'room') d = d.replace(/^Usage room · /, '');
+  if (s.kind === 'user') {
+    d = d.replace(/^Saved preset · /, '');
+    if (saved) d += ' · saved ' + saved;
+  }
+  return d;
+}
+function savedDay(iso) {
+  var t = Date.parse(iso || '');
+  if (!isFinite(t)) return '';
+  try { return new Date(t).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); } catch (_) { return ''; }
+}
+function presetList() { try { return (window.PMU && PMU.boards && PMU.boards.presets) ? PMU.boards.presets.list() : []; } catch (_) { return []; } }
+function startFromSpec(rec) {
+  var list = setsOf(rec), presets = {};
+  presetList().forEach(function (p) { presets['user:' + p.id] = p; });
+  var n = 0; try { n = rec.b.count(); } catch (_) {}
+  var sections = SET_GROUPS.map(function (g) {
+    var rows = list.filter(function (s) { return s.kind === g[0]; }).map(function (s) {
+      var p = presets[s.id];
+      return { id: 'set-' + s.id, label: s.label, sub: setDetail(s, p ? savedDay(p.created) : ''), checked: !!s.active, current: !!s.active,
+        keywords: [g[1], s.kind === 'room' ? 'room usage' : '', s.kind === 'user' ? 'preset saved' : ''].join(' '),
+        run: function () { startFrom(rec, s); } };
+    });
+    if (g[0] === 'user') {
+      // an empty Your presets says what goes here and offers the way in; with presets, their rename and delete
+      if (!rows.length) rows.push({ id: 'preset-first', label: 'Save this dashboard as a preset...', icon: 'keep',
+        sub: 'Presets you save show here, on every dashboard', disabled: !n, reason: 'Presets you save show here. Add a widget first.',
+        keywords: 'preset save', run: function () { savePreset(rec); } });
+      else rows.push({ id: 'presets-manage', label: 'Rename or delete presets', icon: 'rename', keywords: 'preset rename delete manage',
+        submenu: function () { return managePresetsSpec(rec); } });
+    }
+    return { label: g[1], rows: rows };
+  });
+  // a filter field once the user's presets make the list long; until then type-ahead finds a row by its first letters
+  // and the whole list fits a 1080 px window
+  var many = list.filter(function (s) { return s.kind === 'user'; }).length > 3;
+  return { id: 'dash-start', title: 'Start from', search: many ? { placeholder: 'Find a room or a preset' } : null, width: 340,
+    className: 'pmw-dash-menu', sections: sections, empty: 'Nothing matches.' };
+}
+/* Start from from the empty board's own button (the Board menu reaches the same spec as a submenu) */
+function openStartFrom(rec, anchor) { return PMW.menu.open(anchor || null, startFromSpec(rec)); }
+function activeSet(rec) { return setsOf(rec).filter(function (s) { return s.active; })[0] || null; }
+function startedText(rec, s) {
+  var name = nameOf(rec);
+  if (s.kind === 'default') return dashNumber(rec.board) ? name + ' is empty again.' : name + ' is back to its default widgets.';
+  if (s.kind === 'room') return name + ' now has the widgets of the ' + s.label + ' room.';
+  if (s.kind === 'host') return name + ' now has the dashboard starter widgets.';
+  return name + ' now has the widgets of your preset ' + s.label + '.';
+}
+function startFrom(rec, s) {
+  var b = rec.b;
+  if (!b || !s) return null;
+  var before = snapshotBoards([rec.board]), r = null;
+  try { r = b.startFrom(s.id); } catch (err) { logError('dashboard start from failed', err); }
+  if (!r) {
+    // refused: a set that is gone (a preset deleted meanwhile) or a board that is gone
+    var no = s.label + ' cannot be used now. It may have been deleted.';
+    rec.api.announce(no);
+    if (PMW.toast) PMW.toast(no);
+    return null;
+  }
+  if (r.dispatch_accepted === false) return r;   // the engine says why in its own notice and leaves the board as it was
+  var text = startedText(rec, s);
+  rec.api.announce(text + ' Undo is available for a few seconds.');
+  showUndo(rec, text, before);
+  rec.paintLeft();
+  return r;
+}
+
+/* ---- the Undo notice: one plate at the foot of the tab, in the package's popover look, for 8 s (held while the pointer
+   or focus is on it); a change to the widgets ends it. It sits right after the header row in the reading order, so
+   Tab reaches Undo next. ---- */
+var UNDO_MS = 8000;
+function showUndo(rec, text, snap, groupLabel) {
+  dismissUndo(rec, { instant: true });
+  if (!snap || !rec.wrap) return;
+  var btn = h('button', { type: 'button', class: 'pmw-dash-undo-btn', 'data-pmh': 'icon', 'data-pm-hover-label': 'Undo',
+    'data-pm-hover-detail': 'Put the widgets back as they were' }, [PMW.icon('reopen', { size: 14 }), h('span', { text: 'Undo' })]);
+  var el = h('div', { class: 'pmw-dash-undo pmw-pop', role: 'group', 'aria-label': groupLabel || 'Undo Start from', 'data-pmh': 'off' }, [
+    h('span', { class: 'pmw-dash-undo-t', text: text }), btn]);
+  var u = rec.undo = { el: el, snap: snap, timer: 0, held: false };
+  function arm(ms) { clearTimeout(u.timer); u.timer = setTimeout(function () { if (!u.held && rec.undo === u) dismissUndo(rec); }, ms); }
+  el.addEventListener('pointerenter', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('pointerleave', function () { u.held = el.contains(doc.activeElement); if (!u.held) arm(3000); });
+  el.addEventListener('focusin', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('focusout', function (e) { if (el.contains(e.relatedTarget)) return; u.held = el.matches(':hover'); if (!u.held) arm(3000); });
+  el.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    e.preventDefault(); e.stopPropagation();
+    dismissUndo(rec);
+    var to = boardBtn(rec); if (to) { try { to.focus({ preventScroll: true }); } catch (_) {} }
+  });
+  btn.addEventListener('click', function () { undoStart(rec, u); });
+  rec.wrap.insertBefore(el, rec.stage);
+  if (!PMW.reduced()) PMW.motion.animate(el, [{ opacity: 0, transform: 'translate(-50%, 8px)' }, { opacity: 1, transform: 'translate(-50%, 0)' }],
+    { dur: 220, easing: PMW.motion.ease('slide') });
+  arm(UNDO_MS);
+}
+function dismissUndo(rec, o) {
+  var u = rec.undo;
+  if (!u) return;
+  rec.undo = null;
+  clearTimeout(u.timer);
+  var el = u.el, hadFocus = el.contains(doc.activeElement);
+  if (hadFocus) { var to = boardBtn(rec); if (to) { try { to.focus({ preventScroll: true }); } catch (_) {} } }
+  if ((o && o.instant) || PMW.reduced() || !el.isConnected) { el.remove(); return; }
+  el.style.pointerEvents = 'none';
+  var a = PMW.motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 160, easing: 'linear', fill: 'forwards' });
+  if (a) a.onfinish = function () { el.remove(); }; else el.remove();
+}
+function undoStart(rec, u) {
+  if (rec.undo !== u) return;
+  var snap = u.snap;
+  dismissUndo(rec, { instant: true });
+  if (!restoreBoards(snap)) return;
+  var t = nameOf(rec) + ' is back as it was.';
+  rec.api.announce(t);
+  rec.paintLeft();
+}
+
+/* ---- presets (P4): the user's saved boards, one store for every project and every dashboard (PMU.boards.presets,
+   widget_presets:v1). Saved from the Board menu; renamed and deleted from Start from's Your presets. ---- */
+/* a name another preset (or dashboard) already has gets ' 2', ' 3' ... so two never read alike in a list; the suffix
+   always fits the 80-character limit */
+function uniqueAmong(base, names) {
+  var taken = {};
+  names.forEach(function (n) { if (n) taken[String(n).toLowerCase()] = true; });
+  if (!taken[base.toLowerCase()]) return base;
+  for (var i = 2; i < 100; i++) { var c = base.slice(0, 80 - (' ' + i).length) + ' ' + i; if (!taken[c.toLowerCase()]) return c; }
+  return base;
+}
+function uniquePresetName(base, except) {
+  return uniqueAmong(base, presetList().filter(function (p) { return p.id !== except; }).map(function (p) { return p.name; }));
+}
+function promptAt(rec, o) {
+  var anchor = boardBtn(rec);
+  // after the menu that asked has closed (its close returns focus to the button first)
+  requestAnimationFrame(function () { if (!rec.gone) PMW.menu.prompt(anchor && anchor.isConnected ? anchor : null, o); });
+}
+function savePreset(rec) {
+  if (!rec.b || !PMU.boards.presets) return;
+  promptAt(rec, { title: 'Save as preset', value: uniquePresetName(nameOf(rec)), ok: 'Save', maxLength: 80, done: function (v) {
+    var p = null;
+    if (cleanName(v)) v = uniquePresetName(cleanName(v));
+    try { p = PMU.boards.presets.save(rec.b, v); } catch (err) { logError('dashboard preset save failed', err); }
+    var t = p ? 'Saved ' + p.name + ' as a preset. It is in Start from on every dashboard.' : 'This dashboard could not be saved as a preset.';
+    rec.api.announce(t);
+    if (PMW.toast) PMW.toast(t);
+  } });
+}
+function managePresetsSpec(rec) {
+  var list = presetList();
+  return { id: 'dash-presets', title: 'Your presets', className: 'pmw-dash-menu', width: 320,
+    search: list.length > 7 ? { placeholder: 'Find a preset' } : null, empty: 'No presets yet.',
+    rows: list.map(function (p) {
+      return { id: 'preset-' + p.id, label: p.name, icon: 'keep', sub: 'Saved ' + (savedDay(p.created) || 'earlier'),
+        submenu: function () { return presetSpec(rec, p); } };
+    }) };
+}
+function presetSpec(rec, p) {
+  return { id: 'dash-preset:' + p.id, title: p.name, className: 'pmw-dash-menu', width: 320, rows: [
+    { id: 'preset-start', label: 'Start from this preset', icon: 'widget', sub: 'Replaces the widgets on ' + nameOf(rec),
+      run: function () { startFrom(rec, { id: 'user:' + p.id, label: p.name, kind: 'user' }); } },
+    { id: 'preset-rename', label: 'Rename preset...', icon: 'rename', run: function () { renamePreset(rec, p); } },
+    { id: 'preset-delete', label: 'Delete preset...', icon: 'cross', danger: true, sub: 'Dashboards keep their widgets', submenu: function () {
+      return { id: 'dash-preset-delete', title: 'Delete ' + p.name + '?', width: 320, rows: [
+        { id: 'preset-delete-yes', label: 'Delete preset', icon: 'cross', danger: true, sub: 'It leaves Start from everywhere', run: function () { deletePreset(rec, p); } },
+        { id: 'preset-delete-no', label: 'Keep it', icon: 'check', run: function () {} }
+      ] };
+    } }
+  ] };
+}
+function renamePreset(rec, p) {
+  promptAt(rec, { title: 'Rename preset', value: p.name, ok: 'Rename', maxLength: 80, done: function (v) {
+    if (cleanName(v)) v = uniquePresetName(cleanName(v), p.id);
+    if (!cleanName(v)) { rec.api.announce('A preset needs a name. ' + p.name + ' keeps its name.'); if (PMW.toast) PMW.toast('A preset needs a name. ' + p.name + ' keeps its name.'); return; }
+    var r = null;
+    try { r = PMU.boards.presets.rename(p.id, v); } catch (err) { logError('dashboard preset rename failed', err); }
+    var t = r ? 'Renamed the preset to ' + r.name + '.' : 'That preset is gone.';
+    rec.api.announce(t);
+    if (PMW.toast) PMW.toast(t);
+    repaintAll();
+  } });
+}
+function deletePreset(rec, p) {
+  var ok = false;
+  try { ok = PMU.boards.presets.remove(p.id); } catch (err) { logError('dashboard preset delete failed', err); }
+  var t = ok ? 'Deleted the preset ' + p.name + '. Dashboards keep the widgets they have.' : 'That preset was already gone.';
+  rec.api.announce(t);
+  if (PMW.toast) PMW.toast(t);
+  repaintAll();
+}
+
+/* ---- Live readings and the demo hour (P12). Live is one choice for the whole page, the Usage page's own (PMU.live):
+   a shown dashboard holding Usage widgets beats about every 6 s while the Usage page is hidden. The demo hour plays
+   one demo minute per second on every shown board; "Demo time HH:MM" shows in the facts until Back to now. ---- */
+function liveApi() { return window.PMU && PMU.boards && PMU.boards.live ? PMU.boards.live : null; }
+function hourApi() { return window.PMU && PMU.boards && PMU.boards.hour ? PMU.boards.hour : null; }
+function liveEnabled() { try { return !!(PMU.live && PMU.live.enabled && PMU.live.enabled()); } catch (_) { return false; } }
+function liveOn() { var L = liveApi(); try { return !!(L && L.on()); } catch (_) { return false; } }
+function hourRunning() { var H = hourApi(); try { return !!(H && H.running()); } catch (_) { return false; } }
+function hourAvailable() { var H = hourApi(); try { return !!(H && H.available()); } catch (_) { return false; } }
+function setLive(rec, on) {
+  var L = liveApi();
+  if (!L) return;
+  try { L.set(on); } catch (err) { logError('dashboard live switch failed', err); }
+  rec.api.announce(on ? 'Live readings on: a few readings change about every 6 seconds, here and on Usage.' : 'Live readings paused, here and on Usage.');
+  repaintAll();
+}
+function playHour(rec) {
+  var H = hourApi();
+  var ok = false;
+  try { ok = !!(H && H.play()); } catch (err) { logError('dashboard demo hour failed', err); }
+  rec.api.announce(ok ? 'Playing the next hour: one demo minute per second. Back to now is in the Board menu.' : 'The demo hour could not start.');
+  repaintAll();
+}
+function backToNow(rec) {
+  var H = hourApi();
+  try { if (H) H.back(); } catch (err) { logError('dashboard back to now failed', err); }
+  rec.api.announce('Back to now: the current readings.');
+  repaintAll();
+}
+function liveRows(rec) {
+  var rows = [{ id: 'live', label: 'Live readings', checked: liveOn(), disabled: !liveEnabled(),
+    reason: 'Live readings are not part of this page', sub: 'Shared with Live on the Usage page',
+    run: function () { setLive(rec, !liveOn()); } }];
+  if (hourRunning()) rows.push({ id: 'hour-back', label: 'Back to now', icon: 'history', sub: 'Return to the current readings', run: function () { backToNow(rec); } });
+  else rows.push({ id: 'hour', label: 'Play the next hour', icon: 'play', sub: 'One demo minute per second',
+    disabled: !hourAvailable(), reason: 'The demo hour is not available on this page', run: function () { playHour(rec); } });
+  return rows;
+}
+/* the Live mark: shown while Live is on and the board holds a Usage widget (a widget id without a source prefix) */
+function holdsUsage(rec) {
+  try { return rec.b.visible().some(function (id) { return String(id).indexOf(':') < 0; }); } catch (_) { return false; }
+}
+function liveWord() {
+  var lk = PMW.look ? PMW.look() : { family: 'basic' };
+  return lk.nier ? 'LIVE' : lk.family === 'retro' ? '[LIVE]' : 'Live';
+}
+function liveMark(rec) {
+  if (!rec.live) {
+    var ring = h('i', { class: 'pmw-dash-live-ring' });
+    var word = h('span', { class: 'pmw-dash-live-word' });
+    rec.live = { el: h('span', { class: 'pmw-dash-live' }, [h('i', { class: 'pmw-dash-live-dot', 'aria-hidden': 'true' }, [ring]), word]), ring: ring, word: word };
+  }
+  setText(rec.live.word, liveWord());
+  return rec.live.el;
+}
+function pulseLive(rec) {
+  var L = rec.live;
+  if (!rec.liveShown || !L || !L.ring.isConnected || PMW.reduced()) return;
+  // the Usage page's own pulse when it is there (one look for the indicator on both pages), else the same frames here
+  if (window.PMU && PMU.live && typeof PMU.live.pulse === 'function') { try { PMU.live.pulse(L.ring); return; } catch (_) {} }
+  var f = PMW.motion.family();
+  if (f === 'retro' || f === 'nier') PMW.motion.animate(L.ring, [{ opacity: 1 }, { opacity: 0 }], { dur: 240, easing: 'steps(2, jump-none)' });
+  else PMW.motion.animate(L.ring, [{ transform: 'scale(.6)', opacity: 0.5 }, { transform: 'scale(2.2)', opacity: 0 }], { dur: 600, easing: 'cubic-bezier(.22,.8,.28,1)' });
+}
+/* the demo time follows the hour: read on paint, and every 2 s while the hour plays and this tab is on screen */
+function hourTicker(rec) {
+  var H = hourApi(), playing = false;
+  try { playing = !!(H && H.running() && H.step() < 30); } catch (_) {}
+  var want = playing && rec.shown && pageActive() && !rec.gone;
+  if (want && !rec.hourTimer) rec.hourTimer = setInterval(function () { rec.paintLeft(); }, 2000);
+  else if (!want && rec.hourTimer) { clearInterval(rec.hourTimer); rec.hourTimer = 0; }
+}
+
+/* ---- Rename and Delete (custom dashboards only; D35) ---- */
+function tabUserLabel(rec) {
+  var l = PMW.state && PMW.state.layout, t = l && l.tabs[rec.id];
+  return (t && t.userLabel) || null;
+}
+function renameDash(rec) {
+  promptAt(rec, { title: 'Rename dashboard', value: nameOf(rec), ok: 'Rename', maxLength: 80, done: function (v) { applyName(rec, v); } });
+}
+/* the board's name, its tab and every list that shows it, in one step; an empty name goes back to "Dashboard n". The
+   tab takes it through the rename command (cmd.panel_tab.rename, with its receipt), so the strip, the reopen list and
+   the saved layout follow */
+function applyName(rec, v) {
+  if (!dashNumber(rec.board)) return false;
+  var name = cleanName(v);
+  // never the name of a built-in board or of another of this project's dashboards
+  if (name) name = uniqueAmong(name, FIXED_IDS.map(function (b) { return FIXED[b].label; }).concat(customBoards().filter(function (b) { return b !== rec.board; }).map(labelOf)));
+  setName(rec.board, name);
+  var now = labelOf(rec.board), want = name && name !== defaultLabel(rec.board) ? now : null;
+  rec.api.update({ label: now });
+  if (tabUserLabel(rec) !== want) { rec.seenLabel = want; PMW.renameTab(rec.id, want || ''); }
+  refreshCatalog();
+  repaintAll();
+  rec.api.announce('The dashboard is now called ' + now + '.');
+  return true;
+}
+/* a rename of the tab (its own Rename..., the layout's commit) names the board; clearing that rename clears the name */
+function syncNames() {
+  recList().forEach(function (rec) {
+    if (rec.gone || !dashNumber(rec.board)) return;
+    var ul = tabUserLabel(rec);
+    if (ul === rec.seenLabel) return;
+    var had = rec.seenLabel;
+    rec.seenLabel = ul;
+    if (ul) setName(rec.board, ul);
+    else if (had) { setName(rec.board, null); rec.api.update({ label: labelOf(rec.board) }); }
+    refreshCatalog();
+  });
 }
 /* Delete dashboard (dash-<n> only): the tab closes, its key goes (after the board's last write, in unmount) and it
    leaves the reopen stack, so Reopen closed tab cannot bring back an empty copy */
 function deleteDash(rec) {
   if (!dashNumber(rec.board)) return;
-  var id = rec.id, name = nameOf(rec);
+  var id = rec.id, name = nameOf(rec), board = rec.board, project = boardProject();
   rec.deleting = true;
   PMW.closeTab(id, { quiet: true }).then(function (ok) {
     if (!ok) { rec.deleting = false; return; }
-    if (rec.gone) forget(rec.board);
+    if (rec.gone) forget(board, project);
     var l = PMW.state && PMW.state.layout;
     if (l && l.closed) {
       var kept = l.closed.filter(function (c) { return !(c && c.tab && c.tab.id === id); });
@@ -176485,10 +177351,12 @@ function deleteDash(rec) {
     PMW.announce(name + ' deleted');
   });
 }
-/* forget: the ONE place that knows a board's store keys (its layout and its quarantine copy). Delete dashboard and
-   the closed-list drop (P6) both go through it. */
-function forget(board) {
-  try { localStorage.removeItem(KEY_PREFIX + board); localStorage.removeItem(KEY_PREFIX + board + ':quarantine'); } catch (_) {}
+/* forget: the ONE place that drops a board's stores: its key and quarantine copy in this project (the engine's
+   forgetKey), and a custom dashboard's name. Delete dashboard and the closed-list drop (P6) both go through it. */
+function forget(board, project) {
+  var p = project || boardProject();
+  try { if (engineReady() && PMU.boards.forgetKey) PMU.boards.forgetKey(board, p); } catch (err) { logError('dashboard forget failed', err); }
+  if (dashNumber(board)) { setName(board, null, p); refreshCatalog(); }
 }
 
 /* ---- a quiet note in the stage (no Usage engine in this build, an id this kind does not run) ---- */
@@ -176504,6 +177372,62 @@ function showNote(rec, title, sub) {
   rec.note = note;
 }
 
+/* ---- an empty board (P13: every new dashboard starts so): the kind's own invitation in place of the board's note: a
+   sketch of a board, what to do, and the two ways in (Add widget, Start from...). The board stays laid out under it
+   (hidden, not removed), so its width and mount are unchanged. ---- */
+function emptyState(rec) {
+  if (rec.empty) return rec.empty;
+  var tiles = h('div', { class: 'pmw-dash-empty-art', 'aria-hidden': 'true' }, [
+    h('i', { class: 'pmw-dash-empty-tile is-wide is-number' }), h('i', { class: 'pmw-dash-empty-tile is-ring' }),
+    h('i', { class: 'pmw-dash-empty-tile is-bars' }), h('i', { class: 'pmw-dash-empty-tile is-number' }),
+    h('i', { class: 'pmw-dash-empty-tile is-add' }, [PMW.icon('plus', { size: 12 })])
+  ]);
+  var title = h('h3', { class: 'pmw-dash-empty-t' });
+  var sub = h('p', { class: 'pmw-dash-empty-sub' });
+  var add = PMW.frames.button({ id: 'empty-add', label: 'Add widget', icon: 'plus', primary: true, detail: 'Pick a widget for this dashboard',
+    run: function (e, btn) { addPicker(rec, btn); } });
+  var start = PMW.frames.button({ id: 'empty-start', label: 'Start from...', icon: 'widget', detail: 'A Usage room, the dashboard starter or one of your presets',
+    run: function (e, btn) { openStartFrom(rec, btn); } });
+  start.setAttribute('aria-haspopup', 'menu');
+  var acts = h('div', { class: 'pmw-dash-empty-acts' }, [add, start]);
+  var col = h('div', { class: 'pmw-dash-empty-col' }, [tiles, title, sub, acts]);
+  var el = h('div', { class: 'pmw-dash-empty', role: 'group', 'aria-label': 'Empty dashboard', hidden: true }, [col]);
+  rec.stage.appendChild(el);
+  rec.empty = { el: el, tiles: tiles, title: title, sub: sub, acts: acts, add: add, entered: false };
+  return rec.empty;
+}
+function paintEmpty(rec) {
+  if (rec.type !== 'engine' || !rec.b) return;
+  var n = 1;
+  try { n = rec.b.count(); } catch (_) { n = 1; }
+  var on = n === 0;
+  if (!on && !rec.empty) return;
+  var E = emptyState(rec);
+  if (on) {
+    setText(E.title, nameOf(rec) + ' is empty');
+    setText(E.sub, dashNumber(rec.board)
+      ? 'Add widgets one by one, or start from a Usage\u00a0room, the dashboard\u00a0starter or one of your\u00a0presets.'
+      : 'Add widgets one by one, or start from its default\u00a0widgets, a Usage\u00a0room or one of your\u00a0presets.');
+  }
+  if (E.el.hidden === !on) { if (on && !E.entered && rec.shown) enterEmpty(E); return; }
+  E.el.hidden = !on;
+  if (on) rec.stage.setAttribute('data-empty', ''); else { rec.stage.removeAttribute('data-empty'); E.entered = false; }
+  if (on && rec.shown) enterEmpty(E);
+}
+/* its entrance, once each time it appears on screen: the sketch's tiles in reading order, then the words and buttons;
+   none under Reduced Motion, and nothing moves after it */
+function enterEmpty(E) {
+  E.entered = true;
+  if (PMW.reduced()) return;
+  var M = PMW.motion, ease = M.ease('settle');
+  Array.prototype.forEach.call(E.tiles.children, function (t, i) {
+    M.animate(t, [{ opacity: 0, transform: 'translateY(6px) scale(.94)' }, { opacity: 1, transform: 'none' }], { dur: 320, delay: 40 * i, easing: ease, fill: 'backwards' });
+  });
+  [E.title, E.sub, E.acts].forEach(function (el, i) {
+    M.animate(el, [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { dur: 320, delay: 160 + 50 * i, easing: ease, fill: 'backwards' });
+  });
+}
+
 /* ==================================================================================================================
    The header row (every dashboard tab)
    ================================================================================================================== */
@@ -176512,25 +177436,30 @@ function openBoard(rec, b) {
   if (b === rec.board) return;
   rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b) });
 }
+/* a custom dashboard's second line: how many widgets it holds (a board not open is read from its key) */
+function storedCount(b) {
+  var live = engineReady() ? PMU.boards.get(b) : null;
+  if (live) { try { return live.count(); } catch (_) {} }
+  var env = readKey(b), n = 0;
+  ((env && env.records) || []).forEach(function (r) { if (r && r.visible !== false && r.geometry && Object.keys(r.geometry).length) n += 1; });
+  return n;
+}
 function boardRows(rec) {
   var rows = FIXED_IDS.map(function (b) {
-    return { id: 'board-' + b, label: FIXED[b].label, sub: FIXED[b].sub, checked: rec.board === b, run: function () { openBoard(rec, b); } };
+    return { id: 'board-' + b, label: FIXED[b].label, sub: FIXED[b].sub, checked: rec.board === b, current: rec.board === b, run: function () { openBoard(rec, b); } };
   });
-  var dash = [];
-  try { dash = PM_HOME.tabs().filter(function (t) { return DASH_TAB.test(t.tabId); }); } catch (_) {}
-  dash.sort(function (a, c) { return dashNumber(boardOf(a.tabId)) - dashNumber(boardOf(c.tabId)); });
-  dash.forEach(function (t) {
-    var b = boardOf(t.tabId);
-    rows.push({ id: 'board-' + b, label: t.label || labelOf(b), checked: rec.board === b, run: function () { openBoard(rec, b); } });
+  customBoards().forEach(function (b) {
+    rows.push({ id: 'board-' + b, label: labelOf(b), sub: widgetCount(storedCount(b)), checked: rec.board === b, current: rec.board === b, run: function () { openBoard(rec, b); } });
   });
   rows.push({ id: 'board-new', label: 'New dashboard', icon: 'plus', sub: NEW_SUB, run: function () { openBoard(rec, 'new'); } });
   return rows;
 }
 function boardMenu(rec) {
-  var sections = [{ label: 'Boards', rows: boardRows(rec) }];
+  var sections = [{ label: 'Dashboards', rows: boardRows(rec) }];
   if (rec.type === 'engine' && rec.b) {
-    var b = rec.b, st = b.state || {};
-    var rows = [
+    var b = rec.b, st = b.state || {}, custom = !!dashNumber(rec.board), n = 0, act = activeSet(rec);
+    try { n = b.count(); } catch (_) {}
+    sections.push({ label: 'This dashboard', rows: [
       { id: 'range', label: 'Range', icon: 'clock', sub: rangeLabel(st.range), submenu: function () {
         return { id: 'dash-range', title: 'Range of this dashboard', rows: RANGES.map(function (r) {
           return { id: 'range-' + r[0], label: r[1], checked: (b.state || {}).range === r[0], run: function () { setView(rec, { range: r[0] }); } };
@@ -176541,18 +177470,24 @@ function boardMenu(rec) {
           return { id: 'scope-' + s[0], label: s[1], checked: (b.state || {}).scope === s[0], run: function () { setView(rec, { scope: s[0] }); } };
         }) };
       } },
-      { id: 'tidy', label: 'Tidy', icon: 'layout', sub: 'Close the gaps between widgets', run: function () { b.tidy(); } },
-      { id: 'reset', label: 'Reset widgets', icon: 'reopen', sub: dashNumber(rec.board) ? 'Back to an empty dashboard' : 'Back to its starting widgets', run: function () { resetEngine(rec); } }
-    ];
-    if (dashNumber(rec.board)) {
-      rows.push({ id: 'delete', label: 'Delete dashboard...', icon: 'cross', danger: true, sub: 'Closes it and forgets its widgets', submenu: function () {
-        return { id: 'dash-delete', title: 'Delete ' + nameOf(rec) + '?', rows: [
-          { id: 'delete-yes', label: 'Delete dashboard', icon: 'cross', danger: true, sub: 'Its widgets cannot be brought back', run: function () { deleteDash(rec); } },
-          { id: 'delete-no', label: 'Keep it', icon: 'check', run: function () {} }
-        ] };
-      } });
+      { id: 'start', label: 'Start from', icon: 'widget', sub: act ? act.label : 'Default widgets', submenu: function () { return startFromSpec(rec); } },
+      { id: 'preset-save', label: 'Save as preset...', icon: 'keep', sub: 'Reuse these widgets anywhere',
+        disabled: !n, reason: 'Add a widget first', run: function () { savePreset(rec); } },
+      { id: 'tidy', label: 'Tidy', icon: 'layout', sub: 'Close the gaps between widgets', disabled: !n, reason: 'Nothing to tidy yet', run: function () { b.tidy(); } },
+      { id: 'reset', label: 'Reset widgets', icon: 'reopen', sub: custom ? 'Back to an empty dashboard' : 'Back to its default widgets', run: function () { resetEngine(rec); } }
+    ] });
+    sections.push({ label: 'Live', rows: liveRows(rec) });
+    if (custom) {
+      sections.push({ rows: [
+        { id: 'rename', label: 'Rename dashboard...', icon: 'rename', run: function () { renameDash(rec); } },
+        { id: 'delete', label: 'Delete dashboard...', icon: 'cross', danger: true, sub: 'Its widgets go with it', submenu: function () {
+          return { id: 'dash-delete', title: 'Delete ' + nameOf(rec) + '?', rows: [
+            { id: 'delete-yes', label: 'Delete dashboard', icon: 'cross', danger: true, sub: 'Its widgets cannot be brought back', run: function () { deleteDash(rec); } },
+            { id: 'delete-no', label: 'Keep it', icon: 'check', run: function () {} }
+          ] };
+        } }
+      ] });
     }
-    sections.push({ label: 'This dashboard', rows: rows });
   } else if (rec.type === 'agents') {
     sections.push({ label: 'Show', rows: FILTERS.map(function (f) {
       return { id: 'filter-' + f.id, label: f.label, checked: (rec.filter || 'all') === f.id, run: function () { setFilter(rec, f.id); } };
@@ -176573,12 +177508,12 @@ function refreshMax(rec) {
 function rowActions(rec) {
   var actions = [];
   if (rec.type === 'engine' && rec.b) {
-    actions.push({ id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick one of the Usage widgets', run: function (e, button) { addPicker(rec, button); } });
-    actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Boards, range, scope, tidy, reset', menu: function () { return boardMenu(rec); } });
+    actions.push({ id: 'add', label: 'Add widget', icon: 'plus', detail: 'Pick a widget for this dashboard', run: function (e, button) { addPicker(rec, button); } });
+    actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Dashboards, range, scope, Start from, presets, Live', menu: function () { return boardMenu(rec); } });
   } else if (rec.type === 'agents') {
-    actions.push({ id: 'board', label: 'Show', icon: 'eye', detail: 'Filter the agents, switch boards', menu: function () { return boardMenu(rec); } });
+    actions.push({ id: 'board', label: 'Show', icon: 'eye', detail: 'Filter the agents, switch dashboards', menu: function () { return boardMenu(rec); } });
   } else {
-    actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Switch boards', menu: function () { return boardMenu(rec); } });
+    actions.push({ id: 'board', label: 'Board', icon: 'layout', detail: 'Switch dashboards', menu: function () { return boardMenu(rec); } });
   }
   var mx = maxAction(rec);
   actions.push({ id: 'max', label: mx.label, icon: mx.icon, detail: mx.detail, run: function () {
@@ -176590,9 +177525,20 @@ function rowActions(rec) {
 function factsFor(rec) {
   var left = [{ id: 'board', icon: 'dashboard', text: nameOf(rec), strong: true }];
   var n;
+  rec.liveShown = false;
   if (rec.type === 'engine' && rec.b) {
+    if (liveOn() && holdsUsage(rec)) {
+      rec.liveShown = true;
+      left.push({ id: 'live', el: liveMark(rec), title: 'Live readings', detail: 'A few readings change about every 6 seconds, here and on Usage. The Board menu turns them off.' });
+    }
+    if (hourRunning()) {
+      var H = hourApi(), label = '', done = false;
+      try { label = H.label(); done = H.step() >= 30; } catch (_) {}
+      if (label) left.push({ id: 'hour', icon: 'clock', text: label, title: 'Demo time',
+        detail: done ? 'The demo hour has played. Back to now is in the Board menu.' : 'The demo hour is playing, one demo minute per second. Back to now is in the Board menu.' });
+    }
     try { n = rec.b.count(); } catch (_) { n = 0; }
-    left.push({ id: 'count', text: n + (n === 1 ? ' widget' : ' widgets'), dim: true });
+    left.push({ id: 'count', text: n ? n + (n === 1 ? ' widget' : ' widgets') : 'No widgets', dim: true });
     var st = rec.b.state || {};
     left.push({ id: 'view', text: rangeLabel(st.range) + (st.scope && st.scope !== 'all' ? ' · ' + scopeLabel(st.scope) : ''), dim: true });
   } else if (rec.type === 'agents') {
@@ -176611,6 +177557,8 @@ function buildRow(rec) {
     // the tab's hover title follows a rename
     var title = 'Dashboard: ' + nameOf(rec);
     if (rec.title !== title) { if (rec.title != null) rec.api.update({ title: title }); rec.title = title; }
+    paintEmpty(rec);
+    hourTicker(rec);
     var left = factsFor(rec);
     var key = JSON.stringify(left);
     if (key === rec.leftKey) return;
@@ -176652,18 +177600,21 @@ PM_HOME.registerKind('dashboard', {
   },
   labelFor: function (id, st) { var b = boardOf(id, st); return isBoard(b) ? labelOf(b) : 'Dashboard'; },
   iconFor: function () { return 'dashboard'; },
+  /* the "+" row: the four built-in boards, this project's custom dashboards by name, then New dashboard */
   plus: {
     order: 40,
     label: 'Dashboard',
-    subMax: 5,
     sub: function () {
-      return FIXED_IDS.map(function (b) { return { id: b, label: FIXED[b].label, detail: FIXED[b].sub, icon: 'dashboard' }; })
-        .concat([{ id: 'new', label: 'New dashboard', detail: NEW_SUB, icon: 'plus' }]);
+      var out = FIXED_IDS.map(function (b) { return { id: b, label: FIXED[b].label, detail: FIXED[b].sub, icon: 'dashboard' }; });
+      // custom dashboards go into one 'Your dashboards' row under Dashboard (PMW.SUB_GROUPS), so the inline links stay
+      // the four built-ins and New dashboard however many a person makes
+      customBoards().forEach(function (b) { out.push({ id: b, label: labelOf(b), detail: widgetCount(storedCount(b)), icon: 'dashboard', group: 'dash' }); });
+      return out.concat([{ id: 'new', label: 'New dashboard', detail: NEW_SUB, icon: 'plus' }]);
     },
     spec: function (sub) {
       if (sub === 'new') return { kind: 'dashboard', board: 'new' };
-      var b = FIXED[sub] ? sub : 'home';
-      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label };
+      var b = isBoard(sub) ? sub : 'home';
+      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: labelOf(b) };
     }
   },
   mount: function (host, st, api) {
@@ -176671,8 +177622,11 @@ PM_HOME.registerKind('dashboard', {
     var rec = { id: api.id, api: api, board: board, type: type, filter: (st && st.filter) || 'all', host: host, gone: false, shown: false, b: null, offs: [] };
     recs[api.id] = rec;
     var stage = rec.stage = h('div', { class: 'pmw-dash-stage', 'data-board': board, 'data-kind': type });
-    var wrap = h('div', { class: 'pmw-dash', 'data-board': board }, [null, stage]);
+    var wrap = rec.wrap = h('div', { class: 'pmw-dash', 'data-board': board }, [null, stage]);
     host.appendChild(wrap);
+    // a custom dashboard's tab renamed before round two names its board
+    rec.seenLabel = tabUserLabel(rec);
+    if (dashNumber(board) && rec.seenLabel && rec.seenLabel !== labelOf(board)) setName(board, rec.seenLabel);
     if (type === 'engine') mountEngine(rec);
     else if (type === 'agents') mountAgents(rec);
     else if (type === 'fallback') showNote(rec, 'Usage widgets are not available in this build', 'The other dashboards and the panels work as usual.');
@@ -176680,6 +177634,7 @@ PM_HOME.registerKind('dashboard', {
     wrap.insertBefore(buildRow(rec), stage);
     var name = nameOf(rec);
     api.update({ label: labelOf(board), title: 'Dashboard: ' + name, icon: 'dashboard' });
+    if (dashNumber(board)) refreshCatalog();
 
     var inst = {
       serialize: function () {
@@ -176700,12 +177655,13 @@ PM_HOME.registerKind('dashboard', {
         rec.shown = false;
         if (rec.b) rec.b.hide();
         else if (type === 'agents' && rec.clockOn) { rec.clockOn = false; clockStop(); }
+        hourTicker(rec);
       },
       onResize: function (size) {
         refreshMax(rec);
         if (rec.b) rec.b.hostResize(size);
       },
-      onLook: function (look) { if (rec.b) rec.b.relook(look); },
+      onLook: function (look) { if (rec.b) rec.b.relook(look); rec.paintLeft(); },
       wantsKey: function () { return !!(rec.b && rec.b.gesture()); },
       /* an open of this tab: { widget } scrolls an engine board to that card */
       reveal: function (fields) {
@@ -176714,29 +177670,44 @@ PM_HOME.registerKind('dashboard', {
       },
       unmount: function () {
         if (type === 'agents' && rec.clockOn) { rec.clockOn = false; clockStop(); }
+        dismissUndo(rec, { instant: true });
         rec.gone = true;
+        if (rec.hourTimer) { clearInterval(rec.hourTimer); rec.hourTimer = 0; }
         delete recs[api.id];
         rec.offs.splice(0).forEach(function (off) { try { off(); } catch (_) {} });
-        if (rec.b) { try { rec.b.destroy(); } catch (err) { try { console.error('[pm-home] dashboard board destroy failed', err); } catch (_) {} } }
-        if (rec.deleting) forget(board);
+        if (rec.b) { try { rec.b.destroy(); } catch (err) { logError('dashboard board destroy failed', err); } }
+        if (rec.deleting) forget(board, rec.b ? rec.b.project() : null);
       }
     };
-    /* keyboard focus on an engine board: its first card in reading order, else Add widget (the other tabs take the
-       host's default, their panel) */
+    /* keyboard focus on an engine board: its first card in reading order; an empty board's Add widget, else the header
+       row's (the other tabs take the host's default, their panel) */
     if (type === 'engine') inst.focus = function () {
-      if (rec.b && rec.b.focus()) return;
-      var add = rec.row && rec.row.action('add');
+      if (rec.b && focusCard(function () { return rec.b.focus(); })) return;
+      var add = rec.empty && !rec.empty.el.hidden ? rec.empty.add : rec.row && rec.row.action('add');
       if (add && add.focus) add.focus({ preventScroll: true });
     };
     return inst;
   }
 });
 
+/* the catalog: the four built-in boards and New dashboard, then this project's custom dashboards by name (added again
+   when one is made, renamed or the project changes) */
 PM_HOME.catalog.add('dashboard', FIXED_IDS.map(function (b) {
   return { id: 'dashboard:' + b, label: FIXED[b].label, sub: FIXED[b].sub, icon: 'dashboard', keywords: 'dashboard board widgets ' + b,
     spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label } };
 }).concat([{ id: 'dashboard:new', label: 'New dashboard', sub: NEW_SUB, icon: 'dashboard', keywords: 'dashboard board widgets new empty',
   spec: { kind: 'dashboard', board: 'new' } }]));
+function refreshCatalog() {
+  var items = customBoards().map(function (b) {
+    var name = labelOf(b);
+    return { id: 'dashboard:' + b, label: name, sub: 'Your dashboard', icon: 'dashboard', keywords: 'dashboard board widgets custom ' + name,
+      spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: name } };
+  });
+  var now = {}; items.forEach(function (it) { now[it.id] = true; });
+  var stale = PM_HOME.catalog.list('dashboard').filter(function (it) { return DASH_TAB.test(it.id) && !now[it.id]; }).map(function (it) { return it.id; });
+  if (stale.length && PM_HOME.catalog.remove) PM_HOME.catalog.remove('dashboard', stale);
+  if (items.length) PM_HOME.catalog.add('dashboard', items);
+}
 
 /* ---- engine hooks for the tour and checks ---- */
 function reveal(board) {
@@ -176744,69 +177715,88 @@ function reveal(board) {
   if (!isBoard(board)) board = 'home';
   return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board) });
 }
-/* the stored dashboards: every key of an engine board id, plus the live boards' (a board not written yet reads null) */
+/* the stored dashboards of this project: every key of an engine board id, plus the live boards' (a board not written
+   yet reads null) */
 function storedBoards() {
   var ids = {};
-  try {
-    for (var i = 0; i < localStorage.length; i++) {
-      var k = localStorage.key(i);
-      if (k && k.indexOf(KEY_PREFIX) === 0 && isEngineId(k.slice(KEY_PREFIX.length))) ids[k.slice(KEY_PREFIX.length)] = true;
-    }
-  } catch (_) {}
+  storedIds(boardProject()).forEach(function (b) { ids[b] = true; });
   engineRecs().forEach(function (r) { ids[r.board] = true; });
   return Object.keys(ids);
 }
+/* a board's key now: a mounted board's own (b.STORE_KEY, which follows its project), else this project's */
+function liveRec(board) { return engineRecs().filter(function (r) { return r.board === board; })[0] || null; }
+function storeKeyOf(board) { var r = liveRec(board); return r && r.b.STORE_KEY ? r.b.STORE_KEY : keyFor(board); }
 function readKey(board) {
-  try { var v = localStorage.getItem(KEY_PREFIX + board); return v == null ? null : JSON.parse(v); } catch (_) { return null; }
+  try { var v = localStorage.getItem(storeKeyOf(board)); return v == null ? null : JSON.parse(v); } catch (_) { return null; }
+}
+/* every listed engine dashboard's store, written now (each board flushed first): { <board id>: envelope | null } */
+function snapshotBoards(ids) {
+  var list = Array.isArray(ids) ? ids.filter(isEngineId) : storedBoards();
+  list.forEach(function (id) { var r = liveRec(id); if (r) { try { r.b.flush(); } catch (_) {} } });
+  var out = {};
+  list.forEach(function (id) { out[id] = readKey(id); });
+  return out;
+}
+/* the stores written back (null removes one) and every mounted board among them read again. An envelope from another
+   project (a named layout saved there) is written as this project's. */
+function restoreBoards(snap) {
+  if (!snap || typeof snap !== 'object') return false;
+  var p = boardProject();
+  Object.keys(snap).forEach(function (id) {
+    if (!isEngineId(id)) return;
+    var key = storeKeyOf(id), env = snap[id];
+    try {
+      if (env == null) localStorage.removeItem(key);
+      else {
+        if (typeof env === 'object' && env.project_id && env.project_id !== p) env = Object.assign({}, env, { project_id: p });
+        localStorage.setItem(key, JSON.stringify(env));
+      }
+    } catch (_) {}
+  });
+  engineRecs().forEach(function (r) {
+    if (!Object.prototype.hasOwnProperty.call(snap, r.board)) return;
+    try { r.b.reload(); } catch (err) { logError('dashboard reload failed', err); }
+    r.paintLeft();
+  });
+  return true;
 }
 PMW.dashboard = {
   /* show a board's tab (open it when it is not open); 'new' makes a new dashboard */
   reveal: reveal,
-  /* back to the starting widgets: an engine board's reset (cmd.widget.reset_layout) */
+  /* back to the default widgets: an engine board's reset (cmd.widget.reset_layout) */
   reset: function (board) {
-    var r = recList().filter(function (x) { return x.board === board && !x.gone; })[0];
-    if (r && r.b) return resetEngine(r);
+    var r = liveRec(board);
+    if (r) return resetEngine(r);
     return false;
   },
   /* the boards on screen now */
   holder: function () {
     return recList().filter(function (r) { return visible(r) && r.b; }).map(function (r) { return r.board; });
   },
-  boards: function () {
-    var out = FIXED_IDS.slice();
-    try { PM_HOME.tabs().forEach(function (t) { if (DASH_TAB.test(t.tabId)) out.push(boardOf(t.tabId)); }); } catch (_) {}
-    return out;
-  },
+  /* the built-in boards, then this project's custom dashboards */
+  boards: function () { return FIXED_IDS.concat(customBoards()); },
   /* the engine board of a dashboard tab that is mounted, else null */
-  board: function (id) { var r = engineRecs().filter(function (x) { return x.board === id; })[0]; return r ? r.b : null; },
-  /* forget a board's stores (its layout and its quarantine copy): the ONE place that knows the keys */
-  forget: forget,
-  /* every engine dashboard's store, written now: { <board id>: envelope | null } (the tour's snapshot, D10 4.8).
-     With an id list, only those boards (a named layout's boards, P6). */
-  snapshot: function (ids) {
-    engineRecs().forEach(function (r) { try { r.b.flush(); } catch (_) {} });
-    var list = Array.isArray(ids) ? ids.filter(isEngineId) : storedBoards();
-    var out = {};
-    list.forEach(function (id) { out[id] = readKey(id); });
-    return out;
-  },
-  /* the stores written back (null removes one) and every mounted board read again */
-  restore: function (snap) {
-    if (!snap || typeof snap !== 'object') return false;
-    Object.keys(snap).forEach(function (id) {
-      if (!isEngineId(id)) return;
-      try {
-        if (snap[id] == null) localStorage.removeItem(KEY_PREFIX + id);
-        else localStorage.setItem(KEY_PREFIX + id, JSON.stringify(snap[id]));
-      } catch (_) {}
-    });
-    engineRecs().forEach(function (r) {
-      if (!Object.prototype.hasOwnProperty.call(snap, r.board)) return;
-      try { r.b.reload(); } catch (err) { try { console.error('[pm-home] dashboard reload failed', err); } catch (_) {} }
-      r.paintLeft();
-    });
+  board: function (id) { var r = liveRec(id); return r ? r.b : null; },
+  /* a board's name, and a custom dashboard's rename (as Rename dashboard... does it; '' goes back to "Dashboard n") */
+  name: function (board) { return labelOf(board); },
+  rename: function (board, name) {
+    var r = recList().filter(function (x) { return x.board === board && !x.gone; })[0];
+    if (r) return applyName(r, name);
+    if (!dashNumber(board)) return false;
+    setName(board, name);
+    refreshCatalog();
     return true;
-  }
+  },
+  /* the project the boards' keys belong to now, and a board's key in it */
+  project: boardProject,
+  key: function (board) { return isEngineId(board) ? storeKeyOf(board) : null; },
+  /* forget a board's stores in this project (its key, its quarantine copy, a custom dashboard's name): the ONE place */
+  forget: forget,
+  /* every engine dashboard's store in this project, written now: { <board id>: envelope | null } (the tour's
+     snapshot, D10 4.8). With an id list, only those boards (a named layout's boards, P6; a Start from's Undo). */
+  snapshot: snapshotBoards,
+  /* the stores written back to each board's own key (null removes one) and every mounted board read again */
+  restore: restoreBoards
 };
 
 /* P6: a dashboard that leaves the reopen list is forgotten (its stores go with it), unless it is open as a tab.
@@ -176816,10 +177806,39 @@ function onClosedDropped(ev) {
   if (!Array.isArray(ids) || !ids.length) return;
   var open = {};
   try { PM_HOME.tabs().forEach(function (t) { open[t.tabId] = true; }); } catch (_) {}
+  // still in the committed reopen list (the commit that dropped it was rejected): keep it
+  try { var lc = PMW.state && PMW.state.layout && PMW.state.layout.closed; (lc || []).forEach(function (c) { if (c && c.tab) open[c.tab.id] = true; }); } catch (_) {}
   ids.forEach(function (id) {
     if (typeof id !== 'string' || !DASH_TAB.test(id) || open[id]) return;
     forget(boardOf(id));
   });
+}
+
+/* P5: a project switch. 16-persist.js (watchProject, checkProject) saves the layout to the old project, binds the new
+   one and restores its layout in one command, which emits 'layout' only when the two layouts differ; so this listens to
+   that and to the project label itself (a moment later, once persist has bound the new project). Every mounted board
+   whose tab is still in the layout takes the new project's key (setProject writes it to the old key first, then reads
+   the new one; a hidden board reads at its next show). A tab the new layout no longer holds is left alone: it unmounts
+   in the next render and its last write goes to the project it belonged to. */
+function syncProject() {
+  var p = boardProject();
+  if (curProject == null) { curProject = p; return; }
+  if (p === curProject) return;
+  curProject = p;
+  var l = PMW.state && PMW.state.layout;
+  engineRecs().forEach(function (r) {
+    if (l && !l.tabs[r.id]) return;
+    dismissUndo(r, { instant: true });
+    try { r.b.setProject(p); } catch (err) { logError('dashboard project switch failed', err); }
+  });
+  // the custom dashboards' names are the new project's (the same tab id can name another board there)
+  recList().forEach(function (r) {
+    if (r.gone || !l || !l.tabs[r.id]) return;
+    r.seenLabel = tabUserLabel(r);
+    if (dashNumber(r.board)) r.api.update({ label: labelOf(r.board) });
+  });
+  refreshCatalog();
+  repaintAll();
 }
 
 /* the page's own route to a dashboard board (PM_PAGES.go('dashboard', 'Metrics')) reveals that board's tab */
@@ -176835,14 +177854,46 @@ function routeSubtabs() {
    return shows it. */
 function pageActive() { var p = byId('panel-dashboard'); return !p || p.classList.contains('active'); }
 
+/* Focus that leaves a menu or a dashboard's own controls for a card by itself. The engine ends every API move and resize
+   (the preset hold after a Start from, a reload or a look change; the tour's Show me) the way a keyboard gesture ends,
+   by focusing the card (40-board.js apiCommit, reported to the engine's owner). After a Start from the hold runs for
+   seconds, so a person typing a preset's name or walking the Board menu with the keys lost the field to a card
+   mid-word (and a typed M would pick the card up). Such a move is undone here: a card that takes focus from a PMW
+   menu, the name prompt or a dashboard's header row or Undo notice gives it back, unless the person just pressed or
+   pointed on a board, moved focus with Tab or F6, or the kind itself asked for it. Every other focus is left alone. */
+var boardInputAt = 0, kindFocusAt = 0;
+function focusCard(fn) { kindFocusAt = Date.now(); return fn(); }
+function guardFocus() {
+  function mark(e) {
+    var t = e.target;
+    if ((t && t.closest && t.closest('.pmw-dash-stage')) || (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'F6'))) boardInputAt = Date.now();
+  }
+  doc.addEventListener('pointerdown', mark, true);
+  doc.addEventListener('keydown', mark, true);
+  doc.addEventListener('focusin', function (e) {
+    var t = e.target, from = e.relatedTarget, now = Date.now();
+    if (!from || !from.closest || !t || !t.closest || now - boardInputAt < 600 || now - kindFocusAt < 600) return;
+    var stage = t.closest('.pmw-dash-stage');
+    if (!stage || stage.contains(from) || !from.isConnected) return;
+    if (!(from.closest('.pmw-menu') || (from.closest('.pmw-dash') && !from.closest('.pmw-dash-stage')))) return;
+    try { from.focus({ preventScroll: true }); } catch (_) {}
+  }, true);
+}
+
 function install() {
   // ?home=current keeps today's Home: the page's own dashboard code runs as published
   if (doc.documentElement.getAttribute('data-pmw-home') !== 'on') return;
   routeSubtabs();
-  // a rename (a layout commit) shows in the header facts
-  PM_HOME.on('layout', repaintAll);
+  // a layout commit: a project switch re-keys the boards, a tab rename names its board, the facts follow
+  PM_HOME.on('layout', function () { syncProject(); syncNames(); repaintAll(); });
   // a closed dashboard that leaves the reopen list is forgotten (P6)
   PM_HOME.on('closed-dropped', onClosedDropped);
+  guardFocus();
+  var label = byId('projectMenuLabel');
+  if (label && typeof MutationObserver === 'function') {
+    new MutationObserver(function () { setTimeout(syncProject, 0); }).observe(label, { characterData: true, childList: true, subtree: true });
+  }
+  refreshCatalog();
 }
 if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', install); else install();
 })(window.PM_HOME, window.PMW);
@@ -182966,9 +184017,28 @@ function queueRecompute() {
 function commandCard() {
   var lines = ['     Running benches/analytics.rs', 'tenant_read/composite_index  time: [68.9 ms 71.2 ms 73.8 ms]', 'tenant_read/created_at_only  time: [471 ms 482 ms 495 ms]',
     '                             change: -85.2% (p = 0.00 < 0.05)'];
+  var openSpec = { kind: 'terminal', id: 'terminal:cmd-bench', session: 'cmd-bench', cwd: CWD, invocation: 'cargo bench' };
+  /* with the terminal in the build, the chat shows the terminal's own command card (PMT.card, DECISIONS.md D27); the
+     card below is the stand-in's fallback without it */
+  var T = window.PMT;
+  if (T && typeof T.card === 'function') {
+    try {
+      return T.card({ command: 'cargo bench', cwd: CWD, status: 'ok', exitCode: 0, elapsedMs: 45000, lines: lines, totalLines: 214, by: 'user',
+        onOpen: function (sp, el, e) {
+          goHome();
+          PM_HOME.open(Object.assign({}, openSpec, { label: 'cargo bench · api', by: 'user', where: e && e.altKey ? 'panel' : 'auto', background: !!(e && (e.ctrlKey || e.metaKey)) }));
+        },
+        onRerun: function (sp, el, e) {
+          goHome();
+          S.rerunN += 1;
+          PM_HOME.open(Object.assign({}, openSpec, { label: 'cargo bench · api', by: 'user', rerun: true, state: { rerun: S.rerunN }, where: e && e.altKey ? 'panel' : 'auto' }));
+          if (el && typeof el.update === 'function') el.update({ status: 'running', startedAt: Date.now(), exitCode: null, elapsedMs: 0 });
+          PMW.announce('Running cargo bench again in its terminal tab');
+        } });
+    } catch (err) { try { console.error('[pm-home] the terminal command card failed; the stand-in card shows', err); } catch (_) {} }
+  }
   var pre = h('pre', { class: 'pmw-sc-cmd-out', 'data-pmh': 'off', 'aria-label': 'Last lines of the output' }, lines.join('\n'));
   var status = h('p', { class: 'pmw-sc-cmd-exit is-ok' }, [stateMark('ok'), h('span', { text: 'Exit code 0' }), h('span', { class: 'pmw-sc-dim', text: ' · ran in 45s' })]);
-  var openSpec = { kind: 'terminal', id: 'terminal:cmd-bench', session: 'cmd-bench', cwd: CWD, invocation: 'cargo bench' };
   return card({ icon: 'terminal', kicker: 'Command · ' + CWD, cls: 'is-cmd', aria: 'Command cargo bench',
     titleEl: h('p', { class: 'pmw-sc-cmd-line' }, [h('span', { class: 'pmw-sc-dim', 'aria-hidden': 'true', text: '$ ' }), h('code', { text: 'cargo bench' })]),
     body: [pre, status],

@@ -151,6 +151,15 @@ PM_HOME.catalog = {
     });
     bus.emit('catalog', { kind: kind });
   },
+  /* drop items by id (a deleted custom dashboard, one from the project left behind) */
+  remove: function (kind, ids) {
+    var list = CATALOG[kind]; if (!list) return;
+    var gone = {}; [].concat(ids || []).forEach(function (id) { gone[id] = true; });
+    var kept = list.filter(function (x) { return !gone[x.id]; });
+    if (kept.length === list.length) return;
+    CATALOG[kind] = kept;
+    bus.emit('catalog', { kind: kind });
+  },
   list: function (kind) { return (CATALOG[kind] || []).slice(); },
   all: function () { var out = []; Object.keys(CATALOG).forEach(function (k) { out = out.concat(CATALOG[k]); }); return out; },
   find: function (id) { var all = PM_HOME.catalog.all(); for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i]; return null; },
