@@ -14,3 +14,15 @@ html[data-theme] .pm6-tt-mode { position: relative; border-radius: var(--pm-ctl-
 html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-tt-mode[aria-checked="true"] { background: var(--text-primary); color: var(--surface); }
 /* the theme menu's family rows and the other title-bar menu rows: Friendly drew them as wide capsules */
 html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) !important; }
+
+/* ── Phase 2: the title bar's capsules, in every look (NP-SCOPE; Glass's activity bar stays with Liquid Glass) ───────
+   The project menu, the page tabs with their sliding ink, and the search field take the look's rectangle. The ink still
+   springs between tabs exactly as before. Glass's ink loses its 2px lilac line across the top: selection is the
+   surface itself, never an edge stripe (F3-648). */
+html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .title-bar .page-tabs .page-tab, html[data-theme] .title-bar .page-tab-ink { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme^="glass"] .title-bar .page-tabs { border-radius: calc(var(--pm-ctl-r) + 2px) !important; }
+html[data-theme^="glass"] .title-bar .page-tab-ink {
+  background: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 52%, #241450) 100%) !important;
+}
+html[data-theme] .title-bar .search-bar, html[data-theme] .title-bar .pm6-tb-search-wrap .search-bar { border-radius: var(--pm-ctl-r) !important; }
