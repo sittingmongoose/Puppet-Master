@@ -44,12 +44,63 @@ PMR.append = append;
 
 /* ---------- icons ------------------------------------------------------------------------------------------------ */
 /* PM_ICONS names (see DATA.md). Returns <span class="pmr-ico"> holding the SVG; unknown names render an empty box so
-   the layout never jumps. */
+   the layout never jumps. The neon glyph set (pm7-glyphs, RAIL) draws first: NEON maps each rail name to its glyph
+   (the map's "Rail and Settings bridge" group, T-bridge, plus T-jj's undo/oplog, which reach icon() through
+   menus). SIZE is the static render size per icon class (never measured: the boxes stay exactly as the CSS sizes
+   them) and ROLE the glyph's own role. Names PMG cannot draw (the file-type icons, alert) keep the old drawing. */
+const NEON = {
+  folder: 'folder', chevL: 'chevron-left', scissors: 'scissors', clipboard: 'clipboard', eyeOff: 'eye-off',
+  compose: 'compose', chat: 'chat', files: 'folder', search: 'search', source: 'branch', actions: 'pipeline',
+  docker: 'container', tests: 'check-circle', agents: 'robot', artifacts: 'archive', chevD: 'chevron-down',
+  chevR: 'chevron-right', x: 'close', plus: 'plus', minus: 'minus', check: 'check', warn: 'warning', info: 'info',
+  refresh: 'refresh', external: 'open', diff: 'diff', merge: 'merge', pr: 'pull-request', trash: 'trash',
+  play: 'play', stop: 'stop', eye: 'eye', copy: 'copy', terminal: 'terminal', cog: 'settings', filter: 'filter',
+  clock: 'clock', layers: 'layers', flame: 'flame', upload: 'upload', link: 'link', user: 'user',
+  spark: 'sparkles', bell: 'bell', pull: 'download', push: 'upload', fetch: 'swap', branch: 'branch',
+  stash: 'stash', folderOpen: 'folder', globe: 'globe', monitor: 'monitor', pin: 'pin', key: 'key',
+  book: 'notebook', camera: 'camera', file: 'page', arrowUp: 'arrow-up', arrowDn: 'arrow-down', grip: 'grip',
+  edit: 'edit', filePlus: 'file-plus', folderPlus: 'folder-plus', boxMinus: 'minus', boxPlus: 'plus',
+  pause: 'pause', stepOver: 'step-over', stepInto: 'step-into', stepOut: 'step-out', bpLine: 'bp-line',
+  bpCond: 'bp-cond', bpLog: 'bp-log', undo: 'undo', oplog: 'history',
+};
+const NEON_ROLE = {
+  folder: 'concept', chevL: 'control', scissors: 'concept', clipboard: 'concept', eyeOff: 'control',
+  compose: 'concept', chat: 'concept', files: 'concept', search: 'concept', source: 'control', actions: 'concept',
+  docker: 'concept', tests: 'concept', agents: 'concept', artifacts: 'control', chevD: 'control',
+  chevR: 'control', x: 'control', plus: 'control', minus: 'control', check: 'concept', warn: 'concept',
+  info: 'concept', refresh: 'control', external: 'control', diff: 'control', merge: 'control', pr: 'concept',
+  trash: 'control', play: 'control', stop: 'control', eye: 'concept', copy: 'control', terminal: 'concept',
+  cog: 'control', filter: 'control', clock: 'concept', layers: 'concept', flame: 'concept', upload: 'concept',
+  link: 'control', user: 'concept', spark: 'concept', bell: 'concept', pull: 'concept', push: 'concept',
+  fetch: 'control', branch: 'control', stash: 'control', folderOpen: 'concept', globe: 'concept',
+  monitor: 'concept', pin: 'control', key: 'concept', book: 'concept', camera: 'concept', file: 'concept',
+  arrowUp: 'control', arrowDn: 'control', grip: 'control', edit: 'control', filePlus: 'control',
+  folderPlus: 'control', boxMinus: 'control', boxPlus: 'control', pause: 'control', stepOver: 'control',
+  stepInto: 'control', stepOut: 'control', bpLine: 'concept', bpCond: 'concept', bpLog: 'concept',
+  undo: 'control', oplog: 'concept',
+};
+/* the review switcher's own classes are not listed: rail_layer keeps their prefix out of the published page,
+   so the switcher (review-only) takes the default size */
+const NEON_SIZE = {
+  'pmr-btn-ico': 15, 'pmr-mi-ico': 15, 'pmr-mi-sub': 13, 'pmr-trigger-ico': 14, 'pmr-trigger-chev': 14,
+  'pmr-c-act-ico': 16, 'pmr-c-act-chev': 14, 'pmr-c-mini-ico': 14,
+  'pmr-c-rico': 16, 'pmr-c-filter-ico': 14, 'pmr-c-lens-kick-ico': 14, 'pmr-c-chev': 12,
+  'pmr-c-title-chev': 14, 'pmr-c-footline-ico': 15, 'pmr-c-footline-chev': 14, 'pmr-c-sync-chev': 13,
+  'pmr-b-act-ico': 16, 'pmr-b-act-chev': 14, 'pmr-b-chev': 14, 'pmr-b-crumbsep': 12, 'pmr-b-disc-chev': 12,
+  'pmr-b-port-ico': 14, 'pmr-b-title-chev': 14, 'pmr-b-back-ico': 16, 'pmr-b-twist': 12, 'pmr-b-ficon': 16,
+  'pmr-b-filter-ico': 14, 'd-plus': 13, 'd-select-ico': 16, 'd-select-chev': 12, 'd-fold-chev': 13,
+};
+PMR.neonMap = NEON;
+PMR.neonRole = NEON_ROLE;
 function icon(name, cls) {
   const s = h('span', { class: ['pmr-ico', cls], 'aria-hidden': 'true', 'data-ico-name': name || '' });
   let svg = '';
-  try { if (name && typeof window.PMIcon === 'function') svg = window.PMIcon(name) || ''; } catch (e) { svg = ''; }
-  if (!svg && name && window.PM_ICONS && typeof window.PM_ICONS[name] === 'string') svg = window.PM_ICONS[name];
+  const G = window.PMG, g = (name && NEON[name]) || name;
+  if (g && G && G.has(g)) svg = G.icon(g, NEON_SIZE[cls] || 16, 'nx-r-' + (NEON_ROLE[name] || 'concept'));
+  if (!svg) {
+    try { if (name && typeof window.PMIcon === 'function') svg = window.PMIcon(name) || ''; } catch (e) { svg = ''; }
+    if (!svg && name && window.PM_ICONS && typeof window.PM_ICONS[name] === 'string') svg = window.PM_ICONS[name];
+  }
   if (svg) s.innerHTML = svg;
   return s;
 }
