@@ -27455,6 +27455,8 @@ negative_constraints:
 
 This addendum compiles Jared's home and terminal decisions of 2026-10-09 into storage: `Plans/Decision_Log.md#DL-180` (one universal panel system), `Plans/Decision_Log.md#DL-181` (one terminal session per tab), `Plans/Decision_Log.md#DL-182` (terminal images) and `Plans/Decision_Log.md#DL-183` (terminal appearance). It adds SP-330 (the v2 Home layout record, its key, transaction and the migration from v1 and from the Home part of `layout:v1`), SP-331 (where terminal appearance is stored) and SP-332 (the terminal records re-scoped, with saved scrollback). SP-330 replaces the v1 record as the selected Home layout: SP-245 and the PMConcept7 Home Workspace layout passage are amended so the v1 key is a read-only migration input. SP-122 is superseded by SP-332. SP-014, SP-093, SP-100, SP-114, SP-118, SP-123, SP-124, SP-126, SP-127 and SP-273 are amended in place, and so are the terminal persistence passages and the bounded-collections table of section 2. The panel model is `Plans/FinalGUISpec.md#F3-630`, the tab kinds and their host contract are `Plans/FinalGUISpec.md#F3-635`, and the terminal as one session per tab is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`; this document owns keys, transactions, migration, retention and failure behaviour only.
 
+Amended 2026-10-10 (DL-186, DL-187, DL-188): Jared's answers of 2026-10-10 are compiled into these units in place, with no new unit. SP-330: the chat's pop-out is never saved (D32), named layouts keep the boards of their dashboard tabs up to 64 KB (D10 P6, lead ruling F3), the old Dashboard layout converts into no board (P1), the Debug Console is one tab with its session sub-tab as view state (D33) and a terminal tab's notification mute is its state (D38). SP-332: well-known secret formats are scrubbed from saved scrollback (D36) and every terminal's saved copy together is capped at 512 MiB (D37). Outside this addendum, SP-249 now keeps dashboard boards per project and presets per user (D10 P4, P5, P6, D35), SP-250 is dated to match, and SP-273 records that Event Authority admitted `workspace.layout_changed` 2.0.0 (D42).
+
 ### The v2 Home layout record (SP-330)
 
 **Key and schema.** The Home layout of a project and workspace tab is one record under `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, family `home_workspace_layout_v2`, schema `pm.home_workspace_layout.v2` 2.0.0 in `Plans/home_workspace_layout_v2.schema.json`, retention `RP-CONFIG-CURRENT`. It is the only Home layout authority. `home_workspace_layout.v1:{project_id}:{workspace_tab_id}` and the Home part of `layout:v1` (`Plans/FinalGUISpec.md` section 15.1 and `Plans/FinalGUISpec.md#F3-217`) are read-only migration inputs.
@@ -27752,13 +27754,21 @@ Amended 2026-10-10 (lead ruling L1): the session record references its home pane
 
 **Saved scrollback.** A terminal's saved scrollback is the terminal restore record's transcript chunks (SP-125), not a new store. What is saved: the main screen's retained lines, at most the 10,000-line scrollback plus the screen, their styles and links, command records with `by`, and every image placement anchored in them. Never saved, `transient_only`: the alternate screen, the command line being typed, selections and find highlights. The quota is 64 MiB stored per terminal tab, text and images together. Images are stored as PNG, one record per frame, written once and reused by later saves, append-oriented like the transcript chunks. Text is bounded by the scrollback limit and never gives way to images; images that do not fit are dropped oldest first (highest in the scrollback), and a frame that cannot be read back is treated the same. An evicted image leaves a placeholder record in its cells naming it, with its width and height, which the tab draws as `[<name> <W>×<H> · not kept]` (`Plans/FinalGUISpec.md#F3-645`). A terminal tab has one saved copy, keyed by project and by the tab's id, like the layout. The copy and its 64 MiB quota belong to the tab, whichever session wrote them: the session the tab shows now writes it, and each save replaces the tab's previous copy, because the copy is always the tab's scrollback as it stands, restored lines included. After Restart or a restore the new session's first save takes the copy over, so an ended session never leaves a copy of its own and a tab never holds more than one. A restored or reopened tab loads the copy under its own tab id. An ended session's `terminal_session_record` keeps the tab's id as history only; it locates no copy.
 
+**Secrets are left out of the saved copy (amended 2026-10-10, DL-187, D36).** Before a copy is written, well-known secret formats are replaced in it: vendor API keys (`sk-...`, `AKIA...`, `ghp_...`, `github_pat_...`, `glpat-...`, `xox?-...`, `AIza...`, Stripe `sk_live_...`), bearer tokens and JWTs, `KEY=value` assignments whose name says key, secret, token or password, and the body of a private-key block. The live screen keeps the original. A secret's cells are rewritten in place, so the line keeps its width and every image anchor and mark stays put: the label `[API key · not saved]` (with `token`, `secret` or `private key` in place of `API key`) followed by blank cells, or `•` when the secret is shorter than the label. A private key keeps its BEGIN and END lines; its first body line carries the label and the rest of the body is empty. Command lines and link targets in the copy are scrubbed the same way. A restored tab's notice ends "N secrets were left out of the saved copy." (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). This is a floor for the common formats, not a promise that no secret is ever saved.
+
+**A total cap across terminals (amended 2026-10-10, DL-187, D37, lead ruling F4).** Every terminal's saved copy together is capped at 512 MiB on this machine, a fixed value and not a setting; the 64 MiB per terminal tab stays. When a save would pass the total, the oldest saved scrollback gives way first: the saved copies of terminals that are not running now (closed tabs, and the terminals of other projects), least recently saved first, are deleted until a full per-terminal quota fits again; if that is still not enough, the terminal being saved keeps fewer of its images (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`). A small index of each copy's bytes and save time keeps the total without reading the copies.
+
+**A terminal's notification mute (amended 2026-10-10, DL-187, D38).** It is the terminal tab's own state in the v2 Home record (SP-330), set by `ui.terminal.mute_notifications` (lead ruling F5); it is not part of saved scrollback or of the session record.
+
 Saved images follow saved scrollback's own rules, the transcript chunks': the same 64 MiB quota of the tab, the same retention after close and the same exclusion from backups, exports and sync.
 
 **Writes, restore and retention.** The copy is written 1.5 s after output settles, at most every 5 s while output streams, and when the page hides; an unchanged terminal is not written again. Clear scrollback empties the saved copy at the next save. A tab with no live session loads its saved copy before its new session starts (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, `Plans/FinalGUISpec.md#F3-645`); placeholder cells on restored lines resolve only to restored images; a command still running when the page went away comes back ended and indeterminate, never done (SP-125, `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-023`). The load budget is 5 s; past it the tab starts without its scrollback and says so. A closed tab's copy is kept while the tab can be reopened (the closed-tab stack holds 20, SP-330) and for at most 7 days, then deleted. An open tab's copy is never deleted for age; the quota bounds it. A missing or unreadable chunk reads as partial or unavailable, never as empty output (SP-125).
 
-**On this machine only.** Saved scrollback and its images stay on this machine: they are excluded from backups, exports and sync. SP-047's rule that the durable store does not persist interactive transcript or stdin by default covers the privileged-session evidence store Puppet Master keeps for its own external operations; it does not cover the user's terminal scrollback (lead ruling 2026-10-10). SP-047 itself is unchanged. Secret prompts need no rule of their own here, because their input is never echoed. The saved lines are the output as the terminal showed it, unredacted, like the live screen. Command blocks still point at them only by `transcript_ref` and never hold output or command text inline (the no-secret rule of `terminal_command_block` in `Plans/storage_value_registry.json`); the chunks are those refs' targets, and they stay unredacted because they never leave this machine and are deleted as above. No storage family holds an agent's write grant for a terminal (`Plans/Contracts_V0.md#CV-362`).
+**On this machine only.** Saved scrollback and its images stay on this machine: they are excluded from backups, exports and sync. SP-047's rule that the durable store does not persist interactive transcript or stdin by default covers the privileged-session evidence store Puppet Master keeps for its own external operations; it does not cover the user's terminal scrollback (lead ruling 2026-10-10). SP-047 itself is unchanged. Secret prompts need no rule of their own here, because their input is never echoed. The saved lines are the output as the terminal showed it, with the well-known secret formats above replaced (amended 2026-10-10, DL-187, D36; this sentence said "unredacted, like the live screen", and the live screen still keeps the original). Command blocks still point at them only by `transcript_ref` and never hold output or command text inline (the no-secret rule of `terminal_command_block` in `Plans/storage_value_registry.json`); the chunks are those refs' targets, and apart from the D36 replacements they keep the output as shown, because they never leave this machine and are deleted as above. No storage family holds an agent's write grant for a terminal (`Plans/Contracts_V0.md#CV-362`).
 
 **Open items.** Two are left for the lead and Jared. First, SP-125's transcript chunks, and with them saved scrollback and its PNG frames, have no physical family in `Plans/storage_value_registry.json`, so no registry row yet carries their key by project and terminal tab, the 64 MiB and 7-day retention, `backup_required: false` or the export and sync exclusion. Registering them needs a value schema, a retention policy and a redaction transform, and is not done in this addendum. Second, whether saved scrollback should be scrubbed of secrets that a program itself printed (for example a file of keys shown with `cat`) is Jared's question; until he answers, it is kept unredacted on this machine only, as above.
+
+Amended 2026-10-10 (DL-187): Jared answered the second item (D36): well-known secret formats are scrubbed from the saved copy before it is written, as "Secrets are left out of the saved copy" above says, and the live screen keeps the original. The first item stands, and the total cap's index of bytes and save times (D37) joins it: it has no registry row either.
 
 ### SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback
 
@@ -27788,13 +27798,25 @@ canonical_text: >-
   and tab id whichever session wrote it, each save replacing the tab's previous copy, so after Restart or a restore
   the new session's first save takes the copy over and a restored or reopened tab loads the copy under its own tab
   id. Saved images follow saved scrollback's storage, retention and exclusion rules. Saved scrollback is excluded
-  from backups, exports and sync and holds the output unredacted, which command blocks reach only by
-  transcript_ref; its physical family registration and whether to scrub secrets a program printed are open items. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal
+  from backups, exports and sync and holds the output as shown apart from the secret replacements below, which command blocks reach only by
+  transcript_ref; its physical family registration is an open item. SP-047's no-transcript rule covers the privileged-session evidence store, not terminal
   scrollback. No storage family holds an agent's terminal write grant (CV-362).
+  Amended 2026-10-10 (DL-187): before a copy is written, well-known secret formats are replaced in it (vendor API
+  keys sk-..., AKIA..., ghp_..., github_pat_..., glpat-..., xox?-..., AIza..., Stripe sk_live_...; bearer tokens and
+  JWTs; KEY=value assignments whose name says key, secret, token or password; a private-key block's body), cell for
+  cell in place with the label [API key · not saved] (or token, secret, private key) and blank cells, or • when the
+  secret is shorter; a private key keeps its BEGIN and END lines; command lines and link targets the same; the live
+  screen keeps the original, and a restored tab's notice ends "N secrets were left out of the saved copy." (D36).
+  Every terminal's saved copy together is capped at 512 MiB, fixed and not a setting, with 64 MiB per terminal tab
+  kept: past it the saved copies of terminals not running now (closed tabs, other projects), least recently saved
+  first, are deleted until a full per-terminal quota fits, and then the terminal being saved keeps fewer images,
+  with an index of bytes and save times keeping the total (D37, lead ruling F4). The scrub question is answered;
+  the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
+  state in the v2 Home record (D38, SP-330).
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false
-depends_on: [DL-181, DL-182, SMPFS-180, SMPFS-181, SP-125, SP-128, SP-330, SP-331, CV-362]
+depends_on: [DL-181, DL-182, DL-187, SMPFS-180, SMPFS-181, SP-125, SP-128, SP-330, SP-331, CV-362]
 unblocks: []
 acceptance_criteria:
   - "A terminal tab moved, collapsed, maximized or hidden leaves its terminal_session_record unchanged; panel_tab_id is the tab that shows the session (or last showed it) or null, and it may differ from terminal:<this session id> after Restart or a restore."
@@ -27807,6 +27829,8 @@ acceptance_criteria:
   - "Writes follow the 1.5 s, 5 s and page-hide cadence and skip unchanged terminals; Clear scrollback empties the saved copy at the next save."
   - "A closed tab's copy is deleted when the tab leaves the 20-tab stack or after 7 days, whichever comes first; an open tab's copy is bounded by its quota and never deleted for age; past the 5 s load budget the tab starts without its scrollback and says so."
   - "No backup, export or sync carries saved scrollback or its images, and no stored value holds an agent's terminal write grant."
+  - "A saved copy written from a screen that shows a key of each listed format, a bearer token, a JWT, a KEY=value secret and a private-key block holds none of them: each is its label in place with the line's width, image anchors and marks unchanged (or • when shorter), a private key keeps its BEGIN and END lines, command lines and link targets are scrubbed too, the live screen still shows the originals, and the restored tab's notice ends N secrets were left out of the saved copy."
+  - "When every terminal's saved copy together would pass 512 MiB, copies of terminals not running now are deleted least recently saved first until a full 64 MiB quota fits, and only then does the terminal being saved drop images; the total is kept from the index without reading the copies; no setting changes the 512 MiB."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -27829,8 +27853,14 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 7, saved scrollback; concept lineage only)"
   - "Plans/storage-plan.md#SP-122"
   - "Plans/storage-plan.md#SP-125"
+  - "Plans/Decision_Log.md#DL-187"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D36, D37, D38)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 7: the secret formats, labels and notice, and the total cap's trimming order; concept lineage only)"
 preserved_exact_tokens:
   - "pm.storage_value.terminal_session_record.v2"
+  - "512 MiB"
+  - "[API key · not saved]"
+  - "N secrets were left out of the saved copy."
   - "terminal_session_record.v1:{project_id}:{terminal_session_id}"
   - "panel_tab_id"
   - "legacy_terminal_leaf_pane_id"
@@ -27847,9 +27877,13 @@ negative_constraints:
   - "Do not let images push out text, and do not show an evicted image as empty cells."
   - "Do not put saved scrollback or its images in a backup, an export or sync."
   - "Do not store an agent's terminal write grant."
+  - "Do not write a saved copy before the well-known secret formats are replaced, or change the live screen's text when scrubbing."
+  - "Do not let every terminal's saved copy together pass 512 MiB, or make the total a setting."
 compatibility_only_notes:
   - "terminal_leaf_pane_id survives only as legacy_terminal_leaf_pane_id on converted values."
+  - "Earlier text, lineage only (until 2026-10-10, DL-187): saved scrollback held 'the output unredacted', and whether to scrub secrets a program printed was an open item; there was no total cap across terminals."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-187): well-known secret formats are scrubbed from the saved copy (D36); a fixed 512 MiB total across terminals with its trimming order (D37, lead ruling F4); a terminal tab's notification mute is its state (D38)."
   - "Amended 2026-10-10 (lead ruling L1): Home panel tab references are named panel_tab_id."
   - "Supersedes SP-122's nine-key decomposition (DL-181)."
   - "Retires the section, workgroup, tab, pane, leaf-pane, workspace and editor-terminal-panel families as writable records (DL-181)."
