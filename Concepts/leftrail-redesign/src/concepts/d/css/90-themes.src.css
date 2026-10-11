@@ -77,11 +77,7 @@
 §R[data-motion="reduced"] #activityBar *, §R[data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
-§R[data-motion="reduced"] .d-gl::after, §R[data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   §R :is(#sidePanelSlot, #bottomDebugHost) *, §R #activityBar *, §R #activityBar .icon, §R #activityBar .icon .symbol { transition: none !important; animation: none !important; }
-  §R .d-gl::after { display: none !important; }
-  §R .d-gl .d-spin { animation: none !important; }
 }
-§R[data-motion="reduced"] .d-gl .d-spin, §R[data-reduced-motion="1"] .d-gl .d-spin { animation: none !important; }
 §R[data-motion="reduced"] #activityBar .icon, §R[data-reduced-motion="1"] #activityBar .icon { transition: none !important; }

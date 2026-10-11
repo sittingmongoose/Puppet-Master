@@ -53,18 +53,17 @@
 §@testing [data-d-st="errored"], §@agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 §@testing .pm-chip[data-d-st], §@agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
-   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
-   keep more of the colour (they are shapes, not text). Measured in GPU Chrome against the pixels under each word and
-   glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1), glyphs 3.3:1 or
-   better (2026-10-09, lane F). */
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; the
+   glyphs take their tone ink from the neon mark itself (pm7-glyphs, RAIL). Measured in GPU Chrome against the pixels
+   under each word and glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1),
+   glyphs 3.3:1 or better (2026-10-09, lane F). */
 §R { --lf-tx: 100%; --lf-gl: 100%; }
 §R[data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
 §R[data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
 §R[data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
 §R[data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
 §R[data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
-§{light}@testing [data-d-st], §{light}@agents [data-d-st], §{nier,dark}@testing [data-d-st], §{nier,dark}@agents [data-d-st],
-§{light}@testing [data-d-st] > .d-gl, §{light}@agents [data-d-st] > .d-gl, §{nier,dark}@testing [data-d-st] > .d-gl, §{nier,dark}@agents [data-d-st] > .d-gl {
+§{light}@testing [data-d-st], §{light}@agents [data-d-st], §{nier,dark}@testing [data-d-st], §{nier,dark}@agents [data-d-st] {
   color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
 }
 §{light}@testing :is(.pm-chip, .lf-state, .c)[data-d-st], §{light}@agents :is(.pm-chip, .lf-state, .c)[data-d-st],
