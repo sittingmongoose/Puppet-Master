@@ -1,6 +1,6 @@
 # Rollout spec: onboarding and the guided tour adopt the neon glyph set (pm7-glyphs, D44)
 
-Status: DRAFT. Surface 3 (after the rail and Usage). No other thread owns `Concepts/onboarding/opus-5.5/src` today;
+Status: READY (planner's go, 2026-10-11). Surface 3. No other thread owns `Concepts/onboarding/opus-5.5/src` today;
 the planner is told before a worker runs it.
 
 ## Two kinds of glyph here
