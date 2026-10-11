@@ -8,13 +8,10 @@
 .pmw-art { position: absolute; inset: 0; display: flex; flex-direction: column; }
 .pmw-art-stage { position: relative; flex: 1 1 auto; min-height: 0; }
 
-/* Fit / Actual size / Source: text options in the header row, the active one underlined in text colour */
-.pmw-hfact .pmw-art-hseg { display: inline-flex; align-items: stretch; gap: 2px; height: 24px; }
-.pmw-art-hopt { position: relative; height: 24px; padding: 0 7px; border: 0; border-radius: 6px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; cursor: pointer; white-space: nowrap; }
-.pmw-art-hopt:hover { background: var(--pmw-hover); color: var(--pmw-text); }
-.pmw-art-hopt[aria-checked="true"] { color: var(--pmw-text); font-weight: 600; }
-.pmw-art-hopt[aria-checked="true"]::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: 1px; height: 2px; background: var(--pmw-text); }
-.pmw-art-hopt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; }
+/* Fit / Actual size / Source: a radiogroup leading the header row; the chosen option is filled on its own box like
+   the Debug sub-tabs (the chosen fill and the header-row toggle rules, 45-frames.css) */
+.pmw-hfact .pmw-art-hseg { display: inline-flex; align-items: stretch; gap: 4px; }
+.pmw-art-hopt { height: 100%; padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 @container pmw-body (max-width: 519.98px) { .pmw-art .pmw-hfact[data-id="path"] { display: none; } }
 .pmw-art .pmw-hfact[data-id="path"] { min-width: 0; }
 
@@ -86,7 +83,7 @@
   .pmw-art-xl { margin-left: 40px; }
   .pmw-art-chart.is-line .pmw-art-xl span:nth-child(even) { visibility: hidden; }
   /* the metric switch wraps instead of hiding its last options behind a scroll with no bar */
-  .pmw-seg.pmw-art-metric { flex-wrap: wrap; gap: 0 12px; overflow: visible; }
+  .pmw-seg.pmw-art-metric { flex-wrap: wrap; gap: 0 4px; overflow: visible; }
 }
 /* the forecast line: a stretched path with round dots in HTML so they stay round */
 .pmw-art-linesvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
@@ -498,10 +495,8 @@ th.is-num .pmw-art-sort { justify-content: flex-end; }
 /* Retro: square corners (the tokens), the code face for figures, reverse video for what is chosen */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-art-bar, .pmw-art-hbar, .pmw-art-dot, .pmw-art-progbar, .pmw-art-progress, .pmw-run-meter, .pmw-run-meter span, .pmw-run-hubdot, .pmw-run-chdot) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-art-tick, .pmw-art-val, .pmw-art-hval, .pmw-art-gcount, .pmw-run-tcost, .pmw-art-sym) { font-family: var(--pm-font-code); }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-hopt[aria-checked="true"],
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-choice.is-chosen,
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-option.is-lead .pmw-run-optl { background: var(--pmw-accent); color: var(--pmw-surface); border-radius: 0; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-hopt[aria-checked="true"]::after { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-choice.is-chosen .pmw-art-choicek { background: transparent; color: var(--pmw-surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-box { stroke-width: 1.4; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-art-table tbody tr:hover td,
@@ -512,7 +507,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(b, s
 
 /* Friendly: its page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) would turn these 24-32 px
    buttons into capsules (the pill ban); restated at that weight, Friendly only, so NieR's square part stays square */
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-hopt, button.pmw-art-tocl, button.pmw-run-back, button.pmw-run-picker) { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-tocl, button.pmw-run-back, button.pmw-run-picker) { border-radius: 6px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-art-choice, button.pmw-run-seat, button.pmw-run-trow) { border-radius: min(var(--pmw-radius), 8px); }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-art-sort { border-radius: 0; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-run-link { border-radius: 3px; }

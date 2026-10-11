@@ -1,6 +1,7 @@
 /* The shared document and run frames (27-frames.js). Sizes key on the tab body (@container pmw-body), never the window.
-   No pills: meta is a plain text row with dot separators; toggles are text options on a hairline; notices are a full
-   1 px box or a plain line, never a coloured side border. */
+   No pills: meta is a plain text row with dot separators; toggles are text options on a hairline whose chosen option
+   is filled on its own box (the chosen fill below, never an underline); notices are a full 1 px box or a plain line,
+   never a coloured side border. */
 
 .pmw-frame { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
 .pmw-frame-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
@@ -42,14 +43,99 @@
 .pmw-sec-head h2 { margin: 0; font-size: 15px; line-height: 21px; font-weight: 620; }
 .pmw-fine { font-size: 11.5px; color: var(--pmw-text-3); }
 
-.pmw-seg { display: flex; align-items: stretch; gap: 18px; border-bottom: 1px solid var(--pmw-line); min-height: 32px; overflow-x: auto; scrollbar-width: none; }
+/* Segmented toggles (PMW.frames.seg): text options in a row on a hairline. The chosen option takes the chosen fill
+   below on its own box, never an underline (the Plans canon lead's ruling of 2026-10-11: DR-069 and F3-648 count a
+   one-sided coloured line as a side stripe, and D5 bans underline markers); weight and size never change with the
+   choice, so the options never move. The row keeps 3 px inside each end, so its scroll box never clips the first or
+   the last option's focus ring. */
+.pmw-seg { display: flex; align-items: stretch; gap: 4px; padding: 0 3px; border-bottom: 1px solid var(--pmw-line); min-height: 32px; overflow-x: auto; scrollbar-width: none; }
 .pmw-seg::-webkit-scrollbar { display: none; }
-.pmw-seg-opt { position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 2px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; }
+.pmw-seg-opt { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 8px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 .pmw-seg-opt small { font-size: 11px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
-.pmw-seg-opt:hover { color: var(--pmw-text); }
-.pmw-seg-opt[aria-selected="true"] { color: var(--pmw-text); font-weight: 600; }
-.pmw-seg-opt[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--pmw-text); }
-.pmw-seg-opt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; border-radius: 4px; }
+
+/* ---- The chosen fill (DL-162's tab ink, the one the rail's tab strips use: Concepts/leftrail-redesign 22-tabs and
+   90-themes). One grammar for every one-of-several control in the panels: the Debug Console's sub-tabs (22-tools.js),
+   every segmented toggle (PMW.frames.seg) and the artifact's Fit / Actual size / Source (44-artifact.js).
+     .pmw-ink-row  the tablist or radiogroup. --pmw-ink-y is how far the fill sits in from an option's top and bottom
+                   (4 px: a 21 px fill in a 29 px header row, 24 px in a 32 px body row).
+     .pmw-ink-opt  an option. Its ::after is its own fill box: the chosen fill, or the quiet hover fill. Its ::before is
+                   the focus ring, 2 px round the fill box with a 1 px gap, so the ring never touches the fill.
+     .pmw-ink      the one ink that carries the fill from box to box on a change (PMW.frames.ink, 27-frames.js), in the
+                   look's own tab-change voice; while it travels (data-moving on the row) the boxes' own fills wait.
+   The fill: a tint of the accent with a 1 px ring of it and a small shadow in Basic and Friendly dark, the raised
+   surface with the accent's ring in their light modes, the violet liquid ink in Glass, Retro's reverse video, and
+   solid ink with paper words in NieR Mode with or without the cursor part. The chosen words take the panel tab's
+   active ink (--pmw-tab-active); a count or state word beside them goes at 90 %. A hover is the quiet hover fill on
+   the same box, never the chosen fill, so only one option ever reads as chosen. ---- */
+.pmw-ink-row { position: relative; --pmw-ink-y: 4px; }
+.pmw-ink-opt { position: relative; z-index: 1; isolation: isolate; transition: color var(--pmw-t-fast) var(--pmw-ease); }
+.pmw-ink-opt::after, .pmw-ink { content: ""; position: absolute; top: var(--pmw-ink-y, 4px); bottom: var(--pmw-ink-y, 4px); border-radius: 6px; pointer-events: none; }
+.pmw-ink-opt::after { z-index: -1; left: 0; right: 0; }
+.pmw-ink { z-index: 0; left: 0; width: 0; display: none; will-change: transform; }
+.pmw-ink-row[data-moving] > .pmw-ink { display: block; }
+.pmw-ink-row[data-moving] > .pmw-ink-opt::after { opacity: 0; }
+.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--pmw-text); }
+.pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--pmw-hover); }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--pmw-tab-active, var(--pmw-text)); }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: inherit; opacity: .9; }
+.pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, .pmw-ink {
+  background: color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 16%, var(--surface-elevated, var(--pmw-surface-2)));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 24%, transparent); }
+/* light looks: the ink is the raised surface with the accent's ring (DL-162's light ink) */
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
+html:is([data-theme="basic-light"], [data-theme="friendly-light"]) .pmw-ink {
+  background: var(--surface-elevated, var(--pmw-surface-2));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary, var(--pmw-accent)) 30%, transparent); }
+/* the focus ring goes round the fill box with a 1 px gap; the option draws no outline or shadow of its own (two
+   classes, so the page's own button focus rules stay off it) */
+.pmw-ink-opt.pmw-ink-opt:focus-visible { outline: none; box-shadow: none; }
+.pmw-ink-opt:focus-visible::before { content: ""; position: absolute; top: calc(var(--pmw-ink-y, 4px) - 3px); bottom: calc(var(--pmw-ink-y, 4px) - 3px); left: -3px; right: -3px;
+  border: 2px solid var(--pmw-focus); border-radius: 9px; pointer-events: none; }
+/* Glass: the violet liquid ink (a lit top edge inside the fill, a soft violet glow) */
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink {
+  background: linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%);
+  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55); }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after, html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink {
+  background: linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%);
+  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35); }
+html[data-theme="glass-dark"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #fff; }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: #2A1848; }
+/* Retro: the chosen option is the reverse-video cell on the fill box (square, no shadow); a hover lights the name on a
+   phosphor tint; it changes in one step, as Retro's tabs snap */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt::after, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:focus-visible::before,
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: var(--accent-lime); }
+/* light Retro's phosphor green read 3.7:1 as a hovered name on its tint: the same green, darker */
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover { color: color-mix(in srgb, var(--accent-lime) 72%, #000); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: color-mix(in srgb, var(--accent-lime) 14%, transparent); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--accent-lime); box-shadow: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--surface); opacity: 1; }
+/* NieR: solid ink with paper words on the chosen option's own box (DL-162's NieR tab ink, the ink block of the cursor
+   part), no shadow, square with the square part. A hover is NieR's hover tint with or without the cursor part, as on
+   the panel's own tabs: an inked hover read as a second chosen option. The change is a cut (no fade). */
+html[data-o55-nier="on"] .pmw-ink-opt { transition: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink-opt::after, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink-opt:focus-visible::before,
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-ink { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-ink-opt:not([aria-selected="true"]):not([aria-checked="true"]):hover::after { background: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10)); }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"]) small { color: var(--o55-nier-on-ink); opacity: 1; }
+/* Reduced Motion: the fill changes at once (the ink never travels: PMW.motion.animate draws nothing) */
+html[data-motion="reduced"] .pmw-ink-opt { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-ink-opt { transition: none; } }
+
+/* A toggle in the shared header row (28-hrow.js marks its fact .is-ink and the row .has-ink, and .is-ink-lead when the
+   toggle comes first): it takes the row's full height, so its fill is the Debug sub-tabs' 21 px box, and a leading
+   toggle starts its fill 4 px from the panel's edge, so its first word sits on the row's 12 px text column. */
+.pmw-hrow.has-ink > .pmw-hrow-left, .pmw-hrow-left > .pmw-hfact.is-ink { align-self: stretch; }
+.pmw-hrow.is-ink-lead { padding-left: 1px; }
+.pmw-hrow.is-ink-lead > .pmw-hrow-left > .pmw-hfact.is-ink:first-child { margin-left: 3px; }
+.pmw-hfact.is-ink > .pmw-ink-row { height: 100%; min-height: 0; }
+.pmw-hfact.is-ink > .pmw-seg { padding: 0; border-bottom: 0; overflow: visible; }
+.pmw-hfact.is-ink > .pmw-seg > .pmw-seg-opt { height: 100%; font-size: 12px; }
 
 .pmw-notice { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0; padding: 9px 11px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); font-size: 12.5px; color: var(--pmw-text-2); }
 .pmw-notice.is-warn { border-color: color-mix(in srgb, var(--pmw-warn) 55%, transparent); }

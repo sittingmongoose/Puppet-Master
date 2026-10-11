@@ -68,7 +68,7 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `output` | `output`, `output:<channel>` | one Output tab, the channel is its view state (D31); a channel opened as its own tab from the picker is `output:<channel>`, fixed to that channel |
 | `problems` | `problems` | one per workspace |
 | `ports` | `ports` | one per workspace |
-| `debug-console` | `debug-console` | one Debug Console tab with a sub-tab per debug session; the session on screen is its view state (`state.session`, D33). The sub-tabs are a tablist in the header row; the chosen one is filled on its own box and never underlined (the lead's ruling of 2026-10-10, DR-069, F3-648, D5): DL-162's tab ink in Basic, Friendly and Glass, Retro's reverse video, NieR's ink block with or without the cursor part, moving in the look's own tab-change voice and instant under Reduced Motion (NUMBERS has the values). `PM_HOME.open({ kind: 'debug-console', session })` reveals the tab and switches it. The ids of the old one-tab-per-session shape, `debug-console:<session>`, fold into this tab with that session chosen (section 3, `fold`) |
+| `debug-console` | `debug-console` | one Debug Console tab with a sub-tab per debug session; the session on screen is its view state (`state.session`, D33). The sub-tabs are a tablist in the header row; the chosen one is filled on its own box and never underlined (the lead's ruling of 2026-10-10, DR-069, F3-648, D5), the chosen fill every segmented toggle shares (section 5.1): DL-162's tab ink in Basic, Friendly and Glass, Retro's reverse video, NieR's ink block with or without the cursor part, moving in the look's own tab-change voice and instant under Reduced Motion (NUMBERS has the values). `PM_HOME.open({ kind: 'debug-console', session })` reveals the tab and switches it. The ids of the old one-tab-per-session shape, `debug-console:<session>`, fold into this tab with that session chosen (section 3, `fold`) |
 
 Retired, never registered: the chat's Goal tab (`goal-artifact`, DL-147), its lab-only workspaces (`order-export:`,
 `b16-work:`, `b17-work:`, `bsd12:`, `eli5-evidence:`). Activity Detail stays inside the chat (D3) and is not a kind.
@@ -310,6 +310,16 @@ records why.
   `meta` draws its separators before the following item, so a dot never ends a line. Paragraph defaults inside a
   document body have zero specificity (78ch, no colour), so the body's 12 px rhythm and a kind's own rules win.
   Frame controls never take a look's full radius: `min(--pmw-radius, 8px)`, 0 in Retro and in NieR's square part.
+- The chosen fill (the Plans canon lead's ruling of 2026-10-11, DR-069, F3-648, D5): a one-of-several control marks
+  its chosen option by filling the option's own box, never with an underline or any one-sided line. `.seg` toggles
+  (a tablist; Left and Right wrap and choose) and the Debug Console's sub-tabs already draw it; a kind's own tablist or
+  radiogroup puts `.pmw-ink-row` on the group and `.pmw-ink-opt` on each option (chosen by `aria-selected` or
+  `aria-checked`), and calls `PMW.frames.ink(group).move(fromOption, toOption)` on a change for the one ink that
+  carries the fill in the look's own tab-change voice (instant under Reduced Motion; `.stop()` on a resize or a look
+  change). The fill is DL-162's tab ink in Basic, Friendly and Glass, Retro's reverse video, NieR's ink with or without
+  the cursor part; the hover is the quiet hover fill on the same box; the focus ring goes round the fill with a 1 px
+  gap; weight and size never change with the choice. A toggle in the shared header row takes the row's height and, as
+  its first fact, starts 4 px from the panel's edge (the row marks it). NUMBERS ('Chosen fill') has the values.
 - `PMW.fileRef({ path, line, col, label, view }, { api, source, inline, short, icon, cls })`: the one D7 file
   reference (32 px, 24 px inline): a click previews after 240 ms unless a double click arrives (a link inside a
   document opens its preview in the same panel, which would hide the link before the second click), a double click
@@ -687,6 +697,10 @@ and writes through the same model, so Settings > Terminal only binds controls.
   hides the tag layer. A field (input, textarea, select) carries its own `data-pm-hover-label` and
   `data-pm-hover-detail`, or `data-pm-hover-visual-suppressed="true"`: the tag controller otherwise gives an unlabelled
   field the generic detail "Change this setting." (the controller checks the element itself, not its ancestors).
+- No chosen-state underline (the Plans canon lead's ruling of 2026-10-11: DR-069 and F3-648 count a one-sided coloured
+  line as a side stripe, and D5 bans underline markers): a selected, checked, pressed, current or active option is the
+  chosen fill (section 5.1), never a 0-3 px `::after` or `::before` at its top or bottom, a top or bottom border or an
+  inset line. The layer lint fails the build on each.
 - Fonts: faces in `src/terminal/fonts/` are not mirrored into PM Symbols; the layer exempts them from the
   face/symbol pairing check. Box-drawing, block, braille and powerline glyphs are drawn by the terminal.
 
@@ -748,3 +762,8 @@ root. A kind never appends its own overlay to `document.body`.
   with `null`); History pinned or a flyout is `history_pinned`, the typed UI action `ui.chat_column.pin_history`. The
   `chat.width` and `chat.history` settings are gone (carried over once with `chat.pinOpen`); a named layout and Restore
   home layout keep all three fields.
+  Same version (2026-10-11), the Plans canon lead's ruling on chosen-state underlines: sections 5.1 and 13. Every
+  segmented toggle (`PMW.frames.seg`: the Plan viewer, Context, the document, artifact, run and DevTools toggles) and
+  the artifact's Fit / Actual size / Source take the Debug sub-tabs' chosen fill (one grammar, `.pmw-ink-row`,
+  `.pmw-ink-opt`, `.pmw-ink`, and one mover, `PMW.frames.ink`); the 2 px underlines are gone, and the layer lint
+  refuses a chosen-state underline.

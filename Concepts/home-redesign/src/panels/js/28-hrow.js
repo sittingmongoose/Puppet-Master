@@ -73,6 +73,8 @@ PMW.headerRow = function (entry, spec) {
       setText(node, it.text);
     }
     setContent(el, node);
+    // a one-of-several toggle (the chosen fill's .pmw-ink-row, 45-frames.css) takes the row's full height
+    el.classList.toggle('is-ink', !!(node.classList && node.classList.contains('pmw-ink-row')));
   }
   function fillLeft(items) {
     var next = {}, els = [];
@@ -88,6 +90,8 @@ PMW.headerRow = function (entry, spec) {
     reconcile(left, els, factList);
     factEls = next;
     factList = els;
+    row.classList.toggle('has-ink', els.some(function (el) { return el.classList.contains('is-ink'); }));
+    row.classList.toggle('is-ink-lead', !!(els[0] && els[0].classList.contains('is-ink')));
   }
 
   /* ---- actions ---- */

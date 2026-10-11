@@ -130,10 +130,9 @@ html[data-theme$="-light"] .pmw-ctx { --pmw-ctx-c1: #2a78d6; --pmw-ctx-c2: #eb68
 .pmw-ctx-col.pmw-doc { max-width: 720px; }
 @container pmw-body (min-width: 960px) { .pmw-ctx-col.pmw-doc { max-width: 960px; } }
 
-/* Curated / Raw in the header row: the shared text toggle, sized for a 30 px row */
-.pmw-hrow .pmw-ctx-hseg { flex: none; min-height: 24px; gap: 12px; border-bottom: 0; overflow: visible; }
-.pmw-hrow .pmw-ctx-hseg .pmw-seg-opt { height: 24px; padding: 0 2px; font-size: 12px; }
-.pmw-hrow .pmw-ctx-hseg .pmw-seg-opt[aria-selected="true"]::after { bottom: 0; }
+/* Curated / Raw in the header row: the shared toggle as the row's leading toggle, the chosen option filled on its own
+   box like the Debug sub-tabs (45-frames.css, the header-row toggle rules) */
+.pmw-hrow .pmw-ctx-hseg { flex: none; }
 .pmw-ctx .pmw-hfact:is([data-id="ctx-view"], [data-id="ctx-used"]) { flex: none; }
 @container pmw-body (max-width: 379.98px) { .pmw-ctx .pmw-hfact[data-id="ctx-used"] { display: none; } }
 

@@ -762,14 +762,14 @@ PM_HOME.registerKind('debug-console', {
 
     /* one record per session: its sub-tab, its console (a tabpanel) and its live state */
     var recs = {};
-    var tabsEl = h('div', { class: 'pmw-tool-stabs', role: 'tablist', 'aria-label': 'Debug sessions' });
-    var inkEl = h('span', { class: 'pmw-tool-sink', 'aria-hidden': 'true' });
+    var tabsEl = h('div', { class: 'pmw-tool-stabs pmw-ink-row', role: 'tablist', 'aria-label': 'Debug sessions' });
+    var ink = PMW.frames.ink(tabsEl);
     var panes = h('div', { class: 'pmw-tool-dpanes' });
     SESSIONS.forEach(function (s) {
       var r = recs[s.id] = { s: s, mode: s.mode, where: s.mode === 'paused' ? (s.bp || s.pauseAt) : null, timers: [], stream: 0, loopAt: 0, follow: true, top: 0 };
       r.dot = h('i', { class: 'pmw-tool-sdot', 'aria-hidden': 'true' });
       r.word = h('span', { class: 'pmw-tool-sword' });
-      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab', tabindex: '-1', 'aria-selected': 'false',
+      r.tab = h('button', { type: 'button', role: 'tab', id: base + '-' + s.id, class: 'pmw-tool-stab pmw-ink-opt', tabindex: '-1', 'aria-selected': 'false',
         'aria-controls': base + '-' + s.id + '-pane', 'data-session': s.id, 'data-pmh': 'icon', 'data-pmh-tag': 'literal' },
         [r.dot, h('span', { class: 'pmw-tool-sname', text: s.name }), r.word]);
       r.tab.addEventListener('click', function () { select(s.id, { user: true }); });
@@ -780,7 +780,6 @@ PM_HOME.registerKind('debug-console', {
       r.log.addEventListener('click', function (e) { if (!e.target.closest('button') && !window.getSelection().toString()) input.focus({ preventScroll: true }); });
       panes.appendChild(r.pane);
     });
-    tabsEl.appendChild(inkEl);
     /* Left and Right (wrapping), Home and End move to a session and choose it (automatic activation: the console is
        already drawn); Enter and Space choose the one with focus */
     tabsEl.addEventListener('keydown', function (e) {
@@ -837,61 +836,9 @@ PM_HOME.registerKind('debug-console', {
     var inRow = h('label', { class: 'pmw-tool-inrow' }, [h('span', { class: 'pmw-tool-prompt', 'aria-hidden': 'true', text: '›' }), input]);
     root.appendChild(inRow);
 
-    /* The chosen sub-tab's fill is its own (61-kind-browser-tools.css), so at rest it is always exactly its box, through
-       a resize, a font load or a look change. A change moves one ink from the box it leaves to the box it lands on,
-       in the voice the rail's tab strips use for the same ink (DL-162, F3-621; Concepts/leftrail-redesign 31-tabs.js):
-       Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides with the liquid
-       stretch; Retro's reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion
-       changes it at once. While the ink travels (data-moving on the tablist) the boxes' own fills wait, so one fill is
-       on screen in every frame; a second change mid-way starts from where the ink is. Animation speed scales it. */
-    var INK = { basic: { dur: 220, ease: 'cubic-bezier(.2,.8,.2,1)' }, friendly: { dur: 420, spring: true },
-      glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)', liquid: true } };
-    /* Friendly's spring as keyframes of progress p (0 the old box, 1 the new): past the target once, back a little,
-       home; the overshoot is explicit so it never carries the ink out of the row */
-    var SPRING = [[0, 0, 'cubic-bezier(.3,.7,.4,1)'], [0.55, 1, 'ease-in-out', 1], [0.8, 1, 'ease-in-out', -0.3], [1, 1]];
-    var inkSeq = 0;
-    function inkFrame(b, extra) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)' + (extra || ''), width: b.w.toFixed(2) + 'px' }; }
-    function boxIn(el) {
-      var r = el.getBoundingClientRect(), l = tabsEl.getBoundingClientRect(), k = tabsEl.offsetWidth ? l.width / tabsEl.offsetWidth : 1;
-      return { x: (r.left - l.left) / k - tabsEl.clientLeft, w: r.width / k };
-    }
-    function stopInk() {
-      inkSeq += 1;
-      inkEl.getAnimations().forEach(function (a) { a.cancel(); });
-      tabsEl.removeAttribute('data-moving');
-    }
-    function moveInk(fromTab) {
-      var moving = tabsEl.hasAttribute('data-moving') && inkEl.getAnimations().length > 0;
-      var from = moving ? boxIn(inkEl) : fromTab && fromTab.offsetWidth ? boxIn(fromTab) : null;
-      stopInk();
-      var t = recs[cur].tab, g = INK[PMW.motion.family()];
-      if (!from || !g || !shown || !t.offsetWidth || PMW.motion.reduced()) return;
-      var to = boxIn(t), d = to.x - from.x;
-      if (Math.abs(d) < 0.5 && Math.abs(to.w - from.w) < 0.5) return;
-      var frames;
-      if (g.liquid) {
-        // the leading edge runs ahead and the box thins a little, then it lands with one soft give
-        var s = Math.min(Math.abs(d) * 0.3, Math.max(from.w, to.w) * 0.4);
-        var mid = { x: from.x + d * 0.5 - (d >= 0 ? s * 0.35 : s * 0.65), w: (from.w + to.w) / 2 + s };
-        frames = [Object.assign({ offset: 0 }, inkFrame(from)), Object.assign({ offset: 0.4 }, inkFrame(mid, ' scale(1, .9)')),
-          Object.assign({ offset: 0.8 }, inkFrame({ x: to.x - 1, w: to.w + 2 }, ' scale(1, 1.03)')), Object.assign({ offset: 1 }, inkFrame(to, ' scale(1, 1)'))];
-      } else if (g.spring) {
-        // the overshoot: 8 % of the trip, at most the room left beyond the target inside the row
-        var room = d >= 0 ? tabsEl.clientWidth - (to.x + to.w) : to.x;
-        var over = Math.abs(d) > 0.5 ? Math.max(0, Math.min(Math.abs(d) * 0.08, room)) / Math.abs(d) : 0;
-        frames = SPRING.map(function (k) {
-          var p = k[1] + (k[3] || 0) * over, f = inkFrame({ x: from.x + d * p, w: from.w + (to.w - from.w) * Math.min(p, 1) });
-          f.offset = k[0]; if (k[2]) f.easing = k[2];
-          return f;
-        });
-      } else frames = [inkFrame(from), inkFrame(to)];
-      var a = PMW.motion.animate(inkEl, frames, { dur: g.dur, easing: g.spring ? 'linear' : g.ease });
-      if (!a) return;
-      var seq = inkSeq;
-      tabsEl.setAttribute('data-moving', '');
-      var done = function () { if (seq === inkSeq) tabsEl.removeAttribute('data-moving'); };
-      a.finished.then(done, done);
-    }
+    /* The chosen sub-tab's fill is its own box and one ink carries it from box to box on a change, in the look's own
+       tab-change voice (the chosen fill: 45-frames.css and PMW.frames.ink in 27-frames.js, shared with every segmented
+       toggle). The ink only travels while the tab is on screen. */
     function paintTab(r) {
       r.tab.setAttribute('data-mode', r.mode);
       r.dot.className = 'pmw-tool-sdot ' + DBG_DOT[r.mode];
@@ -928,7 +875,7 @@ PM_HOME.registerKind('debug-console', {
       if (o.focus) r.tab.focus({ preventScroll: true });
       refresh();
       if (!changed) return true;
-      if (o.instant) stopInk(); else moveInk(prev.tab);
+      if (o.instant || !shown) ink.stop(); else ink.move(prev.tab, r.tab);
       if (!o.instant) PMW.motion.animate(r.pane, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: PMW.motion.ease('out') });
       api.saveSoon();
       if (!o.user) api.announce('Debug Console shows ' + r.s.name);
@@ -1021,7 +968,7 @@ PM_HOME.registerKind('debug-console', {
     select(cur, { instant: true, user: true });
     api.update({ label: 'Debug Console' });
     // a look changes the sub-tabs' face and voice (NieR's caption, Retro's code face): a move in flight ends at once
-    offs.push(api.on('look', stopInk));
+    offs.push(api.on('look', ink.stop));
 
     return {
       focus: function () { input.focus({ preventScroll: true }); },
@@ -1029,10 +976,10 @@ PM_HOME.registerKind('debug-console', {
       /* an open of this tab with a session (the catalog, an old 'debug-console:<session>' id): switch to it */
       reveal: function (f) { if (f && f.session != null && sessionOf(String(f.session))) select(String(f.session), {}); },
       serialize: function () { return { session: cur, history: hist.slice(-20) }; },
-      onResize: function () { stopInk(); },
+      onResize: function () { ink.stop(); },
       onShow: function () { shown = true; SESSIONS.forEach(function (s) { startStream(recs[s.id]); }); },
-      onHide: function () { shown = false; stopInk(); SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
-      unmount: function () { stopInk(); SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
+      onHide: function () { shown = false; ink.stop(); SESSIONS.forEach(function (s) { stopStream(recs[s.id]); }); },
+      unmount: function () { ink.stop(); SESSIONS.forEach(function (s) { clearTimers(recs[s.id]); }); offs.forEach(function (f) { try { f(); } catch (_) {} }); }
     };
   }
 });

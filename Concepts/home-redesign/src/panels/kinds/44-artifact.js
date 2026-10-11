@@ -526,9 +526,11 @@ function mountArtifact(host, state, api) {
   var viewOpts = [{ value: 'fit', label: 'Fit' }];
   if (art && VISUAL[art.kind]) viewOpts.push({ value: 'actual', label: 'Actual size' });
   viewOpts.push({ value: 'source', label: 'Source' });
-  var seg = h('div', { class: 'pmw-art-hseg', role: 'radiogroup', 'aria-label': 'View' });
+  // the chosen option is filled on its own box and one ink carries the fill on a change (the chosen fill, 45-frames.css)
+  var seg = h('div', { class: 'pmw-art-hseg pmw-ink-row', role: 'radiogroup', 'aria-label': 'View' });
+  var segInk = PMW.frames.ink(seg);
   viewOpts.forEach(function (op) {
-    var b = h('button', { type: 'button', class: 'pmw-art-hopt', role: 'radio', 'data-v': op.value, 'data-pmh': 'icon',
+    var b = h('button', { type: 'button', class: 'pmw-art-hopt pmw-ink-opt', role: 'radio', 'data-v': op.value, 'data-pmh': 'icon',
       'data-pm-hover-label': op.label, 'data-pm-hover-detail': op.value === 'source' ? 'The artifact as written' : op.value === 'actual' ? 'At its own size; scroll to see all of it' : 'Drawn to fit this panel' }, [op.label]);
     b.addEventListener('click', function () { setView(op.value); });
     b.addEventListener('keydown', function (e) {
@@ -543,14 +545,19 @@ function mountArtifact(host, state, api) {
     seg.appendChild(b);
   });
   function paintSeg() {
-    Array.prototype.forEach.call(seg.children, function (b) {
+    Array.prototype.forEach.call(seg.querySelectorAll('.pmw-art-hopt'), function (b) {
       var on = b.getAttribute('data-v') === st.view;
       b.setAttribute('aria-checked', on ? 'true' : 'false');
       b.tabIndex = on ? 0 : -1;
       b.classList.toggle('pmw-chosen', on);
     });
   }
-  function setView(v) { if (st.view === v) return; st.view = v; paintSeg(); render(); api.saveSoon(); }
+  function setView(v) {
+    if (st.view === v) return;
+    var prev = seg.querySelector('.pmw-art-hopt[aria-checked="true"]');
+    st.view = v; paintSeg(); render(); api.saveSoon();
+    segInk.move(prev, seg.querySelector('.pmw-art-hopt[data-v="' + v + '"]'));
+  }
 
   function versionRows() {
     var rows = [];

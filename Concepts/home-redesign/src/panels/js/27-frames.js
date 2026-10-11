@@ -1,10 +1,12 @@
 /* Shared body frames (DRY): one rendering grammar for every document-like kind (plan, document, artifact, record,
    context, transcript) and every run view, so they read as one system in every look. Replaces the chat's pills with a
-   plain meta row, its boxed chips with text, its accent-underlined toggles with text options on a hairline.
+   plain meta row, its boxed chips with text, its accent-underlined toggles with text options on a hairline whose chosen
+   option is filled on its own box (the chosen fill, 45-frames.css; never an underline).
      PMW.frames.doc({ title, meta: [..] | 'a · b', aside, body: el | [els], actions: [btn specs], footer: el }) -> el
      PMW.frames.run({ title, kind: { icon, word }, status: [..], actions, more, plate, tabs: { items, value, onChange }, main, aside }) -> el
      PMW.frames.meta(items) -> <p>    items: strings, or { text, state: 'ok'|'warn'|'bad', mono }
-     PMW.frames.seg(options, value, onChange, { label }) -> el    options: [{ value, label, count }]
+     PMW.frames.seg(options, value, onChange, { label, cls }) -> el    options: [{ value, label, count }]
+     PMW.frames.ink(row) -> { move(from, to), stop() }    the chosen fill's one moving ink for any .pmw-ink-row
      PMW.frames.section(title, meta, body) -> <section>
      PMW.frames.notice(text, { state, icon }) -> <p>
      PMW.frames.tiles([{ label, value, sub, state }]) -> el
@@ -28,29 +30,117 @@ frames.meta = function (items) {
   return p;
 };
 
+/* The chosen fill's one ink (45-frames.css). The chosen option's fill is its own ::after, so at rest it is always
+   exactly its box, through a resize, a font load or a look change. A change moves one ink from the box it leaves to the
+   box it lands on, in the voice the rail's tab strips use for the same ink (DL-162, F3-621; Concepts/leftrail-redesign
+   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides with the liquid
+   stretch; Retro's reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it
+   at once (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
+   so one fill is on screen in every frame; a second change mid-way starts from where the ink is; Animation speed
+   scales it. `from` is the option left, or a client rect of it kept across a rebuild; boxes on different lines (a
+   wrapped row) or a row out of view change at once. */
+var INK_VOICE = { basic: { dur: 220, ease: 'cubic-bezier(.2,.8,.2,1)' }, friendly: { dur: 420, spring: true },
+  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)', liquid: true } };
+/* Friendly's spring as keyframes of progress p (0 the old box, 1 the new): past the target once, back a little, home;
+   the overshoot is explicit so it never carries the ink out of the row */
+var INK_SPRING = [[0, 0, 'cubic-bezier(.3,.7,.4,1)'], [0.55, 1, 'ease-in-out', 1], [0.8, 1, 'ease-in-out', -0.3], [1, 1]];
+frames.ink = function (row) {
+  if (row._pmwInk) return row._pmwInk;
+  var seq = 0, el = null;
+  function inkEl() {
+    if (!el) el = h('span', { class: 'pmw-ink', 'aria-hidden': 'true' });
+    if (el.parentNode !== row) row.appendChild(el);
+    return el;
+  }
+  function frame(b, extra) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)' + (extra || ''), width: b.w.toFixed(2) + 'px' }; }
+  /* a box in the ink's own coordinates: the row's padding box, scrolled with the row; y is the box's middle on screen */
+  function box(x) {
+    var r = x.nodeType === 1 ? x.getBoundingClientRect() : x, l = row.getBoundingClientRect(), k = row.offsetWidth ? l.width / row.offsetWidth : 1;
+    return { x: (r.left - l.left) / k - row.clientLeft + row.scrollLeft, w: r.width / k, y: r.top + r.height / 2 };
+  }
+  function stop() {
+    seq += 1;
+    if (el) el.getAnimations().forEach(function (a) { a.cancel(); });
+    row.removeAttribute('data-moving');
+  }
+  function move(from, to) {
+    var moving = row.hasAttribute('data-moving') && el && el.getAnimations().length > 0;
+    var a = moving ? box(el) : from && (from.nodeType !== 1 || from.offsetWidth) ? box(from) : null;
+    stop();
+    var g = INK_VOICE[PMW.motion.family()];
+    if (!a || !g || !to || !to.offsetWidth || !row.isConnected || PMW.motion.reduced()) return;
+    var b = box(to), d = b.x - a.x;
+    if (Math.abs(b.y - a.y) > 1.5) return;
+    if (Math.abs(d) < 0.5 && Math.abs(b.w - a.w) < 0.5) return;
+    var kf;
+    if (g.liquid) {
+      // the leading edge runs ahead and the box thins a little, then it lands with one soft give
+      var s = Math.min(Math.abs(d) * 0.3, Math.max(a.w, b.w) * 0.4);
+      var mid = { x: a.x + d * 0.5 - (d >= 0 ? s * 0.35 : s * 0.65), w: (a.w + b.w) / 2 + s };
+      kf = [Object.assign({ offset: 0 }, frame(a)), Object.assign({ offset: 0.4 }, frame(mid, ' scale(1, .9)')),
+        Object.assign({ offset: 0.8 }, frame({ x: b.x - 1, w: b.w + 2 }, ' scale(1, 1.03)')), Object.assign({ offset: 1 }, frame(b, ' scale(1, 1)'))];
+    } else if (g.spring) {
+      // the overshoot: 8 % of the trip, at most the room left beyond the target inside the row
+      var room = d >= 0 ? row.scrollWidth - (b.x + b.w) : b.x;
+      var over = Math.abs(d) > 0.5 ? Math.max(0, Math.min(Math.abs(d) * 0.08, room)) / Math.abs(d) : 0;
+      kf = INK_SPRING.map(function (k) {
+        var p = k[1] + (k[3] || 0) * over, f = frame({ x: a.x + d * p, w: a.w + (b.w - a.w) * Math.min(p, 1) });
+        f.offset = k[0]; if (k[2]) f.easing = k[2];
+        return f;
+      });
+    } else kf = [frame(a), frame(b)];
+    var anim = PMW.motion.animate(inkEl(), kf, { dur: g.dur, easing: g.spring ? 'linear' : g.ease });
+    if (!anim) return;
+    var mine = seq;
+    row.setAttribute('data-moving', '');
+    var done = function () { if (mine === seq) row.removeAttribute('data-moving'); };
+    anim.finished.then(done, done);
+  }
+  return (row._pmwInk = { move: move, stop: stop });
+};
+
+/* A kind that draws its body again on a change builds a new toggle in the same place: the toggle it replaces hands the
+   box it left to the new one (same label and class, built inside the change), so the fill still travels. */
+var segHandoff = null;
 frames.seg = function (options, value, onChange, o) {
   o = o || {};
-  var wrap = h('div', { class: 'pmw-seg' + (o.cls ? ' ' + o.cls : ''), role: 'tablist', 'aria-label': o.label || 'View' });
+  var key = (o.label || 'View') + '|' + (o.cls || '');
+  var wrap = h('div', { class: 'pmw-seg pmw-ink-row' + (o.cls ? ' ' + o.cls : ''), role: 'tablist', 'aria-label': o.label || 'View' });
+  var ink = frames.ink(wrap);
+  function opts() { return Array.prototype.filter.call(wrap.children, function (b) { return b.classList.contains('pmw-seg-opt'); }); }
+  function chosen() { return opts().filter(function (b) { return b.getAttribute('aria-selected') === 'true'; })[0] || null; }
   function paint(v) {
-    Array.prototype.forEach.call(wrap.children, function (b) {
+    opts().forEach(function (b) {
       var on = b._v === v;
       b.setAttribute('aria-selected', on ? 'true' : 'false');
       b.tabIndex = on ? 0 : -1;
     });
   }
   options.forEach(function (op) {
-    var b = h('button', { type: 'button', class: 'pmw-seg-opt', role: 'tab' }, [h('span', { text: op.label })]);
+    var b = h('button', { type: 'button', class: 'pmw-seg-opt pmw-ink-opt', role: 'tab' }, [h('span', { text: op.label })]);
     if (op.count != null) b.appendChild(h('small', { text: String(op.count) }));
     b._v = op.value;
-    b.addEventListener('click', function () { paint(op.value); if (onChange) onChange(op.value); });
+    b.addEventListener('click', function () {
+      var prev = chosen();
+      paint(op.value);
+      var hand = prev && prev !== b && prev.offsetWidth ? { key: key, rect: prev.getBoundingClientRect(), taken: false } : null;
+      segHandoff = hand;
+      try { if (onChange) onChange(op.value); } finally { segHandoff = null; }
+      if (hand && !hand.taken && wrap.isConnected) ink.move(prev, b);
+    });
     b.addEventListener('keydown', function (e) {
-      var opts = Array.prototype.slice.call(wrap.children), i = opts.indexOf(b);
-      var go = e.key === 'ArrowRight' ? opts[(i + 1) % opts.length] : e.key === 'ArrowLeft' ? opts[(i - 1 + opts.length) % opts.length] : null;
+      var all = opts(), i = all.indexOf(b);
+      var go = e.key === 'ArrowRight' ? all[(i + 1) % all.length] : e.key === 'ArrowLeft' ? all[(i - 1 + all.length) % all.length] : null;
       if (go) { e.preventDefault(); go.focus(); go.click(); }
     });
     wrap.appendChild(b);
   });
   paint(value);
+  if (segHandoff && segHandoff.key === key && !segHandoff.taken) {
+    var hand = segHandoff;
+    hand.taken = true;
+    requestAnimationFrame(function () { var t = chosen(); if (t && wrap.isConnected) ink.move(hand.rect, t); });
+  }
   wrap.setValue = paint;
   return wrap;
 };
