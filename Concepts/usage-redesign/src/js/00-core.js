@@ -212,6 +212,41 @@ SVG.toolGear = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 SVG.toolSize = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1-2.5 2.5h-12a2.5 2.5 0 0 1-2.5-2.5v-12a2.5 2.5 0 0 1 2.5-2.5zM13 17h4v-4M11 7H7v4"/></svg>';
 SVG.kebab = SVG.dots;
 
+/* The neon glyph set draws first (pm7-glyphs D44, rollout USAGE step 1; the left rail's 00-core.js is the worked
+   example). NEON maps each PM7 name to its glyph (the lead's table; it wins over map.json where they differ: list
+   is the list, resize and size the resize). PMU.icon asks window.PMG first and keeps the SVG table only as the
+   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, tidy, the brand marks and every name
+   the table does not list). SIZE is the static render size per icon class (never measured: PMU.icon runs on every
+   live-beat re-render): pmu-glyph and pmu-lglyph 14 (40-widgets.css), pmu-vs-glyph 13 (30-charts.css .pmu-vs .pmu-ico),
+   pmu-kpiarrow 12 (30-charts.css .pmu-kpidelta .pmu-ico), default 16. The card-head tools (toolGrip, toolSize, toolGear,
+   toolKebab) draw flat at 14 through PMG.flat: one path, no halo, ink-only hover (PERF-3); the kebab is the set's
+   more (horizontal dots, like every other menu). The neon svg string is cached per (glyph, size, role); no box size
+   changes (every svg keeps the CSS box it already had). */
+var NEON = {
+  refresh: 'refresh', 'export': 'outbox', chevron: 'chevron-down', chevronDown: 'chevron-down', chevronRight: 'chevron-right',
+  chevronLeft: 'chevron-left', close: 'close', gear: 'settings', toolGear: 'settings', checkCircle: 'check-circle',
+  alert: 'st-warning', hourglass: 'hourglass', key: 'key', lock: 'lock', link: 'link', arrowUp: 'arrow-up',
+  arrowDown: 'arrow-down', coin: 'coin', info: 'info', plus: 'plus', minus: 'minus', resize: 'resize', toolSize: 'resize',
+  size: 'resize', eye: 'eye', eyeOff: 'eye-off', search: 'search', clock: 'clock', clockCircle: 'clock', file: 'page',
+  user: 'user', briefcase: 'briefcase', pencil: 'edit', grip: 'grip', drag: 'grip', toolGrip: 'grip', kebab: 'more',
+  dots: 'more', toolKebab: 'more', grid: 'grid', list: 'list', wallet: 'wallet', gauge: 'gauge', pulse: 'pulse',
+  spark: 'sparkles', book: 'notebook'
+};
+var NEON_ROLE = {
+  refresh: 'control', 'export': 'concept', chevron: 'control', chevronDown: 'control', chevronRight: 'control',
+  chevronLeft: 'control', close: 'control', gear: 'control', toolGear: 'control', checkCircle: 'concept',
+  alert: 'concept', hourglass: 'concept', key: 'concept', lock: 'concept', link: 'control', arrowUp: 'control',
+  arrowDown: 'control', coin: 'concept', info: 'concept', plus: 'control', minus: 'control', resize: 'control',
+  toolSize: 'control', size: 'control', eye: 'concept', eyeOff: 'control', search: 'concept', clock: 'concept',
+  clockCircle: 'concept', file: 'concept', user: 'concept', briefcase: 'concept', pencil: 'control', grip: 'control',
+  drag: 'control', toolGrip: 'control', kebab: 'control', dots: 'control', toolKebab: 'control', grid: 'concept',
+  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept'
+};
+var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kpiarrow': 12 };
+var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
+var ICON_CACHE = Object.create(null);
+function roleFor(name) { return NEON_ROLE[name] || 'concept'; }
+
 var PMU = window.PMU = {
   version: 'pmu-b2-2026-10-02b',
   core: {
@@ -219,8 +254,21 @@ var PMU = window.PMU = {
     command: command, completeCommandReceipt: completeCommandReceipt, usageEvent: usageEvent, viewAction: viewAction
   },
   icons: SVG,
+  neonMap: NEON,
+  neonRole: NEON_ROLE,
   icon: function (name, cls) {
-    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + (SVG[name] || SVG.grid) + '</span>';
+    var G = window.PMG, g = (name && NEON[name]) || name, svg = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), size = flat ? 14 : NEON_SIZE[cls] || 16;
+      var key = (flat ? 'f|' : 'i|') + g + '|' + size + '|' + role;
+      svg = ICON_CACHE[key];
+      if (!svg) {
+        try { svg = flat ? G.flat(g, 14, 'nx-r-control') : G.icon(g, size, 'nx-r-' + role); } catch (error) { svg = ''; }
+        if (svg) ICON_CACHE[key] = svg;
+      }
+    }
+    if (!svg) svg = SVG[name] || SVG.grid;
+    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + svg + '</span>';
   }
 };
 
