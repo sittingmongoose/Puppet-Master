@@ -241,9 +241,63 @@
   {
    "check": "audit-governance",
    "count": 1,
-   "error": "event_authority_currentness_audit_unavailable",
+   "error": "event_authority_currentness_live_registry_drift",
    "fingerprints": [
-    "8a2d2757c4d3"
+    "-"
+   ],
+   "path": "",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 45,
+   "error": "event_authority_currentness_source_drift",
+   "fingerprints": [
+    "006050d34ec8",
+    "022973cb2e3a",
+    "0262cebb1230",
+    "02dd85b72540",
+    "1293094d7ea3",
+    "15b6655ef3bc",
+    "1e89965ec8c7",
+    "2dde2bc7700b",
+    "2f5d55a27d5f",
+    "3144f19a6964",
+    "314dffac99b6",
+    "31cb07fddf06",
+    "3a148e9930cd",
+    "41f4e93fb130",
+    "47b0783cbeb0",
+    "4b4e99908cc0",
+    "4f5e8df4e0a2",
+    "5555c7df9632",
+    "64392ff7cf25",
+    "68f8b554dcad",
+    "7ba7abc0e17f",
+    "85b744d73149",
+    "87144dca10ac",
+    "948eca363615",
+    "966713e6ac2f",
+    "968c76671567",
+    "97e212c23116",
+    "9ab756ff1c91",
+    "9bbda8d47e30",
+    "a30d32e5cc7b",
+    "a40aa02ebc9f",
+    "a56f058b4b3a",
+    "b05520a9880a",
+    "d1cb22ec6bb2",
+    "d5be4dc5e9b9",
+    "d94a146403ea",
+    "d9e287f261e5",
+    "daefa58a63a3",
+    "dd5519df234d",
+    "df3850d1ccf2",
+    "e5b743d2bdde",
+    "e62a59ff2641",
+    "eb336c21b3dd",
+    "f629fc308c3e",
+    "fb950887822e"
    ],
    "path": "",
    "subcheck": "implementation_readiness"
@@ -310,22 +364,13 @@
   },
   {
    "check": "audit-governance",
-   "count": 1,
-   "error": "pnc019_source_hash_path_missing",
-   "fingerprints": [
-    "f5cde198f22a"
-   ],
-   "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-   "subcheck": "implementation_readiness"
-  },
-  {
-   "check": "audit-governance",
-   "count": 16,
+   "count": 17,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
     "1d098610efe4",
     "2a58f532ea39",
+    "32a163796b64",
     "35e67cfa7dd6",
     "55f16c15391c",
     "7500493ee92a",
@@ -960,25 +1005,170 @@
   },
   {
    "check": "run-gates",
-   "count": 16,
-   "error": "raw_capture_manifest_path_unresolved",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
    "fingerprints": [
-    "21a61f2e6d90",
-    "3dd7d0368ec0",
-    "6d4b03c978f3",
-    "754ac6b4c159",
-    "7da68d814c20",
-    "84cb34d07a03",
-    "89f7626fc70e",
-    "8a50dc9bbda8",
-    "9c34c1b0924e",
-    "baee8a97e9fc",
-    "c11f21245f69",
-    "d0c89b39f6c9",
-    "d81e27d9cc5f",
-    "e03118e493b8",
-    "eb1d247cea7f",
-    "f37d0ed49674"
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "1c54b72c32ec"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_capture.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "1c54b72c32ec"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_prefix.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_mode_census_mismatch",
+   "fingerprints": [
+    "08ea05121408"
    ],
    "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
    "subcheck": "json_syntax"
@@ -1133,92 +1323,54 @@
   },
   {
    "check": "run-gates",
-   "count": 1,
-   "error": "event_authority_currentness_audit_unavailable",
+   "count": 32,
+   "error": "event_authority_currentness_source_drift",
    "fingerprints": [
-    "8a2d2757c4d3"
+    "0262cebb1230",
+    "02dd85b72540",
+    "1293094d7ea3",
+    "15b6655ef3bc",
+    "1e89965ec8c7",
+    "2f5d55a27d5f",
+    "3144f19a6964",
+    "314dffac99b6",
+    "31cb07fddf06",
+    "3a148e9930cd",
+    "47b0783cbeb0",
+    "4b4e99908cc0",
+    "4f5e8df4e0a2",
+    "5555c7df9632",
+    "64392ff7cf25",
+    "85b744d73149",
+    "948eca363615",
+    "966713e6ac2f",
+    "968c76671567",
+    "97e212c23116",
+    "9ab756ff1c91",
+    "a30d32e5cc7b",
+    "a56f058b4b3a",
+    "b05520a9880a",
+    "d1cb22ec6bb2",
+    "d5be4dc5e9b9",
+    "d9e287f261e5",
+    "daefa58a63a3",
+    "dd5519df234d",
+    "e5b743d2bdde",
+    "e62a59ff2641",
+    "f629fc308c3e"
    ],
    "path": "",
    "subcheck": "validate_implementation_readiness"
   },
   {
    "check": "run-gates",
-   "count": 2,
-   "error": "event_denominator_unresolved",
-   "fingerprints": [
-    "97e8acf1e98e"
-   ],
-   "path": "Plans/event_family_registry.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 2,
-   "error": "event_family_contract_depth_unresolved",
-   "fingerprints": [
-    "81d16768317e"
-   ],
-   "path": "Plans/event_family_registry.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "event_legacy_fixture_root_mismatch",
-   "fingerprints": [
-    "659b3044753f"
-   ],
-   "path": "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "event_record_spec_lock_hash_stale",
-   "fingerprints": [
-    "5015550b0f6a"
-   ],
-   "path": "Plans/Spec_Lock.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "implementation_readiness_self_tests_failed",
-   "fingerprints": [
-    "278ef94b633b"
-   ],
-   "path": "scripts/pm-implementation-readiness.py",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "non_executable_closure_spec_lock_hash_stale",
-   "fingerprints": [
-    "5015550b0f6a"
-   ],
-   "path": "Plans/Spec_Lock.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "pnc019_source_hash_path_missing",
-   "fingerprints": [
-    "f5cde198f22a"
-   ],
-   "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 16,
+   "count": 17,
    "error": "pnc019_source_hash_stale",
    "fingerprints": [
     "1ca89bc9eeff",
     "1d098610efe4",
     "2a58f532ea39",
+    "32a163796b64",
     "35e67cfa7dd6",
     "55f16c15391c",
     "7500493ee92a",
@@ -1234,17 +1386,6 @@
     "f59332e38626"
    ],
    "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 2,
-   "error": "storage_value_registry_spec_lock_hash_stale",
-   "fingerprints": [
-    "332cb1f846c0",
-    "5015550b0f6a"
-   ],
-   "path": "Plans/Spec_Lock.json",
    "subcheck": "validate_implementation_readiness"
   },
   {
@@ -1685,7 +1826,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 5381,
+   "failure_total": 5426,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1702,8 +1843,8 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 29,
-     "sampled": 29
+     "reported": 74,
+     "sampled": 74
     },
     "plan_graph": {
      "exported": 1887,
@@ -1745,12 +1886,12 @@
    }
   },
   "run-gates": {
-   "failure_total": 5397,
+   "failure_total": 5443,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
-     "reported": 16,
-     "sampled": 16
+     "reported": 17,
+     "sampled": 17
     },
     "lint_contractrefs": {
      "reported": 1,
@@ -1770,8 +1911,9 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "reported": 29,
-     "sampled": 29
+     "exported": 74,
+     "reported": 74,
+     "sampled": 50
     },
     "validate_plan_graph": {
      "exported": 1887,
@@ -1799,7 +1941,7 @@
    }
   }
  },
- "commit": "86d0fe8b3f7896c8215afdd45036b264bfc80d0c",
+ "commit": "28de206b9b1822f998a6c1f9157b38f955f1fad1",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -2479,6 +2621,177 @@
   },
   {
    "check": "run-gates",
+   "count": 1,
+   "error": "buildability_gate_report_stale_or_not_canonical",
+   "fingerprints": [
+    "c6f2600bdef5"
+   ],
+   "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "event_authority_currentness_live_registry_drift",
+   "fingerprints": [
+    "-"
+   ],
+   "path": "",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 45,
+   "error": "event_authority_currentness_source_drift",
+   "fingerprints": [
+    "006050d34ec8",
+    "022973cb2e3a",
+    "0262cebb1230",
+    "02dd85b72540",
+    "1293094d7ea3",
+    "15b6655ef3bc",
+    "1e89965ec8c7",
+    "2dde2bc7700b",
+    "2f5d55a27d5f",
+    "3144f19a6964",
+    "314dffac99b6",
+    "31cb07fddf06",
+    "3a148e9930cd",
+    "41f4e93fb130",
+    "47b0783cbeb0",
+    "4b4e99908cc0",
+    "4f5e8df4e0a2",
+    "5555c7df9632",
+    "64392ff7cf25",
+    "68f8b554dcad",
+    "7ba7abc0e17f",
+    "85b744d73149",
+    "87144dca10ac",
+    "948eca363615",
+    "966713e6ac2f",
+    "968c76671567",
+    "97e212c23116",
+    "9ab756ff1c91",
+    "9bbda8d47e30",
+    "a30d32e5cc7b",
+    "a40aa02ebc9f",
+    "a56f058b4b3a",
+    "b05520a9880a",
+    "d1cb22ec6bb2",
+    "d5be4dc5e9b9",
+    "d94a146403ea",
+    "d9e287f261e5",
+    "daefa58a63a3",
+    "dd5519df234d",
+    "df3850d1ccf2",
+    "e5b743d2bdde",
+    "e62a59ff2641",
+    "eb336c21b3dd",
+    "f629fc308c3e",
+    "fb950887822e"
+   ],
+   "path": "",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 2,
+   "error": "event_denominator_unresolved",
+   "fingerprints": [
+    "97e8acf1e98e"
+   ],
+   "path": "Plans/event_family_registry.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 2,
+   "error": "event_family_contract_depth_unresolved",
+   "fingerprints": [
+    "81d16768317e"
+   ],
+   "path": "Plans/event_family_registry.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "event_legacy_fixture_root_mismatch",
+   "fingerprints": [
+    "659b3044753f"
+   ],
+   "path": "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "event_record_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "implementation_readiness_self_tests_failed",
+   "fingerprints": [
+    "278ef94b633b"
+   ],
+   "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "non_executable_closure_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 17,
+   "error": "pnc019_source_hash_stale",
+   "fingerprints": [
+    "1ca89bc9eeff",
+    "1d098610efe4",
+    "2a58f532ea39",
+    "32a163796b64",
+    "35e67cfa7dd6",
+    "55f16c15391c",
+    "7500493ee92a",
+    "b22bf52e5237",
+    "b2a73128daf8",
+    "c4329d5730c3",
+    "c76f768a153c",
+    "ce4907fd3617",
+    "dcb8f2e47788",
+    "e0468f29a929",
+    "e600ee1d3f52",
+    "ef5e3f1b521f",
+    "f59332e38626"
+   ],
+   "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 2,
+   "error": "storage_value_registry_spec_lock_hash_stale",
+   "fingerprints": [
+    "332cb1f846c0",
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
    "count": 1885,
    "error": "artifact_hash_stale",
    "fingerprints": null,
@@ -3117,8 +3430,30 @@
   }
  ],
  "max_fingerprints_per_bucket": 200,
- "recorded_at_utc": "2026-10-11T01:40:17Z",
- "run_dir": "Plans/.plan_migration/pds-20261010-008-current-planunit-snapshot",
+ "readiness_audit_inputs": {
+  "files": {
+   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "3adc48978891f4d7133f6065906f7e49ae80b5a29ad6d5e100c6b4b9e8d71906",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "b5ed820701e4fc612b4136738ff870f0d17c6544082aa934ce283c6e0e8a1492",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "fcf2f283fa893eac9f13094ffd58ece8da3e9af31f99b53f67b722e540b9caba",
+   "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "cd84b49c08f5e5d3001c447473614a3071437ff2212cc832b8a0fb93a92e779b",
+   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "c92316cbe40459e99153304840de361233cc28c7fc404df4a05ac583484c1466",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1",
+   "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+  },
+  "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
+ },
+ "recorded_at_utc": "2026-10-11T14:31:40Z",
+ "run_dir": "Plans/.plan_migration/pds-20261011-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
- "untracked_inputs": []
+ "untracked_inputs": [
+  "tests/agent_packet_restrictions"
+ ]
 }
