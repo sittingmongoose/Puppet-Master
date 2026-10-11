@@ -215,8 +215,10 @@ SVG.kebab = SVG.dots;
 /* The neon glyph set draws first (pm7-glyphs D44, rollout USAGE step 1; the left rail's 00-core.js is the worked
    example). NEON maps each PM7 name to its glyph (the lead's table; it wins over map.json where they differ: list
    is the list, resize and size the resize). PMU.icon asks window.PMG first and keeps the SVG table only as the
-   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, tidy, the brand marks and every name
-   the table does not list). SIZE is the static render size per icon class (never measured: PMU.icon runs on every
+   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, the brand marks and every name
+   the table does not list; the notch stays identical to the meters' notch). Round 2 maps check, users, shield,
+   filter, ring, chart, layers and more to themselves, tool to the wrench and tidy to the layout. SIZE is the static
+   render size per icon class (never measured: PMU.icon runs on every
    live-beat re-render): pmu-glyph and pmu-lglyph 14 (40-widgets.css), pmu-vs-glyph 13 (30-charts.css .pmu-vs .pmu-ico),
    pmu-kpiarrow 12 (30-charts.css .pmu-kpidelta .pmu-ico), default 16. The card-head tools (toolGrip, toolSize, toolGear,
    toolKebab) draw flat at 14 through PMG.flat: one path, no halo, ink-only hover (PERF-3); the kebab is the set's
@@ -230,7 +232,8 @@ var NEON = {
   size: 'resize', eye: 'eye', eyeOff: 'eye-off', search: 'search', clock: 'clock', clockCircle: 'clock', file: 'page',
   user: 'user', briefcase: 'briefcase', pencil: 'edit', grip: 'grip', drag: 'grip', toolGrip: 'grip', kebab: 'more',
   dots: 'more', toolKebab: 'more', grid: 'grid', list: 'list', wallet: 'wallet', gauge: 'gauge', pulse: 'pulse',
-  spark: 'sparkles', book: 'notebook'
+  spark: 'sparkles', book: 'notebook', check: 'check', users: 'users', shield: 'shield', filter: 'filter', ring: 'ring',
+  chart: 'chart', layers: 'layers', more: 'more', tool: 'wrench', tidy: 'layout'
 };
 var NEON_ROLE = {
   refresh: 'control', 'export': 'concept', chevron: 'control', chevronDown: 'control', chevronRight: 'control',
@@ -240,7 +243,9 @@ var NEON_ROLE = {
   toolSize: 'control', size: 'control', eye: 'concept', eyeOff: 'control', search: 'concept', clock: 'concept',
   clockCircle: 'concept', file: 'concept', user: 'concept', briefcase: 'concept', pencil: 'control', grip: 'control',
   drag: 'control', toolGrip: 'control', kebab: 'control', dots: 'control', toolKebab: 'control', grid: 'concept',
-  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept'
+  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept',
+  check: 'concept', users: 'concept', shield: 'concept', filter: 'concept', ring: 'concept', chart: 'concept',
+  layers: 'concept', more: 'control', tool: 'control', tidy: 'control'
 };
 var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kpiarrow': 12 };
 var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
