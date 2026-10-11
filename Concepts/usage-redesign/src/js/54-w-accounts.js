@@ -215,10 +215,12 @@
       ' aria-label="' + esc(a.nickname + ' switches at ' + at + '% used, ' + (own ? 'its own level' : 'following ' + p.name)) + '"' + C.hover('Switch level · ' + a.nickname, ok ? accSwDetail(a, p) : 'Settings is not available') + '>' +
       '<span class="pmu-accswi" aria-hidden="true"><i class="is-link">' + PMU.mark(p.id, 12) + '</i><i class="is-own">' + SVG.notch + '</i></span><span class="pmu-accswv">' + at + '%</span></button>';
   }
-  /* the button's width with its glyph box (12 px, the provider's mark) and the widest value in the theme's face at its weight, 3 px between
+  /* the button's width with its glyph box (10 px; the provider's 12 px mark leans 1 px over each side, so the plate keeps
+     the widths it had with the 10 px link glyph: a 12 px box wrapped Codex's Team row a line taller in Glass on a 487 px
+     board) and the widest value in the theme's face at its weight, 3 px between
      them and 4 px each side, so the column that holds it never re-lays when the account takes its own level or follows
      again */
-  function accSwW() { return Math.ceil(12 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
+  function accSwW() { return Math.ceil(10 + 3 + tw('95%', 13, 650) * 1.06 + 8 + 2); }
   /* what the buttons of a plate show, as one string (a plate whose accounts' levels changed is patched, never left stale) */
   function accSwSig(p) { return switchable(p) ? p.accounts.map(function (a) { return a.key + ':' + accSwAt(a, p) + (accSwOwn(a) ? 'o' : '') + ((a.policy || polOf(p)).auto ? '' : 'x'); }).join(',') : ''; }
   /* every switch-level button under root takes its account's state in place: the value rolls (odometer 220; NieR decodes),
@@ -1402,7 +1404,7 @@
       var target = { target_type: 'setting', setting_id: 'ai.accounts.provider-connections', manager_id: null, detail_id: null };
       if (providerId) { target.provider_id = providerId; if (accountId) target.account_id = accountId; }
       var receipt = command('cmd.settings.open', { route_id: 'settings-route:usage-provider-settings', target: target, origin_surface: 'usage', origin_route: 'usage/accounts' }, { opened: true });
-      PMU.settings.open(providerId, null, accountId || null);
+      if (receipt.dispatch_accepted !== false) PMU.settings.open(providerId, null, accountId || null);   /* a cancelled dispatch stays on Usage, as Open in Settings does */
       return receipt;
     },
     openSetup: function () {

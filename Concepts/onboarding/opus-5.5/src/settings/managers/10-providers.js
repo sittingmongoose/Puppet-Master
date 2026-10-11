@@ -429,7 +429,9 @@
       + '</div>';
     return group('Models on this account', modelsBody(p, acc))
       + group('This account', PM51.scoped.rows(about))
-      + group('When it runs low', low, 'Only for this account. Its service\'s rules are under This service; the shared ones under Limits & switching.')
+      /* the line right above the switch level names the account, so a landing from the Usage page says whose level it is
+         while the account's header is far above it (D43 review: about 890 px of the account sits between them) */
+      + group('When it runs low', low, `Only for ${acc.nickname}. Its service's rules are under This service; the shared ones under Limits & switching.`)
       + group('For experts', tech)
       + actions;
   }
@@ -1122,16 +1124,21 @@
            account (GPU trace 2026-10-11). At most about 2 s; if the row is still out of view after the glide, once more. */
         const scrollerOf = f => { for (let e = f.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) return e; } return document.scrollingElement; };
         const opened = f => { for (let it = f.closest('.pm51-acc-item'); it; it = it.parentElement && it.parentElement.closest('.pm51-acc-item')) { const i = it.querySelector(':scope > .pm51-acc-body > .pm51-acc-inner'); if (!it.classList.contains('is-open') || (i && i.getBoundingClientRect().height < i.scrollHeight - 1)) return false; } return true; };
-        /* the account's header lands in view with its row, so the name says whose level it is (D43 review: with the row
-           centred, the header sat 80 to 560 px above the view): the stretch from the header to the row is centred, 16 px
-           clear of each edge; only where the two cannot be shown together is the row centred alone */
+        /* whose level it is lands in view with the row (D43 review: with the row centred, the account's header sat 80 to 560
+           px above the view): the stretch from the account's header to the row is centred, 16 px clear of each edge, where
+           it fits; otherwise the stretch from the row's own group head, whose line names the account ("Only for Lab"),
+           since the account's body runs about 890 px from its header to this row */
         const view = f => { const sc = scrollerOf(f), b = sc && sc !== document.scrollingElement ? sc.getBoundingClientRect() : { top: 0, bottom: window.innerHeight }; return { sc, top: Math.max(0, b.top), bottom: Math.min(window.innerHeight, b.bottom) }; };
-        const headOf = f => { const it = f.closest('.pm51-acc-item'); return (it && it.querySelector(':scope > .pm51-acc-head')) || f; };
-        const shown = f => { const v = view(f), fr = f.getBoundingClientRect(), hr = headOf(f).getBoundingClientRect(); return fr.top >= v.top && fr.bottom <= v.bottom && (fr.bottom - hr.top > v.bottom - v.top - 32 || hr.top >= v.top); };
+        const topOf = f => {
+          const v = view(f), fr = f.getBoundingClientRect(), it = f.closest('.pm51-acc-item'), hd = it && it.querySelector(':scope > .pm51-acc-head');
+          if (hd && fr.bottom - hd.getBoundingClientRect().top <= v.bottom - v.top - 32) return hd;
+          const g = f.closest('.o55-acc-group'), gh = g && g.querySelector(':scope > .o55-acc-group-head');
+          return gh && fr.bottom - gh.getBoundingClientRect().top <= v.bottom - v.top - 32 ? gh : f;
+        };
+        const shown = f => { const v = view(f), fr = f.getBoundingClientRect(), tr = topOf(f).getBoundingClientRect(); return fr.top >= v.top && fr.bottom <= v.bottom && tr.top >= v.top; };
         const place = f => {
-          const v = view(f), fr = f.getBoundingClientRect(), hr = headOf(f).getBoundingClientRect(), behavior = o55Still() ? 'auto' : 'smooth';
-          if (fr.bottom - hr.top > v.bottom - v.top - 32) { f.scrollIntoView({ block: 'center', behavior }); return; }
-          const dy = Math.round((hr.top + fr.bottom) / 2 - (v.top + v.bottom) / 2);
+          const v = view(f), fr = f.getBoundingClientRect(), tr = topOf(f).getBoundingClientRect(), behavior = o55Still() ? 'auto' : 'smooth';
+          const dy = Math.round((tr.top + fr.bottom) / 2 - (v.top + v.bottom) / 2);
           if (v.sc === document.scrollingElement) window.scrollBy({ top: dy, behavior }); else v.sc.scrollBy({ top: dy, behavior });
         };
         let lastH = -1, still = 0, frames = 0;
