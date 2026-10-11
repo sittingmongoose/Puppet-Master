@@ -1115,7 +1115,27 @@
       const land = () => {
         if (root.querySelectorAll(sel).length > 1 && ++tries < 30) { window.setTimeout(land, 70); return; }
         o55OpenAround(sel);
-        window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+        /* the scroll waits until the account has opened all the way (each account around the row is open and its body as
+           tall as what it holds, on its look's own motion) and the page has stopped growing, then glides once: scrolled
+           while the account below the row was still opening, the scroll was cut short by the page's height then, so the
+           row landed low in Basic and 610 px under the fold in Friendly, NieR and Retro at 1920 after landing on another
+           account (GPU trace 2026-10-11). At most about 2 s; if the row is still out of view after the glide, once more. */
+        const scrollerOf = f => { for (let e = f.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) return e; } return document.scrollingElement; };
+        const opened = f => { for (let it = f.closest('.pm51-acc-item'); it; it = it.parentElement && it.parentElement.closest('.pm51-acc-item')) { const i = it.querySelector(':scope > .pm51-acc-body > .pm51-acc-inner'); if (!it.classList.contains('is-open') || (i && i.getBoundingClientRect().height < i.scrollHeight - 1)) return false; } return true; };
+        let lastH = -1, still = 0, frames = 0;
+        const settle = () => {
+          const f = root.querySelector(sel); if (!f) { if (++frames < 120) window.requestAnimationFrame(settle); return; }
+          const sc = scrollerOf(f), hgt = sc ? sc.scrollHeight : 0;
+          still = opened(f) && hgt === lastH ? still + 1 : 0; lastH = hgt;
+          if (still < 3 && ++frames < 120) { window.requestAnimationFrame(settle); return; }
+          f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
+          window.setTimeout(() => {
+            const g = root.querySelector(sel); if (!g) return;
+            const r = g.getBoundingClientRect(), s2 = scrollerOf(g), box = s2 && s2 !== document.scrollingElement ? s2.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+            if (r.top < Math.max(0, box.top) || r.bottom > Math.min(window.innerHeight, box.bottom)) g.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
+          }, o55Still() ? 60 : 700);
+        };
+        window.requestAnimationFrame(settle);
       };
       land();
     }
