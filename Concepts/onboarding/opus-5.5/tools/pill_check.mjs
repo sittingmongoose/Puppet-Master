@@ -24,6 +24,11 @@
  *
  * Usage:
  *   node pill_check.mjs <page.html> [--out <dir>] [--dialogs] [--quick] [--looks a,b] [--scopes s,t,f]
+ *                       [--viewport WxH] [--reduced] [--cdp <endpoint>]
+ *     --viewport  page size in CSS pixels (default 1920x1080)
+ *     --reduced   emulate prefers-reduced-motion: reduce for the whole walk
+ *     --cdp       drive an existing Chrome over CDP (an agent-browser session on the P1000) instead of launching one;
+ *                 the walk opens and closes its own tab there and reports the WebGL renderer it ran on
  *     --dialogs   also open every one-click Settings dialog/sheet per page (slow)
  *     --quick     Settings home + 6 representative pages only (manager tabs still walked)
  *     --looks     comma list out of: basic-light friendly-light glass-dark retro-dark basic-dark friendly-dark
@@ -70,7 +75,7 @@ const QUICK_REPS = ['ai/bsd', 'ai/media', 'ai/providers', 'memory/context-memory
 const raw = process.argv.slice(2);
 function argOf(name) { const i = raw.indexOf(name); return i >= 0 && i + 1 < raw.length ? raw[i + 1] : null; }
 const hasFlag = (name) => raw.includes(name);
-const flagsWithValue = new Set(['--out', '--looks', '--scopes']);
+const flagsWithValue = new Set(['--out', '--looks', '--scopes', '--viewport', '--cdp']);
 let pageArg = null;
 for (let i = 0; i < raw.length; i++) {
   if (flagsWithValue.has(raw[i])) { i++; continue; }
@@ -79,6 +84,12 @@ for (let i = 0; i < raw.length; i++) {
 const pagePath = resolve(pageArg || join(here, '../../PMConcept7.html'));
 const outDir = argOf('--out') ? resolve(argOf('--out')) : null;
 const withDialogs = hasFlag('--dialogs');
+const cdpEndpoint = argOf('--cdp');
+const reducedMotion = hasFlag('--reduced');
+const vpMatch = /^(\d{3,4})x(\d{3,4})$/.exec(argOf('--viewport') || '1920x1080');
+if (!vpMatch) { console.error('--viewport must be WxH, e.g. 1600x1000'); process.exit(2); }
+const VIEWPORT = { width: +vpMatch[1], height: +vpMatch[2] };
+let renderer = null;
 const quick = hasFlag('--quick');
 const looksSel = argOf('--looks') ? argOf('--looks').split(',').map((s) => s.trim()).filter(Boolean) : null;
 const scopesSel = argOf('--scopes') ? argOf('--scopes').split(',').map((s) => s.trim()) : null;
@@ -275,11 +286,27 @@ const viewsWalked = [];
 const viewsFailed = [];
 let browser = null, page = null;
 
+/* open the Settings page through the page's own navigation (the tab can sit in the title bar's overflow at narrow widths) */
+async function openSettingsPage() {
+  const went = await page.evaluate(() => { if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') { window.PM_PAGES.go('settings'); return true; } return false; });
+  if (!went) await page.locator('#tab-settings').click({ force: true });
+}
+
 async function boot() {
-  browser = await chromium.launch({ executablePath: CHROME, headless: true });
-  page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+  if (cdpEndpoint) {
+    browser = await chromium.connectOverCDP(cdpEndpoint);
+    const ctx = browser.contexts()[0] || await browser.newContext();
+    page = await ctx.newPage();
+    await page.setViewportSize(VIEWPORT);
+  } else {
+    browser = await chromium.launch({ executablePath: CHROME, headless: true });
+    page = await browser.newPage({ viewport: VIEWPORT });
+  }
+  if (reducedMotion) await page.emulateMedia({ reducedMotion: 'reduce' });
+  renderer = await page.evaluate(() => { const g = document.createElement('canvas').getContext('webgl'); const x = g && g.getExtension('WEBGL_debug_renderer_info'); return x ? g.getParameter(x.UNMASKED_RENDERER_WEBGL) : 'none'; });
   page.setDefaultTimeout(20000);
-  await page.route('**/*', (route) => (/^(file:|data:|blob:)/.test(route.request().url()) ? route.continue() : route.abort()));
+  /* offline without request interception (interception over CDP sends every inline asset through Node): Chrome blocks the network itself */
+  { const s = await page.context().newCDPSession(page); await s.send('Network.enable'); await s.send('Network.setBlockedURLs', { urls: ['http://*', 'https://*', 'ws://*', 'wss://*'] }); }
   page.on('pageerror', (e) => pageErrors.push(String((e && e.message) || e)));
   await page.goto(pathToFileURL(pagePath).href, { waitUntil: 'domcontentloaded', timeout: 90000 });
   await page.locator('#pm-settings-root').waitFor({ state: 'attached', timeout: 60000 });
@@ -291,7 +318,7 @@ async function boot() {
     const gone = await page.evaluate(() => { const o = document.querySelector('#pm-o55-onboarding'); return !o || getComputedStyle(o).display === 'none'; });
     if (gone) break;
   }
-  await page.locator('#tab-settings').click({ force: true });
+  await openSettingsPage();
   await page.waitForFunction(() => { const r = document.querySelector('#pm-settings-root'); if (!r) return false;
     const b = r.getBoundingClientRect(); const cs = getComputedStyle(r); return b.width > 0 && b.height > 0 && cs.visibility === 'visible'; }, null, { timeout: 30000 });
   await page.addStyleTag({ content: 'html,body,*{scroll-behavior:auto!important;}' }).catch(() => {});
@@ -320,7 +347,7 @@ async function ensureSettingsOpen(why) {
   const tab = await page.evaluate(() => ((document.querySelector('.page-tab.active') || {}).id) || null);
   if (tab !== 'tab-settings') {
     progress('settings closed (' + why + '); reopening');
-    await page.locator('#tab-settings').click({ force: true });
+    await openSettingsPage();
     await page.waitForTimeout(600);
   }
 }
@@ -489,6 +516,7 @@ async function main() {
     progress('look ' + look.id + ' static views');
     await walkStaticViews(look);
   }
+  if (cdpEndpoint) await page.close().catch(() => {});   /* over CDP, close() only disconnects: the session's owner stops it */
   await browser.close(); browser = null;
 
   /* dedup by (kind, scope, signature, look) */
@@ -521,13 +549,14 @@ async function main() {
     }
   }
   const seconds = Math.round((Date.now() - t0) / 1000);
-  console.log('RESULT findings=' + sorted.length + ' instances=' + findings.length + ' looks=' + looks.length + ' views=' + viewsWalked.length + ' failed=' + viewsFailed.length + ' page_errors=' + pageErrors.length + ' seconds=' + seconds);
+  console.log('RESULT findings=' + sorted.length + ' instances=' + findings.length + ' looks=' + looks.length + ' views=' + viewsWalked.length + ' failed=' + viewsFailed.length + ' page_errors=' + pageErrors.length + ' seconds=' + seconds + ' viewport=' + VIEWPORT.width + 'x' + VIEWPORT.height + ' reduced=' + reducedMotion + ' renderer=' + JSON.stringify(renderer));
   if (outDir) {
     mkdirSync(outDir, { recursive: true });
     writeFileSync(join(outDir, 'report.json'), JSON.stringify({
       rule: 'FinalGUISpec F3-648 / DL-184 (no-pills gate)', generated_at: new Date().toISOString(),
       page: pagePath, page_sha256: pageSha, looks: looks.map((l) => l.id), scopes: activeScopes,
-      quick, dialogs: withDialogs, views_walked: viewsWalked, views_failed: viewsFailed,
+      quick, dialogs: withDialogs, viewport: VIEWPORT, reduced_motion: reducedMotion, renderer, cdp: !!cdpEndpoint,
+      views_walked: viewsWalked, views_failed: viewsFailed,
       page_errors: pageErrors, seconds,
       findings: sorted.map((g) => ({ kind: g.kind, scope: g.scope, signature: g.sig, look: g.look, count: g.count, views: g.views,
         first: { view: g.first.view, rect: { x: g.first.x, y: g.first.y, w: g.first.w, h: g.first.h }, radius: g.first.radius,
