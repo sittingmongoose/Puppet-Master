@@ -68,7 +68,10 @@ async function openPage(profile) {
     ev: (fn, ...a) => page.evaluate(fn, ...a),
     step: () => page.evaluate(() => window.O55.tour.state().step),
     async until(fn, what, timeout = 12000) { const t0 = Date.now(); while (Date.now() - t0 < timeout) { if (await page.evaluate(fn)) return true; await sleep(150); } throw new Error('timeout: ' + what + ' (step ' + await t.step() + ')'); },
-    async untilStep(id, timeout = 9000) { return t.until(new Function(`return window.O55.tour.state().step === ${JSON.stringify(id)}`), 'step ' + id, timeout); },
+    async untilStep(id, timeout = 9000) {
+      // The step changes before enter() finishes; its previous callout can still expose the same controls.
+      return t.until(new Function(`const st = window.O55.tour.st, c = document.querySelector('#pm-o55-tour .o55t-callout'); return !!(st.step && st.step.id === ${JSON.stringify(id)} && !st.entering && c && c.getAttribute('data-step') === ${JSON.stringify(id)})`), 'step ' + id, timeout);
+    },
     /* a real mouse click at an element's centre */
     /* like a person: wait until the control has stopped moving and nothing covers it, then click its centre */
     async click(sel, what) {
@@ -207,6 +210,10 @@ async function byHandChapter2(t, A) {
   await t.untilStep('open_planning', 8000); await t.snap('widget');
   A.ok(await t.ev((y) => window.PMW.dashboard.board('home').rect('ov-resets').y < y, y0), 'Upcoming resets moved up');
 }
+const reviewPartsReady = () => {
+  const st = window.O55.tour.st;
+  return st.step.id === 'review_parts' && !st.entering && st.partsDone === true && !!document.querySelector('#pm-o55-tour .o55t-callout[data-step="review_parts"] [data-o55t="next"]');
+};
 async function byHandChapter3(t, A) {
   await t.click('#tab-wizard', 'Planning Wizard tab');
   await t.untilStep('book_club_goal'); await sleep(300); await t.snap('goal');
@@ -218,9 +225,7 @@ async function byHandChapter3(t, A) {
   await t.untilStep('review', 6000); await t.snap('answered');
   await t.click('[data-o55p="review"]', 'Review the plan');
   await t.untilStep('review_parts', 6000);
-  const seen = new Set();
-  await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'the plan read part by part', 20000).catch(() => {});
-  for (const k of await t.ev(() => [window.O55.tour.st.part])) seen.add(k);
+  await t.until(reviewPartsReady, 'the plan read part by part', 20000);
   A.ok(await t.ev(() => window.O55.tour.st.partsDone === true), 'the review glides over every part of the plan before Next');
   await t.callout('next');
   await t.untilStep('answer_edit', 6000); await t.snap('review');
@@ -270,7 +275,7 @@ def('t2', 'Every action through Show Me, then Keep this layout', async (t, A) =>
     A.ok(true, 'Show Me completed ' + id);
     if (id === 'send_question') { await t.untilStep('answer_stream', 8000); await t.until(() => window.O55.tour.chat.answered('a1'), 'answer'); await t.callout('next'); }
     if (id === 'same_answer_eli5') { await sleep(1400); await t.callout('next'); await t.untilStep('workspace_orientation'); await t.until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 'orientation ready', 9000); await t.callout('next'); }
-    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(() => window.O55.tour.st.partsDone === true && !!document.querySelector('#pm-o55-tour .o55t-callout[data-step="review_parts"] [data-o55t="next"]'), 'plan read part by part', 20000); await t.callout('next'); }
+    if (id === 'review') { await t.untilStep('review_parts', 8000); await t.until(reviewPartsReady, 'plan read part by part', 20000); await t.callout('next'); }
     if (id === 'answer_edit') { await t.untilStep('consequence_changed', 6000); await t.callout('next'); }
   }
   const kept = await t.ev(() => ({ panels: window.PM_HOME.panels().length, editors: window.PM_HOME.tabs().filter((x) => x.kind === 'editor').length }));

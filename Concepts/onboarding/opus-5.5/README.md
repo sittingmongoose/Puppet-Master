@@ -114,7 +114,9 @@ inline in the landing records and in `REPORT.md` instead. Every tool deletes its
 
 The onboarding driver and tour acceptance suites launch each browser with `agent-browser` through
 `tools/chrome.mjs` and `tools/agent-browser-pipe.mjs` (Node 22). The helper enforces the machine's cap and stops that
-exact browser and its profile at close. Nas1 runs ordinary page checks and screenshots with intentional software
+exact browser and its profile at close. When the shared browser cap is full, start retries every 15 seconds,
+up to 80 attempts; other launch failures fail immediately. Tour waits require the current step's settled callout,
+and the plan review must finish reading its parts before Next. Nas1 runs ordinary page checks and screenshots with intentional software
 rendering; it has a four-browser cap and no video. These suites exit nonzero if any scenario fails. Owner results
 are deliberately injected by the test harness after checking the pending gates; fixture acceptance is not native
 execution, protected authentication, or durable owner proof. Kit bytes are never supplied or read from the DOM.
