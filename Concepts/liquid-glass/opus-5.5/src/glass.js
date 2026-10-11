@@ -22,8 +22,7 @@
   var root = document.documentElement, q = new URLSearchParams(location.search);
   var SVGNS = 'http://www.w3.org/2000/svg';
   root.setAttribute('data-lg', q.get('lg') === 'off' ? 'off' : 'on');
-  if (q.get('lgwall')) root.setAttribute('data-lg-wall', q.get('lgwall'));
-  if (!root.getAttribute('data-lg-wall')) root.setAttribute('data-lg-wall', 'ribbons');
+  /* the wallpaper is applied by applyWall() (below) from the saved choice or ?lgwall= */
 
   function isGlass() { return root.getAttribute('data-lg') === 'on' && /^glass/.test(root.getAttribute('data-theme') || ''); }
   function gpu() { return root.getAttribute('data-lg-tier') !== 'cpu'; }
@@ -467,6 +466,9 @@
     ['.title-bar', 'bar'], ['.left-panel', 'panel'], ['#chatPanel', 'panel'], ['#panel-usage .pmu-rail', 'panel'],
     ['#panel-usage .pmu-stagehead', 'bar'], ['#panel-usage .pmu-board > .pmu-card', 'card'],
     ['#pm7GlobalStatusBar', 'bar'], ['.pmu-pop.open', 'menu'], ['.pmr-menu-list', 'menu'], ['#lg-demo-pop[data-open]', 'menu'],
+    /* Settings: its domain rail and section index are sheets, every section is a card */
+    ['#pm-settings-root aside.domain-rail', 'panel'], ['#pm-settings-root .document-layout > :is(nav, aside):not(.document-main)', 'panel'],
+    ['#pm-settings-root section.settings-section', 'card'],
   ];
   function segTracks() {   /* the rail's tab strips get a track element to be the glass (the strip itself is a full-width plate) */
     document.querySelectorAll('#sidePanelSlot .pm-segtab').forEach(function (s) {
@@ -615,6 +617,7 @@
   var syncQ = false, lazyT = 0;
   function syncAll() {
     syncQ = false;
+    applyWall(); mountPicker();
     if (!isGlass()) { unmountAll(); return; }
     syncSurfaces();
     STRIPS.forEach(function (cfg) { (cfg.many ? document.querySelectorAll(cfg.sel) : [document.querySelector(cfg.sel)]).forEach(function (s) { if (s) syncStrip(cfg, s); }); });
@@ -653,6 +656,7 @@
       syncAll(); if (enter) materialize(Array.from(glassSet));
     } else queueSync();
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion'] });
+  applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });
 
@@ -677,6 +681,47 @@
     var n = 0; (function go() { if (window.PM12_KIMI && window.PM_PAGES) { if (!/^glass/.test(root.getAttribute('data-theme') || '')) window.PM12_KIMI.setSettingFromHost('general.visual.theme', 'Glass Dark'); window.PM_PAGES.go('usage'); } else if (++n < 60) setTimeout(go, 250); })();
   }
 
+  /* ---- wallpapers: any wallpaper for any look (Jared, 2026-10-11) ---------------------------------------------------
+     The choice is one setting: 'look' (each look's own: Glass shows Ribbons, the other looks keep their ground until
+     the wallpaper designer's set is approved) or a wallpaper id, used by every look; its dark or light print follows
+     the look's mode. In this concept the choice lives in localStorage and on <html data-lg-wall>; the product reads
+     general.visual.wallpaper (canon draft). Settings shows it as a gallery under Theme & colors. */
+  var WALLS = [
+    { id: 'ribbons', name: 'Ribbons', family: 'Glass', default_for: 'glass' },
+    { id: 'prism', name: 'Prism', family: 'Glass' },
+    { id: 'orbs', name: 'Orbs', family: 'Glass' },
+  ];
+  var WALL_KEY = 'pm-lg-wallpaper';
+  function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
+  function applyWall() {
+    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0];
+    var id = c === 'look' ? (fam === 'glass' ? 'ribbons' : '') : c;
+    if (id) root.setAttribute('data-lg-wall', id); else root.removeAttribute('data-lg-wall');
+    /* a non-Glass look shows a chosen wallpaper around and between its opaque panels */
+    if (id && fam !== 'glass') root.setAttribute('data-lg-wall-any', ''); else root.removeAttribute('data-lg-wall-any');
+  }
+  function setWall(c) { try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall(); renderPickers(); }
+  function pickerHtml() {
+    var c = wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], mode = /light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+    var tiles = [{ id: 'look', name: "Each look's own", family: fam === 'glass' ? 'Glass: Ribbons' : 'Its own ground' }].concat(WALLS);
+    return tiles.map(function (w) {
+      var thumb = w.id === 'look' ? (fam === 'glass' ? 'ribbons' : '') : w.id, on = c === w.id;
+      return '<button type="button" class="lg-wtile' + (on ? ' is-on' : '') + '" role="radio" aria-checked="' + on + '" data-lg-wall-pick="' + w.id + '">' +
+        '<span class="lg-wthumb"' + (thumb ? ' style="background-image:var(--lg-wall-' + thumb + '-' + mode + ')"' : '') + '><i class="lg-wcheck" aria-hidden="true"></i></span>' +
+        '<span class="lg-wname">' + w.name + '</span><span class="lg-wfam">' + w.family + '</span></button>';
+    }).join('');
+  }
+  function renderPickers() { document.querySelectorAll('.lg-wgrid').forEach(function (g) { g.innerHTML = pickerHtml(); }); }
+  function mountPicker() {
+    var themeRow = document.getElementById('setting-general.visual.theme'); if (!themeRow || document.getElementById('setting-general.visual.wallpaper')) return;
+    var row = el('div', { class: 'setting-row o55-row lg-wrow', id: 'setting-general.visual.wallpaper' });
+    row.innerHTML = '<div class="lg-whead setting-copy"><div class="setting-label">Wallpaper</div><div class="setting-description">What shows behind the panels, in any look. Each look has its own unless you pick one; it follows light and dark.</div></div>' +
+      '<div class="lg-wgrid" role="radiogroup" aria-label="Wallpaper">' + pickerHtml() + '</div>';
+    var after = document.getElementById('setting-general.visual.theme-mode') || themeRow;
+    after.parentNode.insertBefore(row, after.nextSibling);
+  }
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-lg-wall-pick]'); if (!t) return; setWall(t.getAttribute('data-lg-wall-pick')); e.preventDefault(); e.stopPropagation(); }, true);
+
   /* ---- the concept's own control (status bar) -------------------------------------------------------------------- */
   function demo() {
     var bar = document.getElementById('pm7GlobalStatusBar'); if (!bar || document.getElementById('lg-demo-btn')) return;
@@ -695,7 +740,7 @@
     var rows = [
       row('Liquid Glass', 'data-lg', [['on', 'On', set('data-lg', 'on')], ['off', 'Today', set('data-lg', 'off')]]),
       row('Look', 'data-theme', [['glass-dark', 'Dark', look('Glass Dark')], ['glass-light', 'Light', look('Glass Light')]]),
-      row('Wallpaper', 'data-lg-wall', [['ribbons', 'Ribbons', set('data-lg-wall', 'ribbons')], ['prism', 'Prism', set('data-lg-wall', 'prism')], ['orbs', 'Orbs', set('data-lg-wall', 'orbs')]]),
+      row('Wallpaper', 'data-lg-wall', [['ribbons', 'Ribbons', function () { setWall('ribbons'); }], ['prism', 'Prism', function () { setWall('prism'); }], ['orbs', 'Orbs', function () { setWall('orbs'); }]]),
       row('Path', 'data-lg-tier', [['gpu', 'GPU', set('data-lg-tier', 'gpu')], ['cpu', 'CPU', set('data-lg-tier', 'cpu')]]),
       row('Motion', 'data-motion', [['', 'Full', set('data-motion', null)], ['reduced', 'Reduced', set('data-motion', 'reduced')]]),
     ];
