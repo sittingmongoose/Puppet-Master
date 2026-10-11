@@ -12,7 +12,11 @@
 - Card GLY-4 asked (share folder 2026-10-11-glyph-gly4-onboarding-art/); option A prototype in
   /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/gly4-prototype/.
 - Hover triage for the planner (not glyph work): /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/
-  hover-return-review/ (REVIEW.md, hover-return.patch).
+  hover-return-review/ (REVIEW.md, hover-return.patch). The supplement FAILED its first Glass return (planner mail
+  1011202718-3b78): recorded in ADDENDUM-supplement-result.md, with the untested data-pmu-moment rest hypothesis for the
+  hover owner. No second patch; the owner's late slot decides.
+- Usage gate verdict on the final composition: PASS. The six walk differences are adjudicated row by row (USAGE-RECORD.md;
+  evidence usage-step6-review/cmp-adjudication/); none is a glyph source issue.
 
 ## Waiting (owners, by mail)
 - home-terminal's re-review of the step 6 fixes (the planner routes it).

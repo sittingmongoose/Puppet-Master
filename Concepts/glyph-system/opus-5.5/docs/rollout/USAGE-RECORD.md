@@ -65,7 +65,19 @@ between presets); F3 the records Export neon (Ledger). 0 page errors. The picker
 in this session, so the film does not catch the in-place check insertion itself; its call is now the first render's.
 
 Gates on the final composition (main 2f91e7a622 vs the branch at 65e832fa63, P1000):
-- walk/cmp: 0 page errors and 0 overflowX on both. 6 differences: +-1 overview cards in both directions (the pre-warm's
-  1 % copy, home-panels' finding) and textOverflow swings. That's noise.
+- walk/cmp: 0 page errors and 0 overflowX on both. The six differences, each adjudicated
+  (`cmp-adjudication/RESULTS.md` in the evidence folder, with a bounded settled recheck on the P1000):
+  - basic-light@1440 overview cards 13 -> 14, basic-light@1920 14 -> 13, glass-dark@1920 14 -> 13: the pre-warm's 1 %
+    plate copy, which exists about 250 ms around 10.5-11 s after load on any page (home-panels' pwtime.mjs). Both
+    directions occur, and two walks of the same page differ the same way.
+  - friendly-dark@1440 free textOverflow 0 -> 1 and friendly-light@1440 costs 1 -> 4: odometer digit cells
+    (span.pmu-odo-c.is-d) mid-roll during the room entrance. No glyph in them; main's walk has them too.
+  - glass-dark@1920 costs textOverflow 0 -> 1 (a card body): the budget card's body at 778 px of scroll in 774 during the
+    entrance, with 0 neon svgs in it, the odometer strips and the Usage film's comet (i.pmu-film-comet) animating. Settled,
+    0/3 on both pages; at the walk's timing, branch 2/9 and main 1/4 (1300 ms), the identical case on main. It's an
+    existing entrance transient, not the glyphs. The same class sat unexplained in the W7 summary (filed as noise);
+    RESULTS.md now explains it.
+  Verdict: no glyph source issue. Harness note for its owner: the walk samples 1.5 s into a room's entrance and does not
+  skip .pmu-film-comet or rolling odometer cells.
 - flick2 Glass Dark and NieR: 0 show-hide-show.
 - usage_boot --page (the branch): ok, newErrors [] (its Home check, fixed on main 0d33a0c4d0, passes).
