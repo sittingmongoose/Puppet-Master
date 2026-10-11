@@ -36225,6 +36225,8 @@ canonical_text: >-
   change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact reveals;
   Basic, Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion, and
   its hero moments, typed text and one-way large exits are F3-598's. Those moments do not hold input.
+  A resumed onboarding repaints the session's stored look_choice, NieR Mode included, with null fields
+  falling back to this unit's start rule (DL-153).
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -36328,6 +36330,8 @@ negative_constraints:
   - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
 owner_boundary_notes:
   - "Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control, Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and commands; Home owns only the visible relaunch trigger; Final GUI owns visual hierarchy and motion."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session look choice."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md]
 ```
 
