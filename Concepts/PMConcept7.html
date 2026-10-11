@@ -56159,15 +56159,24 @@ var PMU_SERIES = {
     var followOff = own && pp.switchLeft >= pol.warnLeft;
     var levels = LEVELS.map(function (v) { var off = v >= pol.warnLeft; return { value: v, label: (100 - v) + '% used', right: v + '% left', disabled: off, hover: off ? 'At or past the warn level (' + warnAt + '% used)' : '', active: own && v === pol.switchLeft }; });
     var anyOff = levels.some(function (o) { return o.disabled; });
+    /* SSYS-044: a hosted control offers Open in Settings, landing on the account's own row (its warn level and rest
+       period are edited there). It is pinned under the levels, outside the list that scrolls: a plate's button in the
+       middle of a 900 px window leaves the menu about 330 px, and as the list's last row it sat under the foot, out of
+       reach of the pointer (GPU probe 2026-10-11). The row joins the menu's own rows (h.flat), so the arrow keys, End,
+       Enter and a click pick it like any other. */
+    var openRow = { value: 'open', label: 'Open in Settings', sub: t('accounts.acc_sw_open', { name: a.nickname }), icon: 'gear', action: true };
     el.classList.add('is-open');
     return PMU.menu.toggle(el, { id: 'acc-sw:' + key, title: title, current: '', width: MW,
       foot: t('accounts.acc_sw_foot', { name: a.nickname }) + ' ' + t('accounts.not_consent'),
       sections: [{ rows: [{ value: 'follow', label: follow, sub: pp.own && pp.own.switchLeft ? p.name + '’s own level, set on its plate' : p.name + ' follows the shared setting', active: !own, disabled: followOff,
         hover: followOff ? 'At or past the warn level for ' + a.nickname + ' (' + warnAt + '% used)' : '' }] },
-        { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : ''), rows: levels },
-        /* SSYS-044: a hosted control offers Open in Settings, landing on the account's own row (its warn level and rest
-           period are edited there) */
-        { rows: [{ divider: true }, { value: 'open', label: 'Open in Settings', sub: t('accounts.acc_sw_open', { name: a.nickname }), icon: 'gear', action: true }] }],
+        { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : ''), rows: levels }],
+      body: function (c, h) {
+        if (!h || !Array.isArray(h.flat)) return;
+        var i = h.flat.length; h.flat.push(openRow);
+        c.innerHTML = '<div class="pmu-mdiv" role="separator"></div><button type="button" class="pmu-poprow pmu-mitem has-sub" role="menuitem" tabindex="-1" data-mi="' + i + '" data-pm-hover-exempt="menu">' +
+          '<span class="pmu-mlead pmu-micon" aria-hidden="true">' + SVG.gear + '</span><span class="pmu-mcopy"><b>' + esc(openRow.label) + '</b><span>' + esc(openRow.sub) + '</span></span></button>';
+      },
       onPick: function (v, r, h) {
         if (v === 'open') { accSwOpen(a); return; }
         if (v === 'follow' ? !own : own && v === pol.switchLeft) return;   /* already so */
@@ -82937,7 +82946,27 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
       const land = () => {
         if (root.querySelectorAll(sel).length > 1 && ++tries < 30) { window.setTimeout(land, 70); return; }
         o55OpenAround(sel);
-        window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+        /* the scroll waits until the account has opened all the way (each account around the row is open and its body as
+           tall as what it holds, on its look's own motion) and the page has stopped growing, then glides once: scrolled
+           while the account below the row was still opening, the scroll was cut short by the page's height then, so the
+           row landed low in Basic and 610 px under the fold in Friendly, NieR and Retro at 1920 after landing on another
+           account (GPU trace 2026-10-11). At most about 2 s; if the row is still out of view after the glide, once more. */
+        const scrollerOf = f => { for (let e = f.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) return e; } return document.scrollingElement; };
+        const opened = f => { for (let it = f.closest('.pm51-acc-item'); it; it = it.parentElement && it.parentElement.closest('.pm51-acc-item')) { const i = it.querySelector(':scope > .pm51-acc-body > .pm51-acc-inner'); if (!it.classList.contains('is-open') || (i && i.getBoundingClientRect().height < i.scrollHeight - 1)) return false; } return true; };
+        let lastH = -1, still = 0, frames = 0;
+        const settle = () => {
+          const f = root.querySelector(sel); if (!f) { if (++frames < 120) window.requestAnimationFrame(settle); return; }
+          const sc = scrollerOf(f), hgt = sc ? sc.scrollHeight : 0;
+          still = opened(f) && hgt === lastH ? still + 1 : 0; lastH = hgt;
+          if (still < 3 && ++frames < 120) { window.requestAnimationFrame(settle); return; }
+          f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
+          window.setTimeout(() => {
+            const g = root.querySelector(sel); if (!g) return;
+            const r = g.getBoundingClientRect(), s2 = scrollerOf(g), box = s2 && s2 !== document.scrollingElement ? s2.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+            if (r.top < Math.max(0, box.top) || r.bottom > Math.min(window.innerHeight, box.bottom)) g.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' });
+          }, o55Still() ? 60 : 700);
+        };
+        window.requestAnimationFrame(settle);
       };
       land();
     }
