@@ -225,7 +225,7 @@
     var rows = shown.map(function (a) {
       var hidden = !n || allHiddenP(a);
       var amountsLine = a.amounts.length && !hidden ? '<span class="pmu-amounts">' + esc(a.amounts[0].label) + ' <b>' + esc(a.amounts[0].value || a.amounts[0].word) + '</b>' + (a.amounts[0].suffix ? ' ' + esc(a.amounts[0].suffix) : '') + '</span>' : '';
-      var ident = '<span class="pmu-accid"' + identHover(p, a) + '><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
+      var ident = '<span class="pmu-accid"' + identHover(p, a) + '><span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span>' +
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         '<span class="pmu-identmeta">' + metaHtml(a) + '</span>' + amountsLine + '</span></span>';
       var cells;
@@ -247,7 +247,7 @@
       var sig = a.shownState + '|' + a.effective + '|' + a.windows.map(function (w) { return w.pct; }).join(',');
       return '<div class="pmu-row pmu-accrow pmu-planline' + (lineOne(a) ? '' : ' is-two') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '"' +
         ' data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' + C.hover(p.name + ' · ' + a.nickname + (a.effective ? ' · Active' : ''), foldLine(a) + ' · ' + (a.fresh ? a.fresh.source + ' · ' : '') + C.sampledText(a.sampledAt) + ' · select for Details') + '>' +
-        '<span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + nameCls(a) + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
+        '<span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span><span class="pmu-plid"><b class="pmu-ident' + (a.effective ? ' is-eff' : '') + nameCls(a) + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         '<i class="pmu-dot"> · </i>' + stateHtmlP(a) + '</span><span class="pmu-plvals">' + right + '</span></div>';
     }).join('');
     var foldItems = folded.map(foldLine);
@@ -455,7 +455,7 @@
         : cap.value != null ? C.valHtml(cap.value, 'int', 'pmu-freecap', ctx.id + ':cap').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') + '<span class="pmu-freecapu">' + esc(cap.unit) + '</span>'
         : '<b class="pmu-freecap"><span class="pmu-num">' + esc(cap.text) + '</span></b><span class="pmu-freecapu">' + esc(cap.unit) + '</span>';
       var head = '<div class="pmu-freehero' + (ringPx ? '' : ' no-ring') + '">' + (ringPx ? '<div class="pmu-freering" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' : '') +
-        '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + C.glyph(m.stateGlyph) + esc(m.state) + '</span>' +
+        '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + (PMU.stateMark(m.state, 14) || C.glyph(m.stateGlyph)) + esc(m.state) + '</span>' +
         '<span class="pmu-freecapline"' + C.hover('Capacity', m.capacitySource) + '>' + capHtml + '</span>' +
         (provBelow ? '' : '<span class="pmu-freeprov">' + esc(m.provider) + '</span>') + '</div></div>' +
         (provBelow ? '<span class="pmu-freeprov is-below">' + esc(m.provider) + '</span>' : '');
