@@ -200,8 +200,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
       body after #glass-bg) carries the shell's single blur and the k-factor tint (F3-427: dark .73/.57/.67, light
       .62/.36/.47 of the look's glass alpha). The app shell itself turns transparent.
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg .pm6-gbg { display: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { background: var(--background) var(--lg-wall) center / cover no-repeat; }
+/* (!important: the base's pm7-architectural-glass-final block forces its cloudscape on and clears #glass-bg with it) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg .pm6-gbg,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg::before,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg::after { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { background: var(--background) var(--lg-wall) center / cover no-repeat !important; }
 html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz):not([data-motion="reduced"]):not([data-reduced-motion="1"]) #glass-bg {
   animation: lg-drift 90s ease-in-out infinite alternate;
 }
@@ -510,19 +513,22 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card {
   transition: box-shadow 320ms var(--lg-ease);
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card[data-lg-lit] { box-shadow: var(--lg-rim-l) !important; }
-/* the rim catches the pointer: a ring of light brightest on the side nearest the cursor (lg.js adds .lg-rim) */
+/* the edge: every card carries a ring of light (.lg-rim, added by lg.js), brightest along the top-left where the light
+   enters and returning faintly at the bottom-right, the silhouette Liquid Glass draws; the pointer brightens it nearby */
 .lg-rim { display: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-rim {
   display: block; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 3;
   padding: 1px;
-  background: radial-gradient(220px 220px at var(--lg-mx, -999px) var(--lg-my, -999px), var(--lg-spec), transparent 70%);
+  background:
+    radial-gradient(240px 240px at var(--lg-mx, -999px) var(--lg-my, -999px), var(--lg-spec), transparent 70%),
+    linear-gradient(140deg, var(--lg-edge-a) 0%, var(--lg-edge-b) 22%, transparent 46%, transparent 64%, var(--lg-edge-c) 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: 0; transition: opacity 260ms var(--lg-ease);
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-lit] > .lg-rim { opacity: 1; }
-/* meters and tracks inside cards: fills, square ends (no-pills NP-BARS) */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-edge-a: rgba(255, 255, 255, .46); --lg-edge-b: rgba(255, 255, 255, .12); --lg-edge-c: rgba(255, 255, 255, .20); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-edge-a: rgba(255, 255, 255, 1); --lg-edge-b: rgba(255, 255, 255, .55); --lg-edge-c: rgba(255, 255, 255, .80); }
+html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-edge-a: rgba(255, 255, 255, .18); --lg-edge-b: transparent; --lg-edge-c: rgba(255, 255, 255, .08); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-card, #chatPanel) { position: relative; }
 /* switches: the look's rectangle with a glass key, never a capsule (no-pills NP-SWITCH gives the final keyed form) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) {
   border-radius: var(--pm-ctl-r) !important; box-shadow: var(--lg-recess) !important;
