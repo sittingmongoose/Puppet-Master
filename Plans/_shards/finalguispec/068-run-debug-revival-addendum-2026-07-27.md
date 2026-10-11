@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34206-L35329
+Source lines: L34206-L35345
 
-Source SHA256: `a74986e6892dde6385ca5587566b89db5e9ec99007f0e9aba901aa643e3c7d26`
+Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
 
 ---
 
@@ -648,19 +648,32 @@ canonical_text: >-
   session, and the sub-tab shown is view state with no command (lead ruling F6); an older `debug-console:<session>`
   id folds into it with that session shown (F3-635). The sub-tabs sit in the tab's shared header row (F3-635) as an
   ARIA tab list with a roving focus: Left and Right move and choose at once and wrap, Home and End go to the first
-  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
+  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides, 4 px apart and shows the session's
   name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
   warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
-  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
-  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
-  in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
-  strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
-  in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
-  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px with a 5 px radius,
+  first name with its text column. The chosen Debug Console sub-tab and every segmented toggle are filled on their own box, never underlined:
+  Friendly, Glass and Basic use each look's neutral selection fill (the surface a chosen row uses), never an
+  accent; Glass adds its 1 px rim on the filled box's top edge; Retro keeps reverse video; NieR keeps its
+  ink block with or without the cursor part (F3-648). The console beneath
+  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px around the fill box with a 1 px gap and a 9 px radius,
   square in Retro and with NieR's square part. Its hover tag names the session, how it runs and its state, and a
   paused session's location shows as a file reference beside the tab's buttons (F3-634). Below 460 px of body the
   state words go, below 640 px the paused-at reference goes, and below 820 px the buttons lose their words. Each
   session keeps its own console, state and frame.
+  The chosen fill sits 4 px in from the row's top and bottom: 21 px tall in the 29 px header row, 24 px in a
+  32 px body row and 20 px in a 28 px DevTools tool row, with 6 px corners (0 in Retro and NieR's square
+  part). Basic and Friendly dark use the chosen-row surface, the text colour at 11 %; Basic light uses 17 %
+  and Friendly light 20 %. Glass dark uses selection frost and Glass light its reading plate, with the same
+  top rim. The fill reads at least 1.3:1 against the row, chosen words at least 4.5:1, and a count or state
+  dot at least 3:1. Hover is a quieter step on the same box, about half the chosen fill; weight and size
+  stay unchanged. Options have 8 px side padding and 4 px gaps; a body row keeps 3 px inside each end, and a
+  leading header toggle starts its fill 4 px from the panel edge. One fill moves between boxes: Basic glides
+  220 ms, Friendly springs 420 ms with one 8 % overshoot held inside the row, Glass glides 460 ms without
+  liquid stretch; Retro and NieR cut, Reduced Motion and the system preference are instant, and Animation
+  speed scales it. Options on different lines of a wrapped Metric switch below 520 px change at once; its
+  gap is 4 px. With the fill, state words hide below 500 px in Retro and Friendly and 600 px in NieR with
+  its headers part; the paused-at reference hides below 680 px in NieR with headers, and button words below
+  920 px there; the other thresholds above stand.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
@@ -670,7 +683,7 @@ acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
 - "ATTACHED shows per-session sub-tabs per F3-484, the session chrome row (adapter identity, mirrored state chip, elapsed time, Terminate/Disconnect), the CONSOLE pane with stream tags and session-gated REPL input with per-session history, and the PROCESS pane only under integrated_terminal routing."
 - "TERMINATED shows exit code plus Restart and retains console scrollback."
-- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (the tab ink filling its box in Friendly, Glass, Basic and NieR Mode without the cursor part, reverse video in Retro, the ink block in NieR Mode with the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
+- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (each look's neutral chosen-row fill in Friendly, Glass and Basic, never an accent, Glass with its 1 px top rim; reverse video in Retro; the ink block in NieR Mode with or without the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
 - "The §7.20.2 'Debug Console' entry and the locked-decision 'classical debugger surface' entry both resolve to this tab."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -694,6 +707,8 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-187"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console sub-tabs; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -716,6 +731,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
 - "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
 - "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
+- "Amended 2026-10-11 (lead ruling 2026-10-11, D29): Debug sub-tabs and segmented toggles share neutral chosen fills and the measured sub-tab geometry."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:

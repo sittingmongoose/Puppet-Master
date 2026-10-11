@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4293-L14434
+Source lines: L4297-L14442
 
-Source SHA256: `691632bad3b0c6b350b78e1e75516740082b4c16a55cb4f03f8f341a9ddb991e`
+Source SHA256: `b2e1fd90a9af2fe9a453a5e16acace05236f2f53fbcc73c8b0784b7cd699f4b4`
 
 ---
 
@@ -8480,6 +8480,8 @@ negative_constraints:
   - "Do not make a NieR variant per family."
   - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
   - "Do not add a command id, a route or a Guided Tour action for a look control."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10, reseal item 2): the onboarding session stores look_choice so a resumed setup repaints the chosen look, NieR included; Settings are still written only at commit."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -9900,6 +9902,8 @@ preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead rulings under D29): a chosen option is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic; Glass top rim, Retro reverse video, NieR ink."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

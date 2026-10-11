@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18719-L18965
+Source lines: L18728-L18980
 
-Source SHA256: `7301c4c3a8faa26aa16665273999dbac84142a1e6b0e1a806b2bb87f1c54734f`
+Source SHA256: `83ef7894d34fc118940e34a528bb950fab9a6f7cfd82e8d982ed8e454ebe2ed6`
 
 ---
 
@@ -106,6 +106,10 @@ canonical_text: The existing onboarding_state family uses onboarding_state.v3:{o
   counts with a hashed per-row manifest, and never replays owner work. Domain reconciliation remains separately
   pending physical admission. No physical family, retention policy, native store, readiness or recovery certification
   is added.
+  The session's optional look_choice is merged per ui.onboarding.choose_look request, replacing only fields
+  the request sets; absent or null fields mean nothing chosen yet, and a resume repaints that stored choice,
+  NieR Mode included, with null fields falling back to F3-520's start rule; look_choice is never a Settings
+  value.
 gui_related: true
 gui_classification_reason: The migrated stage/session determines the simple Product Onboarding screen and safe resume
   point shown to the user.
@@ -191,6 +195,8 @@ negative_constraints:
 - Do not fabricate owner receipts or treat the bundle as native persistence/migration proof.
 - Do not create a new physical family/retention policy or hide Tour checkpoints, protected contents or arbitrary
   raw plans inside onboarding_state.
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): The session retains the optional look choice for resume without making it a Settings value."
 owner_hints:
 - Plans/storage-plan.md
 - Plans/Planning_Wizard.md

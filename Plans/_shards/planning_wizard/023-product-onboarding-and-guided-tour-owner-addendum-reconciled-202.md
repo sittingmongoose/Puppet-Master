@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2139
+Source lines: L1781-L2145
 
-Source SHA256: `468e42291ffd8b7408b8ca3d913ccb8712363222d05f0b52889f5287fa914575`
+Source SHA256: `9408fbc6093882f07c12e9e188d76530bbb93adb5d3c31b74b76e5b6b0e518f0`
 
 ---
 
@@ -123,6 +123,10 @@ canonical_text: Product Onboarding owns the reversible draft-first eleven-stage 
   and truthful Ready. Explicit Project deferral skips both provider phases without inventing a Project. UI choreography
   remains fourteen typed local actions (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or
   command family.
+  Each ui.onboarding.choose_look request replaces only the fields it sets in the session's optional
+  look_choice; absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look
+  choice, NieR Mode included, and null fields fall back to F3-520's start rule; this session choice performs
+  no Settings write before commit.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -228,6 +232,8 @@ negative_constraints:
 - Do not synthesize readiness or progress from time, cache or UI state.
 - Do not turn the modal into a full-page route or nested-modal manager.
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
