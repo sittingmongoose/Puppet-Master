@@ -151,8 +151,6 @@
          a stepped opacity animation (the compositor runs it; an animated dash offset repaints on the main thread) */
       + Array.from({ length: 15 }, (_, k) => `<rect class="o55t-ph${k < 4 ? ' o55t-ph4' : ''}${k === 0 ? ' o55t-ph0' : ''}" rx="12" ry="12" style="--k:${k}"/>`).join('') + `</svg></div>`
       + `<div class="o55t-shield" aria-hidden="true"></div>`
-      + `<div class="o55t-zone" aria-hidden="true"><span class="o55t-zonelabel"><svg viewBox="0 0 20 20" width="16" height="16"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-      + `<span class="o55t-zl-idle">${U.esc(T('tour.steps.move_or_dock_chat.zone'))}</span><span class="o55t-zl-hot">${U.esc(T('tour.steps.move_or_dock_chat.zoneHot'))}</span></span></div>`
       + `<div class="o55t-callout" role="dialog" aria-modal="false" aria-labelledby="o55t-h"></div>`
       + `<div class="o55t-bar" role="toolbar" aria-label="${U.esc(T('tour.bar.label'))}"></div>`
       /* one pointer per family, every glyph drawn with its hotspot at (6, 3): a drafting crosshair (Basic), a cartoon
@@ -780,11 +778,36 @@
     renderBar(); O55.sound.play(st.paused ? 'toggleOff' : 'toggleOn');
     emit('pause', { paused: st.paused });
   }
+  /* A checkpoint is a position in TR.defs, so every save also names its step and this step order (TR.order()). */
+  TR.order = () => {
+    const ids = TR.defs.map((d) => d.id).join('|'); let h = 5381;
+    for (let i = 0; i < ids.length; i++) h = ((h * 33) ^ ids.charCodeAt(i)) >>> 0;
+    return 'o55-' + TR.defs.length + '-' + h.toString(36);
+  };
+  const stamp = (index) => ({ step: (TR.defs[index] || {}).id || null, order: TR.order() });
   function save() {
-    O55.store.set(KEY, { v: 2, status: st.sess.status, index: st.sess.index, done: st.sess.done.slice(0, TR.defs.length),
+    O55.store.set(KEY, Object.assign({ v: 2, status: st.sess.status, index: st.sess.index, done: st.sess.done.slice(0, TR.defs.length),
       tips: st.tips, started: st.sess.started, project: st.sess.project, chatTucked: !!st.sess.chatTucked,
-      snapshot_ref: st.snapshotRef, thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page });
+      snapshot_ref: st.snapshotRef, thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page }, stamp(st.sess.index)));
   }
+  /* A checkpoint saved under another step order (an older page, or the page before the Home panels, whose checkpoints
+     name no step: TR.unstamped is its order) goes to its own step by id, and is written back once. A step that is gone
+     picks up at the first step of its chapter (TR.retired names the chapter of each retired step), and done ids of
+     steps no longer here are dropped. A checkpoint whose step and chapter are both gone cannot pick up (index -1): the
+     tour begins again and says so (start()). */
+  function migrate(saved) {
+    if (!saved || saved.v !== 2 || !Number.isInteger(saved.index) || saved.order === TR.order()) return saved;
+    const id = saved.step || (TR.unstamped || [])[saved.index] || null;
+    const chapter = id && !TR.byId[id] ? (TR.retired || {})[id] || null : null;
+    const at = id && TR.byId[id] ? TR.byId[id].index : chapter ? TR.defs.findIndex((d) => d.chapter === chapter) : -1;
+    if (at < 0) return Object.assign({}, saved, { index: -1 });
+    const done = (Array.isArray(saved.done) ? saved.done : []).filter((d) => TR.byId[d] && TR.byId[d].index < at);
+    const moved = Object.assign({}, saved, { index: at, done }, stamp(at));
+    O55.store.set(KEY, moved);
+    TR.migrated = { from: id, to: moved.step };
+    return moved;
+  }
+  const readCheckpoint = () => migrate(O55.store.get(KEY, null));
   function showRecovery(saved) {
     let box = document.getElementById('o55-tour-recovery');
     if (!box) { box = document.createElement('div'); box.id = 'o55-tour-recovery'; box.setAttribute('role', 'alert');
@@ -825,7 +848,7 @@
     if (o.fresh) await TR.reset({ silent: true, force: true });
     else if (TR.running) { if (st.sess && st.sess.status === 'restore-pending') showRecovery(O55.store.get(KEY, null)); return true; }
     if (O55.S && O55.S.open) O55.ui.close('done');
-    const saved = o.fresh ? null : O55.store.get(KEY, null);
+    const saved = o.fresh ? null : readCheckpoint();
     if (saved && saved.status === 'restore-pending') { showRecovery(saved); return false; }
     const at = saved && saved.status === 'running' ? resumeIndex(saved, o.project || null) : -1;
     const resume = at >= 0;
@@ -913,9 +936,9 @@
       st.sess.restored = res; st.sess.status = 'restore-pending';
       st.sess.requestedStatus = status;
       st.sess.requestedKeep = !!keep;
-      O55.store.set(KEY, { v: 2, status: 'restore-pending', requested_status: status, requested_keep: !!keep, index: st.sess.index,
+      O55.store.set(KEY, Object.assign({ v: 2, status: 'restore-pending', requested_status: status, requested_keep: !!keep, index: st.sess.index,
         done: st.sess.done.slice(0, TR.defs.length), project: st.sess.project, snapshot_ref: st.snapshotRef,
-        thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res });
+        thread_ref: st.snap && st.snap.thread, page_ref: st.snap && st.snap.page, restored: res }, stamp(st.sess.index)));
       O55.pageToast(T('tour.restoreFailed'));
       showRecovery(O55.store.get(KEY, null));
       emit('end', { status: 'restore-pending', keep: !!keep });
@@ -1002,7 +1025,7 @@
      pick up, else null */
   TR.resumable = () => {
     if (TR.running) return { running: true, step: st.sess ? st.sess.index + 1 : 1, total: TR.defs.length };
-    const saved = O55.store.get(KEY, null), at = saved && saved.status === 'running' ? resumeIndex(saved, null) : -1;
+    const saved = readCheckpoint(), at = saved && saved.status === 'running' ? resumeIndex(saved, null) : -1;
     return at >= 0 ? { running: false, step: at + 1, total: TR.defs.length } : null;
   };
   TR.resume = (o) => TR.start(Object.assign({}, o || {}, { fresh: false }));

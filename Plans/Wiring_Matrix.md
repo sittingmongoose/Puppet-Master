@@ -3358,7 +3358,7 @@ acceptance_criteria:
   - validate-wiring-matrix fails if production wiring registers `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical command rows instead of compatibility aliases or exclusions.
   - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success; event-primary dispatch proves usage_event/usage_event_ref, while a PMConcept7 Ledger attempt dispatch proves usage_attempt/attempt_id plus usage_event_ref correlation. The two cmd.nav.open_usage_subject selector branches carry no OpenSubject; the two pre-existing artifact rows retain their artifact OpenSubject bridge and remain event-primary; all preserve applicable provider/account/runtime refs.
   - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters, while current PMConcept7 aggregate provider/account/panel cards remain local inspectors with no command, receipt, event, route object id, or invented route kind.
-  - The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level appear only on their existing account-select and Settings-transaction rows, with Usage Accounts locations, and never as route/open rows; the account card body and Details still dispatch nothing.
+  - The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level and each account's own switch level (D43, 2026-10-10) appear only on their existing account-select and Settings-transaction rows, with Usage Accounts locations, and never as route/open rows; the account card body and Details still dispatch nothing.
   - Wiring evidence distinguishes thread Context Detail Pane commands from app-wide Usage route/open commands.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -3980,6 +3980,7 @@ Live / Paused choice (the Live / Paused row). The dashboard tab's own controls a
 | Aggregate provider/account/panel details | `view_only` local inspector | current Usage projection; no router or command handler | no command, receipt, domain event, or persistence | local inspector | missing presentation data remains local; no fallback route or invented object kind |
 | Usage Accounts Use this account | `cmd.account.select_profile`, shown only when `supports_manual_set_active` | `handlers::account::select_profile`; Multi-Account owner (`Plans/Multi-Account.md#MA-073`) | dispatch receipt and the existing `account_switch_event` history; no Usage-side state | the account card and every account and provider projection | past the provider's switch point it asks first; declining dispatches nothing; owner disabled reasons stay visible |
 | Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the provider plate and Settings › Providers & Accounts, showing the same value | stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
+| Usage Accounts account switch level (D43, 2026-10-10) | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `account` with the account id | `handlers::settings::transaction_preview` / `handlers::settings::transaction_apply`; Settings owner (`Plans/Settings_System.md#SSYS-044`) | one Settings transaction per settled change, read back | the account's card and Details and its own row in Settings › Providers & Accounts, showing the same value | a level at or past the warning level that applies to the account is offered only as disabled, with the reason; stale revision, invalid value or denial leaves the stored value and both surfaces unchanged and shows the reason |
 | Usage room/scope/range/disclosure/filter/More-menu | `view_only` | current Usage view projection | no command/receipt/event; settled preference storage remains storage-owned | current Usage render | dismissal/cancel restores or retains prior local selection |
 | Usage Live / Paused | `view_only` | current Usage view projection holds or applies arriving projection updates | no command/receipt/event; the remembered choice is the storage-owned Usage view preference `live` | current Usage render | none; the concept's demo controls have no row (`Plans/usage-feature.md#UF-107`) |
 | Context ring popup/hover | `view_only` | shared Assistant local overlay projection | no command/receipt/event | compact context summary | dismissal emits nothing |
@@ -4013,8 +4014,8 @@ canonical_text: >-
   Tidy commits the whole repacked room as one settled layout transaction through exactly one existing
   cmd.widget.move carrying arrange { mode: tidy, detail } with one receipt, never one move per card, and a
   size-picker preset commits one cmd.widget.resize. The Usage Accounts room's Use this account reuses the
-  account-select row, and each provider's Auto-switch toggle and switch level reuse the Settings transaction rows at
-  scope provider; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
+  account-select row, and each provider's Auto-switch toggle and switch level at scope provider and each account's
+  own switch level at scope account (D43, 2026-10-10) reuse the Settings transaction rows; Live / Paused is view_only, and the concept's demo controls have no row (UF-107). Usage refresh and stable-event
   drill-through reuse their existing rows while current PMConcept7 aggregate provider/account/panel details
   remain local inspectors; Context-ring actions reuse their existing rows; and the same
   Assistant node/store is re-seated across Home and global docks without cloning. Amended 2026-10-09 (DL-180): the
@@ -4034,7 +4035,7 @@ acceptance_criteria:
   - Preview frames, popup/hover disclosure, and cancellation produce zero commands, receipts, persisted events, and storage writes.
   - Changed widget pointer releases, keyboard reorder drops, atomic keyboard-resize activations, and changed Home releases produce exactly one existing semantic command and settle only after owner acceptance.
   - "A changed Usage move, resize, preset, hide, or show produces one command whose settled write includes every peer the resolver or Usage board gravity moved; a Tidy that moves cards produces exactly one cmd.widget.move, one receipt, and one write of widget_layout:v1:usage; no gravity or Tidy path produces a per-card command or a second commit."
-  - "The Usage Accounts room's Use this account and each provider's Auto-switch toggle and switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair at scope provider, the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
+  - "The Usage Accounts room's Use this account, each provider's Auto-switch toggle and switch level, and each account's own switch level dispatch only cmd.account.select_profile and the cmd.settings.transaction.preview/apply pair, at scope provider for the provider's controls and at scope account for an account's (D43, 2026-10-10), the production rows catalog.account_select_profile, catalog.settings_transaction_preview and catalog.settings_transaction_apply name those Usage Accounts locations and catalog.widget_move names Usage Tidy, Live / Paused dispatches nothing, and the concept's demo controls (UF-107) have no production row."
   - The Context ring and shared Assistant rows preserve one node/store and use existing compact/details/panel authorities.
   - No production row exists for cmd.workspace_layout.size_surface or cmd.provider.usage.open_management.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
@@ -5826,11 +5827,17 @@ canonical_text: >-
   (ui.widget_board.set_view) and the preset save, rename and delete (ui.widget_preset.*) are typed local actions with
   no entry; Live readings is the Usage page's view_only Live / Paused; the Undo in the notice that follows Start from
   is home.dashboard_tab.undo_start_from, one cmd.widget.reset_layout with { scope: room, room: <board_id>,
-  restore_revision } while the notice is up, never with set_id, refused with a disabled reason once that revision is no
-  longer the board's previous one, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
+  restore_revision } while the notice is up, never with set_id, refused without dispatch and disabled with a reason when any other board change was committed since, excluding the preset hold's settling resizes, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
   after Start from has no entry until the lead rules). The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows,
   in the Home options menu and the chat header's menu, is the typed local action ui.chat_column.keep_open with no
   entry; the chat's pop-out is never saved.
+  The same dashboard Undo notice and existing Undo route serve Start from and a Reset widgets that changed
+  anything: one cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one receipt
+  and no workspace.layout_changed, never set_id with restore_revision. The revision and its envelope are
+  captured before that operation and written back and read by the board owner after acceptance. Any other
+  committed board change disables Undo without dispatch, except the preset hold's settling resizes;
+  eligibility is rechecked while the notice is up on commit, pointer or focus entering and click (WS-030,
+  F3-638).
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
@@ -5874,6 +5881,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)"
   - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets, rename and delete through the tab commands"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "home.dashboard_tab.start_from"
   - "home.dashboard_tab.undo_start_from"
@@ -5913,6 +5922,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard tab's controls, New dashboard and the launcher's dashboard links; the Dashboard row bodies open or reveal dashboard:home; range, scope and presets are typed local actions without entries."
   - "Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher's sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one debug-console tab whose sub-tab dispatches nothing; the rail's Chat entry on every page; Keep the chat open in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved."
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The existing dashboard Undo restores the captured revision after Start from or a changed Reset with the same command and guard."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json

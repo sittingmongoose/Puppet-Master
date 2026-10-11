@@ -1,0 +1,56 @@
+/* Home panels tokens (CONTRACT section 10). Every kind reads these, so a look changes everything at once. They alias
+   the page's own theme variables (html[data-theme]); per-look values are in 50-looks.css, NieR in 60-nier.css. */
+
+#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope {
+  --pmw-surface: var(--surface, #1e1e1e);
+  --pmw-surface-2: color-mix(in srgb, var(--pmw-surface) 92%, var(--text-primary, #fff));
+  --pmw-strip: color-mix(in srgb, var(--pmw-surface) 66%, #000);
+  --pmw-gutter: color-mix(in srgb, var(--pmw-surface) 58%, #000);
+  --pmw-text: var(--text-primary, #e8e8e8);
+  --pmw-text-2: var(--text-secondary, #a0a0a0);
+  --pmw-text-3: var(--text-muted, #6b7280);
+  --pmw-line: var(--border-light, rgba(255, 255, 255, .08));
+  --pmw-line-2: var(--border, rgba(255, 255, 255, .16));
+  --pmw-accent: var(--accent-primary, var(--accent-blue, #64b5f6));
+  --pmw-ok: var(--accent-lime, #3dd68c);
+  --pmw-warn: var(--accent-orange, #ffa347);
+  --pmw-bad: var(--accent-red, #ef6b6b);
+  --pmw-focus: var(--accent-primary, var(--accent-blue, #64b5f6));
+  --pmw-pop: color-mix(in srgb, var(--pmw-surface) 96%, var(--text-primary, #fff));
+  --pmw-pop-line: color-mix(in srgb, var(--pmw-text) 14%, transparent);
+  --pmw-pop-shadow: 0 18px 65px rgba(0, 0, 0, .42), 0 4px 18px rgba(0, 0, 0, .26);
+  --pmw-hover: color-mix(in srgb, var(--pmw-text) 7%, transparent);
+  --pmw-press: color-mix(in srgb, var(--pmw-text) 11%, transparent);
+  --pm-font-code: 'JetBrains Mono', 'PM NieR Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --pm-font-ui: inherit;
+  --pmw-radius: 8px;
+  --pmw-panel-radius: 8px;
+  --pmw-row-radius: 8px;
+  --pmw-menu-radius: 13px;
+  /* the strip and the silhouette (EDSHAPE tokens, per look in 50-looks.css) */
+  --pmw-strip-h: 35px;
+  --pmw-tab-h: 31px;
+  --pmw-tab-gap: 8px;
+  --pmw-tab-crown: 13px;
+  --pmw-tab-shoulder: 14px;
+  --pmw-tab-flare: 22px;
+  --pmw-tab-profile: arc;
+  --pmw-tab-font: 12px;
+  --pmw-tab-inactive: color-mix(in srgb, var(--pmw-text) 74%, transparent);
+  --pmw-tab-hover: color-mix(in srgb, var(--pmw-surface) 30%, transparent);
+  --pmw-plate-crown: transparent;
+  --pmw-plate-crown-h: 0px;
+  /* motion (0 under Reduced Motion, 90-reduced.css) */
+  --pmw-ease: cubic-bezier(.2, .8, .2, 1);
+  --pmw-ease-slide: cubic-bezier(.22, 1, .36, 1);
+  --pmw-t-fast: 120ms;
+  --pmw-t-med: 180ms;
+  --pmw-t-slow: 260ms;
+}
+html[data-theme$="-light"] #pm-home-centre, html[data-theme$="-light"] #pmw-overlay, html[data-theme$="-light"] #pmw-chat, html[data-theme$="-light"] .pmw-scope {
+  --pmw-strip: color-mix(in srgb, var(--pmw-surface) 90%, #000);
+  --pmw-gutter: color-mix(in srgb, var(--pmw-surface) 86%, #000);
+  --pmw-pop: color-mix(in srgb, var(--pmw-surface) 99%, #fff);
+  --pmw-pop-shadow: 0 18px 50px rgba(21, 32, 43, .16), 0 4px 14px rgba(21, 32, 43, .08);
+  --pmw-tab-inactive: color-mix(in srgb, var(--pmw-text) 78%, var(--pmw-text-3));
+}

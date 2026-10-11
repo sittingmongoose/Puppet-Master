@@ -429,7 +429,9 @@
       + '</div>';
     return group('Models on this account', modelsBody(p, acc))
       + group('This account', PM51.scoped.rows(about))
-      + group('When it runs low', low, 'Only for this account. Its service\'s rules are under This service; the shared ones under Limits & switching.')
+      /* the line right above the switch level names the account, so a landing from the Usage page says whose level it is
+         while the account's header is far above it (D43 review: about 890 px of the account sits between them) */
+      + group('When it runs low', low, `Only for ${acc.nickname}. Its service's rules are under This service; the shared ones under Limits & switching.`)
       + group('For experts', tech)
       + actions;
   }
@@ -1108,8 +1110,49 @@
     const aid = ds(el, 'account');
     if (aid && (find(id).accounts || []).some(x => x.id === aid)) {
       const sel = `.pm51-acc-item[data-account="${cssEscape(aid)}"] .o55-field[data-setting-id="${SW_ID}"]`;
-      o55OpenAround(sel);
-      window.setTimeout(() => { const f = root.querySelector(sel); if (f) f.scrollIntoView({ block: 'center', behavior: o55Still() ? 'auto' : 'smooth' }); }, 320);
+      /* the detail swaps in while its outgoing copy is still drawn: the account is opened and scrolled to in the copy that
+         stays (D43, Open in Settings from the Usage page: the toggle was clicked in the outgoing copy, so the account came
+         back closed and the scroll landed on the copy that left) */
+      let tries = 0;
+      const land = () => {
+        if (root.querySelectorAll(sel).length > 1 && ++tries < 30) { window.setTimeout(land, 70); return; }
+        o55OpenAround(sel);
+        /* the scroll waits until the account has opened all the way (each account around the row is open and its body as
+           tall as what it holds, on its look's own motion) and the page has stopped growing, then glides once: scrolled
+           while the account below the row was still opening, the scroll was cut short by the page's height then, so the
+           row landed low in Basic and 610 px under the fold in Friendly, NieR and Retro at 1920 after landing on another
+           account (GPU trace 2026-10-11). At most about 2 s; if the row is still out of view after the glide, once more. */
+        const scrollerOf = f => { for (let e = f.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) return e; } return document.scrollingElement; };
+        const opened = f => { for (let it = f.closest('.pm51-acc-item'); it; it = it.parentElement && it.parentElement.closest('.pm51-acc-item')) { const i = it.querySelector(':scope > .pm51-acc-body > .pm51-acc-inner'); if (!it.classList.contains('is-open') || (i && i.getBoundingClientRect().height < i.scrollHeight - 1)) return false; } return true; };
+        /* whose level it is lands in view with the row (D43 review: with the row centred, the account's header sat 80 to 560
+           px above the view): the stretch from the account's header to the row is centred, 16 px clear of each edge, where
+           it fits; otherwise the stretch from the row's own group head, whose line names the account ("Only for Lab"),
+           since the account's body runs about 890 px from its header to this row */
+        const view = f => { const sc = scrollerOf(f), b = sc && sc !== document.scrollingElement ? sc.getBoundingClientRect() : { top: 0, bottom: window.innerHeight }; return { sc, top: Math.max(0, b.top), bottom: Math.min(window.innerHeight, b.bottom) }; };
+        const topOf = f => {
+          const v = view(f), fr = f.getBoundingClientRect(), it = f.closest('.pm51-acc-item'), hd = it && it.querySelector(':scope > .pm51-acc-head');
+          if (hd && fr.bottom - hd.getBoundingClientRect().top <= v.bottom - v.top - 32) return hd;
+          const g = f.closest('.o55-acc-group'), gh = g && g.querySelector(':scope > .o55-acc-group-head');
+          return gh && fr.bottom - gh.getBoundingClientRect().top <= v.bottom - v.top - 32 ? gh : f;
+        };
+        const shown = f => { const v = view(f), fr = f.getBoundingClientRect(), tr = topOf(f).getBoundingClientRect(); return fr.top >= v.top && fr.bottom <= v.bottom && tr.top >= v.top; };
+        const place = f => {
+          const v = view(f), fr = f.getBoundingClientRect(), tr = topOf(f).getBoundingClientRect(), behavior = o55Still() ? 'auto' : 'smooth';
+          const dy = Math.round((tr.top + fr.bottom) / 2 - (v.top + v.bottom) / 2);
+          if (v.sc === document.scrollingElement) window.scrollBy({ top: dy, behavior }); else v.sc.scrollBy({ top: dy, behavior });
+        };
+        let lastH = -1, still = 0, frames = 0;
+        const settle = () => {
+          const f = root.querySelector(sel); if (!f) { if (++frames < 120) window.requestAnimationFrame(settle); return; }
+          const sc = scrollerOf(f), hgt = sc ? sc.scrollHeight : 0;
+          still = opened(f) && hgt === lastH ? still + 1 : 0; lastH = hgt;
+          if (still < 3 && ++frames < 120) { window.requestAnimationFrame(settle); return; }
+          place(f);
+          window.setTimeout(() => { const g = root.querySelector(sel); if (g && !shown(g)) place(g); }, o55Still() ? 60 : 700);
+        };
+        window.requestAnimationFrame(settle);
+      };
+      land();
     }
   });
   /* Auto-switch policies: a service's arrow opens it under Services at its auto-switch row */

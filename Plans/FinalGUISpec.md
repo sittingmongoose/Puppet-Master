@@ -32085,6 +32085,13 @@ most specific set value winning. The retired row stays in the registry marked su
 for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
 own switch level, and the row count stays 916.
 
+Amended 2026-10-10 (owner decision D43, `Plans/Decision_Log.md#DL-174`, owner `Plans/Settings_System.md#SSYS-044`):
+an account's own `ai.accounts.hard-switch-level` at scope account is set in that account's own rows of Settings > AI >
+Providers & Accounts and also on the Usage Accounts room, on the account's card and in its Details
+(`Plans/usage-feature.md#UF-107`); it is the same row, written only through the Settings owner's
+`cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=account` and the account id, neither
+surface keeps a copy, and the row count stays 916.
+
 ### F3-442 - Project Settings Modal Reconciliation
 
 ```yaml
@@ -34836,19 +34843,32 @@ canonical_text: >-
   session, and the sub-tab shown is view state with no command (lead ruling F6); an older `debug-console:<session>`
   id folds into it with that session shown (F3-635). The sub-tabs sit in the tab's shared header row (F3-635) as an
   ARIA tab list with a roving focus: Left and Right move and choose at once and wrap, Home and End go to the first
-  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides and shows the session's
+  and the last, and Enter and Space choose. Each sub-tab is 29 px tall with 8 px at its sides, 4 px apart and shows the session's
   name at 12 px, weight 500, then its state word (Paused, Running or Ended) at 11 px after a 7 px state mark in the
   warn, ok or dim tone, square in Retro and NieR Mode; the first mark lines up with the console's glyph column and the
-  first name with its text column. The chosen sub-tab is shown by its own surface, never by an edge stripe (F3-648;
-  lead ruling, 2026-10-10: the concept's 2 px underline is lineage only, and the lead asks home-panels to change it):
-  in Friendly, Glass and Basic, and in NieR Mode without the cursor part, it carries the ink named above, the rail
-  strips' tab ink, which fills the sub-tab's own box at the look's inner radius (F3-618, F3-621; square in NieR Mode);
-  in Retro it is the reverse-video cell; and in NieR Mode with the cursor part, the ink block. The console beneath
-  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px with a 5 px radius,
+  first name with its text column. The chosen Debug Console sub-tab and every segmented toggle are filled on their own box, never underlined:
+  Friendly, Glass and Basic use each look's neutral selection fill (the surface a chosen row uses), never an
+  accent; Glass adds its 1 px rim on the filled box's top edge; Retro keeps reverse video; NieR keeps its
+  ink block with or without the cursor part (F3-648). The console beneath
+  fades in over 170 ms from 3 px, at once under Reduced Motion. A sub-tab's focus ring is 2 px around the fill box with a 1 px gap and a 9 px radius,
   square in Retro and with NieR's square part. Its hover tag names the session, how it runs and its state, and a
   paused session's location shows as a file reference beside the tab's buttons (F3-634). Below 460 px of body the
   state words go, below 640 px the paused-at reference goes, and below 820 px the buttons lose their words. Each
   session keeps its own console, state and frame.
+  The chosen fill sits 4 px in from the row's top and bottom: 21 px tall in the 29 px header row, 24 px in a
+  32 px body row and 20 px in a 28 px DevTools tool row, with 6 px corners (0 in Retro and NieR's square
+  part). Basic and Friendly dark use the chosen-row surface, the text colour at 11 %; Basic light uses 17 %
+  and Friendly light 20 %. Glass dark uses selection frost and Glass light its reading plate, with the same
+  top rim. The fill reads at least 1.3:1 against the row, chosen words at least 4.5:1, and a count or state
+  dot at least 3:1. Hover is a quieter step on the same box, about half the chosen fill; weight and size
+  stay unchanged. Options have 8 px side padding and 4 px gaps; a body row keeps 3 px inside each end, and a
+  leading header toggle starts its fill 4 px from the panel edge. One fill moves between boxes: Basic glides
+  220 ms, Friendly springs 420 ms with one 8 % overshoot held inside the row, Glass glides 460 ms without
+  liquid stretch; Retro and NieR cut, Reduced Motion and the system preference are instant, and Animation
+  speed scales it. Options on different lines of a wrapped Metric switch below 520 px change at once; its
+  gap is 4 px. With the fill, state words hide below 500 px in Retro and Friendly and 600 px in NieR with
+  its headers part; the paused-at reference hides below 680 px in NieR with headers, and button words below
+  920 px there; the other thresholds above stand.
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
@@ -34858,7 +34878,7 @@ acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
 - "ATTACHED shows per-session sub-tabs per F3-484, the session chrome row (adapter identity, mirrored state chip, elapsed time, Terminate/Disconnect), the CONSOLE pane with stream tags and session-gated REPL input with per-session history, and the PROCESS pane only under integrated_terminal routing."
 - "TERMINATED shows exit code plus Restart and retains console scrollback."
-- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (the tab ink filling its box in Friendly, Glass, Basic and NieR Mode without the cursor part, reverse video in Retro, the ink block in NieR Mode with the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
+- "One Debug Console tab, debug-console, holds a sub-tab per debug session in its header row; choosing a sub-tab dispatches nothing; an older debug-console:<session> id opens the one tab with that session shown; the chosen sub-tab is shown by its own surface, never an edge stripe (each look's neutral chosen-row fill in Friendly, Glass and Basic, never an accent, Glass with its 1 px top rim; reverse video in Retro; the ink block in NieR Mode with or without the cursor part), and the sub-tabs follow the keys, sizes and narrow steps stated here."
 - "The §7.20.2 'Debug Console' entry and the locked-decision 'classical debugger surface' entry both resolve to this tab."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -34882,6 +34902,8 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-187"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console sub-tabs; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
 - "Start Debugging"
 - "Terminate"
@@ -34904,6 +34926,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-10 (DL-187, D33): one Debug Console tab with a sub-tab per debug session in its header row, the session shown as view state, older debug-console:<session> ids folding into it."
 - "Amended 2026-10-10 (DL-187, D33; DL-162, F3-648): in Friendly, Glass, Basic and NieR Mode without the cursor part the chosen sub-tab carries DL-162's tab ink as a fill on its own box; the concept's 2 px underline is not adopted."
 - "Amended 2026-10-10 (lead ruling): the chosen sub-tab's fill (DL-162's tab ink on its own box in Friendly, Glass, Basic and NieR Mode without the cursor part; reverse video in Retro; NieR's ink block with the cursor part) is the lead's ruling; the concept's 2 px underline is lineage, and the lead asks home-panels to change it."
+- "Amended 2026-10-11 (lead ruling 2026-10-11, D29): Debug sub-tabs and segmented toggles share neutral chosen fills and the measured sub-tab geometry."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -35677,8 +35700,8 @@ canonical_text: >-
   retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
   inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
   one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
-  owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
+  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
+  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
   previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
@@ -36218,6 +36241,8 @@ canonical_text: >-
   change or a very short opacity settle. Retro uses deliberate stepped, no-scale motion and hard compact reveals;
   Basic, Friendly, and Glass use material-appropriate easing and paint; NieR uses stepped, glow-free ink motion, and
   its hero moments, typed text and one-way large exits are F3-598's. Those moments do not hold input.
+  A resumed onboarding repaints the session's stored look_choice, NieR Mode included, with null fields
+  falling back to this unit's start rule (DL-153).
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -36321,6 +36346,8 @@ negative_constraints:
   - "Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work, readiness, handler, native Slint, or certification claims."
 owner_boundary_notes:
   - "Planning Wizard owns Onboarding orchestration and typed session/actions/returns; Project, Source Control, Server, Remote Access, Backup/Restore, provider, and authentication owners retain their domain state and commands; Home owns only the visible relaunch trigger; Final GUI owns visual hierarchy and motion."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed onboarding repaints the stored session look choice."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md]
 ```
 
@@ -36869,7 +36896,9 @@ canonical_text: >-
   Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
   Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
   service that opens the chat picker (F3-621), never a native select; picking runs
-  ui.repository_automation.binding.select and changes nothing else.
+  ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
+  field shows only when the project has several bindings; with one, the rail names the service as a fact beside
+  the revision (owner, 2026-10-10).
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -43147,7 +43176,8 @@ canonical_text: >-
   half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
   bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
   failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
-  warning triangle; and skipped, cancelled, superseded and terminated take the stopped ring. A row's state is the
+  warning triangle; and skipped, cancelled, superseded, terminated and expired take the stopped ring (an expired
+  runtime artifact reads Expired, never stale: owner, 2026-10-10). A row's state is the
   same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
@@ -43608,7 +43638,7 @@ canonical_text: >-
   The five Jujutsu views (F3-623, DL-163) use two-line rows: line 1 the name with a file letter, an age or a diff at
   its end, and line 2 the state glyph and word (F3-619) and then the facts, left-aligned under the name. Raw commit,
   operation and workspace IDs appear only in a Technical details disclosure in the expanded row (JJI section 4.1);
-  whether a change's short change ID may also show on line 2 is an open owner question (DL-163). Every dropdown is
+  a change's short change ID also shows on line 2, the owner's choice of 2026-10-10 (DL-163). Every dropdown is
   the chat picker (F3-621). Changes shows the current change @ first: its description or "No description yet",
   its state (conflicted, empty, on an older main, divergent), a note offering Rebase onto main when main has moved,
   a description box with Describe, then New change as the primary action, Squash, and More with Rebase onto…,
@@ -44000,6 +44030,8 @@ canonical_text: >-
   sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
   the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
   section 5.8's 240 px panel minimum.
+  A saved named layout also keeps at most 64 KB (65,536 bytes) of its dashboard boards' contents; a larger
+  save keeps the layout without those contents, records boards_skipped_bytes and says so (SP-330).
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -44046,6 +44078,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "n-ary split tree"
   - "0.34"
@@ -44074,6 +44108,7 @@ compatibility_only_notes:
   - "The concept seeds its Home layout with demo files, a demo plan and two terminals; the seed contents are illustrative, the tree and proportions are canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L13): Adds a lost pointer capture to the gesture's cancel set, as DR-066 says."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Named-layout saves keep at most 64 KB of dashboard contents and announce a larger save without them."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
@@ -44227,8 +44262,9 @@ canonical_text: >-
   and an address; Terminal (Ctrl+Shift+`), with a sub-row of every shell installed on the computer, from the terminal
   kind (F3-640, D39); when the terminal kind knows SSH hosts, the row SSH hosts, right under Terminal; Browser
   (Ctrl+Shift+B), with a sub-row of recent addresses; File... (Ctrl+P), with the three most recent files inline, each
-  clickable; Dashboard, with a sub-row of Home, Metrics, Monitoring, Agents, this project's custom dashboards by name
-  and New dashboard (F3-638); Plan or document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
+  clickable; Dashboard, with inline sub-row links Home, Metrics, Monitoring, Agents and New dashboard,
+  then one Your dashboards row when this project has custom dashboards, opening a submenu of them by name with
+  the widget count on the second line and a search field above 7 entries (F3-638); Plan or document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
   a hairline; Split right (Ctrl+\); Split down (Ctrl+Shift+\); Reopen closed tab (Ctrl+Shift+T, Alt+Shift+T in a web
   browser). Kinds join the menu through their registration (F3-635) in this order, and every row shows the shortcut that
   works where the app runs. A sub-row lists all of its kind's entries unless the kind caps its own; the Terminal row
@@ -44264,7 +44300,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The Output row opens or reveals output and never makes output:<channel>; a reveal leaves its tab where it is."
   - "The Terminal row's sub-row lists every installed shell; with SSH hosts known, an SSH hosts row right under Terminal opens a submenu of the hosts (a filter field above 7), whose row body opens a host here and trailing cell in a new panel, and typing in the menu's field finds a host by name or detail."
-  - "The Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this project's custom dashboards by name and New dashboard, which makes a new, empty custom dashboard."
+  - "The Dashboard sub-row has Home, Metrics, Monitoring, Agents and New dashboard inline; this project's custom dashboards appear by name and widget count in one Your dashboards submenu, with search above 7; New dashboard makes a new empty dashboard."
   - "The empty-panel launcher shows each row's sub-row as a line of links under it, hidden under 360 px of panel width, and no wrapped sub-row starts with a separator dot."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -44294,6 +44330,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 3 and 7; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 1, the \"+\" menu row; concept lineage only)"
   - "Concepts/home-redesign/NUMBERS.md at c4e32ec0b7 on branch concept/home-panels-20261009 (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7; the Dashboard sub-row as built; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "output"
   - "Open anything: kinds, files, URLs"
@@ -44322,6 +44360,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards without creating, renaming or deleting boards."
   - "Amended 2026-10-10 (DL-187, D39): The Terminal row lists every installed shell, SSH hosts get their own submenu row under it, the field finds hosts, and the launcher shows each row's sub-row as links."
   - "Amended 2026-10-10 (DL-186, D35): The Dashboard sub-row adds this project's custom dashboards and New dashboard; L10's interim rule that no board is created, renamed or deleted is answered."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The Dashboard sub-row groups this project's custom dashboards under Your dashboards."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44700,6 +44739,9 @@ canonical_text: >-
   without a path. In-tab view saves coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px,
   Basic 6 px and Retro/NieR square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping
   slack.
+  The Debug Console's chosen sub-tab and every segmented toggle are filled on their own box, never
+  underlined, with Friendly's, Glass's and Basic's neutral chosen-row surface, never an accent; Glass adds
+  its 1 px top rim, Retro uses reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -44750,6 +44792,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and fold; concept lineage only)"
   - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Open in new tab"
   - "output:<channel>"
@@ -44799,6 +44842,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
   - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral chosen fill."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
@@ -44958,6 +45002,29 @@ canonical_text: >-
   is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px), with C 754 px. At 900 px
   in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned peek. These measurements
   include centre-budget clamping, while the saved width remains the message-area preference.
+  The v2 layout record's chat_column keeps width_px, history_pinned and keep_open (defaults null, false and
+  false), in addition to its shown state; none is a Settings value. width_px is the message area's width,
+  rounded to an integer in 400-760 px, with an out-of-range finite number stored at the nearer bound and
+  null following the window's default; other values are refused. The resize command is
+  cmd.workspace_layout.resize_surface { surface: 'chat', width }: a changed release commits once with one
+  receipt, one workspace.layout_changed and a new revision; Escape or release with no movement commits
+  nothing. Double-clicking the resizer commits once with width null. The two pin actions accept their named
+  boolean or toggle when it is absent, and save like view state with no receipt, event or revision;
+  History's button, the pin in its list header and Keep History open in More dispatch
+  ui.chat_column.pin_history. A named layout and Restore home layout keep all three fields; a project switch
+  shows that project's own record, or the defaults if none exists. Once at boot, the former stored
+  chat.width (finite, rounded and clamped to 400-760), chat.history value pinned and chat.pinOpen true copy
+  into this project's layout and every other project's saved layout only where the target field still holds
+  its default; existing non-default fields stay. The three old keys are dropped only after this project's
+  layout is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
+  and false) are just dropped. The chat's More menu rows, in order, are Show the current chat, Pop out or
+  Dock back where supported, Keep History open (checked, ui.chat_column.pin_history), Keep the chat open in
+  narrow windows (checked, ui.chat_column.keep_open), and Clear what you sent. Keep open's second line says
+  Instead of folding to a strip at the edge. At 1920 px with width_px 500, History pinning grows the column
+  from 500 to 681 px (History 240 px, centre 960 px) and unpinning returns it to 500; dragging the 600 px
+  column's inner edge 100 px right stores width_px 500, and double-click resets it to 600 with width_px
+  null. At 900 x 700, keep_open on keeps the chat at 400 px with centre 443 px; off it folds to the strip
+  with centre 811 px.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -45007,6 +45074,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept lineage only)"
   - "The planning thread's rulings of 2026-10-10: the Usage board's 400 px floor (pm-mail 1010142236-fced) and Chat Layout's retirement with the narrow-window pin on the chat's header menu (pm-mail 1010211322-7b6c)"
   - "Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the Usage board floor as built; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "clamp(400, 0.26667 x window width + 88, 640)"
   - "400"
@@ -45039,6 +45108,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
   - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
   - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -45062,7 +45132,7 @@ canonical_text: >-
   redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands'
   payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
   Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
-  make as many custom dashboards as they like (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
+  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
   Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The
   old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine
   after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard
@@ -45112,8 +45182,8 @@ canonical_text: >-
   and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo
   dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
   being the board's committed layout revision just before that Start from, with one receipt and only while the
-  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore whose
-  revision is no longer the board's previous one is refused with a disabled reason, and it emits no
+  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since,
+  excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no
   workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button
   opens the same list.
   Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks
@@ -45152,7 +45222,7 @@ canonical_text: >-
   catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and
   Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard,
   and the dashboard's own Main, Metrics and Monitoring strip of F3-505.
-  Measurements: the tab body pads its board and the Agents cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
+  Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
   width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
   520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
   Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly #C2557A,
@@ -45167,6 +45237,37 @@ canonical_text: >-
   160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; the concept's
   working progress gains 1 % every 9 s up to 96 % and moves in 260 ms, stepped in NieR Mode and at once under Reduced
   Motion; a filter other than All agents is that tab's own state, saved about 250 ms after it changes.
+  The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this
+  project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's
+  number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted
+  unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board
+  opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names
+  collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
+  project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored
+  name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the
+  active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's
+  detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and
+  Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage
+  widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well
+  as Start from; its restore_revision is the committed revision immediately before that operation. The owner
+  writes and reads that revision's captured envelope in this project, with one receipt and no
+  workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on
+  a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the
+  envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and
+  the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never
+  end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding
+  5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass
+  uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing.
+  The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6
+  px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
+  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed
+  on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
+  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and
+  refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only
+  envelopes saved for the current project, skipping another project's envelope; a custom board that the
+  applied layout does not hold keeps its current contents. The lab-only Demo time reads on paint, on each
+  beat and every 2 s while the demo hour plays and the tab is visible; its Board rows remain Play the next
+  hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -45180,7 +45281,7 @@ acceptance_criteria:
   - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels; gravity and Tidy behave as on the Usage page, each settled change one transaction."
   - "The board's width class follows the tab's own width, the board sits on Home's tab surface in every look, and a dashboard's widget layout is never written into the Home layout record."
   - "Range and scope are chosen per dashboard and change only that board, through ui.widget_board.set_view with no receipt and no event."
-  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused with a disabled reason once that revision is no longer the board's previous one (amended 2026-10-10, lead ruling)."
+  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused without dispatch and disabled with a reason once any other board change was committed since, excluding the preset hold's settling resizes (amended 2026-10-10, lead ruling)."
   - "Saving, renaming and deleting a preset dispatch no command; a saved preset shows in Start from on every dashboard of every project, and deleting it leaves the dashboards that used it unchanged."
   - "A custom dashboard is renamed from Rename dashboard... or by renaming its tab, each renaming the other, and is deleted only after the confirm, which closes its tab and forgets its board and name; Home, Metrics, Monitoring and Agents show no Rename dashboard... or Delete dashboard...."
   - "Each board's contents belong to the project: a project switch shows that project's boards and lists only its own custom dashboards."
@@ -45215,6 +45316,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -45248,6 +45351,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
   - "Amended 2026-10-10 (DL-186): Every dashboard tab is its own board on the Usage board engine: built-in and custom dashboards, per-project boards, per-dashboard range and scope, Start from with set_id and Undo, presets, rename and delete, the reopen-list and named-layout rules, the entrance, the empty board, Details to the Usage inspector, Home's tab surface and live readings per board; the old Home widgets, the shared-holder note and the wave 1 board key leave."
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Dashboard controls gain the remaining round-two menu, name, focus and Undo details."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Only Agents uses the measured card-body padding; the engine board keeps its own layout."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
@@ -45533,6 +45638,9 @@ canonical_text: >-
   rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
   or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
   of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
+  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
+  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
+  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
@@ -45561,6 +45669,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "3px left-edge accent stripe"
   - "accent-left-border"
@@ -45574,6 +45683,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
   - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -45872,6 +45982,8 @@ canonical_text: >-
   to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
   fix, suggest or ask action and no inline completion; explaining commands is the Teacher persona's job in the chat
   (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
+  Under Full CRT, a command mark sits beside its row as the tube shows it, inset by the case and bent by the
+  curvature; a prompt the shell redraws (Ctrl+L or a completion list) keeps its mark (SMPFS-183).
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
@@ -45909,6 +46021,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-187"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1 and 2 (notifications; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "path:line:col"
   - "OSC 9;4"
@@ -45929,6 +46042,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D38; terminal SPEC 01c5e78c42): adds system notifications from OSC 9, OSC 777 and OSC 99 in the background, the 3 s limit, the per-tab mute and the permission notice."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Full CRT marks follow their shown rows and survive prompt redraw."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -46005,6 +46119,9 @@ canonical_text: >-
   ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
   no copy (F3-639, F3-647).
   The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
+  Hovering a scheme previews it on this terminal only after the pointer rests on that row for 110 ms; arrow
+  keys preview at once, with a 110 ms wait while a key repeats, so passing over rows or scrolling them
+  beneath a stationary pointer never flashes through the schemes.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -46046,6 +46163,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -46071,6 +46189,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key previews and delayed repeats."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -46113,6 +46232,8 @@ canonical_text: >-
   reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
   states at once. Motion voices belong to the theme family (DR-043).
   An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
+  The cursor trail never fires while a program hides the cursor, including while a progress bar redraws its
+  line.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -46148,6 +46269,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -46169,6 +46291,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): A hidden program cursor never triggers a cursor trail."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

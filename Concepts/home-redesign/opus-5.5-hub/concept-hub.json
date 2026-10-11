@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "topic": "Home panels and terminal",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Window width",
+    "role": "page",
+    "min": 1024,
+    "max": 1920,
+    "step": 10,
+    "default": 1920,
+    "presets": [1024, 1280, 1440, 1470, 1680, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "home-panels",
+      "title": "Home: universal panels (review copy)",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["home", "panels", "tabs", "terminal", "pm7"],
+      "order": 10
+    }
+  ]
+}

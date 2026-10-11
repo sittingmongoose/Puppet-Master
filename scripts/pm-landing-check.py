@@ -67,6 +67,12 @@ long it ran and the limit; it is never a new failure, growth or a blocker. The r
 not fully verified, so it lifts exit 0 to 1 and changes no other exit code. A baseline is never
 recorded from a run that has one.
 
+The readiness audit inputs are gitignored. Both modes select --readiness-audit-root (the shared
+currentness directory when present, otherwise this tree's), and expose it through a temporary
+symlink when this tree has no local copy. The baseline binds the five direct inputs and the receipt's
+artifact dependencies by presence and SHA-256. Missing metadata, different inputs, unreadable inputs,
+or inputs that change during the checks stop comparison with exit 3; no failure is excused by that.
+
 It exits 0 only when every subcheck finished and it has nothing to report.
 
 A key is `check | subcheck | error kind | path | fingerprint`. The fingerprint is a short digest of
@@ -105,11 +111,12 @@ Exit codes:
      rise in a subcheck whose failures are truncated, where the on-branch match cannot see what was
      added, other than the readiness growth counter; a subcheck keyed from its export is not truncated
   3  the script could not run a check or could not read the baseline or the branch paths, or a
-     subcheck timed out while recording a baseline
+     subcheck timed out while recording a baseline, or readiness audit inputs could not be compared
 """
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import hashlib
 import importlib.util
 import json
@@ -131,6 +138,18 @@ DEFAULT_BASELINE = "reports/landing-checks/baseline.json"
 BASELINE_SCHEMA_ID = "pm.landing_check.baseline.v1"
 CURRENT_RUN_POINTER = "Plans/.plan_migration/current_run.json"
 PLAN_UNITS_INDEX = "Plans/.plan_index/plan_units.jsonl"
+# Direct reads in pm_pnc019_currentness.event_authority_audit_failures and its quarantine check.
+# The receipt names the other audit artifacts that validator rehashes.
+READINESS_AUDIT_REL = "Plans/.audits/event-authority-2026-08-13-currentness"
+READINESS_AUDIT_DIRECT_INPUTS = (
+    "VALIDATOR_RECEIPT.json",
+    "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+    "CURRENT_EVENT_SOURCE_INVENTORY.json",
+    "adjudication/GROUP_ARTIFACT_MANIFEST.json",
+    "adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+)
+READINESS_AUDIT_INPUTS_SCHEMA_ID = "pm.landing_check.readiness_audit_inputs.v1"
+SHARED_READINESS_AUDIT_ROOT = Path("/mnt/Cursor/PuppetMaster") / READINESS_AUDIT_REL
 # Files regenerated from every owner document. A branch that edits one document rewrites all of
 # them, so their paths say nothing about what the branch decided and are kept out of the match.
 DERIVED_PREFIXES = ("Plans/_shards/", "Plans/.plan_index/")
@@ -255,6 +274,89 @@ def display_path(path: Path, root: Path) -> str:
         return str(resolved.relative_to(root.resolve()))
     except ValueError:
         return str(resolved)
+
+
+@contextmanager
+def readiness_audit_source(root: Path, source: Path):
+    """Expose one audit source without copying, replacing, or writing its evidence.
+
+    The validators still resolve canonical sources against root. Only the ignored currentness
+    directory is linked; an existing local copy must be explicitly selected rather than overwritten.
+    """
+    local = root / READINESS_AUDIT_REL
+    linked = False
+    made_parent = False
+    try:
+        if local.resolve() != source:
+            if local.exists() or local.is_symlink():
+                raise RuntimeError(f"{local} already exists; select it explicitly with --readiness-audit-root "
+                                   "or use a clean worktree; no audit inputs were replaced")
+            if not source.is_dir():
+                raise RuntimeError(f"readiness audit source is not a directory: {source}")
+            made_parent = not local.parent.exists()
+            local.parent.mkdir(parents=True, exist_ok=True)
+            local.symlink_to(source, target_is_directory=True)
+            linked = True
+        yield
+    finally:
+        if linked:
+            if not local.is_symlink() or local.resolve() != source:
+                raise RuntimeError(f"temporary readiness audit link changed during the check: {local}")
+            local.unlink()
+        if made_parent:
+            # Leave any files another process added alone, including when link creation failed.
+            try:
+                local.parent.rmdir()
+            except OSError:
+                pass
+
+
+def readiness_audit_inputs(root: Path) -> dict[str, Any]:
+    """Identity of the ignored audit bytes actually read, never the live canonical source hashes.
+
+    A missing file is recorded as null. Malformed JSON is left for the validator to report;
+    unreadable bytes cannot establish identity and stop the landing check instead.
+    """
+    files: dict[str, str | None] = {}
+
+    def read(path: str) -> bytes | None:
+        try:
+            data = (root / path).read_bytes()
+        except FileNotFoundError:
+            data = None
+        except OSError as exc:
+            raise RuntimeError(f"cannot identify readiness audit input {path}: {exc}") from exc
+        files[path] = hashlib.sha256(data).hexdigest() if data is not None else None
+        return data
+
+    receipt_path = f"{READINESS_AUDIT_REL}/VALIDATOR_RECEIPT.json"
+    receipt = read(receipt_path)
+    paths = {f"{READINESS_AUDIT_REL}/{name}" for name in READINESS_AUDIT_DIRECT_INPUTS}
+    if receipt is not None:
+        try:
+            parsed = json.loads(receipt)
+        except (ValueError, UnicodeError):
+            parsed = None
+        artifacts = parsed.get("artifact_hashes") if isinstance(parsed, dict) else None
+        if isinstance(artifacts, dict):
+            paths.update(artifacts)
+    for path in sorted(paths - {receipt_path}):
+        read(path)
+    return {"schema_id": READINESS_AUDIT_INPUTS_SCHEMA_ID, "files": dict(sorted(files.items()))}
+
+
+def require_same_readiness_audit_inputs(recorded: Any, current: dict[str, Any], when: str) -> None:
+    if not isinstance(recorded, dict) or recorded.get("schema_id") != READINESS_AUDIT_INPUTS_SCHEMA_ID \
+            or not isinstance(recorded.get("files"), dict):
+        raise RuntimeError("baseline does not bind readiness audit inputs; comparison is unavailable. "
+                           "Keep this baseline unchanged for the pending landing; adopt the new recorder "
+                           "during a scheduled baseline refresh between landings")
+    old, new = recorded["files"], current["files"]
+    changed = [path for path in sorted(set(old) | set(new))
+               if path not in old or path not in new or old[path] != new[path]]
+    if changed:
+        raise RuntimeError(f"readiness audit inputs {when}: " + ", ".join(changed) +
+                           ". Restore the recorded inputs; do not re-record a baseline to make this landing pass")
 
 
 # ---------------------------------------------------------------------------- running the checks
@@ -834,6 +936,7 @@ def build_baseline(
     max_fingerprints: int,
     untracked_inputs: list[str],
     export_items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
+    readiness_inputs: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """The baseline document. `items` are the rows the checks printed; `export_items` the complete rows
     of the subchecks keyed from their export (the exports brief), whose counts carry `exported`.
@@ -850,6 +953,7 @@ def build_baseline(
         "run_dir": run_dir,
         "max_fingerprints_per_bucket": max_fingerprints,
         "untracked_inputs": sorted(untracked_inputs),
+        "readiness_audit_inputs": readiness_inputs,
         "checks": {
             check: {
                 "status": statuses.get(check, "unknown"),
@@ -1473,12 +1577,33 @@ def main() -> int:
     parser.add_argument("--json", action="store_true", help="print the machine-readable report instead of the summary")
     parser.add_argument("--allow-sparse", action="store_true",
                         help="run on a sparse worktree anyway; everything outside the cone reads as missing")
+    parser.add_argument("--readiness-audit-root", metavar="DIR",
+                        help="currentness audit directory used by both recording and checking (default: "
+                             "the shared checkout's when present, otherwise this checkout's)")
     parser.add_argument("--keep-check-reports", default=None, metavar="DIR",
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
+    if args.readiness_audit_root:
+        source = Path(args.readiness_audit_root)
+        source = (source if source.is_absolute() else root / source).resolve()
+        if not source.is_dir():
+            print(f"pm-landing-check: readiness audit source is not a directory: {source}", file=sys.stderr)
+            return 3
+    else:
+        source = (SHARED_READINESS_AUDIT_ROOT if SHARED_READINESS_AUDIT_ROOT.is_dir()
+                  else root / READINESS_AUDIT_REL).resolve()
+    try:
+        with readiness_audit_source(root, source):
+            return check_main(args, root, source)
+    except (RuntimeError, OSError) as exc:
+        print(f"pm-landing-check: {exc}", file=sys.stderr)
+        return 3
+
+
+def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     baseline_path = Path(args.baseline)
     if not baseline_path.is_absolute():
         baseline_path = root / baseline_path
@@ -1517,6 +1642,7 @@ def main() -> int:
     baseline: dict[str, Any] = {}
     touched: list[str] = []
     currency: dict[str, Any] = {}
+    audit_inputs = readiness_audit_inputs(root)
     if not args.record_baseline:
         try:
             baseline = load_baseline(baseline_path)
@@ -1524,6 +1650,8 @@ def main() -> int:
             print(f"pm-landing-check: cannot read the baseline {args.baseline}: {exc}", file=sys.stderr)
             print("pm-landing-check: record one with --record-baseline in a full checkout at main.", file=sys.stderr)
             return 3
+        require_same_readiness_audit_inputs(baseline.get("readiness_audit_inputs"), audit_inputs,
+                                          "differ from the baseline")
         try:
             touched = branch_paths(root, args.base)
         except RuntimeError as exc:
@@ -1554,6 +1682,8 @@ def main() -> int:
         listed[check] = listed_totals(check, report)
         if check == "audit-governance" and before is not None:
             after = tree_state(root)
+        require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
+                                          f"changed during {check}")
 
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True
@@ -1590,14 +1720,17 @@ def main() -> int:
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
         args.subcheck_timeout_seconds, keep_dir, items)
+    require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
+                                      "changed during the exports")
 
     if args.record_baseline:
         untracked = untracked_check_inputs(root)
         doc = build_baseline(commit, run_dir, items, counts, statuses, args.max_fingerprints, untracked,
-                             [item for key in sorted(exported) for item in exported[key]])
+                             [item for key in sorted(exported) for item in exported[key]], audit_inputs)
         baseline_path.parent.mkdir(parents=True, exist_ok=True)
         baseline_path.write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         print(f"pm-landing-check: baseline written to {baseline_label} at commit {commit}")
+        print(f"  readiness audit source: {audit_source}; {len(audit_inputs['files'])} inputs bound by presence and SHA-256")
         for check in CHECKS:
             entry = doc["checks"][check]
             print(f"  {check:24s} {entry['status']:5s} {entry['failure_total']:7d} failures "
@@ -1734,6 +1867,8 @@ def main() -> int:
             {
                 "schema_id": "pm.landing_check.report.v1",
                 "baseline_currency": currency,
+                "readiness_audit_source": str(audit_source),
+                "readiness_audit_inputs": audit_inputs,
                 "branch_units": len(units),
                 "derived_paths_excluded": derived,
                 "subchecks_compared_by_total_only": sorted(f"{c}/{s}" for c, s in partial - paired),
@@ -1779,6 +1914,7 @@ def main() -> int:
                 print(line)
         print(f"pm-landing-check: baseline {baseline_label} recorded at "
               f"{str(baseline.get('commit'))[:12]}; this checkout is at {commit[:12]}")
+        print(f"  readiness audit source: {audit_source}; {len(audit_inputs['files'])} inputs match the baseline")
         if rule_two:
             print(f"  the baseline is current, so rule 2 applies: {currency['reason']}")
         for check in CHECKS:

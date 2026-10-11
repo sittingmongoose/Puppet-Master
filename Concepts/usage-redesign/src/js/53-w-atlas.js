@@ -158,6 +158,7 @@
   });
 
   /* ================================================================== qhist: quota history rows (A1 7.9) */
+  /* (view state per board: C.bk keys, the bare widget id on the Usage board; D10 3.5) */
   var openRows = {};
   /* lane d-plans (AAC's quota focus, research R3 2): the open row's focus chart can compare its main window across every
      account of its provider ("Compare weekly across Claude accounts"): one step line per account, the open account solid
@@ -226,8 +227,8 @@
       /* the timeline takes the middle of the row (Atlas; coordinator review 1 item 3: a third of the row was too little) */
       var tmpl = wide ? 'minmax(210px,26%) minmax(160px,1fr) 76px 110px 26px' : mid ? 'minmax(170px,36%) minmax(110px,1fr) 64px 96px 22px' : 'minmax(120px,40%) minmax(80px,1fr) 56px 20px';
       var collapsed = (C.view(ctx.id, 'collapsed', '') || '').split(',').filter(Boolean);
-      var open = openRows[ctx.id] || '';
-      var cmpG = open ? compareGroup(q, open) : null, cmpOn = !!(cmpG && compareOn[ctx.id]);
+      var vk = C.bk(ctx.id), open = openRows[vk] || '';
+      var cmpG = open ? compareGroup(q, open) : null, cmpOn = !!(cmpG && compareOn[vk]);
       var rowH = mid ? 36 : 40, headH = 36, focusH = 236 + (cmpG ? 32 : 0);
       /* the foot's own height: it wraps to two lines in a 368 px card (lane c-presets: the 34 px of one line let the
          "N more accounts" line run under a two-line foot) */
@@ -333,18 +334,20 @@
   /* opening a row grows it to its focus chart (WOW-SPEC 3.10): the rows below slide to their new places (FLIP 250
      SLIDE), the focus opens top-down and its chart draws with its comet */
   C.act('qcompare', function (el, id) {
-    compareOn[id] = !compareOn[id];
-    viewAction('view.usage.quota_compare_toggled', { widget_id: id, account: openRows[id] || '', compare: !!compareOn[id] });
-    var card = PMU.board.card(id); if (!card) return;
+    var vk = C.bk(id);
+    compareOn[vk] = !compareOn[vk];
+    viewAction('view.usage.quota_compare_toggled', { widget_id: id, account: openRows[vk] || '', compare: !!compareOn[vk] });
+    var card = C.board().card(id); if (!card) return;
     PMU.cards.updateAll([card], 'config');
     var body = card.querySelector('.pmu-cardbody');
     if (body && body._pmuFocusChart && body._pmuFocusChart.enter) { try { body._pmuFocusChart.enter(0); } catch (error) {} }
   });
   C.act('qrow', function (el, id) {
     var v = el.getAttribute('data-value');
-    openRows[id] = openRows[id] === v ? '' : v;
-    viewAction('view.usage.quota_row_toggled', { widget_id: id, account: v, open: !!openRows[id] });
-    var card = PMU.board.card(id); if (!card) return;
+    var vk = C.bk(id);
+    openRows[vk] = openRows[vk] === v ? '' : v;
+    viewAction('view.usage.quota_row_toggled', { widget_id: id, account: v, open: !!openRows[vk] });
+    var card = C.board().card(id); if (!card) return;
     var before = {};
     Array.prototype.forEach.call(card.querySelectorAll('.pmu-qhist > [data-value], .pmu-qhist > .pmu-qgroup'), function (r) { before[r.getAttribute('data-value') + '|' + r.className.split(' ')[0]] = r.getBoundingClientRect().top; });
     PMU.cards.updateAll([card], 'config');
@@ -444,7 +447,7 @@
       body._pmuAgenda = { hidden: hidden, beyond: ag.beyond, hz: hz, passed: ag.passed.length, unknown: ag.unknown.length }; body._pmuAgCols = colsN;
       body.querySelector('.pmu-agenda').addEventListener('click', function (event) {
         var row = event.target.closest('[data-key]'); if (!row) return;
-        var acct = PMU.roster.account(row.getAttribute('data-acct')); if (acct && PMU.accounts) PMU.accounts.inspect(acct.key, row);
+        var acct = PMU.roster.account(row.getAttribute('data-acct')); if (acct && PMU.accounts) C.inBoard(row, function () { PMU.accounts.inspect(acct.key, row); });
       });
     }
   });

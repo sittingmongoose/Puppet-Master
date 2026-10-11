@@ -81,6 +81,45 @@
 § .d-select .d-select-v { color: var(--d-text); font-weight: 600; }
 § .d-select > .pmr-ico:last-child { margin-left: auto; width: 12px; height: 12px; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
 § .d-select.is-menu-open > .pmr-ico:last-child { transform: rotate(180deg); }
+/* a menu of several choices at once (PMR.menu multi: the Owner filter) gives every choice a check box, so it reads as
+   "pick any" before the first pick. A pick fills the box in the look's own time and then draws its check: Basic and
+   Glass fill from the centre, Friendly's box springs, Retro fills and prints in steps, NieR wipes its ink in from the
+   left; under Reduced Motion the box and its check fade in place. NieR's box takes its row's own ink (a chosen or
+   hovered row is inverted), so it reads on paper and on the ink bar alike. */
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  display: inline-grid; place-items: center; width: 14px; height: 14px; box-sizing: border-box; opacity: 1;
+  border: 1.5px solid var(--d-text-3); border-radius: min(var(--d-r), 3px); color: var(--d-on-accent);
+  background: linear-gradient(var(--accent-primary), var(--accent-primary)) no-repeat center / 0% 0%;
+  transition: background-size var(--d-t2) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-size: 100% 100%; border-color: var(--accent-primary); }
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck svg { width: 10px; height: 10px; overflow: visible; }
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-width: 3; stroke-dasharray: 20; stroke-dashoffset: 20; transition: stroke-dashoffset var(--d-t1) var(--d-ease); }
+§R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { stroke-dashoffset: 0; transition-duration: var(--d-t2); transition-delay: calc(var(--d-t1) * .6); }
+§{friendly,notnier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { animation: d-bump var(--d-t3) var(--d-spring); }
+§{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  color: inherit; border-color: color-mix(in srgb, currentColor 62%, transparent);
+  background-image: linear-gradient(currentColor, currentColor); background-position: left center; background-size: 0% 100%;
+}
+§{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { border-color: currentColor; background-size: 100% 100%; }
+§{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke: var(--o55-nier-ink); }
+§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck {
+  background-image: none; background-color: transparent; animation: none;
+  transition: background-color 140ms linear, border-color 140ms linear;
+}
+§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
+§{nier}R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck, §{nier}R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
+§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path {
+  stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear;
+}
+§R[data-motion="reduced"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path, §R[data-reduced-motion="1"] .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck { background-image: none; animation: none; transition: background-color 140ms linear, border-color 140ms linear; }
+  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: var(--accent-primary); }
+  §{nier}R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck { background-color: currentColor; }
+  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"] .pm6-chat-modelcheck path { stroke-dashoffset: 0; opacity: 0; transition: opacity 140ms linear; }
+  §R .pmr-menu .pmr-mi[role="menuitemcheckbox"].active .pm6-chat-modelcheck path { opacity: 1; }
+}
 
 /* button rows: equal columns that fold to one column instead of shortening words */
 § :is(.pm-eqrow, .pm-btnrow) { display: flex !important; flex-wrap: wrap; gap: 6px !important; margin: var(--d-g) 0 0 !important; }

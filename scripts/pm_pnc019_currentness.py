@@ -53,7 +53,7 @@ EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
 # Moved by Jared's approval of 2026-10-10 (D42, "approved"; Plans/Decision_Log.md#DL-188,
 # recorded as DL-039 and DL-045 were): workspace.layout_changed moves to family revision 2.0.0
 # with the payload of Plans/Contracts_V0.md#CV-361, still 43 families: registry 2026-10-09.1,
-# SHA-256 6e01bb3670744d2cbbde18ed6fea6c0154de807d5275676984bcdb0fad6a2ee9 (predecessor
+# SHA-256 4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe (predecessor
 # 4227be36806615cabc8a36c0a8a6555a24b6b6c38e960e07bd12354c3c373e70). The audit status file's
 # pinned revision and hash move with the next reseal, not here.
 # Checkpoint data only: denominator and contract-depth clearance remain false.

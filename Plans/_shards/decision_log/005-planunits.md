@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4288-L14418
+Source lines: L4297-L14442
 
-Source SHA256: `e6ec9c9c17fc8ee3345bd4636b90270093a2db8ffa9c22fd2e3c2553138bc285`
+Source SHA256: `b2e1fd90a9af2fe9a453a5e16acace05236f2f53fbcc73c8b0784b7cd699f4b4`
 
 ---
 
@@ -8480,6 +8480,8 @@ negative_constraints:
   - "Do not make a NieR variant per family."
   - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
   - "Do not add a command id, a route or a Guided Tour action for a look control."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10, reseal item 2): the onboarding session stores look_choice so a resumed setup repaints the chosen look, NieR included; Settings are still written only at commit."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -8832,8 +8834,11 @@ canonical_text: >-
   Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
   under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
   dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
-  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
-  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  grammar in one owner. The owner answered its two open questions on 2026-10-10, one set of status marks (F3-585's
+  and the rail's) and some frost back on the plates, and the glyph and Liquid Glass design threads carry them; his
+  other answers that day are in the concept: the worktree Owner filter takes several owners (W-075), Current Branch
+  leads Actions & Pipelines (GI-011), the binding picker shows only with several bindings (F3-528) and an expired
+  artifact reads Expired (F3-619). Settled later
   under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
   owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
   More tray as the chat picker (F3-625).
@@ -8901,8 +8906,8 @@ canonical_text: >-
   bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
   strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
   Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
-  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
-  ID shows on its row and whether to keep "Operation Log".
+  workspace and what Undo reverts after an automatic working-copy save. The owner answered his two on 2026-10-10:
+  a change's short change ID shows on its row (JJI section 4.1 and F3-624 amended) and "Operation Log" stays.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
 split_recommended: false
@@ -8911,7 +8916,7 @@ unblocks: [F3-623, F3-624]
 acceptance_criteria:
   - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
   - "No command, action, schema value or wiring row is added by this decision."
-  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+  - "The owner's question, the two choices left to him and his answers of 2026-10-10 are recorded in plain words with their source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9038,6 +9043,12 @@ canonical_text: >-
   project, provider, account, the most specific set value winning, and a value stored under the retired id is
   carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
   status state is defined by a set of section 5 reason codes, in the MA-073 state table.
+  Owner decision 2026-10-10 (D43, "account cards get switches"): each account card carries one bound control for
+  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, shown only on the accounts of
+  a provider with two or more accounts (the reading of those words: a lone account has nothing to switch to),
+  showing the level the account resolves to and whether it is the account's own or follows its provider, offering
+  following the provider again, committed through the Settings transaction at scope account and held below the
+  warning level that applies to that account; its Open in Settings lands inside that account (SSYS-044).
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -9050,6 +9061,7 @@ acceptance_criteria:
   - "Plans & limits lists every account of a provider, one row per account."
   - "No command is added for the Accounts room."
   - "An account's own switch level is ai.accounts.hard-switch-level at scope account, and nothing reads or writes ai.accounts.account-threshold-override after its stored value is carried there once."
+  - "Each account of a provider with two or more accounts has a switch-level control on its Usage card and in its Details that changes ai.accounts.hard-switch-level at scope account through the Settings transaction, and Settings shows the same value without a reload."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9072,6 +9084,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
   - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D43, owner decision 2026-10-10)"
 preserved_exact_tokens:
   - "DL-174"
   - "Use this account"
@@ -9889,6 +9902,8 @@ preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead rulings under D29): a chosen option is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic; Glass top rim, Retro reverse video, NieR ink."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

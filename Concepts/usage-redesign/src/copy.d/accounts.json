@@ -11,6 +11,12 @@
     "manage": "Manage",
     "setup_required": "Provider Setup Required",
     "auto_needs_two": "Auto-switch is off until a second account is signed in",
-    "auto_single": "Off · one account"
+    "auto_single": "Off · one account",
+    "acc_sw_own": "own level",
+    "acc_sw_follow": "Follow {provider}",
+    "acc_sw_foot": "{name} only, shared with Settings.",
+    "acc_sw_shared": "Shared with Settings > AI > Providers & Accounts.",
+    "acc_sw_open": "{name}’s row in Providers & Accounts",
+    "acc_sw_cap": "Each account switches at its own level, or follows its service’s level. Pick one to change it; it is the same value as the account’s row in Settings."
   }
 }

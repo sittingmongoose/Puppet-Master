@@ -1,0 +1,368 @@
+/* Motion for the terminal's chrome: the agent row and notices, command marks, the find bar, the Appearance popover
+   (both surfaces) and the recolour when a scheme is previewed or chosen. JS only starts things and waits for them
+   (T.Motion in 70-view.js): an element plays its entrance under .pmt-in, its exit under .pmt-out, a content change
+   under .pmt-swap, a command's end under .pmt-settle. What each of those animates is a token on .pmt-root (and on the
+   editor's floating popover, .pmt-pop-float, which carries the look itself).
+
+   Layers, from the bottom:
+   1. calm tokens: what Reduced Motion gets (short opacity cross-fades; nothing travels). Elements whose calm version
+      is a fade carry .pmt-calm, which 30-looks.css leaves alone under Reduced Motion.
+   2. motion tokens per look, only with motion allowed: Basic cubic-bezier(0.2, 0, 0, 1); Friendly cubic-bezier(0.34,
+      1.56, 0.64, 1), springy; Glass cubic-bezier(0.05, 0.7, 0.1, 1), a slow glide; Retro steps(6, end), stepped and
+      snappy; durations 120-300 ms, so nothing delays typing or reading output.
+   3. NieR: end states at once, then motion only where an installed Motion part asks for it, stepped (steps(8, end)):
+      slice (the popover and find bar open from a line), decode (rows and counts type on, marks snap), glitch (a
+      request, a failure and an empty find arrive with a short jitter; target brackets snap), wipe (a recolour crosses
+      as an ink-edged band). Reduced Motion, Still and Colors only (no Motion part) show end states at once. Colours
+      only from --o55-nier-* tokens; no glow, filter or blur.
+   The terminal's canvas text never animates or moves: a recolour lays the old colours over it and takes them away.
+   Nothing here loops, so nothing moves at idle. No side stripes, no capsules. */
+
+@property --pmt-xf-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+/* ================================================================================================================
+   1. calm tokens (Reduced Motion, and the floor every look starts from)
+   ================================================================================================================ */
+.pmt-root, .pmt-pop-float {
+  --pmt-ease-move: linear; --pmt-ease-fade: linear; --pmt-ease-exit: linear; --pmt-ease-xf: linear;
+  --pmt-t-in: 120ms; --pmt-t-out: 100ms; --pmt-t-swap: 120ms; --pmt-t-xf: 120ms; --pmt-t-tick: 0ms;
+  --pmt-t-slide: 0ms; --pmt-t-settle: 120ms; --pmt-t-ring: 520ms; --pmt-t-tint: 0ms;
+  --pmt-rise: 0px; --pmt-pop-scale: 1; --pmt-pop-origin: 100% 0; --pmt-ring-from: 1;
+  --pmt-a-pop-in: pmt-m-fade-in; --pmt-a-pop-out: pmt-m-fade-out;
+  --pmt-a-row-in: pmt-m-fade-in; --pmt-a-row-body: none; --pmt-a-row-out: pmt-m-fade-out; --pmt-a-row-sheen: none;
+  --pmt-a-new: pmt-m-dip-in; --pmt-a-old: pmt-m-dip-out; --pmt-a-rescope: pmt-m-dim-in;
+  --pmt-a-xf: pmt-xf-fade; --pmt-a-ring: pmt-m-hold-fade;
+  --pmt-a-tick: none; --pmt-a-nudge: none; --pmt-a-ask: none;
+  --pmt-a-draw: none; --pmt-a-mark: none; --pmt-a-mark-fail: none; --pmt-a-ripple: none; --pmt-a-start: none; --pmt-a-box: none;
+  --pmt-a-pick: none; --pmt-stagger: 0ms;
+}
+
+/* ================================================================================================================
+   2. motion per look (only when motion is allowed, and never in NieR, which has its own rules below)
+   ================================================================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Basic: quiet and exact */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-ease-move: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-fade: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+    --pmt-ease-xf: cubic-bezier(0.2, 0, 0, 1);
+    --pmt-t-in: 180ms; --pmt-t-out: 120ms; --pmt-t-swap: 200ms; --pmt-t-xf: 180ms; --pmt-t-tick: 140ms;
+    --pmt-t-slide: 180ms; --pmt-t-settle: 220ms; --pmt-t-ring: 440ms; --pmt-t-tint: 90ms;
+    --pmt-rise: 5px; --pmt-pop-scale: .98; --pmt-ring-from: 1.2;
+    --pmt-a-pop-in: pmt-m-drop-in; --pmt-a-pop-out: pmt-m-drop-out;
+    --pmt-a-row-in: pmt-m-unfold; --pmt-a-row-body: pmt-m-rise-in; --pmt-a-row-out: pmt-m-fold;
+    --pmt-a-new: pmt-m-roll-in; --pmt-a-old: pmt-m-roll-out;
+    --pmt-a-xf: pmt-xf-fade; --pmt-a-ring: pmt-m-lock;
+    --pmt-a-tick: pmt-m-tick; --pmt-a-nudge: pmt-m-nudge;
+    --pmt-a-draw: pmt-m-draw; --pmt-a-start: pmt-m-grow;
+  }
+  /* Friendly: springy, things land with a little give; the recolour blooms out of the scheme under the pointer */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="friendly"] {
+    --pmt-ease-move: cubic-bezier(0.34, 1.56, 0.64, 1); --pmt-ease-xf: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --pmt-t-in: 260ms; --pmt-t-out: 140ms; --pmt-t-swap: 280ms; --pmt-t-xf: 300ms; --pmt-t-tick: 220ms;
+    --pmt-t-slide: 300ms; --pmt-t-settle: 340ms; --pmt-t-ring: 520ms;
+    --pmt-rise: 9px; --pmt-pop-scale: .92; --pmt-ring-from: 1.55;
+    --pmt-a-row-body: pmt-m-spring-in; --pmt-a-xf: pmt-xf-grow; --pmt-a-ask: pmt-m-knock;
+    --pmt-a-mark: pmt-m-pop; --pmt-a-mark-fail: pmt-m-shake; --pmt-a-start: pmt-m-pop;
+    --pmt-a-pick: pmt-m-pop-soft; --pmt-stagger: 40ms;
+  }
+  /* Glass: a slow glide; light runs across what arrives; the recolour slides in from the popover's side */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="glass"] {
+    --pmt-ease-move: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-fade: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-xf: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --pmt-t-in: 260ms; --pmt-t-out: 160ms; --pmt-t-swap: 300ms; --pmt-t-xf: 320ms; --pmt-t-tick: 220ms;
+    --pmt-t-slide: 300ms; --pmt-t-settle: 360ms; --pmt-t-ring: 560ms; --pmt-t-tint: 140ms;
+    --pmt-rise: 10px; --pmt-pop-scale: .97; --pmt-ring-from: 1.35;
+    --pmt-a-row-in: pmt-m-fade-in; --pmt-a-row-body: pmt-m-glide-in; --pmt-a-row-out: pmt-m-lift-out; --pmt-a-row-sheen: pmt-m-sheen;
+    --pmt-a-xf: pmt-xf-grow; --pmt-a-ripple: pmt-m-ripple;
+  }
+  /* Retro: stepped and snappy, like a terminal drawing its own box; reverse video for emphasis */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="retro"] {
+    --pmt-ease-move: steps(6, end); --pmt-ease-fade: steps(3, end); --pmt-ease-exit: steps(3, end); --pmt-ease-xf: steps(6, end);
+    --pmt-t-in: 180ms; --pmt-t-out: 90ms; --pmt-t-swap: 150ms; --pmt-t-xf: 180ms; --pmt-t-tick: 90ms;
+    --pmt-t-slide: 0ms; --pmt-t-settle: 160ms; --pmt-t-ring: 420ms; --pmt-t-tint: 0ms;
+    --pmt-rise: 0px; --pmt-pop-scale: 1;
+    --pmt-a-pop-in: pmt-m-scan-in; --pmt-a-pop-out: pmt-m-scan-out;
+    --pmt-a-row-in: pmt-m-print-in; --pmt-a-row-body: none; --pmt-a-row-out: pmt-m-print-out;
+    --pmt-a-new: pmt-m-print-in; --pmt-a-old: pmt-m-gone; --pmt-a-rescope: pmt-m-dim-in;
+    --pmt-a-xf: pmt-xf-grow; --pmt-a-ring: pmt-m-blink2;
+    --pmt-a-tick: pmt-m-fade-in; --pmt-a-nudge: pmt-m-invert; --pmt-a-ask: pmt-m-revert;
+    --pmt-a-draw: none; --pmt-a-mark: pmt-m-invert; --pmt-a-start: pmt-m-invert;
+  }
+}
+
+/* ================================================================================================================
+   3. NieR: end states at once; each Motion part adds its own stepped motion
+   ================================================================================================================ */
+html[data-o55-nier="on"] :is(.pmt-root, .pmt-pop-float) {
+  --pmt-ease-move: steps(8, end); --pmt-ease-fade: steps(4, end); --pmt-ease-exit: steps(4, end); --pmt-ease-xf: steps(8, end);
+  --pmt-t-in: 200ms; --pmt-t-out: 100ms; --pmt-t-swap: 200ms; --pmt-t-xf: 200ms; --pmt-t-tick: 120ms;
+  --pmt-t-slide: 0ms; --pmt-t-settle: 150ms; --pmt-t-ring: 480ms; --pmt-t-tint: 0ms;
+  --pmt-pop-origin: 50% 0;
+  --pmt-a-pop-in: none; --pmt-a-pop-out: none; --pmt-a-row-in: none; --pmt-a-row-body: none; --pmt-a-row-out: none;
+  --pmt-a-new: none; --pmt-a-old: none; --pmt-a-rescope: none; --pmt-a-xf: none; --pmt-a-ring: pmt-m-hold;
+  --pmt-a-tick: none; --pmt-a-nudge: none; --pmt-a-ask: none;
+  --pmt-a-draw: none; --pmt-a-mark: none; --pmt-a-mark-fail: none; --pmt-a-start: none; --pmt-a-box: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* slice: the popover and the find bar open from a thin line at their top edge (they hang from their anchor), in
+     eight steps */
+  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-pop-in: pmt-m-slice-in; --pmt-a-pop-out: pmt-m-slice-out;
+  }
+  /* decode: rows print in as an ink band and their text types on; counts type on; a finished command's square snaps */
+  html[data-o55-nier="on"][data-o55-nier-parts~="decode"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-row-in: pmt-m-print-in; --pmt-a-row-out: pmt-m-print-out; --pmt-a-new: pmt-m-print-in; --pmt-a-old: pmt-m-gone;
+    --pmt-a-tick: pmt-m-print-in; --pmt-a-box: pmt-m-nier-box; --pmt-a-draw: pmt-m-draw;
+  }
+  /* glitch: a request, a failure and an empty find arrive with a short jitter */
+  html[data-o55-nier="on"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-ask: pmt-m-jitter; --pmt-a-mark-fail: pmt-m-jitter; --pmt-a-nudge: pmt-m-jitter;
+  }
+  /* brackets with glitch: the find target's brackets snap in, as the bell's do (40-nier.css) */
+  html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) .pmt-root {
+    --pmt-a-ring: pmt-m-nier-lock;
+  }
+  /* wipe: a recolour crosses as an ink-edged band from the popover's side */
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root { --pmt-a-xf: pmt-xf-grow; }
+}
+
+/* ================================================================================================================
+   keyframes (from-only keyframes end on the element's own style)
+   ================================================================================================================ */
+@keyframes pmt-m-fade-in { from { opacity: 0; } }
+@keyframes pmt-m-fade-out { to { opacity: 0; } }
+@keyframes pmt-m-dim-in { from { opacity: .45; } }
+/* a dip: the old words are gone before the new ones come, so the two never sit on top of each other */
+@keyframes pmt-m-dip-out { 0% { opacity: 1; } 45%, 100% { opacity: 0; } }
+@keyframes pmt-m-dip-in { 0%, 45% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes pmt-m-gone { from, to { opacity: 0; } }
+@keyframes pmt-m-hold { from, to { opacity: 1; } }
+@keyframes pmt-m-hold-fade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+/* overlays drop from their anchor */
+@keyframes pmt-m-drop-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)) scale(var(--pmt-pop-scale)); } }
+@keyframes pmt-m-drop-out { to { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -.6)) scale(var(--pmt-pop-scale)); } }
+@keyframes pmt-m-scan-in { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-scan-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+@keyframes pmt-m-slice-in { from { transform: scaleY(.006); } }
+@keyframes pmt-m-slice-out { to { transform: scaleY(.006); } }
+/* inline rows: the row unrolls, its content settles into it */
+@keyframes pmt-m-unfold { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-fold { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); opacity: 0; } }
+@keyframes pmt-m-rise-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)); } }
+@keyframes pmt-m-spring-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)) scale(.97); } }
+@keyframes pmt-m-glide-in { from { opacity: 0; transform: translateX(calc(var(--pmt-rise) * 1.6)); } }
+@keyframes pmt-m-lift-out { to { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -.5)); } }
+@keyframes pmt-m-print-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-print-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 0 100%); } }
+/* an odometer: the new words come up from under the row as the old ones leave over its top, one row apart */
+@keyframes pmt-m-roll-in { from { opacity: .2; transform: translateY(calc(100% + 8px)); } }
+@keyframes pmt-m-roll-out { to { opacity: .2; transform: translateY(-100%); } }
+@keyframes pmt-m-sheen { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes pmt-m-knock { 0%, 100% { transform: none; } 30% { transform: scale(1.22); } 55% { transform: scale(.94); } 78% { transform: scale(1.08); } }
+@keyframes pmt-m-jitter { 0% { transform: translateX(3px); } 34% { transform: translateX(-3px); } 67% { transform: translateX(1px); } 100% { transform: none; } }
+@keyframes pmt-m-invert { from, to { background: var(--pmt-fg); color: var(--pmt-bg-solid); } }
+/* the reverse of Retro's reverse-video rows */
+@keyframes pmt-m-revert { from, to { background: var(--pmt-bg-solid); color: var(--pmt-fg); } }
+/* find */
+@keyframes pmt-m-tick { from { opacity: .2; transform: translateY(var(--pmt-tick-dy, 5px)); } }
+@keyframes pmt-m-nudge { 0%, 100% { transform: none; } 20% { transform: translateX(-3px); } 45% { transform: translateX(3px); } 70% { transform: translateX(-1.5px); } }
+@keyframes pmt-m-lock { 0% { opacity: 0; transform: scale(var(--pmt-ring-from)); } 32% { opacity: 1; transform: none; } 68% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+@keyframes pmt-m-blink2 { 0%, 22% { opacity: 1; } 23%, 45% { opacity: 0; } 46%, 72% { opacity: 1; } 73%, 100% { opacity: 0; } }
+@keyframes pmt-m-nier-lock { 0% { transform: scale(1.7); } 22% { transform: scale(1.35); } 44%, 99% { transform: none; opacity: 1; } 100% { transform: none; opacity: 0; } }
+/* command marks */
+@keyframes pmt-m-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pmt-m-pop { from { transform: scale(.35); } }
+@keyframes pmt-m-pop-soft { from { transform: scale(.8); } }
+@keyframes pmt-m-grow { from { transform: scale(.55); opacity: .4; } }
+@keyframes pmt-m-shake { 0%, 100% { transform: none; } 25% { transform: translateX(-2px); } 55% { transform: translateX(2px); } 80% { transform: translateX(-1px); } }
+@keyframes pmt-m-ripple { from { opacity: .7; transform: scale(.5); } to { opacity: 0; transform: scale(1.9); } }
+@keyframes pmt-m-nier-box { from { width: 15px; height: 15px; } to { width: 7px; height: 7px; } }
+/* recolour */
+@keyframes pmt-xf-fade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes pmt-xf-grow { from { --pmt-xf-r: 0px; } to { --pmt-xf-r: var(--pmt-xf-max, 2000px); } }
+
+/* ================================================================================================================
+   the agent row and notices: inline rows above the screen (the row takes its room at once, so the terminal moves
+   once; what moves after that is the row's own paint)
+   ================================================================================================================ */
+.pmt-agentrow, .pmt-notice { transition: background-color var(--pmt-t-swap) var(--pmt-ease-fade), color var(--pmt-t-swap) var(--pmt-ease-fade); }
+:is(.pmt-agentrow, .pmt-notice).pmt-in { overflow: hidden; animation: var(--pmt-a-row-in) var(--pmt-t-in) var(--pmt-ease-move) both; }
+.pmt-agentrow.pmt-in > .pmt-agent-in > :not(.pmt-agent-acts), .pmt-agentrow.pmt-in .pmt-agent-acts > *,
+.pmt-notice.pmt-in > .pmt-notice-text, .pmt-notice.pmt-in .pmt-notice-actions > * { animation: var(--pmt-a-row-body) var(--pmt-t-in) var(--pmt-ease-move) both; }
+/* the actions land one after another (Friendly's stagger; the other looks land them together) */
+.pmt-agentrow.pmt-in .pmt-agent-acts > :nth-child(2), .pmt-notice.pmt-in .pmt-notice-actions > :nth-child(2) { animation-delay: var(--pmt-stagger); }
+.pmt-agentrow.pmt-in .pmt-agent-acts > :nth-child(3), .pmt-notice.pmt-in .pmt-notice-actions > :nth-child(3) { animation-delay: calc(var(--pmt-stagger) * 2); }
+:is(.pmt-agentrow, .pmt-notice).pmt-out { overflow: hidden; pointer-events: none; animation: var(--pmt-a-row-out) var(--pmt-t-out) var(--pmt-ease-exit) both; }
+/* Glass: one pass of light across a row as it arrives */
+:is(.pmt-agentrow, .pmt-notice)::after { content: none; }
+:is(.pmt-agentrow, .pmt-notice).pmt-in::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-100%);
+  background: linear-gradient(100deg, transparent 25%, rgb(255 255 255 / .2) 50%, transparent 75%);
+  animation: var(--pmt-a-row-sheen) calc(var(--pmt-t-in) * 2.1) cubic-bezier(0.4, 0, 0.2, 1) calc(var(--pmt-t-in) * .3) both;
+}
+html[data-theme="glass-light"] :is(.pmt-agentrow, .pmt-notice).pmt-in::after { background: linear-gradient(100deg, transparent 25%, rgb(255 255 255 / .55) 50%, transparent 75%); }
+.pmt-notice { position: relative; }
+
+/* a state change rolls the old words out and the new ones in; the row's tint follows */
+.pmt-agentrow.pmt-swap, .pmt-notice.pmt-swap { overflow: hidden; }
+.pmt-agentrow.pmt-swap > .pmt-agent-in:not(.pmt-agent-old) { animation: var(--pmt-a-new) var(--pmt-t-swap) var(--pmt-ease-move) both; }
+.pmt-agentrow.pmt-swap > .pmt-agent-old { animation: var(--pmt-a-old) var(--pmt-t-swap) var(--pmt-ease-fade) both; }
+.pmt-notice.pmt-swap > .pmt-notice-text { animation: var(--pmt-a-new) var(--pmt-t-swap) var(--pmt-ease-move) both; }
+/* the answer the person gave stays marked while its row rolls away */
+.pmt-agent-old .pmt-textbtn.pmt-picked { background: color-mix(in srgb, currentColor 18%, transparent); text-decoration-color: currentColor; }
+.pmt-root[data-pmt-look="retro"] .pmt-agent-old .pmt-textbtn.pmt-picked { background: var(--pmt-bg-solid); color: var(--pmt-fg); }
+/* a request knocks once: the agent's square (Friendly), reverse video (Retro), a jitter (NieR glitch) */
+.pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-sq,
+.pmt-agentrow.pmt-agent-permission.pmt-swap > .pmt-agent-in:not(.pmt-agent-old) .pmt-agent-sq {
+  animation: var(--pmt-a-ask) calc(var(--pmt-t-in) * 1.6) cubic-bezier(0.2, 0, 0, 1) calc(var(--pmt-t-in) * .5) both;
+}
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow.pmt-agent-permission :is(.pmt-agent-sq) { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission:is(.pmt-in, .pmt-swap) { animation-timing-function: steps(3, end); }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-sq { animation: none; }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-text { animation: var(--pmt-a-ask) 150ms steps(3, end) var(--pmt-t-in) both; }
+
+/* ================================================================================================================
+   command marks: a mark settles when its command ends (running to done or failed), without pulling the eye from
+   the text: the stroke draws itself and the colour follows
+   ================================================================================================================ */
+.pmt-mark { transition: color var(--pmt-t-settle) var(--pmt-ease-fade), background-color var(--pmt-t-tint) linear; }
+.pmt-mark.pmt-settle svg :is(path, rect) { stroke-dasharray: 1 1; animation: var(--pmt-a-draw) var(--pmt-t-settle) var(--pmt-ease-fade) both; }
+.pmt-mark.pmt-settle svg path + path { animation-delay: calc(var(--pmt-t-settle) * .3); }
+.pmt-mark.pmt-settle svg { animation: var(--pmt-a-mark) var(--pmt-t-settle) var(--pmt-ease-move) both; }
+.pmt-mark.pmt-settle.pmt-mark-fail { animation: var(--pmt-a-mark-fail) var(--pmt-t-settle) cubic-bezier(0.3, 0, 0.3, 1) both; }
+.pmt-mark.pmt-start svg { animation: var(--pmt-a-start) calc(var(--pmt-t-settle) * .8) var(--pmt-ease-move) both; }
+/* Glass: a ring of light leaves the mark */
+.pmt-root[data-pmt-look="glass"] .pmt-mark.pmt-settle::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  border: 1px solid currentColor; pointer-events: none; opacity: 0;
+  animation: var(--pmt-a-ripple) calc(var(--pmt-t-settle) * 1.4) cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+/* Retro: the glyph flashes in reverse video for one beat */
+.pmt-root[data-pmt-look="retro"] .pmt-mark:is(.pmt-settle, .pmt-start) { animation: var(--pmt-a-mark) var(--pmt-t-settle) steps(1, end); }
+.pmt-root[data-pmt-look="retro"] .pmt-mark:is(.pmt-settle, .pmt-start) svg { animation: none; }
+/* NieR (icons + decode): the square snaps down onto its line in three steps; a failure jitters (glitch) */
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark:is(.pmt-settle, .pmt-start)::before { animation: var(--pmt-a-box) var(--pmt-t-settle) steps(3, end) both; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark.pmt-settle.pmt-mark-fail { animation: var(--pmt-a-mark-fail) 150ms steps(3, end) var(--pmt-t-settle) both; }
+html[data-o55-nier="on"] .pmt-mark { transition: none; }
+
+/* ================================================================================================================
+   find bar: opens from its corner, the count rolls with the direction you moved, an empty search nudges, and the
+   match you jumped to is marked for a moment by a ring around it (the text under it stays still)
+   ================================================================================================================ */
+:is(.pmt-pop, .pmt-findbar).pmt-in { transform-origin: var(--pmt-pop-origin); animation: var(--pmt-a-pop-in) var(--pmt-t-in) var(--pmt-ease-move) both; }
+:is(.pmt-pop, .pmt-findbar).pmt-out { transform-origin: var(--pmt-pop-origin); pointer-events: none; animation: var(--pmt-a-pop-out) var(--pmt-t-out) var(--pmt-ease-exit) both; }
+.pmt-findbar .pmt-find-count.pmt-tick { animation: var(--pmt-a-tick) var(--pmt-t-tick) var(--pmt-ease-move) both; }
+.pmt-findbar .pmt-find-count[data-pmt-dir="down"] { --pmt-tick-dy: -5px; }
+.pmt-findbar .pmt-find-count.pmt-nudge { animation: var(--pmt-a-nudge) 280ms cubic-bezier(0.3, 0, 0.3, 1) both; }
+.pmt-root[data-pmt-look="retro"] .pmt-find-count.pmt-nudge { animation-duration: 140ms; animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .pmt-find-count.pmt-nudge { animation-duration: 150ms; animation-timing-function: steps(3, end); }
+.pmt-find-toggle, .pmt-find-btn { transition: background-color var(--pmt-t-tint) linear, color var(--pmt-t-tint) linear, border-color var(--pmt-t-tint) linear; }
+
+.pmt-overlays > .pmt-findring {
+  position: absolute; z-index: 4; pointer-events: none; border-radius: min(var(--pmt-radius, 4px), 4px);
+  box-shadow: 0 0 0 1.5px var(--pmt-accent), 0 0 0 4px color-mix(in srgb, var(--pmt-accent) 22%, transparent);
+  animation: var(--pmt-a-ring) var(--pmt-t-ring) var(--pmt-ease-move) both;
+}
+.pmt-root[data-pmt-look="friendly"] .pmt-findring { border-radius: 5px; background: color-mix(in srgb, var(--pmt-accent) 10%, transparent); }
+.pmt-root[data-pmt-look="glass"] .pmt-findring {
+  border-radius: 5px; box-shadow: 0 0 0 1px rgb(255 255 255 / .8), 0 0 12px 2px color-mix(in srgb, var(--pmt-accent) 55%, transparent);
+}
+.pmt-root[data-pmt-look="retro"] .pmt-findring { border-radius: 0; box-shadow: 0 0 0 2px var(--pmt-fg); animation-timing-function: linear; }
+html[data-o55-nier="on"] .pmt-findring { box-shadow: 0 0 0 1px var(--o55-nier-ink); border-radius: 0; background: none; animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-findring {
+  box-shadow: none; --b: var(--o55-nier-ink);
+  background:
+    linear-gradient(var(--b), var(--b)) left top / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) left top / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) right top / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 6px no-repeat;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"] .pmt-findring { animation-timing-function: steps(2, end); }
+
+/* ================================================================================================================
+   Appearance popover (both surfaces): segmented choices and the scheme list slide their chosen mark to the new
+   choice; a scope switch fades the values in, since they now read from another layer
+   ================================================================================================================ */
+.pmt-seg { position: relative; isolation: isolate; }
+.pmt-seg-ind, .pmt-scheme-ind { position: absolute; left: 0; top: 0; z-index: -1; pointer-events: none; will-change: transform; }
+.pmt-seg-ind { bottom: 0; background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 18%, transparent); }
+.pmt-scheme-ind { border-radius: 3px; background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
+:is(.pmt-seg-ind, .pmt-scheme-ind).pmt-go { transition: transform var(--pmt-t-slide) var(--pmt-ease-move), width var(--pmt-t-slide) var(--pmt-ease-move), height var(--pmt-t-slide) var(--pmt-ease-move); }
+.pmt-seg.pmt-sliding button[aria-checked="true"], .pmt-schemes.pmt-sliding .pmt-scheme[aria-selected="true"] { background: transparent; }
+.pmt-schemes { position: relative; isolation: isolate; }
+.pmt-scheme { transition: background-color var(--pmt-t-tint) linear; }
+.pmt-pop-body.pmt-rescope { animation: var(--pmt-a-rescope) calc(var(--pmt-t-swap) * 1.1) var(--pmt-ease-fade) both; }
+/* Friendly: the chosen scheme's swatch lands with a little bounce */
+.pmt-scheme.pmt-picked .pmt-swatch {
+  animation: var(--pmt-a-pick) var(--pmt-t-settle) var(--pmt-ease-move) both;
+}
+html[data-o55-nier="on"] .pmt-scheme { transition: none; }
+
+/* ================================================================================================================
+   recolour (a scheme hovered, chosen or reverted): the old ground and the old text are laid over the new ones and
+   taken away: Basic a cross-fade, Friendly a bloom out of the scheme under the pointer, Glass a soft-edged glide from
+   the popover's side, Retro a raster sweep top to bottom in six steps, NieR (wipe) an ink-edged band in eight steps,
+   Reduced Motion a short cross-fade, NieR without wipe at once. 70-view.js places the layers and their geometry.
+   ================================================================================================================ */
+.pmt-xf { position: absolute; inset: 0; pointer-events: none; }
+.pmt-xf-text > canvas { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; }
+.pmt-xf.pmt-in, .pmt-xf-edge.pmt-in { animation: var(--pmt-a-xf) var(--pmt-t-xf) var(--pmt-ease-xf) both; }
+.pmt-xf-edge { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="friendly"] .pmt-xf {
+    --pmt-xf-max: var(--pmt-xf-rad);
+    -webkit-mask-image: radial-gradient(circle at calc(var(--pmt-xf-ox) - var(--pmt-xf-dx)) calc(var(--pmt-xf-oy) - var(--pmt-xf-dy)), transparent calc(var(--pmt-xf-r) - 72px), #000 var(--pmt-xf-r));
+    mask-image: radial-gradient(circle at calc(var(--pmt-xf-ox) - var(--pmt-xf-dx)) calc(var(--pmt-xf-oy) - var(--pmt-xf-dy)), transparent calc(var(--pmt-xf-r) - 72px), #000 var(--pmt-xf-r));
+  }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="glass"] .pmt-xf {
+    --pmt-xf-max: calc(var(--pmt-xf-bw) + 220px);
+    -webkit-mask-image: linear-gradient(to left, transparent calc(var(--pmt-xf-r) - var(--pmt-xf-dr) - 220px), #000 calc(var(--pmt-xf-r) - var(--pmt-xf-dr)));
+    mask-image: linear-gradient(to left, transparent calc(var(--pmt-xf-r) - var(--pmt-xf-dr) - 220px), #000 calc(var(--pmt-xf-r) - var(--pmt-xf-dr)));
+  }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="retro"] .pmt-xf {
+    --pmt-xf-max: var(--pmt-xf-bh);
+    clip-path: inset(max(0px, calc(var(--pmt-xf-r) - var(--pmt-xf-dy))) 0 0 0);
+  }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root :is(.pmt-xf, .pmt-xf-edge) { --pmt-xf-max: var(--pmt-xf-bw); }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root .pmt-xf { clip-path: inset(0 max(0px, calc(var(--pmt-xf-r) - var(--pmt-xf-dr))) 0 0); }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root .pmt-xf-edge {
+    display: block; position: absolute; top: 0; bottom: 0; z-index: 3; width: 3px; pointer-events: none;
+    left: calc(var(--pmt-xf-bw) - var(--pmt-xf-r) - 3px); background: var(--o55-nier-ink);
+    box-shadow: 5px 0 0 -2px rgba(var(--o55-nier-ink-rgb), .55);
+  }
+}
+/* while the old colours leave, the DOM painted in scheme colours (marks, sticky header, scrollbar, hints) follows; so
+   does a see-through ground (Glass), which has no layer of its own */
+.pmt-root.pmt-recolor .pmt-body { transition: background-color var(--pmt-t-xf) var(--pmt-ease-fade); }
+.pmt-root.pmt-recolor :is(.pmt-mark, .pmt-sticky, .pmt-sb-thumb, .pmt-modehint, .pmt-hint) {
+  transition: color var(--pmt-t-xf) var(--pmt-ease-fade), background-color var(--pmt-t-xf) var(--pmt-ease-fade), border-color var(--pmt-t-xf) var(--pmt-ease-fade);
+}
+
+/* ================================================================================================================
+   Reduced Motion: the calm versions keep their length. The page stills every animation under Reduced Motion
+   (animation-duration .01ms and transitions off, all !important), and so do the effects screens (50-fx.css). The
+   terminal's calm versions are short opacity cross-fades and colour changes, nothing that travels, so they keep their
+   length here. NieR shows end states at once (its tokens are none), so it is left out.
+   ================================================================================================================ */
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-calm { animation-duration: var(--pmt-calm, 120ms) !important; animation-iteration-count: 1 !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-calm.pmt-out { --pmt-calm: 100ms; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-findring.pmt-calm { --pmt-calm: 520ms; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) :is(.pmt-agentrow, .pmt-notice).pmt-calm { transition: background-color 120ms linear, color 120ms linear !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-mark.pmt-calm { transition: color 120ms linear !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root.pmt-recolor .pmt-body { transition: background-color 120ms linear !important; }
+/* inside a screen with an effect class, 50-fx.css also takes the animation itself away: the find bar, the find ring and
+   the recolour's text layer get their fade back */
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findbar.pmt-calm.pmt-in { animation: pmt-m-fade-in 120ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findbar.pmt-calm.pmt-out { animation: pmt-m-fade-out 100ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findring.pmt-calm { animation: pmt-m-hold-fade 520ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-xf.pmt-calm.pmt-in { animation: pmt-xf-fade 120ms linear both !important; }
+/* NieR under Reduced Motion: the find target's brackets still stand for a moment, still (an end state, then gone) */
+html[data-o55-nier="on"][data-motion="reduced"] .pmt-findring.pmt-calm { animation: pmt-m-hold 480ms steps(1, end) both !important; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] .pmt-findring.pmt-calm { animation: pmt-m-hold 480ms steps(1, end) both !important; }
+  html:not([data-o55-nier="on"]) .pmt-calm { animation-duration: var(--pmt-calm, 120ms) !important; animation-iteration-count: 1 !important; }
+  html:not([data-o55-nier="on"]) .pmt-calm.pmt-out { --pmt-calm: 100ms; }
+  html:not([data-o55-nier="on"]) .pmt-findring.pmt-calm { --pmt-calm: 520ms; }
+  html:not([data-o55-nier="on"]) :is(.pmt-agentrow, .pmt-notice).pmt-calm { transition: background-color 120ms linear, color 120ms linear !important; }
+  html:not([data-o55-nier="on"]) .pmt-mark.pmt-calm { transition: color 120ms linear !important; }
+  html:not([data-o55-nier="on"]) .pmt-root.pmt-recolor .pmt-body { transition: background-color 120ms linear !important; }
+}

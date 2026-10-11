@@ -1,0 +1,26 @@
+{
+  "family": "Dracula",
+  "slug": "dracula",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-dracula.txt",
+  "copyright": "Copyright (c) 2023 Dracula Theme",
+  "homepage": "https://github.com/dracula/dracula-theme",
+  "schemes": [
+    {
+      "id": "dracula",
+      "name": "Dracula",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/dracula/ghostty/b0e64590232331d9837c82cc1c5138e11ea39f76/dracula",
+      "sourceSha256": "edc3e75c13daaeb3fa3ec837800a5172564cc091a125ac7a3d7c2941424a1be5",
+      "colors": {
+        "background": "#282a36",
+        "foreground": "#f8f8f2",
+        "cursor": "#f8f8f2",
+        "cursorText": "#282a36",
+        "selectionBackground": "#44475a",
+        "selectionForeground": "#f8f8f2",
+        "ansi": ["#21222c", "#ff5555", "#50fa7b", "#f1fa8c", "#bd93f9", "#ff79c6", "#8be9fd", "#f8f8f2", "#6272a4", "#ff6e6e", "#69ff94", "#ffffa5", "#d6acff", "#ff92df", "#a4ffff", "#ffffff"]
+      }
+    }
+  ]
+}

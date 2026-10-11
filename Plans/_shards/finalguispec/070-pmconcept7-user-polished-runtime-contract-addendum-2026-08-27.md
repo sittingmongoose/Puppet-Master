@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35570-L36049
+Source lines: L35593-L36072
 
-Source SHA256: `dbea51739cd483544b8afb4d97d4efb76112921920265301e15d507c48f2aaa5`
+Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
 
 ---
 
@@ -118,8 +118,8 @@ canonical_text: >-
   retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
   inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
   one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
-  owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
+  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
+  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
   previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.

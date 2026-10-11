@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18525-L18717
+Source lines: L18525-L18726
 
-Source SHA256: `7301c4c3a8faa26aa16665273999dbac84142a1e6b0e1a806b2bb87f1c54734f`
+Source SHA256: `83ef7894d34fc118940e34a528bb950fab9a6f7cfd82e8d982ed8e454ebe2ed6`
 
 ---
 
@@ -58,6 +58,12 @@ canonical_text: >-
   under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying
   one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are
   not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one.
+  Board contents are scoped per project and per board; custom dashboard names are kept per project, with
+  whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards
+  and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored
+  entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is
+  retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
+  storage key is admitted by this rule.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]
@@ -99,6 +105,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
   - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
@@ -125,6 +133,7 @@ compatibility_only_notes:
   - "The concept's pm.home.dashboards:v1:<project> name store and its board and preset envelope schema ids are concept lineage only."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186): dashboard boards are per project under widget_layout:v1:<project_id>:<board_id> with quarantine, one-time adoption and forgetting; presets are per user under widget_presets:v1; the single Dashboard namespace is the old layout's only."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Board contents are per project and board, and custom names remain per project without a concept-only key."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Widget_System.md

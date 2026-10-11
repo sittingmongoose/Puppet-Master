@@ -1313,27 +1313,36 @@
       },
       "workspace_orientation": {
         "title": "Your workspace",
-        "do": "Pages sit across the top. Panels like Chat can live wherever suits you.",
-        "doEli5": "Pages are on top. Panels can move."
+        "do": "Pages sit across the top. Everything you open lands in these panels: files, terminals, browsers, plans. The chat stays on the right; pop it out to move it.",
+        "doEli5": "Pages are on top. What you open shows up in these panels. Chat stays on the right."
       },
-      "move_or_dock_chat": {
-        "title": "Move Chat to where it helps.",
-        "do": "Drag Assistant Chat to the highlighted side of the workspace. You can move it again whenever your work changes.",
-        "doEli5": "Drag Chat to the glowing left edge.",
-        "doTop": "This window is narrow, so Chat moves above your work instead of beside it. Choose Move Chat to the top.",
-        "doTopEli5": "Choose Move Chat to the top.",
-        "after": "The same Chat stays with you; only its place changed.",
-        "zone": "Drop Chat here",
-        "zoneHot": "Let go",
-        "moveTop": "Move Chat to the top"
+      "open_from_plus": {
+        "title": "Open anything from +",
+        "do": "Choose + at the end of the tabs, then pick something to open, like a terminal or a browser.",
+        "doEli5": "Click +, then pick something.",
+        "pick": "Pick something to open. It opens as a new tab in this panel.",
+        "pickEli5": "Pick one.",
+        "after": "It opened as a new tab in this panel. Each panel has its own +."
+      },
+      "open_file_from_rail": {
+        "title": "Open a file into a panel",
+        "do": "Click a file in the Files list. One click opens a preview tab; a double click keeps it open.",
+        "doEli5": "Click a file on the left.",
+        "after": "A preview tab makes way for the next file you click. Double-click a file, or its tab, to keep it."
+      },
+      "split_by_drag": {
+        "title": "Split by dragging a tab",
+        "do": "Drag this tab to the edge of a panel and let go when that half lights up. Or right-click the tab and choose Split right with this tab.",
+        "doDown": "Drag this tab to the edge of a panel and let go when that half lights up. Or right-click the tab and choose Split down with this tab.",
+        "doEli5": "Drag the tab to the edge of a panel.",
+        "doDownEli5": "Drag the tab to the edge of a panel.",
+        "after": "The tab has a panel of its own now. Drag it back onto the other tabs to join them again."
       },
       "widget_action": {
-        "title": "Keep useful things in view.",
-        "do": "Add the Approval queue widget, then place it where you can glance at it while planning.",
-        "doEli5": "Add the Approval queue widget.",
-        "place": "Now place it: drag its grip to move it, or choose a size.",
-        "placeEli5": "Drag it to a new spot, or pick a size.",
-        "after": "Widgets keep useful Project information nearby without taking you away from the page you’re using."
+        "title": "Add a widget",
+        "do": "On your Home dashboard, choose Add widget, find Upcoming resets and add it. Then drag it up to where you can glance at it.",
+        "doEli5": "Add Upcoming resets to Home.",
+        "after": "Upcoming resets is on your Home dashboard now. Each dashboard keeps its own widgets."
       },
       "open_planning": {
         "title": "Planning Wizard helps turn a rough idea into a plan you can inspect before work begins.",

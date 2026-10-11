@@ -124,29 +124,72 @@ function applyContext(panel) {
   });
 }
 
-/* worktree owner filter: the chip row becomes one chat-style dropdown; picking clicks the shell's own chip */
-function applyWorktreeFilter(panel) {
-  const chips = panel.querySelector('.sh-wtchips');
-  if (!chips || chips._dFilter) return;
-  const btns = Array.from(chips.querySelectorAll('.pm-chipbtn'));
-  if (!btns.length) return;
-  const labelOf = b => { const f = b.querySelector('.wt-full'); const t = (f ? f.textContent : b.textContent).trim(); return OWNER[t] || t; };
+/* the Owner filter (F3-622, W-075): one chat-style dropdown of All and the owner classes. Several classes can be chosen
+   at once and a row shows when its class is any of them (W-075: within a dimension the choices are OR'd; owner,
+   2026-10-10). Picking a class checks or clears it and the menu stays open; All clears them all and closes; every class
+   chosen is All again. The trigger names the class chosen, or the classes while they fit on it, else how many.
+   classes = [[value, label]]; onChange(chosen) filters, an empty set meaning All. */
+function ownerFilter(menuId, hover, classes, start, onChange) {
+  const chosen = new Set(start);
   const value = PMR.h('span.d-select-v');
   const trig = PMR.h('button', { type: 'button', class: 'd-select', 'aria-haspopup': 'menu', 'aria-expanded': 'false' },
     PMR.icon('filter', 'd-select-ico'), PMR.h('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD'));
-  PMR.hover(trig, 'Filter worktrees by owner', 'Threads, the orchestrator, agents or manual worktrees');
-  const sync = () => { const a = btns.find(b => b.classList.contains('active')) || btns[0]; value.textContent = labelOf(a); };
-  sync();
+  PMR.hover(trig, hover[0], hover[1]);
+  const show = () => {
+    const names = classes.filter(c => chosen.has(c[0])).map(c => c[1]);
+    const all = names.length ? names.join(', ') : 'All';
+    value.textContent = all;
+    trig.setAttribute('aria-label', 'Owner: ' + all);
+    if (names.length > 1 && visible(trig) && trig.scrollWidth > trig.clientWidth + .5) value.textContent = names.length + ' owners';
+  };
+  show();
   trig.addEventListener('click', ev => {
     ev.preventDefault(); ev.stopPropagation();
-    const items = btns.map((b, i) => ({ label: labelOf(b), value: String(i), selected: b.classList.contains('active'), _src: b }));
-    PMR.menu.toggle({ id: 'd-wt-owner', label: 'Owner', groups: [{ items }] }, trig, { width: Math.max(220, Math.round(trig.getBoundingClientRect().width)), onPick: it => { it._src.click(); requestAnimationFrame(sync); } });
+    const items = [{ label: 'All', value: '', checked: !chosen.size, closes: true }]
+      .concat(classes.map(c => ({ label: c[1], value: c[0], checked: chosen.has(c[0]) })));
+    PMR.menu.toggle({ id: menuId, label: 'Owner', multi: true, groups: [{ items }] }, trig, {
+      width: Math.max(220, Math.round(trig.getBoundingClientRect().width)),
+      onPick: it => {
+        if (!it.value) chosen.clear();
+        else if (it.checked) chosen.add(it.value);
+        else chosen.delete(it.value);
+        if (chosen.size === classes.length) chosen.clear();
+        items.forEach(x => { x.checked = x.value ? chosen.has(x.value) : !chosen.size; });
+        show();
+        onChange(chosen);
+      },
+    });
   });
-  const row = PMR.h('div.d-wtfilter', trig);
+  return { trig, reset() { chosen.clear(); show(); onChange(chosen); } };
+}
+
+/* the worktrees' Owner filter: the shell's chip row (one class at a time) gives way to the Owner dropdown, which filters
+   the worktree rows itself; it starts from the chip the shell had chosen, and the rows go back to that chip's filter */
+function applyWorktreeFilter(panel) {
+  const chips = panel.querySelector('.sh-wtchips');
+  if (!chips || chips._dFilter) return;
+  const btns = Array.from(chips.querySelectorAll('.pm-chipbtn[data-wtf]'));
+  if (!btns.length) return;
+  const labelOf = b => { const f = b.querySelector('.wt-full'); const t = (f ? f.textContent : b.textContent).trim(); return OWNER[t] || t; };
+  const classes = btns.filter(b => b.getAttribute('data-wtf') !== 'all').map(b => [b.getAttribute('data-wtf'), labelOf(b)]);
+  const shell = (btns.find(b => b.classList.contains('active')) || btns[0]).getAttribute('data-wtf');
+  const was = new Map();
+  const f = ownerFilter('d-wt-owner', ['Filter worktrees by owner', 'Threads, the orchestrator, agents or manual worktrees; choose several to see them together'],
+    classes, shell && shell !== 'all' ? [shell] : [], chosen => {
+      const shown = [];
+      panel.querySelectorAll('.sh-wt[data-owner]').forEach(r => {
+        if (!was.has(r)) was.set(r, r.classList.contains('pm-hidden'));
+        const on = !chosen.size || chosen.has(r.getAttribute('data-owner'));
+        if (on && r.classList.contains('pm-hidden')) shown.push(r);
+        r.classList.toggle('pm-hidden', !on);
+      });
+      if (shown.length) { midFitAll(panel); cascade(shown.filter(visible), { max: 8 }); }
+    });
+  const row = PMR.h('div.d-wtfilter', f.trig);
   inject(chips.parentNode, row, chips);
   addClass(chips, 'd-hidden');
   chips._dFilter = true;
-  remember(() => { delete chips._dFilter; });
+  remember(() => { was.forEach((hidden, r) => r.classList.toggle('pm-hidden', hidden)); delete chips._dFilter; });
 }
 
 /* NieR's cursor (ink bar + square cursor) follows the rail's hook class on rows */

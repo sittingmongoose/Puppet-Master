@@ -1850,8 +1850,7 @@ canonical_text: >-
   (Plans/FinalGUISpec.md#F3-638) dispatches cmd.widget.reset_layout { scope: 'room', room: <board_id>,
   restore_revision }, restore_revision being the board's committed layout revision (its committed_revision, WS-020)
   just before that Start from: one receipt, offered only while the notice is up (8 s, held on pointer or focus).
-  restore_revision and set_id never travel together. The owner puts back exactly that revision's records, and a
-  restore whose revision is no longer the board's previous one is refused with a disabled reason. Like every widget
+  restore_revision and set_id never travel together. The owner puts back exactly that revision's records, and a restore is refused without dispatch when any other change was committed on the board since, except the preset hold's settling resizes, and Undo is disabled with its reason. Like every widget
   command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361).
   Presets (D35, Jared: "With savable presets."): a person can save a board's arrangement as their own preset, rename
   it and delete it. Presets belong to the person, not the project: they are kept in the per-user family
@@ -1897,6 +1896,29 @@ canonical_text: >-
   and amends the Home Workspace boundary addendum's sentences that assume one dashboard. DL-186 retires the panels
   concept's stand-in board with its grid numbers and reset spans, and the conversion of `widget_layout:v1:dashboard`
   into the Home board; their 2026-10-09 and 2026-10-10 text is kept below for lineage only.
+  The Dashboard plus sub-row keeps Home, Metrics, Monitoring, Agents and New dashboard inline; one Your
+  dashboards row opens this project's custom dashboards by name with their widget counts and search above 7.
+  Custom ids run from dash-1 to dash-9999: the next number is one above the largest across open tabs, the
+  reopen list, this project's stored boards, still-unadopted unscoped stores, names and live boards; beyond
+  9999 the open resolves to Home. An unknown board opens Home, dashboard:new creates one and
+  dashboard:current resolves to dashboard:home. Dashboard names are unique against built-ins and the
+  project's custom dashboards, and preset names against the person's presets, using suffixes 2, 3 and so on;
+  an empty or default dashboard name drops its stored entry. A project switch rebinds every mounted engine
+  board whose tab survives, hidden boards too, reloads custom names and refreshes the catalog; a board
+  unmounted by the switch writes to its prior project. Add widget groups the 13 Usage rooms in order, then
+  More widgets for Usage widgets without a room, then other sources under their labels, with no second
+  catalogue. A Reset widgets that changed anything offers the same Undo as Start from. It retains the
+  envelope and committed revision just before that operation, writes that exact envelope back in this
+  project after acceptance and reads it, with one cmd.widget.reset_layout { scope: 'room', room: <board_id>,
+  restore_revision }, one receipt and no workspace.layout_changed; restore_revision never travels with
+  set_id. Any other committed board change makes Undo unavailable; the preset hold's settling resizes do
+  not. The notice ends on later widget change or commit other than those resizes, Escape, project switch or
+  unmount, or after its 8 s offer, held on pointer or focus then 3 s after. Eligibility is checked on each
+  commit that leaves it up, pointer or focus entering, and click; stale revision, invalid envelope or a gone
+  board dispatches nothing and disables Undo with its reason. A named layout applies a captured board
+  envelope only to the project it was saved for, skips another project's envelope and leaves a custom board
+  not held by that layout unchanged. F3-638 owns the header facts, Live mark, Board and Start from menu
+  rows, empty-board invitation, focus return and measured sizes.
 gui_related: true
 gui_classification_reason: Defines which boards a person can open, make, rename and delete as dashboard tabs, what each can show, and how each board's widget layout, view and presets are kept and restored.
 split_recommended: false
@@ -1910,7 +1932,7 @@ acceptance_criteria:
   - "Nothing is converted from or written to `widget_layout:v1:dashboard`, nothing is read from or written to `widget_layout:v1:dashboard:<board_id>`, and an unscoped `widget_layout:v1:<board_id>` is adopted once, by the first project that shows that board, and then removed."
   - "New dashboard opens an empty board with the next unused number, named \"Dashboard <n>\"; Rename dashboard... and renaming its tab set the stored name through cmd.panel_tab.rename; Delete dashboard... asks first, closes the tab, drops it from the reopen list and forgets its key, set-aside copy and name; Home, Metrics, Monitoring and Agents offer neither Rename dashboard... nor Delete dashboard...."
   - "Reset widgets dispatches one cmd.widget.reset_layout { scope: 'room', room } that returns the board to its default set; each Start from row dispatches one cmd.widget.reset_layout with its set_id; Start from shows the sets in F3-638's four groups, This dashboard (default), Dashboard starter (host:dashboard), the 13 Usage room sets in room order, then the person's presets; the envelope stores every set_id but default."
-  - "The Undo after Start from dispatches one cmd.widget.reset_layout { scope: 'room', room, restore_revision } with the board's committed layout revision just before that Start from and no set_id, only while its notice is up; the owner puts back exactly that revision's records, a restore whose revision is no longer the board's previous one is refused with a disabled reason, and no workspace.layout_changed is emitted (amended 2026-10-10, lead ruling)."
+  - "The Undo after Start from dispatches one cmd.widget.reset_layout { scope: 'room', room, restore_revision } with the board's committed layout revision just before that Start from and no set_id, only while its notice is up; the owner puts back exactly that revision's records, a restore is refused without dispatch when any other change was committed on the board since, except the preset hold's settling resizes, and Undo is disabled with its reason, and no workspace.layout_changed is emitted (amended 2026-10-10, lead ruling)."
   - "Saving, renaming and deleting a preset dispatch no command and write only `widget_presets:v1`; a preset holds no view, appears in Start from on every dashboard of every project, and applying it dispatches cmd.widget.reset_layout with set_id user:<preset_id>."
   - "Changing a board's range or scope runs ui.widget_board.set_view, writes only that board's envelope and dispatches no command, receipt or event; each board keeps its own range and scope."
   - "Add widget offers every Usage widget grouped by Usage room, and any other registered source's widgets under that source; a widget on the board cannot be added twice; no board offers an old Home widget; every widget command inside a dashboard tab names its board in `room`, changes only that board and emits no `workspace.layout_changed`; a panel or tab command changes no board."
@@ -1950,6 +1972,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (the \"+\" menu's Dashboard sub-row and the Home named layout; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/widgets-and-coordination.md, SHA-256 631c28a9198c9f550514c856ade138627410b94c48fe5f96a67450b14f407a90 (part A, A1 to A7; research lineage only)"
   - "Concepts/home-redesign/src/panels/kinds/30-dashboard.js on concept/home-panels-20261009 (the boards, the Details route and the entrance; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:<board_id>"
@@ -2014,6 +2038,7 @@ stale_retired_dispositions:
   - "Superseded 2026-10-09 (DL-180): the one Dashboard widget-layout namespace and the singleton Dashboard surface."
   - "Amended 2026-10-10 (DL-186): Start from shows the sets in F3-638's group order, the lab-only Play the next hour is no criterion of this unit, and the built-in boards' own sets stay an open question for Usage until a Usage unit lists them."
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from, never with set_id."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Round-two dashboard names, grouping, project rebinding, picker sections and guarded Reset Undo use the board owner."
 owner_boundary_notes:
   - "F3-638 owns how a dashboard tab looks in its panel; WS-017, WS-018, WS-019 and WS-020 keep the widget sizes, gestures and record fields; usage-feature.md owns the Usage widgets themselves, their default sets and the live readings; storage-plan registers the board and preset families; UI_Command_Catalog owns the commands and typed local actions named here."
 owner_hints:

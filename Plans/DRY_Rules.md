@@ -3759,6 +3759,9 @@ canonical_text: >-
   statuses (DL-036) and the production icon contract with no emoji (FinalGUISpec section 2.6, F3-417); where one of
   them names only the chat, Settings or the rail, this rule covers every other surface as well. A new surface cites
   this rule instead of restating it. The checks are F3-648's and the home certification's (ATS-075).
+  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
+  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
+  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: "Fixes one shell-wide rule against side stripes, emoji and pills."
 split_recommended: false
@@ -3786,6 +3789,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8, sections 2.12 and 7.1 (A11, A12) (worklist)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Remember, no boxes with side colors, no emojis, no pills are to be used."
   - "APR-034"
@@ -3794,6 +3798,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped tab, tag, badge, button or status chip, or an emoji in Puppet Master's chrome."
   - "Do not restate this rule per surface or carve a surface out of it."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

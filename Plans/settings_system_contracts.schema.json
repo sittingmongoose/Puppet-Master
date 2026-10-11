@@ -1383,8 +1383,30 @@
             },
             "detail_id": {
               "$ref": "#/$defs/nullable_non_secret_ref"
+            },
+            "provider_id": {
+              "description": "Optional (SSYS-019, SSYS-044): the provider whose section the route lands in, for a row drawn once per provider, such as the provider scope of a Settings control hosted on the Usage page. Absent keeps the target's existing meaning.",
+              "$ref": "#/$defs/non_secret_ref"
+            },
+            "account_id": {
+              "description": "Optional (SSYS-019, SSYS-044; owner decision 2026-10-10 D43): the account inside provider_id whose own row the route lands on, for an account's own switch level hosted on its Usage account card. It needs provider_id.",
+              "$ref": "#/$defs/non_secret_ref"
             }
           },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "account_id"
+                ]
+              },
+              "then": {
+                "required": [
+                  "provider_id"
+                ]
+              }
+            }
+          ],
           "additionalProperties": false
         },
         {

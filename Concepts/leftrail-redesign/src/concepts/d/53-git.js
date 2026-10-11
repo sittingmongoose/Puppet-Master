@@ -2,8 +2,10 @@
 
    The shell's panel stays as it is (Runs / Workflows / Settings, the automation service selector, the provider views it
    renders for the other services); this file adds what d.css cannot, on top of the shared passes of 10-skin.js:
-   - the automation service <select> opens as the chat-style PMR.menu; picking sets the select and fires its change
-     event, so the shell's own setService() renders the provider view exactly as before;
+   - the automation service <select> opens as the chat-style PMR.menu of the project's bindings when it has several;
+     picking sets the select and fires its change event, so the shell's own setService() renders the provider view
+     exactly as before; a project with one binding shows its service as a fact instead (owner, 2026-10-10);
+   - GitHub's first tab is Current Branch: this branch's runs, then the other branches' (owner, 2026-10-10);
    - full words for the shell's shorthand ("4 - 2 - 1", "7 · 5 refs", "on:", REPO / ORG, UPPERCASE micro labels) and a
      real arrow for "->";
    - job and run states as the shared glyph family (done is a solid badge, failed a cross, running a live dot, skipped
@@ -167,20 +169,42 @@ const LANE_E = (() => {
     });
   }
 
-  /* the automation service: the native select becomes a chat-style dropdown; the select stays the source of truth */
+  /* the automation bindings this project has (Forge_Integrations: binding selection shows only when several exist;
+     owner, 2026-10-10). The demo project tastebook pushes to GitHub and the Origin mirror, whose checks are GitHub's
+     own (the shell's "Origin checks" view is the fallback when the GitHub binding is unavailable), so it has one:
+     GitHub Actions. The shell's select lists every service it can draw; ?bindings=github,gitlab (any of its values)
+     gives the page that project instead, to review the picker. */
+  function bindings(sel) {
+    const all = Array.from(sel.options).map(o => o.value);
+    const q = new URLSearchParams(location.search).get('bindings');
+    const want = q ? q.split(',').map(s => s.trim()).filter(v => all.indexOf(v) >= 0) : [];
+    return want.length ? Array.from(new Set(want)) : ['github'];
+  }
+  /* the automation service: with several bindings the native select becomes a chat-style dropdown of those bindings;
+     with one, the service is a plain fact beside Revision and Pinned and there is nothing to choose. The select stays
+     the source of truth either way. */
   function service(panel) {
     const sel = panel.querySelector('#pm7AutomationService');
     if (!sel || sel._dE) return;
     sel._dE = true;
+    const applies = bindings(sel);
+    if (applies.indexOf(sel.value) < 0) {
+      const was = sel.value;
+      sel.value = applies[0];
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+      remember(() => { sel.value = was; sel.dispatchEvent(new Event('change', { bubbles: true })); });
+    }
+    const nameOf = v => { const o = Array.from(sel.options).find(x => x.value === v); return o ? o.textContent.trim() : v; };
+    if (applies.length < 2) { serviceFact(panel, sel, nameOf(applies[0])); return; }
     const value = PMR.h('span.d-select-v');
     const trig = PMR.h('button', { type: 'button', class: 'd-select d-e-service', 'aria-haspopup': 'menu', 'aria-expanded': 'false', 'aria-label': 'Automation service' },
       value, PMR.icon('chevD'));
-    PMR.hover(trig, 'Choose the automation service', 'The hosted service whose checks, workflows or pipelines this panel shows. GitHub keeps Runs, Workflows and Settings; the others show their own native view.');
+    PMR.hover(trig, 'Choose the automation service', 'This project has ' + applies.length + ' automation services. GitHub keeps Current Branch, Workflows and Settings; the others show their own native view.');
     const sync = () => { const o = sel.options[sel.selectedIndex]; value.textContent = o ? o.textContent.trim() : ''; };
     sync();
     trig.addEventListener('click', ev => {
       ev.preventDefault(); ev.stopPropagation();
-      const items = Array.from(sel.options).map(o => ({ label: o.textContent.trim(), value: o.value, selected: o.value === sel.value }));
+      const items = applies.map(v => ({ label: nameOf(v), value: v, selected: v === sel.value }));
       PMR.menu.toggle({ id: 'd-e-service', label: 'Automation service', value: sel.value, groups: [{ items }] }, trig, {
         width: Math.max(220, Math.round(trig.getBoundingClientRect().width)),
         onPick: it => {
@@ -194,6 +218,17 @@ const LANE_E = (() => {
     inject(sel.parentNode, trig, sel);
     addClass(sel, 'd-hidden');
     remember(() => { sel.removeEventListener('change', onChange); delete sel._dE; });
+  }
+  /* one binding: the field goes and the service leads the facts (Service · Revision · Pinned), in their grid */
+  function serviceFact(panel, sel, name) {
+    const main = sel.closest('.pm7-automation-context-main');
+    const common = panel.querySelector('.pm7-automation-context > .pm7-automation-common');
+    if (!main || !common) return;
+    const fact = PMR.h('div.pm7-automation-fact.d-e-service-fact', PMR.h('small', { text: 'Service' }), PMR.h('strong', { text: name }));
+    PMR.hover(fact, 'Automation service', name + ' is the one automation service this project has. A picker appears here when a project has several.');
+    inject(common, fact, common.firstChild);
+    addClass(main, 'd-hidden');
+    remember(() => { delete sel._dE; });
   }
   /* the other view comes in: provider cards rise in one after the other, or the GitHub pane deals back in */
   function riseProvider(panel) {
@@ -241,6 +276,72 @@ const LANE_E = (() => {
     });
   }
 
+  /* GitHub's first subview is Current Branch (GitHub_Integration GI-011; owner, 2026-10-10): the branch this worktree
+     is on with its readiness and its runs, and under them the other branches' runs, still in view (a background run
+     never takes focus). The shell lists every ref's runs in one Recent runs shelf; this splits that shelf in two. The
+     branch is the one Source Control's branch menu names. */
+  const plainOf = el => el.textContent.replace(/⁠/g, '').replace(/ /g, ' ');
+  const refOf = run => {
+    const m = run.querySelector(':scope > .sh-run-h .sh-meta');
+    const p = m ? plainOf(m).split(' · ') : [];
+    return p.length > 2 ? p.slice(1, -1).join(' · ').trim() : '';
+  };
+  const runsWord = n => n + ' ' + (n === 1 ? 'run' : 'runs');
+  function headCount(head, full, abbr, own) {
+    const hc = head.querySelector('.sh-hcount');
+    if (!hc) return;
+    const f = hc.querySelector(':scope > .hc-full'), a = hc.querySelector(':scope > .hc-abbr');
+    if (own) { if (f) f.textContent = full; if (a) a.textContent = abbr; hc.setAttribute('title', full); return; }
+    if (f) setOwnText(f, full);
+    if (a) setOwnText(a, abbr);
+    if (hc.getAttribute('title') !== full) setAttr(hc, 'title', full);
+  }
+  function currentBranch(panel) {
+    const tab = panel.querySelector(':scope > .pm-segtab > .pm-segtab-item[data-tab="runs"] > span');
+    if (tab && ownText(tab) !== 'Current Branch') setOwnText(tab, 'Current Branch');
+    const pane = panel.querySelector(':scope > .sh-scroll > [data-pane="runs"]');
+    if (!pane || pane._dEBranch) return;
+    const shelf = pane.querySelector(':scope > .sh-shelf');
+    const head = shelf && shelf.querySelector(':scope > .sh-head'), body = shelf && shelf.querySelector(':scope > .sh-body');
+    const menu = document.querySelector('#panel-source .pm6-tb-menu-label.sh-branch');
+    const branch = menu ? menu.textContent.trim() : '';
+    if (!head || !body || !branch) return;
+    const runs = Array.from(body.querySelectorAll(':scope > .sh-run'));
+    const mine = runs.filter(r => refOf(r) === branch), other = runs.filter(r => refOf(r) !== branch);
+    pane._dEBranch = true;
+    remember(() => { delete pane._dEBranch; });
+    /* this branch: its name and worktree first, its readiness counted over its own runs */
+    const label = head.querySelector(':scope > .sh-hlabel');
+    if (label) setOwnText(label, 'Current branch');
+    headCount(head, runsWord(mine.length), String(mine.length));
+    const kvs = Array.from(body.querySelectorAll(':scope > .sh-kv'));
+    const ready = kvs.find(kv => { const k = kv.querySelector(':scope > .sh-k'); return k && k.textContent.trim() === 'Readiness'; });
+    if (ready) {
+      const n = { ok: 0, fail: 0, live: 0 };
+      mine.forEach(r => { const st = r.querySelector(':scope > .sh-run-h > .pm-chip'); const s = st && st.getAttribute('data-d-st'); if (s === 'run') n.live += 1; else if (s in n) n[s] += 1; });
+      const words = [[n.ok, 'passed'], [n.fail, 'failed'], [n.live, 'running']].filter(x => x[0]).map(x => x[0] + ' ' + x[1]);
+      const v = ready.querySelector(':scope > .sh-v');
+      if (v && words.length) setOwnText(v, words.join(' · '));
+    }
+    inject(body, PMR.h('div.sh-kv.d-e-branch', PMR.h('span.sh-k', { text: 'Branch' }),
+      PMR.h('span.sh-v', { text: branch + ' · this worktree' })), kvs[0] || body.firstChild);
+    if (!other.length) return;
+    /* the other branches: the same shelf, its own head, the runs moved in their order */
+    const shelf2 = shelf.cloneNode(false), head2 = head.cloneNode(true), body2 = body.cloneNode(false);
+    const l2 = head2.querySelector(':scope > .sh-hlabel');
+    if (l2) l2.textContent = 'Other branches';
+    const refs = new Set(other.map(refOf)).size;
+    headCount(head2, runsWord(other.length) + ' · ' + refs + ' ' + (refs === 1 ? 'ref' : 'refs'), String(other.length), true);
+    shelf2.classList.add('d-e-others');
+    shelf2.append(head2, body2);
+    inject(pane, shelf2, shelf.nextSibling);
+    other.forEach(r => {
+      const home = r.parentNode, next = r.nextSibling;
+      body2.appendChild(r);
+      remember(() => { home.insertBefore(r, next && next.parentNode === home ? next : null); });
+    });
+  }
+
   function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); stackRuns(panel, force); }
 
   function onClick(ev) {
@@ -256,6 +357,7 @@ const LANE_E = (() => {
       panel.querySelectorAll('.sh-dfrow > .sh-k, .sh-chk, .sh-head > .sh-hcount, [data-pane="workflows"] .sh-run-h .sh-meta').forEach(LANE_E.capOwn);
       LANE_E.headStates(panel);
       jobs(panel);
+      currentBranch(panel);
       reasons(panel);
       service(panel);
       LANE_E.cursor(panel, '.sh-run-h, .sh-art[data-demo-action]');

@@ -5,8 +5,10 @@
 html[data-o55-nier-parts~="ground"] #pmuApp.pmu-shell { background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px),
   linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .06) 1px, transparent 1px); background-size: 32px 32px; }
 html[data-o55-nier-scene] #pmuApp.pmu-shell { background-color: transparent; background-image: none; }
-html[data-o55-nier-scene] #pmuApp .pmu-rail, html[data-o55-nier-scene] #pmuApp .pmu-stagehead, html[data-o55-nier-scene] #pmuApp .pmu-card,
-html[data-o55-nier-scene] #pmuApp .pmu-inspector, html[data-o55-nier-scene] #pmuApp .pmu-pop, html[data-o55-nier-scene] #pmuApp .pmu-morph { background-color: var(--surface); }
+/* the scene's opaque surfaces sit on the Usage shell and on a hosted board's (.pmu-hosted, D10 6.2); the two shell
+   rules above and the room headers below stay the Usage page's */
+html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-rail, html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-stagehead, html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-card,
+html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-inspector, html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-pop, html[data-o55-nier-scene] :is(#pmuApp,.pmu-hosted) .pmu-morph { background-color: var(--surface); }
 html[data-o55-nier="on"] #panel-usage .pmu-stagehead { background: transparent; }
 
 /* square: every element; rings and dots stay SVG so they stay round */

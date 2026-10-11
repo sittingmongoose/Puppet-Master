@@ -12878,6 +12878,9 @@ canonical_text: >-
   inline notice when the user is back: Allow, Mute this terminal, Not now. The notification's text is the
   program's text, shown as plain text, and a system notification is still no new notification family. The menu
   rows and the notice's look are Plans/FinalGUISpec.md#F3-641's.
+  Under Full CRT a command mark sits beside its row as the tube shows it, inset by the case and bent by the
+  curvature; when the shell redraws a prompt, including Ctrl+L or a completion list, the prompt keeps its
+  mark (F3-641).
 gui_related: true
 gui_classification_reason: Owns the engine behaviour behind the terminal's visible marks, links, find, copy mode, bell and accessible buffer.
 split_recommended: false
@@ -12932,6 +12935,7 @@ source_lineage:
 - Plans/Decision_Log.md#DL-187
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
 - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (sections 1 and 2: notifications, the 3 s limit, the mute and the permission notice; concept lineage only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
 - "SMPFS-183"
 - "ui.terminal.mute_notifications"
@@ -12958,6 +12962,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Amended 2026-10-10 (DL-187, D38): terminal notifications raise system notifications while Puppet Master is in the background, at most one every 3 s per terminal, with a per-terminal mute (lead ruling F5)."
 - "Closes 2026-10-09 (DL-181) the terminal audit's Section 15 gaps on OSC 8, bell and OSC 9, 777 and 99 notifications that SMPFS-162 cited as an existing policy."
+- "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Command marks stay with their displayed Full CRT row and survive a shell-redrawn prompt."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/FinalGUISpec.md

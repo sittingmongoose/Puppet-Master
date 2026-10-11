@@ -235,18 +235,19 @@
     var w = i === 0 ? pressureWin() : null;
     return w ? Math.round(al.score + (w.pct - PRESSURE_FIX)) : al.score;
   };
+  /* a row opens the Attention room: on a hosted board through its host (C.openRoom, D10 7.1) */
   def('attention-now', 'overview', { meta: function () { return (DATA.alerts.filter(function (a) { return a.state === 'warn'; }).length + (D.liveAlerts ? D.liveAlerts().length : 0)) + ' current · scope filters by provider'; }, model: function () {
     /* live: an alert the demo engine raised while Usage is open arrives at the top (WOW-SPEC-3 8.3 beat 7) */
     var liveRows = (D.liveAlerts ? D.liveAlerts() : []).filter(function (al) { return !al.provider_id || D.inScope(al.provider_id); }).map(function (al) {
       return { name: al.title, sub: al.detail, glyph: 'alert', tone: al.state === 'warn' ? 'warn' : 'good', value: 'now', note: C.oldName(al.owner), key: 'alert:' + al.id, share: 'alert:' + al.id, live: true,
-        prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function () { PMU.shell.setView({ room: 'attention' }, 'attention-now'); } };
+        prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function (row) { C.openRoom('attention', row, 'attention-now'); } };
     });
     var rows = DATA.alerts.map(function (al, i) {
       if (al.provider_id && !D.inScope(al.provider_id)) return null;
       /* the alert's board title (no "runway": headroom, not a run-out countdown) and its Settings owner name */
       var bt = (PMU_BOARDS.widgets['alert-' + i] || {}).title || al.title;
       return { name: bt, sub: C.alertDetail(i), glyph: al.state === 'warn' ? 'alert' : 'checkCircle', tone: al.state === 'warn' ? 'warn' : 'good', value: al.time === 'now' ? 'now' : al.time + ' ago', note: C.oldName(al.owner),
-        prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function () { PMU.shell.setView({ room: 'attention' }, 'attention-now'); } };
+        prov: al.provider_id ? PMU.roster.legacyProvider(al.provider_id) : null, onClick: function (row) { C.openRoom('attention', row, 'attention-now'); } };
     }).filter(Boolean);
     return { rows: liveRows.concat(rows), empty: 'No alerts for the selected scope' };
   } });

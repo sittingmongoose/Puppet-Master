@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11779-L11915
+Source lines: L11779-L11916
 
-Source SHA256: `5258c8594defdcca2eb03557e1f2adcca4e4ffe26cc34f642a3b72a3dc3fc8d9`
+Source SHA256: `8069feae09a9e9acf0c51d927c4cff994861865b5c03a2bef574e2bea6ce253b`
 
 ---
 
@@ -27,10 +27,11 @@ census, not a new command family.
 | Home preset-size control | resolve the historical PM7 semantic preset alias through `cmd.workspace_layout.resize_surface` | Resolve `preset_id` to committed size values before dispatch; the alias is documentation-only and is not cataloged. |
 | Usage Refresh | `cmd.usage.refresh` | One explicit refresh request; background refresh remains separately owner-driven. |
 | Usage Ledger attempt drill-through | `cmd.nav.open_usage_subject` | One Usage object route with `route_target.object_kind = usage_attempt`, `route_target.object_id = attempt_id`, top-level `attempt_id`, and `usage_event_ref` correlation; no `OpenSubject`. |
-| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. On the Accounts room the card body and Details stay local; the three Accounts rows below are the only owner-routed actions on an account card or provider plate. |
+| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. On the Accounts room the card body and Details stay local; the four Accounts rows below are the only owner-routed actions on an account card or provider plate. |
 | Usage Accounts card Use this account | `cmd.account.select_profile` | Shown only when the provider's capability `supports_manual_set_active` is true and labelled as an override; asks first when the account is already past its provider's switch point (`Plans/Multi-Account.md#MA-073`), and that question's Use now and Use anyway answers dispatch the same one command; unavailable states show the command's own disabled reason. |
 | Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` for that provider id | The plate's toggle, the switch-level stepper and menu, and the same controls on the Accounts hero cells and the Overview headroom card: the same Settings value Settings edits, committed once per settled change through the Settings owner, the request's `changes` naming each row; the menu's Shared setting choice sends the change with `inherit` true; no Usage copy, no new command (`Plans/Settings_System.md#SSYS-044`). Opening the menu and hovering are `view_only`. The provider's warning level and rest period are edited in Settings, reached through Open in Settings. |
-| Usage Accounts Open in Settings | `cmd.settings.open` with `target_type` `setting` | Lands on the row inside that provider's section in Settings; the plate's shared-value line opens it too. |
+| Usage Accounts account switch level (D43, 2026-10-10) | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `account` for that provider id and account id | The account's switch-level button and menu on its account card and the Switch at N% used action in its Details: the same value as the account's own row in Settings, committed once per settled change through the Settings owner; the menu's Follow choice sends the change with `inherit` true, which clears the account's own value; no Usage copy, no new command (`Plans/Settings_System.md#SSYS-044`). Opening the menu and hovering are `view_only`. |
+| Usage Accounts Open in Settings | `cmd.settings.open` with `target_type` `setting` | Lands on the row inside that provider's section in Settings, or inside that account for an account's level, the setting target naming the provider and the account (`Plans/Settings_System.md#SSYS-019`); the plate's shared-value line opens it too. |
 | Usage head Export menu (Snapshot or Ledger) and the Ledger table's export | `cmd.usage.export` with `scope` `snapshot` or `ledger` | One export per choice; opening the menu is `view_only`; no other export command. |
 | Usage alert Acknowledge and Snooze 1 hour | `cmd.alert.acknowledge`, `cmd.alert.snooze` | The shared alert store owns the lifecycle (`Plans/FinalGUISpec.md#F3-453`); Usage keeps no alert state of its own. |
 | Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
@@ -70,9 +71,9 @@ canonical_text: >-
   remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
   The redesigned Usage page (2026-10-09) adds no command. On its Accounts room the card body and
   Details stay local, Use this account dispatches cmd.account.select_profile, shown only when
-  supports_manual_set_active holds, and each provider's Auto-switch toggle and switch level commit
-  through cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider,
-  with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
+  supports_manual_set_active holds, each provider's Auto-switch toggle and switch level at scope
+  provider and each account's own switch level at scope account (D43, 2026-10-10) commit through
+  cmd.settings.transaction.preview and then cmd.settings.transaction.apply, with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
   period are edited. Usage board gravity commits inside the one cmd.widget.move, cmd.widget.resize,
   cmd.widget.add or cmd.widget.remove of the action that caused it, and Tidy commits the whole
   repacked room as one settled layout transaction through exactly one existing cmd.widget.move that
@@ -96,7 +97,7 @@ acceptance_criteria:
   - Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does not route through app-wide Usage.
   - The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
   - cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
-  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider; opening a card's Details dispatches nothing."
+  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider, and a change of an account's own switch level the same pair at scope account with the account id (D43, 2026-10-10); opening a card's Details dispatches nothing."
   - "Usage layout: a Tidy that moves cards dispatches exactly one cmd.widget.move carrying arrange { mode: tidy, detail } and one receipt for the whole repacked room, the owner computing the repack, a Tidy that moves nothing dispatches nothing, gravity adds no command beyond the action that caused it, and a size-picker preset dispatches one cmd.widget.resize whose settled record carries the preset_id."
   - "Live / Paused and the concept demo controls of UF-107 dispatch no command and have no catalog or production wiring row; export, alert acknowledge and alert snooze reuse cmd.usage.export, cmd.alert.acknowledge and cmd.alert.snooze."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.

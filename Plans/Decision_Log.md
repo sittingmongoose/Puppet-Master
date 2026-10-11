@@ -3413,6 +3413,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/Final
    - SSYS-043, F3-598 and DL-152 said no onboarding action is added; each is amended to name the one action this item adds and the editor's actions. `Plans/Commands_System.md` registers none of these families and is unchanged.
 7. **Consumers updated:** `Plans/Planning_Wizard.md` (the starting look keyed to how the window opened, the four families' moments, the quiet restore, the action census, and PWIZ-021, PWIZ-022 and PWIZ-023), `Plans/UI_Wiring_Rules.md#UIW-015` and its result table (a start row and a look row), `Plans/Wiring_Matrix.md#WM-041` and `#WM-046`, `Plans/UI_Command_Catalog.md#UCC-106`, `#UCC-108` and `#UCC-120`, `Plans/Settings_System.md#SSYS-010` (the first frame is the Project's committed look, with no app-global copy or hint) and `#SSYS-043`, and `Plans/Automated_Testing_System.md#ATS-020`, with their machine companions (the Product Onboarding schema and fixtures, `Plans/touch_closure.json` and the production wiring rows).
 
+Amended 2026-10-11 (Jared's answer of 2026-10-10, reseal item 2): the onboarding session stores the look chosen so far as `look_choice` (theme family and mode, NieR Mode, its parts and background), each `ui.onboarding.choose_look` request replacing only what it sets, so a resumed setup repaints the chosen look, NieR included; anything not yet chosen falls back to the start rule, and Settings are still written only at commit (`Plans/product_onboarding_contracts.schema.json`, `Plans/storage-plan.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md#F3-520`).
+
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md`, SHA-256 `5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48` (the request and the two rulings, the rulings word for word); `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/LEAD-RULINGS-20261009.md`, SHA-256 `d838d83f930bda2967e9c289cffe1a98a59a2d07dd163374331c8c3803b98b38` (the lead's wiring rulings and the DL-152 thread's handoff; agent rulings, not owner answers).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/UI_Wiring_Rules.md#UIW-015, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/UI_Command_Catalog.md#UCC-108, ContractName:Plans/Wiring_Matrix.md#WM-041, ContractName:Plans/Planning_Wizard.md#PWIZ-021
@@ -3598,11 +3600,13 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/Final
 - The rail's status marks are not the chat's 13 status marks: the two sets differ (the chat's failed mark is a triangle, the rail's warning mark is). Whether one set should serve both is an open question for Jared.
 - The rail's header and tab plates keep the frosted scroll-under they already had in Basic, Friendly and Retro, which F3-431's closed blur budget does not list; Glass turns it off. Whether the budget admits it, or the product draws those plates solid, is an open question for Jared.
 - The concept still has three issues Jared raised on the same day (Jujutsu sub-text alignment, Jujutsu tabs that do nothing, and Retro and NieR tab-switch motion); they are being fixed under this decision, and any canon they change is recorded with it.
+- Jared answered the two open questions above on 2026-10-10 (below): one set of status marks, and some frost back on the plates. The design threads that own them, the neon glyph system and the Liquid Glass restyle, carry them and record their own canon.
 
 **Options considered:** A "Ledger" (read in place: calm two-line rows, an overflow dropdown for tabs), B "Stack" (drill in: a summary page per panel and no tabs), C "Lens" (a detail sheet beside the rail and morphing icon tabs), D "Polish" (today's rail, polished), or keeping the current rail. Jared chose D. The rail's width envelope (240 px minimum, 280 px default, 480 px maximum, F3-471) and the 48 px icon-only activity bar (F3-198) are unchanged.
 
 **What the owner decided** (in plain words):
 - 2026-10-09, in his request: go with the Polish design, finish the rest of the rail in it with the newer NieR Mode changes and the looks' built-in fonts in mind, fix the three issues he found, and update the plans, DRY rules, commands and wiring wherever the work changes them.
+- 2026-10-10, his answers to the build's questions: keep the 12.5 px names and 11.5 px facts; the worktree Owner filter takes several owners at once, as W-075 says; the first tab of Actions & Pipelines is Current Branch, as GitHub's canon says; the automation service picker shows only when a project has several services, as Forge_Integrations says; an expired artifact says Expired, not stale; use one set of status marks, the new neon glyphs, everywhere; bring back some frost on the plates; and darken Glass Light's green and amber to at least 4.5:1. The concept now follows the first five; the last three belong to the glyph and Liquid Glass threads.
 
 **What the spec now says:**
 1. **Geometry, shelves and type** (`Plans/FinalGUISpec.md#F3-618`; F3-474's shelf tints and section 3.5's selection stripe amended for the rail).
@@ -3614,7 +3618,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/Final
 7. **Settled later the same day:** the Jujutsu view's tabs are DL-163's. The six other panels and the bottom Debug tab take this design through amendments in their owner units, all on the commands they already had, with no new command, action or wiring row (`Plans/FinalGUISpec.md#F3-045`, `#F3-046`, `#F3-477`, `#F3-483`, `#F3-484`, `#F3-485`, `#F3-488`, `#F3-490`, `#F3-528`, `Plans/GitHub_Integration.md#GI-035`, `#GI-036`, `#GI-040`, `Plans/Runtime_Artifacts_Panel.md#RAP-050`, `#RAP-051` and `Plans/FileManager.md#F-076`). The status glyphs gain paused, immutable and errored (`Plans/FinalGUISpec.md#F3-619`). The More tray opens as the chat picker (`Plans/FinalGUISpec.md#F3-625`, `#F3-419` amended).
 8. **Published:** as he asked, the Polish rail is carried into the published concept. `Concepts/PMConcept7.html` shows it, built through its opus-5.5 build from the same sources as the review copy, and `Concepts/LeftRailPMConcept7.html` stays the comparison copy with A, B, C and "Original" (today's rail before Polish). The concept's NieR Mode kit gains a cursor hook and a target-brackets hook for the rail. No canon unit changes for the publication itself (`Plans/UI_Wiring_Rules.md` notes it for wiring review).
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, and the design he chose); the concept source `Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606 (concept lineage only).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, and the design he chose); the concept source `Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606 (concept lineage only); the owner's answers of 2026-10-10, relayed by the usage scheduler in pm-mail message `1010192014-0f1c`, `/mnt/Cursor/Inbox/box/leftrail-polish-lead/read/1010192014-0f1c.json`, SHA-256 `9a45175348f848c75fb267dd247025d5d48e4623c1b0ca8b94fbe4662a5a2b31`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/DRY_Rules.md#DR-057
 
@@ -3646,6 +3650,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 **What the owner decided** (in plain words):
 - 2026-10-09, in his request (issue 2): "On the source control panel, in jujutsu, should there be tabs? There is a changes, worktrees, history, and branches tab but nothing happens when you click them? If they apply, then they need to be fleshed out, if not, then they should be removed. This is more of a thought experiment rather than a simple task." He left the answer to the build, which worked it through and had it reviewed twice; this record is that answer.
 - Two choices remain his. The plans called the fifth view both "Operation Log" (JJI §4.1, JJI-006's registered string, the command catalogue and the wiring rows) and "Operation History" (F3-529, F3-552, UCC-163 and JJI-008); the consumers now follow the Jujutsu owner's registered "Operation Log", written as a proper name in title case, and he may reverse that (or ask for sentence case, "Operation log"). And the plans disagree on whether a change's short ID shows on its row: JJI §4.1 puts raw IDs only in Technical details, while F3-529 lists the change ID among what Jujutsu renders. The concept shows the short change ID on the row's second line because Jujutsu users name changes by it; the spec leaves that open until he chooses.
+- 2026-10-10, his answers: keep "Operation Log" as it is, a proper name in title case; and keep the short change ID on a change's row, with the Jujutsu owner's §4.1 amended to match. `Plans/Jujutsu_Integration.md` §4.1 and `Plans/FinalGUISpec.md#F3-624` now say so.
 
 **What the spec now says:**
 1. **The strip, the engine switch, the fit rule, the panel head and the footer card** (`Plans/FinalGUISpec.md#F3-623`).
@@ -3656,7 +3661,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/Final
 6. **No new command, action or wiring row.** The 31 `cmd.jujutsu.*` wiring rows already name "Adaptive Source Control Changes, Workspaces, History, Bookmarks, Operation Log".
 7. **Left open for the Jujutsu owner:** disabled-reason codes for the concept-local reasons above; a command to update an out-of-date workspace; what Undo reverts when the newest operation is an automatic working-copy save, checked against the certified Jujutsu version; whether JJI-012's "restoring an old operation view" should say, as the view now does, that restoring to an operation undoes every later operation and keeps that one; and the short change ID on the row (for Jared).
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only).
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md`, SHA-256 `4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06` (the owner request, verbatim, issue 2); the left-rail build's Jujutsu tab decision, revision 2 of 2026-10-09, folded with two reviews and summarised in this entry (not a repository file); the concept source `Concepts/leftrail-redesign/src/concepts/d/` from lane commits 8693996260 and 2f77b78710 (concept lineage only); the owner's answers of 2026-10-10, relayed by the usage scheduler in pm-mail message `1010192014-0f1c`, `/mnt/Cursor/Inbox/box/leftrail-polish-lead/read/1010192014-0f1c.json`, SHA-256 `9a45175348f848c75fb267dd247025d5d48e4623c1b0ca8b94fbe4662a5a2b31`.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-623, ContractName:Plans/FinalGUISpec.md#F3-624, ContractName:Plans/Source_Control_System.md#SCS-005, ContractName:Plans/Jujutsu_Integration.md#JJI-006, ContractName:Plans/FinalGUISpec.md#F3-529
 
@@ -3732,7 +3737,9 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 
 **Owner decision 2026-10-10 (USG-2):** Jared asked for MA-073's status states to be written as a mapping: each state is defined by a set of section 5 reason codes. `Plans/Multi-Account.md` now carries the MA-073 state table, read top to bottom, with no new code and no stored status.
 
-SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5).
+**Owner decision 2026-10-10 (D43):** Jared's words were "account cards get switches", overriding the recommendation to leave an account's own switch level to Settings. Each account card on the Usage page carries one control for `ai.accounts.hard-switch-level` at scope account, on its card and in its Details. Showing it only on the accounts of a provider with two or more accounts is the reading of those words, not part of them: an account whose provider has no other account has nothing to switch to, so its card shows no control, as such a provider shows no auto-switch controls (`Plans/Multi-Account.md#MA-073`). The control is the same value as that account's own row in Settings, not a copy. It shows the level the account resolves to and whether that level is the account's own or follows its provider, and it offers following the provider again, which clears the account's own value. It commits through the same Settings transaction, at scope account with the account id; it keeps the provider's hold rules, so a level at or past the warning level that applies to the account is shown disabled with the reason; and its Open in Settings lands inside that account. The spec now says so in `Plans/Settings_System.md#SSYS-044` and section 8.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (answer 1, the provider catalog and the demo roster); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (Jared's notes 2 and 4 of 2026-10-09 in section 2, and the AI Account Center's switching rules in section 5); `/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9` (D43, the owner decision of 2026-10-10 on account switch controls).
 
 ContractRef: ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-022, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/UI_Command_Catalog.md#UCC-147, ContractName:Plans/Commands_System.md#CS-067, ContractName:Plans/Wiring_Matrix.md#WM-043
 
@@ -4141,6 +4148,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/Final
 1. **The rule** (`Plans/DRY_Rules.md#DR-069`), owned for presentation by `Plans/FinalGUISpec.md#F3-648`.
 2. **Retired defaults:** section 3.5's "3px left-edge accent stripe" and `Plans/FinalGUISpec.md#F3-039`'s token, Appendix C's and `Plans/FinalGUISpec.md#F3-276`'s accent left border, `Plans/FinalGUISpec.md#F3-469`'s inset left accent bar, the workgroup pill of section 5.1, and the pill skins of `Plans/FinalGUISpec.md#F3-422`, `Plans/FinalGUISpec.md#F3-463`, `Plans/FinalGUISpec.md#F3-464` and `Plans/FinalGUISpec.md#F3-467`, each amended in place with a dated note.
 3. **Unchanged:** the chat's, Settings' and the left rail's own statements of the rule stay; they now read as instances of the one rule.
+
+Amended 2026-10-11 (lead rulings under D29): a chosen option in a set of options (the Debug Console's sub-tabs, every segmented toggle) is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds its 1 px top rim, Retro keeps reverse video and NieR its ink block (`Plans/FinalGUISpec.md#F3-490`, `Plans/DRY_Rules.md#DR-069`).
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decision D22 and Jared's brief).
 
@@ -12757,6 +12766,8 @@ negative_constraints:
   - "Do not make a NieR variant per family."
   - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
   - "Do not add a command id, a route or a Guided Tour action for a look control."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10, reseal item 2): the onboarding session stores look_choice so a resumed setup repaints the chosen look, NieR included; Settings are still written only at commit."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -13109,8 +13120,11 @@ canonical_text: >-
   Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
   under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
   dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
-  grammar in one owner. Open owner questions: whether the rail's glyphs and the chat's 13 status marks (F3-585)
-  should be one set, and whether the rail's frosted scroll-under plates fit F3-431's blur budget. Settled later
+  grammar in one owner. The owner answered its two open questions on 2026-10-10, one set of status marks (F3-585's
+  and the rail's) and some frost back on the plates, and the glyph and Liquid Glass design threads carry them; his
+  other answers that day are in the concept: the worktree Owner filter takes several owners (W-075), Current Branch
+  leads Actions & Pipelines (GI-011), the binding picker shows only with several bindings (F3-528) and an expired
+  artifact reads Expired (F3-619). Settled later
   under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
   owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
   More tray as the chat picker (F3-625).
@@ -13178,8 +13192,8 @@ canonical_text: >-
   bookmarks per remote and operations with existing commands only (F3-624). SCS-005 records the per-engine tab
   strips, the footer card and the bookmark state axes; F3-529, F3-552, UCC-163 and JJI-008 call the fifth view
   Operation Log. Open: disabled-reason codes for the concept's local reasons, an update command for an out-of-date
-  workspace, what Undo reverts after an automatic working-copy save, and, for the owner, whether a change's short
-  ID shows on its row and whether to keep "Operation Log".
+  workspace and what Undo reverts after an automatic working-copy save. The owner answered his two on 2026-10-10:
+  a change's short change ID shows on its row (JJI section 4.1 and F3-624 amended) and "Operation Log" stays.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Jujutsu view of the Source Control rail panel.
 split_recommended: false
@@ -13188,7 +13202,7 @@ unblocks: [F3-623, F3-624]
 acceptance_criteria:
   - "The Jujutsu view's strip, views, rows and actions are owned by F3-623 and F3-624, and SCS-005, F3-529, F3-552, UCC-163 and JJI-008 point at them or use their label."
   - "No command, action, schema value or wiring row is added by this decision."
-  - "The owner's question and the two choices left to him are recorded in plain words with the request's source hash."
+  - "The owner's question, the two choices left to him and his answers of 2026-10-10 are recorded in plain words with their source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -13315,6 +13329,12 @@ canonical_text: >-
   project, provider, account, the most specific set value winning, and a value stored under the retired id is
   carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
   status state is defined by a set of section 5 reason codes, in the MA-073 state table.
+  Owner decision 2026-10-10 (D43, "account cards get switches"): each account card carries one bound control for
+  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, shown only on the accounts of
+  a provider with two or more accounts (the reading of those words: a lone account has nothing to switch to),
+  showing the level the account resolves to and whether it is the account's own or follows its provider, offering
+  following the provider again, committed through the Settings transaction at scope account and held below the
+  warning level that applies to that account; its Open in Settings lands inside that account (SSYS-044).
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -13327,6 +13347,7 @@ acceptance_criteria:
   - "Plans & limits lists every account of a provider, one row per account."
   - "No command is added for the Accounts room."
   - "An account's own switch level is ai.accounts.hard-switch-level at scope account, and nothing reads or writes ai.accounts.account-threshold-override after its stored value is carried there once."
+  - "Each account of a provider with two or more accounts has a switch-level control on its Usage card and in its Details that changes ai.accounts.hard-switch-level at scope account through the Settings transaction, and Settings shows the same value without a reload."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -13349,6 +13370,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
   - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D43, owner decision 2026-10-10)"
 preserved_exact_tokens:
   - "DL-174"
   - "Use this account"
@@ -14166,6 +14188,8 @@ preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead rulings under D29): a chosen option is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic; Glass top rim, Retro reverse video, NieR ink."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

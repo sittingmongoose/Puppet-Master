@@ -11816,7 +11816,9 @@
         "provider_owner_result_refs",
         "free_models_owner_result_refs"
       ],
-      "optional_fields": [],
+      "optional_fields": [
+        "look_choice"
+      ],
       "nullable_fields": [
         "active_branch",
         "approved_setup_plan_sha256",
@@ -11997,6 +11999,10 @@
                 "type": "null"
               }
             ]
+          },
+          "look_choice": {
+            "$ref": "#/$defs/onboarding__onboarding_look_choice",
+            "description": "The look chosen so far in this onboarding session (DL-153): each ui.onboarding.choose_look request replaces only the fields it sets; absent or null fields mean nothing chosen yet. A resumed session repaints from it, NieR Mode included; null fields fall back to F3-520's start rule. Settings are written only at commit (F3-520)."
           },
           "path_kind": {
             "oneOf": [
@@ -14214,6 +14220,123 @@
               "private_ca_ref is instance-scoped and never a certificate path or global TLS-disable instruction; known_host_proof_ref is owner-verified evidence rather than a hostname",
               "Product Onboarding records this draft without a network probe, sign-in, repository operation, trust decision, credential use, or filesystem mutation"
             ]
+          },
+          "onboarding__onboarding_look_choice": {
+            "title": "OnboardingLookChoice",
+            "description": "The closed look one ui.onboarding.choose_look request previews inside the onboarding window (DL-153): the theme family and Light/Dark mode for intent choose_look, or NieR Mode's three Settings rows (Settings_System SSYS-043) by their canonical inventory labels for intent preview_nier. Only the fields the intent changes are non-null; a NieR preset is one value of nier_parts. It is a preview written with the Project at commit (FinalGUISpec F3-520), never a Settings transaction or a cmd.theme.* dispatch.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "theme_family",
+              "theme_mode",
+              "nier_mode",
+              "nier_parts",
+              "nier_background"
+            ],
+            "properties": {
+              "theme_family": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "friendly",
+                      "glass",
+                      "retro",
+                      "basic"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "theme_mode": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "light",
+                      "dark"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "nier_mode": {
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "nier_parts": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "maxItems": 29,
+                    "items": {
+                      "enum": [
+                        "Square hairlines",
+                        "Menu cursor",
+                        "YoRHa headers",
+                        "Parchment ground",
+                        "Target brackets",
+                        "Diamond loaders",
+                        "Reboot moment",
+                        "Slice open",
+                        "Text decode",
+                        "Page wipe",
+                        "Drifting particles",
+                        "Scan sweep",
+                        "Alert glitch",
+                        "Menu sounds",
+                        "Pod voice",
+                        "Pod companion",
+                        "Square pointer",
+                        "Boot sequence",
+                        "Unit readouts",
+                        "Block progress",
+                        "Ink charts",
+                        "Map ticks",
+                        "Machine glyphs",
+                        "Intel tooltips",
+                        "Square icon strokes",
+                        "Pod 042 in Chat",
+                        "Quest banners",
+                        "Ink empty states",
+                        "Save signal"
+                      ]
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "nier_background": {
+                "oneOf": [
+                  {
+                    "enum": [
+                      "Parchment",
+                      "City Ruins",
+                      "The Bunker",
+                      "Desert",
+                      "Forest Castle",
+                      "Amusement Park",
+                      "Flooded City",
+                      "Follow the page"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
           },
           "onboarding__onboarding_return_context": {
             "type": "object",

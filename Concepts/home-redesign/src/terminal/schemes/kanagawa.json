@@ -1,0 +1,42 @@
+{
+  "family": "Kanagawa",
+  "slug": "kanagawa",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-kanagawa.txt",
+  "copyright": "Copyright (c) 2021 Tommaso Laurenzi",
+  "homepage": "https://github.com/rebelot/kanagawa.nvim",
+  "schemes": [
+    {
+      "id": "kanagawa-wave",
+      "name": "Kanagawa Wave",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/rebelot/kanagawa.nvim/bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3/extras/ghostty/kanagawa-wave",
+      "sourceSha256": "f52da716fc190df8929184b9d545dab0d464036f7d0f189d5327f915a7174708",
+      "colors": {
+        "background": "#1f1f28",
+        "foreground": "#dcd7ba",
+        "cursor": "#c8c093",
+        "cursorText": null,
+        "selectionBackground": "#2d4f67",
+        "selectionForeground": "#c8c093",
+        "ansi": ["#16161d", "#c34043", "#76946a", "#c0a36e", "#7e9cd8", "#957fb8", "#6a9589", "#c8c093", "#727169", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#dcd7ba"]
+      }
+    },
+    {
+      "id": "kanagawa-lotus",
+      "name": "Kanagawa Lotus",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/rebelot/kanagawa.nvim/bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3/extras/ghostty/kanagawa-lotus",
+      "sourceSha256": "522d21eabb45e6fc9a04463ce2ae6b7908f3107f627b8c2f53a055fb722b0d47",
+      "colors": {
+        "background": "#f2ecbc",
+        "foreground": "#545464",
+        "cursor": "#43436c",
+        "cursorText": null,
+        "selectionBackground": "#c9cbd1",
+        "selectionForeground": "#43436c",
+        "ansi": ["#1f1f28", "#c84053", "#6f894e", "#77713f", "#4d699b", "#b35b79", "#597b75", "#545464", "#8a8980", "#d7474b", "#6e915f", "#836f4a", "#6693bf", "#624c83", "#5e857a", "#43436c"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,488 @@
+/* Actions: every user-visible change goes through one of these, so the mouse, the menus and the keyboard all reach
+   the same command (DRY). Structural changes are commands (PMW.commit); focus, activation and maximize are view state
+   (PMW.viewAction). */
+
+function L() { return state.layout; }
+/* Fit checks measure the tree, never the maximized rects (where one panel fills the centre). */
+function treeRects() { return PMW.treeRects ? PMW.treeRects() : render.rects(); }
+/* Maximize follows focus (normalize does the same for commits): focus moving to another panel restores the panels,
+   so the panel that takes focus is never hidden. Returns true when it restored them. */
+function leaveMaximize(lay, focusId) {
+  if (!lay.view.maximized || lay.view.maximized === focusId) return false;
+  lay.view.maximized = null;
+  return true;
+}
+function maximizeLeft() { bus.emit('maximize', { panelId: null }); }
+
+PMW.focusPanel = function (panelId, opts) {
+  opts = opts || {};
+  var l = L();
+  if (!model.panel(l, panelId) || l.view.focus === panelId) return;
+  var prev = l.view.focus;
+  var restored = false;
+  var restoring = !!l.view.maximized && l.view.maximized !== panelId;
+  viewAction(UI.focus, function (lay) { lay.view.focus = panelId; restored = leaveMaximize(lay, panelId); }, { animate: restoring });
+  if (restored) maximizeLeft();
+  bus.emit('focus', { panelId: panelId, previous: prev });
+  if (!opts.quiet) {
+    announce(panelLabelFor(panelId) + (restored ? '. Panels restored' : ''));
+    PMW.focusPanelDom(panelId);
+  }
+};
+function panelLabelFor(id) {
+  var l = L(), p = model.panel(l, id);
+  if (!p) return '';
+  var rec = p.active && l.tabs[p.active];
+  return (rec ? tabLabel(rec) : 'Empty panel') + ', ' + model.describe(l, id);
+}
+PMW.focusPanelDom = function (panelId) {
+  nextFrame(function () {
+    var el = render.panelEl(panelId);
+    if (!el) return;
+    var tab = el.querySelector('.pmw-tab[aria-selected="true"]') || el.querySelector('.pmw-plus');
+    if (tab) quietFocus(tab);
+  });
+};
+/* focus the program moves (an open, a panel focus, F6) is not a hover: the page's tag controller opens a tag on every
+   focusin, which then covered the header row with no pointer near it. The control stays quiet until the pointer comes
+   to it or focus leaves it; arrowing along the strip focuses other tabs, which tag as usual. */
+function quietFocus(el) {
+  if (doc.activeElement === el) return;
+  if (!el.hasAttribute('data-pm-hover-visual-suppressed')) {
+    el.setAttribute('data-pm-hover-visual-suppressed', 'true');
+    el.setAttribute('data-pmw-quiet', '');
+  }
+  el.focus({ preventScroll: true });
+}
+function unquiet(el) {
+  if (!el || !el.hasAttribute || !el.hasAttribute('data-pmw-quiet')) return;
+  el.removeAttribute('data-pmw-quiet');
+  el.removeAttribute('data-pm-hover-visual-suppressed');
+}
+// window capture runs before the tag controller's document listeners, so the first hover already gets its tag
+window.addEventListener('pointerover', function (e) { unquiet(e.target && e.target.closest && e.target.closest('[data-pmw-quiet]')); }, true);
+doc.addEventListener('focusout', function (e) { unquiet(e.target); }, true);
+
+function touchMru(l, tabId) {
+  var m = l.view.mru || (l.view.mru = []);
+  var i = m.indexOf(tabId);
+  if (i >= 0) m.splice(i, 1);
+  m.unshift(tabId);
+  if (m.length > 40) m.length = 40;
+}
+
+PMW.activateTab = function (tabId, opts) {
+  opts = opts || {};
+  var l = L(), p = model.panelOf(l, tabId);
+  if (!p) return false;
+  var changed = p.active !== tabId || p.collapsed || l.view.focus !== p.id || (l.tabs[tabId] && l.tabs[tabId].attention);
+  var restored = false;
+  var restoring = !opts.background && !!l.view.maximized && l.view.maximized !== p.id;
+  viewAction(UI.activate, function (lay) {
+    var pp = model.panelOf(lay, tabId);
+    pp.active = tabId;
+    pp.collapsed = false;
+    // a background activation (an agent) never restores the panels; a person's does when the tab is elsewhere
+    if (!opts.background) { lay.view.focus = pp.id; restored = leaveMaximize(lay, pp.id); }
+    if (lay.tabs[tabId].attention) lay.tabs[tabId].attention = false;
+    touchMru(lay, tabId);
+  }, { animate: !!p.collapsed || restoring });
+  if (restored) { maximizeLeft(); announce('Panels restored'); }
+  if (changed) bus.emit('activate', { tabId: tabId, panelId: p.id, kind: l.tabs[tabId].kind, reason: opts.reason || 'user' });
+  if (opts.focus) {
+    nextFrame(function () {
+      var e = instances[tabId];
+      if (e && e.instance && e.instance.focus) { try { e.instance.focus(); } catch (_) {} }
+      else if (e) e.host.focus({ preventScroll: true });
+    });
+  }
+  if (PMW.strip.reveal) PMW.strip.reveal(tabId);
+  return true;
+};
+
+/* Push-updates from kinds (labels and marks); never a command. */
+var TAB_FIELDS = ['label', 'title', 'icon', 'exitCode', 'agent', 'attention', 'dirty', 'busy', 'readOnly'];
+PMW.updateTab = function (tabId, fields) {
+  var rec = L().tabs[tabId];
+  if (!rec) return;
+  var changed = false;
+  for (var i = 0; i < TAB_FIELDS.length; i++) {
+    var f = TAB_FIELDS[i];
+    if (Object.prototype.hasOwnProperty.call(fields, f) && rec[f] !== fields[f]) { rec[f] = fields[f]; changed = true; }
+  }
+  // editing keeps a preview tab (D7): a structural change, so it is the keep command, not a quiet edit of the record
+  if (fields.dirty && rec.preview) PMW.keepTab(tabId);
+  if (changed) {
+    var p = model.panelOf(L(), tabId);
+    if (p) stripSoon(p.id);
+    PMW.persist.saveSoon();
+  }
+};
+/* a kind's push-updates (a terminal's label and exit code at each command's start and end, a dirty mark) repaint the
+   panel's strip once, in the next frame, after the kind's own writes: never a fit pass inside the kind's write task,
+   which forced the page's layout mid-task (home-terminal's profile: about 50 ms twice per command on Nas1) */
+var stripDue = {}, stripRaf = 0;
+function stripSoon(panelId) {
+  stripDue[panelId] = true;
+  if (stripRaf) return;
+  stripRaf = requestAnimationFrame(function () {
+    stripRaf = 0;
+    var ids = Object.keys(stripDue), l = L();
+    stripDue = {};
+    var o = { narrow: PMW.narrow && PMW.narrow.singleColumn(), rects: render.rects() };
+    ids.forEach(function (id) {
+      var p = model.panel(l, id), el = p && render.panelEl(id);
+      if (el) PMW.strip.render(el, p, l, o);
+    });
+  });
+}
+PM_HOME.update = function (tabId, fields) { PMW.updateTab(tabId, fields); };
+
+PMW.closeTab = function (tabId, opts) {
+  opts = opts || {};
+  var l = L(), rec = l.tabs[tabId];
+  if (!rec) return Promise.resolve(false);
+  var e = instances[tabId];
+  var ask = e && e.instance && e.instance.canClose ? e.instance.canClose() : true;
+  return Promise.resolve(ask).then(function (yes) {
+    if (!yes) return false;
+    var p = model.panelOf(L(), tabId);
+    var panelId = p && p.id;
+    var res = commit(CMD.close, { tabId: tabId }, function (d) {
+      var r = model.removeTab(d, tabId, { remember: true });
+      if (!r) return false;
+      // closing the last tab closes the panel unless it is the only panel or locked (then the empty launcher)
+      return { panelId: r.panelId };
+    });
+    if (res.ok) {
+      bus.emit('close', { tabId: tabId, panelId: panelId, kind: rec.kind, reason: opts.reason || 'user' });
+      if (!opts.quiet) announce(tabLabel(rec) + ' closed');
+      var np = model.panel(L(), panelId);
+      if (np && np.active) bus.emit('activate', { tabId: np.active, panelId: np.id, kind: L().tabs[np.active].kind, reason: 'close' });
+      if (opts.refocus !== false) {
+        var target = np ? np.id : L().view.focus;
+        if (target) PMW.focusPanelDom(target);
+      }
+    }
+    return res.ok;
+  });
+};
+PMW.closeOthers = function (tabId) {
+  var p = model.panelOf(L(), tabId);
+  if (!p) return;
+  var ids = p.tabs.filter(function (t) { return t !== tabId && !L().tabs[t].pinned; });
+  ids.reduce(function (pr, t) { return pr.then(function () { return PMW.closeTab(t, { quiet: true, refocus: false }); }); }, Promise.resolve())
+    .then(function () { announce('Other tabs closed'); });
+};
+PMW.closeToRight = function (tabId) {
+  var p = model.panelOf(L(), tabId);
+  if (!p) return;
+  var ids = p.tabs.slice(p.tabs.indexOf(tabId) + 1).filter(function (t) { return !L().tabs[t].pinned; });
+  ids.reduce(function (pr, t) { return pr.then(function () { return PMW.closeTab(t, { quiet: true, refocus: false }); }); }, Promise.resolve());
+};
+
+PMW.keepTab = function (tabId) {
+  var rec = L().tabs[tabId];
+  if (!rec || !rec.preview) return false;
+  return commit(CMD.keep, { tabId: tabId }, function (d) { d.tabs[tabId].preview = false; return {}; }, { animate: false }).ok;
+};
+PMW.pinTab = function (tabId, pinned) {
+  var rec = L().tabs[tabId];
+  if (!rec) return false;
+  var res = commit(pinned ? CMD.pin : CMD.unpin, { tabId: tabId }, function (d) {
+    d.tabs[tabId].pinned = !!pinned;
+    if (pinned) d.tabs[tabId].preview = false;
+    return {};
+  });
+  if (res.ok) announce(tabLabel(rec) + (pinned ? ' pinned' : ' unpinned'));
+  return res.ok;
+};
+PMW.renameTab = function (tabId, label) {
+  var rec = L().tabs[tabId];
+  if (!rec) return false;
+  label = (label || '').trim().slice(0, 80);
+  return commit(CMD.rename, { tabId: tabId, label: label }, function (d) { d.tabs[tabId].userLabel = label || null; return {}; }, { animate: false }).ok;
+};
+PMW.moveTab = function (tabId, panelId, index, opts) {
+  opts = opts || {};
+  var l = L();
+  var from = model.panelOf(l, tabId);
+  if (!from) return false;
+  var res = commit(CMD.move, { tabId: tabId, panelId: panelId, index: index }, function (d) {
+    var ff = model.panelOf(d, tabId);
+    if (ff.id === panelId) {
+      var cur = ff.tabs.indexOf(tabId);
+      if (index == null) index = ff.tabs.length - 1;
+      if (cur === index) return false;
+      ff.tabs.splice(cur, 1);
+      ff.tabs.splice(index, 0, tabId);
+      ff.active = tabId;
+      if (d.tabs[tabId] && d.tabs[tabId].preview) d.tabs[tabId].preview = false;   // dragging a tab keeps it (D7)
+      return {};
+    }
+    if (!model.moveTab(d, tabId, panelId, index)) return false;
+    d.view.focus = panelId;
+    return {};
+  }, { animate: opts.animate !== false });
+  if (res.ok && !res.noChange && !opts.quiet) {
+    var to = model.panel(L(), panelId);
+    var pos = to ? to.tabs.indexOf(tabId) + 1 : 0;
+    announce(tabLabel(l.tabs[tabId] || L().tabs[tabId]) + (from.id === panelId ? ' moved to position ' + pos : ' moved to the ' + model.describe(L(), panelId)));
+  }
+  return res.ok;
+};
+/* Move a tab into a new panel on an edge of a panel (or of the whole centre with panelId '@root'). */
+PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
+  opts = opts || {};
+  var l = L();
+  var from = model.panelOf(l, tabId);
+  if (!from) return false;
+  if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
+  // every caller (menus, keyboard, strip, drag) gets the same fit rule, measured on the tree, not the maximized rects
+  var rects = panelId !== '@root' && !opts.force ? treeRects() : null;
+  if (rects && rects.panels[panelId] && !geom.splitFits(l, panelId, edge, rects, PMW.panelMin(l, { tabs: [tabId] }))) {
+    if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
+    return null;
+  }
+  var newId = null;
+  var res = commit(CMD.move, { tabId: tabId, split: { panelId: panelId, edge: edge } }, function (d) {
+    var np = model.newPanel(d, []);
+    newId = np.id;
+    var ok = panelId === '@root' ? model.insertAtRoot(d, edge, np, opts.ratio || 0.34) : model.insertBeside(d, panelId, edge, np, opts.ratio || 0.5);
+    if (!ok) return false;
+    if (!model.moveTab(d, tabId, np.id, 0)) return false;
+    d.view.focus = np.id;
+    return { panelId: np.id };
+  });
+  if (res.ok) announce(tabLabel(l.tabs[tabId]) + ' split ' + (edge === 'left' || edge === 'right' ? edge : edge === 'top' ? 'up' : 'down') + ' into a new panel');
+  return res.ok ? newId : null;
+};
+
+PMW.splitPanel = function (panelId, edge, spec) {
+  // Split right / down from a panel's menu: a new panel beside it holding a new tab of the panel's usual kind
+  // (or `spec`). Without room it says why instead of making two panels below their minimum.
+  var l = L(), rects = treeRects();
+  var p = model.panel(l, panelId);
+  if (!p) return null;
+  if (PMW.narrow && PMW.narrow.singleColumn()) { announce('The window is too narrow to split; widen it or close the chat to split.'); return null; }
+  if (rects && !geom.splitFits(l, panelId, edge, rects)) {
+    PMW.toast(edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
+    return null;
+  }
+  var s = spec || PMW.defaultSpecFor(panelId);
+  var full = Object.assign({}, s, { where: edge, source: panelId });
+  // one command under its own id (CONTRACT section 8), placed by the same open module
+  var args = { panelId: panelId, direction: edge === 'bottom' ? 'down' : edge, spec: JSON.parse(JSON.stringify(s)) };
+  return PMW.openAs ? PMW.openAs(full, CMD.split, args) : PM_HOME.open(full);
+};
+
+PMW.toggleMaximize = function (panelId) {
+  var l = L();
+  var next = l.view.maximized === panelId ? null : panelId;
+  // a collapsed panel shows only its strip: maximizing it expands it first, or the centre would be blank
+  var target = next && model.panel(l, next);
+  if (target && target.collapsed) PMW.setCollapsed(next, false);
+  viewAction(UI.maximize, function (lay) { lay.view.maximized = next; if (next) lay.view.focus = next; });
+  announce(next ? panelLabelFor(next) + ' maximized. Press Escape to restore.' : 'Panels restored');
+  bus.emit('maximize', { panelId: next });
+};
+PMW.setCollapsed = function (panelId, collapsed) {
+  var res = commit(CMD.collapse, { panelId: panelId, collapsed: !!collapsed }, function (d) {
+    var p = model.panel(d, panelId);
+    if (!p) return false;
+    var parent = model.parentOf(d, panelId);
+    if (!parent) return { ok: false, reason: 'only_panel' };
+    // a split with every kid collapsed would leave its space to nobody: the last open kid of a split stays open
+    if (collapsed && !parent.kids.some(function (k) { return k.id !== panelId && !(k.t === 'panel' && k.collapsed); })) {
+      return { ok: false, reason: 'last_open_in_split' };
+    }
+    p.collapsed = !!collapsed;
+    if (collapsed && d.view.focus === panelId) {
+      var others = model.panels(d).filter(function (x) { return x.id !== panelId && !x.collapsed; });
+      if (others[0]) d.view.focus = others[0].id;
+    }
+    return {};
+  });
+  if (res.ok) announce(panelLabelFor(panelId) + (collapsed ? ' collapsed to its tabs' : ' expanded'));
+  else if (res.reason === 'last_open_in_split') PMW.toast('The panels beside this one are collapsed, so it stays open. Expand one of them first.');
+  return res.ok;
+};
+/* Close panel is one command (CONTRACT section 8): every tab is asked first (canClose, in order; the first refusal
+   stops it and nothing closes), then one commit closes the tabs (remembered for reopen) and the panel. The only
+   panel stays, empty, as the launcher. */
+function askClose(tabId) {
+  var e = instances[tabId];
+  if (!e || !e.instance || !e.instance.canClose) return Promise.resolve(true);
+  try { return Promise.resolve(e.instance.canClose()).then(function (y) { return !!y; }, function () { return false; }); }
+  catch (_) { return Promise.resolve(false); }
+}
+PMW.closePanel = function (panelId) {
+  var l = L(), p = model.panel(l, panelId);
+  if (!p) return Promise.resolve(false);
+  var ids = p.tabs.slice();
+  return ids.reduce(function (pr, t) { return pr.then(function (ok) { return ok ? askClose(t) : false; }); }, Promise.resolve(true))
+    .then(function (ok) {
+      if (!ok) return false;
+      var before = L(), recs = [];
+      var res = commit(CMD.closePanel, { panelId: panelId }, function (d) {
+        var pp = model.panel(d, panelId);
+        if (!pp) return false;
+        ids.forEach(function (t) {
+          if (pp.tabs.indexOf(t) < 0) return;
+          recs.push(d.tabs[t]);
+          model.removeTab(d, t, { remember: true });
+        });
+        // a tab that arrived while the questions were open was never asked: its panel stays for it
+        if (!pp.tabs.length && model.panels(d).length > 1) model.removePanel(d, panelId);
+        return {};
+      });
+      if (!res.ok) return false;
+      recs.forEach(function (rec) { bus.emit('close', { tabId: rec.id, panelId: panelId, kind: rec.kind, reason: 'user' }); });
+      var gone = !model.panel(L(), panelId);
+      announce(gone ? 'Panel closed' : (recs.length === 1 ? '1 tab closed' : recs.length + ' tabs closed'));
+      var target = gone ? L().view.focus : panelId;
+      if (target && target !== before.view.focus) bus.emit('focus', { panelId: target, previous: before.view.focus });
+      if (target) PMW.focusPanelDom(target);
+      return true;
+    });
+};
+PMW.lockPanel = function (panelId, locked) {
+  var res = commit(CMD.lock, { panelId: panelId, locked: !!locked }, function (d) {
+    var p = model.panel(d, panelId); if (!p) return false; p.locked = !!locked; return {};
+  }, { animate: false });
+  if (res.ok) announce(locked ? 'Panel locked: files open elsewhere' : 'Panel unlocked');
+  return res.ok;
+};
+PMW.movePanel = function (panelId, targetId, edge) {
+  var res = commit(CMD.movePanel, { panelId: panelId, target: { panelId: targetId, edge: edge } }, function (d) {
+    return model.movePanel(d, panelId, targetId, edge) ? {} : false;
+  });
+  if (res.ok) announce(panelLabelFor(panelId) + ' moved');
+  return res.ok;
+};
+PMW.resizeSplit = function (splitId, sizes) {
+  return commit(CMD.resize, { splitId: splitId, sizes: sizes }, function (d) { return model.setSizes(d, splitId, sizes) ? {} : false; }, { animate: false }).ok;
+};
+PMW.reopenClosed = function () {
+  var l = L();
+  // an entry whose tab is open again (opened from the tree since) is stale: it would use up a press and reopen
+  // nothing. Drop those quietly first (the open module also drops them as it opens a tab).
+  var live = l.closed.filter(function (c) { return c && c.tab && !(l.tabs[c.tab.id] && model.panelOf(l, c.tab.id)); });
+  if (live.length !== l.closed.length) {
+    var gone = l.closed.filter(function (c) { return live.indexOf(c) < 0; }).map(function (c) { return c && c.tab && c.tab.id; }).filter(Boolean);
+    l.closed = live; PMW.persist.saveSoon();
+    if (gone.length) bus.emit('closed-dropped', { ids: gone });
+  }
+  if (!l.closed.length) { announce('No closed tab to reopen'); return false; }
+  var res = commit(CMD.reopen, {}, function (d) {
+    var it = d.closed.pop();
+    if (!it) return { ok: false, reason: 'nothing_closed' };
+    var target = model.panel(d, it.panelId) ? it.panelId : (d.view.focus || model.panels(d)[0].id);
+    it.tab.preview = false;
+    model.stripLive(it.tab);
+    if (!model.addTab(d, target, it.tab, { index: it.index })) return false;
+    d.view.focus = target;
+    touchMru(d, it.tab.id);
+    return { tab: it.tab, panelId: target };
+  });
+  if (res.ok && res.result && res.result.tab) {
+    var tab = res.result.tab, held = model.panelOf(L(), tab.id), pid = held ? held.id : res.result.panelId;
+    announce(tabLabel(tab) + ' reopened');
+    bus.emit('open', { tabId: tab.id, panelId: pid, kind: tab.kind, created: true, by: 'user' });
+    bus.emit('activate', { tabId: tab.id, panelId: pid, kind: tab.kind, reason: 'reopen' });
+    PMW.focusPanelDom(pid);
+  }
+  return res.ok;
+};
+/* the boards a saved named layout puts back (P6): each board it saved, except a custom dashboard (dash-<n>) that the
+   applied layout does not hold (deleted since, whose Delete said its widgets cannot be brought back, or closed) or that
+   was saved in another project (the envelope's project_id: the same dash-<n> names another board here, which the
+   restore would overwrite). Home, Metrics and Monitoring come back as saved. */
+function namedBoards(boards) {
+  var l = L(), p = null, out = {};
+  try { p = PMW.dashboard.project ? PMW.dashboard.project() : null; } catch (_) { p = null; }
+  Object.keys(boards).forEach(function (id) {
+    var env = boards[id];
+    // board contents are per project (P5): an envelope saved in another project is never written here, a built-in
+    // board's included (that project's Home stays that project's); a custom one only while the layout holds its tab
+    if (env && env.project_id && p && env.project_id !== p) return;
+    if (/^dash-\d+$/.test(id) && !l.tabs['dashboard:' + id]) return;
+    out[id] = env;
+  });
+  return out;
+}
+PMW.applyNamed = function (name, opts) {
+  opts = opts || {};
+  var built = PMW.buildNamed(name, opts.fresh ? null : L());
+  if (!built) return false;
+  var res = commit(opts.reset ? CMD.reset : CMD.applyNamed, { name: name }, function (d) {
+    built.revision = d.revision;
+    // the chat column is not part of a layout's shape: a named layout or Restore home layout keeps it (width_px,
+    // history_pinned, keep_open)
+    var chatColumn = d.chat_column;
+    for (var k in d) delete d[k];
+    Object.assign(d, model.clone(built));
+    if (chatColumn) d.chat_column = model.clone(chatColumn);
+    return {};
+  });
+  if (res.ok) {
+    PMW.settings.set('panels.layout.named', name);
+    var def = PMW.NAMED[name] || PMW.savedLayouts()[name];
+    if (def && def.boards && PMW.dashboard && typeof PMW.dashboard.restore === 'function') {
+      try { PMW.dashboard.restore(namedBoards(def.boards)); } catch (_) {}
+    }
+    announce((def && def.label ? def.label : name) + ' layout');
+  }
+  return res.ok;
+};
+PMW.resetLayout = function () { return PMW.applyNamed('home', { reset: true }); };
+PMW.saveNamedLayout = function (name) {
+  name = (name || '').trim();
+  if (!name) return false;
+  var ok = PMW.saveNamed(name, L());
+  pushLog(commandLog, { seq: ++cmdSeq, command_id: CMD.saveNamed, args: { name: name }, at: Date.now() });
+  pushLog(receiptLog, { seq: cmdSeq, command_id: CMD.saveNamed, outcome: ok ? 'applied' : 'rejected' });
+  var skipped = ok && (PMW.savedLayouts()[name] || {}).boardsSkipped;
+  if (ok) announce('Layout saved as ' + name + (skipped ? '. Its dashboards hold too much to keep with it, so applying it leaves their widgets as they are' : ''));
+  return ok;
+};
+
+/* The panel's usual kind (Ctrl+T, D6): its dedicated kind, else its active tab's kind, else an editor buffer. */
+PMW.defaultSpecFor = function (panelId) {
+  var l = L(), p = model.panel(l, panelId);
+  var role = p ? PMW.panelRole(l, p) : 'documents';
+  if (role === 'terminal') return { kind: 'terminal' };
+  if (role === 'browser') return { kind: 'browser' };
+  if (role === 'dashboard') return { kind: 'dashboard' };
+  var rec = p && p.active && l.tabs[p.active];
+  if (rec && (rec.kind === 'terminal' || rec.kind === 'browser' || rec.kind === 'dashboard')) return { kind: rec.kind };
+  return { kind: 'editor', title: 'Untitled', text: '', edit: true };
+};
+
+/* Commands reachable by id (PM_HOME.command) */
+Object.assign(COMMAND_HANDLERS, {});
+COMMAND_HANDLERS[CMD.open] = function (a) { return PM_HOME.open(a); };
+COMMAND_HANDLERS[CMD.close] = function (a) { return PMW.closeTab(a.tabId); };
+COMMAND_HANDLERS[CMD.keep] = function (a) { return PMW.keepTab(a.tabId); };
+COMMAND_HANDLERS[CMD.pin] = function (a) { return PMW.pinTab(a.tabId, true); };
+COMMAND_HANDLERS[CMD.unpin] = function (a) { return PMW.pinTab(a.tabId, false); };
+COMMAND_HANDLERS[CMD.rename] = function (a) { return PMW.renameTab(a.tabId, a.label); };
+COMMAND_HANDLERS[CMD.move] = function (a) {
+  return a.split ? PMW.moveTabToSplit(a.tabId, a.split.panelId, a.split.edge) : PMW.moveTab(a.tabId, a.panelId, a.index);
+};
+COMMAND_HANDLERS[CMD.reopen] = function () { return PMW.reopenClosed(); };
+COMMAND_HANDLERS[CMD.split] = function (a) { return PMW.splitPanel(a.panelId, a.direction === 'down' ? 'bottom' : a.direction === 'right' ? 'right' : a.direction, a.spec); };
+COMMAND_HANDLERS[CMD.movePanel] = function (a) { return PMW.movePanel(a.panelId, a.target.panelId, a.target.edge); };
+/* { splitId, sizes } resizes a split; { surface: 'chat', width } the chat column (46-chat.js, null = the default) */
+COMMAND_HANDLERS[CMD.resize] = function (a) {
+  if (a.surface === 'chat') return PMW.chatCol.setWidth(a.width);
+  return PMW.resizeSplit(a.splitId, a.sizes);
+};
+COMMAND_HANDLERS[CMD.collapse] = function (a) { return PMW.setCollapsed(a.panelId, a.collapsed); };
+COMMAND_HANDLERS[CMD.closePanel] = function (a) { return PMW.closePanel(a.panelId); };
+COMMAND_HANDLERS[CMD.lock] = function (a) { return PMW.lockPanel(a.panelId, a.locked); };
+COMMAND_HANDLERS[CMD.applyNamed] = function (a) { return PMW.applyNamed(a.name); };
+COMMAND_HANDLERS[CMD.saveNamed] = function (a) { return PMW.saveNamedLayout(a.name); };
+COMMAND_HANDLERS[CMD.reset] = function () { return PMW.resetLayout(); };
+COMMAND_HANDLERS[UI.activate] = function (a) { return PMW.activateTab(a.tabId, { focus: !!a.focus }); };
+COMMAND_HANDLERS[UI.maximize] = function (a) { return PMW.toggleMaximize(a.panelId); };
