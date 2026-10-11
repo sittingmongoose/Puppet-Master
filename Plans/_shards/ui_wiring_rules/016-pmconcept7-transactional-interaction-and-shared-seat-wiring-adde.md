@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L762-L879
+Source lines: L771-L901
 
-Source SHA256: `ae16b718354adcfd7a8dee63e240281f64c01b2237781af7018c50a080de0cd3`
+Source SHA256: `0da34925513f3023b2a7db422a241cfe95aed1e5ef18b1a21fd5ab2aefa721cf`
 
 ---
 
@@ -34,6 +34,11 @@ account's own switch level at scope account (D43, 2026-10-10) commit through the
 Usage Tidy is one settled layout transaction: steps 3 to 5 run once for the whole repacked room, with exactly one
 existing `cmd.widget.move` and one receipt, never one move per card; a Tidy that changes nothing follows step 6.
 
+Amended 2026-10-09 (DL-180): on Home the chat is a fixed column on the right, from the title bar to the status bar
+(F3-637); it has no saved Home dock and never moves inside the window. Pop out into its own window (desktop
+app) and Dock back are its only move (`cmd.panel.undock` and `cmd.panel.redock` with `chat`), and the same node and
+store serve the window. The sentences below keep their identity rules; "saved Home host" now reads as the chat column.
+
 The shared Assistant has one DOM/native component identity and one thread/context store. Shell wiring may
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
 `cmd.panel.switch` controls visibility; re-parenting is local shell projection and must preserve node
@@ -61,13 +66,17 @@ canonical_text: >-
   cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
   event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
   wiring re-seats one shared Assistant node/store between Home and global hosts without
-  cloning or losing thread/context continuity. Usage plates carry no magnet (F3-465), so
-  move/resize acquisition is direct on the painted controls: a pointerdown on a move or resize
-  control starts the existing controller with pointer capture, with no translation
-  attenuation, no acquisition lease, and no document-capture handoff. A pointerdown that an
-  intervening overlay or an unrelated interactive receives belongs to that target and starts
-  no widget operation. Concurrent resize/reorder entry is rejected before mutation; unrelated
-  interactives, cancellation, no-op, and settlement cannot leave a latent activation path.
+  cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
+  transaction carries every panel and tab gesture of the universal panels (a tab drag, a
+  panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
+  own window is its only relocation, and the same node/store serves that window. Usage
+  plates carry no magnet (F3-465), so move/resize acquisition is direct on the painted
+  controls: a pointerdown on a move or resize control starts the existing controller with
+  pointer capture, with no translation attenuation, no acquisition lease, and no
+  document-capture handoff. A pointerdown that an intervening overlay or an unrelated
+  interactive receives belongs to that target and starts no widget operation. Concurrent
+  resize/reorder entry is rejected before mutation; unrelated interactives, cancellation,
+  no-op, and settlement cannot leave a latent activation path.
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
   footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order, and
   effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
@@ -87,7 +96,8 @@ acceptance_criteria:
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
   - "Usage board gravity is not previewed: the held preview moves only the obstructed peers the first criterion names, the accepted release commits that painted layout with gravity applied at settle inside the same single command, shown cards float up into holes in reading order only after release, and no extra command, receipt, or write follows; Usage Tidy dispatches exactly one cmd.widget.move for the whole repacked room."
   - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
-  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock.
+  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock. (Amended 2026-10-09, DL-180 - the saved Home dock is now the fixed chat column, and the same identity holds across Pop out and Dock back.)
+  - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -120,7 +130,10 @@ negative_constraints:
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
   - Do not give the Usage plates a magnet, an acquisition lease, or a document-capture handoff, or let an occluded pointerdown or one on another interactive start a widget transaction; do not allow two widget-operation controllers to coexist.
   - Do not clone the Assistant node, controller, transcript store, or context store.
+  - Do not move, dock or float the chat inside the window; Pop out is its only relocation (DL-180).
   - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the chat's saved Home dock and in-window re-seat retire; the transaction covers every panel and tab gesture. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-041 depends on this unit instead."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md

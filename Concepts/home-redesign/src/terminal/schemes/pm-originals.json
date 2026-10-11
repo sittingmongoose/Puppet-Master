@@ -1,0 +1,201 @@
+{
+  "family": "Puppet Master",
+  "slug": "pm-originals",
+  "licence": "PM-authored",
+  "licenceFile": null,
+  "copyright": "Puppet Master",
+  "homepage": null,
+  "schemes": [
+    {
+      "id": "pm-phosphor-green",
+      "name": "PM Phosphor Green",
+      "appearance": "dark",
+      "look": "retro",
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#071109",
+        "foreground": "#77ea83",
+        "cursor": "#7eff8c",
+        "cursorText": "#071109",
+        "selectionBackground": "#58b762",
+        "selectionForeground": "#071109",
+        "ansi": ["#203a24", "#c4ec35", "#3dcc56", "#d3ffb0", "#42ae8e", "#88b297", "#6bd6a9", "#accdae", "#4b7a4f", "#d6f941", "#25e954", "#deff9f", "#62cba9", "#a1d0b1", "#87f2c4", "#e9fee9"]
+      },
+      "roles": {
+        "link": "#87f2c4",
+        "searchMatch": "#163b1a",
+        "searchCurrent": "#4f6015",
+        "markOk": "#3dcc56",
+        "markFail": "#c4ec35",
+        "markNeutral": "#4b7a4f",
+        "progress": "#77ea83",
+        "attention": "#d3ffb0",
+        "glow": "#12fb56"
+      }
+    },
+    {
+      "id": "pm-phosphor-amber",
+      "name": "PM Phosphor Amber",
+      "appearance": "dark",
+      "look": "retro",
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#150c06",
+        "foreground": "#ffb963",
+        "cursor": "#ffd29e",
+        "cursorText": "#150c06",
+        "selectionBackground": "#d58d25",
+        "selectionForeground": "#150c06",
+        "ansi": ["#432d1a", "#f5642b", "#fea621", "#ffe58b", "#b98e6c", "#cf9a7d", "#dfc691", "#ddc9ac", "#8c6843", "#ff7f51", "#ffc781", "#ffef90", "#d8a984", "#e9b396", "#f6dda7", "#fff3e2"]
+      },
+      "roles": {
+        "link": "#f6dda7",
+        "searchMatch": "#462b0b",
+        "searchCurrent": "#6f341f",
+        "markOk": "#fea621",
+        "markFail": "#f5642b",
+        "markNeutral": "#8c6843",
+        "progress": "#ffb963",
+        "attention": "#ffe58b",
+        "glow": "#ffa842"
+      }
+    },
+    {
+      "id": "pm-paper-teletype",
+      "name": "PM Paper Teletype",
+      "appearance": "light",
+      "look": "retro",
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#f4ecdd",
+        "foreground": "#231e19",
+        "cursor": "#231e19",
+        "cursorText": "#f4ecdd",
+        "selectionBackground": "#322d26",
+        "selectionForeground": "#f4ecdd",
+        "ansi": ["#181512", "#a13126", "#346b37", "#815b16", "#2d4d8b", "#783b82", "#216970", "#67635c", "#8b857d", "#b83a28", "#337538", "#8b5f0d", "#355da9", "#8b4496", "#1a737c", "#4b4741"]
+      },
+      "roles": {
+        "link": "#2d4d8b",
+        "searchMatch": "#efdcb1",
+        "searchCurrent": "#edbb64",
+        "markOk": "#346b37",
+        "markFail": "#a13126",
+        "markNeutral": "#8b857d",
+        "progress": "#231e19",
+        "attention": "#a13126"
+      }
+    },
+    {
+      "id": "pm-yorha-parchment",
+      "name": "PM YoRHa Parchment",
+      "appearance": "light",
+      "look": "nier",
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#ccc8b1",
+        "foreground": "#211f1b",
+        "cursor": "#211f1b",
+        "cursorText": "#dcd8c2",
+        "selectionBackground": "#4d4b3f",
+        "selectionForeground": "#dcd8c2",
+        "ansi": ["#211f1b", "#7d3427", "#425731", "#5c5022", "#3e505a", "#5d4452", "#3b5654", "#4d4b3f", "#6f6c5e", "#7d3427", "#364b23", "#524413", "#2c3e4b", "#4e3343", "#274543", "#454138"]
+      },
+      "roles": {
+        "link": "#2c3e4b",
+        "searchMatch": "#aeaa93",
+        "searchCurrent": "#a08e42",
+        "markOk": "#425731",
+        "markFail": "#7d3427",
+        "markNeutral": "#4d4b3f",
+        "progress": "#211f1b",
+        "attention": "#5c5022"
+      }
+    },
+    {
+      "id": "pm-yorha-ink",
+      "name": "PM YoRHa Ink",
+      "appearance": "dark",
+      "look": "nier",
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#2b2923",
+        "foreground": "#d1cdb7",
+        "cursor": "#d1cdb7",
+        "cursorText": "#2b2923",
+        "selectionBackground": "#b5b096",
+        "selectionForeground": "#2b2923",
+        "ansi": ["#3d3b33", "#d98a77", "#a9c68c", "#d3c47e", "#99aebb", "#bfa1b1", "#96b5b3", "#a8a593", "#848073", "#d98a77", "#c0dca5", "#e6d89b", "#b2c8d5", "#d8baca", "#afcfcc", "#dcd8c2"]
+      },
+      "roles": {
+        "link": "#b2c8d5",
+        "searchMatch": "#45433a",
+        "searchCurrent": "#5c5022",
+        "markOk": "#a9c68c",
+        "markFail": "#d98a77",
+        "markNeutral": "#9d9986",
+        "progress": "#d1cdb7",
+        "attention": "#d3c47e"
+      }
+    },
+    {
+      "id": "pm-high-contrast-light",
+      "name": "PM High Contrast Light",
+      "appearance": "light",
+      "look": null,
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "cursor": "#000000",
+        "cursorText": "#ffffff",
+        "selectionBackground": "#0a3d91",
+        "selectionForeground": "#ffffff",
+        "ansi": ["#000000", "#a50018", "#005e15", "#6b4b00", "#0445c0", "#8a1593", "#005a65", "#3d3d3d", "#575757", "#b4000a", "#1b6600", "#795000", "#1f4bcf", "#9120a7", "#00626b", "#262626"]
+      },
+      "roles": {
+        "link": "#0445c0",
+        "searchMatch": "#fff09a",
+        "searchCurrent": "#ffb000",
+        "markOk": "#005e15",
+        "markFail": "#a50018",
+        "markNeutral": "#575757",
+        "progress": "#0445c0",
+        "attention": "#6b4b00"
+      }
+    },
+    {
+      "id": "pm-high-contrast-dark",
+      "name": "PM High Contrast Dark",
+      "appearance": "dark",
+      "look": null,
+      "source": "authored 2026-10-09",
+      "sourceSha256": null,
+      "colors": {
+        "background": "#000000",
+        "foreground": "#ffffff",
+        "cursor": "#ffd60a",
+        "cursorText": "#000000",
+        "selectionBackground": "#9ccfff",
+        "selectionForeground": "#000000",
+        "ansi": ["#a3a3a3", "#ff8f80", "#5ee87d", "#ffd60a", "#8fb8ff", "#f0a3ff", "#5ce1f0", "#e6e6e6", "#c4c4c4", "#ffb3a8", "#a2f5b2", "#ffe970", "#bdd5ff", "#f7c8ff", "#a6f0f7", "#ffffff"]
+      },
+      "roles": {
+        "link": "#8fb8ff",
+        "searchMatch": "#3d3600",
+        "searchCurrent": "#704f00",
+        "markOk": "#5ee87d",
+        "markFail": "#ff8f80",
+        "markNeutral": "#c4c4c4",
+        "progress": "#8fb8ff",
+        "attention": "#ffd60a"
+      }
+    }
+  ]
+}

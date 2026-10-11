@@ -63,7 +63,10 @@ def problems_for(text: str) -> list[str]:
     for kept in KEPT:
         if kept not in text:
             problems.append(f'kept reference missing: {kept}')
-    if text.count('<title>') != 1 or NEW_TITLE not in text:
+    # only the page's own <head> title counts (the published page carries the terminal's fixtures, one of them an HTML
+    # file with a <title> of its own)
+    head = text[:text.find('</head>')] if '</head>' in text else text
+    if head.count('<title>') != 1 or NEW_TITLE not in head:
         problems.append('title is not exactly one LeftRail PM7 title')
     return problems
 

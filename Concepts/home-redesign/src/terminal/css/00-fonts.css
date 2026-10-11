@@ -1,0 +1,17 @@
+/* Terminal faces (D17). None is declared here any more: since 2026-10-10 every face the terminal uses is the page's own,
+   embedded once through the onboarding concept's DL-161 pipeline (Concepts/onboarding/opus-5.5/src/css/01-webfonts.css,
+   files and licences in its src/fonts, origins and SHA-256 in src/fonts/SOURCE.md). The standalone harness declares the
+   same faces in its page stand-in (harness/mock-host.css).
+
+   Roles (js/42-appearance.js FONTS)
+   - JetBrains Mono: the code face in every look but Retro, upright and its own italic, so SGR italic draws the real
+     italic.
+   - VT323: the Retro terminal default. Sixtyfour and Sixtyfour Raster (a static instance at SCAN 45, BLED 40, because
+     a canvas cannot set custom axes): Retro options with a motion-free CRT look. Departure Mono: a Retro option. None of
+     the four has a bold weight; bold is synthesised.
+   - Atkinson Hyperlegible Mono: the accessibility face, selectable in every look (normal and italic).
+
+   PM Symbols rule: these families are terminal faces and are never mirrored into PM Symbols (03-symbols.css), whose set
+   includes the box-drawing lines U+2500, U+2502 and U+2550. The terminal draws box drawing (U+2500-257F), blocks
+   (U+2580-259F), braille (U+2800-28FF), powerline (U+E0B0-E0BF) and sextants itself (js/22-glyphs.js), so it never looks
+   them up in a face; the PM Symbols pairing on the page's JetBrains Mono is harmless to it. */

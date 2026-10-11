@@ -3,6 +3,7 @@
  * Writes report.json (per scenario: steps, assertions, errors, refused commands, command log), drafts.json (every
  * captured draft, for tools/schema_check.py validate) and a final screenshot per scenario. */
 import { open, sleep } from './drive.mjs';
+import { injectOwnerResult, assertPublishedProject, finishServerSetup, finishBackupProtection } from './owner_fixtures.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
@@ -20,6 +21,18 @@ const until = (d, js, what, timeout) => d.until(new Function('return ' + js), { 
 const readyPrimary = (d) => d.until(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; }, { what: 'primary enabled', timeout: 15000 });
 async function toName(d) { await d.primary(); await d.primary(); await d.primary(); await d.primary(); } /* welcome→look→where→begin→name */
 async function reviewAndCreate(d) { await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done' || window.O55.S.sess.commit.state === 'failed'", 'commit settled', 25000); }
+async function githubAttempt(d, A, failure) {
+  await readyPrimary(d); await d.primary();
+  await until(d, "window.O55.S.sess.commit.state === 'pending'", 'GitHub awaiting owner result', 15000);
+  A.ok(await d.state(() => !window.O55.S.sess.commit.projectId && !window.O55.S.sess.commit.recovery), 'GitHub transport alone publishes no Project or remote verdict');
+  const key = await d.state(() => window.O55.S.sess.commit.original.key);
+  const result = await injectOwnerResult(d, 'commit', 'or_create', failure ? { failure_reason: failure } : {});
+  await d.act('checkAgain');
+  await until(d, "window.O55.S.sess.commit.state === 'done' || window.O55.S.sess.commit.state === 'failed'", 'GitHub owner result adopted', 8000);
+  A.eq(await d.state(() => window.O55.S.sess.commit.original.key), key, 'adoption retains the original attempt key');
+  if (!failure) A.eq(await assertPublishedProject(d, A), result.listed_project_id, 'only the owner-listed identity is published');
+  return key;
+}
 
 /* ---------------------------------------------------------------------------------------------- packet scenarios */
 def('s01', 'fresh', 'Fresh user, local default, no existing Projects', async (d, A) => {
@@ -29,7 +42,7 @@ def('s01', 'fresh', 'Fresh user, local default, no existing Projects', async (d,
   A.eq(await d.screen(), 'safe', 'safe after name'); await d.primary();
   A.eq(await d.screen(), 'review', 'review after safe'); await reviewAndCreate(d);
   A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'commit done');
-  A.ok(await d.state(() => !!document.querySelector('#projectMenu [data-project="p-book-club-website"].is-selected')), 'new Project selected in the title bar');
+  await assertPublishedProject(d, A);
   await d.primary(); A.eq(await d.screen(), 'ai', 'AI only after commit');
   const cmds = await d.commands(); A.ok(cmds.findIndex((c) => c.includes('postcommit')) > cmds.findIndex((c) => c.includes('project_commit')), 'provider work after the commit');
   A.capture('s01 after commit', await d.draft('main'));
@@ -107,20 +120,30 @@ def('s08', 'fresh', 'Review Edit returns to review', async (d, A) => {
   await d.type('name', 'Second name'); await d.primary(); A.eq(await d.screen(), 'review', 'Continue returns straight to review');
   A.ok(await d.state(() => /Second name/.test(document.querySelector('.o55-title').textContent)), 'title shows the new name');
 });
-def('s09', 'nameTaken', 'Commit failure, change the name, resume (idempotent)', async (d, A) => {
+def('s09', 'nameTaken', 'Name taken before a remote effect: review, change the name, create once', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
   await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed', 8000); await d.primary();
   A.eq(await d.screen(), 'online-details', 'name on GitHub'); await d.primary(); await d.primary();
-  await reviewAndCreate(d); A.eq(await d.state(() => window.O55.S.sess.commit.state), 'failed', 'online copy failed at creation');
-  await d.act('rename'); A.eq(await d.screen(), 'online-details', 'change the name'); await d.type('repo', 'book-club-site'); await d.primary();
-  await until(d, "window.O55.S.sess.commit.state === 'done'", 'resumed commit', 20000);
-  A.eq(await d.state(() => document.querySelectorAll('#projectMenu [data-project="p-book-club-website"]').length), 1, 'exactly one Project');
+  const failedKey = await githubAttempt(d, A, 'name_taken');
+  A.eq(await d.state(() => window.O55.S.sess.commit.state), 'failed', 'owner reports failure before the remote effect');
+  await d.state(() => window.O55.projectRecovery.replayOriginal(window.O55.S.sess.commit));
+  A.eq(await d.state(() => window.O55.S.sess.commit.original.key), failedKey, 'replay keeps the failed original key');
+  A.ok(await d.state(() => window.O55.S.sess.commit.state === 'failed' && !window.O55.S.sess.commit.projectId), 'replay performs no creation');
+  await d.act('reviewAgain'); await readyPrimary(d); await d.act('edit', 'safe');
+  await d.act('online'); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'online-details', 'change the name through the reviewed setup'); await d.type('repo', 'book-club-site'); await d.primary(); await d.primary();
+  A.eq(await d.screen(), 'review', 'changed name returns to review');
+  A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });
-def('s09b', 'flaky', 'Network failure, Try again resumes', async (d, A) => {
+def('s09b', 'flaky', 'Network failure before a remote effect: review a fresh attempt', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Flaky one'); await d.primary();
   await d.act('online'); await d.primary(); await d.act('signIn'); await until(d, "window.O55.S.sess.signin.state === 'done'", 'signed', 8000); await d.primary(); await d.primary(); await d.primary();
-  await reviewAndCreate(d); A.eq(await d.state(() => window.O55.S.sess.commit.code), 'network', 'network failure');
-  await d.act('retry'); await until(d, "window.O55.S.sess.commit.state === 'done'", 'retry done', 20000); A.ok(true, 'retry completed');
+  const failedKey = await githubAttempt(d, A, 'network');
+  A.eq(await d.state(() => window.O55.S.sess.commit.code), 'network', 'owner reports network failure before the remote effect');
+  await d.state(() => window.O55.projectRecovery.replayOriginal(window.O55.S.sess.commit));
+  A.ok(await d.state(() => window.O55.S.sess.commit.state === 'failed' && !window.O55.S.sess.commit.projectId), 'original-key replay cannot turn failure into success');
+  await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'fresh creation requires review');
+  A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });
 async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, "(window.O55.S.sess.ops||{})['detect:this computer'] && window.O55.S.sess.ops['detect:this computer'].state === 'done'", 'detection', 8000); await sleep(400); }
 def('s10', 'returning', 'Provider already installed and signed in: Ready automatically', async (d, A) => {
@@ -201,7 +224,7 @@ def('v1', 'fresh', 'Set up a new Server, then a Project on it with Tailscale', a
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found truenas.local', 6000); await d.act('pick', 'pm:new'); await d.primary();
   A.eq(await d.screen(), 's-confirm', 'confirm'); await d.type('code', '000 000'); await d.primary({ settle: 1500 });
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong setup code explained');
-  await d.type('code', '482 913'); await d.primary(); await d.untilScreen('s-ready', 8000);
+  await d.type('code', '482 913'); await d.primary(); await finishServerSetup(d, A);
   A.ok(await d.state(() => !!document.querySelector('.o55-qr')), 'pairing card with QR'); await d.primary();
   A.eq(await d.screen(), 'begin', 'Project chapter'); await d.primary(); await d.type('name', 'Garden planner'); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'away', 'away from home step'); await d.act('pick', 'anywhere'); await d.primary();
@@ -462,13 +485,13 @@ def('l1', 'fresh', 'Set up a Project later', async (d, A) => {
 
 /* ---------------------------------------------------------------------------------------------- logic audit (AUDIT.md) */
 /* welcome -> look -> where: a new Server -> NAS -> found -> claimed -> Server ready -> the Project chapter */
-async function toNewServer(d) {
+async function toNewServer(d, A) {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary(); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found truenas.local', 6000); await d.act('pick', 'pm:new'); await d.primary();
-  await d.type('code', '482 913'); await d.primary(); await d.untilScreen('s-ready', 8000); await d.primary();
+  await d.type('code', '482 913'); await d.primary(); await finishServerSetup(d, A); await d.primary();
 }
 def('a1', 'fresh', 'A Project later on a new Server still sets up its access, and nothing else', async (d, A) => {
-  await toNewServer(d); A.eq(await d.screen(), 'begin', 'Project chapter');
+  await toNewServer(d, A); A.eq(await d.screen(), 'begin', 'Project chapter');
   await d.act('later'); A.eq(await d.screen(), 'away', "the Server's access is still asked");
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'review', 'review');
   A.ok(await d.state(() => !!document.querySelector('#pm-o55-onboarding [data-key="rv-remote"]')), 'Review shows the access');
@@ -500,7 +523,7 @@ def('a3', 'fresh', 'A cloud computer is reached by its address and is not called
   A.eq(await d.state(() => document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]').value), 'Cloud server', 'named for what it is');
 });
 def('a4', 'fresh', 'On a new Server an existing folder is on the Server, keeps its place and keeps its online copy', async (d, A) => {
-  await toNewServer(d); await d.act('pick', 'existing');
+  await toNewServer(d, A); await d.act('pick', 'existing');
   const srv = await d.state(() => window.O55.project.serverName(window.O55.S)); /* the Server's own name (never a name already in use) */
   A.ok(await d.page.evaluate((n) => document.querySelector('#pm-o55-onboarding').textContent.includes('A folder on ' + n), srv), 'the folder choice names the Server (' + srv + ')');
   await d.act('sub', 'folder'); await d.primary(); A.eq(await d.screen(), 'ex-folder', 'folder');
@@ -525,7 +548,7 @@ def('a5', 'fresh', 'Restoring from a NAS shows its identity and sets up a key fi
   A.eq(await d.screen(), 'r-pick', 'then the backups');
 });
 def('a6', 'fresh', 'Choosing This computer after setting up a Server leaves nothing of the Server in the draft', async (d, A) => {
-  await toNewServer(d);
+  await toNewServer(d, A);
   for (let i = 0; i < 8 && (await d.screen()) !== 'where'; i++) await d.back();
   A.eq(await d.screen(), 'where', 'back to where the work runs');
   await d.act('pick', 'this'); await d.primary(); A.eq(await d.screen(), 'begin', 'Project chapter');
@@ -590,12 +613,14 @@ def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished
 def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits for it', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
   await readyPrimary(d); await d.primary(); A.eq(await d.screen(), 'creating', 'creating');
+  const originalKey = await d.state(() => window.O55.S.sess.commit.original.key);
   await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
   await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
   A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
   A.ok(/still being created/.test(await d.state(() => document.body.textContent)), 'it says the Project is still being created');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
-  A.eq(await d.state(() => document.querySelectorAll('#projectMenu [data-project="p-book-club-website"]').length), 1, 'exactly one Project was made');
+  await assertPublishedProject(d, A);
+  A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'reopening Creating retains the same attempt');
   await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
   await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
   A.eq(await d.screen(), 'welcome', 'once it is made, Run Onboarding Again starts over');
@@ -609,11 +634,7 @@ async function toProtect(d, dest) {
   await readyPrimary(d); await d.primary();
 }
 async function finishProtect(d, A) {
-  for (const [step, what] of [['test', 'test'], ['kit', 'kit']]) { await readyPrimary(d); await d.primary(); await until(d, `(window.O55.S.sess.backup.done||[]).includes('${step}')`, what, 8000); }
-  const word = await d.state(() => [...document.querySelectorAll('.o55-kitwords span')][3].lastChild.textContent.trim());
-  await d.type('word', word); await d.primary(); await until(d, "(window.O55.S.sess.backup.done||[]).includes('kitTest')", 'kit checked', 8000);
-  await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.backup.state === 'done'", 'backups on', 8000);
-  A.ok(/Backups are on/.test(await d.state(() => document.body.textContent)), 'backups are on');
+  await finishBackupProtection(d, A);
 }
 def('b1', 'fresh', 'Backup to Home NAS: Connect runs the SSH steps once, then the backup finishes with that key', async (d, A) => {
   await toProtect(d, 'nas');
@@ -732,7 +753,7 @@ def('lc3', 'fresh', 'A backup place suggested by a restore leaves with the resto
   A.eq(JSON.stringify([await d.state(() => window.O55.S.sess.backup.dest), dr.backup_source_ref]), JSON.stringify([null, '']), 'no backup place and no backup source');
 });
 def('lc4', 'keyWorks', "On a Server the NAS key is the Server's own, not this computer's", async (d, A) => {
-  await toNewServer(d); A.eq(await d.screen(), 'begin', 'Project chapter'); await d.primary();
+  await toNewServer(d, A); A.eq(await d.screen(), 'begin', 'Project chapter'); await d.primary();
   await d.type('name', 'Book club website'); await d.act('storage', 'network_location'); A.eq(await d.screen(), 'nas-find', 'a network drive');
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"nas-home\"]')", 'discovered', 5000); await d.act('device', 'nas-home'); await d.primary(); await d.primary();
   await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000);
@@ -746,7 +767,7 @@ def('lc5', 'fresh', 'A new Server is not offered a name already used on the netw
   A.ok(name && name.toLowerCase() !== 'home nas', 'the suggested name is not Home NAS (' + name + ')');
 });
 def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it away from home, and sets that up', async (d, A) => {
-  await toNewServer(d); await d.back(); A.eq(await d.screen(), 's-ready', 'the Server is ready');
+  await toNewServer(d, A); await d.back(); A.eq(await d.screen(), 's-ready', 'the Server is ready');
   await d.act('restore'); await d.act('source', 'kit'); await d.primary(); await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
   await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(400); await d.primary();
   A.eq(await d.screen(), 'away', 'asked about away from home first');
@@ -780,3 +801,4 @@ for (const sc of SC) {
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
 writeFileSync(join(out, 'drafts.json'), JSON.stringify({ drafts }, null, 1));
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));
+if (report.some(r => !r.pass)) process.exitCode = 1;

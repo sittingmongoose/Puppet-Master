@@ -55,13 +55,19 @@
           },
           "workspace_orientation": {
             "wait": "Report: Scanning the workspace.",
-            "line": "Report: Scan complete. Pages sit on top, and panels can move."
+            "line": "Report: Scan complete. Pages on top, panels in the middle, Chat on the right."
           },
-          "move_or_dock_chat": {
-            "line": "Proposal: Put Chat where you look most. It can move again any time."
+          "open_from_plus": {
+            "line": "Proposal: Use + to open a new tab. Any kind will do."
+          },
+          "open_file_from_rail": {
+            "line": "Report: One click previews a file. Two clicks keep it."
+          },
+          "split_by_drag": {
+            "line": "Proposal: Drag the tab to an edge. It gets a panel of its own."
           },
           "widget_action": {
-            "line": "Proposal: Keep the Approval queue in view. Anything waiting for you shows up there."
+            "line": "Proposal: Add Upcoming resets to Home. It shows the next limit resets."
           },
           "open_planning": {
             "line": "Report: Planning Wizard turns a rough idea into a plan you can check."

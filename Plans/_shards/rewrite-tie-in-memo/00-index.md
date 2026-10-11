@@ -1,20 +1,20 @@
 # Shard Index: Plans/rewrite-tie-in-memo.md
 
-Generated: 2026-10-02T04:10:05Z
+Generated: 2026-10-10T08:26:09Z
 
-Source SHA256: `db91bb8fa752f4e91bf52c3d75a6b41c1728acd0509585a238a4e864ad31c204`
+Source SHA256: `d90337f35c544f1a4a65da7bf5aa52ca2017d36c42e07d8331ec8159e2f72066`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L11 `6d497eb550af99363bef572392fb58d081f56585b39e435a240d2d61f5d2f385`
-- [002 - Provided memo (verbatim)](002-provided-memo-verbatim.md) L13-L87 `887dfb80e4be1d371c09e1555e2537a274a0ea4256f889dbaa150c94129d3082`
-- [003 - Impacts on existing Plans (deltas to keep consistency)](003-impacts-on-existing-plans-deltas-to-keep-consistency.md) L89-L139 `6c59b0670af436a1221c591ec8cf0c3f0877ec6279ab84079a0920b976533a29`
-- [004 - Suggested "single source of truth" rule for the rewrite](004-suggested-single-source-of-truth-rule-for-the-rewrite.md) L141-L150 `43072ebf614f3af00f5adab916be5118fa65bb5fd9698216679f8bd936198d95`
-- [005 - Unified Document/Media Rendering Contract (2026-03-07)](005-unified-document-media-rendering-contract-2026-03-07.md) L152-L484 `17f9b62b962eb000fc54c292a0d7fe46a3dff9af22b6e313934f029a8458b0e8`
-- [006 - Runtime Scheduler Packet Tie-In Note (2026-03-08)](006-runtime-scheduler-packet-tie-in-note-2026-03-08.md) L486-L494 `35eeaf3629f7d132084ef9084bee2c699d55febbb4e8c07a3d4f3bd28d49a49d`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L496-L500 `2de6f3de4074272a81967dfca77616488cd4f0e2567bdafe5383088940e2ab9d`
-- [008 - PlanUnits](008-planunits.md) L502-L834 `00a5840eb87183bf054f441775308fd74cc16ebce05d031cf02fa5384497cf0a`
-- [009 - Migration Coverage](009-migration-coverage.md) L836-L846 `db7af189cf1d5092670df8fcfe958ad5c75f1e88ae149d241afb147bbc0afd6c`
-- [010 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L848-L852 `4bf30371c8c71f3a3f54e25b6f8ed8059755de46d9b762df6250f6b203b2da14`
+- [001 - Preamble](001-preamble.md) L1-L11 `ce60d20b44b82116612800080fd7fc06dc61108fe6e1457d31d43c81251237a0`
+- [002 - Provided memo (verbatim)](002-provided-memo-verbatim.md) L13-L87 `fd5a5046c7d8279f6a0ce41aee93aa6366d9970e972bcb89fff3554d7b8b121d`
+- [003 - Impacts on existing Plans (deltas to keep consistency)](003-impacts-on-existing-plans-deltas-to-keep-consistency.md) L89-L139 `f4962d9916f851ba82fcf5641b6b32be58512aed2e5a857786e61bd813b845f6`
+- [004 - Suggested "single source of truth" rule for the rewrite](004-suggested-single-source-of-truth-rule-for-the-rewrite.md) L141-L150 `a42983fa424dfcd72e95dffbe238b17821c5fb8aa078234149581a9dbc0df93d`
+- [005 - Unified Document/Media Rendering Contract (2026-03-07)](005-unified-document-media-rendering-contract-2026-03-07.md) L152-L484 `5b0e80cdd7120833f1d82105b1294f334d161924f6257a819ff14ffcc1169032`
+- [006 - Runtime Scheduler Packet Tie-In Note (2026-03-08)](006-runtime-scheduler-packet-tie-in-note-2026-03-08.md) L486-L494 `2f5208b067b4931c8145929f9d0c37fd38c59182b4aed9106a87c26606b43d8f`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L496-L500 `5773251a2ef2f562a5cc11c14b8fd1fe738b7c2c0b0d25235f0f207c658974d6`
+- [008 - PlanUnits](008-planunits.md) L502-L834 `46134a96d1139ed5939c74a75ec464f76273ae1f60756a909fe5c43a2c7a791e`
+- [009 - Migration Coverage](009-migration-coverage.md) L836-L846 `bc92eab521eb139cfb0b06b991d904ac71b0769de713b74894b9cfadea941d3c`
+- [010 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L848-L852 `c2dedd8e498be28b0fc8ca6d4a1e96cbe3978cbe622abadb32771a0abd015fc1`

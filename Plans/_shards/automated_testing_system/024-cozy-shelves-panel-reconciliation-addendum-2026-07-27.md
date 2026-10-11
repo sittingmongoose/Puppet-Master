@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2734-L3049
+Source lines: L2736-L3051
 
-Source SHA256: `0bb0522147e1a134c83941e876edf725a4e5993dcaf9e1458d8fce1fc0069dd3`
+Source SHA256: `3b3e6cc928463874d31448ebb06530e55e68c5de446e8fd52ab25240f837f3b6`
 
 ---
 

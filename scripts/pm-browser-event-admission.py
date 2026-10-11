@@ -28,7 +28,10 @@ ORIGINAL39_SHA256 = "f548a2977dc4f1c51dc0a4976940a0a3562de6281a707a96fbd5cee67f6
 ORIGINAL40_SHA256 = "4f701c9598003d7c01a405f18f7991b373379eca8b182cf6222540a4746d1756"
 # Current manifest re-frozen by the landed storage-registry repairs on
 # 2026-09-24. Keep its authority separate from the preparation-era lineage.
-CURRENT39_SHA256 = "e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306"
+# Re-frozen 2026-10-10 for DL-188 (Jared approved the Event Authority checkpoint that moves
+# workspace.layout_changed to family revision 2.0.0, D42): the one changed row is the reviewed layout
+# successor below; was e2b5a433c668a36ffe3ffdc329f90a0f860b680bbc54fb9c596d1a302c6cd306.
+CURRENT39_SHA256 = "5ccb9d5d543fcb81e91db26ce432b89192fe96ed86ca6adf5515c9e5929383ed"
 COMPACTION_FAMILY = "event-family-context-compaction-completed"
 COORDINATION_LEDGER = "Plans/coordination_event_admission.json"
 # The exact seven Step 9 batch 2 families (DL-045), each event type mapped to its prepared family ID
@@ -77,6 +80,36 @@ REVIEWED_GOAL_SUCCESSORS = {
         "f58cc6a74676d7d3266c0a45f1a7f07a7e9f12e9782ca2c837f840070df7654e",
         "f6350caf277d662fad531fc9b9af4c82803670fa", "Plans/Goal_Runtime_System.md#GRS-084",
     ),
+}
+
+# The one reviewed successor outside the Goal adoptions: workspace.layout_changed 1.1.0 -> 2.0.0,
+# approved by Jared as DL-188 (D42) and landed by the home panels and terminal follow-up round.
+# Pins: (historical row fingerprint, successor row fingerprint, approval, contract). The historical
+# field values are retained verbatim so the preparation-era rows reconstruct exactly.
+REVIEWED_LAYOUT_SUCCESSORS = {
+    "event-family-workspace-layout-changed": (
+        "1a8f179c72f026b106eda791a03bd225f40c02a0ece8db2ad480c3cc180948a7",
+        "39a2bbdb6e08fc05ae0526533b01ce3841dfe21014ae98de43889ea30d5c7c1a",
+        "Plans/Decision_Log.md#DL-188", "Plans/Contracts_V0.md#CV-361",
+    ),
+}
+REVIEWED_LAYOUT_HISTORICAL_FIELDS = {
+    "event-family-workspace-layout-changed": {
+        "family_revision": "1.1.0",
+        "payload_owner_doc": "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
+        "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
+        "payload_schema_ref": {
+                "path": "Plans/event_payloads/workspace_layout_changed.schema.json",
+                "json_pointer": "#",
+                "schema_id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0"
+        },
+        "source_refs": [
+                "Plans/event_payloads/workspace_layout_changed.schema.json#",
+                "Plans/Contracts_V0.md#pmconcept7-home-workspace-event-contracts",
+                "Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary",
+                "Plans/Automated_Testing_System.md#ats-040---settled-command-event-receipt-and-context-compaction-fixtures"
+        ]
+    },
 }
 
 
@@ -135,6 +168,14 @@ def historical_preexisting_rows(rows):
     """
     historical = copy.deepcopy(rows)
     for row in historical:
+        layout_pins = REVIEWED_LAYOUT_SUCCESSORS.get(row["family_id"])
+        if layout_pins is not None:
+            if fingerprint(row) not in layout_pins[:2]:
+                raise ValueError("unreviewed_preexisting_successor: " + row["family_id"])
+            row.update(copy.deepcopy(REVIEWED_LAYOUT_HISTORICAL_FIELDS[row["family_id"]]))
+            if fingerprint(row) != layout_pins[0]:
+                raise ValueError("historical_preexisting_row_reconstruction: " + row["family_id"])
+            continue
         pins = REVIEWED_GOAL_SUCCESSORS.get(row["family_id"])
         if pins is None:
             continue

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-10T14:29:28Z",
+  "generated_at_utc": "2026-10-11T01:03:11Z",
   "index_path": "Plans/_shards/widget_system/00-index.md",
-  "index_sha256": "2b988a8f799344cdd17f7d0f434f85edaca1fec551d1907118999243cace79ce",
+  "index_sha256": "ad7acd3ab7e878fac01c4b4117abc24ca59b0b80d39084d8d43187f98b414ac7",
   "manifest_path": "Plans/_shards/widget_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/widget_system/001-preamble.md",
-      "sha256": "5beb86b0156737395259f4241a17040e6176581db674bc5a69a2e616969b0758",
+      "sha256": "96c46136e59091ea6b481ac9c029da0cf0b127aba89497b182cf065f59576e25",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/widget_system/002-canonical-owner-section-requirements.md",
-      "sha256": "c8718aa218d97196d1030dfd15f91bb09019d4383f3d8dabe0573ce3a29de512",
+      "sha256": "2d69864760c31babc33195459a168b3d4fac59570b3a898213a45c5224ccad77",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Scope and non-scope",
       "path": "Plans/_shards/widget_system/003-1.-scope-and-non-scope.md",
-      "sha256": "208835cebb54c63c97d44fd1ed7f070481571ac6afd2a017913bd3f6360ac624",
+      "sha256": "9689cb2390c80ea5497bdcd5b218f13a06964c387a7b893c39c96d54f47a7cc4",
       "shard_id": "003",
       "source_line_end": 29,
       "source_line_start": 12,
@@ -35,106 +35,115 @@
     {
       "heading": "2. Hostability and data contracts",
       "path": "Plans/_shards/widget_system/004-2.-hostability-and-data-contracts.md",
-      "sha256": "7be4e8f057f0787fe325db789c2c16e2bede29adc535f9a0995c9934632a1360",
+      "sha256": "6d3cb8a4dde6fc5a04bd925c46e381489f46b073a9b255e192d31440e4034abb",
       "shard_id": "004",
-      "source_line_end": 72,
+      "source_line_end": 76,
       "source_line_start": 30,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. Layout persistence",
       "path": "Plans/_shards/widget_system/005-3.-layout-persistence.md",
-      "sha256": "f14c77ec63d5b46f741dbcedc3e648b3ad08bc7f4771505f14fddc8439049dae",
+      "sha256": "c718a789ef72c764dbf7e6c3a5ab38a2a99757b9cf612ffd74a15a5f549b36e5",
       "shard_id": "005",
-      "source_line_end": 83,
-      "source_line_start": 74,
+      "source_line_end": 91,
+      "source_line_start": 78,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. Orchestrator Progress widget scope and catalog linkage",
       "path": "Plans/_shards/widget_system/006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md",
-      "sha256": "033d4769d46a00821b6da9b7dce43b58b3f303d68b870d3ae0d9511dc83d4c73",
+      "sha256": "789e887707def4fb54e8f18a5d5b8fcd9c482657cc7c3c7a6599691fc4c91638",
       "shard_id": "006",
-      "source_line_end": 124,
-      "source_line_start": 85,
+      "source_line_end": 132,
+      "source_line_start": 93,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/widget_system/007-owner-consumer-map.md",
-      "sha256": "370e4eed287e38dfb1aee0a112d3296c5ead2c006604325d552a6b3f9a6b522c",
+      "sha256": "6fef65a0efa0f3f38d9860b423b6223a917cb22423b79a68838de76dccc1c53a",
       "shard_id": "007",
-      "source_line_end": 130,
-      "source_line_start": 126,
+      "source_line_end": 138,
+      "source_line_start": 134,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/widget_system/008-planunits.md",
-      "sha256": "5f2139f579f6a901f6125d388e7d73a15e42d9ea723e490f14c3680ee369ab9c",
+      "sha256": "7c97212d607244038f5c3ee38bc97058e0c7a26c8aad0e6e84935883aa43688a",
       "shard_id": "008",
-      "source_line_end": 1015,
-      "source_line_start": 132,
+      "source_line_end": 1036,
+      "source_line_start": 140,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/widget_system/009-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "1d9b9206ca3e0c991e1222c7b3ad2b285ee37bbe387ad2a3b7cb47b047cd8434",
+      "sha256": "9ebbb80c60b8c081a9fc26f8a8ce65e7aafbcc1a6c3aa9024565485a54b2947b",
       "shard_id": "009",
-      "source_line_end": 1077,
-      "source_line_start": 1017,
+      "source_line_end": 1098,
+      "source_line_start": 1038,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/widget_system/010-migration-coverage.md",
-      "sha256": "4f3ca652c15f70056ebc5b790c6f8f58e3b9e884b3d3b0eededd0366142c64db",
+      "sha256": "3892807f197c359f9bb0b4ff285cf53cdcc18c90ab65b6ba07efe3891864d4a4",
       "shard_id": "010",
-      "source_line_end": 1089,
-      "source_line_start": 1079,
+      "source_line_end": 1110,
+      "source_line_start": 1100,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/widget_system/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "8508c5884c4196d2494d08bc7b4ac9b1567882080e1a8bddc6e3e71cfd4bc1ba",
+      "sha256": "c69c14f75aa52e29b4fda34842be202f3e5de484e4124b3199844344f789aa9a",
       "shard_id": "011",
-      "source_line_end": 1091,
-      "source_line_start": 1091,
+      "source_line_end": 1112,
+      "source_line_start": 1112,
       "split_rule": "heading-##"
     },
     {
       "heading": "PMConcept7 Home Workspace boundary clarification \u2014 2026-08-04",
       "path": "Plans/_shards/widget_system/012-pmconcept7-home-workspace-boundary-clarification-2026-08-04.md",
-      "sha256": "2fdc2de98a3e4fc3aaf919eea5055c73601fc6a8c06c8eaac2d2f4c2bffe4572",
+      "sha256": "f7bb76de2dd3d453b9fb8e2e1cdc82f73e439a627823174a9d089b4e41676e96",
       "shard_id": "012",
-      "source_line_end": 1131,
-      "source_line_start": 1093,
+      "source_line_end": 1177,
+      "source_line_start": 1114,
       "split_rule": "heading-##"
     },
     {
       "heading": "u11 Prism II Usage Widget Disclosure Addendum - 2026-08-18",
       "path": "Plans/_shards/widget_system/013-u11-prism-ii-usage-widget-disclosure-addendum-2026-08-18.md",
-      "sha256": "d112b9698eaf41ae3ac256d46a95524cbb65cdcb0037dac0dcbdbafda999f015",
+      "sha256": "16c77d7710ae48d6ca71024391cc95fa33cfaba9979fd9ac20bd95518c964da9",
       "shard_id": "013",
-      "source_line_end": 1202,
-      "source_line_start": 1133,
+      "source_line_end": 1248,
+      "source_line_start": 1179,
       "split_rule": "heading-##"
     },
     {
       "heading": "PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27",
       "path": "Plans/_shards/widget_system/014-pmconcept7-recovery-canonical-integration-addendum-2026-08-27.md",
-      "sha256": "9c95c59cbbd084f13669d6e57997b06c4787ce0367a5698fc2968e87a2ce3eb2",
+      "sha256": "bcee926e08581618b832ce8884ab53f981e76a1a1ce7f29e25251c2350df935f",
       "shard_id": "014",
-      "source_line_end": 1657,
-      "source_line_start": 1204,
+      "source_line_end": 1743,
+      "source_line_start": 1250,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "DL-180 to DL-185 \u2014 Dashboard Tabs And Their Boards (2026-10-09)",
+      "path": "Plans/_shards/widget_system/015-dl-180-to-dl-185-dashboard-tabs-and-their-boards-2026-10-09.md",
+      "sha256": "c081ee92df4ced9cf8976d3b00a530288ef9e56aad16457b7ce1f8b583f715a8",
+      "shard_id": "015",
+      "source_line_end": 2027,
+      "source_line_start": 1746,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1657,
+    "line_count": 2027,
     "path": "Plans/Widget_System.md",
-    "sha256": "c662bd5004ee1856b3c78260dfcd1919a2fe8ff8f1c0751a561ba1c0e853e755"
+    "sha256": "9572a88139c37c5eb4fe22b053754299de9f535b4f3066bb05214f490f7b3413"
   }
 }

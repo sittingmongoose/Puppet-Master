@@ -15,7 +15,10 @@
      (into the search field when there is one, type-ahead otherwise), Left / Right between the rail and the list.
    The panel is appended inside .pmu-shell (so it reads the --pmu-* tokens) and placed against the shell box; rows carry
    .pmu-poprow and the panel .pmu-pop so NieR Mode's menu cursor and slice apply (usage_layer NIER_NAMES).
-   API (NOTES-engine.md): PMU.menu.open(anchor, spec) -> handle { el, close(), update(spec), refresh() };
+   Per board (D10 3.8): a menu belongs to the board it was opened from (spec.board, else the board of its anchor, else
+   the ambient board) and lives in that board's menu host: #pmuApp for the Usage board, the shared hosted layer's shell
+   for a dashboard. Every spec callback runs in that board (PMU.boards.run). One menu is open page-wide, as before.
+   API (NOTES-engine.md): PMU.menu.open(anchor, spec) -> handle { el, board, host, close(), update(spec), refresh() };
    PMU.menu.toggle(anchor, spec); PMU.menu.close(); PMU.menu.isOpen(); PMU.menu.choice(anchor, opts). */
 (function () {
   var app = document.getElementById('pmuApp');
@@ -27,6 +30,8 @@
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
   function icon(name) { return SVG[name] || ''; }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
+  /* a spec callback, in the menu's board */
+  function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
 
   /* ---- markup ---- */
   function normRows(spec) {
@@ -117,7 +122,7 @@
   /* ---- placement: measured untransformed, against the shell box; flips above when the room below is short ---- */
   function place(h) {
     var el = h.el, anchor = h.anchor;
-    var host = app.getBoundingClientRect();
+    var host = h.host.getBoundingClientRect();
     var a = anchor && anchor.isConnected ? anchor.getBoundingClientRect() : h.lastAnchor || { left: host.left + 20, right: host.left + 20, top: host.top + 60, bottom: host.top + 60, width: 0, height: 0 };
     h.lastAnchor = { left: a.left, right: a.right, top: a.top, bottom: a.bottom, width: a.width, height: a.height };
     el.style.left = '0px'; el.style.top = '0px'; el.style.bottom = 'auto'; el.style.maxHeight = ''; el.style.width = h.spec.width ? h.spec.width + 'px' : '';
@@ -180,14 +185,14 @@
     var r = h.flat[+row.getAttribute('data-mi')];
     if (!r) return;
     if (r.submenu) {
-      var next = typeof r.submenu === 'function' ? r.submenu(r) : r.submenu;
+      var next = typeof r.submenu === 'function' ? inBoard(h, function () { return r.submenu(r); }) : r.submenu;
       if (next) { h.stack.push({ spec: h.spec, query: h.query, rail: h.rail }); h.spec = next; h.query = ''; h.rail = next.railValue || 'all'; h.resetScroll = true;
         morph(h, function () { h.el.innerHTML = bodyHtml(h); }); focusFirst(h); }
       return;
     }
     var keep = h.spec.keepOpen || r.keepOpen;
     var res;
-    try { res = h.spec.onPick ? h.spec.onPick(r.value, r, h) : undefined; } catch (error) { console.error('[pm-usage] menu pick', error); }
+    try { res = h.spec.onPick ? inBoard(h, function () { return h.spec.onPick(r.value, r, h); }) : undefined; } catch (error) { console.error('[pm-usage] menu pick', error); }
     if (!h.open) {   /* the pick itself closed the menu (a view change closes menus): focus still goes back to the trigger */
       if (h.anchor && h.anchor.isConnected && typeof h.anchor.focus === 'function') { try { h.anchor.focus({ preventScroll: true }); } catch (e) {} }
       return;
@@ -270,12 +275,15 @@
       h.query = input.value;
       morph(h, function () { h.listEl.innerHTML = listHtml(h); });
     });
-    if (h.spec.body) { var c = h.el.querySelector('.pmu-mcustom'); if (c) { try { h.spec.body(c, h); } catch (error) { console.error('[pm-usage] menu body', error); } } }
+    if (h.spec.body) { var c = h.el.querySelector('.pmu-mcustom'); if (c) { try { inBoard(h, function () { h.spec.body(c, h); }); } catch (error) { console.error('[pm-usage] menu body', error); } } }
   }
 
   /* ---- open / close ---- */
   function open(anchor, spec) {
-    if (!app || !spec) return null;
+    if (!spec) return null;
+    var board = spec.board || (PMU.boards ? PMU.boards.of(anchor) || PMU.boards.current() : null) || PMU.board || null;
+    var host = spec.host || (board && board.menuHost ? board.menuHost() : app);
+    if (!host) return null;
     if (current) close(current, { focus: false, instant: false });
     var el = document.createElement('div');
     el.className = 'pmu-pop pmu-menu' + (spec.className ? ' ' + spec.className : '') + (spec.rail && spec.rail.length ? ' has-rail' : '');
@@ -283,7 +291,7 @@
     el.setAttribute('data-pm-hover-exempt', 'menu');
     el.setAttribute('data-mid', spec.id || ('m' + (++seq)));
     if (spec.title) el.setAttribute('aria-label', spec.title);
-    var h = { el: el, anchor: anchor, spec: spec, query: '', rail: spec.railValue || 'all', stack: [], open: true, settled: false, flat: [] };
+    var h = { el: el, anchor: anchor, spec: spec, query: '', rail: spec.railValue || 'all', stack: [], open: true, settled: false, flat: [], board: board, host: host };
     h.close = function (o) { close(h, o); };
     h.update = function (next) { h.spec = next || h.spec; refresh(h); };
     h.refresh = function () { refresh(h); };
@@ -292,7 +300,7 @@
     el.setAttribute('data-mstate', 'measure');
     el.setAttribute('data-mnomo', '');
     el.style.setProperty('--pmu-msp', String(speed()));
-    app.appendChild(el);
+    host.appendChild(el);
     wire(h);
     place(h);
     /* 2. arm the closed sprout (no transition), force it, re-enable transitions, force again, release to open */
@@ -312,7 +320,7 @@
     el.addEventListener('click', function (event) {
       var b = event.target.closest('[data-mback]'); if (b) { back(h); return; }
       var rb = event.target.closest('.pmu-mrailbtn');
-      if (rb) { h.rail = rb.getAttribute('data-rail'); h.resetScroll = true; morph(h, function () { el.innerHTML = bodyHtml(h); }); var again = el.querySelector('.pmu-mrailbtn[data-rail="' + h.rail + '"]'); if (again) again.focus({ preventScroll: true }); if (h.spec.onRail) h.spec.onRail(h.rail, h); return; }
+      if (rb) { h.rail = rb.getAttribute('data-rail'); h.resetScroll = true; morph(h, function () { el.innerHTML = bodyHtml(h); }); var again = el.querySelector('.pmu-mrailbtn[data-rail="' + h.rail + '"]'); if (again) again.focus({ preventScroll: true }); if (h.spec.onRail) inBoard(h, function () { h.spec.onRail(h.rail, h); }); return; }
       var row = event.target.closest('.pmu-mitem'); if (row) pick(h, row);
     });
     el.addEventListener('keydown', function (event) { onKey(h, event); });
@@ -363,7 +371,7 @@
       setTimeout(function () { el.remove(); }, CLOSE_MS * speed() + 20);
     }
     if (opts.focus && anchor && anchor.isConnected && typeof anchor.focus === 'function') { try { anchor.focus({ preventScroll: true }); } catch (e) {} }
-    if (h.spec.onClose) { try { h.spec.onClose(h); } catch (error) { console.error('[pm-usage] menu close', error); } }
+    if (h.spec.onClose) { try { inBoard(h, function () { h.spec.onClose(h); }); } catch (error) { console.error('[pm-usage] menu close', error); } }
   }
   function toggle(anchor, spec) {
     if (current && current.anchor === anchor && (!spec.id || current.spec.id === spec.id || (current.stack[0] && current.stack[0].spec.id === spec.id))) { close(current, { focus: false }); return null; }
@@ -386,12 +394,13 @@
     close(current, { focus: false });
   }, true);
   /* Escape closes the open menu wherever focus is (FINAL-REVIEW-3 must-fix 6: with focus left on the trigger, the menu's own
-     handler never heard it): a capture-phase listener on the document, for keys from inside the Usage page or from no
-     particular element; a drilled-in menu steps back first, as the menu's own handler does */
+     handler never heard it): a capture-phase listener on the document, for keys from inside the Usage page, inside the
+     menu's own board (a dashboard's root) or from no particular element; a drilled-in menu steps back first, as the
+     menu's own handler does */
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Escape' || !current || !current.open) return;
-    var tg = event.target, panel = document.getElementById('panel-usage');
-    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)) || current.el.contains(tg))) return;
+    var tg = event.target, panel = document.getElementById('panel-usage'), broot = current.board && current.board.root;
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)) || current.el.contains(tg) || (broot && broot.contains(tg)))) return;
     event.preventDefault(); event.stopPropagation();
     if (current.stack.length) { back(current); return; }
     close(current, { focus: true });
@@ -399,6 +408,14 @@
   window.addEventListener('resize', function () { if (current) close(current, { instant: true }); });
   var scroller = document.getElementById('pmuScroll');
   if (scroller) scroller.addEventListener('scroll', function () { if (current && !current.spec.keepOnScroll) close(current, { focus: false }); }, { passive: true });
+  /* a dashboard's scroll pane closes only a menu of its own board (the Usage page's pane keeps the listener above) */
+  if (PMU.boards && PMU.boards.each) PMU.boards.each(function (b) {
+    var sc = b.scrollEl;
+    if (!sc || sc === scroller) return null;
+    var onScroll = function () { if (current && current.board === b && !current.spec.keepOnScroll) close(current, { focus: false }); };
+    sc.addEventListener('scroll', onScroll, { passive: true });
+    return function () { sc.removeEventListener('scroll', onScroll, { passive: true }); };
+  });
 
   PMU.menu = { open: open, toggle: toggle, close: function () { if (current) close(current, { focus: false }); }, isOpen: function () { return !!current; },
     current: function () { return current; }, choice: choice };

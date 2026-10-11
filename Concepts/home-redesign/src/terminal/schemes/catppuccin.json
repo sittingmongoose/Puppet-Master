@@ -1,0 +1,74 @@
+{
+  "family": "Catppuccin",
+  "slug": "catppuccin",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-catppuccin.txt",
+  "copyright": "Copyright (c) 2021 Catppuccin",
+  "homepage": "https://github.com/catppuccin/catppuccin",
+  "schemes": [
+    {
+      "id": "catppuccin-latte",
+      "name": "Catppuccin Latte",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/catppuccin/ghostty/b0b03ccee7ae8f16b13bd4fdfe267616defdb2b7/themes/catppuccin-latte.conf",
+      "sourceSha256": "4be5760d759a90f007a70ca1819ae09ab1db0c849c462f3f3b44590f5110aef5",
+      "colors": {
+        "background": "#eff1f5",
+        "foreground": "#4c4f69",
+        "cursor": "#dc8a78",
+        "cursorText": "#eff1f5",
+        "selectionBackground": "#d8dae1",
+        "selectionForeground": "#4c4f69",
+        "ansi": ["#5c5f77", "#d20f39", "#40a02b", "#df8e1d", "#1e66f5", "#ea76cb", "#179299", "#acb0be", "#6c6f85", "#d20f39", "#40a02b", "#df8e1d", "#1e66f5", "#ea76cb", "#179299", "#bcc0cc"]
+      }
+    },
+    {
+      "id": "catppuccin-frappe",
+      "name": "Catppuccin Frappé",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/catppuccin/ghostty/b0b03ccee7ae8f16b13bd4fdfe267616defdb2b7/themes/catppuccin-frappe.conf",
+      "sourceSha256": "fb090c112aaac0cc07b456c88771ca7c53aae56adcd5b162da898def18f86574",
+      "colors": {
+        "background": "#303446",
+        "foreground": "#c6d0f5",
+        "cursor": "#f2d5cf",
+        "cursorText": "#232634",
+        "selectionBackground": "#44495d",
+        "selectionForeground": "#c6d0f5",
+        "ansi": ["#51576d", "#e78284", "#a6d189", "#e5c890", "#8caaee", "#f4b8e4", "#81c8be", "#a5adce", "#626880", "#e78284", "#a6d189", "#e5c890", "#8caaee", "#f4b8e4", "#81c8be", "#b5bfe2"]
+      }
+    },
+    {
+      "id": "catppuccin-macchiato",
+      "name": "Catppuccin Macchiato",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/catppuccin/ghostty/b0b03ccee7ae8f16b13bd4fdfe267616defdb2b7/themes/catppuccin-macchiato.conf",
+      "sourceSha256": "b3c8cfbd5dc87250f69da03c52df66730c8f01e6983de05695993712d86c1421",
+      "colors": {
+        "background": "#24273a",
+        "foreground": "#cad3f5",
+        "cursor": "#f4dbd6",
+        "cursorText": "#181926",
+        "selectionBackground": "#3a3e53",
+        "selectionForeground": "#cad3f5",
+        "ansi": ["#494d64", "#ed8796", "#a6da95", "#eed49f", "#8aadf4", "#f5bde6", "#8bd5ca", "#a5adcb", "#5b6078", "#ed8796", "#a6da95", "#eed49f", "#8aadf4", "#f5bde6", "#8bd5ca", "#b8c0e0"]
+      }
+    },
+    {
+      "id": "catppuccin-mocha",
+      "name": "Catppuccin Mocha",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/catppuccin/ghostty/b0b03ccee7ae8f16b13bd4fdfe267616defdb2b7/themes/catppuccin-mocha.conf",
+      "sourceSha256": "fcdc0f045f68d7a8797ff5f1d3a76788bc17dd53b467c05b7bd65bd14a01331e",
+      "colors": {
+        "background": "#1e1e2e",
+        "foreground": "#cdd6f4",
+        "cursor": "#f5e0dc",
+        "cursorText": "#11111b",
+        "selectionBackground": "#353749",
+        "selectionForeground": "#cdd6f4",
+        "ansi": ["#45475a", "#f38ba8", "#a6e3a1", "#f9e2af", "#89b4fa", "#f5c2e7", "#94e2d5", "#a6adc8", "#585b70", "#f38ba8", "#a6e3a1", "#f9e2af", "#89b4fa", "#f5c2e7", "#94e2d5", "#bac2de"]
+      }
+    }
+  ]
+}

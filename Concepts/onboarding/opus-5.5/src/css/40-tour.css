@@ -38,45 +38,6 @@
 .o55t-root[data-paused] .o55t-ph, .o55t-root[data-hidden] .o55t-ph, .o55t-root[data-paused] .o55t-ringbox, .o55t-root[data-hidden] .o55t-ringbox { animation-play-state: paused; }
 .o55t-shield { position: fixed; inset: 0; pointer-events: auto; background: transparent; clip-path: inset(50%); }
 
-/* the left dock's entry band: a glowing edge plus a label that points at it. It brightens while Chat is lifted and
-   says "Let go" once the workspace has adopted the left dock (the engine's own drop-active state), so the learner sees
-   the drop land before letting go. Nothing here takes pointer events; the engine hit-tests by position. */
-.o55t-zone { position: fixed; left: 0; top: 0; width: 28px; opacity: 0; pointer-events: none; border-radius: 10px; transition: opacity 300ms ease, box-shadow 220ms ease, background 220ms ease;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--o55t-accent) 62%, transparent), color-mix(in srgb, var(--o55t-accent) 14%, transparent));
-  box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 22px color-mix(in srgb, var(--o55t-accent) 38%, transparent); }
-.o55t-zone.o55t-on { opacity: 1; animation: o55t-zone 1.6s ease-in-out infinite alternate; }
-@keyframes o55t-zone { from { opacity: 0.74; } to { opacity: 1; } } /* a breathing glow on the compositor (was a brightness filter) */
-.o55t-zonelabel { position: absolute; left: calc(100% + 12px); top: 50%; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px 8px 9px; border-radius: 999px; white-space: nowrap;
-  background: var(--o55t-accent); color: var(--background); font: 700 13px/1 var(--body-font); box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.55); transform: translateY(-50%); transition: transform 220ms cubic-bezier(0.2, 0, 0, 1); }
-.o55t-zonelabel svg { flex: none; animation: o55t-nudge 1.1s cubic-bezier(0.3, 0, 0.2, 1) infinite; }
-@keyframes o55t-nudge { 45% { transform: translateX(-5px); } }
-.o55t-zl-hot { display: none; }
-body.pm-home-dragging .o55t-zone.o55t-on { animation: none; box-shadow: inset 3px 0 0 var(--o55t-accent), 0 0 44px color-mix(in srgb, var(--o55t-accent) 70%, transparent); }
-body.pm-home-dragging .o55t-zonelabel { transform: translateY(-50%) scale(1.06); }
-/* data-hot mirrors the workspace's drop-active state on the left dock (83-tour-steps.js watches that one element): a
-   :has() rule on body here restyled the whole page on every DOM change in the app */
-.o55t-zone.o55t-on[data-hot] { background: color-mix(in srgb, var(--o55t-accent) 78%, transparent); }
-.o55t-zone[data-hot] .o55t-zl-idle { display: none; }
-.o55t-zone[data-hot] .o55t-zl-hot { display: inline; }
-.o55t-zone[data-hot] .o55t-zonelabel svg { animation: none; }
-/* Basic: a drafting callout with a dimension-line edge */
-.o55t-root[data-family="basic"] .o55t-zone { border-radius: 3px; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--o55t-accent) 34%, transparent) 0 4px, transparent 4px 10px); box-shadow: inset 2px 0 0 var(--o55t-accent), inset -1px 0 0 color-mix(in srgb, var(--o55t-accent) 50%, transparent); }
-.o55t-root[data-family="basic"] .o55t-zonelabel { border-radius: 4px; background: var(--surface); color: var(--o55t-accent); border: 1.5px solid var(--o55t-accent); font: 700 11.5px/1 var(--body-font); letter-spacing: 0.09em; text-transform: uppercase; }
-/* Friendly: a felt strip with a paper tab that bounces */
-.o55t-root[data-family="friendly"] .o55t-zone { border-radius: 14px; box-shadow: inset 0 0 0 2px var(--o55t-accent), 0 0 26px color-mix(in srgb, var(--o55t-accent) 40%, transparent); }
-.o55t-root[data-family="friendly"] .o55t-zonelabel { font-family: var(--display-font, var(--body-font)); box-shadow: 4px 5px 0 color-mix(in srgb, var(--text-primary) 18%, transparent); }
-.o55t-root[data-family="friendly"] .o55t-zonelabel svg { animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
-/* Glass: a column of light with a prism label */
-.o55t-root[data-family="glass"] .o55t-zone { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-blue) 60%, transparent), color-mix(in srgb, var(--accent-magenta) 60%, transparent)); box-shadow: 0 0 30px color-mix(in srgb, var(--accent-magenta) 45%, transparent), inset 0 0 0 1px rgba(255, 255, 255, 0.35); }
-.o55t-root[data-family="glass"] .o55t-zonelabel { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; box-shadow: 0 14px 34px -12px rgba(40, 10, 80, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
-/* Retro: blinking pixel stripes and a terminal label */
-.o55t-root[data-family="retro"] .o55t-zone { border-radius: 0; background: repeating-linear-gradient(0deg, var(--o55t-accent) 0 6px, transparent 6px 12px); box-shadow: none; }
-.o55t-root[data-family="retro"] .o55t-zone.o55t-on { opacity: 0.9; animation: o55t-blink 1s steps(1) infinite; }
-.o55t-root[data-family="retro"] .o55t-zonelabel { border-radius: 0; font-family: var(--display-font); text-transform: uppercase; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); transition-timing-function: steps(3, end); }
-.o55t-root[data-family="retro"] .o55t-zonelabel svg { animation: o55t-blink 0.8s steps(1) infinite; }
-.o55t-root[data-family="retro"] .o55t-zl-idle::before { content: '> '; }
-/* the label's nudge runs only while the zone shows (hidden, it kept a loop running for the whole tour) */
-.o55t-zone:not(.o55t-on) .o55t-zonelabel svg { animation: none; }
 @keyframes o55t-blink { 50% { opacity: 0.35; } }
 
 /* while the tour runs, its callout is the only guide on screen: the app's hover tags would stack a second tooltip on
@@ -87,8 +48,8 @@ html[data-o55-tour] #pm-hover-tag-root { display: none !important; }
    is not enough: it is taken out of the page, or the pill from the Restore click draws over the card and the line.
    The class stands on the root itself, one small element, so the hand-over click never restyles the whole document. */
 #pm-hover-tag-root.o55t-notags { display: none !important; }
-/* while Chat is being dragged the guide steps back: the scrim thins and the callout fades so the learner sees the
-   workspace make room, and the spotlight sits on the drop zone */
+/* while a tab is being carried (split_by_drag) the guide steps back: the scrim thins and the callout fades so the learner
+   sees the panels make room, and the spotlight opens onto the whole centre */
 body.pm-home-dragging .o55t-scrimpath { fill-opacity: 0.35; }
 body.pm-home-dragging .o55t-callout { opacity: 0.16; }
 
@@ -258,12 +219,12 @@ html[data-theme-family="retro"] .o55p-pulse { animation-timing-function: steps(5
 
 /* Reduced Motion: sequence and cause/effect stay; movement becomes short fades */
 html[data-motion="reduced"] .o55t-callout, html[data-motion="reduced"] .o55t-bar { transition-duration: 0.01ms !important; }
-html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-ringbox, html[data-motion="reduced"] .o55t-ph, html[data-motion="reduced"] .o55t-zone, html[data-motion="reduced"] .o55t-zonelabel svg { animation: none !important; }
+html[data-motion="reduced"] .o55t-ring, html[data-motion="reduced"] .o55t-ringbox, html[data-motion="reduced"] .o55t-ph { animation: none !important; }
 html[data-motion="reduced"] .o55t-ph0 { opacity: 1; } /* the dashes stand still */
 html[data-motion="reduced"] .o55p-fresh, html[data-motion="reduced"] .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 @media (prefers-reduced-motion: reduce) {
   .o55t-callout, .o55t-bar { transition-duration: 0.01ms !important; }
-  .o55t-ring, .o55t-ringbox, .o55t-ph, .o55t-zone, .o55t-zonelabel svg { animation: none !important; }
+  .o55t-ring, .o55t-ringbox, .o55t-ph { animation: none !important; }
   .o55t-ph0 { opacity: 1; }
   .o55p-fresh, .o55p-gone { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
 }

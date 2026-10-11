@@ -45,7 +45,8 @@ reference — through its authored generator:
 
 Source chain: pinned TestPM settings checkpoint →
 `build_testpm_settings_refresh.py` → `TestPMConcept.html` → opus-5.5
-`build.py` (+ `Concepts/usage-redesign` `usage_layer`: the Usage page) →
+`build.py` (+ `Concepts/usage-redesign` `usage_layer`: the Usage page; `Concepts/leftrail-redesign`
+`rail_layer`: the left rail; `Concepts/home-redesign` `home_layer`: the Home panels and the terminal) →
 `TestOpus5.5PmConcept.html` → `PMConcept7.html` (same bytes).
 
 The T33+ pipeline in this directory, including the old T44 Settings tome,

@@ -705,7 +705,7 @@ const pm51SectionMeta = {};   // section id -> { id, label, workspace, domain, t
 const pm51SectionObjects = new Map();
 const pm51DefaultTabs = {};
 const pm51TabOrder = {};
-const pm51Report = { ids: 0, placed: 0, built: 0, unplaced: [], deleted: [], retired: [], sections: 0 };
+const pm51Report = { ids: 0, placed: 0, built: 0, unplaced: [], deleted: [], retired: [], retiredIds: [], sections: 0 };
 let pm51InlineDepth = 0;
 const pm51FirstSentence = text => { const m = /\S.*?(?:[.!?](?=\s|$))/.exec(String(text || '')); return m ? m[0].trim() : String(text || '').trim(); };
 const pm51GlobRe = glob => new RegExp('^' + String(glob).split('*').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$');
@@ -720,6 +720,8 @@ const pm51FindWs = id => { for (const d of D.domains) { const w = d.workspaces.f
   const rules = (P.overrides || []).map(r => ({ section: r.section, set: new Set(r.ids || []), re: r.glob ? pm51GlobRe(r.glob) : null }));
   const isReferencePage = w => /-reference$/.test(w.id) && !P.pages[w.id];
   const retired = new Set(P.retire_workspaces || []);
+  /* retired rows (P.retire_ids, validated at build time): drawn nowhere, so no search or walker finds them */
+  const retiredIds = new Set(P.retire_ids || []);
   /* 1. existing setting objects: reference objects (preferred; the T49 page's copies have no
      description), then retired-page copies for anything the reference pages lack, and the
      hand-rendered rows on the surviving hand pages (those win the placement outright). */
@@ -739,6 +741,7 @@ const pm51FindWs = id => { for (const d of D.domains) { const w = d.workspaces.f
   const resolve = row => { for (const r of rules) if (r.set.has(row.id) || (r.re && r.re.test(row.id))) return r.section; return P.subgroups[row.cat + '.' + row.sub] || P.page_defaults[row.cat] || null; };
   const bySection = new Map();
   for (const row of rows) {
+    if (retiredIds.has(row.id)) { pm51Report.retiredIds.push(row.id); continue; }
     const hand = handObjects.get(row.id);
     if (hand) { pm51ById[row.id] = { id: row.id, setting: hand.setting, hand: true, page: true, workspace: hand.workspace, domain: hand.domain, section: hand.section, tab: null, advanced: false, composed: false }; continue; }
     const sid = resolve(row);
@@ -806,7 +809,7 @@ PM51.placement = {
       if (s.inline && s.tab && pm51TabOrder[w.id] && !pm51TabOrder[w.id].includes(s.tab)) missingTabs.push(s.id + ' -> ' + w.id + '/' + s.tab);
     }
     const unplaced = pm51Report.unplaced.concat(Object.keys(pm51ById).length ? [] : ['placement did not run']);
-    return { ids: pm51Report.ids, placed: seen.size, unplaced, duplicates, missingTabs, sections: pm51Report.sections, built: pm51Report.built, deleted: pm51Report.deleted.slice(), retired: pm51Report.retired.slice(), perWorkspace };
+    return { ids: pm51Report.ids, placed: seen.size, unplaced, duplicates, missingTabs, sections: pm51Report.sections, built: pm51Report.built, deleted: pm51Report.deleted.slice(), retired: pm51Report.retired.slice(), retiredIds: pm51Report.retiredIds.slice(), perWorkspace };
   }
 };
 pm51SeedCanonicalValues();

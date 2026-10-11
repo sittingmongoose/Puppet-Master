@@ -1,0 +1,42 @@
+{
+  "family": "Everforest",
+  "slug": "everforest",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-everforest.txt",
+  "copyright": "Copyright (c) 2019 sainnhe",
+  "homepage": "https://github.com/sainnhe/everforest",
+  "schemes": [
+    {
+      "id": "everforest-light",
+      "name": "Everforest Light",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/sainnhe/everforest/85a86eb62409e3ec88713bff3d1b9d7374e112e4/autoload/everforest.vim",
+      "sourceSha256": "4ddab3c8d96e29310a21441a797e69a2c520ec074db9c20a7eaea866d8b5a8c4",
+      "colors": {
+        "background": "#fdf6e3",
+        "foreground": "#5c6a72",
+        "cursor": null,
+        "cursorText": null,
+        "selectionBackground": "#eaedc8",
+        "selectionForeground": null,
+        "ansi": ["#5c6a72", "#f85552", "#8da101", "#dfa000", "#3a94c5", "#df69ba", "#35a77c", "#e6e2cc", "#5c6a72", "#f85552", "#8da101", "#dfa000", "#3a94c5", "#df69ba", "#35a77c", "#e6e2cc"]
+      }
+    },
+    {
+      "id": "everforest-dark",
+      "name": "Everforest Dark",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/sainnhe/everforest/85a86eb62409e3ec88713bff3d1b9d7374e112e4/autoload/everforest.vim",
+      "sourceSha256": "4ddab3c8d96e29310a21441a797e69a2c520ec074db9c20a7eaea866d8b5a8c4",
+      "colors": {
+        "background": "#2d353b",
+        "foreground": "#d3c6aa",
+        "cursor": null,
+        "cursorText": null,
+        "selectionBackground": "#543a48",
+        "selectionForeground": null,
+        "ansi": ["#475258", "#e67e80", "#a7c080", "#dbbc7f", "#7fbbb3", "#d699b6", "#83c092", "#d3c6aa", "#475258", "#e67e80", "#a7c080", "#dbbc7f", "#7fbbb3", "#d699b6", "#83c092", "#d3c6aa"]
+      }
+    }
+  ]
+}

@@ -75,8 +75,9 @@ def placement() -> dict:
     """placement.json plus o55/placement.d/*.json: `sections` merge by id (a patch may add or change fields, or drop a
     section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base),
     `managers` and `pages` merge by id, `hand_moves` are appended in file order (after the base's moves),
-    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn, and
-    `hand_ids` ({old id: inventory id}) give hand-written rows admitted to Plans/settings_inventory.json their ids."""
+    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn,
+    `hand_ids` ({old id: inventory id}) give hand-written rows admitted to Plans/settings_inventory.json their ids, and
+    `retire_ids` (a list) name inventory ids whose row is retired: drawn nowhere, found by no search, never placed."""
     base = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
     extra_rules = []
     for p in sorted((FORK / 'o55' / 'placement.d').glob('*.json')):
@@ -95,6 +96,8 @@ def placement() -> dict:
         for ws, ids in patch.get('hand_drops', {}).items():
             have = base.setdefault('hand_drops', {}).setdefault(ws, [])
             have += [i for i in ids if i not in have]
+        retired = base.setdefault('retire_ids', [])
+        retired += [i for i in patch.get('retire_ids', []) if i not in retired]
         extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
     base['overrides'] = extra_rules + base.get('overrides', [])
     return base
@@ -243,7 +246,8 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
     globs it, then its subgroup, then its page default); a placement.d patch's rules come first, so it can re-home ids a
     base rule also names. Checked: every id lands in a real section of a real manager tab or page, no page default is
     used, every rule wins at least one id, subgroups cover the reference exactly, and managers named by sections exist
-    in exactly one manager file."""
+    in exactly one manager file. A retired id (retire_ids) must be a reference id that no hand page draws and no rule
+    names; it is placed nowhere."""
     import fnmatch
     rows = t50.reference_rows(engine)
     by_id = {r['id']: r for r in rows}
@@ -273,10 +277,17 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         need(pages.get(ws, {}).get('hand'), f'O55 placement: hand_drops names {ws!r}, which draws no hand rows')
     hand = set(t50.HAND_CANONICAL_RE.findall(engine))
     rules = merged.get('overrides', [])
+    retired = set(merged.get('retire_ids', []))
+    for rid in sorted(retired):
+        need(rid in by_id, f'O55 placement: retire_ids names unknown id {rid}')
+        need(rid not in hand, f'O55 placement: retired id {rid} is drawn by a hand page')
+        need(not any(rid in r.get('ids', []) for r in rules), f'O55 placement: retired id {rid} is still named by a rule')
     wins = [0] * len(rules)
     resolved = {}
     for row in rows:
         rid = row['id']
+        if rid in retired:
+            continue
         if rid in hand:
             resolved[rid] = None
             continue
@@ -300,7 +311,7 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         if sid:
             per[sections[sid]['to']] = per.get(sections[sid]['to'], 0) + 1
     composed = sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('composed'))
-    return {'ids': len(rows), 'hand': len(hand), 'per_destination': per, 'composed_rows': composed,
+    return {'ids': len(rows), 'hand': len(hand), 'retired': sorted(retired), 'per_destination': per, 'composed_rows': composed,
             'advanced_rows': sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('advanced'))}
 
 

@@ -74,7 +74,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/65–74` | Screens by chapter: Welcome, Computer (Connect, Server, Restore), Project (begin, folder, NAS/SSH, name, start-like, keep safe, online copy, away, review, creating, protect), AI (providers, Free Models), Ready. |
 | `src/js/66-nier-window.js` + `src/css/11-window-nier.css`, `13-nier-look.css` | The NieR window (`O55.nierWindow`, NieR Mode's skin of the onboarding window) and the styles of the look row, its thumbnail and its Adjust panel. |
 | `src/js/66-family-window.js` + `src/css/14-family-moments.css` | The four looks' own hero moments (`O55.famWindow`): the wake, the act card and the curtain call in Basic, Friendly, Glass and Retro, asked after NieR's skin (see "The four looks' hero moments"). |
-| `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 18 steps; then NieR Mode's Pod 042 chat adapter. |
+| `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 20 steps; then NieR Mode's Pod 042 chat adapter. |
 | `src/js/85-tour-nier.js` + `src/css/41-tour-nier.css` | The Guided Tour's NieR skin: Pod 042 in the callout and as the Show Me pointer, the square spotlight, the hung chapter cards and the results card. |
 | `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
@@ -89,6 +89,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | Tool | Use |
 |---|---|
 | `tools/scenarios.mjs <out> [--only ids] [--theme t] [--snaps]` | Acceptance scenarios by real clicks; `--snaps` photographs every screen reached. |
+| `tools/owner_fixtures.mjs` | Test-only owner-result fixtures used by the scenarios: explicit request-bound claim/bootstrap/pair/trust, GitHub terminal creation, and protected Recovery Kit/policy results. Missing or mismatched proof must stay pending. |
 | `tools/schema_check.py validate <drafts.json>` / `coverage [--check]` | jsonschema validation of captured drafts against `Plans/product_onboarding_contracts.schema.json`; coverage table. |
 | `tools/draft_matrix.mjs <out.json>` | Data-level matrix of drafts for every journey, service, privacy and remote mode. |
 | `tools/film.mjs <out> [--scenes] [--themes] [--freeze]` | Slow-motion 60 fps films (CDP playback rate + the motion clock). |
@@ -98,7 +99,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `tools/sound_render.mjs` + `tools/sound_board.py` | Offline renders of every sound kit, listening boards, spectrograms, live trace check. |
 | `tools/tour_scenarios.mjs <out> [--only t1,t2] [--snaps]` | Tour acceptance by real CDP input: t1 every step by hand then Restore, t2 every action through Show Me then Keep, t3 Skip restores, t4 resume after a reload, t5 missing target. Every run also checks that no raw copy key shows and that a settled callout never covers its target. |
 | `tools/tour_reset.mjs [--page <path>]` | Reload and reset checks: Settings search › Restore home layout lands on Reset the layout, Settings Home's three setup and tour rows, Resume after a reload, Run Onboarding Again after a reload, a legacy record starting over, and Skip for a tour started from Settings. Exits 1 on any failure. |
-| `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the dock step mid-drag. |
+| `tools/tour_shots.mjs <out> [--themes] [--width --height]` | Every tour step settled, in each theme (parallel browsers), plus after-states and the split step mid-drag. |
 | `tools/tour_film.mjs <out> [--scenes] [--themes] [--rate]` | Slow-motion films of the handoff, the tour opening, every Show Me, Explain this reply simply, the plan read part by part and the finish. |
 | `tools/tour_census.mjs <out> [--wpm]` | Meaningful actions and dwell time per chapter, measured on the real tour. |
 | `tools/nier_palette.py --write \| --check` | NieR Mode's token tables in `src/settings/styles.d/13-nier.css`, generated from `src/settings/nier/nier-automata.json`; `build.py --check` runs `--check` (stale tables, or a colour literal elsewhere in that file). |
@@ -111,7 +112,16 @@ Recorded media (screenshots, contact sheets, film frames, videos, audio renders)
 `~/pm-scratch`, is reviewed, and is deleted when the work is finished (Jared, 2026-09-24). Results are written down
 inline in the landing records and in `REPORT.md` instead. Every tool deletes its Chrome profile when it exits.
 
-The tools launch Chrome on the GPU (no `--disable-gpu`) and accept `--page <built html>` to test a private build
+The onboarding driver and tour acceptance suites launch each browser with `agent-browser` through
+`tools/chrome.mjs` and `tools/agent-browser-pipe.mjs` (Node 22). The helper enforces the machine's cap and stops that
+exact browser and its profile at close. When the shared browser cap is full, start retries every 15 seconds,
+up to 80 attempts; other launch failures fail immediately. Tour waits require the current step's settled callout,
+and the plan review must finish reading its parts before Next. Nas1 runs ordinary page checks and screenshots with intentional software
+rendering; it has a four-browser cap and no video. These suites exit nonzero if any scenario fails. Owner results
+are deliberately injected by the test harness after checking the pending gates; fixture acceptance is not native
+execution, protected authentication, or durable owner proof. Kit bytes are never supplied or read from the DOM.
+
+The tools accept `--page <built html>` to test a private build
 (`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`; without
 `--page` they test the checked-in page.
 
@@ -225,20 +235,27 @@ entry offline, then `tools/sound_catalog.py --write` rewrites the tables.
 
 ## The Guided Tour
 
-Three chapters in the real app, 18 steps: **Ask and understand** (open Chat with the Chat icon, choose Teacher, send
+Three chapters in the real app, 20 steps: **Ask and understand** (open Chat with the Chat icon, choose Teacher, send
 the supplied question, read the local answer, ask for Explain this reply simply, which adds one simpler reply under
 the answer and leaves the answer as it was (DL-126), then meet the quick ELI5 switch by the message box, which changes
 only later replies), **Make the workspace
-yours** (a glide over pages, workspace and Chat; drag Chat to the glowing left dock; add the Approval queue widget and
-place it), **Plan before building** (open Planning Wizard by its visible route, use the practice goal, open an
+yours** (the Home panels, D25: a glide over pages, the panels and Chat; open a tab from a panel's +; open a file from
+the rail's Files list into a preview tab; split by dragging a tab to a panel edge, or Split right / Split down from the
+tab's menu; add Upcoming resets to the Home dashboard and move it up. What only the panels know comes from their tour
+hooks, `PMW.tour` in `Concepts/home-redesign/src/panels/js/52-tour.js`, and without the panels the chapter is the
+glide alone), **Plan before building** (open Planning Wizard by its visible route, use the practice goal, open an
 outcome, answer the access question with Why this matters, review, read the plan part by part, change the answer and
 see only the affected decisions change, then the fenced Approve And Build and Restore or Keep). Show Me drives the
-same handlers as doing it by hand. Skip and Finish restore the layout, the dashboard (added widgets leave through their
-own control, every card returns to its place and size), Chat's persona, ELI5, thread and draft. The restoration basis (layout, dashboard cards, page, thread,
+same handlers as doing it by hand. Skip and Finish restore the layout (the panels through the layout restore), the Home
+dashboard boards, Chat's persona, ELI5, thread and draft; Back puts the panels and the boards back as the step found
+them. The restoration basis (layout, dashboard cards, page, thread,
 persona, ELI5; never the composer's text) is kept in its own record, `pm.o55.tour-basis.v1`, beside the bounded
 checkpoint, so Resume the Guided Tour works after a reload too: it revalidates the current owner state and picks up
 at the earliest step whose result no longer holds, and Skip or Finish still put the layout back (the composer is left
-as it is). A saved tour that cannot pick up (another Project, its thread gone) first puts back what of its basis is still
+as it is). Every checkpoint names its step and the step order it was saved under (`TR.order()`); one saved under
+another order goes to its step by id, a retired step's checkpoint (`move_or_dock_chat`, `TR.retired`) picks up at the
+first step of its chapter, and the page before the Home panels, whose checkpoints name no step, is read by its order
+(`TR.unstamped`). A saved tour that cannot pick up (another Project, its thread gone) first puts back what of its basis is still
 there, then starts from the beginning and says so, naming the layout when it could not be put back.
 Only a layout that could not be put back stops at the recovery panel (Retry restore, or start over). Run Onboarding
 Again and Start the Guided Tour over reset the tour completely: progress, basis, chip and any recovery note go.
@@ -246,16 +263,16 @@ Settings Home › Essential setup has Run Onboarding Again, Resume the Guided To
 to pick up) and Start the Guided Tour over. A missing target offers Take me there. Onboarding's Ready screen hands over by turning its window
 into the tour's first callout.
 
-Measured with `tools/tour_census.mjs`: 14 meaningful actions, 7 of them in Planning (50 %), and 4.5 minutes at 200
-words a minute, 52 % of it in Planning (the packet asks for at least half of both).
+Measured with `tools/tour_census.mjs` (2026-10-10, with the Home panels): 16 meaningful actions, 7 of them in Planning
+(44 %), and 4.8 minutes at 200 words a minute, 49 % of it in Planning. The packet asked for at least half of both; the
+workspace chapter's four actions (D25) put Planning just under, which is the planner's call (it was 7 of 14 and 52 %).
 
 Native durable owner snapshot admission remains to be implemented; the browser fixture's basis record stands in for
 the layout owner's snapshot store, and it does not recover an unsaved composer draft after a full reload.
 
 Narrow windows: the bar wraps and keeps every control; Open Planning goes through the pages menu when the tab strip
-folds; below the width where the workspace stacks its docks, dragging cannot reach any dock (the right dock's hit band
-spans the whole width), so the dock step offers Move Chat to the top, which sends the same move command; below 600 px
-the planning chapter tucks Chat away through its real command (the shell lets Chat cover the Wizard there) and brings
+folds; the split step names the edge that fits (Split right, else Split down) and its Show Me drops inside the panel's
+own edge band; below 600 px the planning chapter tucks Chat away through its real command (the shell lets Chat cover the Wizard there) and brings
 it back at the end.
 
 Canon check: the onboarding carries F3-520's exact eleven-stage main graph and six-stage connect graph

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2317-L2404
+Source lines: L2343-L2463
 
-Source SHA256: `ba9cf0aa7fbf57a2ac900f58bb6007c9f61ee301264b329566297a4c9c4843c3`
+Source SHA256: `42728733152ab43044573b47f71b7786b83f9ef829f311046dca8f1541bb0082`
 
 ---
 
@@ -18,7 +18,7 @@ architecture layer merely because the concept contains self-contained fixture ad
 | Usage data semantics and view state | `Plans/usage-feature.md` | PM7-local Usage service, provider-management service, or second Usage store |
 | Usage/Ledger drill-through | `Plans/Contracts_V0.md` plus `Plans/usage-feature.md`; event-primary callers use `usage_event`/`usage_event_ref`, while a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, retains `usage_event_ref` as correlation, and carries no `OpenSubject` | correlation or presentation identity substituted for the selected object id, current PMConcept7 aggregate-card route command, or unregistered object kind |
 | Usage/Dashboard widget layout | `Plans/Widget_System.md` plus `Plans/storage-plan.md` namespaces | PM7-local widget store, `dashboard_layout:v1` peer writes, per-frame preview persistence |
-| Home shell surface layout | `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md` | Dashboard widget layout inside the Home record, concept-only size command/store |
+| Home shell surface layout | `Plans/home_workspace_layout_v2.schema.json` and `Plans/storage-plan.md` (SP-330); the v1 `Plans/home_workspace_layout.schema.json` is a read-only migration input | Dashboard widget layout inside the Home record (several dashboard tabs are allowed, each board's widget layout in its own per-project `widget_layout:v1:<project_id>:<board_id>` key, WS-030, amended 2026-10-10 by DL-186), concept-only size command/store |
 | Command language | `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | PM7 command family, popup/hover commands, duplicate `size_surface` primary command |
 | Production wiring | `Plans/Wiring_Matrix.md` and `Plans/Wiring_Matrix.production.json` | concept report or demo event log as production wiring authority |
 | Shared Assistant/context | `Plans/assistant-chat-design.md` | second Assistant node, controller, transcript store, context store, or page-local clone |
@@ -28,6 +28,19 @@ architecture layer merely because the concept contains self-contained fixture ad
 The PM7 prototype keys and concept events are source-lineage fixtures only. Production adapters must
 normalize them into the owner contracts above, and one shared Assistant node must be re-seated rather than
 recreated.
+
+Amended 2026-10-09 (DL-180): the Home shell surface layout row now names the v2 Home layout record
+(`home_workspace_layout.v2`, SP-330). Its ban stands: no dashboard's widget layout lives in the Home record.
+Several dashboard tabs are allowed, each showing one board whose widget layout lives in its own
+`widget_layout:v1:dashboard:<board_id>` namespace under WS-030; the Home record holds only the dashboard tab
+and its board reference.
+
+Amended 2026-10-10 (DL-186): a board's widget layout lives per project under
+`widget_layout:v1:<project_id>:<board_id>` (WS-030), as the table's row now says; the 2026-10-09 per-board key
+above was never written. The
+person's saved board presets live in the one per-user family `widget_presets:v1`. Dashboards run the one Usage
+board engine, so they add no widget-layout authority, store or settlement of their own, and the Home record still
+holds only the dashboard tab and its board id.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/assistant-chat-design.md
 
@@ -48,15 +61,27 @@ canonical_text: >-
   current PMConcept7 aggregate provider/account/panel inspectors are local. Event-primary Usage callers cross
   the route-command boundary with usage_event/usage_event_ref; a PMConcept7 Ledger attempt row crosses it with
   usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries
-  no OpenSubject. Only settled owner commands cross the command/persistence boundary.
+  no OpenSubject. Only settled owner commands cross the command/persistence boundary. Since DL-180 the
+  dashboard host has one namespace per board: each dashboard tab shows one board whose widget layout lives in
+  widget_layout:v1:dashboard:<board_id> (WS-030), which replaces the single widget_layout:v1:dashboard namespace
+  (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one
+  Home layout schema is pm.home_workspace_layout.v2, its record home_workspace_layout.v2 (SP-330); the
+  home_workspace_layout.v1 record is a read-only migration input, converted on first read and never reset.
+  Amended 2026-10-10 (DL-186): each board's widget layout lives per project in
+  widget_layout:v1:<project_id>:<board_id> (WS-030), and the 2026-10-09 widget_layout:v1:dashboard:<board_id> was
+  never written; widget_layout:v1:dashboard is converted into no board. Every dashboard board runs the one Usage
+  board engine, so dashboards add no widget-layout authority, store or settlement, and a person's saved board
+  presets live in the one per-user family widget_presets:v1.
 gui_related: true
 gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
 split_recommended: false
-depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012]
+depends_on: [DR-037, DR-038, CS-068, UCC-147, WM-045, UIW-012, DL-180, DL-186]
 unblocks: [ACD-448]
 acceptance_criteria:
   - Usage semantics, widget layout, Home layout, commands, wiring, events, and Assistant state each name one current owner and no peer PM7 authority; event-primary callers use usage_event/usage_event_ref and a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id with usage_event_ref correlation, while current aggregate inspectors dispatch no command, receipt, or domain event.
   - Production never writes PM7 fixture keys as a peer to widget_layout:v1:usage, widget_layout:v1:dashboard, or home_workspace_layout.v1.
+  - Production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:dashboard:<board_id> namespace or to home_workspace_layout.v2, and no dashboard board's widget layout is written into the Home layout record.
+  - "Amended 2026-10-10 (DL-186): production never writes PM7 fixture keys as a peer to a board's widget_layout:v1:<project_id>:<board_id> or to widget_presets:v1, and every dashboard board runs the one Usage board engine with no store or settlement of its own."
   - No primary cmd.workspace_layout.size_surface or PM7 command family is registered.
   - No pointer-preview or unregistered context-compaction event family is admitted.
   - Every page reuses the same Assistant node/controller/transcript/context store and re-seats it instead of cloning it.
@@ -87,11 +112,19 @@ preserved_exact_tokens:
   - cmd.workspace_layout.size_surface
   - chatPanel
   - chatResizer
+  - widget_layout:v1:dashboard:<board_id>
+  - home_workspace_layout.v2
+  - widget_layout:v1:<project_id>:<board_id>
+  - widget_presets:v1
 negative_constraints:
   - Do not create a second Usage store, widget-layout store, Home layout store, command language, Event Authority, or production wiring matrix.
   - Do not create a second Assistant node, controller, transcript store, context store, or page-local clone.
   - Do not treat concept fixture logs, keys, or events as production authority.
   - Do not attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, substitute correlation or presentation identity for the selected object_id, or invent a route kind for aggregate Usage cards; pre-existing artifact route/open source realization remains separately owned.
+  - Do not store a dashboard board's widget layout inside the Home layout record or share one widget namespace between two boards.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): one widget namespace per dashboard board (widget_layout:v1:dashboard:<board_id>, WS-030) replaces the single widget_layout:v1:dashboard namespace, and the one Home layout schema is now the v2 record of SP-330 with v1 a read-only migration input."
+  - "Amended 2026-10-10 (DL-186): board keys are per project (widget_layout:v1:<project_id>:<board_id>), presets are one per-user family, and dashboards run the one Usage board engine."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/assistant-chat-design.md

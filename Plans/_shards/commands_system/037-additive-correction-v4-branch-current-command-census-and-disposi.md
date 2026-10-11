@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6145-L6253
+Source lines: L6159-L6269
 
-Source SHA256: `ee02947b79b38f4f5df29fe6b4e43d0714c78fcb735188e11c0554482d13186d`
+Source SHA256: `64e3a6837c32d862a1ed226b2d798873e26c28a9fb2ccbdf6b6113c1a9d08161`
 
 ---
 
@@ -76,6 +76,8 @@ Plan Rich/Markdown toggle is `cmd.chat.plan.view.set`, and To-Do parent expansio
 `cmd.chat.todos.toggle_parent`. Neither emits a domain event or changes a revision or hash. There
 is no separate `local.plan_view.toggle` action. The Review and BrainStorm Formatted and Plain text
 toggles are local view state with no catalog row (CDRY-021).
+
+Amended 2026-10-09 (DL-180): local tabs include the home panels' tabs. Choosing a panel tab, maximizing or restoring a panel and focusing a panel are view state (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`); opening, closing, moving, pinning, keeping and renaming a tab are catalog commands that emit `workspace.layout_changed` (CS-100).
 
 ### CDRY-007..009 — Family reuse
 

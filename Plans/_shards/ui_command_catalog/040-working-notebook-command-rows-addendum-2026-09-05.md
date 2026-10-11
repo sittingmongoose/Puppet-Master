@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12815-L12850
+Source lines: L12914-L12953
 
-Source SHA256: `3559621f5ad3aca9857c5f89b991064c006ebd787138e0ccce78777c8ebc6157`
+Source SHA256: `03f5138c92f0e8961e02bc081707df553498fd2ac6d8739f1bfc0f98ee2e4b25`
 
 ---
 
@@ -17,10 +17,12 @@ plan_unit_id: UCC-158
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Three Working Notebook command rows are registered with truthful candidate dispositions (cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook). No production wiring row, handler, or persisted event family exists for them; dispatch before wiring fails closed (command_not_registered/unknown_command), and every row names payload, availability, owner refs, and error vocabulary within the existing strict overlay.
+canonical_text: >-
+  Three Working Notebook command rows are registered with truthful candidate dispositions (cmd.chat.open_working_notebook, cmd.chat.request_fresh_context, cmd.orchestrator.open_notebook). No production wiring row, handler, or persisted event family exists for them; dispatch before wiring fails closed (command_not_registered/unknown_command), and every row names payload, availability, owner refs, and error vocabulary within the existing strict overlay.
+  Amended 2026-10-09 (DL-180): when admitted, cmd.chat.open_working_notebook opens a document tab through the one opening module with CV-360's placement fields (UCC-200); its candidate disposition is unchanged.
 gui_related: true
 gui_classification_reason: Command catalog rows define user-visible command contracts.
-depends_on: [UCC-157, WN-019]
+depends_on: [UCC-157, WN-019, DL-180]
 unblocks: []
 acceptance_criteria:
   - Every proposed visible action has availability, payload, owner, errors, and registration disposition.
@@ -40,6 +42,8 @@ preserved_exact_tokens: ["cmd.chat.open_working_notebook", "cmd.chat.request_fre
 negative_constraints:
   - Do not add production wiring rows for unwired candidate commands.
   - Do not claim handlers or emitted events from schema/catalog rows.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the Working Notebook opens as a document tab when admitted."
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/UI_Wiring_Rules.md]
 ```
 

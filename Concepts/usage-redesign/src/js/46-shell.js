@@ -89,14 +89,23 @@
       { dur: 120, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
     if (a) a.finished.then(function () { g.remove(); }, function () { g.remove(); }); else g.remove();
   }
-  /* the Animation speed for CSS (WOW-SPEC 9, E-10): every Usage transition duration reads calc(<ms> * var(--pmu-speed)) */
+  /* the Animation speed for CSS (WOW-SPEC 9, E-10): every Usage transition duration reads calc(<ms> * var(--pmu-speed));
+     every hosted board's shell and the shared layer's carry it too (D10 6.5 and 7.1), from their creation on */
   var speedKey = null;
+  function hostedSpeed(el, v) { if (el && el.style.getPropertyValue('--pmu-speed') !== v) el.style.setProperty('--pmu-speed', v); }
+  function syncHosted(v) {
+    if (!PMU.boards) return;
+    PMU.boards.all().forEach(function (b) { if (b !== PMU.board) hostedSpeed(b.appEl, v); });
+    hostedSpeed(document.querySelector('[data-pmu-host="layer"] > .pmu-shell'), v);
+  }
   function syncSpeed() {
     if (!app || !PMU.motion) return;
     var v = String(PMU.motion.speed());
     if (v !== speedKey) { speedKey = v; app.style.setProperty('--pmu-speed', v); }
+    syncHosted(v);
   }
   if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { syncSpeed(); });
+  if (PMU.boards && PMU.boards.each) PMU.boards.each(function (b) { if (b !== PMU.board && PMU.motion) syncHosted(String(PMU.motion.speed())); });
   function render() {
     if (!app) return;
     var room = ROOM[st.room] ? st.room : 'overview';

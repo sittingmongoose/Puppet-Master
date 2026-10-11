@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8348-L8536
+Source lines: L8422-L8612
 
-Source SHA256: `3559621f5ad3aca9857c5f89b991064c006ebd787138e0ccce78777c8ebc6157`
+Source SHA256: `03f5138c92f0e8961e02bc081707df553498fd2ac6d8739f1bfc0f98ee2e4b25`
 
 ---
 
@@ -95,10 +95,12 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.terminal.reveal` | Reveal Terminal Session | Reveals the bottom panel and terminal tab and scrolls the target session into view without spawning a duplicate shell. | `session_exists` | `shell_view` |
+| `cmd.terminal.reveal` | Reveal Terminal Session | Reveals the session's terminal tab wherever it is (amended 2026-10-09, UCC-201) and scrolls the target session into view without spawning a duplicate shell. | `session_exists` | `shell_view` |
 | `cmd.terminal.terminate_session` | Terminate Terminal Session | Requests graceful shutdown for the selected live session; distinct from kill. | `session_live` | `domain_action` |
 | `cmd.terminal.kill_session` | Kill Terminal Session | Forces termination for the selected live session; must not present the old session as still live. | `session_live` | `domain_action` |
 | `cmd.terminal.reattach_section` | Reattach Terminal Section | Returns a detached terminal section to docked layout with preserved tab, pane, and session identity. | `section_detached` | `shell_view` |
+
+Amended 2026-10-09 (DL-181): `cmd.terminal.reattach_section` is retired with detached terminal sections, and `cmd.terminal.reveal` no longer assumes a bottom panel (UCC-201). `cmd.terminal.clear_scrollback`, called covered above, had no catalog row until UCC-201 added it; `cmd.terminal.restart_session` is a retired spelling of `cmd.terminal.restart_replace` and `cmd.terminal.focus_session` an alias of `cmd.terminal.focus` (UCC-202).
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
