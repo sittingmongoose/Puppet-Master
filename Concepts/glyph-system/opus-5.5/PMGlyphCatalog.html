@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="2fa274e64d9e">
+<meta name="pmg-build" content="e507b6f713c6">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -2183,13 +2183,25 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   }
   /* a calm status mark: lit and still from the first frame, no list rhythm and no mount act (Usage: b-motion's room
      entrance owns arrival motion). The wrapper takes nx-still and pmg-calm (pm7-bridge.css). */
-  function calm(key, size, cls) { return N.status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
+  /* PMG's own statuses (warning, offline, off, info, the change marks: 10-status.js) in the chat's status wrapper, so
+     PMG.status(key) draws every key of the vocabulary; the chat's own keys and aliases go to PM56_NEON.status. */
+  var EXTRA_ST = Object.create(null);
+  function statusDef(key, glyph, tone) { EXTRA_ST[key] = { glyph: glyph, tone: tone }; }
+  function esc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function status(key, size, cls) {
+    var x = EXTRA_ST[key];
+    if (!x) return N.status(key, size, cls);
+    return '<span class="nx-st nx-st-' + esc(key) + ' nx-tn-' + x.tone + (cls ? ' ' + esc(cls) : '') + '" data-k="st:' + esc(key) + '" aria-hidden="true">' +
+      N.icon(x.glyph, size, 'nx-r-status nx-t-' + x.tone) + '</span>';
+  }
+  function hasStatus(key) { return !!EXTRA_ST[key] || !!(N.STATUS[key] || Object.keys(N.STATUS).some(function (k) { return (N.STATUS[k].aliases || []).indexOf(key) >= 0; })); }
+  function calm(key, size, cls) { return status(key, size, 'nx-still pmg-calm' + (cls ? ' ' + cls : '')); }
 
   window.PMG = {
     version: 1,
     ACTS: ACTS, ROLES: ROLES,
     def: def, map: map,
-    icon: N.icon, status: N.status, has: N.has, alias: N.alias, flat: flat, calm: calm,
+    icon: N.icon, status: status, statusDef: statusDef, hasStatus: hasStatus, has: N.has, alias: N.alias, flat: flat, calm: calm,
     records: function () { return order.map(function (k) { return records[k]; }); },
     record: function (k) { return records[N.alias(k)] || records[k] || records[aliasOf[k]] || null; },
     /* true for a name PMG drew or aliased (the catalog keeps those out of the chat set's lists) */
@@ -2269,6 +2281,17 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   G.def('change-deleted', { family: 'status', role: 'status', act: 'none', meaning: 'Deleted: removed.', replaces: ['editor Deleted', 'git D', 'document deleted'], parts: [SQ, '<path d="M8.7 12h6.6"/>'] });
   G.def('change-conflict', { family: 'status', role: 'status', act: 'none', meaning: 'Conflict: two changes collide and someone must choose.', replaces: ['rail conflict (a diamond with a cross)', 'git C and U'], parts: [SQ, '<path d="M12 8.2v4.6"/>', '<path d="M12 15.7v.1"/>'] });
   G.def('change-renamed', { family: 'status', role: 'status', act: 'none', meaning: 'Renamed or moved.', replaces: ['editor Renamed', 'git R'], parts: [SQ, '<path d="M8.4 12h6.6M12.6 9.3 15.3 12l-2.7 2.7"/>'] });
+
+  /* the vocabulary's PMG keys, so PMG.status(key) draws them like the chat's 13 (tone: the wrapper's backlight and ink) */
+  G.statusDef('warning', 'st-warning', 'attention');
+  G.statusDef('offline', 'st-offline', 'attention');
+  G.statusDef('off', 'st-off', 'paused');
+  G.statusDef('info', 'st-info', 'idle');
+  G.statusDef('change-added', 'change-added', 'done');
+  G.statusDef('change-modified', 'change-modified', 'changed');
+  G.statusDef('change-deleted', 'change-deleted', 'blocked');
+  G.statusDef('change-renamed', 'change-renamed', 'changed');
+  G.statusDef('change-conflict', 'change-conflict', 'blocked');
 })();
 
 </script>
@@ -2958,7 +2981,7 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   m('st-pending', ['d G.pending (a dashed ring that turns)', 'd G.unknown (a dashed ring with a question mark)']);
   m('st-skipped', ['d G.stale (a clock in a ring)', 'd G.orphan (a broken ring)', 'F3-619 expired, superseded, terminated']);
   m('ring-dot', ['d G.current (a ring with a dot): where you are, a position marker, not a state']);
-  m('archive', ['d G.stash (a tray)']);
+  m('stash', ['d G.stash (a tray)']);
 })();
 
 </script>
