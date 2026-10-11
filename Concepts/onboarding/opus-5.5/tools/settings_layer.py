@@ -75,8 +75,9 @@ def placement() -> dict:
     """placement.json plus o55/placement.d/*.json: `sections` merge by id (a patch may add or change fields, or drop a
     section with null), `overrides` are prepended in file order (first match wins, so a patch beats the base),
     `managers` and `pages` merge by id, `hand_moves` are appended in file order (after the base's moves),
-    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn, and
-    `hand_ids` ({old id: inventory id}) give hand-written rows admitted to Plans/settings_inventory.json their ids."""
+    `hand_drops` ({page: [hand row ids]}) name hand-written rows that only repeat an inventory row and are not drawn,
+    `hand_ids` ({old id: inventory id}) give hand-written rows admitted to Plans/settings_inventory.json their ids, and
+    `retire_ids` (a list) name inventory ids whose row is retired: drawn nowhere, found by no search, never placed."""
     base = json.loads((FORK / 'placement.json').read_text(encoding='utf-8'))
     extra_rules = []
     for p in sorted((FORK / 'o55' / 'placement.d').glob('*.json')):
@@ -95,6 +96,8 @@ def placement() -> dict:
         for ws, ids in patch.get('hand_drops', {}).items():
             have = base.setdefault('hand_drops', {}).setdefault(ws, [])
             have += [i for i in ids if i not in have]
+        retired = base.setdefault('retire_ids', [])
+        retired += [i for i in patch.get('retire_ids', []) if i not in retired]
         extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
     base['overrides'] = extra_rules + base.get('overrides', [])
     return base
@@ -134,9 +137,13 @@ def inline_fonts(css: str, font_dir: Path = FONT_DIR) -> str:
     import base64
 
     def data_uri(m: re.Match) -> str:
+        # The page's 'JetBrains Mono' code face (DL-161, D17) reuses NieR Mode's files, so a name missing from font_dir
+        # is looked up in nier/fonts: one copy of the bytes in the repository for both families.
         path = font_dir / m.group(1)
         if not path.is_file():
-            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)}')
+            path = FONT_DIR / m.group(1)
+        if not path.is_file():
+            raise ValueError(f'O55: embedded font {m.group(1)!r} is not in {font_dir.relative_to(PKG)} or {FONT_DIR.relative_to(PKG)}')
         return 'url("data:font/woff2;base64,' + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")'
     return FONT_URL.sub(data_uri, css)
 
@@ -153,7 +160,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
     if not all(p.is_file() for p in PRO56_FONT_CSS):
         print('NOTE: 5.6 Pro is not checked out here; the shared-font check (DR-050) was skipped', file=sys.stderr)
         return []
-    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in font_dir.glob('*.woff2')}
+    ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in [*font_dir.glob('*.woff2'), *FONT_DIR.glob('*.woff2')]}
     problems = []
     for css in PRO56_FONT_CSS:
         for m in re.finditer(r'@font-face\s*\{([^}]*)\}', css.read_text(encoding='utf-8')):
@@ -171,7 +178,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
 
 # Text faces that carry PM Symbols (src/css/03-symbols.css). Nunito and Georgia are left out on purpose: Nunito only
 # stands behind Poppins, and Georgia sets one "i".
-SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'PM NieR Sans', 'PM NieR Mono'}
+SYMBOL_MIRRORED = {'Inter', 'Poppins', 'IBM Plex Mono', 'JetBrains Mono', 'PM NieR Sans', 'PM NieR Mono'}
 
 
 def _font_faces(css: str) -> list[tuple[str, str, str, str, str]]:
@@ -207,6 +214,20 @@ def web_font_checks(src: Path) -> list[str]:
     for f, s, w in sorted(text):
         if f in SYMBOL_MIRRORED and (f, s, w) not in {(a, b, c) for a, b, c, _ in sym}:
             problems.append(f'text face {f} {s} {w} has no PM Symbols face (src/css/03-symbols.css)')
+    # Script slices (DL-161, amended 2026-10-09): a family's Latin face comes after its unicode-range slices, so the
+    # Latin bytes win every code point they share, and every embedded file is listed in src/fonts/SOURCE.md.
+    seen_latin = set()
+    for f, s, w, u, _ in faces:
+        if 'pm-symbols' in u:
+            continue
+        if '-latin-' in u and '-latin-ext-' not in u:
+            seen_latin.add((f, s, w))
+        elif (f, s, w) in seen_latin:
+            problems.append(f'{f} {s} {w}: the slice {u} comes after the Latin face; declare the Latin face last')
+    listed = set(re.findall(r'`([\w.-]+\.woff2)`', (src / 'fonts' / 'SOURCE.md').read_text(encoding='utf-8')))
+    for path in sorted((src / 'fonts').glob('*.woff2')) + sorted(FONT_DIR.glob('*.woff2')):
+        if path.name not in listed:
+            problems.append(f'{path.name} is embedded but not listed in src/fonts/SOURCE.md')
     base = (PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html').read_text(encoding='utf-8')
     sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
     for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",
@@ -225,7 +246,8 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
     globs it, then its subgroup, then its page default); a placement.d patch's rules come first, so it can re-home ids a
     base rule also names. Checked: every id lands in a real section of a real manager tab or page, no page default is
     used, every rule wins at least one id, subgroups cover the reference exactly, and managers named by sections exist
-    in exactly one manager file."""
+    in exactly one manager file. A retired id (retire_ids) must be a reference id that no hand page draws and no rule
+    names; it is placed nowhere."""
     import fnmatch
     rows = t50.reference_rows(engine)
     by_id = {r['id']: r for r in rows}
@@ -255,10 +277,17 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         need(pages.get(ws, {}).get('hand'), f'O55 placement: hand_drops names {ws!r}, which draws no hand rows')
     hand = set(t50.HAND_CANONICAL_RE.findall(engine))
     rules = merged.get('overrides', [])
+    retired = set(merged.get('retire_ids', []))
+    for rid in sorted(retired):
+        need(rid in by_id, f'O55 placement: retire_ids names unknown id {rid}')
+        need(rid not in hand, f'O55 placement: retired id {rid} is drawn by a hand page')
+        need(not any(rid in r.get('ids', []) for r in rules), f'O55 placement: retired id {rid} is still named by a rule')
     wins = [0] * len(rules)
     resolved = {}
     for row in rows:
         rid = row['id']
+        if rid in retired:
+            continue
         if rid in hand:
             resolved[rid] = None
             continue
@@ -282,7 +311,7 @@ def validate(merged: dict, engine: str, t50, need) -> dict:
         if sid:
             per[sections[sid]['to']] = per.get(sections[sid]['to'], 0) + 1
     composed = sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('composed'))
-    return {'ids': len(rows), 'hand': len(hand), 'per_destination': per, 'composed_rows': composed,
+    return {'ids': len(rows), 'hand': len(hand), 'retired': sorted(retired), 'per_destination': per, 'composed_rows': composed,
             'advanced_rows': sum(1 for rid, sid in resolved.items() if sid and sections[sid].get('advanced'))}
 
 

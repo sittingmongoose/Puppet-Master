@@ -39,13 +39,15 @@ function render() {
 /* rerender(room?): a known room re-renders only while it is showing (in place); anything else (no argument, or a reason
    such as the bridge's 'stable_account_identity') refreshes the page. */
 function rerender(room) {
-  if (room && ROOM[room] && room !== state.room) return false;
+  /* the hosted boards (Home dashboards) hear every data change, the Usage page's hidden rooms' too (D10 3.1 touch) */
+  if (room && ROOM[room] && room !== state.room) { if (PMU.boards) PMU.boards.touch('data'); return false; }
   if (PMU.roster) PMU.roster.invalidate();
   PMU.shell.render();
   if (PMU.board) {
     if (state.room === 'accounts') PMU.board.relevel();   /* a provider may have gained or lost its widget (Settings roster) */
     PMU.board.refresh(room ? 'data' : 'page');
   }
+  if (PMU.boards) PMU.boards.touch(room ? 'data' : 'page');
   return true;
 }
 
@@ -199,6 +201,8 @@ window.PM7_USAGE = {
   get migration_receipt() { return PMU.board ? PMU.board.envelope().migration_receipt : null; },
   get workspace_envelope() { return PMU.board ? PMU.board.envelope() : null; },
   get board() { return PMU.board; },
+  /* the board registry (D10): the Usage board and every hosted board (Home dashboards) */
+  get boards() { return PMU.boards; },
   /* WOW-SPEC-3 8.5: the live readings (state, pause, resume, beat(i) for harnesses, log, reset) */
   get live() {
     if (!PMU.live) return null;

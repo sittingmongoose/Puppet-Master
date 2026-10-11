@@ -7,11 +7,11 @@ import { tmpdir } from 'node:os';
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 
 // GPU rule: Chrome renders on the VM's GPU, never --disable-gpu/SwiftShader; see /mnt/Cursor/Agent-Guides/gpu-recording.md.
-export async function launch({ width = 1600, height = 1000, scale = 1, profile, args = [] } = {}) {
+export async function launch({ width = 1600, height = 1000, scale = 1, profile, args = [], chrome: executable = CHROME } = {}) {
   profile = profile || `${process.env.PM_CDP_PROFILE_DIR || tmpdir()}/pm-cdp-profile-${process.pid}`;
   mkdirSync(profile, { recursive: true });
   const safeArgs = args.filter((a) => a !== '--disable-gpu' && a !== '--use-gl=swiftshader' && a !== '--use-angle=swiftshader' && a !== '--enable-unsafe-swiftshader');
-  const chrome = spawn(CHROME, [
+  const chrome = spawn(executable, [
     '--headless=new', '--remote-debugging-pipe', '--no-sandbox', '--enable-gpu', '--disable-dev-shm-usage',
     '--allow-file-access-from-files', '--hide-scrollbars', `--force-device-scale-factor=${scale}`,
     '--no-first-run', '--no-default-browser-check', '--disable-background-timer-throttling',
@@ -22,7 +22,12 @@ export async function launch({ width = 1600, height = 1000, scale = 1, profile, 
   let buf = '', id = 0;
   const pending = new Map();
   const listeners = [];
-  chrome.stderr.on('data', () => {});
+  let launchError = '';
+  chrome.stderr.on('data', chunk => { launchError = (launchError + chunk.toString()).slice(-3000); });
+  const rejectPending = err => { for (const { rej } of pending.values()) rej(err); pending.clear(); };
+  wr.on('error', rejectPending); rd.on('error', rejectPending);
+  chrome.on('error', rejectPending);
+  chrome.on('exit', (code, signal) => rejectPending(new Error(`Chrome launcher exited (${signal || code}): ${launchError.slice(-1200)}`)));
   rd.on('data', chunk => {
     buf += chunk.toString('utf8');
     let i;

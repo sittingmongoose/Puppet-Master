@@ -1,0 +1,42 @@
+{
+  "family": "Gruvbox",
+  "slug": "gruvbox",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-gruvbox.txt",
+  "copyright": "Copyright (c) 2018 Pavel Pertsev",
+  "homepage": "https://github.com/morhetz/gruvbox",
+  "schemes": [
+    {
+      "id": "gruvbox-light",
+      "name": "Gruvbox Light",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/gruvbox-community/gruvbox-contrib/5bfe85a961d144376f9f9460f2b2a85343a0f0b3/kitty/gruvbox-light.conf",
+      "sourceSha256": "e6fb1e5cf80b704082815294ab210c23afcbd9eda4802921ee0cc4d6582478f4",
+      "colors": {
+        "background": "#fbf1c7",
+        "foreground": "#3c3836",
+        "cursor": "#665c54",
+        "cursorText": "#bdae93",
+        "selectionBackground": "#d65d0e",
+        "selectionForeground": "#3c3836",
+        "ansi": ["#ebdbb2", "#cc241d", "#98971a", "#d79921", "#458588", "#b16286", "#689d6a", "#7c6f64", "#928374", "#9d0006", "#79740e", "#b57614", "#076678", "#8f3f71", "#427b58", "#282828"]
+      }
+    },
+    {
+      "id": "gruvbox-dark",
+      "name": "Gruvbox Dark",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/gruvbox-community/gruvbox-contrib/5bfe85a961d144376f9f9460f2b2a85343a0f0b3/kitty/gruvbox-dark.conf",
+      "sourceSha256": "4f15c259671d7e8a09bcad610359d495383db0ca9bc9d91601da42691a0ada51",
+      "colors": {
+        "background": "#282828",
+        "foreground": "#ebdbb2",
+        "cursor": "#bdae93",
+        "cursorText": "#665c54",
+        "selectionBackground": "#d65d0e",
+        "selectionForeground": "#ebdbb2",
+        "ansi": ["#3c3836", "#cc241d", "#98971a", "#d79921", "#458588", "#b16286", "#689d6a", "#a89984", "#928374", "#fb4934", "#b8bb26", "#fabd2f", "#83a598", "#d3869b", "#8ec07c", "#fbf1c7"]
+      }
+    }
+  ]
+}

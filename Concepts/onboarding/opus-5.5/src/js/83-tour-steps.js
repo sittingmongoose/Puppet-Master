@@ -1,6 +1,6 @@
-/* The Guided Tour's steps (canonical phase ids). Chapter 1 Ask and understand, chapter 2 Make the workspace yours,
-   chapter 3 Plan before building — which carries more than half of the learner's actions. Every action step has a real
-   target, a success predicate that reads the real result, and a Show Me that goes through the same control. */
+/* The Guided Tour's steps (canonical phase ids). Chapter 1 Ask and understand, chapter 2 Make the workspace yours (the
+   Home panels, D25), chapter 3 Plan before building, which carries the most of the learner's actions. Every action step
+   has a real target, a success predicate that reads the real result, and a Show Me that goes through the same control. */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, T = (k, v) => O55.t(k, v), M = O55.motion, TR = O55.tour, C = TR.chat, P = TR.practice;
@@ -60,7 +60,17 @@
     showMe: async (sm) => { await sm.click(C.explainBtn(C.midFor('a1'))); } });
 
   /* ================================================================ chapter 2: Make the workspace yours */
-  const ORIENT = [() => q('.page-tabs'), () => document.getElementById('pm-home-workspace'), () => document.getElementById('chatPanel')];
+  /* The workspace is the Home panels (Concepts/home-redesign, D25): pages on top, panels in the middle, Chat on the right
+     (it moves only by popping out, D3). The steps teach + (open_from_plus), opening a file into a panel
+     (open_file_from_rail), splitting by dragging a tab to a panel edge (split_by_drag) and adding a widget to the Home
+     dashboard (widget_action, D10 round two P10), each finished by what the panels report, never by a timer. What only
+     the panels know (their buttons, menus, tabs, receipts, Back snapshots and dashboard boards) comes from their tour
+     hooks, PMW.tour (home-redesign src/panels/js/52-tour.js), looked up as a step runs: the panels boot after this
+     script. Without the panels (?home=current, a build.py --no-home reference page) the chapter is the orientation. */
+  const panels = document.documentElement.getAttribute('data-pmw-home') === 'on';
+  const hk = (name, ...a) => { const h = window.PMW && window.PMW.tour; return h && typeof h[name] === 'function' ? h[name](...a) : null; };
+  const stepDone = (id) => !!(TR.st.sess && TR.st.sess.done.includes(id));
+  const ORIENT = [() => q('.page-tabs'), () => document.getElementById('pm-home-centre') || document.getElementById('pm-home-workspace'), () => document.getElementById('chatPanel')];
   S({ id: 'workspace_orientation', chapter: 'workspace', kind: 'info',
     enter(st) { goPage('dashboard'); st.orient = 0; st.orientAt = performance.now(); st.orientLoops = 0; },
     tick(st) { if (performance.now() - st.orientAt > 1700) { st.orient = (st.orient + 1) % ORIENT.length; st.orientAt = performance.now(); if (st.orient === 0) st.orientLoops++; O55.sound.play('move', { step: st.orient }); } },
@@ -68,99 +78,62 @@
     avoid: () => [ORIENT[0](), ORIENT[2]()],
     ready: (st) => st.orientLoops > 0 || st.orient === ORIENT.length - 1 });
 
-  /* Where Chat should go. On a wide window the workspace has side docks and Chat is dragged to the left dock. Below
-     the width where the workspace stacks its docks under the main area, the right dock's hit band spans the whole
-     width, so no dock can be reached by dragging; the reachable version there is a button that sends the same move
-     command (cmd.workspace_layout.move_surface) to put Chat above the work. Production impact noted in REPORT.md. */
-  const hostEl = (h) => document.querySelector(`#pm-home-workspace [data-pm-home-host="${h}"]`);
-  const stacked = () => { const m = hostEl('home_main'), r = hostEl('dock_right'); if (!m || !r) return false; const a = m.getBoundingClientRect(), b = r.getBoundingClientRect(); return b.width > 0 && b.top >= a.bottom - 4; };
-  /* the left dock's entry band: 28 px inside the workspace's left edge (the engine's frozen dock latch) */
-  function leftBand() { const ws = document.getElementById('pm-home-workspace'); if (!ws) return null; const r = ws.getBoundingClientRect(); return { x: r.left, y: r.top, w: 28, h: r.height }; }
-  TR.dockBand = () => { const b = leftBand(); return b ? Object.assign({ stacked: stacked(), drop: { x: b.x + 12, y: b.y + b.h * 0.45 } }, b) : null; };
-  /* the zone says "Let go" the moment the workspace adopts the left dock as the drop target: one observer on that host's
-     class list, attached while the zone shows */
-  let hot = null;
-  function watchHot(z, on) {
-    const host = on ? hostEl('dock_left') : null;
-    if (hot && hot.host !== host) { hot.obs.disconnect(); hot = null; }
-    if (!host) { z.removeAttribute('data-hot'); return; }
-    const sync = () => { const h = host.classList.contains('pm-home-drop-active'); if (z.hasAttribute('data-hot') !== h) z.toggleAttribute('data-hot', h); };
-    if (!hot) { hot = { host, obs: new MutationObserver(sync) }; hot.obs.observe(host, { attributes: true, attributeFilter: ['class'] }); }
-    sync();
-  }
-  function showZone(on) {
-    const z = document.querySelector('#pm-o55-tour .o55t-zone'); if (!z) return;
-    const b = leftBand(); if (!on || !b) { z.classList.remove('o55t-on'); watchHot(z, false); return; }
-    const tf = `translate(${b.x}px, ${b.y}px)`, w = b.w + 'px', h = b.h + 'px';
-    if (z.style.transform !== tf) z.style.transform = tf; if (z.style.width !== w) z.style.width = w; if (z.style.height !== h) z.style.height = h;
-    z.classList.add('o55t-on'); watchHot(z, true);
-  }
-  const dockDone = () => TR.st.sess.done.includes('move_or_dock_chat');
-  S({ id: 'move_or_dock_chat', chapter: 'workspace', kind: 'action', after: true,
-    enter() { goPage('dashboard'); if (!C.chatVisible()) api().setSurfaceVisible('chat', true, 'cmd.panel.switch'); },
-    tick(st) {
-      const sk = stacked(); if (st.dockStacked !== sk) { const first = st.dockStacked === undefined; st.dockStacked = sk; if (!first) TR.refresh(); }
-      showZone(!dockDone() && !sk);
-    },
-    leave: (st) => { showZone(false); st.dockStacked = undefined; },
-    doKey: () => (stacked() ? 'doTop' : 'do'),
-    extra: () => (stacked() && !dockDone() ? `<div class="o55t-inline">${TR.btn('moveChatTop', T('tour.steps.move_or_dock_chat.moveTop'), 'secondary')}</div>` : ''),
-    actions: { moveChatTop: () => { O55.sound.play('drop'); api().moveSurface('chat', 'dock_top'); } },
-    /* the grip while Chat is still in place; the drop zone while it is lifted; once it has moved, the whole panel */
-    target: () => (dockDone() ? document.getElementById('chatPanel')
-      : document.body.classList.contains('pm-home-dragging') ? document.querySelector('#pm-o55-tour .o55t-zone') : q('[data-pm-home-handle="chat"]')),
-    done: () => { const s = chatSurface(); return !!(s && s.visible && (s.host === 'dock_left' || s.host === 'dock_top')); },
-    showMe: async (sm) => {
-      if (stacked()) { await sm.click(document.querySelector('#pm-o55-tour [data-o55t="moveChatTop"]')); return; }
-      /* down out of the right dock first, then straight across into the left band: an arc over the top would pass
-         the workspace's top-dock band, which previews (and holds) Top dock for most of the carry */
-      const b = leftBand(), ws = document.getElementById('pm-home-workspace');
-      if (b && ws) { const r = ws.getBoundingClientRect(), y = b.y + b.h * 0.45; await sm.drag(q('[data-pm-home-handle="chat"]'), { x: b.x + 12, y }, { via: { x: r.left + r.width * 0.5, y }, ready: () => { const h = hostEl('dock_left'); return !!(h && h.classList.contains('pm-home-drop-active')); } }); }
-    },
-    goTo: () => goPage('dashboard') });
+  if (panels) {
+    /* two moves: open the + menu, then pick a row; the spotlight follows the menu while it is open */
+    S({ id: 'open_from_plus', chapter: 'workspace', kind: 'action', after: true,
+      enter(st, o) { hk('entry', 'open_from_plus', o); goPage('dashboard'); hk('watchPlus'); st.plusPhase = null; },
+      leave(st) { st.plusPhase = null; },
+      tick(st) { const ph = hk('plusMenu') ? 'pick' : 'do'; if (st.plusPhase !== ph) { const first = st.plusPhase == null; st.plusPhase = ph; if (!first) { st.side = null; st.fixed = null; TR.refresh(); } } },
+      doKey: (st) => (st.plusPhase === 'pick' ? 'pick' : 'do'),
+      target: () => hk('plusMenu') || hk('plusButton'),
+      done: () => !!hk('plusDone'),
+      showMe: async (sm) => { if (!hk('plusMenu')) { await sm.click(hk('plusButton')); await sm.wait(380); } const row = hk('plusRow'); if (row) await sm.click(row); },
+      goTo: () => goPage('dashboard') });
 
-  const aqItem = () => [...document.querySelectorAll('.pm6-dash-catalog-item')].find((x) => TR.vis(x) && /approval queue/i.test(x.textContent)) || null;
-  const aqWidget = () => [...document.querySelectorAll('[data-widget-id], .pm6-dash-widget')].find((w) => TR.vis(w) && /approval queue/i.test(w.textContent)) || null;
-  /* placed = the dashboard accepted a move or a resize of the Approval queue since this step began */
-  const AQ = 'pm6-dash-approval-queue';
-  const dashLogs = () => window.PM7_DASH_WIDGETS || { command_log: [], receipt_log: [] };
-  const placed = (st) => {
-    const w = dashLogs(), mine = w.command_log.slice(st.wlog || 0).filter((c) => (c.command_id === 'cmd.widget.move' || c.command_id === 'cmd.widget.resize') && c.instance_id === AQ);
-    return mine.some((c) => w.receipt_log.some((r) => r.command_instance_id === c.command_instance_id && (r.outcome === 'accepted' || r.outcome === 'applied')));
-  };
-  /* where to drop it: onto the card just before the new widget, so it moves up a place. The point is kept clear of
-     the dashboard's auto-scroll bands (about 80 px from its top and bottom edges), where a held pointer would scroll
-     the list under itself. No such point in view: the widget is placed by choosing a size instead. */
-  const dropSpot = () => {
-    const h = document.getElementById('dashGridMain'), sc = document.getElementById('pm6DashScroll'), w = aqWidget(); if (!h || !w) return null;
-    const v = sc ? sc.getBoundingClientRect() : { top: 0, bottom: innerHeight };
-    const cards = [...h.children].filter((c) => c.classList.contains('pm6-dash-card') && TR.vis(c)), at = cards.indexOf(w);
-    const prev = at > 0 ? cards[at - 1] : null; if (!prev) return null;
-    const r = prev.getBoundingClientRect(), lo = Math.max(r.top + 6, v.top + 86), hi = Math.min(r.bottom - 6, v.bottom - 86);
-    if (hi - lo < 12) return null;
-    return { card: prev, id: prev.getAttribute('data-widget-id'), x: r.left + r.width * 0.3, y: Math.max(lo, Math.min(hi, r.top + r.height * 0.35)) };
-  };
-  TR.dashDrop = () => { const d = dropSpot(); return d ? { id: d.id, x: d.x, y: d.y } : null; };
-  S({ id: 'widget_action', chapter: 'workspace', kind: 'action', after: true,
-    enter(st) { goPage('dashboard'); st.wlog = dashLogs().command_log.length; st.wphase = null; },
-    /* two moves in one step: add it from the real catalog, then place it (drag its grip, or choose a size) */
-    tick(st) { const ph = aqWidget() ? 'place' : 'add'; if (st.wphase !== ph) { const first = st.wphase === null; st.wphase = ph; if (!first) { st.side = null; O55.sound.play('phase'); TR.refresh(); } } },
-    /* while placing, the callout stands beside the dashboard column, never over the cards the widget can drop onto */
-    place: (st) => (st.wphase === 'place' ? 'left' : 'auto'),
-    doKey: (st) => (st.wphase === 'place' ? 'place' : 'do'),
-    target: (st) => { const w = aqWidget(); if (TR.st.sess.done.includes('widget_action')) return w; if (w) return w; return aqItem() || q('#pm6DashAddBtn'); },
-    done: (st) => !!aqWidget() && placed(st),
-    showMe: async (sm) => {
-      if (!aqWidget()) { if (!aqItem()) { await sm.click(q('#pm6DashAddBtn')); await sm.wait(420); } await sm.click(aqItem()); await sm.wait(900); }
-      const w = aqWidget(), grip = w && w.querySelector('.pm6-dash-drag'), to = dropSpot();
-      if (grip && to) { await sm.drag(grip, { x: to.x, y: to.y }); return; }
-      /* nothing above it in view: give it a size that reads at a glance */
-      const sizeBtn = w && w.querySelector('.pm7-dash-size-btn'); if (!sizeBtn) return;
-      await sm.click(sizeBtn); await sm.wait(320);
-      const cur = w.getAttribute('data-pm7-size'), pick = document.querySelector(`.pm7-dash-size-pop.open [data-size="${cur === '1x2' ? '2x1' : '1x2'}"]`);
-      if (pick) await sm.click(pick);
-    },
-    goTo: () => goPage('dashboard') });
+    /* one click opens a preview tab, a double click keeps it; done once an editor tab is created */
+    S({ id: 'open_file_from_rail', chapter: 'workspace', kind: 'action', after: true,
+      async enter(st, o) { hk('entry', 'open_file_from_rail', o); goPage('dashboard'); await hk('watchFile', o); },
+      target: () => hk('fileRow'),
+      done: () => !!hk('fileDone'),
+      showMe: async (sm) => { hk('showFiles'); await sm.click(hk('fileRow')); },
+      goTo: () => { goPage('dashboard'); hk('showFiles'); } });
+
+    /* While a tab is carried the callout and the bar hold still and step back, as for any drag in the tour (this file
+       and the core read body.pm-home-dragging); the class is set here only while this step carries. */
+    let held = false;
+    const hold = (on) => { if (on === held) return; held = on; document.body.classList.toggle('pm-home-dragging', on); };
+    /* the copy names the edge that fits (Split right, else Split down); done once a split is applied and a panel added */
+    S({ id: 'split_by_drag', chapter: 'workspace', kind: 'action', after: true, pad: 6,
+      enter(st, o) { hk('entry', 'split_by_drag', o); goPage('dashboard'); st.splitEdge = hk('watchSplit'); },
+      tick(st) {
+        hold(!!hk('carrying'));
+        if (held || stepDone('split_by_drag')) return;
+        const e = hk('splitEdge'); if (e && e !== st.splitEdge) { st.splitEdge = e; TR.refresh(); }
+      },
+      leave: () => hold(false),
+      doKey: (st) => (st.splitEdge === 'bottom' ? 'doDown' : 'do'),
+      /* the tab; while it is carried, the whole centre (every edge it can land on); once split, its new panel */
+      target: () => hk('splitTarget', stepDone('split_by_drag')),
+      done: () => !!hk('splitDone'),
+      showMe: async (sm) => { const d = hk('splitDrag'); if (d) await sm.drag(d.el, d.to, { ready: d.ready }); },
+      goTo: () => goPage('dashboard') });
+
+    /* Upcoming resets on the Home dashboard board (hidden at the start when the board shows it): done once it is added
+       and then moved or resized there */
+    S({ id: 'widget_action', chapter: 'workspace', kind: 'action', after: true,
+      async enter(st, o) { hk('entry', 'widget_action', o); goPage('dashboard'); st.wlog = (await hk('watchWidget')) || 0; },
+      target: () => hk('widgetAddButton'),
+      done: (st) => !!hk('widgetDone', st),
+      showMe: async () => { await hk('widgetShowMe'); },
+      goTo: () => { goPage('dashboard'); hk('showDashboard'); } });
+  }
+
+  /* Checkpoints across step orders (80-tour-core.js): the step order of the page before the Home panels, whose
+     checkpoints name no step, and the chapter of each retired step (Chat moves only by popping out, D3). */
+  TR.unstamped = ['comfort_intro', 'open_chat', 'select_teacher', 'send_question', 'answer_stream', 'same_answer_eli5',
+    'workspace_orientation', 'move_or_dock_chat', 'widget_action', 'open_planning', 'book_club_goal', 'three_outcomes',
+    'access_answer', 'review', 'review_parts', 'answer_edit', 'consequence_changed', 'completion_boundary'];
+  TR.retired = { move_or_dock_chat: 'workspace' };
 
   /* ================================================================ chapter 3: Plan before building */
   /* its visible route: the page tab, or on a narrow window the pages menu (the strip folds pages into it) */
@@ -281,7 +254,8 @@
     /* a phone-width window may have Chat over the Wizard again: say it where it will be seen as well */
     if (innerWidth < 600) O55.pageToast(T('tour.landing'), 6000);
   };
-  /* measured by tools/tour_census.mjs on the real tour: 4.5 minutes at 200 words a minute with every action shown
-     (Planning takes 7 of 14 actions and 53 % of the time); rounded up so the promise is kept */
+  /* measured by tools/tour_census.mjs on the real tour with the Home panels (2026-10-10): 4.8 minutes at 200 words a
+     minute with every action shown (Planning takes 7 of 16 actions and 49 % of the time); rounded up so the promise is
+     kept */
   TR.minutes = () => 5;
 })();

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2840-L2895
+Source lines: L2908-L2965
 
-Source SHA256: `5627038fba52ffcc363b7e8c780ba9150d18e17926d82b509035ca2194d3eacc`
+Source SHA256: `42728733152ab43044573b47f71b7786b83f9ef829f311046dca8f1541bb0082`
 
 ---
 
@@ -21,7 +21,7 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Every Plan surface that shows actions draws them with the one action row the wand modules use (F3-566 J-2): the
-  transcript Plan card, the editor's sticky footer and its More row, the compact Completed or Canceled card, a
+  transcript Plan card, the plan tab's sticky footer and its More row (F3-635), the compact Completed or Canceled card, a
   Building plan's attention actions, the schedule line's decision and the Build-started receipt. The Build control is
   a boxed primary inside that row, not a control with sizes of its own, and the row's spacing rule treats it as one
   (F3-606). A Plan surface supplies its controls and their order only; it never restates the row's height, type,
@@ -31,7 +31,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps one action-row grammar for every Plan surface."
 split_recommended: false
-depends_on: [DR-044, F3-566, DL-156]
+depends_on: [DR-044, F3-566, DL-156, DL-180]
 unblocks: [F3-606]
 acceptance_criteria:
   - "No Plan surface defines its own button height, type size, padding or gap for its actions."
@@ -58,9 +58,11 @@ preserved_exact_tokens:
   - "action row"
 negative_constraints:
   - "Do not give a Plan surface its own action sizes or a tinted footer band."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the plan viewer is the plan tab kind in a home panel (F3-635), so the editor's sticky footer is now the plan tab's; the action row rule is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-635

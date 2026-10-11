@@ -1,0 +1,116 @@
+/* Per-look treatments (D16, D23). The effects policy writes data-pmt-look, data-pmt-focusfx and data-pmt-bell on the
+   root. Focus: Friendly a soft accent ring, Glass a luminous rim, Retro a 2 px rule in the screen's text colour under
+   the header (the header keeps the panel surface, so tab and panel stay one surface), Basic a thin accent line under
+   the header, NieR ink corner brackets. Inactive dimming per look. Bell per look, at most once a second.
+   Reduced Motion: every animation here is replaced by a static state. */
+
+/* ---- focus ---- */
+.pmt-root[data-pmt-focusfx="ring"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 45%, transparent); }
+.pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.30), inset 0 1px 0 rgba(255,255,255,.22); }
+html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), inset 0 1px 0 rgba(255,255,255,.9); }
+.pmt-root[data-pmt-focusfx="line"].pmt-focused > .pmw-hrow { box-shadow: inset 0 -1px 0 var(--pmw-accent, var(--accent-primary)); }
+.pmt-root[data-pmt-focusfx="rule"].pmt-focused > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmt-fg); }
+/* NieR: ink target brackets live in 40-nier.css, gated by the brackets part */
+
+/* ---- inactive dimming ---- */
+.pmt-body::after { content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0; background: var(--pmt-dim-color, var(--pmt-bg-solid)); transition: opacity .2s; }
+.pmt-inactive .pmt-body::after { opacity: var(--pmt-dim-amount, 0); }
+.pmt-root[data-pmt-look="retro"] { --pmt-dim-color: #000; }
+.pmt-root[data-pmt-look="glass"] { --pmt-dim-color: transparent; }
+/* an ended session keeps its own, deeper 72 % (10-view.css) */
+.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: .8; }
+
+/* ---- bell ---- */
+.pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }
+@keyframes pmt-bell-flash { 0% { opacity: .09; } 100% { opacity: 0; } }
+.pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+.pmt-root[data-pmt-bell="inverse"].pmt-bell .pmt-screen { animation: pmt-bell-inv .12s steps(1) 1; }
+@keyframes pmt-bell-inv { 0% { filter: invert(1); } 100% { filter: none; } }
+.pmt-root[data-pmt-bell="marker"].pmt-bell > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmw-warn, var(--accent-warning)); }
+
+/* ---- command marks per look ---- */
+.pmt-root[data-pmt-look="retro"] .pmt-mark svg { display: none; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark::before { font-family: var(--pmt-font); font-size: var(--pmt-font-size); line-height: 1; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-ok::before { content: ">"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-fail::before { content: "!"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-run::before { content: "*"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-idle::before { content: ">"; opacity: .45; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark-agent::before { content: "#"; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark { border-radius: 0; }
+.pmt-root[data-pmt-look="retro"] .pmt-mark:hover { background: var(--pmt-fg); color: var(--pmt-bg-solid); }
+
+/* ---- progress per look ---- */
+.pmt-root[data-pmt-look="glass"] .pmt-progress { background: rgba(255,255,255,.12); }
+.pmt-root[data-pmt-look="glass"] .pmt-progress::before { background: rgba(255,255,255,.75); box-shadow: 0 0 6px rgba(255,255,255,.5); }
+.pmt-root[data-pmt-look="retro"] .pmt-progress { height: 4px; background: transparent; }
+.pmt-root[data-pmt-look="retro"] .pmt-progress::before { background: repeating-linear-gradient(90deg, var(--pmt-fg) 0 6px, transparent 6px 8px); transition: none; }
+.pmt-root[data-pmt-look="friendly"] .pmt-progress { height: 3px; }
+
+/* ---- grounds (D23 polish) ----
+   Friendly: the ground (42-appearance.js) is a stage lit from above; here it sits a little recessed under the header,
+   with a faint paper grain. Glass: the ground reads the shared look tokens (--pmw-surface, which Glass maps to its
+   reading surface), so an app-wide Glass restyle reaches the terminal; --pmt-glass-veil is the hook. Static. */
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::after {
+  content: ""; position: absolute; inset: 0;
+  box-shadow: inset 0 16px 20px -16px rgb(76 56 110 / .34), inset 0 -12px 16px -16px rgb(76 56 110 / .16);
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::after {
+  box-shadow: inset 0 16px 20px -16px rgb(0 0 0 / .7), inset 0 -12px 16px -16px rgb(0 0 0 / .4);
+}
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::before {
+  content: ""; position: absolute; inset: 0; opacity: .045; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.30 0 0 0 0 0.22 0 0 0 0 0.40 0 0 0 1.6 -0.55'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url%28%23n%29'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::before { mix-blend-mode: screen; opacity: .05; }
+.pmt-root[data-pmt-look="glass"] { --pmt-glass-veil: color-mix(in srgb, var(--pmw-surface, transparent) 28%, transparent); }
+.pmt-root[data-pmt-look="glass"] .pmt-bglayer.pmt-bg-theme { background: var(--pmt-glass-veil); }
+
+/* ---- chrome shapes per look ---- */
+.pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
+.pmt-root[data-pmt-look="glass"] { --pmt-radius: 10px; }
+.pmt-root[data-pmt-look="retro"] { --pmt-radius: 0px; }
+/* the editor's popover floats outside any terminal root; it carries the look itself (76-popover.js) */
+.pmt-pop[data-pmt-look="friendly"] { --pmt-radius: 8px; }
+.pmt-pop[data-pmt-look="glass"] { --pmt-radius: 10px; }
+.pmt-pop[data-pmt-look="retro"] { --pmt-radius: 0px; }
+:is(.pmt-root[data-pmt-look="friendly"] .pmt-pop, .pmt-pop[data-pmt-look="friendly"]) { border-radius: 14px; }
+/* Glass overlays take the app's Glass menu plate (--rg-menu, the one PM menus use): Glass's elevated surface is a
+   translucent tint meant to sit on a backdrop blur, and the terminal adds none (F3-431), so over it the terminal's own
+   text showed through the scheme list, crisp, between the rows */
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]), .pmt-root[data-pmt-look="glass"] .pmt-findbar {
+  background: var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent)); border-color: var(--glass-hairline, rgba(255,255,255,.16));
+}
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) { border-radius: 14px; }
+/* the sticky family names hold their own ground in Glass, so rows scrolling under them never show through */
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group {
+  /* the menu plate is a little see-through: laid three deep it hides the row scrolling under the name */
+  background: linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)), linear-gradient(var(--rg-menu, transparent), var(--rg-menu, transparent)),
+    var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent));
+}
+:is(.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-pop[data-pmt-look="retro"]), .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
+  border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
+}
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) :is(.pmt-seg, .pmt-seg button, .pmt-pop-ctl select, .pmt-find-input,
+  .pmt-textbtn, .pmt-scheme, .pmt-swatch, .pmt-step, .pmt-pop-x, .pmt-pop-search) { border-radius: 0; }
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) :is(.pmt-seg button[aria-checked="true"], .pmt-scheme[aria-selected="true"], .pmt-find-toggle.pmt-on) {
+  background: var(--pmw-accent, var(--accent-primary)); color: var(--background, #10120e);
+}
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) .pmt-pop-sec h4::before { content: "[ "; }
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) .pmt-pop-sec h4::after { content: " ]"; }
+.pmt-root[data-pmt-look="retro"] .pmt-hint { border-radius: 0; background: var(--pmt-fg); color: var(--pmt-bg-solid); }
+.pmt-root[data-pmt-look="retro"] .pmt-sb-thumb { border-radius: 0; background: transparent; border: 1px solid var(--pmt-fg); opacity: .7; }
+.pmt-root[data-pmt-look="retro"] .pmt-sticky { background: color-mix(in srgb, var(--pmt-bg-solid) 90%, var(--pmt-fg)); }
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow { background: var(--pmt-fg); color: var(--pmt-bg-solid); border-bottom: 0; }
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
+.pmt-root[data-pmt-look="retro"] .pmt-notice { border-radius: 0; }
+
+/* ---- Reduced Motion: nothing moves in the terminal. An element whose calm version is a deliberate cross-fade carries
+   .pmt-calm (60-motion.css gives it that fade); everything else is still. ---- */
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm), html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::before,
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
+html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
+html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
+@media (prefers-reduced-motion: reduce) {
+  .pmt-root :not(.pmt-calm), .pmt-root :not(.pmt-calm)::before, .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
+}

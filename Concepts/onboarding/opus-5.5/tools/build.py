@@ -6,12 +6,14 @@ Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/x.html  # private build: lint, then write only that path
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-usage  # private build without the Usage layer (a reference page)
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-home   # private build without the Home layer (today's Home)
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
 The base file is read-only. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
 The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
+Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs last, at step 5.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -321,6 +323,9 @@ def lint_sources() -> list[str]:
     # The Usage page's sources (Concepts/usage-redesign/src): emoji, banned copy, :has(), accent borders, pills,
     # page-wide universal selectors, duplicate top-level names, copy and roster JSON.
     problems.extend(usage_layer.lint())
+    # The Home layer's sources (Concepts/home-redesign/src): emoji, :has(), coloured side borders, pills, capsule radii,
+    # viewport-width @media, window-size reads, banned copy, a top-level name declared twice in one scope.
+    problems.extend(_home().lint())
     return problems
 
 
@@ -392,6 +397,20 @@ PATCHES = [
      "      'settings.guided_tour.resume':['Resume the Guided Tour','Pick up the tour at the step where it stopped.'],\n"
      "      'settings.guided_tour.replay':['Start the Guided Tour over','Begin the tour again from its first step.'],",
      'hover label tour resume and restart'),
+    # Settings' Chat Layout row (general.visual.chat-layout-mode) is retired: the chat stays in its column and moves only
+    # by its own Pop out (the planner's ruling on D3 and D32; o55/placement.d/60-app-input.json retire_ids). The paint
+    # no longer sends chat.layout from the stored value, and a stored value (Overlay, Detached or any other) is ignored
+    # and cleared on first read, with no pop-out and no notice.
+    ("      var chat=String(settings['general.visual.chat-layout-mode']||'Docked').toLowerCase();\n"
+     "      if(chat!==lastChatLayout&&window.PM_DEMO&&typeof window.PM_DEMO.emit==='function'){lastChatLayout=chat;window.PM_DEMO.emit('chat.layout',{mode:chat,origin:'settings'});}\n",
+     "      /* Chat Layout (general.visual.chat-layout-mode) is retired (D3, D32): the paint sends no chat.layout */\n",
+     'settings paint: chat layout retired'),
+    ("      var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;\n",
+     "      /* Chat Layout is retired (D3, D32): a stored value is ignored and cleared on first read */\n"
+     "      var retiredChat='general.visual.chat-layout-mode';\n"
+     "      if(projection&&projection.settings&&Object.prototype.hasOwnProperty.call(projection.settings,retiredChat)){delete projection.settings[retiredChat];if(projection.changed)delete projection.changed[retiredChat];if(Object.prototype.hasOwnProperty.call(base.settings,retiredChat))saved.settings[retiredChat]=base.settings[retiredChat];else delete saved.settings[retiredChat];if(saved.changed)delete saved.changed[retiredChat];if(source==='local_concept_fixture')try{localStorage.setItem(k,JSON.stringify(scrubCredentialSettings(projection)));}catch(_e){}}\n"
+     "      var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;\n",
+     'settings load: chat layout retired'),
     # Settings search › Restore home layout pointed its detail panel at "restore-defaults", which is not a setting on
     # App & Input, so the panel opened empty. It now opens the real row and asks the Reset Home layout question.
     ("      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults'],",
@@ -808,9 +827,19 @@ def _rail():
     return rail_layer
 
 
-def build_text(usage: bool = True) -> str:
-    """The built page. usage=False leaves the base's Prism Usage page in place: a private reference build only
-    (build.py --out PATH --no-usage, usage_boot.mjs), never published."""
+def _home():
+    """The Home layer (Concepts/home-redesign/tools/home_layer.py: the universal panels and the terminal), imported when
+    first needed."""
+    home_tools = str(CONCEPTS / 'home-redesign' / 'tools')
+    if home_tools not in sys.path:
+        sys.path.insert(0, home_tools)
+    import home_layer  # noqa: E402
+    return home_layer
+
+
+def build_text(usage: bool = True, home: bool = True) -> str:
+    """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
+    reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
     original = SOURCE.read_bytes()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
@@ -862,13 +891,21 @@ def build_text(usage: bool = True) -> str:
     # 4. The left rail: concept D (Polish) from Concepts/leftrail-redesign, a skin over the shell's own rail panels
     #    (its CSS, its script and data-rail-* on the <html> tag); the review copy with concepts A-C is build_rail.py.
     text, SETTINGS_NOTES['rail'] = _rail().apply_published(text, need)
+    # 5. Home: the universal panel system and the terminal tab kind from Concepts/home-redesign (D28: after Usage and the
+    #    rail). home_layer.apply() adds the early script and its CSS between HOME:CSS markers before </head>, the panels
+    #    and the terminal between HOME:BODY markers before </body>, three NieR selector hooks and three guarded app JS
+    #    patches; it anchors after the O55 and rail blocks, so it runs last.
+    if home:
+        text, SETTINGS_NOTES['home'] = _home().apply(text, need)
+    else:
+        SETTINGS_NOTES.pop('home', None)
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     return note + text
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
+    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built) + _home().published_problems(built)
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                                   "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
@@ -925,12 +962,13 @@ def syntax_check(built: str, usage: bool = True) -> list[str]:
 
 def main() -> int:
     usage = '--no-usage' not in sys.argv
-    if not usage and ('--out' not in sys.argv or '--check' in sys.argv or '--publish-pm7' in sys.argv):
-        print('--no-usage makes a private reference build only: use it with --out PATH, never --check or --publish-pm7',
-              file=sys.stderr)
+    home = '--no-home' not in sys.argv
+    if (not usage or not home) and ('--out' not in sys.argv or '--check' in sys.argv or '--publish-pm7' in sys.argv):
+        print('--no-usage and --no-home make a private reference build only: use them with --out PATH, never --check or '
+              '--publish-pm7', file=sys.stderr)
         return 2
     try:
-        built = build_text(usage=usage)
+        built = build_text(usage=usage, home=home)
     except BuildError as exc:
         print(f'BUILD FAILED: {exc}', file=sys.stderr)
         return 2
@@ -941,6 +979,8 @@ def main() -> int:
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
     problems = lint_sources() + syntax_check(built, usage=usage) + _rail().published_problems(built)
+    if home:
+        problems += _home().published_problems(built)
     if problems:
         for p in problems:
             print('LINT:', p)

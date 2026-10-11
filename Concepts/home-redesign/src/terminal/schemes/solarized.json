@@ -1,0 +1,42 @@
+{
+  "family": "Solarized",
+  "slug": "solarized",
+  "licence": "MIT",
+  "licenceFile": "LICENSE-solarized.txt",
+  "copyright": "Copyright (c) 2011 Ethan Schoonover",
+  "homepage": "https://github.com/altercation/solarized",
+  "schemes": [
+    {
+      "id": "solarized-light",
+      "name": "Solarized Light",
+      "appearance": "light",
+      "source": "https://raw.githubusercontent.com/altercation/solarized/62f656a02f93c5190a8753159e34b385588d5ff3/xresources/solarized",
+      "sourceSha256": "e08a83d94acc1380d497f6770c22752c9e419b2ac9de81ebf7fb9d0a006b7987",
+      "colors": {
+        "background": "#fdf6e3",
+        "foreground": "#657b83",
+        "cursor": "#586e75",
+        "cursorText": null,
+        "selectionBackground": null,
+        "selectionForeground": null,
+        "ansi": ["#eee8d5", "#dc322f", "#859900", "#b58900", "#268bd2", "#d33682", "#2aa198", "#073642", "#fdf6e3", "#cb4b16", "#93a1a1", "#839496", "#657b83", "#6c71c4", "#586e75", "#002b36"]
+      }
+    },
+    {
+      "id": "solarized-dark",
+      "name": "Solarized Dark",
+      "appearance": "dark",
+      "source": "https://raw.githubusercontent.com/altercation/solarized/62f656a02f93c5190a8753159e34b385588d5ff3/xresources/solarized",
+      "sourceSha256": "e08a83d94acc1380d497f6770c22752c9e419b2ac9de81ebf7fb9d0a006b7987",
+      "colors": {
+        "background": "#002b36",
+        "foreground": "#839496",
+        "cursor": "#93a1a1",
+        "cursorText": null,
+        "selectionBackground": null,
+        "selectionForeground": null,
+        "ansi": ["#073642", "#dc322f", "#859900", "#b58900", "#268bd2", "#d33682", "#2aa198", "#eee8d5", "#002b36", "#cb4b16", "#586e75", "#657b83", "#839496", "#6c71c4", "#93a1a1", "#fdf6e3"]
+      }
+    }
+  ]
+}

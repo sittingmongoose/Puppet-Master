@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2610-L11072
+Source lines: L2614-L11088
 
-Source SHA256: `e3d73fe4f4cde68957321dfa11bb0111c4d350a1908ae16fc7650ff2d2c454a3`
+Source SHA256: `d16b9cb18b7053ffe1e667aafbb44b7a8b635a960007b796d13117457029972b`
 
 ---
 
@@ -853,19 +853,27 @@ plan_unit_id: T-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`bash` accepts command execution parameters, returns shell-bound sync/async results, emits structured errors,
-  and applies default wait and hard timeout behavior without fabricating terminal state.'
+canonical_text: >-
+  `bash` accepts command execution parameters, returns shell-bound sync/async results, emits structured errors, and
+  applies default wait and hard timeout behavior without fabricating terminal state.
+  Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one canonical `terminal_session_id` its
+  shell binds to, joined so Open in Terminal and Show Terminal reveal that session's terminal tab; `detach` means
+  process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
+  follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
+  `secret_input` during a secret prompt.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on:
 - T-007
 - T-017
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -879,6 +887,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0021
+- Plans/Decision_Log.md#DL-181
 preserved_exact_tokens:
 - sync
 - async
@@ -894,10 +903,13 @@ preserved_exact_tokens:
 - spawn_failed
 - output_limit_exceeded
 - timeout
+- preempted
+- secret_input
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): shellId is joined to terminal_session_id, detach is process detachment only, and writes into a human's terminal follow SMPFS-182."
 owner_hints:
 - Plans/Tools.md
 ```

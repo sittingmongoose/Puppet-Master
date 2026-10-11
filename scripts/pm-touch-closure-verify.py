@@ -1892,6 +1892,34 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # TOUCH-SETLOC-004..008 (the NieR Mode editor's open/close/replay and the sound
     # library's look filter and takes toggle, TCP-SET-LOCAL) (676 -> 682). No profile,
     # production row, exclusion, alias, handler or proof is added.
+    # 2026-10-09 Open exact Plan · Vn (DL-157, UCC-176, WM-065): +1 production-intent
+    # entry, assistant.redesign.cmd.chat_plan_open_version for cmd.chat.plan.open_version
+    # (1155 -> 1156). Like cmd.chat.queue.send_now it has no Touch row; no row,
+    # profile, alias, exclusion, native handler or proof is added.
+    # 2026-10-09 universal panels and terminal tab (DL-180, DL-181; WM-090, WM-091,
+    # UIW-040..042): +139 production-intent entries for the new Home and terminal
+    # controls (the "+" menu and launcher rows, panel and tab menus, keys, the terminal
+    # header, More, context and mark menus, the agent row) and -59 retired home.* and
+    # terminal section/workgroup/pane rows (1156 -> 1236). No Touch row, profile,
+    # alias, handler or proof is added; the catalog tokens the retired rows leave are
+    # listed in Plans/Wiring_Matrix.production.exclusions.json.
+    # 2026-10-10 Jared's answers on dashboards, the Debug Console and the terminal
+    # (DL-186, DL-187; WM-090, UIW-040): +20 production-intent home.* entries: the
+    # "+" menu's SSH hosts row and New dashboard (4), the empty-panel launcher's
+    # sub-row links (6) and the dashboard tab's command-bearing controls (10:
+    # Add widget, a dashboard and New dashboard in its Board menu, Start from,
+    # Start from this preset, Tidy, Reset widgets, Rename dashboard..., Delete
+    # dashboard... and an Agents card) (1236 -> 1256). Every one dispatches an
+    # existing catalog command with its existing handler; no command, Touch row,
+    # profile, alias, exclusion, handler or proof is added. The typed local
+    # actions the answers add (range and scope, presets, the terminal's mute, the
+    # chat's narrow-window pin) have no entry.
+    # 2026-10-10 lead ruling on the Undo after Start from (UCC-200, WM-090,
+    # UIW-040): +1 production-intent home.* entry,
+    # home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with
+    # restore_revision (1256 -> 1257). It dispatches an existing catalog command
+    # with its existing handler; no command, Touch row, profile, alias,
+    # exclusion, handler or proof is added.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1899,7 +1927,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1155,
+        "production_wiring_entry_count": 1257,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

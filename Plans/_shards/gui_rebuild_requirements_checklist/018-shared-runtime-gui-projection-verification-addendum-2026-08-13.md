@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L2013-L2074
+Source lines: L2029-L2090
 
-Source SHA256: `9658f485cf5fc1cfebbe4bd0e24ff25bc1566fa5979ed8341198b6df080e231c`
+Source SHA256: `f57313869fe5d26f48b940911b0c428d591b856d15b5c54b6278b507959459e6`
 
 ---
 

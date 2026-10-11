@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4310-L4489
+Source lines: L4310-L4495
 
-Source SHA256: `450f5c6700ad57ccc7bec8d90723b1d077b0b9d496e1c772293d9733ac406d78`
+Source SHA256: `723a65f8374bade06ec9e41622ed83809b03ea67224b28a7f30283c26f6e13a1`
 
 ---
 
@@ -31,13 +31,14 @@ canonical_text: >-
   no minting authority: GitHub Actions commands live under cmd.github., and the concept-only
   ID cmd.actions.rerun must reconcile to cmd.github.actions.rerun before any catalog row or
   wiring coverage can treat it as real.
+  Amended 2026-10-09 (DL-180): the registry extends to cmd.panel_tab. and cmd.workspace_layout., eighteen reserved families in all, with the same single minter (CS-100).
 gui_related: false
 gui_classification_reason: Prefix reservation is command-registry governance, not a visible GUI surface.
 split_recommended: false
-depends_on: [CS-013, CS-039, CS-050]
+depends_on: [CS-013, CS-039, CS-050, DL-180]
 unblocks: []
 acceptance_criteria:
-  - The reserved-prefix registry enumerates all sixteen reserved families with Plans/UI_Command_Catalog.md as the sole minting authority.
+  - The reserved-prefix registry enumerates all eighteen reserved families (sixteen until 2026-10-09, when CS-100 added cmd.panel_tab. and cmd.workspace_layout.) with Plans/UI_Command_Catalog.md as the sole minting authority.
   - User Command creation whose name collides into any reserved prefix is rejected, consistent with the AC-CMD02/AC-CMD10 reserved-name boundaries.
   - cmd.actions. is absent from the reserved registry; no cmd.actions.* command can be minted, and GitHub Actions IDs reconcile under cmd.github.
   - No prototype command ID under a newly reserved prefix is treated as real until it has a UI_Command_Catalog row plus Wiring_Matrix reverse coverage, with fail-closed dispatch on mismatch.
@@ -69,6 +70,8 @@ negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
   - Do not mint, rename, or retire catalog rows from this constraint; Plans/UI_Command_Catalog.md remains the sole registration owner.
   - Do not reserve cmd.actions. or let a cmd.actions.* ID survive reconciliation as canonical.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): cmd.panel_tab. and cmd.workspace_layout. join the reserved registry."
 owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -88,10 +91,11 @@ canonical_text: >-
   detachment is adjudicated as cmd.panel.undock with cmd.panel.redock as its inverse;
   detach (cmd.panel.detach) is a recorded compatibility alias of cmd.panel.undock, never a
   second handler or peer command.
+  Amended 2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, as the chat's Pop out and Dock back (UCC-203); home panels are named panel_id in cmd.panel_tab. and cmd.workspace_layout. and never join this vocabulary (CS-100).
 gui_related: true
 gui_classification_reason: The destination vocabulary determines visible panel navigation targets and the undock/redock affordance.
 split_recommended: false
-depends_on: [CS-006, CS-011, CS-060]
+depends_on: [CS-006, CS-011, CS-060, DL-180]
 unblocks: []
 acceptance_criteria:
   - cmd.panel.switch accepts only the ten canonical panel ids from the Plans/FinalGUISpec.md Section 4.1 inventory; any other destination refuses before dispatch.
@@ -123,6 +127,8 @@ negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
   - Do not enumerate a second panel-id vocabulary in this document; Plans/FinalGUISpec.md Section 4.1 owns the inventory.
   - Do not promote cmd.panel.detach to a canonical command or let cmd.panel.switch become an object-first navigation command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): undock and redock are the chat's Pop out and Dock back from the home layout."
 owner_hints: [Plans/Commands_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 

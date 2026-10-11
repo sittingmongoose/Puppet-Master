@@ -28,6 +28,10 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGU
 
 <a id="ws-progress-only-widget-hostability"></a>
 ## 2. Hostability and data contracts
+Amended 2026-10-09 (DL-180): the Dashboard is now a tab kind in the home centre, and several dashboard tabs may be open, each showing one board with its own widget layout under `widget_layout:v1:dashboard:<board_id>`; any Usage widget can be placed on a board (`Plans/usage-feature.md#UF-062`). WS-030 owns the boards, their namespaces and the catalogue. The two rules below that named one Dashboard namespace and "some" Usage widgets are amended in place.
+
+Amended 2026-10-10 (DL-186): every dashboard tab's board is a board of the Usage board engine, the engine the Usage page runs, and each board's contents are kept per project under `widget_layout:v1:<project_id>:<board_id>`; the 2026-10-09 form `widget_layout:v1:dashboard:<board_id>` was never written. Boards and their catalogue are built for several widget sources: Usage today, the Orchestrator after its own redesign, others later. Until then the old Home widgets and the curated `Progress` subset are on no dashboard. WS-030 owns all of this.
+
 Widgets consume stable projections and canonical records. They do not define page semantics.
 
 Rules:
@@ -41,7 +45,7 @@ Rules:
 - Widget hostability treats `/settings/widget`, `/plan/question/approval`, and `/web-tool` as routed GUI consumer paths over FinalGUISpec and UI command owners; Widget_System owns only whether those widgets can be hosted by Dashboard, Usage, or Orchestrator `Progress`, plus layout and projection inheritance.
 - Stale or incomplete widget summaries are `/retire` or `/incomplete` instead of being reintroduced as live catalog entries; the older source shorthand `### 15.1` through `### 15.9` is source-lineage only, with active promoted widget sections resolved by named FinalGUISpec headings rather than by minting a missing `### 15.9` section.
 - Legacy Orchestrator widget inputs such as `/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, and `TierChanged` are compatibility evidence only. Live hostability does not restore `Dashboard, Usage, Orchestrator widget tabs`; non-Progress Orchestrator surfaces use native views, while `Progress` may host widgets over canonical projections.
-- Layout migration SSOT keeps `dashboard_layout:v1` only as an import source or rollback backup; canonical Dashboard writes go to `widget_layout:v1:dashboard`, and the legacy `dashboard_layout` / `dashboard_layout:v1` keys are not updated or retained as peer layout state after migration completes. Retired Orchestrator layout namespaces `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` remain compatibility-only import evidence, not live widget layout targets.
+- Layout migration SSOT keeps `dashboard_layout:v1` only as an import source or rollback backup; canonical Dashboard writes go to `widget_layout:v1:dashboard` (amended 2026-10-09, DL-180: each dashboard board writes `widget_layout:v1:dashboard:<board_id>`, and `widget_layout:v1:dashboard` itself becomes a read-only migration input into the Home board, WS-030; amended 2026-10-10, DL-186: a board writes `widget_layout:v1:<project_id>:<board_id>`, and `widget_layout:v1:dashboard`, which holds the old Home widgets, is converted into no board and stays a read-only record and rollback backup, WS-030), and the legacy `dashboard_layout` / `dashboard_layout:v1` keys are not updated or retained as peer layout state after migration completes. Retired Orchestrator layout namespaces `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` remain compatibility-only import evidence, not live widget layout targets.
 - `Plans/GUI_Rebuild_Requirements_Checklist.md` / `/GUI_Rebuild_Requirements_Checklist.md` is a follower, not a source. Any `PASS` for `/open`, cross-cutting widget coverage, or `Tiers` is valid only after current owner docs pass the Progress-only, route/open, and runtime-recovery model.
 - `Plans/Widget_System.md` / `/Widget_System.md` removal remains lightweight and locally undoable, but canonical concern actions and `/governance` records do not inherit Widget_System / `Widget_System.md` removal policy.
 - Settings scope follows this hierarchy: `App / Global` owns broad product defaults and `/catalogs/capabilities`; `Project` owns primary execution policy; `Seam` carries meaningful feature-level overrides; `Package` carries local `/recovery` overrides; `Node` is rare and targeted; `Actor / Role` covers cross-cutting `/account/persona/worker` policy; `Runtime only` is computed truth, not user configuration.
@@ -62,7 +66,7 @@ Rules:
 - Progress widgets are reconciled away from active-tier-first semantics and bind to active work objects, `/attention` items, lane `/worktree` state, and record-backed summaries.
 - `widget.tier_tree` is retired as a first-class Orchestrator widget in favor of native `Seams` and native graph `/history/evidence/ledger` tabs.
 - Widget shell data-contract fields are widget identity `/type`, scope, filter `/sort/display` config, and projection ref; widgets consume shared projections instead of raw event streams or bespoke queries.
-- `Dashboard` may host a curated subset of `Progress` widgets and some `Usage` widgets, while deep inspection surfaces remain non-hostable native tabs.
+- `Dashboard` may host a curated subset of `Progress` widgets and some `Usage` widgets, while deep inspection surfaces remain non-hostable native tabs. Amended 2026-10-09 (DL-180): every dashboard tab may host every `Usage` widget, not only some (`Plans/usage-feature.md#UF-062`, WS-030); the curated `Progress` subset stands until the Orchestrator page's own redesign. Amended 2026-10-10 (DL-186): dashboards run on the Usage board engine, whose only widget source today is Usage, so the curated `Progress` subset and the old Home widgets are on no dashboard until the Orchestrator redesign brings its widgets to the engine as a source (WS-030).
 - As a cross-cutting owner, Widget_System must prevent stale hostability drift into `/Usage`, `FinalGUISpec.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` reconciliation.
 - `Source Control` is a constrained side-panel and `/small` surface, not a broad widget canvas; widget usage stays focused on wider surfaces such as `Dashboard` and `Orchestrator / Progress`.
 - `Progress` widgets consume compact projections rather than live-scan huge record sets per widget, and dense detail uses a deep-link to the native tab.
@@ -73,6 +77,10 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_C
 
 ## 3. Layout persistence
 Layout persistence uses app-default with project override.
+
+Amended 2026-10-09 (DL-180): the "page/surface" a layout key belongs to is, for dashboards, one board: each board has its own key `widget_layout:v1:dashboard:<board_id>` with its own app default and project override (WS-030).
+
+Amended 2026-10-10 (DL-186): a board's key is per project, `widget_layout:v1:<project_id>:<board_id>`. Each project keeps its own copy of each board, and a board with no saved copy in a project starts from the board's own default set, the app default (WS-030).
 
 Rules:
 - the default layout key remains stable per page/surface
@@ -557,7 +565,7 @@ plan_unit_id: WS-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace.'
+canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace. Amended 2026-10-09 (DL-180): each dashboard board writes its own namespace `widget_layout:v1:dashboard:<board_id>`, with the app default and project override applied per board; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read, is never reset, and stays only as a read-only migration input and rollback backup, like `dashboard_layout:v1` (WS-030). Amended 2026-10-10 (DL-186): board contents are kept per project, so each dashboard board writes `widget_layout:v1:<project_id>:<board_id>`, and a project with no saved copy of a board starts from that board''s own default set; `widget_layout:v1:dashboard` holds the old Home widgets, which leave Home, so it is converted into no board and stays only a read-only record and rollback backup; the 2026-10-09 `widget_layout:v1:dashboard:<board_id>` was never written (WS-030).'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible layout persistence and migration behavior.'
 split_recommended: false
@@ -568,8 +576,11 @@ depends_on:
 - PNC-001
 - WS-002
 - WS-010
+- DL-180
+- DL-186
 unblocks: []
 acceptance_criteria:
+- 'Amended 2026-10-10 (DL-186): every dashboard board restores from and writes to its project''s own `widget_layout:v1:<project_id>:<board_id>`, and no write goes to `widget_layout:v1:dashboard` or to the never-written `widget_layout:v1:dashboard:<board_id>` (WS-030).'
 - WS-009 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
@@ -602,13 +613,17 @@ preserved_exact_tokens:
 - 'widget_layout:v1:orchestrator:history'
 - 'widget_layout:v1:orchestrator:ledger'
 - 'orchestrator:progress'
+- 'widget_layout:v1:<project_id>:<board_id>'
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Orchestrator_Page.md'
 compatibility_only_notes:
 - 'Retired Orchestrator layout namespaces remain compatibility-only import evidence, not live widget layout targets.'
+- 'Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: Amended 2026-10-09 (DL-180): every dashboard board restores from and writes to its own `widget_layout:v1:dashboard:<board_id>`, and no write after migration goes to `widget_layout:v1:dashboard` (WS-030).'
 stale_retired_dispositions:
 - 'Migration from legacy `dashboard_layout:v1` must retire stale orchestration-hostability assumptions rather than preserve them as peer canon.'
+- 'Amended 2026-10-09 (DL-180): the single Dashboard namespace becomes one namespace per dashboard board, and `widget_layout:v1:dashboard` becomes a read-only migration input into the Home board (WS-030).'
+- 'Amended 2026-10-10 (DL-186): board keys are per project (`widget_layout:v1:<project_id>:<board_id>`), and `widget_layout:v1:dashboard` is no longer converted into the Home board; the 2026-10-09 criterion naming `widget_layout:v1:dashboard:<board_id>` is replaced.'
 owner_hints:
 - 'Plans/Widget_System.md'
 - 'Plans/storage-plan.md'
@@ -834,7 +849,7 @@ plan_unit_id: WS-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Dashboard may host a curated subset of Progress widgets and some Usage widgets, while deep inspection surfaces remain non-hostable native tabs. Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas.'
+canonical_text: 'Dashboard may host a curated subset of Progress widgets and some Usage widgets, while deep inspection surfaces remain non-hostable native tabs. Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas. Amended 2026-10-09 (DL-180): every dashboard tab may host every Usage widget, not only some (`Plans/usage-feature.md#UF-062`, which wins over the four-widget catalogue of `Plans/FinalGUISpec.md#F3-279`); the curated Progress subset stands, and further Orchestrator widgets join after the Orchestrator page has its own redesign (WS-030). Amended 2026-10-10 (DL-186): every dashboard board runs on the Usage board engine, whose only widget source today is Usage; the curated Progress subset and the old Home widgets (run progress, lanes, results and custom metrics) are on no dashboard until the Orchestrator redesign brings its widgets to the engine as a source, under the same kind contract (WS-030).'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible cross-surface widget hostability boundaries.'
 split_recommended: false
@@ -845,8 +860,12 @@ depends_on:
 - PNC-001
 - WS-002
 - WS-010
+- DL-180
+- DL-186
 unblocks: []
 acceptance_criteria:
+- 'Amended 2026-10-09 (DL-180): the Add widget flow of every dashboard tab offers every Usage widget, and no four-widget limit applies (WS-030).'
+- 'Amended 2026-10-10 (DL-186): no dashboard offers a Progress widget or an old Home widget until the Orchestrator redesign adds its widgets to the board engine as a source.'
 - WS-013 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
@@ -879,7 +898,9 @@ negative_constraints:
 - 'Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas.'
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): "some Usage widgets" now reads every Usage widget, on every dashboard tab (WS-030).'
+- 'Amended 2026-10-10 (DL-186): the curated Progress subset leaves dashboards with the old Home widgets until Orchestrator widgets join the board engine as a source.'
 owner_hints:
 - 'Plans/Widget_System.md'
 - 'Plans/FinalGUISpec.md'
@@ -1092,6 +1113,30 @@ Phase 2B batch 198 atomized `Widget_System-S0001` through `Widget_System-S0009` 
 
 ## PMConcept7 Home Workspace boundary clarification — 2026-08-04
 
+Amended 2026-10-10 (DL-186) — dashboards run on the Usage board engine. Each dashboard tab's board is one board of
+the engine the Usage page runs, and its widget layout is kept per project under
+`widget_layout:v1:<project_id>:<board_id>` (WS-030), never in the Home layout record. The owner of a dashboard
+widget's move, resize, gravity and Tidy is that board, exactly as on the Usage page (WS-019); the panel that holds the
+tab is the outer frame that never owns a widget mutation. A widget operation inside the tab names its board in the
+widget command's existing `room` field, with no new field. The ownership split below stands and now names the
+per-project key; the 2026-10-09 `widget_layout:v1:dashboard:<board_id>` it named was never written, and its
+"addressed by `board_id`" now reads as the board id carried in `room`.
+
+Amended 2026-10-09 (DL-180) — panels, dashboard tabs and one gesture kit. Home's centre is now one universal panel
+system (`Plans/FinalGUISpec.md#F3-630`): its panels, their tabs and the fixed chat column are shell presentation
+surfaces, and a dashboard is a tab kind that may be open in several tabs, each showing one board (WS-030). The
+ownership split below stands with new names: the Home layout record is `home_workspace_layout.v2`
+(`Plans/storage-plan.md#SP-330`), which owns panels and tabs and never a widget, and each board's widget layout is
+`widget_layout:v1:<project_id>:<board_id>` (amended 2026-10-10, DL-186), which owns widget placement and never a
+panel or tab. Panels and the widget
+board now move with one gesture kit (`Plans/DRY_Rules.md#DR-066`), which replaces the earlier "shared interaction
+vocabulary" and "may reuse U10 interaction semantics" sentences; the kit carries no layout model, so sharing it
+merges no ownership. Moving or resizing a dashboard tab, or the panel that holds it, is a panel operation
+(`cmd.panel_tab.*`, `cmd.workspace_layout.*`); a widget operation inside the tab is a `cmd.widget.*` row that names
+its board in the existing `room` field (WS-030, amended 2026-10-10, DL-186). The sentences below that named `editor_panel_*`, the singleton `dashboard`, terminal sections,
+`home_workspace_layout.v1` and the one `widget_layout:v1:dashboard` are amended in place; the 2026-08-13 notes on the
+Home surface grip are lineage, because panels are now moved by their own grip (F3-630).
+
 Amended 2026-08-12 — shared interaction vocabulary, separate layout ownership. Dashboard
 widget reorder and resize adopt the same direct-manipulation vocabulary as Home surface
 movement: a lifted item that tracks the pointer one-to-one, a real in-flow placeholder in
@@ -1099,9 +1144,11 @@ the vacated cell carrying that item's grid span, neighbour reflow animated from 
 rects, a top-left grab handle, corner resize that snaps to grid tracks live and re-renders
 the widget body once on release, and Escape / pointer-cancel / blur as the cancellation
 contract. Sharing that vocabulary is a presentation decision and does not merge ownership:
-Home layout continues to own surface placement under `home_workspace_layout.v1`, while
-widget layout continues to own widget placement under `widget_layout:v1:dashboard`. A
-widget drag never writes the Home record and a surface drag never writes the widget record.
+Home layout continues to own surface placement under `home_workspace_layout.v2` (amended
+2026-10-09; `home_workspace_layout.v1` is a read-only migration input), while widget layout
+continues to own widget placement under each board's `widget_layout:v1:<project_id>:<board_id>`
+(amended 2026-10-09 and 2026-10-10, WS-030). A widget drag never writes the Home record and a panel or tab
+drag never writes a widget record.
 
 Amended 2026-08-13 — grab-handle presentation update on the Home side: the Home surface
 grab handle became a 28 by 28 folded-corner triangle filling the surface's top-left corner.
@@ -1114,14 +1161,13 @@ WIDGETS, whose handle position and glyph are unchanged; the Home surface grip's 
 and glyph are owned by F3-HOME-003, and this presentation note changes no ownership
 boundary.
 
-Home Workspace surfaces (`editor_panel_*`, `dashboard`, `chat`, and terminal
-sections) are shell presentation surfaces, not Dashboard widgets. The Home layout
-may reuse U10 interaction semantics such as lift, placeholder, reflow, edge zones,
-cancellation, and save-on-drop, but it does not import Widget System hostability,
-DOM order as canonical state, Dashboard widget layout, or any `cmd.widget.*`
-command. Dashboard widget movement remains owned by this document and its existing
-projection contract; moving the Dashboard surface itself is owned by the Home
-workspace owner.
+Home Workspace surfaces (amended 2026-10-09: the panels, their tabs of every kind,
+dashboard tabs and terminal tabs included, and the chat column) are shell presentation
+surfaces, not Dashboard widgets. The Home layout shares one gesture kit with the widget
+board (DR-066), but it does not import Widget System hostability, DOM order as canonical
+state, Dashboard widget layout, or any `cmd.widget.*` command. Dashboard widget movement
+remains owned by this document and its existing projection contract; moving a dashboard
+tab or its panel is owned by the Home panel owner (F3-630, F3-631).
 
 This addendum repairs non-runtime widget rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
@@ -1406,7 +1452,11 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/Widget_System.md
 canonical_text: >-
-  Usage and Dashboard widgets share one transactional direct-manipulation contract. Pickup snapshots the
+  Usage and Dashboard widgets share one transactional direct-manipulation contract. Amended 2026-10-10 (DL-186):
+  every dashboard board is a board of the Usage board engine (WS-030), so wherever this unit says Usage board, Usage
+  move, Usage resize, Usage board gravity or the current Usage room, it holds alike on the Usage page's board and on
+  every dashboard board, whose one room is the board itself; the Dashboard-only rules below, its frozen-peer resize
+  and its own settlement, are retired. Pickup snapshots the
   stable widget identity, committed order, and measured painted physical column/row footprint. Usage pointer resize
   installs a real in-flow placeholder initialized from that footprint, lifts a fixed-position preview, and then
   advances both the placeholder and lifted card to each last-painted supported footprint while visibly and
@@ -1425,8 +1475,9 @@ canonical_text: >-
   name, or custom size, and its width x height in tracks and rows, while obstructed peers reflow live; on release
   the card morphs into place without overshoot and the cards gravity moves then float up into their settled
   places; every cancel path glides the card and its peers back to the snapshot. Under reduced
-  motion each of these moves is instant. Dashboard resize retains its measured-footprint
-  placeholder and frozen peers. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
+  motion each of these moves is instant. Dashboard resize retained its measured-footprint
+  placeholder and frozen peers until 2026-10-10, when DL-186 retired it: a dashboard board resizes as the Usage
+  board does. Reorder starts only from the dedicated widget handle, uses a fixed ghost plus a
   measured-footprint in-flow placeholder, and derives stable two-dimensional slot candidates from the frozen
   grid plus the stable before/after widget identities in the committed-order snapshot. Candidate coverage includes
   empty same-footprint cavities and lower rows rather than only positions adjacent in DOM order. Pointer targeting
@@ -1451,7 +1502,8 @@ canonical_text: >-
   gravity moved, written once under its one receipt, with no per-peer command and no second gravity commit. Every Usage commit path applies the same
   gravity inside its own single command: pointer and keyboard move and resize, a size-picker preset (WS-017), and
   hiding or showing a card through `cmd.widget.remove` or `cmd.widget.add`. Tidy, chosen from a card's menu or the
-  Customize panel, is the explicit full repack of the current Usage room: the cards shown at the current disclosure
+  Customize panel, is the explicit full repack of the current Usage room (on a dashboard, its board, where every
+  widget placed is shown at the deepest level, `diagnostics`): the cards shown at the current disclosure
   level take their first-fit places upward in reading order (their columns may change), then the cards of other
   levels and hidden cards take places below them. Tidy commits as one settled layout transaction through exactly
   one existing `cmd.widget.move` that carries the optional typed `arrange` field `{ mode: "tidy", detail }`
@@ -1463,8 +1515,10 @@ canonical_text: >-
   `arrange` is an ordinary move. The settled result carries every card Tidy moved, under one receipt, one settled
   write, and one board settlement; there is no per-card move command and no Tidy command. A Tidy that would move
   nothing, which the surface knows by computing the same deterministic repack, dispatches nothing, and an owner
-  rejection leaves the pre-Tidy layout in place. Gravity and Tidy are Usage board behaviour; Dashboard keeps its
-  own settlement. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
+  rejection leaves the pre-Tidy layout in place. Gravity and Tidy are Usage board behaviour, and since 2026-10-10
+  (DL-186) every dashboard board is a Usage board, so gravity and Tidy apply on every board, the Usage page's and
+  each dashboard's, each in one settled transaction as stated above; the earlier line that Dashboard keeps its own
+  settlement is retired. Escape, pointer cancellation, `lostpointercapture`, blur, an invalid
   target, a pre-dispatch validation failure, or an unchanged release/drop restores the committed state and
   dispatches nothing. Once a changed action has dispatched, owner rejection or persistence-adapter failure retains
   exactly that one attempted command and its rejected/failed receipt, restores the authoritative visual state, and
@@ -1478,20 +1532,24 @@ canonical_text: >-
   resize, pointer reorder, or keyboard pickup is rejected before focus, capture, class, or DOM mutation and cannot
   clear the first owner's active-operation state. A Dashboard widget remains owned by
   its Home Dashboard wrapper/host even when that wrapper participates presentation-only in an outer grid; the
-  outer presentation grid never becomes the widget mutation owner.
+  outer presentation grid never becomes the widget mutation owner. Amended 2026-10-10 (DL-186): that owner is the
+  widget's board in its dashboard tab, and the panel holding the tab is the outer frame that never owns a widget
+  mutation; one widget transaction at a time holds across every board on the page, so starting a gesture on one
+  board first cancels any gesture still running on another.
 gui_related: true
 gui_classification_reason: This unit defines the complete pointer and keyboard lifecycle for visible widget resize and reorder.
-depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018]
+depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018, DL-186]
 unblocks: [WS-020]
 acceptance_criteria:
-  - Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Dashboard resize retains its measured placeholder and frozen peers.
+  - "Pickup records the stable widget identity, committed order, and measured painted physical column/row footprint; Usage pointer resize initializes a real placeholder from that footprint, then paints each supported target footprint and visibly repacks only obstructed peers while the peer nodes, unobstructed peer rectangles, DOM order, opacity, entrance-animation state, and document scroll position remain stable. Usage keyboard resize remains one atomic changed-only settlement per supported directional key intent rather than a held live-preview mode. Amended 2026-10-10 (DL-186): a dashboard board's resize is the Usage board's, live preview included; no board keeps a frozen-peer resize."
   - Command, receipt, event, and persistence spies remain empty until a changed pointer release, keyboard reorder drop, or atomic keyboard-resize activation.
-  - Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology with Usage board gravity applied at settle, while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen. Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent.
+  - "Reorder begins only from the dedicated handle, uses a fixed ghost and measured-footprint in-flow placeholder for pointer operation, resolves stable two-dimensional candidates including empty same-footprint cavities and lower rows, binds pointer choice to the ghost's anchored top-left with geometric hysteresis, resolves before/after identities against the committed-order snapshot, and visibly displaces affected peers during pointer and keyboard preview while keeping their DOM nodes mounted, their opacity nonzero, and their entrance animations stopped; Usage pointer resize uses the same target-first deterministic slot projection so obstructed peers move during the held preview and the accepted settlement matches the last painted topology with Usage board gravity applied at settle, while Usage keyboard resize remains atomic (amended 2026-10-10, DL-186: on every board alike; no dashboard board keeps frozen resize peers). Horizontal-only pointer and keyboard input advances strictly along the requested supported curated axis with minimum companion-axis drift at far-right, far-left, and middle positions, an edge-constrained deliberate drag can express one step, and an in-viewport pointer release after same-direction overshoot commits the last painted supported intent."
   - A changed pointer release commits the last painted pointer intent without pointer-up re-hit-testing or retargeting, a changed keyboard reorder drop commits its selected insertion intent, and each supported keyboard-resize activation settles atomically; each changed terminal path emits exactly one existing `cmd.widget.resize` or `cmd.widget.move`, writes settled state once, triggers one board settlement, and emits no persisted domain event, including no `workspace.layout_changed`.
   - Escape, pointercancel, `lostpointercapture`, blur, invalid target, pre-dispatch validation failure, and unchanged release/drop restore the original state, emit no command, receipt, event, or persistence write, release capture, and remove every listener, class, ghost, placeholder, lifted state, preview style, and pending animation frame; an owner-rejected command or post-dispatch persistence-adapter failure instead retains exactly one attempted command and one rejected/failed receipt, restores authoritative geometry/order, emits no settled event or successful owner-store write, and performs the same complete transient cleanup.
   - Successful pointer and keyboard reorder restore the board's pre-transaction inline minimum-height value and leave scroll extent bounded to settled card geometry so repeated moves do not accumulate a blank tail; while one pointer or keyboard resize/reorder owns the board, every competing pointer, touch, pen, or keyboard acquisition is rejected before focus, capture, transient DOM, or class mutation, and cancelling the owner clears exactly that owner without leaving an operation flag.
   - Keyboard reorder supports pickup, directional move, drop, Escape, and blur; `aria-grabbed` is true only while pickup is active and returns to false after drop or cancellation, the picked card has a visible focus/outline state, and its two-dimensional candidate choice, live peer displacement, changed-only commit, rollback, and cleanup match pointer reorder without requiring a cloned pointer ghost or placeholder.
-  - The contract applies to Usage widgets and widgets owned by the Home Dashboard wrapper/host, even when that wrapper participates presentation-only in an outer grid; the outer grid does not own widget mutations, and moving or resizing the Dashboard surface itself remains Home workspace authority.
+  - "The contract applies to Usage widgets and widgets owned by the Home Dashboard wrapper/host, even when that wrapper participates presentation-only in an outer grid; the outer grid does not own widget mutations, and moving or resizing the Dashboard surface itself remains Home workspace authority. Amended 2026-10-10 (DL-186): the owner is the widget's board in its dashboard tab, the panel never owns a widget mutation, and moving or sizing the tab or its panel is the home panels' (F3-630)."
+  - "Amended 2026-10-10 (DL-186): on every dashboard board gravity, Tidy and the live move and resize previews behave exactly as on the Usage page, each changed action committing one settled transaction under one receipt; no dashboard board keeps its own settlement or a frozen-peer resize, and a gesture started on one board cancels a gesture still running on another."
   - "Usage board gravity: after any changed Usage move, resize, preset, hide, or show, no shown card other than the one the action placed has an empty hole directly above it that it could float into, reading order is unchanged among the cards gravity moved, cards of deeper disclosure levels and hidden cards move only to step down from a floated card, no unobstructed peer moves during the held preview, the active card settles where the preview showed it, the committed layout equals the last-painted layout with gravity applied, and exactly one command and one receipt carry the whole settled room."
   - "Usage move and resize previews: a move lifts the card and follows the pointer one to one with a landing placeholder in the exact target slot; a resize from every edge and corner shows a live snapped outline labelled with the preset name or custom size and its width x height; only obstructed peers slide or reflow live; release morphs into place without overshoot and the cards gravity moves then float up; every cancel path glides card and peers back to the snapshot; reduced motion makes each of these instant; and none of it dispatches or writes before release."
   - "Tidy repacks the current Usage room first-fit upward in reading order, shown cards first, and commits through exactly one existing cmd.widget.move carrying arrange { mode: tidy, detail }, whose instance_id is the card Tidy was chosen from (or the room's first card from Customize) at its committed place, whose repack the owner computes from the committed layout, and whose settled result carries every moved card, with one receipt, one settled write, and one board settlement; a Tidy that moves nothing dispatches nothing, and command, receipt, and persistence spies show no per-card move and no other command."
@@ -1541,12 +1599,21 @@ negative_constraints:
   - Do not commit Usage board gravity or Tidy as per-card commands, as a second commit after the gesture's own, or through a new command.
   - Do not let gravity change the reading order of the cards it moves or float a card of a deeper disclosure level or a hidden card into view.
   - Do not move an unobstructed peer during a held Usage preview, and do not let a Tidy request carry or dictate the repacked layout; the owner computes it.
-  - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize.
+  - Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview.
+  - Do not keep a dashboard-only settlement, gravity rule, Tidy rule or frozen-peer resize beside the Usage board's (DL-186).
   - Do not remount reorder peers, replay their entrance animation, or black out the board during preview.
   - Do not retain preview-only board minimum height after either commit or rollback, or allow simultaneous widget-operation controllers.
   - Do not derive reorder placement from stale nominal spans, persist a measured preview footprint, or re-hit-test and retarget at pointer-up.
   - Do not let an outer presentation grid replace the Home Dashboard wrapper as widget mutation owner.
   - Do not claim the protected generated artifact passes this interaction contract without fresh browser execution and raw receipts.
+compatibility_only_notes:
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (canonical text): Dashboard resize retains its measured-footprint placeholder and frozen peers."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (canonical text): Gravity and Tidy are Usage board behaviour; Dashboard keeps its own settlement."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (end of the first acceptance criterion): Dashboard resize retains its measured placeholder and frozen peers."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (end of the reorder acceptance criterion): while Usage keyboard resize remains atomic and Dashboard resize peers remain frozen."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (negative constraint): Do not persist or treat live Usage preview repack as settlement, reconcile DOM order, or remount peers during preview; do not generalize Usage live resize repack to Dashboard resize."
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): dashboard boards run the Usage board engine, so gravity, Tidy and the live previews apply on every board; the line that Dashboard keeps its own settlement, the frozen-peer Dashboard resize and the negative constraint against generalizing the Usage live resize to Dashboard resize are retired."
 owner_hints:
   - Plans/Widget_System.md
   - Plans/UI_Command_Catalog.md
@@ -1567,6 +1634,11 @@ or null; `preset_id` is a non-empty supported-preset string or null;
 and `committed_revision` is a non-negative integer. No field other than
 `slot_id` and `preset_id` is nullable. The record is versioned before this
 closed field set changes.
+
+Amended 2026-10-10 (DL-186): a dashboard board writes the same closed record,
+field for field. On the Usage page `host_id` is `usage`; on a dashboard board it
+is `home.dashboard`, and `room_id` is the board id, which never equals a Usage
+room id (WS-030). The field set is unchanged, so the record keeps its version.
 
 ### WS-020 - Widget Layout Namespace And Semantic Size Identity
 
@@ -1602,18 +1674,28 @@ canonical_text: >-
   or else to null with the geometry snapped by WS-018; a stored `preset_id` never brings back a retired preset. When
   the default boards or a kind's preset table change, `default_set_version` changes, and a saved Usage layout from an
   older set keeps its visibility and configuration and takes the new default geometry once.
+  Amended 2026-10-09 (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>`
+  with `host_id` `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2`
+  (Plans/storage-plan.md#SP-330), and `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as
+  migration inputs (WS-030).
+  Amended 2026-10-10 (DL-186): a dashboard board is a board of the Usage board engine and writes this record family
+  per project under `widget_layout:v1:<project_id>:<board_id>`; its envelope's `host_id` is `home.dashboard`, its
+  `project_id` is the board's real project, and each record's `room_id` is the board id. The 2026-10-09
+  `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>` was never written, and
+  `widget_layout:v1:dashboard` is converted into no board (WS-030).
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
-depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]
+depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019, DL-186]
 unblocks: []
 acceptance_criteria:
-  - Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v1.
+  - "Usage and Dashboard restore from their own namespaces while Home surfaces restore only from home_workspace_layout.v2 (amended 2026-10-09, DL-180: Plans/storage-plan.md#SP-330 reads home_workspace_layout.v1 only as a migration input)."
   - "UsageWidgetLayoutRecord is the named public contract for a settled Usage widget layout and has exactly the required fields layout_schema_version, default_set_version, host_id, room_id, widget_id, visible, order_index, slot_id, geometry_id, semantic_tier_id, preset_id, configuration_refs, and committed_revision, including semantic size or preset identity in addition to supported geometry so adaptive content restores deterministically; every configuration_ref resolves to an existing stable, non-secret widget-configuration identity governed by WS-004 and UF-060, and filter payloads remain in the configuration record rather than becoming new UsageWidgetLayoutRecord fields."
   - "No preview rectangle, pointer or pointer coordinate, ghost, placeholder, animation state, draft, or per-frame draft appears in UsageWidgetLayoutRecord."
   - A widget mutation never writes Home surface placement and a Home surface mutation never writes Usage or Dashboard widget placement.
   - Migration rejects, quarantines, or deterministically maps unsupported old geometry before it can override corrected current defaults.
   - "A settled size equal to one of the kind's presets stores that preset_id whatever path produced it, any other size stores null, a size-picker choice commits one cmd.widget.resize with the preset's geometry, a retired saved preset_id restores to the same-geometry preset or to null with snapped geometry, and a default_set_version change resets saved Usage geometry once while keeping visibility and configuration."
   - "A stored preset_id is the preset's table id, never its display name; a chosen preset, including one a keyboard resize landed on, keeps its preset_id after a reload and after a look change that moves the pitch or a fit height, re-resolving to that preset's current geometry rather than to a custom size."
+  - "Amended 2026-10-10 (DL-186): a dashboard board's records have the same closed field set, host_id home.dashboard and room_id the board id, under its project's widget_layout:v1:<project_id>:<board_id>; the Usage page's records keep host_id usage under widget_layout:v1:usage."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -1646,12 +1728,300 @@ preserved_exact_tokens:
   - committed revision
   - semantic tier
   - preset
+  - widget_layout:v1:<project_id>:<board_id>
+  - home.dashboard
 negative_constraints:
   - Do not create a second Widget layout store or a PM7-only persistence namespace.
   - Do not serialize transient interaction state.
   - Do not admit preview rectangles, pointers, ghosts, placeholders, animation, or drafts into UsageWidgetLayoutRecord.
   - Do not store a presentation label such as custom, or a preset's display name, as a preset_id, or restore a preset the kind no longer offers.
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (DL-186): a dashboard board writes widget_layout:v1:<project_id>:<board_id> with host_id home.dashboard and room_id the board id; the 2026-10-09 per-board key and host_id were never written."
 owner_hints:
   - Plans/Widget_System.md
   - Plans/storage-plan.md
 ```
+
+
+## DL-180 to DL-185 — Dashboard Tabs And Their Boards (2026-10-09)
+
+Jared's home redesign (`Plans/Decision_Log.md#DL-180`, decision D10) makes the dashboard a tab kind in the universal
+panels: several dashboard tabs may be open, each showing one board with its own widget layout, and a board can show
+every Usage widget. This addendum adds WS-030, which owns the boards, their widget-layout namespaces, the catalogue and
+the move of today's one Dashboard layout into the Home board. How a dashboard tab looks in its panel is
+`Plans/FinalGUISpec.md#F3-638`; the tab kind is `#F3-635`; the open rules are `#F3-634`. It amends WS-009 (one
+namespace per board), WS-013 (every Usage widget) and the PMConcept7 Home Workspace boundary addendum (panels, dashboard
+tabs and one gesture kit) with dated notes, and the section 2 and 3 rules that named one Dashboard namespace. It cites
+and does not edit WS-017 and WS-019, which the Usage thread is amending (`Plans/Decision_Log.md#DL-176`), and adds only
+one dated sentence at the end of WS-020's canonical text for the per-board namespace and the v2 Home record. It
+creates no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks.
+
+Amended 2026-10-10 (DL-186): Jared answered the dashboard questions (D10 P1 to P13) and let people make, rename and
+delete their own dashboards with presets they can save (D35). WS-030 is rewritten to the boards as the panels thread
+built them: one Usage board engine for every board, per-project keys, several widget sources, Reset and Start from
+with `set_id`, per-user presets, custom dashboards, the reopen-list rule and named-layout snapshots. At the Usage
+thread's request this addendum also amends WS-019 (gravity, Tidy and the live previews on every board; the Dashboard
+line that kept its own settlement and its frozen-peer resize retire) and WS-020 (the dashboard record's `host_id` and
+`room_id`), and adds dated notes to WS-009, WS-013, sections 2 and 3, the closed record above WS-020 and the Home
+Workspace boundary addendum. `Plans/usage-feature.md#UF-107` carries the one line that runs live readings on
+dashboards.
+
+### WS-030 - Dashboard Tabs, Their Boards And One Widget Layout Per Board
+
+```yaml
+plan_unit_id: WS-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Widget_System.md
+canonical_text: >-
+  A dashboard is a tab kind in the home centre (Plans/FinalGUISpec.md#F3-635, #F3-638), and each dashboard tab shows
+  one board (DL-180, D10). Rewritten 2026-10-10 (DL-186): Jared's answers to the dashboard questions P1 to P13 and
+  D35 settle the boards as the panels thread built them. One engine: every board except Agents is a board of the
+  Usage board engine, the engine the Usage page runs, one board per tab; there is no second dashboard engine, board
+  model or settlement. Boards: home, metrics and monitoring are built-in engine boards; agents is the fourth built-in
+  board, drawn by the dashboard kind itself with no widget store, no catalogue and no widget command, its Show filter
+  (all, working, needs, waiting, done) saved with its tab (P9, lead ruling F7); the dashboards a person makes are
+  dash-<n>. A board is a project's widget board with a stable board_id; its tab id is `dashboard:<board_id>`, and one
+  board is at most one tab in the workspace: opening a board that is already open reveals its tab where it is
+  (F3-634). The board id, never the tab id, is the domain
+  reference a dashboard tab keeps in the Home layout record (Plans/storage-plan.md#SP-330); the tab saves only that, and
+  Agents its Show filter too. No board takes the id usage (the Usage page's own board), the id dashboard or a Usage room id,
+  so a board id in a widget command is never read as a Usage room. `dashboard:home` is the default board, the pinned
+  Home dashboard of the default layout (F3-630). The "+" menu's Dashboard row body opens or reveals `dashboard:home`, and its sub-row
+  lists Home, Metrics, Monitoring, Agents, this project's own dashboards by name and New dashboard, with no cap
+  (Plans/UI_Command_Catalog.md#UCC-200).
+  Custom dashboards (D35): a person can make, rename and delete their own dashboards. New dashboard, in that sub-row
+  and in the tab's Board menu, opens a new board in a new tab through the one opening module (UCC-200); the board
+  takes the next unused number and starts empty (P13). Its name is "Dashboard <n>" until the person renames it. The
+  name is kept per project with the board, trimmed, with runs of white space made one, at most 80 characters, and the
+  default name is not stored. Rename dashboard... in the Board menu sets the name and renames the tab through
+  cmd.panel_tab.rename; renaming the tab sets the name too, and clearing that rename clears it. Delete dashboard...,
+  after a confirm, closes the tab (cmd.panel_tab.close), drops it from the reopen list and forgets the board: its
+  stored widgets, the set-aside copy of an unreadable envelope and its name; the dashboard also leaves the "+" menu
+  and the page's catalogue. Rename and delete add no command family. Home, Metrics, Monitoring and Agents are never
+  renamed as boards and never deleted: Home, Metrics and Monitoring offer Reset widgets, and Agents, which has no
+  widgets, resets only its filter.
+  Storage (P5): board contents are kept per project. Each engine board's widgets, their sizes, order, visibility and
+  configuration, its view (range and scope) and the set it was started from are one envelope of the one widget-layout
+  record family (WS-020) under `widget_layout:v1:<project_id>:<board_id>`, and an envelope that cannot be read is set
+  aside under that key with `:quarantine` added. The project_id is one to 64 characters with no white space and no
+  colon. The envelope's `host_id` is `home.dashboard`, its project_id is the board's real project and each record's
+  `room_id` is the board id; the Usage page keeps its own `widget_layout:v1:usage`, untouched. A project switch
+  writes the open boards to the old project's keys and loads them from the new project's. A board saved by the
+  concept's first build of these boards under the unscoped `widget_layout:v1:<board_id>` is adopted once, by the
+  first project that shows that board while its own key is missing, and the old key is removed. Plans/storage-plan.md
+  registers both families and the adoption. The 2026-10-09 form
+  `widget_layout:v1:dashboard:<board_id>`, with `host_id` `dashboard:<board_id>`, was never written, so nothing
+  migrates from it. Today's single Dashboard layout `widget_layout:v1:dashboard` holds the old Home widgets, which
+  leave Home (P1); it is converted into no board and stays only a read-only record and rollback backup, like
+  `dashboard_layout:v1`. A board's widget layout is never written into the Home layout record, and the Home layout
+  record is never written by a widget operation (DR-066).
+  Commands and sources (P3): widget command payloads are unchanged. Every cmd.widget.* row inside a dashboard tab
+  names its board in the payload's existing `room` field (for example cmd.widget.add { room, widget_id } with room the
+  board id), changes only that board, commits only to its key and emits no `workspace.layout_changed`, which stays the
+  Home layout's event (Plans/Contracts_V0.md#CV-361). Home's panels, tabs and chat column are not widgets: no panel or
+  tab command reaches a board, no cmd.widget.* row reaches a panel or tab, and a widget gesture never moves or sizes a
+  panel (DR-066). Boards, their catalogue and the layout record are built for several widget sources: a widget's
+  source is the prefix of its id (`<source>:<id>`), Usage widgets keep their bare ids, and the engine keeps one
+  registry of sources, each with its label, its catalogue and the way its widgets are built. Usage is the one source
+  today; Orchestrator widgets join as a source after the Orchestrator page's own redesign and follow this same kind
+  contract, and other sources may follow.
+  Catalogue: Add widget sits in the tab's header row (F3-635) and offers every widget the board can be given: one
+  section per Usage room in room order, then the Usage widgets of no room, then one section per other source under its
+  label. A widget already on the board shows checked and cannot be added again; a pick adds it to that board only
+  (cmd.widget.add). Any Usage widget can be placed on any board (Plans/usage-feature.md#UF-062 wins over the
+  four-widget catalogue of F3-279, which F3-638 supersedes). The old Home widgets, `widget-orchestrator-progress`,
+  `widget-active-lanes`, `widget-recent-results` and `widget-custom-metrics`, leave Home (P1, option B): no board
+  offers them and no Home (current) board keeps them until Orchestrator widgets join as a source.
+  Reset and Start from (P4): Reset widgets returns a board to its own default set through cmd.widget.reset_layout
+  { scope: 'room', room: <board_id> }. Start from replaces a board's widgets with a chosen set through the same command
+  with the field `set_id` naming it: { scope: 'room', room: <board_id>, set_id }. The sets, in the order the board
+  lists them: `default`, the board's own set (for Home, Metrics and Monitoring the set built for that board, P13, and
+  empty for a dashboard a person made); the 13 Usage room sets, `room:<room_id>` in Usage room order (overview,
+  plans, costs, accounts, free, context, analytics, ledger, attention, cache, tools, signals, authority);
+  `host:dashboard`, the dashboard starter; then `user:<preset_id>` for each preset the person saved. Start from shows
+  them in four groups, in this order: This dashboard (`default`), Dashboard starter (`host:dashboard`), Usage rooms
+  (the 13 room sets in room order) and Your presets (Plans/FinalGUISpec.md#F3-638). Which Usage widgets Home's,
+  Metrics' and Monitoring's own sets hold is Usage content that usage-feature.md owns; no Usage unit lists them yet,
+  so the sets as built are concept lineage only and naming them is an open question for Usage. A reset with no
+  set_id is the default set. The envelope keeps the set_id of any set other than default. Choosing a set that no
+  longer exists changes nothing and says so.
+  Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo in the notice that follows Start from
+  (Plans/FinalGUISpec.md#F3-638) dispatches cmd.widget.reset_layout { scope: 'room', room: <board_id>,
+  restore_revision }, restore_revision being the board's committed layout revision (its committed_revision, WS-020)
+  just before that Start from: one receipt, offered only while the notice is up (8 s, held on pointer or focus).
+  restore_revision and set_id never travel together. The owner puts back exactly that revision's records, and a
+  restore whose revision is no longer the board's previous one is refused with a disabled reason. Like every widget
+  command it emits no workspace.layout_changed (Plans/Contracts_V0.md#CV-361).
+  Presets (D35, Jared: "With savable presets."): a person can save a board's arrangement as their own preset, rename
+  it and delete it. Presets belong to the person, not the project: they are kept in the per-user family
+  `widget_presets:v1` and shown in Start from on every dashboard of every project. A preset holds its id, its name,
+  when it was saved, the board it was saved from, the layout of the widgets shown at each board class (S, M, L and XL,
+  WS-017), each widget's size preset and each widget's configuration; it never holds the board's view. A name is
+  trimmed, with runs of white space made one, at most 80 characters; the save offers the dashboard's name made
+  unique, and a preset with no name is called "Preset <n>". Saving, renaming and deleting a preset are typed local
+  actions with no command, receipt or event (ui.widget_preset.save, ui.widget_preset.rename, ui.widget_preset.delete;
+  lead ruling F2); applying one is Start from with set_id `user:<preset_id>`. A board that started from a preset keeps
+  its widgets when the preset is deleted.
+  View (P2): each board has its own range (5 hours, 24 hours, 7 days or 30 days) and scope (all accounts, work,
+  personal, or one provider with accounts), kept in its envelope and set from its Board menu. Changing them is view
+  state, the typed local action ui.widget_board.set_view with no receipt and no event (lead ruling F1), like the Usage
+  page's remembered Live / Paused. A widget that follows its board reads the board's range and scope; a range or scope
+  set in a widget's own configuration still wins, as it does over the page's on the Usage page
+  (Plans/usage-feature.md#UF-060; D10 design section 3.5). A board has no rooms and no room change, and it shows every
+  widget placed on it at every disclosure level.
+  Behaviour: inside the tab the board is the Usage widget board, the same on every board as on the Usage page: its
+  snapping grid and its track count from the board's own measured width, never the window (F3-638); its curated sizes
+  and size presets (WS-017, WS-018); its gestures, gravity and Tidy, each one settled transaction (WS-019, which DL-186
+  amends so that no dashboard keeps its own settlement). The per-kind preset table tested at 400, 550 and 700 px of
+  board width is WS-017's one per-kind preset table (DL-176). One widget transaction at a time holds across every
+  board on the page. A board's first show plays the Usage board's calm
+  reading-order entrance, instant under Reduced Motion (P7); a board has no room film. Boards sit on Home's own tab
+  surface, not the Usage page's ground, and every look's widget plates are drawn for that surface (P11, F3-638). Live
+  readings run on dashboards too, per board, under the Usage page's idle rule, and the Live choice is the Usage
+  page's one switch (P12, Plans/usage-feature.md#UF-107). The lab-only Play the next hour, which P12 also runs on
+  dashboards, stays a demo control as UF-107 classifies it, never a product behaviour, so no criterion of this unit
+  gates it. A board that is not shown does no work,
+  live beats included, and catches up when it is shown again. Details on a dashboard card opens the Usage page at the
+  widget's home room with that widget's inspector open (P8), and a card's rows that lead into a Usage room open the
+  Usage page at that room; neither changes the Usage page out of sight.
+  Closing and named layouts (P6): closing a dashboard tab closes the tab only, and its board keeps its key while the
+  tab can be reopened. When a dashboard a person made leaves the reopen list and is not open as a tab, its key, its
+  set-aside copy and its name are deleted; the built-in boards keep theirs. A named layout keeps the boards of the
+  dashboard tabs it holds: saving it snapshots each board's envelope, or none, and applying it restores them, while a
+  named layout saved before this applies as it did. The snapshot is capped at 64 KB per named layout (lead ruling F3):
+  a bigger save keeps the layout without its boards, records how many bytes it left out and says so;
+  Plans/storage-plan.md#SP-330 owns that record. The Guided Tour's snapshots take the Home board's widgets with the
+  panels, per project (Plans/Planning_Wizard.md#PWIZ-035).
+  This supersedes WS-009's one Dashboard namespace and WS-013's limit to some Usage widgets, both amended in place,
+  and amends the Home Workspace boundary addendum's sentences that assume one dashboard. DL-186 retires the panels
+  concept's stand-in board with its grid numbers and reset spans, and the conversion of `widget_layout:v1:dashboard`
+  into the Home board; their 2026-10-09 and 2026-10-10 text is kept below for lineage only.
+gui_related: true
+gui_classification_reason: Defines which boards a person can open, make, rename and delete as dashboard tabs, what each can show, and how each board's widget layout, view and presets are kept and restored.
+split_recommended: false
+depends_on: [DL-180, DL-186, F3-635, F3-638, WS-009, WS-013, WS-017, WS-019, WS-020, UF-062, UF-107]
+unblocks: [ATS-075, GRRC-040, PWIZ-035]
+acceptance_criteria:
+  - "Several dashboard tabs can be open at once, each showing a different board, and opening a board that is already open reveals its tab instead of opening a second one."
+  - "A new project shows Home, Metrics, Monitoring, Agents and New dashboard in the \"+\" menu's Dashboard sub-row, `dashboard:home` is pinned in the default layout, each sub-row opens or reveals its board's tab, and the row body opens or reveals `dashboard:home`."
+  - "Every board but Agents runs on the Usage board engine: its grid, sizes, size presets, gestures, gravity, Tidy, entrance, live readings and idle rule match the Usage page's, and no dashboard keeps its own settlement."
+  - "Each engine board restores from and writes to its project's `widget_layout:v1:<project_id>:<board_id>` with `host_id` `home.dashboard` and `room_id` the board id, a project switch re-keys every open board, an unreadable envelope is set aside under `:quarantine`, and no dashboard widget state appears in the Home layout record."
+  - "Nothing is converted from or written to `widget_layout:v1:dashboard`, nothing is read from or written to `widget_layout:v1:dashboard:<board_id>`, and an unscoped `widget_layout:v1:<board_id>` is adopted once, by the first project that shows that board, and then removed."
+  - "New dashboard opens an empty board with the next unused number, named \"Dashboard <n>\"; Rename dashboard... and renaming its tab set the stored name through cmd.panel_tab.rename; Delete dashboard... asks first, closes the tab, drops it from the reopen list and forgets its key, set-aside copy and name; Home, Metrics, Monitoring and Agents offer neither Rename dashboard... nor Delete dashboard...."
+  - "Reset widgets dispatches one cmd.widget.reset_layout { scope: 'room', room } that returns the board to its default set; each Start from row dispatches one cmd.widget.reset_layout with its set_id; Start from shows the sets in F3-638's four groups, This dashboard (default), Dashboard starter (host:dashboard), the 13 Usage room sets in room order, then the person's presets; the envelope stores every set_id but default."
+  - "The Undo after Start from dispatches one cmd.widget.reset_layout { scope: 'room', room, restore_revision } with the board's committed layout revision just before that Start from and no set_id, only while its notice is up; the owner puts back exactly that revision's records, a restore whose revision is no longer the board's previous one is refused with a disabled reason, and no workspace.layout_changed is emitted (amended 2026-10-10, lead ruling)."
+  - "Saving, renaming and deleting a preset dispatch no command and write only `widget_presets:v1`; a preset holds no view, appears in Start from on every dashboard of every project, and applying it dispatches cmd.widget.reset_layout with set_id user:<preset_id>."
+  - "Changing a board's range or scope runs ui.widget_board.set_view, writes only that board's envelope and dispatches no command, receipt or event; each board keeps its own range and scope."
+  - "Add widget offers every Usage widget grouped by Usage room, and any other registered source's widgets under that source; a widget on the board cannot be added twice; no board offers an old Home widget; every widget command inside a dashboard tab names its board in `room`, changes only that board and emits no `workspace.layout_changed`; a panel or tab command changes no board."
+  - "A board's first show plays the reading-order entrance, instant under Reduced Motion; a hidden board does no work; live readings run per board; boards are drawn on Home's tab surface in every look; Details opens the Usage page at the widget's home room with its inspector open."
+  - "Agents has no widget store, catalogue or widget command, and its Show filter is saved with its tab."
+  - "Closing a dashboard tab keeps its board; a dashboard a person made that leaves the reopen list while not open loses its key, set-aside copy and name; a named layout restores its dashboard boards, and a save over 64 KB keeps the layout without its boards and says how many bytes it left out."
+  - "A board's track count follows the dashboard tab's own width when the panel is resized, the window size alone changes nothing, and no widget gesture moves or sizes a panel."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Widget_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-186"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (sections 2.4 to 2.9, 3.2, 3.5, 4 and 5; questions P1 to P13, answered by Jared and relayed by the planning thread, pm-mail 1010191613-9ce1; design lineage only)"
+  - "home-panels build facts, pm-mail 1010221905-e13e and 1010223444-a10e (engine 66d676cc66, Home track 33d696950c, dashboard kind 54f08139ac; build lineage only)"
+  - "Concepts/home-redesign/CONTRACT.md section 3.1 at 54f08139ac on concept/home-panels-20261009, SHA-256 40d3883c90912124773d5f8cb72128de6bde31a76a9223872ba48e05a7a512fc (concept lineage only)"
+  - "Concepts/home-redesign/NUMBERS.md at 54f08139ac on concept/home-panels-20261009, SHA-256 945ce104ae275d1d37de02ef0608acd49c21890bd372dac3dcf07b24d36b4a7b (the Dashboard section; concept lineage only)"
+  - "Concepts/usage-redesign/src/js/40-board.js at 54f08139ac on concept/home-panels-20261009, SHA-256 f3f1ab41fb650f7a09b65e44d4ebe8c2afdbcae753e2512ac2137e964dae3f8c (the order a board lists its sets; concept lineage only)"
+  - "Concepts/usage-redesign/tools/boards.py at 54f08139ac on concept/home-panels-20261009, SHA-256 6b17a5c2da788daaa522c2e4cc6db0780a09da4f31cc49d6b693160b10526790 (the built-in boards' sets as built, Usage content; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (the retired stand-in grid numbers; concept lineage only)"
+  - "Plans/Decision_Log.md#DL-180"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D10)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 2, dashboard tab ids; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (the \"+\" menu's Dashboard sub-row and the Home named layout; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/widgets-and-coordination.md, SHA-256 631c28a9198c9f550514c856ade138627410b94c48fe5f96a67450b14f407a90 (part A, A1 to A7; research lineage only)"
+  - "Concepts/home-redesign/src/panels/kinds/30-dashboard.js on concept/home-panels-20261009 (the boards, the Details route and the entrance; concept lineage only)"
+preserved_exact_tokens:
+  - "dashboard:home"
+  - "dashboard:<board_id>"
+  - "restore_revision"
+  - "widget_layout:v1:dashboard:<board_id>"
+  - "widget_layout:v1:dashboard:home"
+  - "widget_layout:v1:dashboard"
+  - "host_id"
+  - "board_id"
+  - "UF-062"
+  - "widget_layout:v1:<project_id>:<board_id>"
+  - ":quarantine"
+  - "home.dashboard"
+  - "dash-<n>"
+  - "set_id"
+  - "host:dashboard"
+  - "user:<preset_id>"
+  - "widget_presets:v1"
+  - "Start from"
+  - "Rename dashboard..."
+  - "Delete dashboard..."
+  - "ui.widget_board.set_view"
+  - "ui.widget_preset.save"
+  - "ui.widget_preset.rename"
+  - "ui.widget_preset.delete"
+negative_constraints:
+  - "Do not limit a board to the four widgets of F3-279."
+  - "Do not write a board's widget layout into the Home layout record, or write the Home layout record from a widget operation."
+  - "Do not open a second tab for a board that is already open."
+  - "Do not write, reset or delete the old `widget_layout:v1:dashboard` key, or convert it into a board."
+  - "Do not let a widget gesture move or size a panel, or a panel or tab command change a board."
+  - "Do not size a board's tracks from the window."
+  - "Do not run a second dashboard engine, board model or settlement beside the Usage board engine."
+  - "Do not add a board_id field to a widget command payload, or a command family for dashboards, presets, range or scope."
+  - "Do not keep presets per project or put a board's view in a preset."
+  - "Do not delete Home, Metrics, Monitoring or Agents, or offer Rename dashboard... or Delete dashboard... on them."
+  - "Do not keep the old Home widgets on any board or as a Home (current) board."
+  - "Do not gate the lab-only Play the next hour as a dashboard behaviour (UF-107)."
+compatibility_only_notes:
+  - "The panels concept moves the page's one dashboard node between dashboard tabs and keeps the Main, Metrics and Monitoring grids behind it; that stand-in is concept lineage, not the product's board model."
+  - "The concept keeps a custom dashboard's name under its own key and its presets under its own schema id; those are concept names, not product names (the product's families are the board envelope and widget_presets:v1, which storage-plan registers)."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: The Home board starts with the Dashboard's existing default set, `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results` and `widget-custom-metrics`, which the concept's Home board also shows."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: Each board keeps its own widget layout in the one widget-layout schema family (WS-020) under `widget_layout:v1:dashboard:<board_id>`, whose envelope's `host_id` names the board as `dashboard:<board_id>`, as Usage's names `usage`; WS-009's app default with project override applies per board."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: Today's single Dashboard layout `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read and is never reset: the user's widgets, their sizes, order, visibility and configuration carry over, and the old key stays only as a read-only migration input and rollback backup, like `dashboard_layout:v1`."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: The Usage board engine becomes the dashboard engine once it runs several boards at once; this thread family does that refactor after the Usage port lands, and until then the panels concept's stand-in board is lineage only."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: A project starts with four boards, Home, Metrics, Monitoring and Agents, after the panels concept; the \"+\" menu's Dashboard row lists the project's boards in its sub-row, each opening or revealing that board's tab, and its row body opens or reveals `dashboard:home`, as the panels concept does (Plans/UI_Command_Catalog.md#UCC-200). Closing a dashboard tab closes the tab only: its board and widget layout stay and can be opened again from that row."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: Catalogue: any Usage widget can be placed on any board (Plans/usage-feature.md#UF-062 wins over the four-widget catalogue of F3-279, which F3-638 supersedes), together with the Dashboard widgets canon already admits; Orchestrator widgets beyond WS-013's curated Progress subset join after the Orchestrator page has its own redesign, and that redesign's widgets follow this same kind contract."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: Inside the tab the board is the Usage widget board: its snapping widget grid, its Add widget flow, its widget gestures under WS-019 (one transaction owns one board at a time), its curated sizes under WS-017 and WS-018, and its track count chosen from the board's own measured width, never the window (F3-638)."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage: Add widget sits inside the dashboard tab, in its header row (F3-635), and adds to that board only. Every `cmd.widget.*` row inside a dashboard tab is addressed by board_id (UCC-200), commits only to that board's namespace, and emits no `workspace.layout_changed`, which stays the Home layout's event (Plans/Contracts_V0.md#CV-361)."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: A new project shows the boards Home, Metrics, Monitoring and Agents in the \"+\" menu's Dashboard row, `dashboard:home` is pinned in the default layout, each sub-row opens or reveals its board's tab, and the row body opens or reveals `dashboard:home`."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: Closing a dashboard tab keeps its board and widget layout, and the board opens again from the Dashboard row as it was."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: Each board restores from and writes to its own `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>`, and no dashboard widget state appears in the Home layout record."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: On first read after upgrade a saved `widget_layout:v1:dashboard` becomes the Home board's layout with every widget, size, order, visibility and configuration kept, nothing is reset, and later writes never touch the old key."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: The Add widget flow of every board offers every Usage widget; no four-widget limit applies."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 acceptance criterion kept verbatim for lineage: Every `cmd.widget.*` dispatch inside a dashboard tab carries board_id, changes only that board, and emits no `workspace.layout_changed`; a panel or tab command changes no board."
+  - "Retired 2026-10-10 (DL-186), 2026-10-09 negative constraint kept verbatim for lineage: Do not reset a saved Dashboard layout on upgrade, or keep writing the old `widget_layout:v1:dashboard` key after migration."
+  - "Retired 2026-10-10 (DL-186), kept verbatim for lineage (R35, the stand-in board's numbers): Within a dashboard tab, the grid column correction applies at widths 700-1060 px, with 8 px gaps and at least 200 px per column at four columns. It uses 3 columns if any visible widget spans an odd number of tracks, else 4 if (width minus 3 gaps) / 4 is at least 200 px, else 2. Below that range the page's grid rules give 2 columns. Source measurements in Focus or maximized at windows 1920, 1680 and 1470 px give grid widths 1005, 924 and 924 px: Home/Monitoring use 4 columns and Metrics 3. Home layout grids measure 437-488 px and Build 294-332 px, both 2 columns. Reset captures each board's starting widget set at load and saves 240 ms after reset: Home's orchestrator progress is 2 × 2, active lanes/recent results/custom metrics 2 × 1; Metrics has quota summary 2 × 1 and budget donuts/analytics chart 1 × 1; Monitoring has lane health and containers 2 × 1. These board measurements do not settle the separate per-kind Usage widget preset table."
+stale_retired_dispositions:
+  - "Rewritten 2026-10-10 (DL-186): dashboards run on the Usage board engine with per-project keys, host_id home.dashboard, multi-source boards and catalogue, Reset and Start from with set_id, per-user presets, custom dashboards made, renamed and deleted, the reopen-list rule, named-layout board snapshots capped at 64 KB, per-board range and scope, the reading-order entrance, Details on the Usage page, Agents drawn by the kind, Home's tab surface, live readings per board and empty new dashboards; the old Home widgets leave Home."
+  - "Superseded 2026-10-10 (DL-186): the 2026-10-09 per-board key widget_layout:v1:dashboard:<board_id> and host_id dashboard:<board_id>, the conversion of widget_layout:v1:dashboard into the Home board, the Home board's default set of four old Home widgets, the stand-in board's R35 grid numbers and reset spans, and the phrase addressed by board_id, which now reads as the board id carried in the existing room field."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard grid columns, board reset spans, measured widths and reset-save delay."
+  - "Superseded 2026-10-09 (DL-180): the one Dashboard widget-layout namespace and the singleton Dashboard surface."
+  - "Amended 2026-10-10 (DL-186): Start from shows the sets in F3-638's group order, the lab-only Play the next hour is no criterion of this unit, and the built-in boards' own sets stay an open question for Usage until a Usage unit lists them."
+  - "Amended 2026-10-10 (lead ruling on the Undo after Start from): the Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from, never with set_id."
+owner_boundary_notes:
+  - "F3-638 owns how a dashboard tab looks in its panel; WS-017, WS-018, WS-019 and WS-020 keep the widget sizes, gestures and record fields; usage-feature.md owns the Usage widgets themselves, their default sets and the live readings; storage-plan registers the board and preset families; UI_Command_Catalog owns the commands and typed local actions named here."
+owner_hints:
+  - Plans/Widget_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-186, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/usage-feature.md#UF-062, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/DRY_Rules.md#DR-066

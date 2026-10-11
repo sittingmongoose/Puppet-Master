@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29680-L30756
+Source lines: L30275-L31374
 
-Source SHA256: `e694dbfff9faff413e718e4b678e319b08c485422019a4c4e975e84e2b178622`
+Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
 
 ---
 
@@ -168,6 +168,13 @@ user turn, a block in `--accent-lime`, takes the paper `--surface` (`#F5F0E8`) a
 thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retro Dark, accent-blue on Retro Light.
 These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
 size rows already matched PMConcept7 and are unchanged.
+
+Amended 2026-10-09 (DL-161, the owner's code-face follow-up): the root contract's `--mono-font`, which the Basic,
+Glass and Friendly tables inherit, leads with `'JetBrains Mono'`, the code face the home redesign's D17 designates for
+every look, embedded under that name (F3-430). The Retro tables' `--mono-font` rows are unchanged: Retro's code text
+stays IBM Plex Mono, the face of its whole interface (owner, 2026-10-10, "Keep IBM Plex Mono"), and NieR Mode keeps
+its own PM NieR Mono, the same letters as JetBrains Mono. These are the code-text tokens; the home redesign's editor
+and terminal faces are decided separately (its D17, which its Plans thread records).
 
 ### F3-427 - Glass Composition Single-Blur Contract
 
@@ -380,7 +387,15 @@ canonical_text: >-
   Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
   Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
   info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each embedded family also
+  carries the other scripts it supports, as unicode-range slices declared before its unchanged Latin file: Inter
+  Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins Latin Extended and Devanagari;
+  Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
+  NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
+  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
+  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
+  2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
+  through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
   triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
   src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
   embedded text face for those characters only, with each face's own family, style and weight
@@ -396,6 +411,7 @@ acceptance_criteria:
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
   - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
   - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
+  - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -414,6 +430,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
+  - "Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)"
   - "Plans/FinalGUISpec.md:964"
   - "Plans/FinalGUISpec.md:7647"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -432,6 +449,8 @@ preserved_exact_tokens:
   - "DR-050"
   - "DL-161"
   - "JetBrains Mono"
+  - "unicode-range"
+  - "--mono-font"
   - "M PLUS 1"
   - "PM NieR Mono"
   - "PM NieR Sans"
@@ -475,16 +494,19 @@ canonical_text: >-
   admits on the Skia GPU path only (F3-566). Effects the concept
   builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
   hairline rings, are either renderable natively by the toolkit or precomputed into baked
-  assets.
+  assets. The terminal adds no backdrop blur and takes no entry in this budget (DL-183): in Glass it draws its scheme
+  at 70 % (light) and 74 % (dark) opacity over the app shell's existing glass blur, and a terminal background
+  image's blur is baked once into the image (F3-642, F3-643).
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
-depends_on: [F3-426, F3-427, F3-430]
+depends_on: [F3-426, F3-427, F3-430, DL-183]
 unblocks: []
 acceptance_criteria:
 - "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
 - "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
 - "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
+- "No terminal tab draws a backdrop blur of its own; Glass terminals show the app shell's blur through their scheme's opacity."
 - "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -514,6 +536,7 @@ compatibility_only_notes:
 - "Slint portability (updated for DL-139): this unit is the family-wide remediation contract. Blur, backdrop blur, masks, blend modes and filter effects are no longer banned for portability, because Puppet Master's Skia renderer extensions draw them (F3-582); this unit's closed backdrop-filter budget still limits backdrop blur. The note's other guidance (color math precomputed rather than runtime-mixed, and glass treatment as a single blur over a known wallpaper baked as a pre-blurred asset) remains a performance option."
 stale_retired_dispositions:
 - "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
+- "Amended 2026-10-09 (DL-183): the terminal's Glass look and its background images add no backdrop blur; the budget is not widened."
 owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:
@@ -559,7 +582,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--sheen-dur` | `.6s` |
 | `--display-font` | `'IBM Plex Mono', monospace` |
 | `--body-font` | `'IBM Plex Mono', monospace` |
-| `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
+| `--mono-font` | `'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` (JetBrains Mono embedded; DL-161 amended 2026-10-09) |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
 | `--letter-spacing` | `normal` |
