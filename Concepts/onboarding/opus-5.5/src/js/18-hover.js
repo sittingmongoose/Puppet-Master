@@ -35,9 +35,12 @@
    Tokens: read from #pmh-probe (one <i data-pmh-kind> per kind, so family rows on <html> and kind rows both apply) at
      the first frame and at the frame after a change of data-theme, data-motion, data-o55-nier, data-o55-nier-parts or
      data-pmh-soft (never inside the observer itself). Names and defaults: TOKENS below.
-   Rests: body.pm-resizing / pm-ab-dragging / pmu-pointer-op / pm7u-pointer-op, html[data-pmu-moment] and a Usage
-     board with [data-op] drop the hover and let the magnet settle to 0; a held pointer button keeps the state but
-     calms the magnet to 0 and freezes the field. The next pointer move after a rest resumes.
+   Rests: body.pm-resizing / pm-ab-dragging / pmu-pointer-op / pm7u-pointer-op / pmw-dragging, html[data-pmu-moment],
+     html[data-pm-page-transition] (a page sliding in) and a Usage board with [data-op] drop the hover and let the
+     magnet settle to 0; a held pointer button keeps the state but calms the magnet to 0 and freezes the field. When a
+     rest ends, and after a click, a key, a pointerdown or a pointerup, one frame looks again at what is under the
+     pointer, so a resting pointer gets its hover back without a move (a page switched by keyboard, the Usage room's
+     entrance over).
    Reduced Motion (O55.motion.reduced(): the Settings switch or the system setting): no magnet, no frame travel, no
      pointer-following field; the hovered target gets --pmh-i: 1 and its classes at once.
    Software-rendered (O55.motion.softwareRendered(), asked off the main thread): html[data-pmh-soft], so CSS can drop
@@ -80,6 +83,10 @@
        target under the pointer (a text surface in a card): a target that carries it itself, or sits inside an
        exempt container (a focus landmark, the Usage board), still hovers. */
     var EXEMPT = '[data-pm-hover-exempt]';
+    /* An open menu or popover is drawn over the cards: while one shows, nothing hovers (the fixed frame and glow proxies
+       sit above the page and would cross its rows), and a pointer on one hovers nothing. Checked only after a click,
+       a key or a pointerdown (when menus open and close), never per frame. */
+    var POPUP = '.pmu-menu,.pmu-pop,[role="menu"]';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
        while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
@@ -187,11 +194,26 @@
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
+    var recheck = false, popupOpen = false;
+    function anyPopup() {
+      var l = document.querySelectorAll(POPUP);
+      for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; }
+      return false;
+    }
+    /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
+       switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
+       an idle engine runs no frame, so the look would otherwise wait for the next pointer move (a page switched by
+       keyboard over a page that had nothing hovered never lit the card under the resting pointer) */
+    function recheckSoon() { recheck = true; moved = true; start(); }
+    /* when a rest ends (a page transition, the Usage room's entrance moment, a gesture), boxes may have moved and a look
+       taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
+       outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
+    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); }
 
     function gestureRest() {
       var b = document.body;
       if (b) for (var i = 0; i < REST_BODY.length; i++) { if (b.classList.contains(REST_BODY[i])) return true; }
-      if (root.hasAttribute('data-pmu-moment')) return true;
+      if (root.hasAttribute('data-pmu-moment') || root.hasAttribute('data-pm-page-transition')) return true;
       return !!(hit && hit.closest && hit.closest('.pmu-board[data-op]'));
     }
 
@@ -200,7 +222,10 @@
       px = e.clientX; py = e.clientY; have = true; buttons = e.buttons | 0; hit = e.target;
       var now = e.timeStamp || performance.now();
       if (e.target === lastHitEl && now - lastHitAt < 400) want = lastHitT;
-      else { want = resolve(e.target); lastHitEl = e.target; lastHitT = want; lastHitAt = now; }
+      else {
+        want = e.target && e.target.closest && e.target.closest(POPUP) ? null : resolve(e.target);
+        lastHitEl = e.target; lastHitT = want; lastHitAt = now;
+      }
       moved = true;
       start();
     }
@@ -252,15 +277,21 @@
         scopeEl = c;
         if (mo) mo.disconnect();
         if (c && typeof MutationObserver === 'function') {
-          /* only elements added or removed count: a live widget that rewrites its text (the dashboard's counters, a
-             few times a second) cannot add a target, and a box its new text moves is caught by the read after the
-             next frame */
+          /* only elements added, removed, moved or shown/hidden count: a live widget that rewrites its text (the
+             dashboard's counters, a few times a second) cannot add a target, and a box its new text moves is caught by
+             the read after the next frame. A structural change can put another box under a resting pointer (a search
+             field filtering the Projects grid re-appends the cards and hides some, from a typed character that starts
+             no frame of its own): re-measure and look again under the pointer */
           mo = mo || new MutationObserver(function (ms) {
             for (var i = 0; i < ms.length; i++) {
-              if (hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) { scopeDirty = rectsDirty = geomDirty = true; if (proxyShown()) start(); return; }
+              if (ms[i].type === 'attributes' || hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) {
+                scopeDirty = rectsDirty = geomDirty = true;
+                if (have || proxyShown()) recheckSoon();
+                return;
+              }
             }
           });
-          mo.observe(c, { childList: true, subtree: true });
+          mo.observe(c, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
         }
       }
       scopeMode = gap ? 'gap' : 'hover'; scopeScan = scan;
@@ -402,7 +433,21 @@
 
       /* READ ------------------------------------------------------------ */
       if (tokensDirty) readTokens();
-      var next = rest || !have ? null : (calm ? hover : want);
+      if (recheck) {
+        recheck = false;
+        popupOpen = anyPopup();
+        if (have && !popupOpen) {
+          var under = document.elementFromPoint(px, py);
+          /* resolved again even when the element is the one met before: a look taken during a rest (plates still
+             entering, pending or settling) may have resolved nothing for it */
+          if (under) { hit = under; want = under.closest && under.closest(POPUP) ? null : resolve(under); lastHitEl = under; lastHitT = want; lastHitAt = now; }
+        }
+        /* the target under the pointer comes from elementFromPoint above; a resolved target without a box (its page
+           went away while the pointer was outside or over a menu) never stays: only the wanted one is tested, so a hover
+           left on a box that was hidden never cancels the new target that took its place */
+        if (want && !want.getClientRects().length) want = null;
+      }
+      var next = rest || !have || popupOpen ? null : (calm ? hover : want);
       if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
       if (next && !next.isConnected) next = null;
       var enter = next !== hover;
@@ -771,8 +816,19 @@
       if (e.pointerType === 'touch') return;
       buttons = e.buttons | 0 || 1;
       if (hover) { springs.add(st(hover)); start(); }
+      recheckSoon();
     }, { capture: true, passive: true });
-    document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; }, { capture: true, passive: true });
+    document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
+    document.addEventListener('click', recheckSoon, { capture: true, passive: true });
+    /* a character typed into a text field (the terminal's input, a search box) cannot change what is under the pointer:
+       no frame for it, so typing costs the engine nothing; Enter, Escape, Tab, shortcuts and keys on anything else
+       look again */
+    document.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (e.key && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey && t &&
+          (t.isContentEditable || t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+      recheckSoon();
+    }, { capture: true, passive: true });
     window.addEventListener('scroll', function (e) {
       /* only a scroller around the scope moves its boxes (the demo chat stream scrolls on its own all the time) */
       var t = e.target;
@@ -790,15 +846,21 @@
     if (typeof MutationObserver === 'function') {
       new MutationObserver(function (muts) {
         for (var i = 0; i < muts.length; i++) {
-          if (muts[i].attributeName === 'data-pmu-moment') { if (hover || springs.size) { moved = true; start(); } }
+          var an = muts[i].attributeName;
+          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') {
+            if (!gestureRest()) restEnded();
+            else if (hover || springs.size || lit.size) { moved = true; start(); }
+          }
           else { retokenNextFrame(); return; }
         }
-      }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment'] });
+      }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment', 'data-pm-page-transition'] });
       if (document.body) {
         new MutationObserver(function () {
           var r = gestureRest();
+          var ended = bodyRest && !r;
           if (r !== bodyRest) { bodyRest = r; rectsDirty = geomDirty = true; }   /* a resize or drag gesture moves boxes */
-          if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
+          if (ended && !r) restEnded();
+          else if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
         }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
       }
     }

@@ -538,6 +538,44 @@ PATCHES = [
      "    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag=\"literal\"]')));   /* O55: before the measure */\n"
      "    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
      'pmh: literal hover tag mark'),
+    # The tag controller exempts an element when it carries any non-empty data-pm-hover-exempt itself (prepare, open
+    # and finishPendingOpen test only that the attribute is set; the value and the element's ancestors are never
+    # consulted). The value matters only to its census, audit(), which reports a value missing from EXEMPTIONS as
+    # undocumented_exemption. Two values the page sets were missing: 'labelled-field' (Settings panel fields,
+    # src/settings/kit.d/16-pages.js) and 'menu' (the Usage menu, its unlabelled rows, back button and search field,
+    # usage-redesign src/js/45-menu.js). Global_hover_tags_source.py lists them too (2026-10-10).
+    ("    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.'\n"
+     "  });\n",
+     "    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.',\n"
+     "    'labelled-field':'A field in a Settings panel whose label and help line sit beside it; a tag would only repeat them over the heading above.',\n"
+     "    'menu':'A menu and its rows, back button and search field, which already show their names; a row given its own data-pm-hover-label is not exempt and keeps its tag.'\n"
+     "  });\n",
+     'pmh: hover tag exemptions labelled-field and menu'),
+    # The show-tooltips read deep-cloned the whole app state (PM12_KIMI.getState()) on every call, and the controller
+    # calls it on every input and change event in the document, so each keystroke in a terminal or field cost a full
+    # JSON clone (about 12 ms each with the CPU slowed 4x, ~200 ms over three short commands). The value is now read
+    # once and kept until a Settings write: the first read wraps the Settings tome's save, load, reset and applyPaint
+    # (every state change in the Settings app goes through one of them), and each call clears the kept value. Before
+    # the Settings app exists the read is not kept. setVisualEnabled writes the root and tag only when they change.
+    ("  HoverTagController.prototype.readVisualSetting=function(){\n"
+     "    try{\n"
+     "      var api=window.PM12_KIMI,state=api&&typeof api.getState==='function'?api.getState():null;\n",
+     "  HoverTagController.prototype.readVisualSetting=function(){   /* O55: kept until a Settings write */\n"
+     "    var tome=window.PM7_SETTINGS_TOME,api=window.PM12_KIMI,self=this;\n"
+     "    if(this.visualCacheOk&&this.visualCacheApi===api)return this.visualCache;\n"
+     "    if(tome&&!tome.__pmhTagWatch){['save','load','reset','applyPaint'].forEach(function(name){var f=tome[name];if(typeof f==='function')tome[name]=function(){self.visualCacheOk=false;try{return f.apply(this,arguments);}finally{self.visualCacheOk=false;}};});try{Object.defineProperty(tome,'__pmhTagWatch',{value:true});}catch(_error){}}\n"
+     "    var value=this.readVisualSettingNow();\n"
+     "    this.visualCacheOk=!!(api&&tome&&tome.__pmhTagWatch);this.visualCacheApi=api;this.visualCache=value;return value;\n"
+     "  };\n"
+     "  HoverTagController.prototype.readVisualSettingNow=function(){\n"
+     "    try{\n"
+     "      var api=window.PM12_KIMI,state=api&&typeof api.getState==='function'?api.getState():null;\n",
+     'pmh: hover tag visual setting kept'),
+    ("    this.ensureRoot();this.visualEnabled=value!==false;this.root.setAttribute('data-visual-enabled',String(this.visualEnabled));\n"
+     "    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){this.tag.setAttribute('data-open','false');this.tag.hidden=true;}}\n",
+     "    this.ensureRoot();this.visualEnabled=value!==false;setAttrIfChanged(this.root,'data-visual-enabled',String(this.visualEnabled));   /* O55: write only a change */\n"
+     "    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){setAttrIfChanged(this.tag,'data-open','false');if(!this.tag.hidden)this.tag.hidden=true;}}\n",
+     'pmh: hover tag visual setting writes'),
     # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
     # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
     # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.
