@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3942-L13438
+Source lines: L3944-L13447
 
-Source SHA256: `b1132a18b51eed37ac79fbd1982f7bfcd241371df1048fb05fec6a409e2bacf5`
+Source SHA256: `2e92922a0c4f8e7d13d38abe4ab70538074418bc88bda05dc32195c21e3b390c`
 
 ---
 
@@ -9035,6 +9035,11 @@ canonical_text: >-
   project, provider, account, the most specific set value winning, and a value stored under the retired id is
   carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
   status state is defined by a set of section 5 reason codes, in the MA-073 state table.
+  Owner decision 2026-10-10 (D43): each account of a provider with two or more accounts carries one bound control for
+  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, showing the level the account
+  resolves to and whether it is the account's own or follows its provider, offering following the provider again,
+  committed through the Settings transaction at scope account and held below the warning level that applies to that
+  account; its Open in Settings lands inside that account (SSYS-044).
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -9047,6 +9052,7 @@ acceptance_criteria:
   - "Plans & limits lists every account of a provider, one row per account."
   - "No command is added for the Accounts room."
   - "An account's own switch level is ai.accounts.hard-switch-level at scope account, and nothing reads or writes ai.accounts.account-threshold-override after its stored value is carried there once."
+  - "Each account of a provider with two or more accounts has a switch-level control on its Usage card and in its Details that changes ai.accounts.hard-switch-level at scope account through the Settings transaction, and Settings shows the same value without a reload."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9069,6 +9075,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
   - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D43, owner decision 2026-10-10)"
 preserved_exact_tokens:
   - "DL-174"
   - "Use this account"
