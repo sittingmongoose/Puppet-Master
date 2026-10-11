@@ -42,11 +42,14 @@
      widget's config, view and card lookups inside it must not fall back to the Usage board */
   C.inBoard = function (el, fn) { return PMU.boards ? PMU.boards.run(C.boardOf(el), fn) : fn(); };
   C.bk = function (id) { var b = boardNow(); return !b || b === PMU.board ? id : b.id + '|' + id; };
-  /* a page-wide pass (the settled fit, the fonts pass, the reface) visits the Usage board's live cards as before, then
-     those of every hosted board its host shows; a hidden tab's board is left alone (it refreshes on its next show) */
+  /* a page-wide pass (the settled fit, the fonts pass, the reface) visits the Usage board's live cards while the Usage
+     page shows, then those of every hosted board its host shows; a hidden board is left alone (the Usage board mounts
+     again on the way back to Usage, a hidden tab's board refreshes on its next show), so a pass while Home shows never
+     reads the hidden Usage board's bodies */
   function hostedShown() { return PMU.boards ? PMU.boards.all().filter(function (b) { return b !== PMU.board && b.shown() && b.el(); }) : []; }
+  function usageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
   function shownBodies() {
-    var list = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody'));
+    var list = usageShown() ? Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card > .pmu-cardbody')) : [];
     hostedShown().forEach(function (b) { list = list.concat(Array.prototype.slice.call(b.el().querySelectorAll(':scope > .pmu-card > .pmu-cardbody'))); });
     return list;
   }

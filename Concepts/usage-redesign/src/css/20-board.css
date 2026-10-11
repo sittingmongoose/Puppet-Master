@@ -327,6 +327,15 @@ html[data-theme^="retro"] #panel-usage :is(.pmu-landing, .pmu-outline, .pmu-outl
 #panel-usage .pmu-board > .pmu-card[data-lifted]::before { box-shadow: var(--pmu-plate-lift); opacity: 1; transition: opacity calc(140ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-board > .pmu-card[data-settling]::before { box-shadow: var(--pmu-plate-lift); opacity: 0; transition: opacity calc(200ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
 html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transition-timing-function: steps(2, jump-start); }
+/* the lifted plate's look changes once, in the lift's own frame (40-board.js frameMove holds it at scale 1 for that frame):
+   what the board's data-op does to every plate an idle period later (tools out, head tools and title back) the lifted plate
+   does at once, and its lift shadow is a layer of its own while it is held, so the shadow's fade runs on the compositor
+   and never hands its paint back to the plate mid-carry. A paint change once the plate is scaled re-rastered it at the
+   lift's scale (P1000, 2026-10-11: the GPU programs for every mark in it compiled on a page's first drag, 300-600 ms). */
+#panel-usage .pmu-board > .pmu-card[data-lifted] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; transition: none; }
+#panel-usage .pmu-board > .pmu-card[data-lifted] .pmu-headtools { transform: none; transition: none; }
+#panel-usage .pmu-board > .pmu-card[data-lifted] .pmu-cardtitles { margin-right: 0; transition: none; }
+#panel-usage .pmu-board > .pmu-card[data-lifted]::before { will-change: opacity; }
 /* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
    `*` part restyled the lifted card's whole subtree at pick-up and drop) */
 #panel-usage .pmu-card[data-lifted] { cursor: grabbing !important; }

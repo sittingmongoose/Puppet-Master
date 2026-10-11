@@ -410,6 +410,7 @@ function heldCommit(d) {
 }
 function onBoardEvent(rec, e, d) {
   if (rec.undo && (e === 'change' || (e === 'commit' && !heldCommit(d)))) dismissUndo(rec);
+  else if (rec.undo && e === 'commit') checkUndo(rec, rec.undo);
   if (e === 'change' && d && d.op === 'project') rec.seenLabel = tabUserLabel(rec);
   if (rec.paintLeft) rec.paintLeft();
 }
@@ -465,13 +466,13 @@ function setView(rec, patch) {
 function resetEngine(rec) {
   var b = rec.b;
   if (!b) return null;
-  var before = snapshotBoards([rec.board]);
+  var before = snapshotBoards([rec.board]), point = undoPoint(rec, before);
   var r = b.reset('room');
   var what = dashNumber(rec.board) ? nameOf(rec) + ' is empty again.' : nameOf(rec) + ' is back to its default widgets.';
   var changed = JSON.stringify(snapshotBoards([rec.board])) !== JSON.stringify(before);
-  if (changed && rec.wrap) {
+  if (changed && rec.wrap && !(r && r.dispatch_accepted === false)) {
     rec.api.announce(what + ' Undo is available for a few seconds.');
-    showUndo(rec, what, before, 'Undo Reset widgets');
+    showUndo(rec, what, point, 'Undo Reset widgets');
   } else {
     rec.api.announce(what);
     if (PMW.toast) PMW.toast(what);
@@ -483,7 +484,8 @@ function resetEngine(rec) {
 /* ---- Start from (P4): the sets a dashboard can start from (board.sets()), grouped: this dashboard's own default set,
    the dashboard starter, the 13 Usage rooms in room order, the user's saved presets. The set the widgets started from
    is checked. A pick is one cmd.widget.reset_layout with set_id (board.startFrom), and it replaces the widgets, so the
-   board is snapshotted first (the kind's snapshot path) and an Undo notice puts it back. ---- */
+   board's committed revision and its envelope at that revision are kept first (undoPoint) and an Undo notice puts them
+   back. ---- */
 var SET_GROUPS = [['default', 'This dashboard'], ['host', 'Dashboard starter'], ['room', 'Usage rooms'], ['user', 'Your presets']];
 function setsOf(rec) { try { return (rec.b && rec.b.sets()) || []; } catch (err) { logError('dashboard sets failed', err); return []; } }
 /* the second line: the engine's detail without the words the group's heading already says ("Usage room · 6 widgets"
@@ -543,7 +545,7 @@ function startedText(rec, s) {
 function startFrom(rec, s) {
   var b = rec.b;
   if (!b || !s) return null;
-  var before = snapshotBoards([rec.board]), r = null;
+  var point = undoPoint(rec, snapshotBoards([rec.board])), r = null;
   try { r = b.startFrom(s.id); } catch (err) { logError('dashboard start from failed', err); }
   if (!r) {
     // refused: a set that is gone (a preset deleted meanwhile) or a board that is gone
@@ -555,27 +557,42 @@ function startFrom(rec, s) {
   if (r.dispatch_accepted === false) return r;   // the engine says why in its own notice and leaves the board as it was
   var text = startedText(rec, s);
   rec.api.announce(text + ' Undo is available for a few seconds.');
-  showUndo(rec, text, before);
+  showUndo(rec, text, point);
   rec.paintLeft();
   return r;
+}
+/* what an Undo puts back (Plans WS-030 and UCC restore_revision, the lead's ruling of 2026-10-11): the board's committed
+   layout revision just before the change, and its envelope at that revision (snapshotBoards flushed the board, so the
+   two agree). The engine restores exactly that through one cmd.widget.reset_layout with restore_revision, never with
+   set_id (board.restoreRevision). */
+function undoPoint(rec, snap) {
+  var rev = null;
+  try { rev = rec.b && rec.b.revision ? rec.b.revision() : null; } catch (err) { logError('dashboard revision failed', err); }
+  return rev == null || !snap ? null : { rev: rev, env: snap[rec.board] || null };
 }
 
 /* ---- the Undo notice: one plate at the foot of the tab, in the package's popover look, for 8 s (held while the pointer
    or focus is on it); a change to the widgets ends it. It sits right after the header row in the reading order, so
-   Tab reaches Undo next. ---- */
+   Tab reaches Undo next. Undo is offered only while the notice is up; once the board's revision is no longer the one
+   the change made (something was committed since that did not end the notice), Undo is disabled and says why. ---- */
 var UNDO_MS = 8000;
-function showUndo(rec, text, snap, groupLabel) {
+var UNDO_WHY = {
+  stale: 'The widgets changed after this, so Undo can no longer put them back.',
+  envelope: 'What was there before is no longer known, so Undo cannot put it back.',
+  gone: 'This dashboard is not open now, so Undo cannot put it back.'
+};
+function showUndo(rec, text, point, groupLabel) {
   dismissUndo(rec, { instant: true });
-  if (!snap || !rec.wrap) return;
+  if (!point || !rec.wrap) return;
   var btn = h('button', { type: 'button', class: 'pmw-dash-undo-btn', 'data-pmh': 'icon', 'data-pm-hover-label': 'Undo',
     'data-pm-hover-detail': 'Put the widgets back as they were' }, [PMW.icon('reopen', { size: 14 }), h('span', { text: 'Undo' })]);
   var el = h('div', { class: 'pmw-dash-undo pmw-pop', role: 'group', 'aria-label': groupLabel || 'Undo Start from', 'data-pmh': 'off' }, [
     h('span', { class: 'pmw-dash-undo-t', text: text }), btn]);
-  var u = rec.undo = { el: el, snap: snap, timer: 0, held: false };
+  var u = rec.undo = { el: el, btn: btn, point: point, timer: 0, held: false, off: null };
   function arm(ms) { clearTimeout(u.timer); u.timer = setTimeout(function () { if (!u.held && rec.undo === u) dismissUndo(rec); }, ms); }
-  el.addEventListener('pointerenter', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('pointerenter', function () { u.held = true; clearTimeout(u.timer); checkUndo(rec, u); });
   el.addEventListener('pointerleave', function () { u.held = el.contains(doc.activeElement); if (!u.held) arm(3000); });
-  el.addEventListener('focusin', function () { u.held = true; clearTimeout(u.timer); });
+  el.addEventListener('focusin', function () { u.held = true; clearTimeout(u.timer); checkUndo(rec, u); });
   el.addEventListener('focusout', function (e) { if (el.contains(e.relatedTarget)) return; u.held = el.matches(':hover'); if (!u.held) arm(3000); });
   el.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
@@ -601,11 +618,36 @@ function dismissUndo(rec, o) {
   var a = PMW.motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 160, easing: 'linear', fill: 'forwards' });
   if (a) a.onfinish = function () { el.remove(); }; else el.remove();
 }
+/* the engine's word on the Undo now: null while it may run, else why not (board.restoreWhy) */
+function undoWhy(rec, u) {
+  var b = rec.b;
+  if (!b || !b.restoreWhy) return 'gone';
+  try { return b.restoreWhy(u.point.rev, u.point.env); } catch (err) { logError('dashboard undo check failed', err); return 'gone'; }
+}
+/* a refused Undo stays in the notice, disabled, and the notice says why (the button keeps focus, so the reason is read) */
+function checkUndo(rec, u) {
+  if (!u || rec.undo !== u || u.off) return !!(u && u.off);
+  var why = undoWhy(rec, u);
+  if (!why) return false;
+  var text = UNDO_WHY[why] || UNDO_WHY.stale, t = u.el.querySelector('.pmw-dash-undo-t');
+  u.off = text;
+  u.btn.setAttribute('aria-disabled', 'true');
+  u.btn.setAttribute('data-disabled-reason', text);
+  u.btn.setAttribute('data-pm-hover-detail', text);
+  u.btn.style.opacity = '.5'; u.btn.style.cursor = 'default';
+  if (t) { t.textContent = text; t.title = text; }
+  rec.api.announce(text);
+  return true;
+}
 function undoStart(rec, u) {
   if (rec.undo !== u) return;
-  var snap = u.snap;
+  if (!u.off) checkUndo(rec, u);
+  if (u.off) { if (PMW.toast) PMW.toast(u.off); return; }
+  var b = rec.b, p = u.point, r = null;
   dismissUndo(rec, { instant: true });
-  if (!restoreBoards(snap)) return;
+  try { r = b.restoreRevision(p.rev, p.env); } catch (err) { logError('dashboard undo failed', err); }
+  // refused or rejected: the engine changed nothing (a rejection says so in its own notice)
+  if (!r || r.refused || r.dispatch_accepted === false) { if (r && r.refused) rec.api.announce(UNDO_WHY[r.reason] || UNDO_WHY.stale); return; }
   var t = nameOf(rec) + ' is back as it was.';
   rec.api.announce(t);
   rec.paintLeft();

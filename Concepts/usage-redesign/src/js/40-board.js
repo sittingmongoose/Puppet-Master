@@ -18,7 +18,11 @@
    new dash-<n> starts empty (P13). The Usage board takes none of these paths. Then (2026-10-10): the pick-up draws its
    first held frame in the threshold's own frame (beginGesture, prep, setOpFlags, the pressed plate's warm layer), a
    dashboard lights a beat's lead in its own layer and tells its kind ('beat'), and Start from and a project change
-   forget the board's size picks. */
+   forget the board's size picks. Then (2026-10-11): the lift's paint lands in one frame at scale 1 and the lifted plate
+   never repaints while scaled (frameMove, 20-board.css), the first drag's pre-warm (prewarm: the lifted plate's marks
+   drawn once at the lift's scale, invisibly, at idle), and a dashboard's committed layout revision with the Undo after
+   Start from and Reset widgets (revision, restoreWhy, restoreRevision: one cmd.widget.reset_layout with
+   restore_revision, the lead's ruling of 2026-10-11). */
 (function () {
   /* (lane c-presets, agent 5) M from 880 px, not 820: at 820 a 20-track board's pitch was 41.4 px and the M default
      boards, authored at the 46.9 px pitch of the 929 px board (1920 with a 480 px chat), clipped and wrapped names letter
@@ -51,6 +55,8 @@
     var at = function (n, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(n))); };
     return { x: at(p[0], 0, 29), y: at(p[1], 0, 4000), w: at(p[2], 1, 30), h: at(p[3], 1, 40) };
   }
+  /* a dashboard envelope's committed_revision: a whole number of 0 or more (absent in an envelope written before it: 0) */
+  function revOf(env) { var n = env ? Number(env.committed_revision) : 0; return isFinite(n) && n >= 0 ? Math.min(Math.floor(n), 1e9) : 0; }
   function cfgRefs(cfg) { return Object.keys(cfg || {}).filter(function (k) { return cfg[k] != null && cfg[k] !== ''; }).map(function (k) { return k + '=' + cfg[k]; }); }
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
 
@@ -183,6 +189,8 @@
     var done = function () { el.hidden = true; el._pmuHiding = null; if (a) a.cancel(); };
     if (a) { el._pmuHiding = a; a.onfinish = done; } else done();
   }
+  /* the field PMH writes on a hovered plate (opus-5.5 18-hover.js setI / setPos), cleared from a plate as it lifts */
+  var PMH_PROPS = ['--pmh-i', '--pmh-x', '--pmh-y', '--pmh-px', '--pmh-py', '--pmh-dx', '--pmh-dy'];
   function liftScale() { var f = PMU.motion.family(); return f === 'retro' || f === 'nier' ? 1 : 1.04; }
   /* the velocity tilt's limit per voice (WOW-SPEC 3.11): Basic 1deg, Glass 1.5, Friendly 2, Retro and NieR none */
   function tiltMax() { var f = PMU.motion.family(); return f === 'friendly' ? 2 : f === 'glass' ? 1.5 : f === 'retro' || f === 'nier' ? 0 : 1; }
@@ -213,6 +221,9 @@
      the body's pm-resizing is (RESIZING_BY: its handle; setOpFlags, opSync) and the data epoch that tells a hidden hosted
      board to refresh when it is shown again ---- */
   var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, RESIZING_BY = null, EPOCH = 0, LAYER = null, CATALOG = null, FORGET_WARNED = {};
+  /* the first drag's pre-warm (createBoard prewarm): once per look and Reduce Motion state on the page, by whichever board
+     shows first; ?pmu-prewarm=0 leaves it out (A/B measurements) */
+  var PREWARMED = {}, PREWARM_OFF = /[?&]pmu-prewarm=0(?:&|#|$)/.test(location.search);
   /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
      and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
   var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
@@ -431,6 +442,11 @@
     var configs = {};       /* widget id -> {range?, scope?, <option id>: value} (the records' configuration_refs) */
     var parkedFrom = {};    /* room/class/widget -> the rect a hidden panel had before it was parked under the board */
     var revisions = {};     /* widget id -> committed_revision */
+    /* a dashboard's committed layout revision (its envelope's committed_revision; the Undo after Start from, Plans WS-030
+       restore_revision, the ruling of 2026-10-11): one more for every accepted command that changes its records. undoMark:
+       the revision the last Start from or Reset widgets came from and the one it made ({ rev, at }); a restore to rev runs
+       only while the board is still at `at`. The Usage board keeps neither. */
+    var boardRev = 0, undoMark = null;
     var landing = null, outline = null;
     /* a hosted board builds and refreshes only while its host shows it (D10 3.3 show / hide); the Usage board always shows */
     var shownFlag = !hosted || bo.shown !== false, dead = false, dirty = false, sizeDirty = false, seenEpoch = EPOCH;
@@ -444,7 +460,12 @@
        writes, how many beats a patch carries, and the board's own light layer */
     var liveLead = null, liveLeadRect = null, liveMerged = 0, flyEl = null;
 
-    function emit(evt, detail) { (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } }); }
+    function emit(evt, detail) {
+      (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } });
+      /* every mount and build of a shown board asks for the first drag's pre-warm (it waits for an idle period and for the
+         film, the held build and any gesture to be over; once per look and Reduce Motion state on the page) */
+      if (evt === 'mount' || evt === 'built') prewarmSoon();
+    }
     function say(text) {
       if (bo.announce) { try { bo.announce(text); } catch (error) {} return; }
       if (live) { live.textContent = ''; live.textContent = text; }
@@ -557,6 +578,7 @@
       if (hosted) {
         startSet = typeof envelope.set_id === 'string' && envelope.set_id && envelope.set_id !== 'default' ? envelope.set_id : null; startRows = null;
         envelope.project_id = projectId;
+        boardRev = revOf(envelope);
       }
       if (loaded.fresh || !loaded.env.records || (envelope.migration_receipt && !envelope.records.length)) persist();
     }
@@ -608,7 +630,7 @@
       savePending = false;
       envelope.view = { room: st.room, detail: st.detail, range: st.range, scope: st.scope, more: !!st.more };
       envelope.records = recordsNow();
-      if (hosted) { if (startSet) envelope.set_id = startSet; else delete envelope.set_id; envelope.project_id = projectId; }
+      if (hosted) { if (startSet) envelope.set_id = startSet; else delete envelope.set_id; envelope.project_id = projectId; envelope.committed_revision = boardRev; }
       STORE.set(storeKey, envelope);
     }
     function persist() {
@@ -620,6 +642,13 @@
     }
     /* the envelope written now, not after the debounce (destroy, a tour snapshot; D10 2.4) */
     function flushNow() { ensure(); if (dead) return false; clearTimeout(saveTimer); saveTimer = 0; writeNow(); return true; }
+    /* an accepted command changed the records: the board's revision steps (a dashboard's). The preset hold's resizes settle
+       the set a Start from just placed, so they carry an open Undo's revision along with them. */
+    function committed(source) {
+      if (!hosted) return;
+      if (undoMark && undoMark.at === boardRev && source === 'preset_hold') undoMark.at = boardRev + 1;
+      boardRev++;
+    }
 
     /* ---- defaults, projection ---- */
     function nearestEdited(room, cls) {
@@ -1111,6 +1140,7 @@
     }
     function mount(room, opts) {
       ensure();
+      prewarmEnd();
       opts = opts || {};
       if (!bo.rooms) room = st.room;   /* rooms off: the board's one room */
       if (dead) return;
@@ -1450,9 +1480,10 @@
        period after prep's frame, both after the drop in the one after the release, forced there so no frame pays for
        them; PM_DRAGEND runs when pm-resizing is cleared, a frame or two after the drop, which defers the flush for the
        magnet, PM_EDGE and the observers by as long and changes nothing they read in between (the drop's settle is a
-       transform). What data-op changes waits as long: the lifted plate's tools fade, the other plates stop answering
-       hover and their handles stop taking the pointer (the gesture holds the pointer meanwhile); the resizing plate's own
-       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with one board, page-wide (RESIZING_BY),
+       transform). What data-op changes waits as long: the other plates stop answering hover and their handles stop taking
+       the pointer (the gesture holds the pointer meanwhile); the lifted plate takes data-op's look in the lift's own
+       frame (its tools out, head tools and title back: 20-board.css [data-lifted], so it never repaints once scaled) and
+       the resizing plate's own lift does not wait for it either (20-board.css). Whose pm-resizing it is stays with one board, page-wide (RESIZING_BY),
        never with the attribute: a gesture's pick-up takes it over from another board that still holds it (a pointer
        drop on one board, then a keyboard pick-up on another before the first one's idle period), and only the board
        that holds it clears it and calls PM_DRAGEND (review 2026-10-10: the first board's idle period cleared it in the
@@ -1525,14 +1556,21 @@
     function frameMove(g, force) {
       var now = performance.now();
       var dx = g.px - g.sx + (scroll.scrollLeft - g.scrollL), dy = g.py - g.sy + (scroll.scrollTop - g.scrollT);
-      /* pick-up: 140 ms (.2,.8,.2,1) to scale 1.04 and 6 px up (Retro and NieR: no scale, no lift) */
+      /* pick-up: 140 ms (.2,.8,.2,1) to scale 1.04 and 6 px up (Retro and NieR: no scale, no lift; Reduce Motion: at once).
+         The lift's own frame holds the plate at scale 1 (it follows the pointer, nothing else): every paint change of the
+         lift (its shadow, its tools, PMH's light gone) lands in that frame, while the plate's layer still rasters at scale
+         1, and the scale comes from the next frame as a compositor-only change. A paint change while the plate is scaled
+         re-rastered it at the lift's scale: on a page's first drag that compiled the GPU programs for every kind of mark in
+         the plate, 300-600 ms on the P1000 (2026-10-11), and on every later drag it cost a raster. */
+      var first = !g.liftFrame;
+      g.liftFrame = (g.liftFrame || 0) + 1;
       if (!liftEase) liftEase = PMU.motion.curve('cubic-bezier(.2,.8,.2,1)');
-      var k = reduced() ? 1 : liftEase(Math.min(1, (now - g.liftAt) / (140 * speed())));
+      var k = first ? 0 : reduced() ? 1 : liftEase(Math.min(1, (now - g.liftAt) / (140 * speed())));
       var flat = liftScale() === 1;
       var s = 1 + (liftScale() - 1) * k, ly = flat ? 0 : -6 * k;
       /* velocity tilt: rotate = clamp(vx / 1200 px/s x 1deg), easing in while the pointer moves and back to 0 over about
          160 ms when it rests (the loop runs every frame, so a resting pointer reads as vx 0) */
-      var dt = g.lastT ? now - g.lastT : 0, max = reduced() ? 0 : tiltMax();
+      var dt = g.lastT ? now - g.lastT : 0, max = first || reduced() ? 0 : tiltMax();
       if (dt > 0) {
         var vx = (g.px - (g.lastPx == null ? g.px : g.lastPx)) / dt * 1000;
         g.vx = (g.vx || 0) * 0.55 + vx * 0.45;
@@ -1603,6 +1641,7 @@
        (setOpFlags). Anything that needs them first (a new slot, a key, the release) runs prep itself, so the carry, its
        previews, peers, auto-scroll, keyboard pick-up, Escape and the drop behave as before. */
     function beginGesture(g) {
+      prewarmEnd();
       if (!g.kb) { try { var sel = window.getSelection(); if (sel && sel.rangeCount) sel.removeAllRanges(); } catch (e) {} }
       g.scrollL = scroll.scrollLeft; g.scrollT = scroll.scrollTop;
       claimGesture();
@@ -1627,6 +1666,9 @@
       if (g.card._pmuSettle) { g.card._pmuSettle.cancel(); g.card._pmuSettle = null; }
       g.card.removeAttribute('data-settling');
       if (g.type === 'move') {
+        /* PMH's light leaves the plate in the lift's frame (PMH clears it a frame later, which then changes nothing here;
+           see frameMove for why nothing may change on the plate once it is scaled) */
+        PMH_PROPS.forEach(function (p) { g.card.style.removeProperty(p); });
         g.card.setAttribute('data-lifted', '');
         g.card.setAttribute('aria-grabbed', 'true');
         g.liftAt = performance.now();
@@ -1634,7 +1676,8 @@
         g.card.setAttribute('data-resizing', g.edge);
       }
       if (g.kb) {
-        if (g.type === 'move') g.card.style.transform = 'scale(' + liftScale() + ')';
+        /* the keyboard's lift scales in the frame after its paint changes, as the pointer's does (frameMove) */
+        if (g.type === 'move') requestAnimationFrame(function () { requestAnimationFrame(function () { if (gesture === g && !g.done && g.card.hasAttribute('data-lifted')) g.card.style.transform = 'scale(' + liftScale() + ')'; }); });
         say(t(g.type === 'move' ? 'board.picked' : 'board.resizing', { name: cardTitle(g.id) }));
       } else {
         g.raf = requestAnimationFrame(function () { loop(g); });
@@ -1668,6 +1711,82 @@
        layer already (their backdrop). */
     function warm(g) { g.warm = true; g.card.style.willChange = 'transform'; }
     function unwarm(g) { if (!g.warm) return; g.warm = false; g.card.style.willChange = ''; }
+    /* the first drag's pre-warm (t3-usage-pm7's recipe, measured on the P1000 2026-10-11). A page's first drag drew what
+       the GPU had never drawn: a plate in a layer of its own with its lift shadow, then (in the drop, or mid-carry before
+       frameMove kept the lifted plate from repainting) the same plate repainted at the lift's scale, which compiled the
+       programs for every kind of mark in it, 300-600 ms of GPU, plus the landing's dashed slot and a slide. So once per
+       look (and per Reduce Motion state) and page, in an idle period after a shown board's build, a copy of a plate in view
+       (its content too, with no ids, inert and hidden from assistive tech) goes through a drag at 1 % opacity inside a
+       copy of the board's class (so the board's own rules draw it): pressed (hovered, in its own layer at scale 1), lifted
+       at scale 1, scaled, repainted as the drop repaints it, and slid once, while the landing shows on that plate's slot
+       at 1 %. Under Reduce Motion it does not slide, as a Reduce Motion lift's peers do not. Nothing visible changes,
+       nothing takes focus, nothing in the board moves (the copy is absolutely placed over its plate; the landing is a grid
+       item on that plate's own slot), and nothing runs on a hidden board, without a GPU, during a gesture, a held build or
+       a film. ?pmu-prewarm=0 leaves it out. */
+    var prewarmT = 0, prewarmTries = 0, prewarmEl = null;
+    function prewarmKey() { return lookKey() + (reduced() ? ':rm' : ''); }
+    function prewarmSoon(ms) {
+      if (PREWARM_OFF || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
+      prewarmT = setTimeout(function () {
+        prewarmT = 0;
+        if (window.requestIdleCallback) requestIdleCallback(prewarm, { timeout: 2000 }); else prewarm();
+      }, (ms || 1200) * speed());
+    }
+    function prewarm() {
+      var key = prewarmKey();
+      if (dead || prewarmEl || PREWARMED[key]) return;
+      var usageOff = !hosted && !(rootEl && rootEl.closest && rootEl.closest('#panel-usage.active'));
+      var busy = !!gesture || !!ACTIVE || !current.mounted || !shownFlag || usageOff || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap || document.hidden ||
+        !boardEl || boardEl.hasAttribute('data-held') || boardEl.hasAttribute('data-film') || !current.cls || (PMU.film && PMU.film.moment && PMU.film.moment()) ||
+        softGpu() || !scroll || !scroll.clientWidth;
+      var cards = busy ? [] : cardsNow().filter(function (c) { return inView(c) && !c.hasAttribute('data-pending') && c.getAttribute('data-head') !== 'band' && c.querySelector(':scope > .pmu-cardbody > *'); });
+      var card = cards.filter(function (c) { return c.getAttribute('data-head') === 'plate'; })[0] || cards[0];
+      if (!card) { if (++prewarmTries < 12) prewarmSoon(900); return; }
+      PREWARMED[key] = true;
+      var r = rectOfCard(card), p = px(r), rm = reduced(), s = liftScale();
+      var host = prewarmEl = document.createElement('div');
+      host.className = 'pmu-board'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('data-pmu-prewarm', ''); host.setAttribute('data-pm-hover-exempt', ''); host.inert = true;
+      host.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;padding:0;margin:0;border:0;background:none;overflow:visible;pointer-events:none';
+      var copy = card.cloneNode(true);
+      ['id', 'data-widget', 'tabindex', 'role', 'aria-label', 'aria-labelledby', 'aria-describedby', 'aria-grabbed'].forEach(function (a) { copy.removeAttribute(a); });
+      Array.prototype.forEach.call(copy.querySelectorAll('[id]'), function (n) { n.removeAttribute('id'); });
+      copy.classList.remove('pmh-out', 'pmh-near', 'pmh-mv');
+      /* as a plate is pressed: hovered (PMH's light at full, its Reduce Motion form under Reduce Motion), in a layer of its
+         own at scale 1 */
+      copy.classList.add('pmh-on');
+      copy.style.setProperty('--pmh-i', '1'); copy.style.setProperty('--pmh-x', (p.w / 2) + 'px'); copy.style.setProperty('--pmh-y', '24px');
+      copy.style.position = 'absolute'; copy.style.margin = '0'; copy.style.left = p.l + 'px'; copy.style.top = p.t + 'px';
+      copy.style.width = p.w + 'px'; copy.style.height = p.h + 'px'; copy.style.opacity = '0.01'; copy.style.willChange = 'transform';
+      copy.style.transform = 'translate3d(0px,0px,0)';
+      host.appendChild(copy);
+      boardEl.appendChild(host);
+      ensurePreviews();
+      var showLanding = landing && landing.hidden && !landing._pmuHiding;
+      if (showLanding) { gridPlace(landing, r); landing.style.opacity = '0.01'; landing.hidden = false; }
+      /* then frame by frame what a drag draws: the lift's paint at scale 1 (frameMove's lift frame), the lift's scale, the
+         drop's paint at that scale (the settle repaints the plate while it is still scaled), and one peer's slide */
+      var n = 0, slide = null, lifted = 'translate3d(0px,' + (s === 1 ? 0 : -6) + 'px,0) scale(' + s + ')';
+      var step = function () {
+        if (prewarmEl !== host) return;
+        n++;
+        if (n === 1) { PMH_PROPS.forEach(function (pp) { copy.style.removeProperty(pp); }); copy.classList.remove('pmh-on'); copy.setAttribute('data-lifted', ''); }
+        else if (n === 2) copy.style.transform = lifted;
+        else if (n === 3) { copy.removeAttribute('data-lifted'); copy.setAttribute('data-settling', ''); }
+        else if (n === 4 && !rm) slide = PMU.motion.animate(copy, [{ transform: 'translate3d(8px,2px,0) scale(' + s + ')' }, { transform: lifted }], { dur: 250, ease: 'slide' });
+        else if (n >= 6) { prewarmEnd(); return; }
+        requestAnimationFrame(step);
+      };
+      prewarmEnd = function () {
+        prewarmEnd = function () {};
+        if (slide) { try { slide.cancel(); } catch (e) {} }
+        if (host.parentNode) host.parentNode.removeChild(host);
+        if (prewarmEl === host) prewarmEl = null;
+        if (showLanding && landing) { landing.style.opacity = ''; if (!landing._pmuRect) landing.hidden = true; }
+      };
+      requestAnimationFrame(step);
+    }
+    /* a gesture, a mount or a teardown that comes first ends it at once */
+    var prewarmEnd = function () {};
     function cardTitle(id) { var d = PMU.widgets.get(id) || {}; try { return typeof d.title === 'function' ? d.title({ id: id, room: current.room, state: st }) : (d.title || id); } catch (e) { return id; } }
     /* release: commit (one command) or settle / glide back */
     function endGesture(g, how, instant) {
@@ -1715,6 +1834,7 @@
       if (changed) {
         saveLayout(current.room, g.final || g.preview);
         revisions[g.id] = (revisions[g.id] || 0) + 1;
+        committed(g.source);
         persist();
         var settleMs = g.type === 'move' ? settleMove(g, instant) : morphResize(g, instant);
         /* 60 ms after the settle the displaced cards float up (250 SLIDE, 30 apart in reading order) */
@@ -2032,7 +2152,7 @@
       if (!card) {
         /* not on the board (another level): commit the layout without motion */
         var receipt = cmd(type === 'move' ? 'cmd.widget.move' : 'cmd.widget.resize', { room: current.room, widget_id: id, from: me, to: rect, board_class: current.cls.name, source: g.source }, type === 'move' ? { moved: true } : { resized: true });
-        if (receipt.dispatch_accepted !== false) { saveLayout(current.room, g.preview); revisions[id] = (revisions[id] || 0) + 1; persist(); }
+        if (receipt.dispatch_accepted !== false) { saveLayout(current.room, g.preview); revisions[id] = (revisions[id] || 0) + 1; committed(g.source); persist(); }
         return receipt;
       }
       if (gesture) endGesture(gesture, 'cancel', true);
@@ -2135,6 +2255,7 @@
       if (movedPeers.length) payload.moved_peers = movedPeers;
       var receipt = cmd(visible ? 'cmd.widget.add' : 'cmd.widget.remove', payload, { visible: !!visible });
       revisions[id] = (revisions[id] || 0) + 1;
+      if (receipt.dispatch_accepted !== false) committed();
       if (current.mounted) {
         var rects = layoutFor(room);
         if (fin && receipt.dispatch_accepted !== false) { saveLayout(room, fin); rects = fin; }
@@ -2179,6 +2300,7 @@
       var accepted = placed;
       if (receipts.some(function (rc) { return rc.dispatch_accepted === false; })) { PMU.shell.toast(t('board.rejected')); return receipts; }
       if (receipts.length) {
+        receipts.forEach(function () { committed(); });
         saveLayout(room, accepted);
         persist();
         /* Tidy (WOW-SPEC 3.13): every card glides to its first-fit place, 420 SETTLE, 16 ms apart in reading order */
@@ -2194,8 +2316,9 @@
       var receipt = cmd('cmd.widget.reset_layout', { scope: scope || 'room', room: current.room || st.room }, { reset: true });
       /* a reset the dispatch rejects changes nothing, as Start from's does (review 2026-10-10) */
       if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
-      /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4) */
-      if (hosted) { startSet = null; startRows = null; }
+      /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4); its Undo may put back
+         the revision it came from */
+      if (hosted) { startSet = null; startRows = null; var from = boardRev; committed(); undoMark = { rev: from, at: boardRev }; }
       if (scope === 'all') { st.layout = {}; st.hidden = {}; configs = {}; }
       else {
         delete st.layout[current.room]; delete st.hidden[current.room];
@@ -2215,6 +2338,7 @@
       if (!Object.keys(c).length) delete configs[id];
       var receipt = cmd('cmd.widget.configure', { room: current.room, widget_id: id, configuration_refs: cfgRefs(c), source: 'gear' }, { configured: true });
       revisions[id] = (revisions[id] || 0) + 1;
+      if (receipt.dispatch_accepted !== false) committed();
       persist();
       var card = cardOf(id); if (card) PMU.cards.update(card, 'config');
       emit('change', { op: 'config', id: id, receipt: receipt });
@@ -2497,6 +2621,7 @@
       });
       st.layout[room][cls.name] = rects.concat([rect]).map(function (r) { return { id: r.id, x: r.x, y: r.y, w: r.w, h: r.h }; });
       revisions[id] = (revisions[id] || 0) + 1;
+      committed();
       persist();
       if (current.mounted) reconcile(layoutFor(room));
       if (bo.onShell) bo.onShell();
@@ -2546,7 +2671,7 @@
     function reread() {
       if (gesture) endGesture(gesture, 'cancel', true);
       clearTimeout(saveTimer); saveTimer = 0; savePending = false;
-      loaded = null; envelope = null; configs = {}; revisions = {}; parkedFrom = {}; widgetRoom = null;
+      loaded = null; envelope = null; configs = {}; revisions = {}; parkedFrom = {}; widgetRoom = null; undoMark = null;
       ensure();
       if (current.mounted || current.pending) mount(st.room, { instant: true });
     }
@@ -2600,6 +2725,7 @@
       var room = st.room;
       var receipt = cmd('cmd.widget.reset_layout', { scope: 'room', room: room, set_id: setId }, { reset: true });
       if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
+      var from = boardRev; committed(); undoMark = { rev: from, at: boardRev };
       startSet = setId === 'default' ? null : setId; startRows = startSet ? set.rows : null;
       st.layout[room] = {};
       CLASSES.forEach(function (c) {
@@ -2620,6 +2746,39 @@
       else if (current.mounted) mount(room, { instant: true });   /* hidden: it mounts at its show */
       if (bo.onShell) bo.onShell();
       emit('change', { op: 'start', set_id: setId, receipt: receipt });
+      return receipt;
+    }
+    /* the Undo after Start from or Reset widgets (D10 P4; Plans WS-030 and UCC restore_revision, the lead's ruling of
+       2026-10-11). restoreWhy(rev, env): why a restore to rev is refused now, or null: 'stale' unless rev is the revision
+       the last Start from or Reset came from and nothing else has been committed on the board since (its preset hold
+       aside), 'envelope' unless env is the board's envelope at that revision, 'gone' for a board that has none.
+       restoreRevision(rev, env): one cmd.widget.reset_layout { scope: 'room', room: <board id>, restore_revision: rev },
+       never with set_id; accepted, the board's records are exactly env's again (written back as they were, under this
+       project) and the board reads them; refused, nothing is dispatched and { refused: true, reason } comes back. */
+    function restoreWhy(rev, env) {
+      if (!hosted || dead) return 'gone';
+      ensure();
+      if (!undoMark || rev !== undoMark.rev || boardRev !== undoMark.at) return 'stale';
+      if (env !== undefined && (!env || typeof env !== 'object' || env.schema_id !== 'pm.usage.widget_layout.v1' || !env.view || revOf(env) !== rev)) return 'envelope';
+      return null;
+    }
+    function restoreRevision(rev, env) {
+      var why = restoreWhy(rev, env === undefined ? null : env);
+      if (why) return { refused: true, reason: why };
+      completeStream();
+      if (gesture) endGesture(gesture, 'cancel', true);
+      var receipt = cmd('cmd.widget.reset_layout', { scope: 'room', room: st.room, restore_revision: rev }, { reset: true, restored_revision: rev });
+      if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
+      var back = JSON.parse(JSON.stringify(env));
+      if (back.project_id != null && back.project_id !== projectId) back.project_id = projectId;
+      clearTimeout(saveTimer); saveTimer = 0; savePending = false;
+      STORE.set(storeKey, back);
+      /* the set's size picks and holds go with it: the records read back hold their own */
+      if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
+      if (PMU.cards && PMU.cards.forgetHeld) PMU.cards.forgetHeld(null, api);
+      reread();
+      if (bo.onShell) bo.onShell();
+      emit('change', { op: 'restore', restore_revision: rev, receipt: receipt });
       return receipt;
     }
     /* a saved preset's content (PMU.boards.presets.save): the layout at every board class (the shown widgets only), the
@@ -2647,6 +2806,7 @@
        The Usage board is never destroyed. */
     function destroy() {
       if (dead || !hosted) return false;
+      prewarmEnd(); clearTimeout(prewarmT); prewarmT = 0;
       if (gesture) endGesture(gesture, 'cancel', true);
       if (ACTIVE === inner) ACTIVE = null;
       if (savePending) { clearTimeout(saveTimer); writeNow(); }
@@ -2719,6 +2879,10 @@
       details: bo.details || null, navigate: bo.navigate || null,
       /* D10 round two: Start from (P4), the project (P5), what the live beats did here (P12) */
       sets: sets, startFrom: startFrom, setProject: setProject, project: function () { return projectId; },
+      /* the Undo after Start from (the ruling of 2026-10-11): a dashboard's committed layout revision (null on the Usage
+         board), why a restore to a revision is refused now (null: it may run), and the restore itself */
+      revision: function () { if (!hosted || dead) return null; ensure(); return boardRev; },
+      restoreWhy: function (rev, env) { return restoreWhy(rev, env); }, restoreRevision: restoreRevision,
       liveStats: function () { return { beats: liveStat.beats, patched: liveStat.patched, held: liveStat.held, pending: liveKeys ? Object.keys(liveKeys).length : 0, running: !!liveQ, last: liveStat.last }; }
     });
     Object.defineProperty(api, 'DEFAULT_SET', { get: setVersion, enumerable: true, configurable: true });
