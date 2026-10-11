@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-11T16:38:35Z",
+  "generated_at_utc": "2026-10-11T17:47:38Z",
   "gui_related_units": {
     "count": 3533,
     "units": [
@@ -43092,12 +43092,6 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
-        "source_path": "Plans/event_family_registry.json"
-      },
-      {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
         "expected": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
         "source_path": "Plans/storage_recovery_contracts.schema.json"
       },
@@ -43180,12 +43174,10 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "error": "pnc019_source_hash_path_missing",
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "7d049f67cc566eea6775657897da092287802ee5ab706a5ac24ed5a02534fa49",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
-      },
-      {
-        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
-        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,

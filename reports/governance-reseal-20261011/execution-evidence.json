@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.governance.reseal.execution_evidence.v1",
+  "main_base": "0fd763294610e8e30cc52a62b738c5034c8a9150",
+  "go_mail_id": "1011173122-7808",
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2",
+  "outputs": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/preparation.SHA256SUMS",
+      "sha256": "0920e2d7c290fc845506aae5ad6b01ed5001ab4c56b0a73ed41f20e1fa5e5702"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/before/run-gates.json",
+      "sha256": "0df4d1123d4ed9f39a6c1e6f0e84ad7ae729568bc36445a820d61c2c29c55e63"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/after/run-gates.json",
+      "sha256": "4678c7d72f8e62f559d688aa4f386f9bf18ebc3f90d8ffa76675cc039481c504"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/after/readiness.out",
+      "sha256": "00a24e8801b98e96a3a3290c1bdb629a136d15de87e4070453197b502237997f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/after/migration-run002.out",
+      "sha256": "3fcea3f909763a9378a027c28f3e15bd02337a724916cd3aa43f85a580137fad"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/after/migration-current.out",
+      "sha256": "4ee42005b67f15ae595af94009104d391bb7173338936432ead540108d2e6e87"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/final-currentness-proof.json",
+      "sha256": "8f01be774c6d44639730f33b50b423f40f9fc33afdf931a47de0b508b80a4936"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/buildability-cycle-proof.json",
+      "sha256": "9a881c8770b631b284a7ae7f3252c21f2e218de9f8e12551644f0b0d8f704a36"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/in-place-write.py",
+      "sha256": "63fddc88b0acdb324d2212853828165ca34bb3cbd9c65c47315aec0aa3e6cb24"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261011/phase2/checkpoint-pin-verification.json",
+      "sha256": "c0c63e08bf8f120f2e6cc3331706bd4edae0ce7252283c20407584ea53e44051"
+    }
+  ]
+}
