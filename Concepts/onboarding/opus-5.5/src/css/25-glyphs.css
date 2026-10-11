@@ -1,0 +1,22 @@
+/* The neon glyph set in the onboarding window and the tour (pm7-glyphs D44; rollout ONBOARDING round 2, spec in
+   Concepts/glyph-system/opus-5.5/docs/rollout/ONBOARDING.md). The glyphs and marks bring their own lighting
+   (neon-icons.css and the PM7 bridge); this file only lets the window's hosts hold them. Every rule here keys on a class
+   the glyph path alone writes (o55-phmark-nx, o55-q-nx, o55-mk), so a page without window.PMG renders exactly as
+   before. */
+
+/* A phase or step mark is the shared mark on its own: the solid disc it sat on goes (GLY-3: one drawing per state
+   everywhere), and so do the turning ring of a running phase and Retro's stepping pixel, because the working mark's bead
+   is that motion now. The box keeps its size, so the label does not move. The position marker (a step you are on) is
+   a concept glyph and takes the window's accent; status marks carry their tone's ink. */
+#pm-o55-onboarding .o55-phmark.o55-phmark-nx {
+  border: 0 !important; background: none !important; box-shadow: none !important; animation: none !important;
+  color: var(--o55-accent) !important;
+}
+#pm-o55-onboarding .o55-phmark.o55-phmark-nx::after { content: none !important; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark.o55-phmark-nx { color: var(--o55-nier-ink) !important; }
+
+/* The details disclosure's "?" is the help glyph: its drawn circle replaces the bordered one. */
+#pm-o55-onboarding .o55-q.o55-q-nx { width: auto; height: auto; border: 0 !important; border-radius: 0; }
+
+/* A row still looking for something leads with the working mark where its glyph tile would be. */
+#pm-o55-onboarding .o55-row-wait > .o55-mk { margin: 0 6px; }

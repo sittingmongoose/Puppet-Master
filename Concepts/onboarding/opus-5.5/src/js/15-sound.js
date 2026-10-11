@@ -105,11 +105,16 @@
   }
   /* the wave paths of buttonHtml's icon, so an in-place rebind renders exactly what buttonHtml would */
   const WAVE = { on: ['M15.5 8.5a5 5 0 0 1 0 7', 'M18.4 5.6a9 9 0 0 1 0 12.8'], off: ['M16 9l5 6', 'M21 9l-5 6'] };
+  /* the neon set's speaker and speaker-off (pm7-glyphs D44): two drawings, so a rebind swaps the whole svg; '' without
+     PMG (the old icon and its wave swap then stay exactly as they were). U.nx returns the browser's serialised form. */
+  const neonSvg = (on) => O55.util.nx(on ? 'speaker' : 'speaker-off', 18, 'control');
   function syncButtons() {
     document.querySelectorAll('button.o55-sound').forEach((b) => {
       const on = !S.muted, label = on ? O55.t('chrome.soundOn') : O55.t('chrome.soundOff');
       b.setAttribute('aria-pressed', String(on));
       b.setAttribute('aria-label', label); b.setAttribute('title', label);
+      const svg = b.querySelector('svg');
+      if (svg && svg.classList.contains('nx')) { const nx = neonSvg(on); if (nx && svg.outerHTML !== nx) svg.outerHTML = nx; return; }
       const paths = b.querySelectorAll('svg path');
       for (let i = 0; i < 2 && i + 1 < paths.length; i++) paths[i + 1].setAttribute('d', WAVE[on ? 'on' : 'off'][i]);
     });
@@ -1719,7 +1724,7 @@
     const path = (d) => `<path d="${d}"></path>`;
     const wave = WAVE[on ? 'on' : 'off'].map(path).join('');
     return `<button type="button" class="o55-sound ${cls || ''}" data-o55-do="sound" data-pm-hover-exempt="true" aria-pressed="${on}" aria-label="${O55.util.esc(label)}" title="${O55.util.esc(label)}">`
-      + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg></button>`;
+      + (neonSvg(on) || `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path('M4 9.5h3.5L12 5.5v13l-4.5-4H4z')}${wave}</svg>`) + '</button>';
   };
 
   /* ---- the library: every sound a moment plays, by plain name, with the moment it plays at; renders and previews

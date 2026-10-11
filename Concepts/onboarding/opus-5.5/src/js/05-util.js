@@ -15,10 +15,86 @@
   U.slug = (s) => String(s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
   U.attrs = (obj) => Object.entries(obj || {}).filter(([, v]) => v !== false && v != null)
     .map(([k, v]) => (v === true ? ` ${k}` : ` ${k}="${U.esc(v)}"`)).join('');
+  /* The neon glyph set draws first (pm7-glyphs D44, rollout ONBOARDING step 1; Usage's 00-core.js is the worked
+     example). NEON maps each PM_ICONS name to its glyph (the catalog's "Shell icons (PM_ICONS)" group: every map.json
+     row with table T-core, field glyph). U.icon asks window.PMG first and keeps PM_ICONS only as the fallback for
+     names PMG cannot draw. NEON_ROLE is the glyph's own role (control for an interactive affordance: close, expand,
+     restart, pen, gear, toolbox, branch and the sound pair, mirroring Usage and the rail where the same name appears;
+     concept for everything else). NEON_SIZE is empty on purpose: no caller passes a class (the one call site is
+     U.icon(b.icon) in 60-ui-core.js) and no CSS rule sizes .o55-ico or its svg, so every glyph renders at the default
+     16 with explicit width/height (the PM_ICONS svgs carry neither). The neon svg string is cached per (glyph, size,
+     role); no box size changes. window.PM_ICONS itself is never changed: the Planning Wizard and the Orchestrator
+     read it and get no adoption. */
+  const NEON = {
+    palette: 'palette', brain: 'brain', shield: 'shield', terminal: 'terminal', puzzle: 'puzzle',
+    clipboard: 'clipboard', branch: 'branch', film: 'film', globe: 'globe', masks: 'users',
+    toolbox: 'wrench', gear: 'settings', wave: 'hand', search: 'search', star: 'star',
+    scales: 'scales', sparkle: 'sparkles', restart: 'refresh', check: 'check', checkCircle: 'check-circle',
+    close: 'close', soundOn: 'speaker', soundOff: 'speaker-off', folder: 'folder', home: 'home',
+    robot: 'robot', wand: 'wand', plant: 'sprout', party: 'party', plug: 'plug',
+    bolt: 'lightning', telescope: 'telescope', dial: 'gauge', warning: 'warning', rocket: 'rocket',
+    info: 'info', layers: 'layers', bell: 'bell', lock: 'lock', expand: 'expand',
+    pen: 'edit', comment: 'chat'
+  };
+  const NEON_ROLE = {
+    restart: 'control', close: 'control', gear: 'control', toolbox: 'control', pen: 'control',
+    expand: 'control', branch: 'control', soundOn: 'control', soundOff: 'control'
+  };
+  const NEON_SIZE = {};
+  const ICON_CACHE = Object.create(null);
+  const roleFor = (name) => NEON_ROLE[name] || 'concept';
+  /* the size for a class list: the first token NEON_SIZE knows, else 16 (Usage's sizeOf; no caller passes one) */
+  const sizeOf = (cls) => {
+    const t = String(cls || '').split(/\s+/);
+    for (let i = 0; i < t.length; i++) if (NEON_SIZE[t[i]]) return NEON_SIZE[t[i]];
+    return 16;
+  };
   U.icon = function icon(name, cls) {
+    /* only names in NEON go to PMG: an unmapped name always draws its own PM_ICONS drawing, even if PMG ever
+       gains a glyph of that name (t3-usage-pm7 review, 2026-10-11) */
     const map = window.PM_ICONS || {};
-    const svg = map[name] || map.info || '';
+    const G = window.PMG, g = name ? NEON[name] : '';
+    let svg = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      const role = roleFor(name), size = sizeOf(cls), key = g + '|' + size + '|' + role;
+      svg = ICON_CACHE[key];
+      if (!svg) {
+        try { svg = G.icon(g, size, 'nx-r-' + role); } catch (_) { svg = ''; }
+        if (svg) ICON_CACHE[key] = svg;
+      }
+    }
+    if (!svg) svg = map[name] || map.info || '';
     return `<span class="o55-ico${cls ? ' ' + cls : ''}" aria-hidden="true">${svg}</span>`;
+  };
+  /* The window's own drawings ask the neon set the same way (rollout ONBOARDING, round 2): U.nx draws one glyph, U.mark
+     one status mark of the shared vocabulary; each returns '' when PMG cannot draw it, so its caller keeps the drawing
+     it had. Both strings are cached per argument list (the screens re-render on every state change), in the form the
+     browser serialises them (a host that compares a slot's innerHTML with a fresh string, as the sound and look slots
+     do, then finds it unchanged, and U.morph sees no difference). A mark is lit and still (nx-still: it draws on once
+     and never loops) unless `moving` is set: only working moves. */
+  const NX_CACHE = Object.create(null);
+  const serialised = (html) => {
+    if (!html || typeof document === 'undefined') return html || '';
+    const t = document.createElement('template'); t.innerHTML = html; return t.innerHTML;
+  };
+  U.nx = function nx(glyph, size, role, cls) {
+    const G = window.PMG;
+    if (!glyph || !G || typeof G.has !== 'function' || !G.has(glyph)) return '';
+    const key = 'g|' + glyph + '|' + size + '|' + role + '|' + (cls || '');
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.icon(glyph, size, 'nx-r-' + role + (cls ? ' ' + cls : ''))); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
+  };
+  U.mark = function mark(status, size, cls, moving) {
+    const G = window.PMG;
+    if (!status || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(status)) return '';
+    const c = (moving ? '' : 'nx-still') + (cls ? (moving ? '' : ' ') + cls : '');
+    const key = 's|' + status + '|' + size + '|' + c;
+    if (NX_CACHE[key] == null) {
+      try { NX_CACHE[key] = serialised(G.status(status, size, c)); } catch (_) { NX_CACHE[key] = ''; }
+    }
+    return NX_CACHE[key];
   };
 
   /* Deterministic PRNG (mulberry32) so fixtures, fingerprints and sound noise are reproducible in films. */

@@ -55,7 +55,7 @@
         if (n.manual) {
           out += `<div class="o55-fieldrow" data-key="manual">${C.field({ bind: 'addr', label: T('nas.find.addressLabel'), value: n.addr || '', placeholder: '192.168.1.20', hint: T('nas.find.addressHint') })}${C.field({ bind: 'port', label: T('nas.find.portLabel'), value: n.port || '22', cls: 'o55-field-port' })}</div>`;
         } else if (!st || st.state !== 'done') {
-          out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
+          out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('nas.find.looking'))}</span></span></div>`;
         } else {
           const cards = S.env.here.sshConfigHosts.map((h) => { const d = S.env.devices.find((x) => x.address === h.host); return d && { v: d.id + '|cfg', glyph: 'key', title: h.alias + ' → ' + h.host, sub: T('nas.find.fromConfig') + ' · ' + T('nas.find.user', { user: h.user }) }; }).filter(Boolean)
             .concat(S.env.devices.map((d) => ({ v: d.id, glyph: 'server', title: d.name, sub: d.brand + ' ' + d.model + ' · ' + d.address, tag: d.pm ? T('nas.find.pmTag') : d.ssh ? T('nas.find.sshOn') : T('nas.find.sshOff') })));
@@ -65,7 +65,7 @@
         if (d && d.pm) out += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
           const cs = F.state(S, 'sshcheck:' + d.id);
-          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.small('power', 14)}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
+          out += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
             + `<p class="o55-path" data-key="path">${U.esc(O55.tx('nas.find.steps')[d.brand] || '')}</p>`
             + (cs && cs.state === 'failed' ? C.note(T('nas.find.stillOff', { name: d.name }), 'warn') : '')
             + `<div class="o55-inline" data-key="again">${O55.ui.btn({ label: T('nas.find.checkAgain'), do: 'checkAgain', cls: 'o55-small' }, 'o55-secondary')}</div>`, { cls: 'o55-sshoff' });
