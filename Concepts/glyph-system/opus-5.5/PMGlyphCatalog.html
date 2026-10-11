@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="238418e8f342">
+<meta name="pmg-build" content="59e4390f8a02">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -95,6 +95,9 @@ html[data-o55-nier="on"] body[data-theme="basic-dark"] { --nx-idle-a: .55; --nx-
    sat at .72 of the muted ink and read 1.4-2.7:1 on the severity-tinted cards; hover still ignites it. */
 :is(#rsStage, #rsStack, #rsPanel) .n-card .n-x { opacity: 1; }
 :is(#rsStage, #rsStack, #rsPanel) .n-card .n-x > svg.nx { --nx-ink: var(--text-secondary); }
+/* The empty stack's bell (the title bar's notification button with nothing in it) at the secondary ink and full
+   strength: at .72 of the muted ink it read 1.9-3.6:1. Its hover is the glyph's own ignite. */
+#rsStack .rs-empty-bell.nx { opacity: 1; color: var(--text-secondary); }
 
 /* PMG.calm(key): a status mark that is lit and still from its first frame (no list rhythm, no mount act): Usage, where
    the room entrance owns all arrival motion (t3-usage-pm7, 2026-10-10). */
