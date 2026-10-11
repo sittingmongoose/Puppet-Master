@@ -16998,6 +16998,8 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
       filter: none;
     }
     .rs-card .n-x { opacity: .72; } /* always visible (#4) */
+    /* pm7-glyphs surface 4: the PMG dismiss sits on the button's box, not the text baseline. */
+    .n-card .n-x > svg.nx { display: block; }
 
     /* Collapsed hover: slight rightward fan + front lift (transform only) */
     .rs-stack:not(.empty):hover .rs-card {
@@ -94951,6 +94953,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var stackEl, clipEl, badgeEl, stageEl, panelEl, listEl, headLabel;
 
     function sevClass(s) { return 'n-sev-' + (s || 'info'); }
+    /* pm7-glyphs surface 4 (toasts): the kind mark and dismiss through PMG; without window.PMG the base draws exactly as before. */
+    function pmgSev(s) { return s === 'success' ? 'complete' : s === 'warn' ? 'warning' : s === 'error' ? 'failed' : 'info'; }
+    function pmgMark(s) { return window.PMG ? window.PMG.status(pmgSev(s), 16, 'nx-still') : '<span class="n-sev-dot" aria-hidden="true"></span>'; }
+    function pmgX() { return window.PMG ? window.PMG.icon('close', 14, 'nx-r-control') : '×'; }
     function clearStackTimers() {
       stackTimers.forEach(function (t) { clearTimeout(t); });
       stackTimers = [];
@@ -95017,9 +95023,9 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         }
         card.style.opacity = String(1 - i * 0.16);
         card.innerHTML =
-          '<span class="n-sev-dot" aria-hidden="true"></span>' +
+          pmgMark(it.severity) +
           '<span class="n-title"></span>' +
-          '<button type="button" class="n-x" aria-label="Dismiss">×</button>';
+          '<button type="button" class="n-x" aria-label="Dismiss">' + pmgX() + '</button>';
         card.querySelector('.n-title').textContent = it.title;
         card.querySelector('.n-x').addEventListener('click', function (e) {
           e.stopPropagation();
@@ -95123,13 +95129,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         var top = document.createElement('div');
         top.className = 'rs-item-top';
         top.innerHTML =
-          '<span class="n-sev-dot" aria-hidden="true"></span>' +
+          pmgMark(it.severity) +
           '<div class="meta">' +
             '<div class="kind-tag"></div>' +
             '<div class="t"></div>' +
             '<div class="b"></div>' +
           '</div>' +
-          '<button type="button" class="n-x" aria-label="Dismiss">×</button>';
+          '<button type="button" class="n-x" aria-label="Dismiss">' + pmgX() + '</button>';
         top.querySelector('.kind-tag').textContent = it.kind || 'advisory';
         top.querySelector('.t').textContent = it.title;
         top.querySelector('.b').textContent = it.body || '';
@@ -95349,9 +95355,9 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       card.className = 'rs-card n-card ' + sevClass(msg.severity);
       card.innerHTML =
         '<div class="n-row">' +
-          '<span class="n-sev-dot" aria-hidden="true"></span>' +
+          pmgMark(msg.severity) +
           '<span class="n-title"></span>' +
-          '<button type="button" class="n-x" aria-label="Dismiss">×</button>' +
+          '<button type="button" class="n-x" aria-label="Dismiss">' + pmgX() + '</button>' +
         '</div><div class="n-body"></div>';
       card.querySelector('.n-title').textContent = msg.title;
       card.querySelector('.n-body').textContent = msg.body || '';
@@ -95478,6 +95484,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         return;
       }
       booted = true;
+      /* pm7-glyphs surface 4: the empty bell through PMG (one element keeps its rs-empty-bell CSS); without window.PMG the base svg stays. */
+      try {
+        var bellSvg = stackEl.querySelector('.rs-empty-bell');
+        if (bellSvg && window.PMG) bellSvg.outerHTML = window.PMG.icon('bell', 16).replace('class="nx ', 'class="rs-empty-bell nx ');
+      } catch (eBell) {}
       stackEl.addEventListener('mouseenter', function () { if (items.length) scheduleStack(); });
       stackEl.addEventListener('mouseleave', function () { scheduleStack(); });
       stackEl.addEventListener('click', function () {
