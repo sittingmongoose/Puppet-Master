@@ -71,3 +71,14 @@ rule: only Live beats move). Provider brand marks are untouched.
   6 s with Live paused and 6 s with Live on, where only beat cells may change.
 - `window.PMG` exists before the first board mount on Home (log it in the boot check).
 - Every state mark >= 3:1 on its field in every look (the catalog's measure, `PMG_CATALOG.contrastOf` logic).
+
+## D43 (account switch-level control, concept/usage-d43-20261010, lands after the panels and terminal publish)
+
+t3-usage-pm7, 2026-10-11. The control adds `.pmu-accsw` (button), `.pmu-accswi` (its glyph box with
+`<i class=is-link>` = PMU.icons.link, "follows provider", and `<i class=is-own>` = PMU.icons.notch, "own level"),
+`.pmu-accswv`, the SWITCH AT column (`.pmu-accswcell` / `.pmu-accsww` / `.pmu-accswcap`), the stacked form
+(`.pmu-accactcell.is-stack` / `.pmu-accactw`), row class `.pmu-accrow.is-swbtn` and plate `.pmu-acc[data-sw]`.
+- `is-link` -> the set's `link` (concept role, 14 px, through PMU.icon like every other name).
+- `is-own` -> keep PMU.icons.notch exactly: it must stay identical to the meters' own notch (not a glyph).
+- The menu's "Open in Settings" row: gear -> `settings`.
+If the rollout runs before D43 lands, leave a note in the D43 branch's files instead of editing them.
