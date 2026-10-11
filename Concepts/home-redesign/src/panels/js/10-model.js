@@ -6,7 +6,7 @@
      root: Node,
      tabs: { <tabId>: { id, kind, label, title, icon, state, pinned, preview, userLabel } },
      view: { focus: <panelId>, maximized: <panelId>|null, mru: [<tabId>] },   // view state (ui.* actions)
-     chat_column: { keep_open: false },                                        // the chat column's view state (ui.chat_column.*)
+     chat_column: { width_px: null, history_pinned: false, keep_open: false },  // the chat column (canon's v2 chat_column)
      closed: [ { tab, panelId, index } ],                                      // reopen stack, newest last
      named: 'home' | 'build' | 'terminals' | 'focus' | <saved name> | null
    }
@@ -32,7 +32,23 @@ model.same = function (a, b) {
 };
 model.empty = function () {
   return { schema: SCHEMA, revision: 0, seq: 0, root: null, tabs: {}, view: { focus: null, maximized: null, mru: [] },
-    chat_column: { keep_open: false }, closed: [], named: null };
+    chat_column: model.chatColumn(null), closed: [], named: null };
+};
+
+/* The chat column (canon's v2 chat_column, SP-330 and DL-180; none of its fields is a Settings value, SSYS-050):
+   width_px is the message area's width the user dragged (400-760; null = the default for the window, 44-narrow.js),
+   committed by cmd.workspace_layout.resize_surface { surface: 'chat', width }; history_pinned (History pinned beside the
+   messages, else a flyout) and keep_open (D4's pin) are view state, ui.chat_column.pin_history and
+   ui.chat_column.keep_open (46-chat.js). A record written before a field existed reads as its default; a width that is
+   not a finite number is null, any other is rounded into 400-760; anything but true is false. */
+model.CHAT_W_MIN = 400;
+model.CHAT_W_MAX = 760;
+model.chatWidth = function (w) {
+  return typeof w === 'number' && isFinite(w) ? Math.min(model.CHAT_W_MAX, Math.max(model.CHAT_W_MIN, Math.round(w))) : null;
+};
+model.chatColumn = function (c) {
+  c = c && typeof c === 'object' ? c : {};
+  return { width_px: model.chatWidth(c.width_px), history_pinned: c.history_pinned === true, keep_open: c.keep_open === true };
 };
 
 function nextId(l, prefix) { l.seq = (l.seq || 0) + 1; return prefix + l.seq; }
@@ -245,9 +261,7 @@ model.setSizes = function (l, splitId, sizes) {
 model.normalize = function (l, opts) {
   opts = opts || {};
   if (!l.view) l.view = { focus: null, maximized: null, mru: [] };
-  // the chat column (canon's v2 chat_column; the concept keeps only keep_open here, D4's pin): a record written before
-  // it existed reads as false, and anything but true is false
-  l.chat_column = { keep_open: !!(l.chat_column && l.chat_column.keep_open === true) };
+  l.chat_column = model.chatColumn(l.chat_column);
   if (!l.closed) l.closed = [];
   if (!l.tabs) l.tabs = {};
   var seen = {};

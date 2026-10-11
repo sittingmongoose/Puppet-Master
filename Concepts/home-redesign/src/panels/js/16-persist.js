@@ -97,19 +97,38 @@ var persist = PMW.persist = {
   },
   clear: function () { store.remove(persist.key()); },
 
-  /* 'chat.pinOpen' was a panels setting until 2026-10-10; "Keep the chat open in narrow windows" is now the layout
-     record's chat column keep_open (ui.chat_column.keep_open, 46-chat.js). Once, at boot: a stored true is carried into
-     this project's layout and into every other project's saved layout (the setting was one for all projects), and only
-     when this project's layout is written is the setting dropped from pm.home.settings:v1, so it cannot be carried
-     twice and is never lost to a failed write. A stored false is just dropped. Returns whether a true was carried. */
-  migratePinOpen: function () {
-    var KEY = 'chat.pinOpen';
-    if (!Object.prototype.hasOwnProperty.call(settingsValues, KEY)) return false;
-    var on = settingsValues[KEY] === true;
-    if (on && state.layout) {
-      // this project's unreadable record could not be set aside yet, so it is not written now: carry the pin next time
-      if (pendingQuarantine) return false;
-      state.layout.chat_column = { keep_open: true };
+  /* 'chat.width', 'chat.history' and 'chat.pinOpen' were panels settings until 2026-10-11 and 2026-10-10; they are now
+     the layout record's chat column (canon's v2 chat_column, SSYS-050: none is a Settings value): width_px (committed
+     by resize_surface { surface: 'chat', width }), history_pinned (ui.chat_column.pin_history) and keep_open
+     (ui.chat_column.keep_open), 46-chat.js. Once, at boot: a stored width (a finite number, rounded into 400-760),
+     'pinned' and true are carried into this project's layout and into every other project's saved layout (the settings
+     were one for all projects), each only where that record still holds the field's default, so a value written since
+     is never overwritten; only when this project's layout is written are the keys dropped from pm.home.settings:v1, so
+     nothing is carried twice or lost to a failed write. While this project's unreadable record waits to be set aside
+     nothing is carried or dropped (next time). A stored default (null, 'flyout', false) or a value of the wrong kind is
+     just dropped. Returns the fields carried ({} when none). */
+  migrateChatColumn: function () {
+    var OLD = [
+      ['chat.width', 'width_px', function (v) { return model.chatWidth(v); }],
+      ['chat.history', 'history_pinned', function (v) { return v === 'pinned' ? true : null; }],
+      ['chat.pinOpen', 'keep_open', function (v) { return v === true ? true : null; }]
+    ];
+    var present = OLD.filter(function (o) { return Object.prototype.hasOwnProperty.call(settingsValues, o[0]); });
+    if (!present.length) return {};
+    var carry = {};
+    present.forEach(function (o) { var v = o[2](settingsValues[o[0]]); if (v != null) carry[o[1]] = v; });
+    var fields = Object.keys(carry);
+    function fill(l) {
+      var cc = model.chatColumn(l.chat_column), changed = false;
+      fields.forEach(function (f) { if (cc[f] === model.chatColumn(null)[f]) { cc[f] = carry[f]; changed = true; } });
+      l.chat_column = cc;
+      return changed;
+    }
+    if (fields.length) {
+      if (!state.layout) return {};
+      // this project's unreadable record could not be set aside yet, so it is not written now: carry them next time
+      if (pendingQuarantine) return {};
+      fill(state.layout);
       try {
         var keys = [];
         for (var i = 0; i < localStorage.length; i++) keys.push(localStorage.key(i));
@@ -117,15 +136,13 @@ var persist = PMW.persist = {
           if (!k || k.indexOf(LAYOUT_KEY_PREFIX) !== 0 || k === persist.key()) return;
           var rec = store.get(k);
           if (!rec || !rec.layout || rec.layout.schema !== model.SCHEMA) return;
-          if (rec.layout.chat_column && rec.layout.chat_column.keep_open === true) return;
-          rec.layout.chat_column = { keep_open: true };
-          store.set(k, rec);
+          if (fill(rec.layout)) store.set(k, rec);
         });
       } catch (_) {}
-      if (!persist.save()) return false;
+      if (!persist.save()) return {};
     }
-    settings.set(KEY, null);
-    return on;
+    present.forEach(function (o) { settings.set(o[0], null); });
+    return carry;
   },
 
   /* Saved named layouts name their tabs by id (14-layouts.js, SAVED_KEY): an id a kind folds now

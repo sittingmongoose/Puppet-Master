@@ -630,30 +630,33 @@ function syncPop() {
 }
 function moreMenu(anchor) {
   var floating = !!(PMW.chatCol && PMW.chatCol.isFloating());
-  var pinned = PM_HOME.settings.get('chat.history') === 'pinned';
+  var pinned = histSetting();
   PMW.menu.open(anchor, { id: 'pmw-sc-more', title: 'Chat', align: 'end', width: 280, rows: [
     { id: 'current', label: 'Show the current chat', sub: 'The stand-in comes back from Home options', icon: 'chat', run: function () { toggle(); } },
     floating ? { id: 'dock', label: 'Dock back', icon: 'popOut', run: function () { PMW.chatCol.dockBack(); syncPop(); } }
       : { id: 'pop', label: 'Pop out', sub: 'The only way to move the chat', icon: 'popOut', run: function () { PMW.chatCol.popOut(); syncPop(); } },
-    { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, run: function () { setPinned(!pinned); } },
+    { id: 'pin', label: 'Keep History open', sub: 'The chat grows by its width', checked: pinned, action: PMW.UI.pinHistory, run: function () { setPinned(!pinned); } },
     // D4's pin: the same row as the title bar's Home options, dispatching ui.chat_column.keep_open (46-chat.js)
     PMW.chatCol.keepOpenRow(),
     { id: 'clear', label: 'Clear what you sent', sub: 'In this thread', icon: 'reopen', disabled: !(S.sent[S.thread] || []).length, run: function () { resetThread(); } }
   ] });
 }
-/* History is drawn pinned while the setting says so and the narrow ladder has not given its width back (44-narrow.js:
-   below the strip threshold the column falls back to the flyout before the chat folds to its strip; never saved) */
+/* History pinned or a flyout is the layout record's chat column history_pinned (46-chat.js chatCol.historyPinned), set
+   by the typed UI action ui.chat_column.pin_history: the History button (while pinned it unpins), the list's pin and
+   More's "Keep History open" all dispatch it. It is drawn pinned while the record says so and the narrow ladder has not
+   given its width back (44-narrow.js: below the strip threshold the column falls back to the flyout before the chat
+   folds to its strip; never saved) */
+function histSetting() { return !!(PMW.chatCol && PMW.chatCol.historyPinned && PMW.chatCol.historyPinned()); }
 function histPinned() {
-  return PM_HOME.settings.get('chat.history') === 'pinned' && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
+  return histSetting() && !(PMW.narrow && PMW.narrow.state && PMW.narrow.state.histDropped);
 }
 function setPinned(on) {
-  PM_HOME.settings.set('chat.history', on ? 'pinned' : 'flyout');
-  paintHistoryMode();
-  PMW.announce(on ? 'History stays open' : 'History opens as a flyout');
+  // the action repaints this layer (chat:column) and announces the change
+  PM_HOME.command(PMW.UI.pinHistory, { history_pinned: !!on });
 }
 function paintHistoryMode() {
   if (!S.layer) return;
-  var setting = PM_HOME.settings.get('chat.history') === 'pinned', pinned = histPinned();
+  var setting = histSetting(), pinned = histPinned();
   S.layer.toggleAttribute('data-pmw-sc-pinned', pinned);
   if (pinned) { S.hist.hidden = false; S.histOpen = false; S.layer.removeAttribute('data-pmw-sc-hist'); S.histBtn.setAttribute('aria-expanded', 'true'); }
   else if (!S.histOpen) { S.hist.hidden = true; S.histBtn.setAttribute('aria-expanded', 'false'); }
@@ -687,7 +690,8 @@ function history() {
   search.addEventListener('input', function () { fill(search.value); });
   S.fillHistory = function () { fill(search.value); };
   fill('');
-  var pin = iconBtn('pin', 'Pin History', 'Keep the list open; the chat grows by its width', function () { setPinned(PM_HOME.settings.get('chat.history') !== 'pinned'); });
+  var pin = iconBtn('pin', 'Pin History', 'Keep the list open; the chat grows by its width', function () { setPinned(!histSetting()); });
+  pin.setAttribute('data-ui-action-id', PMW.UI.pinHistory);
   S.pinBtn = pin;
   var panel = h('nav', { id: 'pmw-sc-hist', class: 'pmw-sc-hist', 'aria-label': 'Threads', hidden: true }, [
     h('div', { class: 'pmw-sc-hhead' }, [h('span', { class: 'pmw-sc-htitle', text: 'Threads' }), pin]),
@@ -1064,7 +1068,9 @@ function install() {
   ['activate', 'close', 'open', 'layout'].forEach(function (ev) { PM_HOME.on(ev, queueRecompute); });
   PM_HOME.on('chat', function (e) { if (!e || e.type == null) syncPop(); });
   PM_HOME.settings.on(SC_KEY, apply);
-  PM_HOME.settings.on('chat.history', paintHistoryMode);
+  // pinned or a flyout: its own action (chat:column), or a project switch or a restored layout bringing another record
+  PMW.bus.on('chat:column', paintHistoryMode);
+  PM_HOME.on('layout', paintHistoryMode);
   PM_HOME.on('narrow', paintHistoryMode);   // the ladder gives pinned History's width back, or takes it again
   PMW.bus.on('browser:capture', onCapture);
   PMW.bus.on('browser:send', onSend);

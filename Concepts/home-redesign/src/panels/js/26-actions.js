@@ -417,7 +417,8 @@ PMW.applyNamed = function (name, opts) {
   if (!built) return false;
   var res = commit(opts.reset ? CMD.reset : CMD.applyNamed, { name: name }, function (d) {
     built.revision = d.revision;
-    // the chat column is not part of a layout's shape: a named layout or Restore home layout keeps it (keep_open)
+    // the chat column is not part of a layout's shape: a named layout or Restore home layout keeps it (width_px,
+    // history_pinned, keep_open)
     var chatColumn = d.chat_column;
     for (var k in d) delete d[k];
     Object.assign(d, model.clone(built));
@@ -472,7 +473,11 @@ COMMAND_HANDLERS[CMD.move] = function (a) {
 COMMAND_HANDLERS[CMD.reopen] = function () { return PMW.reopenClosed(); };
 COMMAND_HANDLERS[CMD.split] = function (a) { return PMW.splitPanel(a.panelId, a.direction === 'down' ? 'bottom' : a.direction === 'right' ? 'right' : a.direction, a.spec); };
 COMMAND_HANDLERS[CMD.movePanel] = function (a) { return PMW.movePanel(a.panelId, a.target.panelId, a.target.edge); };
-COMMAND_HANDLERS[CMD.resize] = function (a) { return PMW.resizeSplit(a.splitId, a.sizes); };
+/* { splitId, sizes } resizes a split; { surface: 'chat', width } the chat column (46-chat.js, null = the default) */
+COMMAND_HANDLERS[CMD.resize] = function (a) {
+  if (a.surface === 'chat') return PMW.chatCol.setWidth(a.width);
+  return PMW.resizeSplit(a.splitId, a.sizes);
+};
 COMMAND_HANDLERS[CMD.collapse] = function (a) { return PMW.setCollapsed(a.panelId, a.collapsed); };
 COMMAND_HANDLERS[CMD.closePanel] = function (a) { return PMW.closePanel(a.panelId); };
 COMMAND_HANDLERS[CMD.lock] = function (a) { return PMW.lockPanel(a.panelId, a.locked); };

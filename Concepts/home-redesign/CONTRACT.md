@@ -407,15 +407,41 @@ toggles the column on every page (D40): while the chat is on screen (`chatCol.is
 calls `show()`; it never changes the page in front, Enter and Space do the same when the page makes the entry
 focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
 and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
-after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and `chat.width` are.
-"Keep the chat open in narrow windows" (D4's pin) is the typed UI action `ui.chat_column.keep_open` (section 8), saved
-in the layout record's chat column as `keep_open` (default false; canon's v2 `chat_column`) and never a Settings row.
-`chatCol.keepOpen()` reads it and `chatCol.setKeepOpen(on)` writes it like view state (no receipt, event or revision);
-`PM_HOME.command('ui.chat_column.keep_open', { keep_open })` is the same (without `keep_open` it toggles). Two menus
-carry it as the same checked row, `chatCol.keepOpenRow()`: the title bar's Home options and the chat's own header menu
-(the stand-in's More today; the 5.6 Pro chat's header menu takes the row at the port). With it on, the narrow ladder never
-folds the chat to its strip. A named layout and Restore home layout keep the chat column; a project switch shows that
-project's own. A stored `chat.pinOpen` setting from before is carried into the record once at boot and dropped.
+after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and its width (the
+layout record's chat column `width_px`) are.
+
+The column's saved state is the layout record's chat column, canon's v2 `chat_column` (SP-330, DL-180; the Plans canon
+lead's rulings of 2026-10-10 and 2026-10-11): `{ width_px, history_pinned, keep_open }`, defaults `null`, `false`,
+`false`. None of the three is a Settings value (SSYS-050), so no Settings row can show any of them.
+
+- Width: `width_px` is the message area's width the user dragged (400-760, rounded; `null` is the default for the
+  window). `chatCol.widthPx()` reads it. `chatCol.setWidth(width)` and
+  `PM_HOME.command('cmd.workspace_layout.resize_surface', { surface: 'chat', width })` write it as one structural
+  command (section 8): one `pm:command-dispatch`, one receipt, the one `workspace.layout_changed` event and a new
+  revision, rolled back on a cancelled dispatch or a failed write. A drag on the resizer commits once on release (an
+  Escape or a release with no movement commits nothing); its double-click (`chatCol.resetWidth()`) commits once with
+  `width: null`. A width outside 400-760 is stored at the nearer bound; anything but a finite number or `null` is
+  refused.
+- History pinned or a flyout (D3): `history_pinned` is the typed UI action `ui.chat_column.pin_history` with
+  `{ history_pinned }` (true or false; without it, a toggle), written like view state with the layout (no receipt,
+  event or revision; UCC-203). `chatCol.historyPinned()` reads it and `chatCol.setHistoryPinned(on)` writes it. The chat
+  surface that draws the History dispatches it: the stand-in's History button (while pinned it unpins), the pin in its
+  list's header and its More menu's "Keep History open" row (`data-ui-action-id="ui.chat_column.pin_history"`); the 5.6
+  Pro chat's controls take the same action at the port. The bus event `'chat:column'` `{ history_pinned }` tells the
+  surface to repaint; a layout event (a project switch, a restore) does too.
+- Keep open: "Keep the chat open in narrow windows" (D4's pin) is the typed UI action `ui.chat_column.keep_open`
+  (section 8), saved as `keep_open`. `chatCol.keepOpen()` reads it and `chatCol.setKeepOpen(on)` writes it like view
+  state (no receipt, event or revision); `PM_HOME.command('ui.chat_column.keep_open', { keep_open })` is the same
+  (without `keep_open` it toggles). Two menus carry it as the same checked row, `chatCol.keepOpenRow()`: the title
+  bar's Home options and the chat's own header menu (the stand-in's More today; the 5.6 Pro chat's header menu takes
+  the row at the port). With it on, the narrow ladder never folds the chat to its strip.
+
+A named layout and Restore home layout keep the whole chat column; a project switch shows that project's own (a project
+with no saved layout starts at the defaults). The settings `chat.width`, `chat.history` and `chat.pinOpen` stored
+before are carried once at boot (`persist.migrateChatColumn`): a finite width (rounded into 400-760), `'pinned'` and
+`true` go into this project's layout and every other project's saved layout, each only where that record still holds
+the field's default, and the keys are dropped once this project's layout is written (nothing is carried or dropped
+while an unreadable record waits to be set aside); a stored default is just dropped.
 Until publish retires Settings' Chat Layout row (the planner's ruling on D3 and D32), a pop out the page asks for
 through `PM_HOME_WORKSPACE.popOutChat` before the person's first press or key (that row's saved Overlay or Detached
 replaying at start) leaves the chat in its column.
@@ -485,9 +511,11 @@ from the row, then Recent. A sub-row that wraps starts its new line with an entr
 Every committed structural change is one command with a receipt and emits the one existing event
 `workspace.layout_changed` (no new event family); an open that only reveals an existing tab emits nothing. Previews
 (hover, drag, menu open, the "+" menu, the "+N" list, panel menus) dispatch nothing; a changed release commits once; a
-failed commit rolls back. Activation, maximize and the chat column's keep-open pin are view state: typed local UI
-actions (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.chat_column.keep_open`) with no receipt and no
-event, written with the layout's view-state block or its chat column. Names agreed
+failed commit rolls back. Activation, maximize and the chat column's two pins (keep open, History pinned) are view
+state: typed local UI actions (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.chat_column.keep_open`,
+`ui.chat_column.pin_history`) with no receipt and no event, written with the layout's view-state block or its chat
+column. The chat column's width is a structural commit (`cmd.workspace_layout.resize_surface` with `surface: 'chat'`).
+Names agreed
 with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/panels/js/02-commands.js`).
 
 | Command | Args | Notes |
@@ -502,7 +530,7 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 | `cmd.panel_tab.reopen_closed` | | |
 | `cmd.workspace_layout.split` | `panelId, direction, spec?` | |
 | `cmd.workspace_layout.move_surface` | `panelId, target: { panelId, edge }` | whole-panel drag by its corner grip |
-| `cmd.workspace_layout.resize_surface` | `splitId, sizes` | one commit on release |
+| `cmd.workspace_layout.resize_surface` | `splitId, sizes`, or `surface: 'chat', width` | one commit on release. For the chat, `width` is the message area's width (400-760; `null` is the default for the window, the resizer's double-click), saved as the layout record's chat column `width_px`, never a Settings value (section 6.1) |
 | `cmd.workspace_layout.set_collapsed` | `panelId, collapsed` | collapse to strip, any panel (D2) |
 | `ui.workspace_layout.maximize` | `panelId` or `null` | view state, a flag outside the tree (D1) |
 | `cmd.workspace_layout.close_panel` | `panelId` | tabs close (with `canClose`) |
@@ -511,6 +539,7 @@ with the Plans thread on 2026-10-09; the concept keeps them in one table (`src/p
 | `cmd.workspace_layout.restore` | `source` | a whole saved layout back in one command (the tour's snapshot, `source: 'guided_tour_restore'`); the id still needs the Plans thread's agreement |
 | `cmd.panel.undock` | `'chat'` | the chat's Pop out, its only way to move (D3) |
 | `ui.chat_column.keep_open` | `{ keep_open }` (true or false; without it, a toggle) | view state (no receipt, no event), saved in the layout record's chat column as `keep_open`: "Keep the chat open in narrow windows" (D4's pin), never a Settings row; dispatched by the title bar's Home options and the chat's own header menu (section 6.1) |
+| `ui.chat_column.pin_history` | `{ history_pinned }` (true or false; without it, a toggle) | view state (no receipt, no event; UCC-203), saved in the layout record's chat column as `history_pinned`: the chat's History pinned beside the messages (the column widens by it) or a flyout, never a Settings row; dispatched by the chat's History button, its list's pin and its More menu's "Keep History open" (section 6.1) |
 
 `PM_HOME.command_log`, `PM_HOME.receipt_log` and `PM_HOME.event_log` hold the last 200 of each for checks and the tour.
 
@@ -616,11 +645,12 @@ lists. The terminal's parchment and ink are its own CSS under `html[data-o55-nie
 `pm.home.settings:v1`; every choice a user will later make in Settings reads from here with a default. Panels keys:
 `panels.layout.named`, `panels.tabs.preview` (true), `panels.plus.default` ('menu'), `panels.tabs.sizing` ('shrink'),
 `editor.font.family`, `editor.font.size` (13), `editor.minimap` (true), `editor.stickyScroll` (true),
-`editor.scheme` ('follow', D30; registered by the editor kind), `chat.width` (null = the default for the window),
-`chat.history` ('flyout' or 'pinned'). "Keep the chat open in narrow windows" is not a setting: it is the layout
-record's chat column `keep_open` (`ui.chat_column.keep_open`, section 6.1), so no Settings row can show it; the former
-`chat.pinOpen` key is carried into the record once and dropped. A pinned History widens the chat column by 240 px (the chat draws it at 200
-while its whole column is under 540); `chat.width` and the 400-760 drag range stay the message area's. The widening
+`editor.scheme` ('follow', D30; registered by the editor kind). The chat column registers no keys: its width, its
+History pinned or a flyout, and "Keep the chat open in narrow windows" are the layout record's chat column (`width_px`,
+`history_pinned`, `keep_open`; section 6.1), never Settings values (SSYS-050), so no Settings row can show them; the
+former `chat.width`, `chat.history` and `chat.pinOpen` keys are carried into the record once and dropped. A pinned
+History widens the chat column by 240 px (the chat draws it at 200 while its whole column is under 540); `width_px`
+and the 400-760 drag range stay the message area's. The widening
 counts in the narrow ladder, the peek (400 plus History) and the popped-out window (440 plus History), and is never
 saved. The terminal's appearance model (D15) lives under `terminal.*`,
 registered by the terminal with `PM_HOME.settings.register('terminal', schema, defaults)`; its Appearance popover reads
@@ -712,3 +742,9 @@ root. A kind never appends its own overlay to `document.body`.
   the chat open in narrow windows" is the typed UI action `ui.chat_column.keep_open`, saved in the layout record's chat
   column as `keep_open`, dispatched by the title bar's Home options and the chat's own header menu; the `chat.pinOpen`
   setting is gone (carried over once). Menu rows may carry `action`, written as `data-ui-action-id`.
+  Same version (2026-10-11), the Plans canon lead's ruling on the rest of canon's v2 `chat_column` (SP-330, DL-180,
+  SSYS-050): sections 6.1, 8 and 12. The chat column's width is the layout record's `width_px`, committed by
+  `cmd.workspace_layout.resize_surface` `{ surface: 'chat', width }` (a drag once on release, the double-click reset
+  with `null`); History pinned or a flyout is `history_pinned`, the typed UI action `ui.chat_column.pin_history`. The
+  `chat.width` and `chat.history` settings are gone (carried over once with `chat.pinOpen`); a named layout and Restore
+  home layout keep all three fields.
