@@ -35,7 +35,8 @@ that are new but name none of the branch's files, or a subcheck that timed out, 
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
 files that is neither staleness nor pre-existing, a bucket that grew whose error kind is not
 staleness, or a rise in a subcheck whose failures are truncated, other than the readiness growth
-counter; 3 the check could not run, or a subcheck timed out while recording a baseline. A subcheck
+counter; 3 the check could not run, readiness audit input identity could not be established or matched,
+or a subcheck timed out while recording a baseline. A subcheck
 that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
 from its export is not truncated; one whose export falls back is, and the summary says why.
 
@@ -55,6 +56,52 @@ own first commit `b29eab7b99`, because the script that records a baseline had to
 that recorded it; the rebase at landing left that commit off `main` (it landed as `2c527ce17f`), so
 against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
 2026-09-23 replaced it.
+
+## Readiness audit input identity
+
+The tracked checkout alone does not determine `implementation_readiness`. Its PNC-019 helper reads
+`Plans/.audits/event-authority-2026-08-13-currentness/`, an ignored directory present in the shared
+checkout. Without it the same commit reports an unavailable audit instead of the source, registry
+and artifact failures that the evidence exposes. These different inputs must not be compared as
+though their failure counts describe a regression or an improvement.
+
+Both modes use one `--readiness-audit-root DIR` option, naming that currentness directory. By default
+they select `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` when it is
+present, otherwise the checked tree's directory. A clean worktree temporarily links its missing
+ignored directory to the selected source for the aggregates and exports, then removes its own link
+on success or failure. The source is read, never copied, regenerated or written. Canonical sources
+are still read from the checked worktree. An existing local directory is never replaced: select it
+explicitly with `--readiness-audit-root`, or use a clean worktree. An explicit nonexistent source is
+an error; default local absence is recorded as absence and the validator still reports its failures.
+
+The baseline's `readiness_audit_inputs` records relative file paths and each file's actual SHA-256,
+or `null` when missing. It covers these five direct inputs plus every artifact named by the receipt's
+`artifact_hashes`:
+
+- `VALIDATOR_RECEIPT.json`
+- `EVENT_FAMILY_DENOMINATOR_STATUS.json`
+- `CURRENT_EVENT_SOURCE_INVENTORY.json`
+- `adjudication/GROUP_ARTIFACT_MANIFEST.json`
+- `adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl`
+
+Receipt hashes are expectations to validate, not trusted substitutes for hashing the artifact bytes.
+Canonical sources listed in the inventory and the validator script are deliberately outside this
+binding: edits to those remain readiness findings. Unreferenced audit outputs are outside it too.
+The source's absolute location is printed in the run report, but is not part of the baseline identity,
+so moving the same evidence does not change the comparison.
+
+Comparison refuses with exit 3 before running the checks if the binding is absent or invalid, or
+the path set, file presence or bytes differ. Inputs are rehashed after each aggregate and after
+exports; changes stop the run before failures are classified or a baseline is written. Unreadable
+inputs also stop it. Malformed audit JSON remains a validator finding while its bytes are bound.
+There is no staleness exception or pre-existing classification for an input mismatch. Restore the
+recorded input edition; never re-record a baseline to make a pending landing pass.
+
+Older baselines without this field cannot establish input equivalence and the new checker refuses
+them. Adopt the recorder during a scheduled refresh between landings, using the full local worktree
+at the pushed `main`; the old checker accepts the additive field. The adoption order is documented
+in [the readiness drift notes](readiness-drift-20261011/NOTES.md). This fix does not refresh the
+repository baseline or authorize a governance reseal.
 
 ## What a key is
 
@@ -127,7 +174,8 @@ keeps the truncated rule, and the summary says which condition failed:
 - the audit-governance copy printed every failure, in this run and when the baseline was recorded;
 - every row the run-gates copy printed is among the audit-governance copy's rows.
 
-The inputs themselves cannot be hashed, since each validator reads its own set of files. The equal
+Most validator inputs are not bound separately, since each validator reads its own set of files.
+The ignored readiness audit inputs are bound as described above. For other inputs, the equal
 totals and the rows found in both copies are the evidence that both saw the same inputs. The summary
 prints one line for each run-gates subcheck whose failures are a sample, saying which copy was judged
 and why, and `--json` carries the same as `validator_pairs`, so a replay shows which copy was judged.
@@ -450,7 +498,8 @@ construction, and it is not part of any hash census.
 
 ## What a full checkout has to contain
 
-A baseline must be recorded in a tree that has everything the checks read. The tracked tree is not
+A baseline must be recorded in a tree that has everything the checks read. The readiness audit
+directory is selected and exposed automatically as described above. The tracked tree is not
 enough: these inputs are gitignored and exist only in the shared checkout
 `/mnt/Cursor/PuppetMaster`, and without them `json_syntax` and `pm7_gui_fixtures` fail with
 missing-file errors that a real landing never sees.
@@ -503,12 +552,15 @@ directory, which is why it cannot run where branches land.
 Land that separate commit through the ordinary fast-forward, shard-check, landing-check, main-push
 and worktree-removal procedure while holding the same landing lock; release it afterward.
 
-Four things that make the difference between a good baseline and a misleading one:
+Five things that make the difference between a good baseline and a misleading one:
 
 - `git sparse-checkout disable`, because a sparse tree is missing inputs the checks read and records
   failures no landing ever sees.
 - The symlink, because `json_syntax` reads 16 raw captures underneath it. It is the one check input
-  that stays untracked: it points at raw evidence, which is never committed here.
+  under `tests/` that stays untracked: it points at raw evidence, which is never committed here.
+- The readiness audit source: both modes select it mechanically and the baseline binds its actual
+  ignored inputs. Use `--readiness-audit-root DIR` for another evidence location; no manual audit copy
+  is needed. A later comparison must use the same input bytes.
 - `--record-baseline` after the snapshot, not before, so the baseline describes the snapshot the
   later landings will be checked against; and before the commit, so the commit it names is
   `origin/main` itself, which rule 2 needs on the history of every later base.

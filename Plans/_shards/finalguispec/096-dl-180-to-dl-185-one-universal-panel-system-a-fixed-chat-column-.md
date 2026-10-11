@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43884-L45642
+Source lines: L43911-L45749
 
-Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
+Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
 
 ---
 
@@ -130,6 +130,8 @@ canonical_text: >-
   sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
   the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
   section 5.8's 240 px panel minimum.
+  A saved named layout also keeps at most 64 KB (65,536 bytes) of its dashboard boards' contents; a larger
+  save keeps the layout without those contents, records boards_skipped_bytes and says so (SP-330).
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -176,6 +178,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "n-ary split tree"
   - "0.34"
@@ -204,6 +208,7 @@ compatibility_only_notes:
   - "The concept seeds its Home layout with demo files, a demo plan and two terminals; the seed contents are illustrative, the tree and proportions are canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L13): Adds a lost pointer capture to the gesture's cancel set, as DR-066 says."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Named-layout saves keep at most 64 KB of dashboard contents and announce a larger save without them."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
@@ -357,8 +362,9 @@ canonical_text: >-
   and an address; Terminal (Ctrl+Shift+`), with a sub-row of every shell installed on the computer, from the terminal
   kind (F3-640, D39); when the terminal kind knows SSH hosts, the row SSH hosts, right under Terminal; Browser
   (Ctrl+Shift+B), with a sub-row of recent addresses; File... (Ctrl+P), with the three most recent files inline, each
-  clickable; Dashboard, with a sub-row of Home, Metrics, Monitoring, Agents, this project's custom dashboards by name
-  and New dashboard (F3-638); Plan or document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
+  clickable; Dashboard, with inline sub-row links Home, Metrics, Monitoring, Agents and New dashboard,
+  then one Your dashboards row when this project has custom dashboards, opening a submenu of them by name with
+  the widget count on the second line and a search field above 7 entries (F3-638); Plan or document...; Artifact...; one row "Output, Problems, Ports, Debug Console" whose submenu lists those four tool kinds;
   a hairline; Split right (Ctrl+\); Split down (Ctrl+Shift+\); Reopen closed tab (Ctrl+Shift+T, Alt+Shift+T in a web
   browser). Kinds join the menu through their registration (F3-635) in this order, and every row shows the shortcut that
   works where the app runs. A sub-row lists all of its kind's entries unless the kind caps its own; the Terminal row
@@ -394,7 +400,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "The Output row opens or reveals output and never makes output:<channel>; a reveal leaves its tab where it is."
   - "The Terminal row's sub-row lists every installed shell; with SSH hosts known, an SSH hosts row right under Terminal opens a submenu of the hosts (a filter field above 7), whose row body opens a host here and trailing cell in a new panel, and typing in the menu's field finds a host by name or detail."
-  - "The Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this project's custom dashboards by name and New dashboard, which makes a new, empty custom dashboard."
+  - "The Dashboard sub-row has Home, Metrics, Monitoring, Agents and New dashboard inline; this project's custom dashboards appear by name and widget count in one Your dashboards submenu, with search above 7; New dashboard makes a new empty dashboard."
   - "The empty-panel launcher shows each row's sub-row as a line of links under it, hidden under 360 px of panel width, and no wrapped sub-row starts with a separator dot."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -424,6 +430,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 3 and 7; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc (section 1, the \"+\" menu row; concept lineage only)"
   - "Concepts/home-redesign/NUMBERS.md at c4e32ec0b7 on branch concept/home-panels-20261009 (SHA-256 77e9c04c23959812da6799a54708c487fcb2f33f342219a1c79dae9c396614d7; the Dashboard sub-row as built; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "output"
   - "Open anything: kinds, files, URLs"
@@ -452,6 +460,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards without creating, renaming or deleting boards."
   - "Amended 2026-10-10 (DL-187, D39): The Terminal row lists every installed shell, SSH hosts get their own submenu row under it, the field finds hosts, and the launcher shows each row's sub-row as links."
   - "Amended 2026-10-10 (DL-186, D35): The Dashboard sub-row adds this project's custom dashboards and New dashboard; L10's interim rule that no board is created, renamed or deleted is answered."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The Dashboard sub-row groups this project's custom dashboards under Your dashboards."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -830,6 +839,9 @@ canonical_text: >-
   without a path. In-tab view saves coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px,
   Basic 6 px and Retro/NieR square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping
   slack.
+  The Debug Console's chosen sub-tab and every segmented toggle are filled on their own box, never
+  underlined, with Friendly's, Glass's and Basic's neutral chosen-row surface, never an accent; Glass adds
+  its 1 px top rim, Retro uses reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -880,6 +892,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (Debug Console, Output; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 2 and 3: the kinds and fold; concept lineage only)"
   - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Open in new tab"
   - "output:<channel>"
@@ -929,6 +942,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (D31, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-10 (DL-187, D33): The Debug Console is one tab, debug-console, with a sub-tab per session as view state; debug-console:<session> ids fold into it; each session keeps its console, state and frame, and its input history stays per session (F3-490)."
   - "Amended 2026-10-10 (DL-180, D31 as built, panels NUMBERS 339203bd76; DL-187, D33 and D38): The Output tabs are labelled Output and Output · <Channel>; a kind may fold older ids and add tab-menu rows through its registration."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): The Debug Console sub-tab passage uses the shared neutral chosen fill."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md
@@ -1088,6 +1102,29 @@ canonical_text: >-
   is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px), with C 754 px. At 900 px
   in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned peek. These measurements
   include centre-budget clamping, while the saved width remains the message-area preference.
+  The v2 layout record's chat_column keeps width_px, history_pinned and keep_open (defaults null, false and
+  false), in addition to its shown state; none is a Settings value. width_px is the message area's width,
+  rounded to an integer in 400-760 px, with an out-of-range finite number stored at the nearer bound and
+  null following the window's default; other values are refused. The resize command is
+  cmd.workspace_layout.resize_surface { surface: 'chat', width }: a changed release commits once with one
+  receipt, one workspace.layout_changed and a new revision; Escape or release with no movement commits
+  nothing. Double-clicking the resizer commits once with width null. The two pin actions accept their named
+  boolean or toggle when it is absent, and save like view state with no receipt, event or revision;
+  History's button, the pin in its list header and Keep History open in More dispatch
+  ui.chat_column.pin_history. A named layout and Restore home layout keep all three fields; a project switch
+  shows that project's own record, or the defaults if none exists. Once at boot, the former stored
+  chat.width (finite, rounded and clamped to 400-760), chat.history value pinned and chat.pinOpen true copy
+  into this project's layout and every other project's saved layout only where the target field still holds
+  its default; existing non-default fields stay. The three old keys are dropped only after this project's
+  layout is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
+  and false) are just dropped. The chat's More menu rows, in order, are Show the current chat, Pop out or
+  Dock back where supported, Keep History open (checked, ui.chat_column.pin_history), Keep the chat open in
+  narrow windows (checked, ui.chat_column.keep_open), and Clear what you sent. Keep open's second line says
+  Instead of folding to a strip at the edge. At 1920 px with width_px 500, History pinning grows the column
+  from 500 to 681 px (History 240 px, centre 960 px) and unpinning returns it to 500; dragging the 600 px
+  column's inner edge 100 px right stores width_px 500, and double-click resets it to 600 with width_px
+  null. At 900 x 700, keep_open on keeps the chat at 400 px with centre 443 px; off it folds to the strip
+  with centre 811 px.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -1137,6 +1174,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept lineage only)"
   - "The planning thread's rulings of 2026-10-10: the Usage board's 400 px floor (pm-mail 1010142236-fced) and Chat Layout's retirement with the narrow-window pin on the chat's header menu (pm-mail 1010211322-7b6c)"
   - "Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the Usage board floor as built; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "clamp(400, 0.26667 x window width + 88, 640)"
   - "400"
@@ -1169,6 +1208,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D40): The left rail's Chat entry shows or hides the column on every page (F3-042)."
   - "Amended 2026-10-10 (DL-187, the planning thread's rulings): Keep the chat open in narrow windows is the chat's own preference in its header menu and the Home options menu, not a Settings row; on the Usage page the chat never leaves the board below 400 px; the narrow ladder runs only while Home is the page shown."
   - "Amended 2026-10-10 (lead ruling): Keep the chat open in narrow windows is a check in the chat header's menu, also offered in the Home options menu, both dispatching ui.chat_column.keep_open, saved in the v2 chat column."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The layout chat column keeps the rounded message width and pins, migrates former preferences once, and owns the More rows."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
@@ -1192,7 +1232,7 @@ canonical_text: >-
   redesign, and other sources later, each under its own label (Plans/Widget_System.md#WS-030); the widget commands'
   payloads do not change. The built-in dashboards are Home (`dashboard:home`, pinned in the default layout, F3-630),
   Metrics (`dashboard:metrics`), Monitoring (`dashboard:monitoring`) and Agents (`dashboard:agents`), and a person can
-  make as many custom dashboards as they like (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
+  make custom dashboards with n from 1 to 9999 (`dashboard:dash-<n>`, called "Dashboard <n>" until renamed). Home,
   Metrics and Monitoring start from their own sets of Usage widgets (WS-030); a new custom dashboard starts empty. The
   old Home widgets (run progress, lanes and results) have left Home until Orchestrator widgets join the board engine
   after that page's redesign, and there is no Home (current) board (Jared, P1 B). Agents is drawn by the dashboard
@@ -1242,8 +1282,8 @@ canonical_text: >-
   and when the tab closes, and Undo puts the board back as it was and says so. Amended 2026-10-10 (lead ruling): Undo
   dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
   being the board's committed layout revision just before that Start from, with one receipt and only while the
-  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore whose
-  revision is no longer the board's previous one is refused with a disabled reason, and it emits no
+  notice is up; it never carries set_id, the owner puts back exactly that revision's records, a restore is refused without dispatch if any other change was committed on the board since,
+  excluding the preset hold's own settling resizes, and Undo is disabled with its reason, and it emits no
   workspace.layout_changed (WS-030, UCC-200). The empty board's Start from... button
   opens the same list.
   Presets are the person's own, kept across projects and offered on every dashboard (WS-030). Save as preset... asks
@@ -1282,7 +1322,7 @@ canonical_text: >-
   catalogue and the dashboard catalogue limit of Appendix C.4 and C.4.1, F3-517's "distinct tab models" for Home and
   Dashboard and its Dashboard-frozen resize peers (with F3-515's and F3-518's), section 7.2's singleton dashboard,
   and the dashboard's own Main, Metrics and Monitoring strip of F3-505.
-  Measurements: the tab body pads its board and the Agents cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
+  Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
   width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
   520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
   Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly #C2557A,
@@ -1297,6 +1337,37 @@ canonical_text: >-
   160 ms, 50 ms apart, with no motion under Reduced Motion. The Agents clock ticks every 1 s while shown; the concept's
   working progress gains 1 % every 9 s up to 96 % and moves in 260 ms, stepped in NieR Mode and at once under Reduced
   Motion; a filter other than All agents is that tab's own state, saved about 250 ms after it changes.
+  The Dashboard plus sub-row keeps the four built-ins and New dashboard inline; Your dashboards opens this
+  project's custom dashboards by name with their widget counts and search above 7 (F3-632). A custom board's
+  number is one more than the largest across open tabs, the reopen list, this project's stores, unadopted
+  unscoped board stores, names and live boards; past 9999, opening falls back to Home. An unknown board
+  opens Home; dashboard:new creates one and dashboard:current resolves to dashboard:home. Custom names
+  collapse whitespace before trimming, at most 80 characters; a clash with a built-in or another of this
+  project's dashboards gains 2, 3 and so on, and an empty or default Dashboard <n> name clears the stored
+  name. Preset names use the same uniqueness rule among presets. The current dashboard in Board and the
+  active set in Start from are checked and focused. Board shows Empty for a zero-widget custom board's
+  detail; Start from shows the active set's label, Save as preset... says Reuse these widgets anywhere, and
+  Reset widgets says Back to its default widgets or Back to an empty dashboard. Add widget labels the Usage
+  widgets without a room More widgets. An Undo notice follows a Reset widgets that changed anything as well
+  as Start from; its restore_revision is the committed revision immediately before that operation. The owner
+  writes and reads that revision's captured envelope in this project, with one receipt and no
+  workspace.layout_changed, and restore_revision never accompanies set_id. Undo's availability is checked on
+  a commit that leaves the notice up, on pointer or focus entering it and on its click; if stale, the
+  envelope is invalid or the board is gone, nothing dispatches, Undo is aria-disabled at 50 % opacity, and
+  the notice text and button's hover detail give the reason. Preset-hold resizes settle the set and never
+  end the notice or make its revision stale. The notice is at most the body width minus 24 px, with padding
+  5, 5, 5 and 14 px and a 14 px gap; its text ellipsizes, Retro and NieR's Undo reverses on hover, and Glass
+  uses a 30 px blur at saturation 1.5. NieR's Live word is 11.5 px in the code face with 0.08 em spacing.
+  The empty board stays laid out but is visually hidden under its invitation; its three-track sketch has 6
+  px gaps and sits 20 px above the title, whose weight is 620. A board card focused by an API move or resize
+  returns focus to a menu, prompt, header or Undo notice that held it, unless the person pressed or pointed
+  on a board, pressed Tab or F6, or the kind deliberately focused it within 600 ms. A project switch rebinds
+  every mounted board whose tab the new layout keeps, hidden ones included, reloads custom names and
+  refreshes the catalog; an unmounted tab writes to its prior project. A named layout restores only
+  envelopes saved for the current project, skipping another project's envelope; a custom board that the
+  applied layout does not hold keeps its current contents. The lab-only Demo time reads on paint, on each
+  beat and every 2 s while the demo hour plays and the tab is visible; its Board rows remain Play the next
+  hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -1310,7 +1381,7 @@ acceptance_criteria:
   - "The widget grid, Add widget and widget gestures act only inside the tab and never move or size panels; gravity and Tidy behave as on the Usage page, each settled change one transaction."
   - "The board's width class follows the tab's own width, the board sits on Home's tab surface in every look, and a dashboard's widget layout is never written into the Home layout record."
   - "Range and scope are chosen per dashboard and change only that board, through ui.widget_board.set_view with no receipt and no event."
-  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused with a disabled reason once that revision is no longer the board's previous one (amended 2026-10-10, lead ruling)."
+  - "Start from lists This dashboard, Dashboard starter, the 13 Usage room sets in room order and Your presets; a pick dispatches one cmd.widget.reset_layout with that set's set_id, and the Undo notice that follows puts the board back as it was through one cmd.widget.reset_layout with restore_revision and no set_id, offered only while the notice is up and refused without dispatch and disabled with a reason once any other board change was committed since, excluding the preset hold's settling resizes (amended 2026-10-10, lead ruling)."
   - "Saving, renaming and deleting a preset dispatch no command; a saved preset shows in Start from on every dashboard of every project, and deleting it leaves the dashboards that used it unchanged."
   - "A custom dashboard is renamed from Rename dashboard... or by renaming its tab, each renaming the other, and is deleted only after the confirm, which closes its tab and forgets its board and name; Home, Metrics, Monitoring and Agents show no Rename dashboard... or Delete dashboard...."
   - "Each board's contents belong to the project: a project switch shows that project's boards and lists only its own custom dashboards."
@@ -1345,6 +1416,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -1378,6 +1451,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
   - "Amended 2026-10-10 (DL-186): Every dashboard tab is its own board on the Usage board engine: built-in and custom dashboards, per-project boards, per-dashboard range and scope, Start from with set_id and Undo, presets, rename and delete, the reopen-list and named-layout rules, the entrance, the empty board, Details to the Usage inspector, Home's tab surface and live readings per board; the old Home widgets, the shared-holder note and the wave 1 board key leave."
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Dashboard controls gain the remaining round-two menu, name, focus and Undo details."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Only Agents uses the measured card-body padding; the engine board keeps its own layout."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
@@ -1663,6 +1738,9 @@ canonical_text: >-
   rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
   or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
   of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
+  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
+  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
+  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
@@ -1691,6 +1769,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-184"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "3px left-edge accent stripe"
   - "accent-left-border"
@@ -1704,6 +1783,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
   - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
+  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md

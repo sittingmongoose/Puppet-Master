@@ -19,6 +19,15 @@ const SC = [];
 const def = (id, scenario, title, fn) => SC.push({ id, scenario, title, fn });
 const until = (d, js, what, timeout) => d.until(new Function('return ' + js), { what, timeout: timeout || 15000 });
 const readyPrimary = (d) => d.until(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; }, { what: 'primary enabled', timeout: 15000 });
+async function connectRoutes(d) {
+  // Discovery grows the list above More ways and can move it between a geometry probe and real input.
+  await d.until(() => {
+    const S = window.O55.S, op = (S.sess.ops || {})['discover:connect:' + (S.env.here.vpn ? 'vpn' : 'lan')];
+    return S.sess.screen === 'c-route' && op && op.state === 'done';
+  }, { what: 'network discovery finished before opening route choices', timeout: 8000 });
+  await d.act('more');
+  await d.untilElement('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="route"][data-arg="reverse_proxy"]', 'connection route choices');
+}
 async function toName(d) { await d.primary(); await d.primary(); await d.primary(); await d.primary(); } /* welcome→look→where→begin→name */
 async function reviewAndCreate(d) { await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done' || window.O55.S.sess.commit.state === 'failed'", 'commit settled', 25000); }
 async function githubAttempt(d, A, failure) {
@@ -57,7 +66,7 @@ def('s02', 'returning', 'Existing Projects available; Start fresh', async (d, A)
 });
 def('s03', 'returning', 'Inherit settings with preview and optional group selection', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary();
-  await d.act('pick', 'tastebook', { settle: 900 });
+  await d.act('pick', 'tastebook');
   A.ok(await d.state(() => /Uses the same/.test(document.querySelector('.o55-previewtext') ? document.querySelector('.o55-previewtext').textContent : '')), 'owner preview shown');
   await d.act('choose'); await d.act('cat', 'Notifications & sounds');
   A.ok(await d.state(() => !window.O55.S.sess.like.categories.includes('Notifications & sounds')), 'category deselected');
@@ -78,16 +87,18 @@ def('s04', 'fresh', 'Back through every pre-commit choice creates nothing', asyn
 });
 def('s05', 'fresh', 'Close and resume before commit with the draft intact', async (d, A) => {
   await d.openOnboarding(); await toName(d); await d.type('name', 'Garden notes'); await d.primary();
-  await d.state(() => window.O55.ui.close('close')); await sleep(700);
+  await d.state(() => window.O55.ui.close('close')); await d.settle();
+  await d.untilElement('#o55-resume [data-o55-chip="resume"]', 'resume chip');
   A.ok(await d.state(() => !!document.getElementById('o55-resume')), 'resume chip shown');
-  await d.state(() => document.querySelector('#o55-resume [data-o55-chip="resume"]').click()); await sleep(1200);
+  await d.click('#o55-resume [data-o55-chip="resume"]', 'resume chip'); await d.untilScreen('safe');
   A.eq(await d.screen(), 'safe', 'reopens on the saved screen');
   A.eq((await d.draft('main')).project_name, 'Garden notes', 'draft intact');
 });
 def('s06a', 'fresh', 'Existing folder', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'existing'); await d.act('sub', 'folder'); await d.primary();
-  A.eq(await d.screen(), 'ex-folder', 'folder picker'); await d.act('pick', '~/Documents/recipe-app', { settle: 1200 });
+  A.eq(await d.screen(), 'ex-folder', 'folder picker'); await d.act('pick', '~/Documents/recipe-app');
+  await readyPrimary(d); await d.settle();
   A.ok(await d.state(() => /history/.test(document.querySelector('[data-key="finfo"]') ? document.querySelector('[data-key="finfo"]').textContent : '')), 'read-only check shows history');
   await d.primary(); A.eq(await d.screen(), 'name', 'name'); await d.primary(); await d.primary();
   A.ok(/Add Project/.test((await d.primaryInfo()).label), 'button says Add Project'); await reviewAndCreate(d);
@@ -145,7 +156,7 @@ def('s09b', 'flaky', 'Network failure before a remote effect: review a fresh att
   await d.act('reviewAgain'); A.eq(await d.screen(), 'review', 'fresh creation requires review');
   A.ok(await githubAttempt(d, A) !== failedKey, 'fresh review creates a distinct attempt key');
 });
-async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, "(window.O55.S.sess.ops||{})['detect:this computer'] && window.O55.S.sess.ops['detect:this computer'].state === 'done'", 'detection', 8000); await sleep(400); }
+async function toAi(d, name) { await d.openOnboarding(); await toName(d); await d.type('name', name || 'AI test'); await d.primary(); if ((await d.screen()) === 'like') await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary(); await until(d, "(window.O55.S.sess.ops||{})['detect:this computer'] && window.O55.S.sess.ops['detect:this computer'].state === 'done'", 'detection', 8000); await d.settle(); }
 def('s10', 'returning', 'Provider already installed and signed in: Ready automatically', async (d, A) => {
   await toAi(d); A.ok(await d.state(() => window.O55.S.sess.ai.accounts.claude && window.O55.S.sess.ai.accounts.claude.state === 'ready'), 'Claude Ready with no action');
   A.ok(!(await d.state(() => [...document.querySelectorAll('.o55-pane button')].some((b) => /^(Connect|Use This Installation|Use This Provider|Open Installer)$/.test(b.textContent.trim())))), 'no forbidden action labels');
@@ -161,14 +172,16 @@ def('s12', 'signedOut', 'Installed but signed out: Sign In', async (d, A) => {
 });
 def('s13', 'fresh', 'Key provider: Enter API Key, no Install', async (d, A) => {
   await toAi(d); A.ok(await d.state(() => !document.querySelector('[data-o55-do="install"][data-arg="cursor"]')), 'no Install for Cursor');
-  await d.act('key', 'cursor'); await d.type('key:cursor', 'short'); await d.act('keyCheck', 'cursor', { settle: 1400 });
+  await d.act('key', 'cursor'); await d.type('key:cursor', 'short'); await d.act('keyCheck', 'cursor');
+  await until(d, "window.O55.S.sess.ai.accounts.cursor.state === 'keyEntry'", 'key verification rejected', 8000);
   A.ok(await d.state(() => window.O55.S.sess.ai.accounts.cursor.state === 'keyEntry'), 'bad key rejected');
-  await d.type('key:cursor', 'cur_live_8f3k2m9x1q4w'); await d.act('keyCheck', 'cursor', { settle: 1500 });
+  await d.type('key:cursor', 'cur_live_8f3k2m9x1q4w'); await d.act('keyCheck', 'cursor');
+  await until(d, "window.O55.S.sess.ai.accounts.cursor.state === 'ready'", 'key verification accepted', 8000);
   A.ok(await d.state(() => window.O55.S.sess.ai.accounts.cursor.state === 'ready'), 'key accepted');
   A.ok(!(await d.state(() => JSON.stringify(window.O55.S.sess)).then((s) => s.includes('cur_live'))), 'key never stored in the session');
 });
 def('s14', 'returning', 'Copied provider route already usable', async (d, A) => {
-  await d.openOnboarding(); await toName(d); await d.type('name', 'Copy AI'); await d.primary(); await d.act('pick', 'tastebook', { settle: 900 }); await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary();
+  await d.openOnboarding(); await toName(d); await d.type('name', 'Copy AI'); await d.primary(); await d.act('pick', 'tastebook'); await d.primary(); await d.primary(); await reviewAndCreate(d); await d.primary();
   await until(d, "window.O55.S.sess.ai.accounts.claude && window.O55.S.sess.ai.accounts.claude.state === 'ready'", 'claude ready', 8000);
   A.ok(await d.state(() => /From Tastebook/.test(document.querySelector('[data-key="pv-claude"]').textContent)), 'row says From Tastebook');
 });
@@ -179,8 +192,8 @@ def('s16', 'fresh', 'Skip providers, then Set Up Free Models', async (d, A) => {
   A.eq(await d.screen(), 'ready', 'Ready');
 });
 def('s17', 'fresh', 'Close after commit and resume at AI', async (d, A) => {
-  await toAi(d, 'Resume me'); await d.state(() => window.O55.ui.close('close')); await sleep(600);
-  await d.state(() => document.querySelector('#o55-resume [data-o55-chip="resume"]').click()); await sleep(1200);
+  await toAi(d, 'Resume me'); await d.state(() => window.O55.ui.close('close')); await d.settle();
+  await d.click('#o55-resume [data-o55-chip="resume"]', 'resume chip'); await d.untilScreen('ai');
   A.eq(await d.screen(), 'ai', 'resumes at AI'); A.eq(await d.state(() => window.O55.S.sess.commit.state), 'done', 'Project stays created');
 });
 def('s23', 'lowResource', 'Low-resource mode drops ambient motion only', async (d, A) => {
@@ -208,13 +221,15 @@ def('c2', 'fresh', 'Connect by code, with a wrong code first', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:home\"]')", 'found', 6000); await d.act('pickServer', 'pm:home'); await d.primary();
   await d.act('pairing', 'code'); await d.primary(); await until(d, "(window.O55.S.sess.ops['pairreach:pm:home']||{}).state === 'done'", 'reached', 5000);
-  await d.type('code', 'AAAA-BBBB'); await d.act('checkCode', null, { settle: 1400 });
+  await d.type('code', 'AAAA-BBBB'); await d.act('checkCode', null);
+  await until(d, "(window.O55.S.sess.ops['paircode:pm:home']||{}).state === 'failed'", 'wrong pairing code rejected', 8000);
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong code explained');
-  await d.type('code', 'A7K9-M2Q4'); await d.act('checkCode', null, { settle: 1800 }); A.ok(await d.state(() => window.O55.S.sess.connect.paired), 'paired by code');
+  await d.type('code', 'A7K9-M2Q4'); await d.act('checkCode', null);
+  await until(d, 'window.O55.S.sess.connect.paired', 'paired by code', 8000); A.ok(await d.state(() => window.O55.S.sess.connect.paired), 'paired by code');
 });
 def('c3', 'fresh', 'Connect through My own web address', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
-  await d.act('more'); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
+  await connectRoutes(d); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
   const dr = await d.draft('connect'); A.eq(dr.server_connection_mode, 'manual', 'manual connection (#22)'); A.eq(dr.proxy_kind, null, 'no proxy setup on this device (#22)');
   A.capture('c3 proxy', dr);
 });
@@ -222,7 +237,8 @@ def('v1', 'fresh', 'Set up a new Server, then a Project on it with Tailscale', a
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'server'); await d.primary();
   A.eq(await d.screen(), 's-kind', 'kind of computer'); await d.primary(); A.eq(await d.screen(), 's-wait', 'waiting');
   await until(d, "!!document.querySelector('.o55-card[data-arg=\"pm:new\"]')", 'found truenas.local', 6000); await d.act('pick', 'pm:new'); await d.primary();
-  A.eq(await d.screen(), 's-confirm', 'confirm'); await d.type('code', '000 000'); await d.primary({ settle: 1500 });
+  A.eq(await d.screen(), 's-confirm', 'confirm'); await d.type('code', '000 000'); await d.primary();
+  await until(d, "window.O55.S.sess.server.orClaimErr === 'setup_code_mismatch'", 'wrong setup code rejected', 8000);
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong setup code explained');
   await d.type('code', '482 913'); await d.primary(); await finishServerSetup(d, A);
   A.ok(await d.state(() => !!document.querySelector('.o55-qr')), 'pairing card with QR'); await d.primary();
@@ -306,10 +322,11 @@ def('n6', 'homeNasPm', 'NAS already runs Puppet Master: identity first, then app
 def('n11', 'homeNasPm', 'Pairing by code: a wrong code is explained, the right one pairs', async (d, A) => {
   await toPmPair(d); await d.primary(); await d.act('pairing', 'code'); await d.primary();
   await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^pmpairreach:nas-home/.test(k) && window.O55.S.sess.ops[k].state === 'done')", 'reached', 5000);
-  await d.type('pmcode', 'AAAA-BBBB'); await d.act('checkCode', null, { settle: 1400 });
+  await d.type('pmcode', 'AAAA-BBBB'); await d.act('checkCode', null);
+  await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => /^pmpaircode:nas-home/.test(k) && window.O55.S.sess.ops[k].state === 'failed')", 'wrong NAS pairing code rejected', 8000);
   A.ok(await d.state(() => /doesn't match/.test(document.body.textContent)), 'wrong code explained');
   A.ok(!(await d.state(() => window.O55.S.sess.nas.paired)), 'not paired on a wrong code');
-  await d.type('pmcode', 'A7K9-M2Q4'); await d.act('checkCode', null, { settle: 1800 }); await until(d, pairOk, 'paired by code', 6000);
+  await d.type('pmcode', 'A7K9-M2Q4'); await d.act('checkCode', null); await until(d, pairOk, 'paired by code', 6000);
   A.ok(true, 'paired by code');
 });
 def('n12', 'homeNasPm', 'Use SSH instead: the ordinary key route, recorded as ssh', async (d, A) => {
@@ -326,7 +343,10 @@ def('n13', 'homeNasPm', 'Choosing another way while waiting cancels the pairing 
   await toPmPair(d); await d.primary(); await d.primary();
   await until(d, "Object.values(window.O55.S.sess.ops).some((o) => o.state === 'running' && (o.phases||[]).some((p) => p.key === 'approve' && p.status === 'active'))", 'waiting for approval', 5000);
   A.ok(await d.state(() => !!document.querySelector('[data-key="expiry"]')), 'expiry shown while waiting');
-  await d.act('another', null, { settle: 3800 });
+  const pairingEntry = await d.state(() => window.O55.owners.log.findLastIndex((e) => e.id === 'cmd.client.pair.start'));
+  await d.act('another', null);
+  // Observe the cancelled operation returning at its phase boundary before checking for any late pairing effect.
+  await d.until((i) => (window.O55.owners.log[i] || {}).result === 'failed', { args: [pairingEntry], timeout: 8000, what: 'cancelled pairing owner operation finished' });
   A.ok((await d.commands()).includes('cmd.client.pair.cancel:server_setup'), 'the owner run is cancelled');
   A.ok(!(await d.state(() => window.O55.S.sess.nas.paired)), 'not paired'); A.eq((await d.draft('main')).source_access_authorization_refs.length, 0, 'nothing recorded');
   A.ok(await d.state(() => !!document.querySelector('.o55-card[data-arg="qr"]')), 'back to the choice of method');
@@ -347,7 +367,11 @@ def('n14', 'homeNasPm', 'A new Project kept on a NAS that runs Puppet Master: st
 def('m1', 'fresh', 'Typing a name: the bar never snaps back, each letter plucks the sign, strings stay on', async (d, A) => {
   await d.openOnboarding(); await toName(d);
   await d.page.evaluate(() => { const el = document.querySelector('#o55f-name'); if (el) el.value = ''; });
-  await sleep(2600); /* the scene has settled and the ambient swing is running */
+  await d.until(() => {
+    const w = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out)');
+    const bar = w && w.querySelector('.o55-it[data-key="bar"] > .o55-in > .o55-am');
+    return w && !w.matches('.o55-hold, .o55-ens-hold') && bar && !!bar.getAttribute('transform') && !w.getAnimations({ subtree: true }).some((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime));
+  }, { what: 'name scene entered with ambient bar transform' });
   await d.page.evaluate(() => {
     const svg = () => document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg');
     const rot = (s) => { const m = /rotate\((-?[\d.]+)/.exec(s || ''); return m ? +m[1] : 0; }, ty = (s) => { const m = /translate\((-?[\d.]+)[ ,]+(-?[\d.]+)/.exec(s || ''); return m ? +m[2] : 0; };
@@ -361,7 +385,8 @@ def('m1', 'fresh', 'Typing a name: the bar never snaps back, each letter plucks 
     requestAnimationFrame(loop);
   });
   const fam = await d.state(() => window.PM_THEME.getFamily ? window.PM_THEME.getFamily() : document.documentElement.getAttribute('data-theme-family'));
-  for (const ch of 'Garden') { await d.type('name', ch, { clear: false, settle: 170 }); }
+  // These durations are the motion measurement: a 170 ms typing cadence and 900 ms of the sign's response.
+  for (const ch of 'Garden') { await d.type('name', ch, { clear: false, settle: false }); await sleep(170); }
   await sleep(900);
   const r = await d.page.evaluate(() => { window.__m1.on = false; return window.__m1.frames; });
   const retro = /retro/.test(await d.state(() => document.querySelector('#pm-o55-onboarding .o55-stage svg').getAttribute('data-family')));
@@ -385,11 +410,17 @@ def('m2', 'fresh', 'Each beginning has an idle of its own; a new one is hung wit
   A.eq(await d.screen(), 'begin', 'start scene');
   const lowres = () => d.state(() => document.documentElement.hasAttribute('data-o55-lowres'));
   const idle = () => d.page.evaluate(() => { const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl'); return g ? { cls: g.getAttribute('class'), anims: g.getAnimations().map((a) => a.animationName || 'waapi') } : null; });
-  await sleep(1400); let s = await idle(); A.ok(s && /o55-gl-seed/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-/.test(n))), 'seed idles, unless low-resource mode is on (' + (s && s.anims.join(',')) + ')');
-  await d.act('pick', 'restore', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-rewind/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(rewind|px-rw)/.test(n))), 'rewind ticks back (' + (s && s.anims.join(',')) + ')');
-  await d.act('pick', 'existing', { settle: 60 }); s = await idle(); A.ok(s && s.anims.includes('waapi'), 'the new icon pops in (' + (s && s.anims.join(',')) + ')');
-  await sleep(1100); await d.act('sub', 'online', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-cloud/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(drift|px-drift)/.test(n))), 'cloud drifts (' + (s && s.anims.join(',')) + ')');
-  await d.act('sub', 'device', { settle: 1400 }); s = await idle(); A.ok(s && /o55-gl-server/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(hum|px)/.test(n))), 'server hums (' + (s && s.anims.join(',')) + ')');
+  const untilIdle = (kind) => d.until((k) => {
+    const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl');
+    return g && g.classList.contains('o55-gl-' + k) && (document.documentElement.hasAttribute('data-o55-lowres') || g.getAnimations().some((a) => /^o55-gl-/.test(a.animationName || '') && a.playState === 'running'));
+  }, { args: [kind], what: kind + ' hero idle' });
+  await untilIdle('seed'); let s = await idle(); A.ok(s && /o55-gl-seed/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-/.test(n))), 'seed idles, unless low-resource mode is on (' + (s && s.anims.join(',')) + ')');
+  await d.act('pick', 'restore'); await untilIdle('rewind'); s = await idle(); A.ok(s && /o55-gl-rewind/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(rewind|px-rw)/.test(n))), 'rewind ticks back (' + (s && s.anims.join(',')) + ')');
+  await d.act('pick', 'existing', { settle: false });
+  await d.until(() => { const g = document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) [data-key="hero"] .o55-gl'); return g && g.classList.contains('o55-gl-folder') && g.getAnimations().some((a) => !a.animationName && a.playState === 'running'); }, { every: 60, what: 'new folder hero entrance animation' });
+  s = await idle(); A.ok(s && s.anims.includes('waapi'), 'the new icon pops in (' + (s && s.anims.join(',')) + ')');
+  await d.act('sub', 'online'); await untilIdle('cloud'); s = await idle(); A.ok(s && /o55-gl-cloud/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(drift|px-drift)/.test(n))), 'cloud drifts (' + (s && s.anims.join(',')) + ')');
+  await d.act('sub', 'device'); await untilIdle('server'); s = await idle(); A.ok(s && /o55-gl-server/.test(s.cls) && (await lowres() || s.anims.some((n) => /o55-gl-(hum|px)/.test(n))), 'server hums (' + (s && s.anims.join(',')) + ')');
   const gaps = await d.page.evaluate(() => window.O55.art.rig.gaps(document.querySelector('#pm-o55-onboarding .o55-stage .o55-scene-wrap:not(.o55-out) svg')));
   A.ok(gaps && gaps.every((g) => g.start < 1.5 && g.end < 1.5), 'the hero stays on its string');
 });
@@ -397,7 +428,7 @@ def('n15', 'homeNasPm', 'Restore from a NAS that runs Puppet Master: pairs, and 
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   await d.act('pick', 'restore'); await d.primary(); await d.act('source', 'nas'); await d.act('device', 'nas-home'); await d.primary();
   A.eq(await d.screen(), 'nas-pmpair', 'pairs, no key steps'); await d.primary(); await until(d, pairOk, 'paired', 10000); await d.primary();
-  A.eq(await d.screen(), 'r-pick', 'then the backups'); await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(500); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'then the backups'); await d.act('pick'); await d.primary();
   const dr = await d.draft('main'); A.eq(dr.backup_transport, 'puppet_master', 'backup reached through Puppet Master'); A.ok(dr.source_access_authorization_refs.length >= 1, 'pairing result bound');
   A.ok(!(await d.commands()).some((c) => c.startsWith('cmd.ssh_connection')), 'no SSH key command');
   A.capture('n15 paired restore', dr);
@@ -431,7 +462,7 @@ def('j1', 'fresh', 'Keep your work safe offers Git or Jujutsu in plain sight; Ju
 });
 def('j2', 'fresh', "A folder that already keeps its versions with Jujutsu keeps it: no choice to change", async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
-  await d.act('pick', 'existing'); await d.act('sub', 'folder'); await d.primary(); await d.act('pick', '~/Code/budget-tracker', { settle: 1200 });
+  await d.act('pick', 'existing'); await d.act('sub', 'folder'); await d.primary(); await d.act('pick', '~/Code/budget-tracker');
   await d.primary(); A.eq(await d.screen(), 'name', 'name'); await d.primary();
   A.eq(await d.screen(), 'safe', 'keep your work safe');
   A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="backend"]')), 'no Git/Jujutsu switch for existing history');
@@ -452,7 +483,7 @@ def('c4', 'fresh', 'No VPN switch: a line says a VPN works, and a VPN this devic
   A.ok(await d.state(() => !document.querySelector('.o55-layer:not(.o55-out) [data-o55-do="vpn"]')), 'no VPN switch');
   A.ok(await d.state(() => /connect through a VPN too/.test(document.body.textContent)), 'the VPN line');
   A.eq((await d.draft('connect')).include_vpn_networks, true, 'the draft records that the VPN was included');
-  await d.act('more'); await d.act('route', 'tailscale'); A.eq((await d.draft('connect')).include_vpn_networks, false, 'not on another route');
+  await connectRoutes(d); await d.act('route', 'tailscale'); A.eq((await d.draft('connect')).include_vpn_networks, false, 'not on another route');
 });
 def('n7', 'keyRefused', 'Key refused once: one clear fix', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
@@ -464,9 +495,11 @@ def('n7', 'keyRefused', 'Key refused once: one clear fix', async (d, A) => {
 });
 def('d1', 'fresh', 'Concept demo pill switches the world while the window is open', async (d, A) => {
   await d.openOnboarding();
-  await d.page.click('#o55-demo .o55-demopill'); await sleep(300);
+  await d.click('#o55-demo .o55-demopill', 'demo menu button');
+  await d.untilElement('#o55-demo .o55-demomenu', 'demo menu');
   A.ok(await d.state(() => !!document.querySelector('#o55-demo .o55-demomenu')), 'menu opens over the onboarding scrim');
-  await d.page.click('#o55-demo [data-demo="scenario"][data-arg="returning"]'); await sleep(1200);
+  await d.click('#o55-demo [data-demo="scenario"][data-arg="returning"]', 'returning scenario');
+  await until(d, "window.O55.S.env.scenario === 'returning'", 'returning fixture loaded'); await d.untilScreen('welcome');
   A.eq(await d.state(() => window.O55.S.env.scenario), 'returning', 'scenario switched'); A.eq(await d.screen(), 'welcome', 'onboarding restarted');
   A.ok(await d.state(() => /Welcome back/.test(document.body.textContent)), 'returning banner from cached records');
 });
@@ -567,7 +600,8 @@ def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own li
   await toNasKey(d); await d.primary();
   A.eq(await d.screen(), 'nas-signin', 'sign in once'); await d.act('selfOn');
   A.ok(/yourself/i.test(await d.state(() => document.querySelector('#o55-h').textContent)), 'the title says the key is added by hand, not "Sign in"');
-  await until(d, "(window.O55.S.sess.ops['sshmake:nas-home']||{}).state === 'done'", 'new key made first', 5000); await d.settle(400);
+  await until(d, "(window.O55.S.sess.ops['sshmake:nas-home']||{}).state === 'done'", 'new key made first', 5000);
+  await d.untilElement('.o55-codeline code', 'new public key line'); await d.settle();
   const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
   A.ok(/^ssh-ed25519 AAAA\S+ puppet-master@MacBook-Pro$/.test(line), 'the line is the new key\'s public half (' + line.slice(0, 40) + '...)');
   A.ok(await paneFits(d), 'the line and its Copy button fit inside the window');
@@ -577,7 +611,7 @@ def('n8', 'fresh', "I'll add the key myself: a new key is made first, its own li
 });
 def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: the check says so and nothing goes on", async (d, A) => {
   await toNasKey(d); await d.act('pick', 'k-ed'); await d.primary();
-  await d.act('selfOn'); await d.settle(300);
+  await d.act('selfOn'); await d.untilElement('.o55-codeline code', 'chosen public key line');
   const line = await d.state(() => (document.querySelector('.o55-codeline code') || {}).textContent || '');
   A.ok(/ jared@MacBook-Pro$/.test(line), 'the line is the chosen key\'s (jared@MacBook-Pro)');
   await d.primary(); await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:k-ed']||{}).state === 'failed'", 'the check fails', 9000);
@@ -589,8 +623,8 @@ def('n9', 'selfKeyMissing', "I'll add the key myself, but it is not there yet: t
 def('n10', 'fresh', 'A password typed before the window was closed does not count after it reopens', async (d, A) => {
   await toNasKey(d); await d.primary(); await d.type('user', 'jared'); await d.type('pw', 'correct horse');
   A.ok(!(await d.primaryInfo()).disabled, 'Add my key is ready with a password typed');
-  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(900);
-  await d.state(() => window.O55.ui.open({})); await d.settle(1200);
+  await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
+  await d.openOnboarding({}); await d.untilScreen('nas-signin');
   A.eq(await d.screen(), 'nas-signin', 'resumes on the sign-in');
   A.ok((await d.primaryInfo()).disabled, 'Add my key waits for the password again (the field is empty)');
 });
@@ -598,8 +632,9 @@ def('x1', 'fresh', 'Run Onboarding Again starts over: a clean world, no finished
   await toNasKey(d); await d.primary(); await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
   await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key installed', 9000);
   await d.state(() => window.O55.store.set('tour', { v: 1, status: 'running', index: 4, done: ['open_chat'] }));
-  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(900);
-  await d.page.click('#pm-home-more-btn'); await d.settle(400); await d.page.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]'); await d.settle(1500);
+  await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
+  await d.click('#pm-home-more-btn', 'Home menu button');
+  await d.click('#pm-home-more-menu [data-pm-home-action="run-onboarding"]', 'Run Onboarding Again'); await d.untilScreen('welcome');
   A.eq(await d.screen(), 'welcome', 'starts at Welcome');
   A.eq(await d.state(() => window.O55.store.get('tour', null)), null, 'the saved tour is cleared');
   await d.primary(); await d.primary(); await d.primary(); await d.act('pick', 'existing'); await d.act('sub', 'device'); await d.primary();
@@ -614,15 +649,15 @@ def('x2', 'fresh', 'Run Onboarding Again while a Project is being created waits 
   await d.openOnboarding(); await toName(d); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
   await readyPrimary(d); await d.primary(); A.eq(await d.screen(), 'creating', 'creating');
   const originalKey = await d.state(() => window.O55.S.sess.commit.original.key);
-  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
-  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
+  await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
+  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('creating');
   A.eq(await d.screen(), 'creating', 'the window shows the creation instead of starting over');
   A.ok(/still being created/.test(await d.state(() => document.body.textContent)), 'it says the Project is still being created');
   await until(d, "window.O55.S.sess.commit.state === 'done'", 'creation finishes', 25000);
   await assertPublishedProject(d, A);
   A.eq(await d.state(() => window.O55.S.sess.commit.original.key), originalKey, 'reopening Creating retains the same attempt');
-  await d.page.click('#pm-o55-onboarding [data-o55-do="close"]'); await d.settle(700);
-  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.settle(1500);
+  await d.click('#pm-o55-onboarding [data-o55-do="close"]', 'Close'); await d.settle();
+  await d.state(() => window.PM7_ONBOARDING_CINEMATIC.replay()); await d.untilScreen('welcome');
   A.eq(await d.screen(), 'welcome', 'once it is made, Run Onboarding Again starts over');
 });
 
@@ -686,13 +721,14 @@ def('b4', 'fresh', 'Restore from S3 or B2: access details, then the recovery phr
 /* ---------------------------------------------------------------------------------------------- the look */
 def('x3', 'fresh', 'The chosen look never changes on screen: through Creating, the finish and into the tour', async (d, A) => {
   await d.openOnboarding(); await d.primary();
-  await d.act('pickFamily', 'friendly', { settle: 1400 }); await d.primary();
+  await d.act('pickFamily', 'friendly'); await d.primary();
   /* every painted frame from here on records the look on screen */
   await d.state(() => { window.__looks = new Set(); const f = () => { window.__looks.add(document.documentElement.getAttribute('data-theme')); if (!window.__lookStop) requestAnimationFrame(f); }; requestAnimationFrame(f); });
   await d.primary(); await d.primary(); await d.type('name', 'Book club website'); await d.primary(); await d.primary();
   await readyPrimary(d); await d.primary(); await until(d, "window.O55.S.sess.commit.state === 'done'", 'commit', 25000);
   await readyPrimary(d); await d.primary(); await d.act('skip'); await readyPrimary(d); await d.primary();
-  await d.primary({ settle: 3500 }); /* Take the Guided Tour */
+  await d.primary(); /* Take the Guided Tour */
+  await d.until(() => { const st = window.O55.tour.st, c = document.querySelector('#pm-o55-tour .o55t-callout'); return st.step && st.step.id === 'comfort_intro' && !st.entering && c && c.getAttribute('data-step') === 'comfort_intro'; }, { what: 'Guided Tour comfort_intro callout entered' });
   const seen = await d.state(() => { window.__lookStop = true; return [...window.__looks]; });
   A.eq(JSON.stringify(seen), JSON.stringify(['friendly-dark']), 'only the chosen look was ever painted');
   A.eq(await d.state(() => window.O55.tour.state().step), 'comfort_intro', 'the tour started');
@@ -708,23 +744,27 @@ def('x4', 'fresh', 'A look picked after going into Connect and back is the one k
 def('x5', 'fresh', 'The look can be changed at any point from beside the sound button', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.primary();
   A.eq(await d.screen(), 'begin', 'mid-flow');
-  await d.page.click('#pm-o55-onboarding .o55-lookbtn'); await d.settle(400);
+  await d.click('#pm-o55-onboarding .o55-lookbtn', 'look menu button'); await d.untilElement('#pm-o55-onboarding .o55-lookmenu', 'look menu');
   A.ok(await d.state(() => document.querySelectorAll('#pm-o55-onboarding .o55-lookopt').length === 4), 'four looks offered');
   if (process.env.O55_SNAP) await d.snap(process.env.O55_SNAP);
-  await d.page.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]'); await d.settle(1400);
+  await d.click('#pm-o55-onboarding .o55-lookopt[data-arg="retro"]', 'Retro look');
+  await until(d, "document.documentElement.getAttribute('data-theme').split('-')[0] === 'retro'", 'Retro look applied'); await d.settle();
   A.eq(await d.state(() => document.documentElement.getAttribute('data-theme').split('-')[0]), 'retro', 'the look changed');
   A.eq(await d.state(() => window.O55.S.sess.drafts.main.theme_family), 'retro', 'and is the chosen look');
   A.eq(await d.screen(), 'begin', 'without leaving the screen');
-  await d.page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 }); await d.settle(300);
+  await d.page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27 });
+  await d.until(() => !document.querySelector('#pm-o55-onboarding .o55-lookmenu'), { what: 'look menu closed after Escape' });
   A.ok(await d.state(() => !document.querySelector('#pm-o55-onboarding .o55-lookmenu') && window.O55.S.open), 'Escape closes the menu, not the window');
 });
 
 /* ---------------------------------------------------------------------------------------------- logic crawl findings */
 def('lc1', 'fresh', 'C24: switching the Connect route back does not keep a Server found through the old route', async (d, A) => {
   await d.openOnboarding(); await d.primary(); await d.primary(); await d.act('pick', 'connect'); await d.primary();
-  await d.act('more'); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net'); await d.settle(500);
+  await connectRoutes(d); await d.act('route', 'reverse_proxy'); await d.type('proxy', 'https://pm.example.net');
+  await until(d, "window.O55.S.sess.drafts.connect.server_ref === 'pm:home'", 'web address resolved Home NAS');
   A.eq(await d.state(() => window.O55.S.sess.drafts.connect.server_ref), 'pm:home', 'the web address found Home NAS');
-  await d.act('route', 'local_or_vpn'); await d.settle(500);
+  await d.act('route', 'local_or_vpn');
+  await until(d, "window.O55.S.sess.drafts.connect.server_connection_mode === 'discover'", 'network discovery route applied');
   const dr = await d.state(() => ({ ref: window.O55.S.sess.drafts.connect.server_ref, proxy: window.O55.S.sess.drafts.connect.proxy_hostname, link: window.O55.S.sess.drafts.connect.remote_endpoint }));
   A.eq(JSON.stringify(dr), JSON.stringify({ ref: '', proxy: '', link: '' }), 'back on this network nothing is chosen and the web address is gone');
   A.ok((await d.primaryInfo()).disabled, 'Continue waits for a choice from the list');
@@ -745,7 +785,7 @@ def('lc3', 'fresh', 'A backup place suggested by a restore leaves with the resto
   await until(d, "(window.O55.S.sess.ops['keys:nas-home']||{}).state === 'done'", 'keys', 5000); await d.primary();
   await d.type('user', 'jared'); await d.type('pw', 'correct horse'); await d.primary();
   await until(d, "(window.O55.S.sess.ops['sshinstall:nas-home:new']||{}).state === 'done'", 'key', 9000); await d.primary();
-  A.eq(await d.screen(), 'r-pick', 'backups'); await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(500); await d.primary();
+  A.eq(await d.screen(), 'r-pick', 'backups'); await d.act('pick'); await d.primary();
   A.eq(await d.state(() => window.O55.S.sess.backup.dest), 'nas', 'the restore suggested Home NAS for backups');
   for (let i = 0; i < 12 && (await d.screen()) !== 'begin'; i++) await d.back();
   A.eq(await d.screen(), 'begin', 'back at the beginning'); await d.act('pick', 'new'); await d.primary();
@@ -769,7 +809,7 @@ def('lc5', 'fresh', 'A new Server is not offered a name already used on the netw
 def('lc6', 'fresh', 'Bringing old data onto a new Server asks how to reach it away from home, and sets that up', async (d, A) => {
   await toNewServer(d, A); await d.back(); A.eq(await d.screen(), 's-ready', 'the Server is ready');
   await d.act('restore'); await d.act('source', 'kit'); await d.primary(); await d.type('phrase', 'river candle orbit maple quiet lantern'); await d.primary();
-  await d.page.click('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-do="pick"]'); await d.settle(400); await d.primary();
+  await d.act('pick'); await d.primary();
   A.eq(await d.screen(), 'away', 'asked about away from home first');
   await d.act('pick', 'anywhere'); await d.primary(); A.eq(await d.screen(), 'r-preview', 'then the preview');
   await d.primary(); await until(d, "Object.entries(window.O55.S.sess.ops||{}).some(([k,v]) => k.startsWith('restore:') && v.state === 'done')", 'restored', 12000);

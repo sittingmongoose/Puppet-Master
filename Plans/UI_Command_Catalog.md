@@ -11795,10 +11795,11 @@ census, not a new command family.
 | Home preset-size control | resolve the historical PM7 semantic preset alias through `cmd.workspace_layout.resize_surface` | Resolve `preset_id` to committed size values before dispatch; the alias is documentation-only and is not cataloged. |
 | Usage Refresh | `cmd.usage.refresh` | One explicit refresh request; background refresh remains separately owner-driven. |
 | Usage Ledger attempt drill-through | `cmd.nav.open_usage_subject` | One Usage object route with `route_target.object_kind = usage_attempt`, `route_target.object_id = attempt_id`, top-level `attempt_id`, and `usage_event_ref` correlation; no `OpenSubject`. |
-| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. On the Accounts room the card body and Details stay local; the three Accounts rows below are the only owner-routed actions on an account card or provider plate. |
+| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. On the Accounts room the card body and Details stay local; the four Accounts rows below are the only owner-routed actions on an account card or provider plate. |
 | Usage Accounts card Use this account | `cmd.account.select_profile` | Shown only when the provider's capability `supports_manual_set_active` is true and labelled as an override; asks first when the account is already past its provider's switch point (`Plans/Multi-Account.md#MA-073`), and that question's Use now and Use anyway answers dispatch the same one command; unavailable states show the command's own disabled reason. |
 | Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` for that provider id | The plate's toggle, the switch-level stepper and menu, and the same controls on the Accounts hero cells and the Overview headroom card: the same Settings value Settings edits, committed once per settled change through the Settings owner, the request's `changes` naming each row; the menu's Shared setting choice sends the change with `inherit` true; no Usage copy, no new command (`Plans/Settings_System.md#SSYS-044`). Opening the menu and hovering are `view_only`. The provider's warning level and rest period are edited in Settings, reached through Open in Settings. |
-| Usage Accounts Open in Settings | `cmd.settings.open` with `target_type` `setting` | Lands on the row inside that provider's section in Settings; the plate's shared-value line opens it too. |
+| Usage Accounts account switch level (D43, 2026-10-10) | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `account` for that provider id and account id | The account's switch-level button and menu on its account card and the Switch at N% used action in its Details: the same value as the account's own row in Settings, committed once per settled change through the Settings owner; the menu's Follow choice sends the change with `inherit` true, which clears the account's own value; no Usage copy, no new command (`Plans/Settings_System.md#SSYS-044`). Opening the menu and hovering are `view_only`. |
+| Usage Accounts Open in Settings | `cmd.settings.open` with `target_type` `setting` | Lands on the row inside that provider's section in Settings, or inside that account for an account's level, the setting target naming the provider and the account (`Plans/Settings_System.md#SSYS-019`); the plate's shared-value line opens it too. |
 | Usage head Export menu (Snapshot or Ledger) and the Ledger table's export | `cmd.usage.export` with `scope` `snapshot` or `ledger` | One export per choice; opening the menu is `view_only`; no other export command. |
 | Usage alert Acknowledge and Snooze 1 hour | `cmd.alert.acknowledge`, `cmd.alert.snooze` | The shared alert store owns the lifecycle (`Plans/FinalGUISpec.md#F3-453`); Usage keeps no alert state of its own. |
 | Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
@@ -11838,9 +11839,9 @@ canonical_text: >-
   remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
   The redesigned Usage page (2026-10-09) adds no command. On its Accounts room the card body and
   Details stay local, Use this account dispatches cmd.account.select_profile, shown only when
-  supports_manual_set_active holds, and each provider's Auto-switch toggle and switch level commit
-  through cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider,
-  with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
+  supports_manual_set_active holds, each provider's Auto-switch toggle and switch level at scope
+  provider and each account's own switch level at scope account (D43, 2026-10-10) commit through
+  cmd.settings.transaction.preview and then cmd.settings.transaction.apply, with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
   period are edited. Usage board gravity commits inside the one cmd.widget.move, cmd.widget.resize,
   cmd.widget.add or cmd.widget.remove of the action that caused it, and Tidy commits the whole
   repacked room as one settled layout transaction through exactly one existing cmd.widget.move that
@@ -11864,7 +11865,7 @@ acceptance_criteria:
   - Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does not route through app-wide Usage.
   - The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
   - cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
-  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider; opening a card's Details dispatches nothing."
+  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider, and a change of an account's own switch level the same pair at scope account with the account id (D43, 2026-10-10); opening a card's Details dispatches nothing."
   - "Usage layout: a Tidy that moves cards dispatches exactly one cmd.widget.move carrying arrange { mode: tidy, detail } and one receipt for the whole repacked room, the owner computing the repack, a Tidy that moves nothing dispatches nothing, gravity adds no command beyond the action that caused it, and a size-picker preset dispatches one cmd.widget.resize whose settled record carries the preset_id."
   - "Live / Paused and the concept demo controls of UF-107 dispatch no command and have no catalog or production wiring row; export, alert acknowledge and alert snooze reuse cmd.usage.export, cmd.alert.acknowledge and cmd.alert.snooze."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
@@ -15263,8 +15264,7 @@ canonical_text: >-
   dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
   being the board's committed layout revision just before that Start from, with one receipt and only while the
   notice is up (8 s, held on pointer or focus, F3-638); restore_revision and set_id never travel together; the owner
-  puts back exactly that revision's records, and a restore whose revision is no longer the board's previous one is
-  refused with a disabled reason; like every widget command it emits no workspace.layout_changed (CV-361) (amended
+  puts back exactly that revision's records, and a restore is refused without dispatch and disabled with a reason when any other board change was committed since, excluding the preset hold's settling resizes; like every widget command it emits no workspace.layout_changed (CV-361) (amended
   2026-10-10, lead ruling; it read: The Undo that follows Start from has no id yet and waits for the lead's ruling.)
   Amended 2026-10-10 (DL-187; D33, D38, D39, D40, lead rulings F5 and F6): the Terminal row lists every installed
   shell, uncapped, and an SSH hosts row opens a submenu of hosts that dispatch cmd.panel_tab.open with that host's
@@ -15280,6 +15280,13 @@ canonical_text: >-
   it opens the attachment's document or artifact tab through the one opening module, and an open that adds a tab
   emits workspace.layout_changed (CV-361). cmd.browser.focus_browser_tab is layout-only with no event, and a
   collapsed host panel expands through cmd.workspace_layout.set_collapsed.
+  The same dashboard Undo notice and existing Undo route serve Start from and a Reset widgets that changed
+  anything: one cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one receipt
+  and no workspace.layout_changed, never set_id with restore_revision. The revision and its envelope are
+  captured before that operation and written back and read by the board owner after acceptance. Any other
+  committed board change disables Undo without dispatch, except the preset hold's settling resizes;
+  eligibility is rechecked while the notice is up on commit, pointer or focus entering and click (WS-030,
+  F3-638).
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false
@@ -15293,7 +15300,7 @@ acceptance_criteria:
   - "cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview and cmd.terminal.open carry where, mode, by and background and reach the same opening module as cmd.panel_tab.open; an id already open anywhere is revealed where it is and never opened twice or moved."
   - "No row or route selects a home panel through target_editor_panel_id, target_editor_group_id or target_group, and cmd.file.open_with keeps exactly its five values."
   - "A dashboard tab's widget commands are cmd.widget.* naming the board in their existing room field (amended 2026-10-10, DL-186; it read: addressed by board_id) and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
-  - "Every control of a dashboard tab maps as the Dashboard tab controls table says: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, the Undo after Start from one cmd.widget.reset_layout with restore_revision and no set_id while its notice is up, refused with a disabled reason once that revision is no longer the board's previous one, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event (amended 2026-10-10, lead ruling; it read: Every control of a dashboard tab maps as the Dashboard tab controls table says, except the Undo after Start from, which has no id until the lead rules: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event)."
+  - "Every control of a dashboard tab maps as the Dashboard tab controls table says: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, the Undo after Start from one cmd.widget.reset_layout with restore_revision and no set_id while its notice is up, refused without dispatch and disabled with a reason when any other board change was committed since, excluding the preset hold's settling resizes, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event (amended 2026-10-10, lead ruling; it read: Every control of a dashboard tab maps as the Dashboard tab controls table says, except the Undo after Start from, which has no id until the lead rules: Start from and Start from this preset dispatch one cmd.widget.reset_layout with set_id, Reset widgets one without set_id, Tidy one cmd.widget.move with arrange, and Range, Scope and the preset save, rename and delete dispatch only their typed local actions with no receipt and no event)."
   - "New dashboard, and Ctrl+T or a split in a dashboard panel, make a new empty custom dashboard through cmd.panel_tab.open or cmd.workspace_layout.split with no board_id; Rename dashboard... and Delete dashboard... appear only on a custom dashboard and dispatch cmd.panel_tab.rename and, after the confirm, cmd.panel_tab.close; no other command family exists for dashboards."
   - "The Terminal row lists every installed shell and the SSH hosts row opens their submenu; the empty-panel launcher's sub-row links dispatch exactly what the menu's sub-rows dispatch."
   - "The Debug Console row opens or reveals the one debug-console tab, and choosing its session sub-tab dispatches nothing."
@@ -15333,6 +15340,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; design lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console; concept lineage only)"
   - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id and its set ids, presets, rename and delete through the tab commands"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "set_id"
   - "restore_revision"
@@ -15394,6 +15403,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling): cmd.chat.attachment.open joins the open-routes table, and cmd.browser.focus_browser_tab's row records that it is layout-only with no event."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The existing dashboard Undo restores the captured revision after Start from or a changed Reset with the same command and guard."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md

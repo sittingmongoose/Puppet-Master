@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4291-L14424
+Source lines: L4297-L14442
 
-Source SHA256: `8d72a461742b0873f0afc2414265b123e34eb71b269bcce6e3395c02d78f5cb7`
+Source SHA256: `b2e1fd90a9af2fe9a453a5e16acace05236f2f53fbcc73c8b0784b7cd699f4b4`
 
 ---
 
@@ -8480,6 +8480,8 @@ negative_constraints:
   - "Do not make a NieR variant per family."
   - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
   - "Do not add a command id, a route or a Guided Tour action for a look control."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10, reseal item 2): the onboarding session stores look_choice so a resumed setup repaints the chosen look, NieR included; Settings are still written only at commit."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -9041,6 +9043,12 @@ canonical_text: >-
   project, provider, account, the most specific set value winning, and a value stored under the retired id is
   carried once to ai.accounts.hard-switch-level at scope account. Owner decision 2026-10-10 (USG-2): each MA-073
   status state is defined by a set of section 5 reason codes, in the MA-073 state table.
+  Owner decision 2026-10-10 (D43, "account cards get switches"): each account card carries one bound control for
+  ai.accounts.hard-switch-level at scope account on its Usage card and in its Details, shown only on the accounts of
+  a provider with two or more accounts (the reading of those words: a lone account has nothing to switch to),
+  showing the level the account resolves to and whether it is the account's own or follows its provider, offering
+  following the provider again, committed through the Settings transaction at scope account and held below the
+  warning level that applies to that account; its Open in Settings lands inside that account (SSYS-044).
 gui_related: true
 gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
 split_recommended: false
@@ -9053,6 +9061,7 @@ acceptance_criteria:
   - "Plans & limits lists every account of a provider, one row per account."
   - "No command is added for the Accounts room."
   - "An account's own switch level is ai.accounts.hard-switch-level at scope account, and nothing reads or writes ai.accounts.account-threshold-override after its stored value is carried there once."
+  - "Each account of a provider with two or more accounts has a switch-level control on its Usage card and in its Details that changes ai.accounts.hard-switch-level at scope account through the Settings transaction, and Settings shows the same value without a reload."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -9075,6 +9084,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
   - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D43, owner decision 2026-10-10)"
 preserved_exact_tokens:
   - "DL-174"
   - "Use this account"
@@ -9892,6 +9902,8 @@ preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead rulings under D29): a chosen option is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic; Glass top rim, Retro reverse video, NieR ink."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

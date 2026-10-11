@@ -2391,6 +2391,59 @@
       }
     },
     {
+      "case_id": "valid-settings-route-request-account-target",
+      "schema_ref": "#/$defs/settings_route_request",
+      "record": {
+        "record_type": "settings_route_request",
+        "schema_id": "pm.settings_route_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.open",
+        "route_id": "route-instance:settings/2",
+        "project_id": "project:demo",
+        "target": {
+          "target_type": "setting",
+          "setting_id": "ai.accounts.hard-switch-level",
+          "manager_id": null,
+          "detail_id": null,
+          "provider_id": "provider:claude-code",
+          "account_id": "account:claude-code:lab"
+        },
+        "return_contract": {
+          "continuation_id": "continuation:settings/2",
+          "continuation_generation": 1,
+          "origin_surface": "usage",
+          "origin_route": "route:usage/accounts",
+          "origin_focus_id": "focus:account-switch-level",
+          "origin_query": "",
+          "origin_scroll_anchor": "anchor:plate-claude-code",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:claude-code",
+            "provider_route_id": null,
+            "thread_id": null,
+            "operation_id": null,
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context"
+        },
+        "requested_at_utc": "2026-08-31T12:05:00Z"
+      }
+    },
+    {
       "case_id": "valid-settings-route-return",
       "schema_ref": "#/$defs/settings_route_return",
       "record": {
@@ -3055,6 +3108,59 @@
           ]
         },
         "requested_at_utc": "2026-08-31T12:00:00Z"
+      },
+      "expected_keyword": "required"
+    },
+    {
+      "case_id": "invalid-route-account-without-provider",
+      "schema_ref": "#/$defs/settings_route_request",
+      "record": {
+        "record_type": "settings_route_request",
+        "schema_id": "pm.settings_route_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.settings.open",
+        "route_id": "route-instance:settings/2",
+        "project_id": "project:demo",
+        "target": {
+          "target_type": "setting",
+          "setting_id": "ai.accounts.hard-switch-level",
+          "manager_id": null,
+          "detail_id": null,
+          "account_id": "account:claude-code:lab"
+        },
+        "return_contract": {
+          "continuation_id": "continuation:settings/2",
+          "continuation_generation": 1,
+          "origin_surface": "usage",
+          "origin_route": "route:usage/accounts",
+          "origin_focus_id": "focus:account-switch-level",
+          "origin_query": "",
+          "origin_scroll_anchor": "anchor:plate-claude-code",
+          "close_behavior": "return_to_opener",
+          "escape_order": [
+            "close_transient",
+            "close_details",
+            "clear_query",
+            "return_to_opener"
+          ],
+          "exact_context": {
+            "project_id": "project:demo",
+            "server_id": "server:home",
+            "vault_id": "vault:demo",
+            "host_id": "host:local",
+            "environment_id": "environment:desktop",
+            "client_id": "client:one",
+            "provider_id": "provider:claude-code",
+            "provider_route_id": null,
+            "thread_id": null,
+            "operation_id": null,
+            "topology_generation": 9,
+            "expected_revision": 44
+          },
+          "expires_at_utc": "2026-08-31T12:30:00Z",
+          "stale_return_policy": "reject_and_keep_current_context"
+        },
+        "requested_at_utc": "2026-08-31T12:05:00Z"
       },
       "expected_keyword": "required"
     },

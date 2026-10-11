@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45644-L46475
+Source lines: L45751-L46595
 
-Source SHA256: `ef139c75bd5f1746bfb9aaf2dc84a02f6dbb339c6e74cf0104859ebcf3a4c835`
+Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
 
 ---
 
@@ -242,6 +242,8 @@ canonical_text: >-
   to the screen; images read as their text descriptions (F3-645). There is no AI feature in the terminal: no explain,
   fix, suggest or ask action and no inline completion; explaining commands is the Teacher persona's job in the chat
   (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
+  Under Full CRT, a command mark sits beside its row as the tube shows it, inset by the case and bent by the
+  curvature; a prompt the shell redraws (Ctrl+L or a completion list) keeps its mark (SMPFS-183).
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
@@ -279,6 +281,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-187"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D38)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, sections 1 and 2 (notifications; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "path:line:col"
   - "OSC 9;4"
@@ -299,6 +302,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D38; terminal SPEC 01c5e78c42): adds system notifications from OSC 9, OSC 777 and OSC 99 in the background, the 3 s limit, the per-tab mute and the permission notice."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Full CRT marks follow their shown rows and survive prompt redraw."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -375,6 +379,9 @@ canonical_text: >-
   ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
   no copy (F3-639, F3-647).
   The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
+  Hovering a scheme previews it on this terminal only after the pointer rests on that row for 110 ms; arrow
+  keys preview at once, with a 110 ms wait while a key repeats, so passing over rows or scrolling them
+  beneath a stationary pointer never flashes through the schemes.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
@@ -416,6 +423,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -441,6 +449,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
   - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key previews and delayed repeats."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -483,6 +492,8 @@ canonical_text: >-
   reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
   states at once. Motion voices belong to the theme family (DR-043).
   An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
+  The cursor trail never fires while a program hides the cursor, including while a progress bar redraws its
+  line.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -518,6 +529,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -539,6 +551,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
+  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): A hidden program cursor never triggers a cursor trail."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

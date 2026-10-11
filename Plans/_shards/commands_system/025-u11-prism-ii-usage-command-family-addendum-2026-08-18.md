@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4753-L4845
+Source lines: L4753-L4846
 
-Source SHA256: `723a65f8374bade06ec9e41622ed83809b03ea67224b28a7f30283c26f6e13a1`
+Source SHA256: `64e3a6837c32d862a1ed226b2d798873e26c28a9fb2ccbdf6b6113c1a9d08161`
 
 ---
 
@@ -39,10 +39,11 @@ canonical_text: >-
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
   dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
   `pm.settings_route_request.v1` target and exact-return identity. The one exception (2026-10-09,
-  Plans/Decision_Log.md#DL-174) is a bound Settings control that the redesigned Usage Accounts room hosts in
-  place, which UF-092 carves out and SSYS-044 owns: each provider's Auto-switch toggle and switch level commit
-  through the Settings owner's cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
-  provider, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
+  Plans/Decision_Log.md#DL-174) is the bound Settings controls that the redesigned Usage Accounts room hosts in
+  place, which UF-092 carves out and SSYS-044 owns and lists: each provider's Auto-switch toggle and switch level
+  at scope provider and, from the owner decision of 2026-10-10 (D43), each account's own switch level at scope
+  account commit through the Settings owner's cmd.settings.transaction.preview and then
+  cmd.settings.transaction.apply, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
   level and rest period included, still dispatches cmd.settings.open. On the same room an account's Use this
   account control dispatches the existing account profile selection command, cmd.account.select_profile, as a
   labelled override; it is an explicit account action, shown only where the provider supports choosing the active
@@ -58,7 +59,7 @@ acceptance_criteria:
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
   - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
-  - "Every Usage Settings change dispatches cmd.settings.open except a provider's Auto-switch toggle and switch level on the Accounts room, which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply at scope provider and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
+  - "Every Usage Settings change dispatches cmd.settings.open except the Accounts room's hosted controls SSYS-044 lists, a provider's Auto-switch toggle and switch level at scope provider and an account's own switch level at scope account (D43, 2026-10-10), which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix

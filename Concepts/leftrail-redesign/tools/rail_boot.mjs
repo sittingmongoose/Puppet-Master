@@ -298,6 +298,22 @@ const PAGE_LIB = () => {
       .replace(/ class=""/g, ''); /* a class attribute left empty by a tab click is no attribute */
   };
   L.snapAll = (targets) => Object.fromEntries(Object.entries(targets).map(([k, id]) => [k, L.snap(id)]));
+  /* Compare a settled rail: the shell's scrollbar activity marker lasts two seconds after a scroll,
+     including a scroll caused by layout or tab changes. Keep every class in the comparison; wait for
+     the shell to clear its own marker rather than masking it. A marker that never clears fails. */
+  L.restoreSnapshot = async (targets) => {
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const deadline = Date.now() + 10000;
+    const active = () => Object.values(targets).some((id) => {
+      const root = document.getElementById(id);
+      return root && (root.classList.contains('pm6-sb-active') || root.querySelector('.pm6-sb-active'));
+    });
+    while (active()) {
+      if (Date.now() >= deadline) throw new Error('restore: rail scrollbar activity did not settle within 10 seconds');
+      await L.sleep(100);
+    }
+    return L.snapAll(targets);
+  };
   L.walkTabs = async (root) => { for (const t of [...root.querySelectorAll('[data-tab]')].filter(L.visible)) { t.click(); await L.sleep(220); } };
   /* both snapshots are taken with every panel's tabs walked in the same order, so the tab state the shell leaves behind
      is the same on both sides (the kit's t-restore walks the tabs of Current before its snapshot too) */
@@ -532,7 +548,7 @@ async function refRailSnapshot(t) {
       L.skin = true;
       await L.theme(slug, nier);
       await L.walkAll(panels);
-      return { booted, snap: L.snapAll(ids) };
+      return { booted, snap: await L.restoreSnapshot(ids) };
     }, [t.slug, t.nier, ALL_PANELS, RESTORE_IDS]);
   } finally { await b.close(); }
 }
@@ -556,7 +572,7 @@ async function restoreCheck() {
       const key = t.slug + (t.nier ? '+nier' : '');
       await page.evaluate(([s, n]) => window.__railCheck.theme(s, n), [t.slug, t.nier]);
       await walkEveryPanel();
-      const before = await page.evaluate((ids) => window.__railCheck.snapAll(ids), RESTORE_IDS);
+      const before = await page.evaluate((ids) => window.__railCheck.restoreSnapshot(ids), RESTORE_IDS);
       if (base && t === runs[0]) {
         const diffs = {};
         for (const k of Object.keys(RESTORE_IDS)) { if (base.snap[k] !== before[k]) diffs[k] = shortDiff(base.snap[k], before[k]); }
@@ -568,7 +584,7 @@ async function restoreCheck() {
       const used = await page.evaluate((ids) => window.__railCheck.useRail(ids), ALL_PANELS);
       await page.evaluate(async () => { window.PMR.menu.closeAll(); window.PMR.concepts.set('current'); await window.__railCheck.sleep(800); });
       await walkEveryPanel();
-      const after = await page.evaluate((ids) => window.__railCheck.snapAll(ids), RESTORE_IDS);
+      const after = await page.evaluate((ids) => window.__railCheck.restoreSnapshot(ids), RESTORE_IDS);
       const left = await page.evaluate(() => {
         let marks = 0; document.querySelectorAll('*').forEach((e) => { if (e.classList.contains('d-abind')) marks++; for (const a of e.attributes) if (a.name.startsWith('data-d-')) marks++; });
         return { skin: document.documentElement.getAttribute('data-rail-skin'), marks };

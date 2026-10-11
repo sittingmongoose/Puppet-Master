@@ -1893,6 +1893,10 @@ canonical_text: Product Onboarding owns the reversible draft-first eleven-stage 
   and truthful Ready. Explicit Project deferral skips both provider phases without inventing a Project. UI choreography
   remains fourteen typed local actions (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or
   command family.
+  Each ui.onboarding.choose_look request replaces only the fields it sets in the session's optional
+  look_choice; absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look
+  choice, NieR Mode included, and null fields fall back to F3-520's start rule; this session choice performs
+  no Settings write before commit.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -1998,6 +2002,8 @@ negative_constraints:
 - Do not synthesize readiness or progress from time, cache or UI state.
 - Do not turn the modal into a full-page route or nested-modal manager.
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
@@ -2769,14 +2775,18 @@ canonical_text: >-
   aims the split drop 34 px inside the documents panel's right edge or 30 px above its bottom, clear of the
   centre's 12 px root-edge band, and proceeds only when a split target is ready. In the source's 1920 × 1080
   Home layout with the rail open and chat about 600 px, the documents panel is 511 × 598 px against a 280 ×
-  120 px editor minimum, so only Split down fits and the copy names it. The widget action waits at most 1500
-  ms for Add widget, in the Home dashboard tab's header row, after revealing dashboard:home; the file step
-  waits at most 900 ms for a file row. The
-  source's 6-minute estimate is a publish census measurement to confirm, not a completion deadline. The plus
+  120 px editor minimum, so only Split down fits and the copy names it. The widget action opens dashboard:home and waits at most 1500 ms, checking each frame,
+  for its Home board before it uses Add widget in the tab's header row; the file step
+  waits at most 900 ms for a file row. The tour's estimate is 5 minutes: measured 4.8 minutes at 200 words a minute, with 16 actions;
+  Planning has 7 actions (44 %) and 49 % of the time, and the workspace chapter has 5 actions
+  (the widget step counts two), never a completion deadline. The plus
   step completes only after the menu is used and a tab is opened or a new tab id appears; the file step
   requires an editor tab created since the step began; the drag step requires an applied cmd.panel_tab.move
   with a split and increased panel count, with the menu alternative above retained. Back and Skip/Finish use
   their respective restore paths.
+  A legacy checkpoint from before the panels that has no step-order stamp is read against the published
+  18-step order, then follows the same saved-id and retired-chapter resume rules; only when its step and
+  chapter are both gone does it start fresh with the notice.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -2815,6 +2825,7 @@ source_lineage:
   - Plans/Decision_Log.md#DL-186
   - "Concepts/home-redesign/src/panels/js/52-tour.js at 339203bd76 on concept/home-panels-20261009, SHA-256 456375285dbe1462e78167c21be04bf6a9b37e13fba17fc54ce9725566cf8afd (the widget step as built: Upcoming resets, its done rule and Show Me; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (section 5, option B; design lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
 preserved_exact_tokens:
   - move_or_dock_chat
   - workspace_orientation
@@ -2843,6 +2854,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets on the Home board (add, then move or resize), and the tour's snapshots and restores cover the Home board's widgets; the old Home widgets and the Approval queue practice are gone."
   - "Amended 2026-10-10 (DL-186): the tour contract's predicate:workspace:widget-added keeps its name and now means the add followed by a move or resize."
   - "Amended 2026-10-10 (lead ruling): Home's default set already holds Upcoming resets, so the widget step always first takes it off the Home board as part of the captured practice layout, and Back, Skip and Finish restore that layout quietly (DL-153)."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The tour estimate is the measured 5 minutes and its widget step waits for the Home board."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Legacy unstamped tour checkpoints are interpreted against the earlier 18-step order."
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json

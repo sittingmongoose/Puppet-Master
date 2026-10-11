@@ -245,12 +245,16 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # 75a3814574), the 6 of the hosted rules D10 6.4 appends, and 1 from the pick-up polish (2026-10-10, 20-board.css: the
 # resizing plate's lift no longer waits for the board's data-op; a hosted board's resize behaves the same), and 4 from the
 # lift fix (2026-10-11, 20-board.css: the lifted plate's tools, head tools, title room and lift-shadow layer take their
-# lifted state in the lift's own frame; a hosted board's lift is the same) = 2,629. A Usage CSS
+# lifted state in the lift's own frame; a hosted board's lift is the same) = 2,629; plus the carry frost (2026-10-11,
+# 20-board.css: while html[data-lg-frost="painted"] every plate drops its live blur, the carried plate its whole backdrop
+# filter, and the carried plate's lift layer takes its painted frost; a hosted board's plates too) = 2,632, plus D43's
+# account switch rules in 50-accounts.css (8484df3f25: +44, 258db47370: -2, a471fc10bc: +1; buttons, switch column,
+# stacked and narrow rows, look variants and reduced motion; the same account controls on a hosted board) = 2,675. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2629, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2675, 'compound': 1}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

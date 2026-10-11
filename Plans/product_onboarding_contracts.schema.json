@@ -4113,6 +4113,10 @@
               "type": "null"
             }
           ]
+        },
+        "look_choice": {
+          "$ref": "#/$defs/onboarding_look_choice",
+          "description": "The look chosen so far in this onboarding session (DL-153): each ui.onboarding.choose_look request replaces only the fields it sets; absent or null fields mean nothing chosen yet. A resumed session repaints from it, NieR Mode included; null fields fall back to F3-520's start rule. Settings are written only at commit (F3-520)."
         }
       },
       "allOf": [

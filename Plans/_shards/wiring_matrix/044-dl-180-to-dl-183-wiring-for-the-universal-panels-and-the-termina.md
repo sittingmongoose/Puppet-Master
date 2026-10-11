@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5552-L6216
+Source lines: L5553-L6226
 
-Source SHA256: `1949b9b3de3ac86875fd1f5e2e6856cf2b60a2e5004e17bab0464682e123814b`
+Source SHA256: `61c71646b3f539b9430096057d89f9902cbd7417cf196b138c1d88bd76cc2bd7`
 
 ---
 
@@ -285,11 +285,17 @@ canonical_text: >-
   (ui.widget_board.set_view) and the preset save, rename and delete (ui.widget_preset.*) are typed local actions with
   no entry; Live readings is the Usage page's view_only Live / Paused; the Undo in the notice that follows Start from
   is home.dashboard_tab.undo_start_from, one cmd.widget.reset_layout with { scope: room, room: <board_id>,
-  restore_revision } while the notice is up, never with set_id, refused with a disabled reason once that revision is no
-  longer the board's previous one, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
+  restore_revision } while the notice is up, never with set_id, refused without dispatch and disabled with a reason when any other board change was committed since, excluding the preset hold's settling resizes, with a receipt and no event (amended 2026-10-10, lead ruling; it read: the Undo
   after Start from has no entry until the lead rules). The rail's Chat entry dispatches cmd.panel.switch on every page; Keep the chat open in narrow windows,
   in the Home options menu and the chat header's menu, is the typed local action ui.chat_column.keep_open with no
   entry; the chat's pop-out is never saved.
+  The same dashboard Undo notice and existing Undo route serve Start from and a Reset widgets that changed
+  anything: one cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one receipt
+  and no workspace.layout_changed, never set_id with restore_revision. The revision and its envelope are
+  captured before that operation and written back and read by the board owner after acceptance. Any other
+  committed board change disables Undo without dispatch, except the preset hold's settling resizes;
+  eligibility is rechecked while the notice is up on commit, pointer or focus entering and click (WS-030,
+  F3-638).
 gui_related: true
 gui_classification_reason: "Binds every visible control of the universal panels, the chat column and the Home keys to exactly one command or typed local action."
 split_recommended: false
@@ -333,6 +339,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D33, D35, D39, D40)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console sub-tabs, the rail's Chat entry; concept lineage only)"
   - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id, presets, rename and delete through the tab commands"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "home.dashboard_tab.start_from"
   - "home.dashboard_tab.undo_start_from"
@@ -372,6 +380,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186; D35; lead rulings F1, F2 and F7): 14 home.* entries added for the dashboard tab's controls, New dashboard and the launcher's dashboard links; the Dashboard row bodies open or reveal dashboard:home; range, scope and presets are typed local actions without entries."
   - "Amended 2026-10-10 (DL-187; D32, D33, D39, D40): 6 home.* entries added for SSH hosts and the launcher's sub-row links (shells, a host, a recent address, a recent file); installed shells in the Terminal rows; one debug-console tab whose sub-tab dispatches nothing; the rail's Chat entry on every page; Keep the chat open in narrow windows is ui.chat_column.keep_open, no longer a Settings transaction; the pop-out is never saved."
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): 1 home.* entry added, home.dashboard_tab.undo_start_from for cmd.widget.reset_layout with restore_revision (129 home.* entries); the Undo is no longer an open item."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The existing dashboard Undo restores the captured revision after Start from or a changed Reset with the same command and guard."
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
