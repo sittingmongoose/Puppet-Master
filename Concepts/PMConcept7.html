@@ -49079,6 +49079,23 @@ var PMU = window.PMU = {
     }
     if (!svg) svg = SVG[name] || SVG.grid;
     return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + svg + '</span>';
+  },
+  /* The bare svg for the raw-SVG call sites (rollout USAGE step 6: the card-head tools, the menu's icons, the [data-icon]
+     fill): the same NEON lookup and cache as PMU.icon with no wrapper, so `.pmu-iconbtn > svg` and its siblings still
+     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat. '' when neither
+     PMG nor the SVG table has the name, so each caller keeps its own fallback. */
+  svg: function (name, size) {
+    var G = window.PMG, g = name ? NEON[name] : '', out = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), s = size || (flat ? 14 : 16);
+      var key = (flat ? 'f|' : 'i|') + g + '|' + s + '|' + role;
+      out = ICON_CACHE[key];
+      if (!out) {
+        try { out = flat ? G.flat(g, s, 'nx-r-control') : G.icon(g, s, 'nx-r-' + role); } catch (error) { out = ''; }
+        if (out) ICON_CACHE[key] = out;
+      }
+    }
+    return out || SVG[name] || '';
   }
 };
 
@@ -61729,7 +61746,7 @@ var PMU_SERIES = {
       var r = rows[i], mi = +el.getAttribute('data-mi'), was = h.flat[mi];
       h.flat[mi] = r;
       if (was.right !== r.right) { var rt = el.querySelector('.pmu-mright'); if (rt) rt.textContent = r.right; }
-      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = SVG[r.icon] || ''; }
+      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = (PMU.svg ? PMU.svg(r.icon, 14) : SVG[r.icon]) || ''; }
       if (!!was.active !== !!r.active) {
         el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
         var ck = el.querySelector('.pmu-mcheck');
@@ -61955,10 +61972,10 @@ var PMU_SERIES = {
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +
-        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + SVG.toolGrip + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + SVG.toolSize + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + SVG.toolGear + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + SVG.toolKebab + '</button></span></header>' +
+        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + PMU.svg('toolGrip', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + PMU.svg('toolSize', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + PMU.svg('toolGear', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + PMU.svg('toolKebab', 14) + '</button></span></header>' +
         '<div class="pmu-cardbody"></div>' + EDGES.map(function (e) { return '<i class="pmu-h" data-edge="' + e + '" aria-hidden="true"></i>'; }).join('');
       if (rect) boardNow().place(card, rect);   /* the board it is handed places it (and marks the card as its own) */
       return card;
@@ -62420,7 +62437,9 @@ var PMU_SERIES = {
 
   function speed() { return PMU.motion ? PMU.motion.speed() : 1; }
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
-  function icon(name) { return SVG[name] || ''; }
+  /* the neon glyph at the size this menu's CSS gives the svg (15-menu.css: 14 in rows, the back and the search, 16 on the
+     rail), through PMU.svg; the SVG table without PMG */
+  function icon(name, size) { return PMU.svg ? PMU.svg(name, size || 14) : (SVG[name] || ''); }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
   /* a spec callback, in the menu's board */
   function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
@@ -62464,7 +62483,7 @@ var PMU_SERIES = {
       var on = (h.rail || 'all') === b.value;
       return '<button type="button" class="pmu-mrailbtn' + (on ? ' active' : '') + '" role="tab" aria-selected="' + on + '" data-rail="' + esc(b.value) + '"' +
         ' aria-label="' + esc(b.label) + '" data-pm-hover-label="' + esc(b.label) + '">' +
-        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid') + '</span>') + '</button>';
+        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid', 16) + '</span>') + '</button>';
     }).join('') + '</div>';
   }
   function listHtml(h) {
@@ -70017,7 +70036,9 @@ function roomWidgets(room) { return PMU.board ? PMU.board.visible(room || state.
 function injectIcons() {
   if (!app) return;
   $$('[data-icon]', app).forEach(function (element) {
-    element.innerHTML = SVG[element.getAttribute('data-icon')] || SVG.grid;
+    var name = element.getAttribute('data-icon');
+    /* the neon glyph at the 16 px the shell's CSS gives every [data-icon] svg (rollout USAGE step 6) */
+    element.innerHTML = (PMU.svg ? PMU.svg(name, 16) : SVG[name]) || SVG.grid;
   });
 }
 
