@@ -26204,7 +26204,8 @@ html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item
 /* O55 · restraint (owner direction, 2026-09-26): no capsules and no coloured side or top stripes anywhere in Settings.
    - A status is a dot and a word; a tag is a plain word; an engine badge is a word with a dot for its tone.
    - Choices you pick several of are squared tiles with a checkbox, not rounded chips.
-   - Related links in Details are text links. Toggle switches and progress bars keep their own shape.
+   - Related links in Details are text links. Switches and bars were left round here; 91-no-pills.css squares them
+     (Jared, 2026-10-10: no pills anywhere).
    Manager CSS that drew capsules (transfer categories, web service chains) was changed at its source. */
 
 /* engine badges: a word, with a dot when it carries a tone */
@@ -26234,6 +26235,180 @@ html[data-o55-still] #panel-settings :is(.chip-select button, .pm51-transfer-chi
 
 /* the example box in Details: a quiet box, no accent stripe on its edge */
 #panel-settings .detail-example { padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); }
+
+/* ---- styles.d/91-no-pills.css ---- */
+/* O55 · no pills (Jared 2026-10-10: "pills needs to be removed from settings and redesigned to not use them"; cards
+   NP-SWITCH, NP-BARS and NP-CHOICE, approved as presented; the rule is DL-184 / F3-648). 90-restraint.css removed the
+   chips, badges and tags; this file replaces the two shapes it had left round on purpose, the switch and the bars.
+   Corners come from src/css/06-corners.css (--pm-ctl-r outside, --pm-ctl-r-in inside). */
+
+/* ── The keyed switch ─────────────────────────────────────────────────────────────────────────────────────────────
+   role=switch, its wiring and its keyboard are unchanged; only the drawing is. The track is the look's rectangle. A lit
+   layer (::before) wipes in from the left behind a square key (::after) that carries a grip. The uncovered end shows the
+   power marks: a bar in the lit layer when on, a hollow square on the track when off, so the state reads without colour.
+   Pressing squashes the key. Friendly lands with the spring, Glass has a glass key with a lit top edge, Retro is reverse
+   video with a stepped key and a hard drop, NieR moves an ink block in two beats. */
+html { --pm-switch-off-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect x='.75' y='.75' width='6.5' height='6.5' rx='1' fill='none' stroke='rgba(0,0,0,.42)' stroke-width='1.5'/%3E%3C/svg%3E"); }
+html[data-theme$="-dark"] { --pm-switch-off-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect x='.75' y='.75' width='6.5' height='6.5' rx='1' fill='none' stroke='rgba(255,255,255,.5)' stroke-width='1.5'/%3E%3C/svg%3E"); }
+html #panel-settings .toggle {
+  width: 40px; height: 22px; border-radius: var(--pm-ctl-r); overflow: hidden; isolation: isolate;
+  background: var(--k3-surface-3) var(--pm-switch-off-mark) no-repeat right 7px center / 8px 8px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+html #panel-settings .toggle.on { background-color: var(--k3-surface-3); border-color: var(--k3-line); }
+html #panel-settings .toggle::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(#fff, #fff) no-repeat 8.5px 50% / 1.5px 8px, var(--k3-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 300ms var(--k3-ease-out, cubic-bezier(.2,.8,.2,1));
+}
+html #panel-settings .toggle.on::before { clip-path: inset(0 0 0 0); }
+html #panel-settings .toggle::after {
+  z-index: 1; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: var(--pm-ctl-r-in);
+  background-color: #fbfbfd;
+  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.20) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.20) 9.5px 10.5px, transparent 10.5px);
+  background-repeat: no-repeat; background-size: 16px 7px; background-position: 0 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,.30), 0 0 0 .5px rgba(0,0,0,.18), inset 0 -1px 0 rgba(0,0,0,.08);
+  transition: transform 340ms var(--k3-ease-spring, cubic-bezier(.3,1.4,.5,1)), scale 140ms ease, background-color 200ms ease;
+}
+html #panel-settings .toggle.on::after { transform: translateX(18px); background-color: #fff; }
+html #panel-settings .toggle:active::after { scale: 1.14 .9; }
+html #panel-settings .toggle:hover { box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+html #panel-settings .toggle:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+html[data-theme$="-dark"] #panel-settings .toggle:not(.on)::after { background-color: #c9c8d4; }
+/* Friendly: a softer shadow under the key */
+html[data-theme^="friendly"] #panel-settings .toggle::after { box-shadow: 0 2px 5px rgba(60,40,20,.22), 0 0 0 .5px rgba(60,40,20,.14); }
+/* Glass: a frosted track and a glass key with a lit top edge */
+html[data-theme^="glass"] #panel-settings .toggle { background-color: rgba(var(--glass-tint-rgb, 255,255,255), .22); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 0 1px rgba(255,255,255,.10); }
+html[data-theme^="glass"] #panel-settings .toggle::after {
+  background-color: transparent;
+  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.16) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.16) 9.5px 10.5px, transparent 10.5px), linear-gradient(180deg, rgba(255,255,255,.98), rgba(236,234,250,.80));
+  background-size: 16px 7px, 100% 100%;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 .5px rgba(255,255,255,.7), 0 3px 8px rgba(20,10,60,.28);
+}
+/* Retro: hard edges and a 2px drop; on is reverse video; the key moves in four steps */
+html[data-theme^="retro"] #panel-settings .toggle { border-width: 2px; border-color: var(--k3-text-1); box-shadow: 2px 2px 0 var(--k3-text-1); background-color: var(--k3-surface-3); }
+html[data-theme^="retro"] #panel-settings .toggle::before { background: linear-gradient(var(--k3-surface-3), var(--k3-surface-3)) no-repeat 7px 50% / 2px 8px, var(--k3-text-1); box-shadow: none; transition: clip-path 160ms steps(4, end); }
+html[data-theme^="retro"] #panel-settings .toggle::after, html[data-theme^="retro"] #panel-settings .toggle:not(.on)::after { width: 14px; height: 14px; background-image: none; background-color: var(--k3-text-1); box-shadow: none; transition: transform 160ms steps(4, end); }
+html[data-theme^="retro"] #panel-settings .toggle.on::after { background-color: var(--k3-surface-3); }
+html[data-theme^="retro"] #panel-settings .toggle:hover { box-shadow: 2px 2px 0 var(--k3-text-1); filter: brightness(1.08); }
+/* NieR: ink on parchment; the key is an ink block that moves in two beats */
+html[data-o55-nier="on"] #panel-settings .toggle { border-color: var(--k3-text-1); background-color: transparent; box-shadow: none; }
+html[data-o55-nier="on"] #panel-settings .toggle::before { background: linear-gradient(var(--k3-surface-3), var(--k3-surface-3)) no-repeat 8px 50% / 1.5px 8px, var(--k3-text-1); box-shadow: none; transition: clip-path 180ms steps(2, end); }
+html[data-o55-nier="on"] #panel-settings .toggle::after, html[data-o55-nier="on"] #panel-settings .toggle:not(.on)::after { background-image: none; background-color: var(--k3-text-1); box-shadow: none; transition: transform 180ms steps(2, end); }
+html[data-o55-nier="on"] #panel-settings .toggle.on::after { background-color: var(--k3-surface-3); }
+/* Reduced Motion and NieR's Still: the key moves at once and the colour fades in, a calm version rather than none */
+@media (prefers-reduced-motion: reduce) {
+  html #panel-settings .toggle::before { clip-path: none; opacity: 0; transition: opacity 160ms ease; }
+  html #panel-settings .toggle.on::before { opacity: 1; }
+  html #panel-settings .toggle::after { transition: background-color 160ms ease; scale: none; }
+}
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { clip-path: none; opacity: 0; transition: opacity 160ms ease; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle.on::before { opacity: 1; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::after { transition: background-color 160ms ease; scale: none; }
+
+/* ── Segment rows inside Settings: the look's rectangle, the chosen cell with the inner corner ────────────────────── */
+html #panel-settings .segmented { border-radius: var(--pm-ctl-r); }
+html #panel-settings .segmented button { border-radius: var(--pm-ctl-r-in); }
+
+/* ── Square-ended bars (NP-BARS) ───────────────────────────────────────────────────────────────────────────────────
+   Meters get flat ends with a 1px corner at most, and a little more height so the end reads as meant. Retro counts
+   in blocks, like a segment display; NieR already draws its meters in blocks. The space split's shares sit 2px apart
+   (30-memory.js). The 2px lines (waveform bars, tab ink, step connectors) are lines, not capsules, and keep their ends. */
+html #panel-settings .pm51-meter-track { height: 5px; border-radius: 1px; }
+html #panel-settings .pm51-meter-fill { border-radius: 1px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .pm51-meter-track { height: 6px; border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .pm51-meter-fill {
+  border-radius: 0;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+  mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+}
+
+/* ── Status mark slot (NP-STATUS) ───────────────────────────────────────────────────────────────────────────────
+   A status is a mark and a word: every status dot in Settings now sits in one uniform 1em slot that the neon
+   glyph rollout will later fill with PMG.status(key, 14, 'nx-still'). Today the slot draws exactly the dot it
+   replaces (same colour, diameter and centre); the negative inline margin pays back the slot's extra width so
+   the word starts where it started. Colours still come from the old tone hooks (carry-over rules below, each
+   citing the rule it replaces); the [data-status] rules name each key's usual ink for slots without one. */
+html #panel-settings .pm-status-mark { display: inline-block; flex: none; width: 1em; height: 1em; position: relative; vertical-align: -0.125em; padding: 0; border: 0; background: none; margin-inline: calc((var(--pm-dot, 6px) - 1em) / 2); }
+html #panel-settings .pm-status-mark::before { content: ""; position: absolute; inset: 0; margin: auto; width: var(--pm-dot, 6px); height: var(--pm-dot, 6px); border-radius: 50%; background: var(--pm-status-ink, currentColor); }
+/* the two 7px dots (styles.css .pm51-status i, 11-web.js .o55-chain-step i); every other slot keeps 6px */
+html #panel-settings :is(.pm51-status, .o55-chain-step) .pm-status-mark { --pm-dot: 7px; }
+/* each key's usual ink */
+html #panel-settings .pm-status-mark[data-status="idle"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="working"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="complete"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="warning"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="waiting"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="paused"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="recovering"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="info"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="reviewing"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="failed"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="blocked"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="offline"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="off"] { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm-status-mark[data-status="change-modified"] { --pm-status-ink: var(--k3-accent); }
+/* status tokens (carry-over from styles.css .pm51-status.tone-* i) */
+html #panel-settings .pm51-status.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm51-status.tone-info .pm-status-mark { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm51-status.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm51-status.tone-blocked .pm-status-mark { --pm-status-ink: var(--k3-red); }
+html #panel-settings :is(.pm51-status.tone-off, .pm51-status.tone-neutral) .pm-status-mark { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm51-acc-end .pm51-status > .pm-status-mark { margin-top: calc(.32em - (1em - 7px) / 2); margin-bottom: calc((7px - 1em) / 2); }
+/* roster and delivery-history dots (carry-over from the base .status-dot colour rules) */
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.ready { --pm-status-ink: var(--k3-green); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.attention { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: #69677d; }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.info { --pm-status-ink: var(--k3-blue); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.error { --pm-status-ink: var(--k3-red); }
+/* the base page paints kept .status-dot classes on the element itself; the slot paints only ::before */
+html #panel-settings .status-dot.pm-status-mark { background: none; border-radius: 0; }
+html[data-o55-nier] #panel-settings .status-dot.pm-status-mark { background: none; }
+/* changed marker and its halo (carry-over from 10-rows.css .o55-changed i) */
+html #panel-settings .o55-changed .pm-status-mark { --pm-status-ink: var(--k3-accent); }
+html #panel-settings .o55-changed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-amber-soft); }
+/* service chains (carry-over from 11-web.js .o55-chain-step i: off and blocked fall through to the grey) */
+html #panel-settings .o55-chain-step.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .o55-chain-step.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.o55-chain-step.tone-off, .o55-chain-step.tone-blocked) .pm-status-mark { --pm-status-ink: var(--k3-text-3); }
+/* rail health (carry-over from the base .side-health::before: currentColor plus its glow) */
+html #panel-settings .side-health.pm-has-mark::before { content: none; }
+html #panel-settings .side-health .pm-status-mark { --pm-status-ink: currentColor; }
+html #panel-settings .side-health .pm-status-mark::before { box-shadow: 0 0 10px currentColor; }
+/* home attention rows (carry-over from the base .status-dot.attention) */
+html #panel-settings .attention-row .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+/* NieR idle dots (carry-over from 13-nier.css:538) */
+html[data-o55-nier] #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: var(--o55-nier-line-strong); }
+
+/* ── Dropdown search (found by tools/pill_check.mjs --dialogs) ──────────────────────────────────────────────────────
+   The search at the top of a dropdown popout takes the look's rectangle; its input, focused when the popout opens, no
+   longer draws Friendly's 14px-cornered focus glow, which ringed it as a capsule. */
+html .pm51-popout-search { border-radius: var(--pm-ctl-r); }
+html .pm51-popout-search input { border-radius: var(--pm-ctl-r-in); }
+
+/* ---- styles.d/92-switch-motion.css ---- */
+/* O55 · switch motion: the one frame a redrawn switch spends in the state it was clicked from (kit.d/26-switch-motion.js).
+   No transition into this state; removing the class lets 91-no-pills.css's slide and wipe (or Reduced Motion's fade) run.
+   The lit layer carries both its clip and its opacity, so the same frame works for the slide and for the fade. */
+html #panel-settings .toggle.pm-switch-from.on::before { clip-path: inset(0 100% 0 0) !important; opacity: 0 !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from.on::after { transform: none !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from:not(.on)::before { clip-path: inset(0 0 0 0) !important; opacity: 1 !important; transition: none !important; }
+html #panel-settings .toggle.pm-switch-from:not(.on)::after { transform: translateX(18px) !important; transition: none !important; }
+/* Reduced Motion: the app stops every transition (pm6's global block, for prefers-reduced-motion and for
+   data-motion="reduced"). The switch keeps one calm cue that does not move: its colour fades in over 160 ms while the key
+   goes straight to its place (card NP-SWITCH). */
+@media (prefers-reduced-motion: reduce) { html #panel-settings .toggle::before { transition: opacity 160ms ease !important; } }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { transition: opacity 160ms ease !important; }
+/* Retro and NieR swap the key's ink with the lit layer's (reverse video). The key keeps its old ink until it lands, so it
+   never crosses its own colour mid-way (a solid block for a step); the frame it starts from carries the old ink too. */
+html[data-theme^="retro"] #panel-settings .toggle::after, html[data-theme^="retro"] #panel-settings .toggle:not(.on)::after { transition: transform 160ms steps(4, end), background-color 0s linear 160ms; }
+html[data-o55-nier="on"] #panel-settings .toggle::after, html[data-o55-nier="on"] #panel-settings .toggle:not(.on)::after { transition: transform 180ms steps(2, end), background-color 0s linear 180ms; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from:not(.on)::after { background-color: var(--k3-surface-3) !important; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from.on::after { background-color: var(--k3-text-1) !important; }
 
 </style>
 <!-- O55:CSS:START -->
@@ -26715,6 +26890,16 @@ html:not([data-motion="reduced"]) .o55fx-bd-caret { animation: o55fx-blink 480ms
    the read phase shows them. Reduced Motion is a look switch (the lint allows it: the whole page restyles on it). */
 html[data-motion="reduced"] .o55fx-layer *, html[data-motion="reduced"] .o55fx-layer *::before, html[data-motion="reduced"] .o55fx-layer *::after { transition: none !important; }
 
+/* ---- css/06-corners.css ---- */
+/* Control corners, one pair per look (no-pills, Jared 2026-10-10, card NP-CORNERS; the rule is DL-184 / F3-648).
+   A control is the look's own rectangle: --pm-ctl-r on its outer box, --pm-ctl-r-in on anything inside it (a switch's
+   key, a chosen cell). Both stay well under half of any control's height, so nothing reads as a capsule. Every no-pills
+   pattern reads only these two values; Liquid Glass and later work reuse them instead of choosing their own. */
+html { --pm-ctl-r: 4px; --pm-ctl-r-in: 2px; }
+html[data-theme^="friendly"] { --pm-ctl-r: 6px; --pm-ctl-r-in: 3px; }
+html[data-theme^="glass"] { --pm-ctl-r: 6px; --pm-ctl-r-in: 3px; }
+html[data-theme^="retro"], html[data-o55-nier="on"] { --pm-ctl-r: 0px; --pm-ctl-r-in: 0px; }
+
 /* ---- css/10-window.css ---- */
 /* ---- O55 onboarding window --------------------------------------------------------------------------------------
    One bounded modal over the dimmed live app. Materials differ per family (Basic hairline blueprint, Friendly chunky
@@ -26994,8 +27179,8 @@ html[data-motion="reduced"] #pm-o55-onboarding[data-family="retro"] .o55-spin::a
 .o55-sheethead { display: flex; align-items: center; justify-content: space-between; } .o55-sheethead h2 { margin: 0; font: 700 15px/1.3 var(--body-font); }
 .o55-sheetbody { display: grid; gap: 10px; } .o55-sheetfoot { display: flex; gap: 10px; justify-content: flex-end; }
 
-/* resume chip */
-.o55-resume { position: fixed; z-index: 2147481000; top: 46px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; border-radius: 999px; background: var(--accent-blue); color: #0b1a2b; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); font: 650 13px/1 var(--body-font, system-ui); }
+/* resume notice: the look's rectangle, no pill (DL-184) */
+.o55-resume { position: fixed; z-index: 2147481000; top: 46px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; border-radius: var(--pm-ctl-r, 4px); background: var(--accent-blue); color: #0b1a2b; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5); font: 650 13px/1 var(--body-font, system-ui); }
 .o55-resume button { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 14px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
 .o55-resume .o55-resume-x { padding: 0 12px 0 6px; font-size: 16px; opacity: 0.7; }
 
@@ -27749,11 +27934,13 @@ html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::
 /* the install group */
 .o55-install { padding: 12px 14px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--text-primary) 4%, transparent); }
 
-/* concept demo pill (outside the product; above the onboarding scrim so scenarios can be switched any time) */
+/* concept demo button (outside the product; above the onboarding scrim so scenarios can be switched any time). No pills
+   (DL-184): the look's rectangle, and the scenario is a plain word after a small square mark. */
 .o55-demo { position: fixed; left: 14px; bottom: 14px; z-index: 2147482600; font: 600 12.5px/1.3 var(--body-font, system-ui); color: var(--text-primary); }
-.o55-demopill { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px dashed color-mix(in srgb, var(--text-primary) 35%, transparent); background: color-mix(in srgb, var(--surface) 92%, var(--background)); color: var(--text-secondary); cursor: pointer; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.45); }
+html .o55-demopill { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: var(--pm-ctl-r, 4px); border: 1px dashed color-mix(in srgb, var(--text-primary) 35%, transparent); background: color-mix(in srgb, var(--surface) 92%, var(--background)); color: var(--text-secondary); cursor: pointer; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.45); }
 .o55-demopill .o55-sg { color: var(--accent-magenta); }
-.o55-demoscn { padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--accent-magenta) 16%, transparent); color: var(--text-primary); }
+.o55-demoscn { position: relative; padding: 0 0 0 11px; color: var(--text-primary); font-weight: 650; }
+.o55-demoscn::before { content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: var(--accent-magenta); }
 .o55-demomenu { position: absolute; left: 0; bottom: 40px; width: 300px; max-height: min(560px, 70vh); overflow: auto; padding: 10px; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(var(--surface), var(--surface)), var(--background); box-shadow: 0 20px 50px -14px rgba(0, 0, 0, 0.6); display: grid; gap: 2px; }
 .o55-demotitle { margin: 2px 6px 0; font-weight: 750; font-size: 13.5px; }
 .o55-demonote { margin: 0 6px 6px; font-weight: 400; font-size: 12px; color: var(--text-muted); }
@@ -27766,7 +27953,7 @@ html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::
    (data-o55-narrow): a :has() rule on the root element here made every DOM change anywhere in the app restyle the
    whole page. */
 .o55-demo[data-o55-narrow] { left: 0; bottom: auto; top: 50%; transform: translateY(-50%); }
-.o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 10px 10px 0; border-left: 0; }
+html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; padding: 0; justify-content: center; border-radius: 0 var(--pm-ctl-r, 4px) var(--pm-ctl-r, 4px) 0; border-left: 0; }
 .o55-demo[data-o55-narrow] .o55-demopill > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .o55-demo[data-o55-narrow] .o55-demomenu { left: 26px; bottom: auto; top: 50%; transform: translateY(-50%); width: min(300px, calc(100vw - 40px)); }
 
@@ -28630,6 +28817,43 @@ html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition:
 :not(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console) { --pm6-sb-ink: initial; }
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, .orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) > * { scrollbar-color: transparent transparent; }
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console):is(:hover, .pm6-sb-active) :is(.orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) { scrollbar-color: var(--pm6-sb-thumb) transparent; }
+
+/* ---- css/24-no-pills.css ---- */
+/* No pills outside Settings' own panel (Jared 2026-10-10; cards NP-CHOICE and NP-SCOPE, approved as presented; the rule
+   is DL-184 / F3-648). Settings' panel is in src/settings/styles.d/91-no-pills.css; corners in 06-corners.css. */
+
+/* ── Joined choice row: the title-bar theme menu's Light / Dark / Auto ─────────────────────────────────────────────
+   The cells share one rectangle with thin dividers; the chosen cell is filled on its own box with the inner corner.
+   Retro and NieR show the chosen cell in reverse video. role=radio and the menu's keys are unchanged. */
+html[data-theme] .pm6-tt-modes { gap: 0; padding: 2px; border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .pm6-tt-mode { position: relative; border-radius: var(--pm-ctl-r-in) !important; }
+.pm6-tt-mode + .pm6-tt-mode::before {
+  content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border-light);
+  transition: opacity var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+.pm6-tt-mode[aria-checked="true"]::before, .pm6-tt-mode[aria-checked="true"] + .pm6-tt-mode::before { opacity: 0; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-tt-mode[aria-checked="true"] { background: var(--text-primary); color: var(--surface); }
+/* the theme menu's family rows and the other title-bar menu rows: Friendly drew them as wide capsules */
+html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) !important; }
+
+/* ── Phase 2: the title bar's capsules, in every look (NP-SCOPE; Glass's activity bar stays with Liquid Glass) ───────
+   The project menu, the page tabs with their sliding ink, and the search field take the look's rectangle. The ink still
+   springs between tabs exactly as before. Glass's ink loses its 2px lilac line across the top: selection is the
+   surface itself, never an edge stripe (F3-648). */
+html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme] .title-bar .page-tabs .page-tab, html[data-theme] .title-bar .page-tab-ink { border-radius: var(--pm-ctl-r) !important; }
+html[data-theme^="glass"] .title-bar .page-tabs { border-radius: calc(var(--pm-ctl-r) + 2px) !important; }
+html[data-theme^="glass"] .title-bar .page-tab-ink {
+  background: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 52%, #241450) 100%) !important;
+}
+html[data-theme] .title-bar .search-bar, html[data-theme] .title-bar .pm6-tb-search-wrap .search-bar { border-radius: var(--pm-ctl-r) !important; }
+/* Friendly floats the title bar as a card with its large card corner (20px), which on a 40px bar is a capsule; it takes
+   Glass's floating-bar corner instead, still soft and well under half its height. */
+html[data-theme^="friendly"] .title-bar { border-radius: 14px !important; }
+/* The title bar's notification stage and stack (#rsStage, #rsStack) draw their cards with the look's --border-radius,
+   which in Friendly and Glass rounds a 28px stacked card and a 44px stage card into capsules; they keep a soft card
+   corner instead (found by pm7-glyphs' toast gate). */
+html:is([data-theme^="friendly"], [data-theme^="glass"]) :is(.rs-card, .rs-clip) { border-radius: min(var(--border-radius, 10px), 10px) !important; }
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -81950,14 +82174,45 @@ const PLAIN_STATUS = {
 };
 PM51.plain = status => PLAIN_STATUS[String(status || '').toLowerCase()] || cap(String(status || ''));
 PM51.tone = label => TONE_BY_WORD[String(label || '').toLowerCase()] || 'neutral';
-/* Status token: a small coloured dot plus text. No capsules anywhere in Settings (the user does not
-   like pills); PM51.pill keeps its name so every manager converts without edits. */
-PM51.status = (label, tone) => `<span class="pm51-status tone-${a(tone || PM51.tone(label))}"><i aria-hidden="true"></i><span>${h(label)}</span></span>`;
+/* NP-STATUS: every status dot lives in one uniform 1em slot (PM51.mark) so the neon glyph rollout can
+   later fill each slot with PMG.status(key, 14, 'nx-still'). The KEY names the status vocabulary entry
+   (status.json surfaces.settings, else by meaning); the dot's colour still comes from the old tone hook
+   (carry-over rules in styles.d/91-no-pills.css), so re-keying a word never moves a pixel. */
+const STATUS_KEY_BY_WORD = {
+  'ok': 'complete',
+  'error': 'failed', 'failed': 'failed', 'failed recently': 'failed', 'has problems': 'failed', 'has a problem': 'failed', 'limit reached': 'failed',
+  'blocked': 'blocked', 'locked': 'blocked',
+  'info': 'info', 'neutral': 'info', 'default': 'info', 'recommended': 'info', 'ready to resume here': 'info', 'example': 'info', 'example run': 'info', 'protected handoff': 'info', 'checked · example data': 'info',
+  'active': 'working', 'in use': 'working', 'running': 'working', 'working': 'working', "active in this project's shell": 'working',
+  'clean': 'idle', 'enabled': 'idle', 'ready': 'idle', 'on': 'idle', 'connected': 'idle', 'current': 'idle', 'built in': 'idle', 'without asking': 'idle',
+  'verified': 'complete', 'passed': 'complete', 'passing': 'complete', 'manifest verified': 'complete', 'checked': 'complete', 'delivered': 'complete', 'complete': 'complete',
+  'attention': 'warning', 'needs attention': 'warning', 'needs sign-in': 'warning', 'needs setup': 'warning', 'needs-sign-in': 'warning', 'needs-signin': 'warning', 'needs-setup': 'warning', 'problem': 'warning', 'restart': 'warning', 'restart required': 'warning', 'setup': 'warning',
+  'warning': 'warning', 'not tested': 'warning', 'not checked yet': 'warning', 'not yet': 'warning', 'needs a look': 'warning', 'needs a key': 'warning', 'update ready': 'warning', 'file missing': 'warning', 'source missing': 'warning',
+  '1 failure': 'warning', 'partial with gaps': 'warning', 'redacted': 'warning', 'last checkup: ready with warnings': 'warning',
+  'needs permission': 'waiting', 'waiting': 'waiting', 'waiting for host': 'waiting', 'adjudication': 'waiting', 'needs-sign-in(remote-link)': 'waiting', 'asks first': 'waiting',
+  'paused': 'paused', 'held': 'paused',
+  'checking': 'reviewing', 'testing': 'reviewing',
+  'retrying': 'recovering',
+  'offline': 'offline', 'unavailable': 'offline', "can't reach the address": 'offline',
+  'disabled': 'off', 'not installed': 'off', 'not set up': 'off', 'not connected': 'off', 'off': 'off', 'available': 'off', 'not run': 'off', 'none': 'off', 'queued': 'off',
+  'no recording': 'off', 'rolled forward': 'off', 'can roll back': 'off', 'cleared': 'off', 'keeps local clock time': 'off', "in each chat's menu": 'off', 'kept while the chat exists': 'off', 'the latest 25 are kept': 'off'
+};
+const STATUS_KEY_BY_TONE = { ready: 'idle', attention: 'warning', off: 'off', neutral: 'off', info: 'info', blocked: 'failed' };
+PM51.statusKey = (label, tone) => {
+  const w = String(label || '').toLowerCase().trim();
+  if (STATUS_KEY_BY_WORD[w]) return STATUS_KEY_BY_WORD[w];
+  if (w.startsWith('clashes with ')) return 'warning';
+  return STATUS_KEY_BY_TONE[tone] || 'off';
+};
+PM51.mark = (key, tone) => `<span class="pm-status-mark" data-status="${a(key)}" data-tone="${a(tone || '')}" aria-hidden="true"></span>`;
+/* Status token: a slot plus text. No capsules anywhere in Settings (the user does not like pills);
+   PM51.pill keeps its name so every manager converts without edits. */
+PM51.status = (label, tone) => { const t = tone || PM51.tone(label); return `<span class="pm51-status tone-${a(t)}">${PM51.mark(PM51.statusKey(label, t), t)}<span>${h(label)}</span></span>`; };
 PM51.pill = PM51.status;
 PM51.statusPill = status => PM51.status(PM51.plain(status));
 PM51.tag = (label, { icon: ic } = {}) => `<span class="pm51-tag">${ic ? icon(ic) : ''}${h(label)}</span>`;
 PM51.kbd = key => `<kbd class="pm51-kbd">${h(key)}</kbd>`;
-PM51.dot = tone => `<span class="status-dot ${a({ ready: 'ready', attention: 'attention', off: 'disabled', info: 'info', blocked: 'error', neutral: 'disabled' }[tone] || 'disabled')}"></span>`;
+PM51.dot = (tone, label) => { const t = String(tone || ''); const cls = { ready: 'ready', attention: 'attention', off: 'disabled', info: 'info', blocked: 'error', neutral: 'disabled' }[t] || 'disabled'; return `<span class="status-dot ${cls} pm-status-mark" data-status="${a(label == null ? (STATUS_KEY_BY_TONE[t] || 'off') : PM51.statusKey(label, t))}" data-tone="${a(t)}" aria-hidden="true"></span>`; };
 
 /* ---------- primitives -------------------------------------------------- */
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
@@ -82479,6 +82734,24 @@ renderWorkspaceBody = function (workspace, domain) {
   finally { embedMode = false; }
 };
 pageHeader = function () { return ''; };
+/* NP-STATUS: the rail health line and the home attention rows are base-page static markup; the slot is
+   spliced in here (the established renderer-wrap pattern) instead of editing the base page. */
+const pm51OriginalRenderDomainRail = renderDomainRail;
+renderDomainRail = function () {
+  return String(pm51OriginalRenderDomainRail.apply(this, arguments)).replace(
+    '<div class="side-health">',
+    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`);
+};
+const pm51OriginalRenderHome = renderHome;
+renderHome = function () {
+  /* each attention row's key is read from its own words (the row after the dot): a missing seat is waiting, a test
+     that is retrying is recovering, anything else that needs attention is warning */
+  const keyFor = (text) => /\bseat\b/i.test(text) ? 'waiting' : /retrying/i.test(text) ? 'recovering' : 'warning';
+  return String(pm51OriginalRenderHome.apply(this, arguments)).replace(
+    /<span class="status-dot attention"><\/span>/g,
+    (m, at, all) => { const end = all.indexOf('</button>', at);
+      return `<span class="status-dot attention pm-status-mark" data-status="${keyFor(all.slice(at, end < 0 ? at + 400 : end))}" data-tone="attention" aria-hidden="true"></span>`; });
+};
 
 PM51.tab = (id, fallback) => PM51.s().tabs[id] || fallback;
 PM51.setTab = (id, tab) => { PM51.s().tabs[id] = tab; };
@@ -83592,7 +83865,7 @@ renderSettingRow = function (setting, section, workspace) {
   const needed = !!row.needed && empty && typeof PM51.value === 'function' && !!PM51.value(row.needed);
   const wide = row.layout === 'wide' || ['multiselect'].includes(row.control || setting.control) && o55Options(setting).length > 4;
   return `<div class="setting-row o55-row${changed ? ' is-changed' : ''}${wide ? ' is-wide' : ''}${row.risk ? ' is-risky' : ''}" id="setting-${a(setting.id)}" data-o55-kind="${a(row.control || setting.control || '')}">
-      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}${needed ? '<span class="o55-changed o55-needed" title="Needed before publishing"><i></i><span>Needed</span></span>' : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>` : ''}${needed ? `<span class="o55-changed o55-needed" title="Needed before publishing">${PM51.mark('waiting', 'needed')}<span>Needed</span></span>` : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
       <div class="setting-control">${control}</div>
       <button type="button" class="icon-btn details-btn o55-about" aria-expanded="${state.detailSetting === setting.id ? 'true' : 'false'}" data-action="setting-details" data-setting="${a(setting.id)}" data-workspace="${a(workspace ? workspace.id : '')}" data-section="${a(section ? section.id : '')}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="What it does, your choices, and the default.">${icon('help')}</button>
     </div>`;
@@ -83637,7 +83910,7 @@ function o55MarkChanged(id) {
   const on = !!(state.changed || {})[id];
   row.classList.toggle('is-changed', on);
   const lab = row.querySelector('.setting-label'), mark = lab && lab.querySelector('.o55-changed:not(.o55-needed)');
-  if (on && lab && !mark) lab.insertAdjacentHTML('beforeend', '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>');
+  if (on && lab && !mark) lab.insertAdjacentHTML('beforeend', `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>`);
   if (!on && mark) mark.remove();
 }
 
@@ -87661,6 +87934,54 @@ afterRender = function () {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 })();
 
+/* ---- kit.d/26-switch-motion.js ---- */
+/* O55 · switch motion (no pills, NP-SWITCH). Clicking a switch makes Settings draw its row again, so the switch that shows
+   the new state is a new element and its transition never runs: the old capsule snapped too. This bridge records the
+   clicked switch (what it is, where it was and the state it left) and, when its redrawn copy appears, holds that copy for
+   one frame in the state it came from (class pm-switch-from, styles.d/92-switch-motion.css). Then the key slides and the
+   colour wipes as drawn, and Reduced Motion's fade runs too. A switch updated in place runs its own transition and is
+   left alone; nothing is watched once the redrawn switch is found or 800 ms have passed. The clicked switch is recorded
+   on the way down (capture) and its copy is looked for on the way back up and on every change after it. */
+(function o55SwitchMotion() {
+  const SEL = '#panel-settings .toggle[role="switch"]';
+  const SKIP = /^data-(pm-hover|pm51-disabled|disabled-reason)/;
+  const key = (el) => {
+    const parts = [el.getAttribute('data-action') || '', el.getAttribute('aria-label') || ''];
+    for (const at of el.attributes) if (at.name.startsWith('data-') && at.name !== 'data-action' && !SKIP.test(at.name)) parts.push(at.name + '=' + at.value);
+    return parts.join('|');
+  };
+  let pending = null, watcher = null, timer = 0;
+  const stop = () => { if (watcher) watcher.disconnect(); watcher = null; pending = null; clearTimeout(timer); };
+  const settle = () => {
+    if (!pending || pending.node.isConnected) return;
+    const { k, was, x, y } = pending;
+    let best = null, dist = Infinity;
+    for (const t of document.querySelectorAll(SEL)) {
+      if (key(t) !== k) continue;
+      const r = t.getBoundingClientRect(), d = Math.hypot(r.x - x, r.y - y);
+      if (d < dist) { dist = d; best = t; }
+    }
+    if (!best) return;
+    stop();
+    if ((best.getAttribute('aria-checked') === 'true') === was) return;
+    best.classList.add('pm-switch-from');
+    requestAnimationFrame(() => requestAnimationFrame(() => best.classList.remove('pm-switch-from')));
+  };
+  document.addEventListener('click', (e) => {
+    const t = e.target && e.target.closest ? e.target.closest(SEL) : null;
+    if (!t || t.getAttribute('aria-disabled') === 'true') return;
+    stop();
+    const r = t.getBoundingClientRect();
+    pending = { node: t, k: key(t), was: t.getAttribute('aria-checked') === 'true', x: r.x, y: r.y };
+    watcher = new MutationObserver(settle);
+    watcher.observe(document.getElementById('panel-settings') || document.body, { childList: true, subtree: true });
+    timer = setTimeout(stop, 800);
+  }, true);
+  /* Most rows are drawn again inside the click itself: settle as the click leaves, before anything is painted. The
+     watcher above catches a row that is drawn later. */
+  document.addEventListener('click', settle);
+})();
+
 /* ---- kit.d/30-inspector.js ---- */
 /* O55 · the setting Details panel. The panel itself (its spring in and out, its width, the scrim) is the engine's and
    is unchanged; what it says is rebuilt so it answers a newcomer's questions in order:
@@ -88058,7 +88379,7 @@ PM51.scoped = {
     const kind = row.control || s.control || '';
     const wide = row.layout === 'wide' || (kind === 'multiselect' && (opts.choices || o55Options(s)).length > 4);
     return `<div class="setting-row o55-row o55-scoped${changed ? ' is-changed' : ''}${wide ? ' is-wide' : ''}" data-setting-id="${a(id)}" data-o55-kind="${a(kind)}"${opts.noChanged ? ' data-no-changed="1"' : ''}>
-      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
       <div class="setting-control">${control}</div>
       <button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" data-workspace="${a(found ? found.workspace.id : '')}" data-section="${a(found && found.section ? found.section.id : '')}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="What it does and your choices.">${icon('help')}</button>
     </div>`;
@@ -88632,7 +88953,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy { grid-column: 2; grid-row: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy strong { display: inline; font-size: 12.5px; font-weight: 650; color: var(--k3-text-1); overflow-wrap: anywhere; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status { display: inline-flex; margin: 0; font-size: 11px; }
-    #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status span { display: inline; margin: 0; font-size: 11px; color: inherit; }
+    #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status > span:last-child { display: inline; margin: 0; font-size: 11px; color: inherit; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-waveform { grid-column: 3; grid-row: 1; width: 72px; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-row > .icon-btn { grid-column: 4; grid-row: 1; }
     #panel-settings .pm51-mgr .pm51-sound-grid .pm51-sound-lines { grid-column: 2 / 5; grid-row: 2; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
@@ -89393,7 +89714,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
   function historyTab() {
     const rows = (N().history || []).map((hrow, i) => ({
       title: hrow.event, meta: `${hrow.time} · ${hrow.destination}`,
-      end: `<span class="pm51-notif-result">${PM51.dot(resultTone(hrow.result))}${h(hrow.result)}</span>${icon('chevron')}`,
+      end: `<span class="pm51-notif-result">${PM51.dot(resultTone(hrow.result), hrow.result)}${h(hrow.result)}</span>${icon('chevron')}`,
       action: 'pm51-notifications-history', data: { index: i }
     }));
     return PM51.section({ title: 'Delivery history', help: 'The most recent alerts and what happened to them.', body: rows.length ? PM51.list(rows) : PM51.note('Nothing delivered yet.') })
@@ -89790,8 +90111,9 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
   function statusLabelFor(p) {
     const base = plain(p);
     if (p.id === 'free-models') return base === 'Off' ? base : `${base} · ${routesOn()} of ${routes().length} routes on`;
-    const n = activeAccounts(p).length;
-    if (base === 'Ready' && n) return `${base} · ${countText(n, 'account')}`;
+    /* in use of total, so Settings and Usage count the same accounts (a signed-out account still counts in the total) */
+    const n = activeAccounts(p).length, total = (p.accounts || []).length;
+    if (base === 'Ready' && n) return `${base} · ${total > n ? `${n} of ${countText(total, 'account')}` : countText(n, 'account')}`;
     if (base === 'Needs attention' && p.id === 'github-copilot') return 'Needs a Copilot seat';
     return base;
   }
@@ -91073,7 +91395,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     const m = Object.assign({}, PM51.value(MATRIX) || {}); m[ability] = list.join(' → ');
     if (commitSettingValue(MATRIX, m)) { saveState(); o55Notify(MATRIX, m); }
   }
-  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}"><i></i>${h(svcLabel(n))}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
+  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}">${PM51.mark(PM51.statusKey(label, t), t)}${h(svcLabel(n))}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
   function fallbackText(r) {
     const on = (r.fallbacks || []).filter(f => f.enabled !== false);
     if (!on.length) return 'Nothing. The ability stops and tells you.';
@@ -94786,9 +95108,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
 #panel-settings .o55-mem-doc-preview { font-family: var(--k3-mono, ui-monospace, monospace); font-size: 11.5px; color: var(--k3-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 360px; }
 #panel-settings .o55-mem-doc-preview.is-empty { font-family: inherit; color: var(--k3-text-3); }
 #panel-settings .o55-mem-editor { width: 100%; min-height: 280px; box-sizing: border-box; padding: 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); color: var(--k3-text-1); font: 12.5px/1.6 var(--k3-mono, ui-monospace, monospace); resize: vertical; }
-#panel-settings .o55-mem-split-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); }
-#panel-settings .o55-mem-split-bar span { height: 100%; transition: width 260ms ease; }
-#panel-settings .o55-mem-split-bar span + span { box-shadow: inset 1px 0 0 var(--k3-bg-1); }
+#panel-settings .o55-mem-split-bar { display: flex; gap: 2px; height: 14px; border-radius: min(var(--pm-ctl-r, 4px), 3px); overflow: hidden; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); }
+#panel-settings .o55-mem-split-bar span { height: 100%; flex: none; transition: width 260ms ease; }
 #panel-settings .o55-mem-split-row { display: grid; grid-template-columns: 12px minmax(0, 1fr) 92px; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--k3-line); }
 #panel-settings .o55-mem-split-row:last-child { border-bottom: 0; }
 #panel-settings .o55-mem-split-row i { width: 12px; height: 12px; border-radius: 3px; }
