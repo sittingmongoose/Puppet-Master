@@ -33,14 +33,15 @@ frames.meta = function (items) {
 /* The chosen fill's one ink (45-frames.css). The chosen option's fill is its own ::after, so at rest it is always
    exactly its box, through a resize, a font load or a look change. A change moves one ink from the box it leaves to the
    box it lands on, in the voice the rail's tab strips use for the same ink (DL-162, F3-621; Concepts/leftrail-redesign
-   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides with the liquid
-   stretch; Retro's reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it
-   at once (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
+   31-tabs.js): Basic glides, Friendly springs with its one overshoot held inside the row, Glass glides in its own
+   longer settle (a plain glide: the neutral frost never stretches; the canon lead's ruling of 2026-10-11); Retro's
+   reverse video and NieR's ink cut to the new box, as their panel tabs snap; Reduced Motion changes it at once
+   (PMW.motion.animate draws nothing). While the ink travels (data-moving on the row) the boxes' own fills wait,
    so one fill is on screen in every frame; a second change mid-way starts from where the ink is; Animation speed
    scales it. `from` is the option left, or a client rect of it kept across a rebuild; boxes on different lines (a
    wrapped row) or a row out of view change at once. */
 var INK_VOICE = { basic: { dur: 220, ease: 'cubic-bezier(.2,.8,.2,1)' }, friendly: { dur: 420, spring: true },
-  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)', liquid: true } };
+  glass: { dur: 460, ease: 'cubic-bezier(.16,1,.3,1)' } };
 /* Friendly's spring as keyframes of progress p (0 the old box, 1 the new): past the target once, back a little, home;
    the overshoot is explicit so it never carries the ink out of the row */
 var INK_SPRING = [[0, 0, 'cubic-bezier(.3,.7,.4,1)'], [0.55, 1, 'ease-in-out', 1], [0.8, 1, 'ease-in-out', -0.3], [1, 1]];
@@ -52,7 +53,7 @@ frames.ink = function (row) {
     if (el.parentNode !== row) row.appendChild(el);
     return el;
   }
-  function frame(b, extra) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)' + (extra || ''), width: b.w.toFixed(2) + 'px' }; }
+  function frame(b) { return { transform: 'translateX(' + b.x.toFixed(2) + 'px)', width: b.w.toFixed(2) + 'px' }; }
   /* a box in the ink's own coordinates: the row's padding box, scrolled with the row; y is the box's middle on screen */
   function box(x) {
     var r = x.nodeType === 1 ? x.getBoundingClientRect() : x, l = row.getBoundingClientRect(), k = row.offsetWidth ? l.width / row.offsetWidth : 1;
@@ -73,13 +74,7 @@ frames.ink = function (row) {
     if (Math.abs(b.y - a.y) > 1.5) return;
     if (Math.abs(d) < 0.5 && Math.abs(b.w - a.w) < 0.5) return;
     var kf;
-    if (g.liquid) {
-      // the leading edge runs ahead and the box thins a little, then it lands with one soft give
-      var s = Math.min(Math.abs(d) * 0.3, Math.max(a.w, b.w) * 0.4);
-      var mid = { x: a.x + d * 0.5 - (d >= 0 ? s * 0.35 : s * 0.65), w: (a.w + b.w) / 2 + s };
-      kf = [Object.assign({ offset: 0 }, frame(a)), Object.assign({ offset: 0.4 }, frame(mid, ' scale(1, .9)')),
-        Object.assign({ offset: 0.8 }, frame({ x: b.x - 1, w: b.w + 2 }, ' scale(1, 1.03)')), Object.assign({ offset: 1 }, frame(b, ' scale(1, 1)'))];
-    } else if (g.spring) {
+    if (g.spring) {
       // the overshoot: 8 % of the trip, at most the room left beyond the target inside the row
       var room = d >= 0 ? row.scrollWidth - (b.x + b.w) : b.x;
       var over = Math.abs(d) > 0.5 ? Math.max(0, Math.min(Math.abs(d) * 0.08, room)) / Math.abs(d) : 0;
