@@ -200,8 +200,11 @@
   var LIT = '.pmu-card, #chatPanel, .pmu-ctlbtn, .pmu-iconbtn, #projectMenuBtn, #pm-home-more-btn, #themeSelect';
   var lastLit = null, ptr = null, ptrQueued = false;
   function setXY(e, x, y) { var r = e.getBoundingClientRect(); e.style.setProperty('--lg-mx', (x - r.left).toFixed(0) + 'px'); e.style.setProperty('--lg-my', (y - r.top).toFixed(0) + 'px'); }
+  function carrying() {   /* a plate is being carried or settling: leave the light where it is, so nothing repaints */
+    return root.getAttribute('data-lg-frost') === 'painted' || !!document.querySelector('#panel-usage .pmu-card:is([data-lifted], [data-settling], [data-resizing])');
+  }
   function onPtr() {
-    ptrQueued = false; if (!ptr || !isGlass()) return;
+    ptrQueued = false; if (!ptr || !isGlass() || carrying()) return;
     var x = ptr.x, y = ptr.y, t = ptr.t;
     var hit = t && t.closest ? t.closest(LIT) : null;
     if (hit !== lastLit) {

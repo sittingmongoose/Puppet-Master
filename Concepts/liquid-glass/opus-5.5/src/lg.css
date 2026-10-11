@@ -529,6 +529,18 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-edge-a: rgba(255, 2
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-edge-a: rgba(255, 255, 255, 1); --lg-edge-b: rgba(255, 255, 255, .55); --lg-edge-c: rgba(255, 255, 255, .80); }
 html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-edge-a: rgba(255, 255, 255, .18); --lg-edge-b: transparent; --lg-edge-c: rgba(255, 255, 255, .08); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-card, #chatPanel) { position: relative; }
+/* meters and tracks inside cards: fills, square ends (no-pills NP-BARS) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
+/* the carried card (Usage's drag; with Jared's carry option A the engine also holds html[data-lg-frost="painted"]): a card
+   is a translucent fill here, so while it is lifted or settling its existing lift layer (::before, the one whose opacity
+   the board fades on the compositor) becomes a dense plate under its content, and the cards it passes stay behind it.
+   Apple's rule: glass that is picked up grows more opaque. Only that layer's opacity moves during a carry; the plate is
+   never repainted once scaled (lg.js also freezes the pointer light while anything is carried). home-panels, 2026-10-11. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-board > .pmu-card:is([data-lifted], [data-settling]):not([data-head="band"])::before {
+  z-index: -1; background-color: var(--lg-lift-plate); background-image: linear-gradient(180deg, var(--lg-spec-soft), transparent 42%);
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-lift-plate: rgb(24, 31, 50); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lift-plate: rgb(246, 248, 252); }
 /* switches: the look's rectangle with a glass key, never a capsule (no-pills NP-SWITCH gives the final keyed form) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) {
   border-radius: var(--pm-ctl-r) !important; box-shadow: var(--lg-recess) !important;
