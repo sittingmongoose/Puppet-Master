@@ -1,6 +1,6 @@
 {
- "what": "Fields a status mark sits on that the look's tokens do not name: the toasts' severity-tinted cards (stage, stack front card, inbox rows), each the median of the pixels rendered behind a mark with every glyph hidden. tools/tune_inks.py fits each tone's ink to these too (>= TARGET), so a mark on its own tinted card still reads. Info marks are the paused tone.",
- "source": "pm7-glyphs toasts GPU gate, P1000 (Quadro P1000), 2026-10-11, concept/pm7-glyphs-toasts-20261011 9e818110ee; script and raw measurements under /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/toasts-gate/",
+ "what": "Fields a status mark sits on that the look's tokens do not name: the toasts' severity-tinted cards (stage, stack front card, inbox rows) and the onboarding window's tinted tags and wait labels (Friendly Light), each the median of the pixels rendered behind a mark with every glyph hidden. tools/tune_inks.py fits each tone's ink to these too (>= TARGET), so a mark on its own tinted card still reads. Info marks are the paused tone.",
+ "source": "pm7-glyphs toasts GPU gate, P1000 (Quadro P1000), 2026-10-11, concept/pm7-glyphs-toasts-20261011 9e818110ee; script and raw measurements under /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/toasts-gate/; the onboarding census, P1000, 2026-10-11 (concept/pm7-glyphs-20261010 cfdd7f3919), /mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyphs-20261010/onboarding-gate/",
  "looks": {
   "basic-dark": {
    "attention": [
@@ -162,6 +162,11 @@
      255,
      255,
      255
+    ],
+    [
+     220,
+     236,
+     233
     ]
    ],
    "paused": [
@@ -169,6 +174,13 @@
      234,
      244,
      249
+    ]
+   ],
+   "working": [
+    [
+     249,
+     233,
+     229
     ]
    ]
   },
