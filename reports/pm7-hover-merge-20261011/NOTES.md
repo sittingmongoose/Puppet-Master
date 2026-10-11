@@ -1,106 +1,91 @@
-# PM7 hover mechanical candidate — 2026-10-11
+# PM7 hover mechanical candidate + proposed return supplement — 2026-10-11
 
-Preparation/test-only candidate on `fix/pm7-hover-merge-20261011`. Jared's handoff authorizes coordination and mechanical preparation; the RESUME amendment also assigns bounded current-base functional browser acceptance. The existing source fixes were reviewed and pushed by `pm7-hover`'s Opus owner at `0f1b96f3ba` and `49bcb9841c`; this is not a new Jared approval of the composed candidate. Browser acceptance review and landing approval remain pending. Planner: `home-redesign-planner` (T3 `72e7fc9e-30bf-4689-b780-2855a55deacb`).
+**Landing HOLD. The exact proposed supplement still fails the first Glass stationary-return case; testing stopped at that failure.** Hover-owner confirmation remains pending in its scheduled late slot. Jared/planner authorized mechanical preparation and bounded testing, not a new approval of this composed candidate. The existing original fixes were reviewed/pushed by pm7-hover’s Opus owner; the separate supplement was authored by pm7-glyphs Opus 5.5 xhigh as bounded triage and remains PROPOSED. No additional source repair or policy change was made.
 
-## Pins and original custody
+## Pins, custody and composition
 
-- Actual current base, fetched on RESUME: `2f91e7a6228e5d3b50be997a562eb263bef059bc` (`origin/main`, completed reseal snapshot/baseline follow-up).
-- Initial preparation base: `f2f61a803a92b76878e94c23cf9c04668390f27f` (combined-reseal first push). Clean pushed pre-pause candidate `e987b4bd2df316be7bdb505a52ae682961d592e1` and retained checkout were verified before the authorized own-branch rebase. Rebase was conflict-free: source candidate `d2fc7a4ff51d9ce83078824f1d23f2af9503e659`, custody correction/tested HEAD `e49b44a3f17d0df64b8cbd1f6493c852bccbc8d3`.
-- Approved first commit: `0f1b96f3baa943c744ccff5cb09f352531e0e1d0`; parent `60bf3c7f1faf3eadda4374c90734457e07399ab5`.
-- Approved second commit: `49bcb9841cadc00bcf7f066387c82c55652eb659`; its parent is the first commit.
-- Original physical checkout: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/concept-pm7-hover-polish-20261009`. Read only, clean at the second commit before and after preparation. All three physical source files matched that commit byte for byte.
-- Reviewed original path sets: the first commit changes the two Python sources and three generated pages; the second changes `18-hover.js` and the same three pages. Generated changes were inspected as evidence and rebuilt through current recipes.
+- Actual base: `2f91e7a6228e5d3b50be997a562eb263bef059bc`, completed reseal main. Initial preparation base was `f2f61a803a92b76878e94c23cf9c04668390f27f`; the authorized rebase to 2f was conflict-free and changed no build input.
+- Original approved fixes: `0f1b96f3baa943c744ccff5cb09f352531e0e1d0` (parent `60bf3c7f1faf3eadda4374c90734457e07399ab5`) and `49bcb9841cadc00bcf7f066387c82c55652eb659` (parent first fix). Original physical checkout `/home/sittingmongoose/.t3/worktrees/PuppetMaster/concept-pm7-hover-polish-20261009` was read only; all three source files matched 49bcb9841c during original preparation.
+- Supplement parent: clean pushed `017f4e8aa6a9d4eebd9d7d6ce9b9d480899e9fa3`; source candidate before it was `d2fc7a4ff51d9ce83078824f1d23f2af9503e659`. Planner reviewed the parent’s report-only custody and 13 evidence hashes.
+- Authorized proposal: `/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/hover-return-review/REVIEW.md` and `hover-return.patch` in that directory. Both supplied hashes and the pinned pre-source blob/hash were verified before `git apply --check --verbose`, then `git apply --verbose` unchanged. One source hunk, +10/−2, cleanly applied. No manual conflict resolution.
 
-## Exact changed paths relative to the pinned base
+| Pin | Exact value |
+|---|---|
+| REVIEW.md SHA-256 | `fd771768f1a3e4dc3b70700a6f9c5a09eabbbf687cd0bba215ff1889a8b0ee9a` |
+| Supplied patch SHA-256 | `b995077969a131a043188d7ff4606e5f2a3368d9be89315adf0f4bda69ec6be8` |
+| Pre-source Git blob / SHA-256 | `1aa94550f398b85fcce3190731efd607bc490fbb` / `a2c1b9fc93803683be8d6176ec2a821da6adf95cb624f39f3290e52d5252a3b9` |
+| Composed source Git blob / SHA-256 | `dfdbd1e7eff8fe0533637fd89bb5747d271f1582` / `a9ce9f8f43dcae2cebd98ad6e27843fa586099ea33f5900342262fd0de92a284` |
+| Applied full-index source diff SHA-256 | `0d6c737e339b8e5f9a0c24d4820a6584111d7bf2ff3584074803bc7dc80bc110` |
 
-| Path | Added / removed lines | Role |
+The original source-only stable patch ID `f7ae33b54e5708078368340a43b30f4b6ee51f65` is **historical at parent 017f**, not the full supplemented diff. Supplement stable patch ID: `b5d26b9a05f04590bf0cc7b189eef47bbd39c7f6`; full current source-only diff against 2f: `a634a2a323db0f51a5ffd0112f99db6a1ff205a7`. Original source hunks applied unchanged (build.py offset 519→538, exact context); the two Python sources remain byte-identical to 017f. The old whole 18-hover.js owner blob is the verified pre-source, with only this separate proposal added. No old main content was substituted.
+
+## Exact final scope against base 2f
+
+| Path | Added / removed | Role |
 |---|---:|---|
-| `Concepts/onboarding/opus-5.5/tools/build.py` | 38 / 0 | Original documented exemptions, cached show-tooltips read, and writes only on change |
-| `Concepts/pm7-tools/global_hover_tags_source.py` | 3 / 1 | Original documented `labelled-field` and `menu` exemption entries |
-| `Concepts/onboarding/opus-5.5/src/js/18-hover.js` | 30 / 2 | Original PMH menu/page-change suppression and pointer re-hit hooks |
-| `Concepts/PMConcept7.html` | 43 / 6 | Regenerated published page |
-| `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` | 43 / 6 | Regenerated byte-identical companion |
-| `Concepts/LeftRailPMConcept7.html` | 43 / 6 | Regenerated rail review copy |
-| `reports/pm7-hover-merge-20261011/NOTES.md` | New file | This report |
+| `Concepts/onboarding/opus-5.5/tools/build.py` | 38 / 0 | Original approved exemption documentation/cache path |
+| `Concepts/pm7-tools/global_hover_tags_source.py` | 3 / 1 | Original two documented exemption entries |
+| `Concepts/onboarding/opus-5.5/src/js/18-hover.js` | 38 / 2 | Original approved PMH hooks plus exact proposed supplement |
+| `Concepts/PMConcept7.html` | 51 / 6 | Regenerated published page |
+| `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` | 51 / 6 | Regenerated byte-identical companion |
+| `Concepts/LeftRailPMConcept7.html` | 51 / 6 | Regenerated rail copy |
+| `reports/pm7-hover-merge-20261011/NOTES.md` | New file | Compact custody/results |
 
-## Composition evidence
+This step against parent 017f changes only 18-hover.js, those three generated pages (+10/−2 each), and this report. Current builders regenerated HTML; no generated text merge. Original historical inventory refresh hunks were not restored. Current main’s inventory, Home composition, check hooks, retirement and enrollment changes remain present.
 
-Source-only patches were extracted from the two original commit deltas with `git diff --binary --full-index`, checked with `git apply --check --verbose`, then applied unchanged. All hunks applied cleanly; the build.py insertion moves from line 519 to 538 (19-line offset), with exact context. No source conflict or manual resolution occurred.
-
-Every source hunk's added/deleted lines equals its original commit's hunk byte for byte, disregarding line-number headers. The combined original and candidate source diffs have the same stable patch ID:
-`f7ae33b54e5708078368340a43b30f4b6ee51f65`.
-The concatenated original source-only patch SHA-256 is
-`022d170979c8ddbc1e47238d94f5bba34c55bb2ed937a5bcd43bff0cc452e30f`.
-
-`18-hover.js` and `global_hover_tags_source.py` equal the approved owner's whole file blobs. `build.py` preserves current main's Home composition, lint/check hooks, Chat Layout retirement and density enrollment changes, with only the approved 38-line insertion. Its candidate SHA-256 is
-`aba6ac80215eaa5d9f2b7405aaaffc4e72e8edf2a00b46e70112e20be6b31b2c`.
-
-The regenerated delta in each page consists of nine hunks whose added/deleted lines exactly match the approved generated hover hunks. The original first commit also refreshed two inventory lines (`pm7-settings-data` and `PM12_REFERENCE`); current main's inventory output is retained, and those historical refresh hunks add no change to this candidate. No old generated page or source file was substituted for current main.
-
-The post-reseal base adds no change to `Concepts/**` or `Plans/settings_inventory.json` relative to the initial base. All six source/generated files remain byte-identical to the clean pushed pre-pause candidate; source patch ID and the two whole approved source blobs are preserved. Current recipes' `--check` rebuilt and verified the pages without requiring another write or any generated-HTML text merge.
-
-## Regeneration and checks
-
-Run from this worktree with `PYTHONDONTWRITEBYTECODE=1`:
-
-```sh
-python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7
-python3 Concepts/leftrail-redesign/tools/build_rail.py
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check
-python3 Concepts/leftrail-redesign/tools/build_rail.py --check
-node --check Concepts/onboarding/opus-5.5/src/js/18-hover.js
-python3 Concepts/leftrail-redesign/tools/parity.py
-git diff --check
-```
-
-All passed during preparation. On RESUME, both current-base build checks, Python AST parsing, source/generated JavaScript syntax and rail action parity passed again. Both build checks also passed on the untouched initial base. The candidate checks rebuild in memory and verify generated-byte parity, guarded patches, lint, markers and their existing syntax gates. Rail action parity: Files 87, Source Control 114, Docker 149; zero missing pairs. The changed `pm-hover-tags-js` block is identical in all three outputs.
-
-The build's known `src/css/10-window.css:13` universal-selector note is present on both base and candidate; its source was untouched.
-
-| Generated output | Bytes | SHA-256 |
+| Artifact | Bytes | SHA-256 |
 |---|---:|---|
-| PMConcept7 and TestOpus5.5PmConcept | 18563301 | `e81422637b43829face813de5bc1f583b2aff09b39e922019bc2e7843dbbed94` |
-| LeftRailPMConcept7 | 19197848 | `15c5360ce4e25b7b1542f87925971de3f259742f1619996c89ada3cd2f16b6d8` |
+| Candidate PMConcept7 + TestOpus companion | 18564109 | `8e5d976de8ba1055a67ef7252211b52a8bc08cc694eb5cdcd2f1e277386fbe74` |
+| Candidate LeftRailPMConcept7 | 19198656 | `4217c61a73fe7b70773de9c8a6e93b33c994b1cf2435e339ae284581ea3dbe31` |
+| Unmodified main 2f PMConcept7, extracted with git show | 18560473 | `5e1ac1863c886f4a349448513a85d8021fe1917cbff02754e02cc2cb0002fd82` |
 
-## Bounded current-base functional acceptance
+## Existing checks
 
-**HOLD landing acceptance. Baseline: NOT_COMPARED.** No comparable browser observation of unmodified main `2f91e7a622` was available; these are candidate observations, not a regression claim. Tested HEAD: `e49b44a3f17d0df64b8cbd1f6493c852bccbc8d3`; the final follow-up changes this report only. Planner mechanical source review of the initial candidate passed (stable patch ID, two approved whole source blobs, seven-path scope); runtime acceptance remains subject to the findings below.
+PASS: source `node --check`; `PYTHONDONTWRITEBYTECODE=1 python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7`; `build.py --check`; `python3 Concepts/leftrail-redesign/tools/build_rail.py` and its `--check`; `parity.py`; source and regenerated engine/tag script syntax; `git diff --check`. Build checks verify deterministic generated-byte parity and their existing lint/marker/patch gates. Rail parity: Files 87, Source Control 114, Docker 149, zero missing pairs. Known `src/css/10-window.css:13` universal-selector note remains unchanged. Repository-wide governance/landing checks belong to the authorized lander.
 
-Read `/mnt/Cursor/Agent-Guides/gpu-recording.md`. Admission saw zero helper sessions and zero manually launched Chrome browsers. Started one private P1000 `agent-browser` session (`bae807a209a5`), no recording or exclusive measurement. The candidate's WebGL renderer was `ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)`. Used its own CDP, page and fresh profile only. Initial HTTP/CDP navigation timed out; replacing only the owned page target within that same session loaded the exact candidate through `file:///home/sittingmongoose/pm-scratch/codex-pm7-hover-20261011-le5ry3rg/PMConcept7.html?o55=off`, at 1920×1080. This is non-certifying functional evidence; no performance claim.
+## Bounded empirical browser result
 
-Passed in Glass, Retro and NieR: an ordinary Panel options button under the actual self-exempt Usage panel still tags; the actual `menu`-exempt row does not tag; opening a menu at the hovered trigger and moving onto its row suppresses PMH hover/frame/glow; keyboard navigation away from Usage clears the prior card. The actual Settings `general.interaction.show-tooltips` write path passed four false/true writes through `PM12_KIMI.setSettingFromHost`, plus two actual UI-toggle clicks: warmed cache, subsequent read, cached value and visual-enabled state follow the saved setting. The actual Planning → More options → Expert overrides editor → Add a row creates a self-exempt `labelled-field` Name input; it remains inactive with no visual tag after real pointer dwell. Earlier harness attempts did not reach that field; the final confirmation completes that case without fabricating a control or saving its draft.
+Read the GPU guide. P1000 normal admission counted one other helper browser, zero manual browsers and zero recordings (cap 12). Started one private headless session `70b1a27fa025`, no recording/exclusive measurement/performance claim. Used only its own CDP/page/profile, sequentially navigating exact main/candidate file copies at 1920×1080. Each loaded artifact’s SHA was checked in the driver. Renderer on both: `ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)`.
 
-Confirmed gap in all three looks: Usage → Settings → Usage with a stationary pointer does not restore card hover. Exact bounded repro (`followup.mjs`): hover `.pmu-card[data-widget="ov-skyline"]` to reveal its real toolbar, hover `button[data-tool="menu"]`, then `locator('#tab-settings').focus(); keyboard.press('Enter')`; wait 1000 ms; `locator('#tab-usage').focus(); keyboard.press('Enter')`; wait 2000 ms, without a mouse move. On return, `document.elementFromPoint(x,y)` hits the actual toolbar SVG/path and `PMH.resolve(hit)` returns `ARTICLE.pmu-card[data-widget="ov-skyline"]`, but `PMH.state()` reports `hover:null`, `running:false`, `rest:false`, frame/glow false. Moving to `(x+1,y)` restores the card and its family-specific paint.
+Baseline is now **COMPARED empirically**, not forced to satisfy Opus’s source-only inference. On main 2f, all five normal families and Reduced Motion Basic/Glass returned with no hover. First supplemented-candidate Glass return also failed; stopped immediately at that failed changed-source assertion. Remaining current-candidate scenarios and narrow cases are **NOT_RUN**. This preserves a previously unresolved gap; it is not a demonstrated regression against main.
 
-| Look | Stationary viewport pointer `(x,y)` | Established / restored paint |
+| Stationary return case | Unmodified main 2f observation | Supplemented candidate |
 |---|---|---|
-| Glass | `(1258.984375,132)` | Card + glow |
-| Retro | `(1270.984375,123)` | Card |
-| NieR | `(1273.984375,124)` | Card + PMH frame |
+| Glass, normal | No hover; pointer delta 0 | **FAIL**, no hover; pointer delta 0 |
+| Retro / NieR / Basic / Friendly, normal | No hover in each; pointer delta 0 | NOT_RUN after stop |
+| Basic / Glass, Reduced Motion | No hover in each; pointer delta 0 | NOT_RUN after stop |
 
-Inspected existing call path: the page tab's Enter handler calls `.click()`; the delegated capturing page-tab switcher calls `PM_PAGES.go(data-page)`, which changes active pages and emits `page.changed`. PMH's capturing keydown/click hooks call `recheckSoon()` (`18-hover.js:798–803`). Its existing comment at lines 200–201 says that after a key/click changes the page under a resting pointer, “the next frame looks again at what is under the pointer.” The re-hit block at lines 420–429 reads `elementFromPoint(px,py)` and `resolve(under)`. At line 202, `recheckSoon()` sets `recheck` but calls `start()` only if `hover || proxyShown()`. **Inference, not a traced internal-state assertion:** the inactive engine is not restarted on return; this agrees with the observed `running:false` and recovery after `onMove()` calls `start()`. No source repair was attempted.
+Exact repro/call path: select Glass through actual Settings theme APIs with `general.visual.reduce-animations=false`; click Usage; hover the real `ov-skyline` card to reveal its toolbar, then `button[data-tool="menu"]`. Its center is `(1260.984375,143)` on both current main and candidate. Establish card hover/glow; focus `#tab-settings` and press Enter, wait for `data-pm-page-transition` to be absent plus 1000 ms; focus `#tab-usage` and press Enter, wait for that marker to be absent plus 2000 ms. No mouse input occurs between the keyboard transitions; observed pointer-move count stays 3 (delta 0). Enter follows the existing tab `.click()` → delegated page-tab switcher → `PM_PAGES.go(data-page)` / `page.changed` route.
 
-Existing census is **not green**: each actual menu reports seven `actionable_exemption(menu)` failures, and the actual Name field reports one `actionable_exemption(labelled-field)`; both values are now documented, so those samples have no `undocumented_exemption` for them. General Settings reports 18 dropdown exemptions with 18 `undocumented_exemption(dropdown)` and 18 `actionable_exemption(dropdown)` failures. The existing menu/field self-exempt assignments and audit's actionable-element predicate were already present in source; this candidate only adds the two approved registry entries and cache/PMH hunks. Dropdown policy and the audit predicate are unchanged. Their main runtime counts are NOT_COMPARED; no diagnostic is silently waived and no exemption policy was added or changed.
+Candidate before: real `ov-skyline` hovered/glowing. Settings: H1 `home-title` under the pointer, no resolved PMH target/hover. Return: actual toolbar path resolves to `ARTICLE.pmu-card[data-widget="ov-skyline"]`, but `PMH.state()` is `hover:null`, `running:false`, `rest:false`, frame/glow false, transition marker absent, and no card has `.pmh-on`. The source comment at 18-hover.js:200 states that after a key/click changes the page under a resting pointer, the next frame looks again under it. The supplied proposal’s unconditional restart and transition-end observer are present, yet this runtime expectation remains unmet. No further causal diagnosis/fix or extra test was started.
 
-## External evidence
+Main’s narrow observations: ordinary Panel options tags under the actual self-exempt panel passed in Glass/Retro/NieR; direct menu rows and the actual labelled Name field suppress tags; menu-row PMH suppression passed. Opening a menu at a stationary hovered trigger left the main card hovered in all three (Glass glow and NieR frame remained), so those three suppression assertions were false. Four actual Settings API false/true writes and two real UI-toggle clicks read the correct saved setting/visual-enabled state; main has no added cache fields. Current candidate reruns of menus/tags/cache/census were not reached. Parent 017f’s prior menu/tag/cache/field passes remain historical evidence, not a pass for this supplemented candidate.
 
-Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-hover-merge-20261011/post-reseal-20261011T193803Z/`. Raw scripts/results and the still capture are outside the repository. `SHA256SUMS` covers the complete retained bundle; its hash is recorded below. Each filename denotes that exact root plus filename.
+## Census diagnostics, no waiver
+
+Comparable samples reached on main, and prior candidate source snapshot e49/017f (same six source/generated files) are below. Current supplemented-candidate census is NOT_RUN, so its runtime diagnostic novelty is NOT_ASSESSED. Supplement changes no exemption assignment/registry/audit predicate; no policy fix or waiver.
+
+| Actual sample | Main 2f diagnostics | Prior candidate e49/017f diagnostics |
+|---|---|---|
+| Menu, each Glass/Retro/NieR (7 controls) | 7 undocumented(menu) + 7 actionable(menu) | 7 actionable(menu) |
+| Labelled-field Name input (1) | 1 undocumented(labelled-field) + 1 actionable(labelled-field) | 1 actionable(labelled-field) |
+| General Settings dropdowns (18; census 233 candidates / 215 bound) | 18 undocumented(dropdown) + 18 actionable(dropdown) | Same 36 failures |
+
+These reached observations confirm existing actionable exemptions/dropdown diagnostics on main. The original approved documentation removes the undocumented menu/labelled-field diagnostics in the prior candidate; no new diagnostic bucket appeared in those comparable prior samples. Census remains non-green. Prior evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-hover-merge-20261011/post-reseal-20261011T193803Z/functional.json`, SHA-256 `0a270f8a261b25c11132bf7064b18a14247a428180f3dae740e6bf5d2ee2c40c`; `labelled-field-confirm.json` in that root, SHA-256 `b6a92f85f3d3f6329e260aee8a4397604be6a08ac52b8b63264ca2ef990fd194`.
+
+## Evidence and cleanup
+
+Current evidence root: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-hover-merge-20261011/opus-supplement-20261011T201524Z/`. Filenames below mean that exact root plus filename. Raw review/patch, scripts, observations and check logs stay outside the repo; the manifest pins the complete retained bundle.
 
 | File | SHA-256 |
 |---|---|
-| `composition.json` | `4bbade50a51541ba616f45f69c0ad4bd2b2cc80dd8b446d0d2176c8668f364b7` |
-| `functional.mjs` | `a1e0671f7f6a618c39a8a28fb83aa2dda352b13237e32641c19408cced3df622` |
-| `functional.json` | `0a270f8a261b25c11132bf7064b18a14247a428180f3dae740e6bf5d2ee2c40c` |
-| `followup.mjs` | `0f4cf063faedd220e6760acaf3a3f948627907703f7130bdc28fe04e43644eb1` |
-| `followup.json` | `27aff2c38f61fe59f738a458ff7766eb51be4fb6b06d7307e90e6aaf86ef65f6` |
-| `labelled-field-confirm.mjs` | `1a6a51e4e8d873c69cf30b10371e34631dbc24afd587830790be8192a087aefa` |
-| `labelled-field-confirm.json` | `b6a92f85f3d3f6329e260aee8a4397604be6a08ac52b8b63264ca2ef990fd194` |
-| `glass-page-return-stationary.png` | `0e092d1c9c4d09baae44f401864f37e757f3b03af206386205fed10efccd9303` |
-| `environment-cleanup.json` | `bddc7d76b158ed6394c72cdda930cd77fd576954614db993cce5fdbe94084f97` |
-| `SHA256SUMS` | `41f25e070f08f6049c2ecb41a6bcd283fbb6f7eabf606acc2d74d5be1f8455b8` |
+| `supplement-provenance.json` | `0a602bd89600dd4c0cb712cd83e94f0b94648c89039013e20986940d62ba7b86` |
+| `build-verification.json` | `710d5083058de0676c10056cb69612aee585fbbfc428a625fb5a56ef7fd5b533` |
+| `compare-functional.mjs` | `b5b251deb75e4b15729cb86e3a2625b6ddc6f35ea36d4537c0087aeb0378588b` |
+| `comparison.json` | `fe23f8f52e0b7e23e7afe81d93a6e3581889e613170ab94cefe4fcdd1620621a` |
+| `functional-summary.json` | `ecbc29bb9ab2bcac2a2a855455d02f270aee1a534c5bb127f2b9c55ea28da443` |
+| `census-lineage.json` | `4949cf79e447fc450b53c6e87be8e2a7dee72fc5378feb15d915f846718037f4` |
+| `environment-cleanup.json` | `3705e18fb78dbe7c34bd02df80f098e160dba4ce58468b4d23fe0d1dbbf20291` |
+| `SHA256SUMS` | `f35f7bc8f322fe1c683ddc3b7db0d61db95e2371f8c97fd6c64bca8cc2be176d` |
 
-## Remaining acceptance and cleanup
-
-- Planner holds landing acceptance pending the existing Opus owner's bounded source review/adjudication of the stationary-return gap and census diagnostics. No broad baseline testing was started after HOLD; no second Opus worker was woken or messaged by this worker. No source, generated file or policy changed during acceptance.
-- Own browser `bae807a209a5` stopped successfully (`complete`); its process and profile are gone. Own bounded server exited 0 and is gone. Own P1000 scratch directory was deleted after preserving the named evidence; other shared sessions were untouched. Result worktree/local branch remain for planner review/landing confirmation; only the bounded mailbox waiter remains for coordination.
-- No landing lock, landing, main/shared checkout change, subagent/native worker, new styling/effect, design decision, unrelated performance edit, canon edit or governance edit occurred. The reseal is completed and the lock released; repository-wide landing/governance gates belong to the authorized landing step.
+Own browser stopped successfully (`complete`), process/profile gone. No server was started. Own remote scratch and local baseline-copy scratch were deleted; other sessions untouched. Result worktree/branch retained for planner review; bounded mailbox waiter remains. No main/shared checkout, lock, landing, Opus/worker wake/message, subagent, extra source repair, styling/effect, policy/canon/governance edit. Landing HOLD, unresolved Glass return, remaining functional reruns and hover-owner confirmation are explicit pending acceptance.

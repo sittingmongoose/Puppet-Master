@@ -198,8 +198,16 @@
       return false;
     }
     /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
-       switched): the next frame looks again at what is under the pointer */
-    function recheckSoon() { recheck = true; if (hover || proxyShown()) { moved = true; start(); } }   /* else the next frame takes it */
+       switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
+       an idle engine runs no frame, so the look would otherwise wait for the next pointer move (a page switched by
+       keyboard over a page that had nothing hovered never lit the card under the resting pointer) */
+    function recheckSoon() { recheck = true; moved = true; start(); }
+    /* a page switch slides the new page in (.pm8-page-in, html[data-pm-page-transition]) while the outgoing page stays
+       hit-testable until the transition ends, so the frame after the gesture can still meet the old page or the sliding
+       one off its place: look once more when the transition is over (no frame runs while it lasts) */
+    if (window.MutationObserver) new MutationObserver(function () {
+      if (!document.documentElement.hasAttribute('data-pm-page-transition')) recheckSoon();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-page-transition'] });
 
     function gestureRest() {
       var b = document.body;
