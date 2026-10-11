@@ -4,7 +4,7 @@
  * t3 Skip restores everything; t4 a reload resumes from the saved basis and Skip still restores; t5 a missing target offers Take me there; t6 Back rewinds a
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
-import { launch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs';
+import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
@@ -444,3 +444,4 @@ for (const sc of SC) {
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));
+if (report.some(r => !r.pass)) process.exitCode = 1;
