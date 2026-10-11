@@ -240,6 +240,18 @@
       return typeof softwareRendered === 'function' ? !softwareRendered() : false;
     } catch (error) { return false; }
   }
+  /* the carry frost (Jared, Glass carry option A, 2026-10-11): from a plate's press (or the pick-up of a keyboard move or
+     a resize) until its drop, the peers' glides and the float-up are still, html[data-lg-frost="painted"] has Glass swap
+     the live backdrop blur of every plate at rest for its painted frost (20-board.css), and pm7-liquid-glass's slab for
+     its own. Page-wide holds, one per board, so one board's settle never clears another's carry; set in Glass with a GPU
+     only, and removed only if this file set it. ?pmu-frost=0 leaves it out (A/B measurements). */
+  var FROST_HOLDS = 0, FROST_SET = false, FROST_OFF = /[?&]pmu-frost=0(?:&|#|$)/.test(location.search);
+  function frostHold(on) {
+    var root = document.documentElement;
+    FROST_HOLDS = Math.max(0, FROST_HOLDS + (on ? 1 : -1));
+    if (FROST_HOLDS && !root.hasAttribute('data-lg-frost')) { root.setAttribute('data-lg-frost', 'painted'); FROST_SET = true; }
+    else if (!FROST_HOLDS && FROST_SET) { FROST_SET = false; if (root.getAttribute('data-lg-frost') === 'painted') root.removeAttribute('data-lg-frost'); }
+  }
   /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
      and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
   var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
@@ -480,8 +492,8 @@
     function emit(evt, detail) {
       (listeners[evt] || []).slice().forEach(function (fn) { try { fn(detail); } catch (error) { console.error('[pm-usage] board ' + evt, error); } });
       /* every mount and build of a shown board asks for the first drag's pre-warm (it waits for an idle period and for the
-         film, the held build and any gesture to be over; once per look and Reduce Motion state on the page) */
-      if (evt === 'mount' || evt === 'built') prewarmSoon();
+         film, the held build and any gesture to be over; once per board, look and Reduce Motion state) */
+      if (evt === 'mount' || evt === 'built') prewarmSoon(0, true);
     }
     function say(text) {
       if (bo.announce) { try { bo.announce(text); } catch (error) {} return; }
@@ -1666,7 +1678,8 @@
       if (PMU.menu) PMU.menu.close();
       g.snapshot = snapshotNow();
       g.me = g.snapshot.filter(function (r) { return r.id === g.id; })[0];
-      if (!g.me) { gesture = null; releaseGesture(); return false; }
+      if (!g.me) { gesture = null; releaseGesture(); unfrost(); return false; }
+      frost();
       g.target = { id: g.id, x: g.me.x, y: g.me.y, w: g.me.w, h: g.me.h };
       var shownNow = {}; visibleIds(current.room).forEach(function (id) { shownNow[id] = true; });
       g.maxY = g.snapshot.reduce(function (m, r) { return r.id === g.id || !shownNow[r.id] ? m : Math.max(m, r.y + r.h); }, 0);
@@ -1728,6 +1741,28 @@
        layer already (their backdrop). */
     function warm(g) { g.warm = true; g.card.style.willChange = 'transform'; }
     function unwarm(g) { if (!g.warm) return; g.warm = false; g.card.style.willChange = ''; }
+    /* this board's hold on the carry frost (frostHold): taken at the press, so the swap lands before the lift's frame, and
+       given back once the board is still (no gesture, no settle, no peer glide, no float-up pending, no morph: read on
+       expandos, never a layout or style read), at most 2 s after the release; a press that never lifts gives it back at
+       once */
+    var frosted = false, frostT = 0;
+    function frost() {
+      if (frosted || dead || FROST_OFF || softGpu() || PMU.motion.family() !== 'glass') return;
+      frosted = true; frostHold(true);
+    }
+    function unfrost() {
+      if (!frosted || frostT) return;
+      var t0 = performance.now();
+      (function check() {
+        frostT = 0;
+        if (!frosted) return;
+        if (!dead && gesture && !gesture.done) return;   /* a new gesture on this board keeps it; its end asks again */
+        var moving = !dead && (!!gravityMap || !!gravityT || !!(morphEl && morphEl._pmuMorph) ||
+          cardsNow().some(function (c) { return !!(c._pmuSlide || c._pmuSettle); }));
+        if (moving && performance.now() - t0 < 2000) { frostT = setTimeout(check, 50); return; }
+        frosted = false; frostHold(false);
+      })();
+    }
     /* the first drag's pre-warm (t3-usage-pm7's recipe, measured on the P1000 2026-10-11). A page's first drag drew what
        the GPU had never drawn: a plate in a layer of its own with its lift shadow, then (in the drop, or mid-carry before
        frameMove kept the lifted plate from repainting) the same plate repainted at the lift's scale, which compiled the
@@ -1739,10 +1774,13 @@
        at 1 %. Under Reduce Motion it does not slide, as a Reduce Motion lift's peers do not. Nothing visible changes,
        nothing takes focus, nothing in the board moves (the copy is absolutely placed over its plate; the landing is a grid
        item on that plate's own slot), and nothing runs on a hidden board, without a GPU, during a gesture, a held build or
-       a film. ?pmu-prewarm=0 leaves it out. */
+       a film. ?pmu-prewarm=0 leaves it out. Tries are spent only on a shown board that is busy (12, 0.9 s apart): while
+       the page's GPU answer is not in, it waits for it, and a hidden board waits for its show; every mount, build, show
+       and look change starts a fresh round (prewarmSoon(ms, true)). */
     var prewarmT = 0, prewarmTries = 0, prewarmEl = null;
     function prewarmKey() { return lookKey() + (reduced() ? ':rm' : ''); }
-    function prewarmSoon(ms) {
+    function prewarmSoon(ms, fresh) {
+      if (fresh) prewarmTries = 0;
       if (PREWARM_OFF || gpuNow() === false || prewarmT || prewarmEl || dead || PREWARMED[prewarmKey()]) return;
       prewarmT = setTimeout(function () {
         prewarmT = 0;
@@ -1752,10 +1790,12 @@
     function prewarm() {
       var key = prewarmKey();
       if (dead || prewarmEl || PREWARMED[key]) return;
-      var usageOff = !hosted && !(rootEl && rootEl.closest && rootEl.closest('#panel-usage.active'));
       var gpu = gpuNow();
       if (gpu === false) return;
-      var busy = gpu !== true || !!gesture || !!ACTIVE || !current.mounted || !shownFlag || usageOff || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap || document.hidden ||
+      if (gpu === null) { prewarmSoon(Math.max(900, 7100 - performance.now()) / speed()); return; }
+      var usageOff = !hosted && !(rootEl && rootEl.closest && rootEl.closest('#panel-usage.active'));
+      if (!shownFlag || usageOff || document.hidden) return;
+      var busy = !!gesture || !!ACTIVE || !current.mounted || !!streaming || !!lateHeld || !!refreshQ || !!gravityMap ||
         !boardEl || boardEl.hasAttribute('data-held') || boardEl.hasAttribute('data-film') || !current.cls || (PMU.film && PMU.film.moment && PMU.film.moment()) ||
         softGpu() || !scroll || !scroll.clientWidth;
       var cards = busy ? [] : cardsNow().filter(function (c) { return inView(c) && !c.hasAttribute('data-pending') && c.getAttribute('data-head') !== 'band' && c.querySelector(':scope > .pmu-cardbody > *'); });
@@ -1872,6 +1912,7 @@
       }
       if (g.kb && !g.api && card.isConnected) card.focus({ preventScroll: true });
       if (!g.kb && g.started) suppressClick();
+      unfrost();
     }
     /* the drop (WOW-SPEC 3.11): the card settles from the pointer into its slot on a physical spring (k 520 c 38, about
        260 ms; Friendly k 380 c 22 for a visible hop; Retro snaps in three steps), the lift shadow fades over 200
@@ -2042,6 +2083,7 @@
       if (ctl && !ctl.classList.contains('pmu-grip')) return;
       g.type = 'move';
       warm(g);
+      frost();
       attach(g);
     }
     function attach(g) {
@@ -2052,6 +2094,7 @@
     }
     function detach(g) {
       unwarm(g);
+      unfrost();
       window.removeEventListener('pointermove', g.onMove, true);
       window.removeEventListener('pointerup', g.onUp, true);
       window.removeEventListener('pointercancel', g.onCancel, true);
@@ -2473,14 +2516,14 @@
         if (PMU.roster && PMU.roster.invalidate) PMU.roster.invalidate();
         refresh('page', { sliced: true });
       } else liveTry();   /* only the beats it missed: the cards their shares match */
-      if (current.mounted) scheduleHold();
+      if (current.mounted) { scheduleHold(); prewarmSoon(0, true); }
       /* the live film's tick (15-film.js) is subscribed once the demo engine runs, also when Usage was never opened */
       if (PMU.live && PMU.live.wake) PMU.live.wake();
     }
     /* a look change (the host's onLook): the preset hold re-measures the per-look fit heights; hidden, at the next show */
     function relook() {
       if (dead) return;
-      if (shownFlag && current.mounted) scheduleHold(0); else dirty = true;
+      if (shownFlag && current.mounted) { scheduleHold(0); prewarmSoon(0, true); } else dirty = true;
     }
     inner.touch = function (reason) {
       if (!hosted || dead) return;
@@ -2831,6 +2874,7 @@
       if (savePending) { clearTimeout(saveTimer); writeNow(); }
       opCancel(); opSync();   /* the flags it holds go with it, now */
       dead = true; shownFlag = false;
+      clearTimeout(frostT); frostT = 0; unfrost();
       clearTimeout(saveTimer); clearTimeout(holdT); clearTimeout(gravityT); clearTimeout(filmEndT); clearTimeout(roTimer);
       saveTimer = holdT = gravityT = filmEndT = roTimer = 0; gravityMap = null;
       if (roPending) { cancelAnimationFrame(roPending); roPending = 0; }

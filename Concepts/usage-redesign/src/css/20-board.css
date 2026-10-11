@@ -122,6 +122,15 @@ html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is
 /* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
    4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
 html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
+/* the carry frost (Jared, Glass carry option A, 2026-10-11): from a plate's press until its drop and the board are still,
+   html[data-lg-frost="painted"] (40-board.js frostHold) swaps every plate's live blur for its painted frost. Behind a
+   plate at rest is the shell's frost already, so it drops only the blur and keeps its saturate(1.2): the same colour
+   (P1000: chroma unchanged, dE under 1 against the noise of the live charts) and still its own compositor layer, so the
+   swap repaints nothing (dropping the whole backdrop filter un-layered the plates and re-rastered them: glass-dark's cold
+   carry 9 of 30 frames over 20 ms against 1-5 this way). The carried plate drops it all and is frosted by its lift layer
+   (below). The carry then stops re-blurring the board's plates every frame. */
+html[data-theme^="glass"][data-lg-frost="painted"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: saturate(1.2); backdrop-filter: saturate(1.2); }
+html[data-theme^="glass"][data-lg-frost="painted"]:not([data-pmu-soft]) #panel-usage .pmu-board > .pmu-card[data-lifted] { -webkit-backdrop-filter: none; backdrop-filter: none; }
 html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"]) { background-image: linear-gradient(180deg, rgba(255,255,255,.07), transparent 38%);
   border-color: transparent; box-shadow: var(--pmu-plate-rest), inset 0 0 0 1px rgba(255,255,255,.08); }
 html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"])::after { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
@@ -336,6 +345,16 @@ html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transiti
 #panel-usage .pmu-board > .pmu-card[data-lifted] .pmu-headtools { transform: none; transition: none; }
 #panel-usage .pmu-board > .pmu-card[data-lifted] .pmu-cardtitles { margin-right: 0; transition: none; }
 #panel-usage .pmu-board > .pmu-card[data-lifted]::before { will-change: opacity; }
+/* the carried plate's painted frost (Glass, html[data-lg-frost="painted"]): the same lift layer, under the plate's content
+   (z-index -1 in the plate's own stacking context, set in the lift's frame), takes the colour a plate at rest shows
+   (--pmu-frost-plate: its tint over the pane, measured inside resting plates on the P1000, 2026-10-11: glass-dark
+   37 27 57, glass-light 224 228 228, the same in every Glass background) with the plate's own sheen or hero sheet
+   (inherited), so the carried plate looks as it did at rest, only the plates it passes stay behind frost instead of
+   showing through. It fades in with the lift shadow over 140 ms on the compositor and out with the drop's settle. */
+html[data-theme^="glass"][data-lg-frost="painted"] #panel-usage .pmu-board > .pmu-card:is([data-lifted], [data-settling]):not([data-head="band"])::before {
+  z-index: -1; background-color: var(--pmu-frost-plate); background-image: inherit; }
+html[data-theme="glass-dark"] { --pmu-frost-plate: rgb(37, 27, 57); }
+html[data-theme="glass-light"] { --pmu-frost-plate: rgb(224, 228, 228); }
 /* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
    `*` part restyled the lifted card's whole subtree at pick-up and drop) */
 #panel-usage .pmu-card[data-lifted] { cursor: grabbing !important; }
