@@ -115,7 +115,8 @@ function namesOf(project) {
   var s = PMW.store.get(NAMES_PREFIX + (project || boardProject()));
   return s && typeof s === 'object' && s.names && typeof s.names === 'object' ? s.names : {};
 }
-function cleanName(v) { return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 80); }
+/* at most 80 characters, cut by code point (a cut by UTF-16 unit could leave half an emoji) */
+function cleanName(v) { return Array.from(String(v == null ? '' : v).replace(/\s+/g, ' ').trim()).slice(0, 80).join(''); }
 function defaultLabel(b) { return FIXED[b] ? FIXED[b].label : dashNumber(b) ? 'Dashboard ' + dashNumber(b) : 'Dashboard'; }
 function setName(board, name, project) {
   if (!dashNumber(board)) return false;
@@ -618,7 +619,7 @@ function uniqueAmong(base, names) {
   var taken = {};
   names.forEach(function (n) { if (n) taken[String(n).toLowerCase()] = true; });
   if (!taken[base.toLowerCase()]) return base;
-  for (var i = 2; i < 100; i++) { var c = base.slice(0, 80 - (' ' + i).length) + ' ' + i; if (!taken[c.toLowerCase()]) return c; }
+  for (var i = 2; i < 100; i++) { var c = Array.from(base).slice(0, 80 - (' ' + i).length).join('') + ' ' + i; if (!taken[c.toLowerCase()]) return c; }
   return base;
 }
 function uniquePresetName(base, except) {

@@ -42,7 +42,15 @@
   /* ---- layout store (DESIGN-SPEC 6.6): one envelope, records per widget, geometry per board class edited ---- */
   function geoStr(r) { return r.x + ',' + r.y + ',' + r.w + ',' + r.h; }
   function geoMap(g) { var out = {}; Object.keys(g || {}).forEach(function (cls) { var r = parseGeo(g[cls]); if (r) out[cls] = r; }); return out; }
-  function parseGeo(s) { var p = String(s || '').split(',').map(Number); return p.length === 4 && p.every(function (n) { return isFinite(n) && n >= 0; }) ? { x: p[0], y: p[1], w: p[2], h: p[3] } : null; }
+  /* a stored rect is read in the grid's bounds, as a saved preset's rows are (presetSet: x 0-29, y 0-4000, w 1-30, h 1-40,
+     whole tracks): a record with h 1e9 made firstFitInto and gravity step down row by row for good (review 2026-10-10);
+     a value that is not a finite number of 0 or more drops the rect, as before */
+  function parseGeo(s) {
+    var p = String(s || '').split(',').map(Number);
+    if (p.length !== 4 || !p.every(function (n) { return isFinite(n) && n >= 0; })) return null;
+    var at = function (n, lo, hi) { return Math.max(lo, Math.min(hi, Math.round(n))); };
+    return { x: at(p[0], 0, 29), y: at(p[1], 0, 4000), w: at(p[2], 1, 30), h: at(p[3], 1, 40) };
+  }
   function cfgRefs(cfg) { return Object.keys(cfg || {}).filter(function (k) { return cfg[k] != null && cfg[k] !== ''; }).map(function (k) { return k + '=' + cfg[k]; }); }
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
 
@@ -201,9 +209,10 @@
   function tracksOf(name) { var c = CLASSES.filter(function (x) { return x.name === name; })[0]; return c ? c.tracks : 12; }
 
   /* ---- the registry (D10 3.1): every board by id in creation order, the Usage board first; the ambient board of a
-     synchronous call (run), the board that holds the one page-wide gesture (ACTIVE: its handle), and the data epoch that
-     tells a hidden hosted board to refresh when it is shown again ---- */
-  var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, EPOCH = 0, LAYER = null, CATALOG = null;
+     synchronous call (run), the board that holds the one page-wide gesture (ACTIVE: its handle), the board whose gesture
+     the body's pm-resizing is (RESIZING_BY: its handle; setOpFlags, opSync) and the data epoch that tells a hidden hosted
+     board to refresh when it is shown again ---- */
+  var REG = {}, ORDER = [], EACH = [], ambient = null, ACTIVE = null, RESIZING_BY = null, EPOCH = 0, LAYER = null, CATALOG = null, FORGET_WARNED = {};
   /* ids a hosted board may never take (D10 2.4): the Usage board's, the 13 Usage rooms' (05-data.js ROOM), the kind's own
      and 'dashboard' (the name of a Start-from set, never a board's: D10 P13) */
   var RESERVED = { usage: 1, layer: 1, agents: 1, current: 1, dashboard: 1 };
@@ -291,7 +300,8 @@
   function presetById(id) { return presetStore().presets.filter(function (p) { return presetOk(p) && p.id === id; })[0] || null; }
   function presetLabel(p) { return presetName(typeof p.name === 'string' ? p.name : '') || 'Saved preset'; }
   function presetOut(p) { return { id: p.id, name: presetLabel(p), created: typeof p.created === 'string' ? p.created : null, sourceBoard: typeof p.source_board === 'string' ? p.source_board : null }; }
-  function presetName(name) { return String(name == null ? '' : name).replace(/\s+/g, ' ').trim().slice(0, 80); }
+  /* at most 80 characters, cut by code point (a cut by UTF-16 unit could leave half an emoji) */
+  function presetName(name) { return Array.from(String(name == null ? '' : name).replace(/\s+/g, ' ').trim()).slice(0, 80).join(''); }
   /* a preset's set (setRows): its rows per board class ([widget, x, y, w, h] in the grid's bounds: x 0-29, y 0-4000, w 1-30,
      h 1-40; a row with a size that is not a number made firstFitInto loop for good, and the page hung on Start from), its
      preset id per widget (strings) and its configuration refs per widget (lists of strings) */
@@ -1442,14 +1452,17 @@
        magnet, PM_EDGE and the observers by as long and changes nothing they read in between (the drop's settle is a
        transform). What data-op changes waits as long: the lifted plate's tools fade, the other plates stop answering
        hover and their handles stop taking the pointer (the gesture holds the pointer meanwhile); the resizing plate's own
-       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with the board that added it
-       (resizingMine), never with the attribute. */
-    var opOn = false, opT = 0, resizingMine = false;
+       lift does not wait for it (20-board.css). Whose pm-resizing it is stays with one board, page-wide (RESIZING_BY),
+       never with the attribute: a gesture's pick-up takes it over from another board that still holds it (a pointer
+       drop on one board, then a keyboard pick-up on another before the first one's idle period), and only the board
+       that holds it clears it and calls PM_DRAGEND (review 2026-10-10: the first board's idle period cleared it in the
+       middle of the second board's gesture). A pm-resizing no board added (Home's own drags) is left alone. */
+    var opOn = false, opT = 0;
     function setOpFlags(on) {
       var cl = document.body.classList;
       cl.toggle('pmu-pointer-op', on); cl.toggle('pm7u-pointer-op', on);
       opOn = !!on;
-      if (on && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; }
+      if (on && (!cl.contains('pm-resizing') || RESIZING_BY)) { cl.add('pm-resizing'); RESIZING_BY = inner; }
       if (!on) opLater();   /* on: prep asks for it, after the frame that follows the lift */
     }
     function opLater() {
@@ -1463,8 +1476,8 @@
       opT = 0;
       if (!boardEl) return;
       var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
-      if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); resizingMine = true; wrote = true; }
-      else if (!live && resizingMine) { resizingMine = false; cl.remove('pm-resizing'); ended = wrote = true; }
+      if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); RESIZING_BY = inner; wrote = true; }
+      else if (!live && RESIZING_BY === inner) { RESIZING_BY = null; cl.remove('pm-resizing'); ended = wrote = true; }
       if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
       if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
       if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
@@ -2179,6 +2192,8 @@
     function reset(scope) {
       ensure();
       var receipt = cmd('cmd.widget.reset_layout', { scope: scope || 'room', room: current.room || st.room }, { reset: true });
+      /* a reset the dispatch rejects changes nothing, as Start from's does (review 2026-10-10) */
+      if (receipt && receipt.dispatch_accepted === false) { PMU.shell.toast(t('board.rejected')); return receipt; }
       /* a dashboard's reset is to its own default set, whatever set it was started from (D10 P4) */
       if (hosted) { startSet = null; startRows = null; }
       if (scope === 'all') { st.layout = {}; st.hidden = {}; configs = {}; }
@@ -2548,6 +2563,9 @@
       /* the session's size picks were the old project's: none may apply to the new project's panels (the write above
          took their preset ids) */
       if (PMU.cards && PMU.cards.forgetPicks) PMU.cards.forgetPicks(null, api);
+      /* nor any held preset id: the new project's records hold theirs again as they are read, and a widget they lack is
+         added later at no held preset (review 2026-10-10) */
+      if (PMU.cards && PMU.cards.forgetHeld) PMU.cards.forgetHeld(null, api);
       reread();
       emit('change', { op: 'project', project: pid });
       return true;
@@ -2800,7 +2818,13 @@
     forgetKey: function (boardId, projectId) {
       boardId = String(boardId || '');
       if (!/^[a-z][a-z0-9-]{0,31}$/.test(boardId) || boardId === 'usage' || (projectId != null && !projectOk(projectId))) return false;
-      dropKey(boardKey(boardId, projectId != null ? projectId : null));
+      var key = boardKey(boardId, projectId != null ? projectId : null);
+      /* refused while a live board holds the key: its next save would write it back (destroy the board first) */
+      if (ORDER.some(function (h) { return h.api.STORE_KEY === key; })) {
+        if (!own(FORGET_WARNED, key)) { FORGET_WARNED[key] = true; console.warn('[pm-usage] boards.forgetKey refused: a live board holds ' + key); }
+        return false;
+      }
+      dropKey(key);
       return true;
     },
     /* live beats on dashboards (D10 P12), for the live film (15-film.js): wanted() while a shown dashboard holds a Usage
