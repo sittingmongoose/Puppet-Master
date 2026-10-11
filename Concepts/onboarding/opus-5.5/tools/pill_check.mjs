@@ -424,6 +424,8 @@ async function walkPage(dom, ws, look, prefix) {
         pop: document.querySelectorAll('body > .pm51-popout').length }));
       await openDialog(ws, o);
       await page.waitForTimeout(450);
+      /* measure what settles, not a frame of the popout's opening scale: wait (up to 2 s) for finite animations */
+      await page.waitForFunction(() => document.getAnimations().every((an) => an.playState !== 'running' || !Number.isFinite(an.effect && an.effect.getComputedTiming().endTime)), null, { timeout: 2000 }).catch(() => {});
       const after = await page.evaluate(() => ({ n: (document.getElementById('pm-settings-portals') || { childElementCount: 0 }).childElementCount,
         pop: document.querySelectorAll('body > .pm51-popout').length }));
       if (after.n !== before.n || after.pop !== before.pop) await collect('settings', vid, look.id);

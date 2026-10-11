@@ -144,3 +144,9 @@ html #panel-settings .side-health .pm-status-mark::before { box-shadow: 0 0 10px
 html #panel-settings .attention-row .pm-status-mark { --pm-status-ink: var(--k3-amber); }
 /* NieR idle dots (carry-over from 13-nier.css:538) */
 html[data-o55-nier] #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: var(--o55-nier-line-strong); }
+
+/* ── Dropdown search (found by tools/pill_check.mjs --dialogs) ──────────────────────────────────────────────────────
+   The search at the top of a dropdown popout takes the look's rectangle; its input, focused when the popout opens, no
+   longer draws Friendly's 14px-cornered focus glow, which ringed it as a capsule. */
+html .pm51-popout-search { border-radius: var(--pm-ctl-r); }
+html .pm51-popout-search input { border-radius: var(--pm-ctl-r-in); }
