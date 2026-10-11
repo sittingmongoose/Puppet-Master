@@ -12,6 +12,8 @@
    The example data continues today's cards (tastebook, current change nkmwqzvw) and lives here, in concept D only. */
 
 const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', view: null, reasons: [], registered: false };
+/* neon render sizes per icon class (pm7-glyphs, RAIL): static, never measured; the CSS keeps every box as it is */
+const JJ_SIZE = { sm: 13, 'sh-accchev': 10, 'd-jj-chev': 12, 'd-jj-grp-ico': 11 };
 const JJ_TABS = [
   { id: 'changes', label: 'Changes', icon: 'diff', git: 'changes' },
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
@@ -63,9 +65,15 @@ const JJ_CMDS = [
 const jh = (spec, attrs, ...kids) => PMR.h(spec, attrs, ...kids);
 function jjIco(name, cls) {
   const i = jh('i', { class: ['pm-ico', cls], 'data-ico': name, 'aria-hidden': 'true' });
-  const raw = JJ_SVG[name]
-    ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
-    : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  /* the neon set draws first (oplog -> history), through the shared rail map; JJ_SVG and PMIcon stay as fallback */
+  const G = window.PMG, g = (name && PMR.neonMap[name]) || name;
+  let raw = '';
+  if (g && G && G.has(g)) raw = G.icon(g, JJ_SIZE[cls] || 14, 'nx-r-' + (PMR.neonRole[name] || 'concept'));
+  if (!raw) {
+    raw = JJ_SVG[name]
+      ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
+      : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  }
   i.innerHTML = raw || '';
   return i;
 }
@@ -161,7 +169,7 @@ function jjShelf(s) {
 const jjFoot = text => jh('div.pm-footnote', { text });
 const jjWide = c => jjBtn(Object.assign({ cls: 'd-jj-wide' }, c));
 function jjGroup(icon, name, count, mono) {
-  return jh('div.d-jj-grp', jjIco(icon), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
+  return jh('div.d-jj-grp', jjIco(icon, 'd-jj-grp-ico'), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
 }
 
 /* ---------- the example repository (tastebook; DECISION §5) ---------- */
@@ -272,31 +280,29 @@ function paneWorkspaces() {
     jjFoot('Each workspace is its own working copy of this repository with its own current change. Threads and agents get their own when they start work.'),
   ];
 }
-/* the owner filter: the same chat-style dropdown as Git's worktrees; a local view filter, no command */
+/* the owner filter: the same Owner dropdown as Git's worktrees (ownerFilter, 10-skin.js), several owners at once; a
+   local view filter, no command */
 function jjOwnerFilter(rows, empty) {
-  const OPTS = [['all', 'All'], ['thread', 'Threads'], ['orch', 'Orchestrator'], ['agents', 'Agents'], ['manual', 'Manual']];
-  let cur = 'all';
-  const value = jh('span.d-select-v', { text: 'All' });
-  const trig = jh('button', { type: 'button', class: 'd-select', 'aria-haspopup': 'menu', 'aria-expanded': 'false' },
-    PMR.icon('filter', 'd-select-ico'), jh('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD'));
-  PMR.hover(trig, 'Filter workspaces by owner', 'Threads, the orchestrator, agents or manual workspaces');
-  const set = v => {
-    cur = v;
-    value.textContent = OPTS.find(o => o[0] === v)[1];
+  const CLASSES = [['thread', 'Threads'], ['orch', 'Orchestrator'], ['agents', 'Agents'], ['manual', 'Manual']];
+  const set = chosen => {
     let shown = 0;
-    rows.forEach(r => { const on = v === 'all' || r.getAttribute('data-owner') === v; r.hidden = !on; if (on) shown += 1; });
+    const back = [];
+    rows.forEach(r => {
+      const on = !chosen.size || chosen.has(r.getAttribute('data-owner'));
+      if (on && r.hidden) back.push(r);
+      r.hidden = !on;
+      if (on) shown += 1;
+    });
     empty.hidden = shown > 0;
-    empty.firstChild.textContent = 'No workspaces for ' + value.textContent + '.';
-    const pane = trig.closest('[data-jj-pane]');
-    if (pane && pane.offsetParent) { stackHeads(pane); midFitAll(pane); }
+    const names = CLASSES.filter(c => chosen.has(c[0])).map(c => c[1]);
+    empty.firstChild.textContent = 'No workspaces for ' + (names.length > 1 ? names.slice(0, -1).join(', ') + ' or ' + names[names.length - 1] : names[0] || 'All') + '.';
+    const pane = f.trig.closest('[data-jj-pane]');
+    if (pane && pane.offsetParent) { stackHeads(pane); midFitAll(pane); cascade(back.filter(visible), { max: 8 }); }
   };
-  empty.lastChild.addEventListener('click', () => set('all'));
-  trig.addEventListener('click', ev => {
-    ev.preventDefault(); ev.stopPropagation();
-    const items = OPTS.map(o => ({ label: o[1], value: o[0], selected: o[0] === cur }));
-    PMR.menu.toggle({ id: 'd-jj-owner', label: 'Owner', value: cur, groups: [{ items }] }, trig, { width: Math.max(220, Math.round(trig.getBoundingClientRect().width)), onPick: it => set(it.value) });
-  });
-  return jh('div.d-wtfilter', trig);
+  const f = ownerFilter('d-jj-owner', ['Filter workspaces by owner', 'Threads, the orchestrator, agents or manual workspaces; choose several to see them together'],
+    CLASSES, [], set);
+  empty.lastChild.addEventListener('click', () => f.reset());
+  return jh('div.d-wtfilter', f.trig);
 }
 
 function paneHistory() {
@@ -530,7 +536,7 @@ function jjCard() {
 /* the card folds like Git's; one remembered preference for both engines */
 function jjWireFold(card) {
   const head = card.querySelector('.pm7-post-card-head');
-  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD'));
+  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD', 'd-fold-chev'));
   PMR.hover(btn, 'Show or hide the destinations', 'Where this publishes, the expected head and the review state');
   head.appendChild(btn);
   const set = (folded, animate) => {

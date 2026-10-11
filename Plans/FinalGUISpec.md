@@ -36084,7 +36084,9 @@ canonical_text: >-
   Every packet action remains visibly truthful and unavailable until its owner and central runtime integration exist.
   Amended 2026-10-09 (DL-162): in the left rail the AutomationBinding selector is a field labelled Automation
   service that opens the chat picker (F3-621), never a native select; picking runs
-  ui.repository_automation.binding.select and changes nothing else.
+  ui.repository_automation.binding.select and changes nothing else. As Forge_Integrations' route unit says, the
+  field shows only when the project has several bindings; with one, the rail names the service as a fact beside
+  the revision (owner, 2026-10-10).
 gui_related: true
 gui_classification_reason: This unit defines canonical shell identity, shared visual components, routes, copy, protected states, progress, alerts, themes, accessibility, and responsive behavior.
 split_recommended: false
@@ -42230,7 +42232,8 @@ canonical_text: >-
   half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
   bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
   failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
-  warning triangle; and skipped, cancelled, superseded and terminated take the stopped ring. A row's state is the
+  warning triangle; and skipped, cancelled, superseded, terminated and expired take the stopped ring (an expired
+  runtime artifact reads Expired, never stale: owner, 2026-10-10). A row's state is the
   same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
@@ -42691,7 +42694,7 @@ canonical_text: >-
   The five Jujutsu views (F3-623, DL-163) use two-line rows: line 1 the name with a file letter, an age or a diff at
   its end, and line 2 the state glyph and word (F3-619) and then the facts, left-aligned under the name. Raw commit,
   operation and workspace IDs appear only in a Technical details disclosure in the expanded row (JJI section 4.1);
-  whether a change's short change ID may also show on line 2 is an open owner question (DL-163). Every dropdown is
+  a change's short change ID also shows on line 2, the owner's choice of 2026-10-10 (DL-163). Every dropdown is
   the chat picker (F3-621). Changes shows the current change @ first: its description or "No description yet",
   its state (conflicted, empty, on an older main, divergent), a note offering Rebase onto main when main has moved,
   a description box with Describe, then New change as the primary action, Squash, and More with Rebase onto…,

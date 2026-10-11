@@ -152,16 +152,65 @@
     settled: { glyph: 'check', word: 'Settled', tone: 'neutral' },
     pending_recheck: { glyph: 'refresh', word: 'Pending recheck', tone: 'neutral' }
   };
+  /* The value-state glyphs that stand for a state (pm7-glyphs D44 round 2): vs.html draws PMU.stateMark beside
+     the word (the word names the key: Usage unknown -> pending, Quota not exposed -> skipped, Disabled -> off,
+     Streaming partial -> mixed, Failed -> failed) and keeps the old SVG only when stateMark returns ''. The other
+     STATES glyphs (clockCircle, pencil, lock, check, refresh) are plain icons and draw through PMU.icon's NEON map. */
+  var STATE_GLYPHS = { dashedCircle: 1, slashCircle: 1, minusCircle: 1, halfCircle: 1, xCircle: 1 };
   var vs = {
     STATES: STATES,
     html: function (state, word) {
       var s = STATES[state] || STATES.unknown;
-      return '<span class="pmu-vs" data-vs="' + state + '" data-tone="' + s.tone + '">' + (s.glyph ? PMU.icon(s.glyph, 'pmu-vs-glyph') : '') +
-        '<span>' + esc(word || s.word) + '</span></span>';
+      var w = word || s.word;
+      var mark = (s.glyph && STATE_GLYPHS[s.glyph] && stateMark(w, 13)) || (s.glyph ? PMU.icon(s.glyph, 'pmu-vs-glyph') : '');
+      return '<span class="pmu-vs" data-vs="' + state + '" data-tone="' + s.tone + '">' + mark +
+        '<span>' + esc(w) + '</span></span>';
     }
   };
 
+  /* The state word -> status key table (pm7-glyphs D44, rollout USAGE step 2; the left rail's 00-d.js KEY and
+     STATE_WORDS are the worked example). Ordered [regex, key]: the first match wins. The resolutions are the spec's
+     parenthetical (it wins where status.json's per-key usage lists differ: signed out is offline, not warning; needs a
+     seat is off, not waiting); active/on -> working and unknown -> pending come from status.json itself. Short words
+     match whole words only (low, live, on), so a sentence that merely contains the letters never matches. It maps
+     words only and changes no copy. PMU.stateMark(word, size) is PMG.calm(key, size) (lit and still from the first
+     frame: no rhythm and no mount act; Reduce Motion is instant and only Live beats move) or '' when the word names no
+     key or PMG is missing; callers keep the old glyph as the fallback. Round 2 adds the alert words (attention ->
+     warning, healthy -> complete, both whole-word) and the value-state words (failed; disabled -> off; not exposed and
+     not published -> skipped; streaming partial -> mixed), so vs.html's five state glyphs resolve to the lead's keys.
+     The specific rows sit above active/live/on, so a sentence naming a state ("Attention on …", "Healthy, based on …")
+     never falls through to working. */
+  var STATE_WORDS = [
+    [/exhausted|\bfailed\b/i, 'failed'],
+    [/cooldown/i, 'recovering'],
+    [/standby|paused/i, 'paused'],
+    [/signed[\s-]?out|unavailable/i, 'offline'],
+    [/needs[\s-]?a[\s-]?seat|needs[\s-]?seat|\bdisabled\b/i, 'off'],
+    [/degraded|\blow\b|\battention\b/i, 'warning'],
+    [/\bnot (exposed|published)\b/i, 'skipped'],
+    [/\bstreaming partial\b/i, 'mixed'],
+    [/\bhealthy\b/i, 'complete'],
+    [/\bactive\b|\blive\b|\bon\b/i, 'working'],
+    [/unknown/i, 'pending']
+  ];
+  function stateKey(word) {
+    var w = String(word || ''), i;
+    for (i = 0; i < STATE_WORDS.length; i++) if (STATE_WORDS[i][0].test(w)) return STATE_WORDS[i][1];
+    return null;
+  }
+  /* cached per (key, size): plates re-render on every Live beat (t3-usage-pm7 review, 2026-10-11) */
+  var MARK_CACHE = Object.create(null);
+  function stateMark(word, size) {
+    var G = window.PMG, key = stateKey(word), z = size || 14;
+    if (!key || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(key)) return '';
+    var k = key + '|' + z;
+    if (MARK_CACHE[k]) return MARK_CACHE[k];
+    try { return (MARK_CACHE[k] = G.calm(key, z)); } catch (error) { return ''; }
+  }
+
   PMU.fmt = fmt;
+  PMU.stateKey = stateKey;
+  PMU.stateMark = stateMark;
   PMU.vs = vs;
   PMU.MARKS = MARKS;
   PMU.markOf = markOf;

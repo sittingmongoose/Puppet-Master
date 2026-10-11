@@ -12,7 +12,10 @@
   /* ------------------------------------------------------------------ pieces */
   function stateHtml(a, opts) {
     opts = opts || {};
-    return '<span class="pmu-acstate" data-state="' + a.shownState + '" data-tone="' + a.stateTone + '">' + (opts.glyph !== false && a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '<b>' + esc(a.stateWord) + '</b></span>';
+    /* pm7-glyphs D44: the state mark is PMG.calm beside the state word (the old glyph only when the word names no key
+       or PMG is missing) */
+    var mark = opts.glyph !== false ? (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) : '';
+    return '<span class="pmu-acstate" data-state="' + a.shownState + '" data-tone="' + a.stateTone + '">' + mark + '<b>' + esc(a.stateWord) + '</b></span>';
   }
   function metaLine(a, parts) {
     var bits = [stateHtml(a, { glyph: false })];
@@ -106,9 +109,9 @@
   function polStepper(p) {
     var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
     return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + SVG.minus + '</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
       '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + SVG.plus + '</button></span><span class="pmu-swat">used</span>';
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
   }
   /* the level as one value that opens the level menu (the hero's cells) */
   function polValue(p) {
@@ -495,7 +498,7 @@
       var line1 = stateInAct ? (a.plan ? esc(a.plan) : '') : longState ? metaLine(a, []) : metaLine(a, ['plan']);
       var line2 = [!stateInAct && longState && a.plan ? esc(a.plan) : '', a.host ? esc(a.host) : '', a.fresh.stale ? '<span class="pmu-stale">' + C.glyph('clockCircle') + esc(a.ageText) + '</span>' : esc(a.ageText)].filter(Boolean).join('<i class="pmu-dot"> · </i>');
       var amountsLine = a.amounts.length && !hidden && n ? '<span class="pmu-amounts">' + a.amounts.slice(0, 1).map(function (x) { return esc(x.label) + ' <b>' + esc(x.value || x.word) + '</b>' + (x.suffix ? ' ' + esc(x.suffix) : ''); }).join('') + '</span>' : '';
-      var ident = '<span class="pmu-accid"><span class="pmu-accglyph">' + (a.stateGlyph ? C.glyph(a.stateGlyph) : '') + '</span>' +
+      var ident = '<span class="pmu-accid"><span class="pmu-accglyph">' + (PMU.stateMark(a.stateWord, 14) || (a.stateGlyph ? C.glyph(a.stateGlyph) : '')) + '</span>' +
         '<span class="pmu-acctext"><b class="pmu-ident' + (a.effective ? ' is-eff' : p.effective ? ' is-other' : '') + '"' + C.shareAttr('acct:' + a.key) + '>' + esc(a.nickname) + '</b>' +
         (comfy ? (line1 ? '<span class="pmu-identmeta">' + line1 + '</span>' : '') + '<span class="pmu-identmeta is-2">' + line2 + '</span>' + amountsLine
           : '<span class="pmu-identmeta">' + (stateInAct ? esc(a.plan || '') : stateHtml(a, { glyph: false })) + '</span>') + '</span></span>';
@@ -512,7 +515,12 @@
       return '<div class="pmu-row pmu-accrow' + (comfy ? ' is-comfy' : ' is-compact') + (a.effective ? ' is-eff' : '') + '" data-reveal data-flash-key="' + esc(a.key) + '" data-flash-sig="' + esc(sig) + '" data-acct="' + esc(a.key) + '" data-state="' + a.shownState + '" data-pmu-act="acct-inspect" data-value="' + esc(a.key) + '" role="button" tabindex="0"' +
         ' style="grid-template-columns:' + tmpl + '"' + C.hover(a.nickname, a.identity + (a.routeRole ? ' · ' + a.routeRole : '') + ' · priority ' + a.priority) + '>' + parts + '</div>';
     }).join('');
-    var foot = footLines.slice(0, footCap).map(function (l) { return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + C.glyph(l.glyph) + '<span>' + l.html + '</span></span>'; }).join('');
+    /* pm7-glyphs D44: only the alert footline takes a calm mark (its sentence names the state, e.g. Usage
+       exhausted); info and refresh footlines keep C.glyph */
+    var foot = footLines.slice(0, footCap).map(function (l) {
+      var fm = l.glyph === 'alert' ? PMU.stateMark(String(l.html).replace(/<[^>]+>/g, ' '), 14) : '';
+      return '<span class="pmu-accfootline" data-fit-first' + (l.tone ? ' data-tone="' + l.tone + '"' : '') + '>' + (fm || C.glyph(l.glyph)) + '<span>' + l.html + '</span></span>';
+    }).join('');
     /* the accounts and foot notes the plate has no room for are listed in the "N more" line's hover tag, or the plate's
        (CONTENT-3) */
     var accFold = p.accounts.slice(shown.length).map(function (a) { return a.nickname + ' · ' + a.stateWord + (a.binding && a.binding.pct !== null ? ' · ' + a.binding.short + ' ' + C.fmt(a.binding.pct, 'pct') + ' used' : ''); })

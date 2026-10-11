@@ -18,5 +18,5 @@
   m('st-pending', ['d G.pending (a dashed ring that turns)', 'd G.unknown (a dashed ring with a question mark)']);
   m('st-skipped', ['d G.stale (a clock in a ring)', 'd G.orphan (a broken ring)', 'F3-619 expired, superseded, terminated']);
   m('ring-dot', ['d G.current (a ring with a dot): where you are, a position marker, not a state']);
-  m('archive', ['d G.stash (a tray)']);
+  m('stash', ['d G.stash (a tray)']);
 })();
