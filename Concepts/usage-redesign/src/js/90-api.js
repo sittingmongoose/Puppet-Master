@@ -23,7 +23,9 @@ function roomWidgets(room) { return PMU.board ? PMU.board.visible(room || state.
 function injectIcons() {
   if (!app) return;
   $$('[data-icon]', app).forEach(function (element) {
-    element.innerHTML = SVG[element.getAttribute('data-icon')] || SVG.grid;
+    var name = element.getAttribute('data-icon');
+    /* the neon glyph at the 16 px the shell's CSS gives every [data-icon] svg (rollout USAGE step 6) */
+    element.innerHTML = (PMU.svg ? PMU.svg(name, 16) : SVG[name]) || SVG.grid;
   });
 }
 

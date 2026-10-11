@@ -609,7 +609,7 @@
       var r = rows[i], mi = +el.getAttribute('data-mi'), was = h.flat[mi];
       h.flat[mi] = r;
       if (was.right !== r.right) { var rt = el.querySelector('.pmu-mright'); if (rt) rt.textContent = r.right; }
-      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = SVG[r.icon] || ''; }
+      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = (PMU.svg ? PMU.svg(r.icon, 14) : SVG[r.icon]) || ''; }
       if (!!was.active !== !!r.active) {
         el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
         var ck = el.querySelector('.pmu-mcheck');
@@ -835,10 +835,10 @@
         '<span class="pmu-cardsub">' + esc(sub) + '</span></div>' +
         '<span class="pmu-cardmeta"></span><span class="pmu-headtools"></span>' +
         '<span class="pmu-cardtools">' +
-        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + SVG.toolGrip + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + SVG.toolSize + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + SVG.toolGear + '</button>' +
-        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + SVG.toolKebab + '</button></span></header>' +
+        '<button type="button" class="pmu-iconbtn pmu-grip" data-tool="grip" aria-label="' + esc(t('board.grip')) + '" data-pm-hover-label="' + esc(t('board.grip')) + '">' + PMU.svg('toolGrip', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardsize" data-tool="size" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.size_tool')) + '">' + PMU.svg('toolSize', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardgear" data-tool="gear" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.gear_tool')) + '">' + PMU.svg('toolGear', 14) + '</button>' +
+        '<button type="button" class="pmu-iconbtn pmu-cardmenu" data-tool="menu" aria-haspopup="menu" aria-expanded="false" aria-label="' + esc(t('board.menu_tool')) + '">' + PMU.svg('toolKebab', 14) + '</button></span></header>' +
         '<div class="pmu-cardbody"></div>' + EDGES.map(function (e) { return '<i class="pmu-h" data-edge="' + e + '" aria-hidden="true"></i>'; }).join('');
       if (rect) boardNow().place(card, rect);   /* the board it is handed places it (and marks the card as its own) */
       return card;

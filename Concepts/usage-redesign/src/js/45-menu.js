@@ -28,7 +28,9 @@
 
   function speed() { return PMU.motion ? PMU.motion.speed() : 1; }
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
-  function icon(name) { return SVG[name] || ''; }
+  /* the neon glyph at the size this menu's CSS gives the svg (15-menu.css: 14 in rows, the back and the search, 16 on the
+     rail), through PMU.svg; the SVG table without PMG */
+  function icon(name, size) { return PMU.svg ? PMU.svg(name, size || 14) : (SVG[name] || ''); }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
   /* a spec callback, in the menu's board */
   function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
@@ -72,7 +74,7 @@
       var on = (h.rail || 'all') === b.value;
       return '<button type="button" class="pmu-mrailbtn' + (on ? ' active' : '') + '" role="tab" aria-selected="' + on + '" data-rail="' + esc(b.value) + '"' +
         ' aria-label="' + esc(b.label) + '" data-pm-hover-label="' + esc(b.label) + '">' +
-        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid') + '</span>') + '</button>';
+        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid', 16) + '</span>') + '</button>';
     }).join('') + '</div>';
   }
   function listHtml(h) {
