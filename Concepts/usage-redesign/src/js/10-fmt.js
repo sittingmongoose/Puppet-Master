@@ -198,10 +198,14 @@
     for (i = 0; i < STATE_WORDS.length; i++) if (STATE_WORDS[i][0].test(w)) return STATE_WORDS[i][1];
     return null;
   }
+  /* cached per (key, size): plates re-render on every Live beat (t3-usage-pm7 review, 2026-10-11) */
+  var MARK_CACHE = Object.create(null);
   function stateMark(word, size) {
-    var G = window.PMG, key = stateKey(word);
+    var G = window.PMG, key = stateKey(word), z = size || 14;
     if (!key || !G || typeof G.hasStatus !== 'function' || !G.hasStatus(key)) return '';
-    try { return G.calm(key, size || 14); } catch (error) { return ''; }
+    var k = key + '|' + z;
+    if (MARK_CACHE[k]) return MARK_CACHE[k];
+    try { return (MARK_CACHE[k] = G.calm(key, z)); } catch (error) { return ''; }
   }
 
   PMU.fmt = fmt;

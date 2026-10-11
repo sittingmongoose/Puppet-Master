@@ -251,6 +251,12 @@ var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kp
 var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
 var ICON_CACHE = Object.create(null);
 function roleFor(name) { return NEON_ROLE[name] || 'concept'; }
+/* the size for a class list: the first token NEON_SIZE knows ('pmu-glyph is-x' -> 14), else 16 */
+function sizeOf(cls) {
+  var t = String(cls || '').split(/\s+/);
+  for (var i = 0; i < t.length; i++) if (NEON_SIZE[t[i]]) return NEON_SIZE[t[i]];
+  return 16;
+}
 
 var PMU = window.PMU = {
   version: 'pmu-b2-2026-10-02b',
@@ -262,9 +268,11 @@ var PMU = window.PMU = {
   neonMap: NEON,
   neonRole: NEON_ROLE,
   icon: function (name, cls) {
-    var G = window.PMG, g = (name && NEON[name]) || name, svg = '';
+    /* only names in NEON go to PMG: an unmapped name (notch, diamond, provider, halfCircle, a brand mark) always draws its
+       own Usage drawing, even if PMG ever gains a glyph of that name (t3-usage-pm7 review, 2026-10-11) */
+    var G = window.PMG, g = name ? NEON[name] : '', svg = '';
     if (g && G && typeof G.has === 'function' && G.has(g)) {
-      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), size = flat ? 14 : NEON_SIZE[cls] || 16;
+      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), size = flat ? 14 : sizeOf(cls);
       var key = (flat ? 'f|' : 'i|') + g + '|' + size + '|' + role;
       svg = ICON_CACHE[key];
       if (!svg) {
