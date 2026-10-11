@@ -24,7 +24,7 @@ for (const look of ['glass-dark', 'glass-light']) for (const [name, qs] of CONFI
   const page = AB ? await browser.contexts()[0].newPage() : await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   if (AB) await page.setViewportSize({ width: 1920, height: 1080 });   /* no interception over CDP: it stalls this page */
   else await page.route('**/*', r => /^(file:|data:|blob:)/.test(r.request().url()) ? r.continue() : r.abort());
-  await page.goto(pathToFileURL(resolve(pageFile)).href + '?o55=off&' + qs, { waitUntil: 'domcontentloaded', timeout: 120000 });
+  await page.goto((pageFile.startsWith('file:') ? pageFile : pathToFileURL(resolve(pageFile)).href) + '?o55=off&' + qs, { waitUntil: 'domcontentloaded', timeout: 120000 });
   await page.locator('#pm-settings-root').waitFor({ state: 'attached', timeout: 90000 });
   await page.waitForTimeout(1500);
   await page.evaluate(n => { window.PM12_KIMI.setSettingFromHost('general.visual.theme', n); window.PM_PAGES.go('usage'); }, look === 'glass-dark' ? 'Glass Dark' : 'Glass Light');
