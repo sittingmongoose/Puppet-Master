@@ -3413,6 +3413,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/Final
    - SSYS-043, F3-598 and DL-152 said no onboarding action is added; each is amended to name the one action this item adds and the editor's actions. `Plans/Commands_System.md` registers none of these families and is unchanged.
 7. **Consumers updated:** `Plans/Planning_Wizard.md` (the starting look keyed to how the window opened, the four families' moments, the quiet restore, the action census, and PWIZ-021, PWIZ-022 and PWIZ-023), `Plans/UI_Wiring_Rules.md#UIW-015` and its result table (a start row and a look row), `Plans/Wiring_Matrix.md#WM-041` and `#WM-046`, `Plans/UI_Command_Catalog.md#UCC-106`, `#UCC-108` and `#UCC-120`, `Plans/Settings_System.md#SSYS-010` (the first frame is the Project's committed look, with no app-global copy or hint) and `#SSYS-043`, and `Plans/Automated_Testing_System.md#ATS-020`, with their machine companions (the Product Onboarding schema and fixtures, `Plans/touch_closure.json` and the production wiring rows).
 
+Amended 2026-10-11 (Jared's answer of 2026-10-10, reseal item 2): the onboarding session stores the look chosen so far as `look_choice` (theme family and mode, NieR Mode, its parts and background), each `ui.onboarding.choose_look` request replacing only what it sets, so a resumed setup repaints the chosen look, NieR included; anything not yet chosen falls back to the start rule, and Settings are still written only at commit (`Plans/product_onboarding_contracts.schema.json`, `Plans/storage-plan.md`, `Plans/Planning_Wizard.md`, `Plans/FinalGUISpec.md#F3-520`).
+
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/JARED-REQUEST-20261009.md`, SHA-256 `5d4f5b2aa55364c55fb022e4624657b5185e5ea5b316b6108b880dde51a98e48` (the request and the two rulings, the rulings word for word); `/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-next-20261009/LEAD-RULINGS-20261009.md`, SHA-256 `d838d83f930bda2967e9c289cffe1a98a59a2d07dd163374331c8c3803b98b38` (the lead's wiring rulings and the DL-152 thread's handoff; agent rulings, not owner answers).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/UI_Wiring_Rules.md#UIW-015, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/UI_Command_Catalog.md#UCC-108, ContractName:Plans/Wiring_Matrix.md#WM-041, ContractName:Plans/Planning_Wizard.md#PWIZ-021
@@ -4143,6 +4145,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/Final
 1. **The rule** (`Plans/DRY_Rules.md#DR-069`), owned for presentation by `Plans/FinalGUISpec.md#F3-648`.
 2. **Retired defaults:** section 3.5's "3px left-edge accent stripe" and `Plans/FinalGUISpec.md#F3-039`'s token, Appendix C's and `Plans/FinalGUISpec.md#F3-276`'s accent left border, `Plans/FinalGUISpec.md#F3-469`'s inset left accent bar, the workgroup pill of section 5.1, and the pill skins of `Plans/FinalGUISpec.md#F3-422`, `Plans/FinalGUISpec.md#F3-463`, `Plans/FinalGUISpec.md#F3-464` and `Plans/FinalGUISpec.md#F3-467`, each amended in place with a dated note.
 3. **Unchanged:** the chat's, Settings' and the left rail's own statements of the rule stay; they now read as instances of the one rule.
+
+Amended 2026-10-11 (lead rulings under D29): a chosen option in a set of options (the Debug Console's sub-tabs, every segmented toggle) is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds its 1 px top rim, Retro keeps reverse video and NieR its ink block (`Plans/FinalGUISpec.md#F3-490`, `Plans/DRY_Rules.md#DR-069`).
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md`, SHA-256 `0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64` (decision D22 and Jared's brief).
 
@@ -12759,6 +12763,8 @@ negative_constraints:
   - "Do not make a NieR variant per family."
   - "Do not add a settings key, a NieR part or an onboarding- or tour-only setting."
   - "Do not add a command id, a route or a Guided Tour action for a look control."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (Jared 2026-10-10, reseal item 2): the onboarding session stores look_choice so a resumed setup repaints the chosen look, NieR included; Settings are still written only at commit."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -14176,6 +14182,8 @@ preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+stale_retired_dispositions:
+  - "Amended 2026-10-11 (lead rulings under D29): a chosen option is filled on its own box, never underlined, with each look's neutral selection fill in Friendly, Glass and Basic; Glass top rim, Retro reverse video, NieR ink."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
