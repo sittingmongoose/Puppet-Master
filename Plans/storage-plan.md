@@ -18572,6 +18572,12 @@ canonical_text: >-
   under `widget_presets:v1` (family `widget_presets`), saved, renamed and deleted by typed local actions; applying
   one is `cmd.widget.reset_layout` with `set_id` `user:<preset_id>`. View, preset and board-forgetting writes are
   not `cmd.widget.*` commits and take no receipt or event; every widget change on a board still is one.
+  Board contents are scoped per project and per board; custom dashboard names are kept per project, with
+  whitespace collapsed, trimmed to at most 80 characters and made unique against that project's dashboards
+  and the built-ins by suffixes 2, 3 and so on. An empty or default Dashboard <n> name removes its stored
+  entry. A project switch saves the old project's boards and rebinds every mounted board whose tab is
+  retained, including hidden boards, then reloads that project's custom names. No concept-only custom-name
+  storage key is admitted by this rule.
 gui_related: true
 gui_classification_reason: The persisted record determines restored visible widget order, geometry, semantic content tier, and safe default fallback.
 depends_on: [SP-248, WS-009, WS-020, UF-095, DL-186]
@@ -18613,6 +18619,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
   - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3.1, the Dashboard kind's keys, adoption, names and forgetting; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - widget_layout:v1:usage
   - widget_layout:v1:dashboard
@@ -18639,6 +18647,7 @@ compatibility_only_notes:
   - "The concept's pm.home.dashboards:v1:<project> name store and its board and preset envelope schema ids are concept lineage only."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-186): dashboard boards are per project under widget_layout:v1:<project_id>:<board_id> with quarantine, one-time adoption and forgetting; presets are per user under widget_presets:v1; the single Dashboard namespace is the old layout's only."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Board contents are per project and board, and custom names remain per project without a concept-only key."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Widget_System.md
@@ -27536,17 +27545,31 @@ canonical_text: >-
   source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
   kept and a notice. The concept's pm.home.panels keys are lineage only.
   The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
-  Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width, history_pinned
-  and shown only (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
+  Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
   board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout,
-  writes boards_skipped_bytes instead and says so; applying it writes each board back to its key in the current
-  project (null removes) with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling
+  writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
+  the current project (null removes), skips another project's envelope, and leaves a custom board not held by
+  the applied layout unchanged with no event of its own; a layout saved before applies as it did (D10 P6, lead ruling
   F3). The old Dashboard layout widget_layout:v1:dashboard is converted into no board (P1). The Debug Console is
   one tab, debug-console, whose chosen session sub-tab is view state in its state (D33, lead ruling F6), and a
   terminal tab's notification mute is that tab's state (D38, lead ruling F5); both are written like view state.
   A named layout's boards never name agents, which stores nothing (lead ruling F7). The chat column also keeps
   keep_open, the narrow-window pin ui.chat_column.keep_open sets (UCC-203), off while absent; it is the person's
   choice, not a narrow-window state, and is written like view state.
+  The chat_column fields width_px, history_pinned and keep_open default to null, false and false; width_px
+  is the message area's width, rounded into 400-760 px, an out-of-range finite value stored at the nearer
+  bound and null the window's default. They are layout values, never Settings values. A changed width is one
+  cmd.workspace_layout.resize_surface { surface: 'chat', width } structural commit, with one receipt, one
+  layout event and a new revision; a changed drag commits once on release, Escape or no movement commits
+  nothing, and double-click resets with width null. Both pins are view state with no receipt, event or
+  revision; their typed actions ui.chat_column.pin_history and ui.chat_column.keep_open accept the named
+  boolean and toggle when it is absent. A named layout and Restore home layout keep all three; a project
+  switch loads that project's own chat column, or the defaults. Once at boot, the former chat.width (finite,
+  rounded and clamped), chat.history value pinned and chat.pinOpen true are carried into this project's
+  layout and every other project's saved layout only where the corresponding field is still at its default.
+  Existing non-default values survive. The old keys are dropped only after this project's layout is written,
+  never while an unreadable record waits to be set aside; old defaults null, flyout and false are just
+  dropped.
 gui_related: true
 gui_classification_reason: The persisted record decides the visible panels, tabs, chat column and what survives an upgrade.
 split_recommended: false
@@ -27565,7 +27588,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a separate chat window."
   - "No v2 record holds the chat's pop-out: Plans/home_workspace_layout_v2.schema.json rejects popped_out (fixture chat_popped_out_saved)."
-  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each board's key in the current project, a null removing it, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
+  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each included board's key only for the project the envelope was saved in, a null removing it, skips another project's envelope and leaves a custom board not held by the layout unchanged, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
   - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
   - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
   - "A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open, set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event."
@@ -27601,6 +27624,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the Debug Console's one tab and its folded ids; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/04-settings.js at c4e32ec0b7, SHA-256 07bdcadf218484acbd1be0c290911707fd21f06aa777e213d2f9f9e121ec5e8a (chat.pinOpen, kept beside the chat width and History choice; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/14-layouts.js at c4e32ec0b7, SHA-256 50a4cd1600bcb921430b5f96c1719bdea60703b6815722fa699cbb8cfe2e061a (the 64 KB board snapshot of a named layout and the skipped size; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
 preserved_exact_tokens:
   - "pm.home_workspace_layout.v2"
   - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
@@ -27639,6 +27664,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
   - "Supersedes the v1 record as the selected Home layout (SP-245 amended 2026-10-09, DL-180)."
+  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The chat column stores width_px and the two pins, carries former preferences once, and preserves project-bound named-board contents."
 owner_hints:
   - Plans/storage-plan.md
   - Plans/home_workspace_layout_v2.schema.json
