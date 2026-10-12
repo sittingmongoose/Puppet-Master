@@ -1,0 +1,91 @@
+{
+  "schema": "er13.paired-original-freeze.v1",
+  "assignment_id": "C-R2-P01",
+  "arm_count": 2,
+  "frozen_at_utc": "2026-10-12T03:28:32.537885+00:00",
+  "before_any_comparative_analysis": true,
+  "original_grades_locked": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/input-verification.json",
+      "bytes": 7674,
+      "sha256": "d3e9050aac4984d920337d0984eadde4666fa280347b268cfada2621f49e840e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/primary-source-evidence.json",
+      "bytes": 19174,
+      "sha256": "d11be9d936182b88fd30b0d39804a4540636631a26694582392c463d136d6121"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.md",
+      "bytes": 2520,
+      "sha256": "9a1ef5857a30fd170f45a6076d4064b60d10981cf0e567d3a6d00107cebf4141"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.json",
+      "bytes": 13671,
+      "sha256": "e844e4d38c55344bbd863b11b357cac1ad7b34bb9e82ac196656b5bb8eeae674"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/coverage.json",
+      "bytes": 19766,
+      "sha256": "bf0c67287b86d2891aa1262bd1e8e78eeb4fcd98be223424ef6a15206db2ac7a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/defects.json",
+      "bytes": 4219,
+      "sha256": "b0c6428083e465f222e5c8ff454695b035143ca45c550b3b31b9c6b3e36d4daa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/primary-source-index.json",
+      "bytes": 26007,
+      "sha256": "f9912f459ec3575c98d449b24eacd6ed9c0d5e7f8f7e68d3f0a98d2fb0876427"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/claim-boundaries.md",
+      "bytes": 2329,
+      "sha256": "6a8556ff343dd045f83de93c63e80c3ff255451eb65126d18083dd8adf4d79df"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/manifest.json",
+      "bytes": 2455,
+      "sha256": "ede65e63143959dc76ca76183db4ab2ff3fff5fd1021f02a2410de0b369dc45e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/assessment.md",
+      "bytes": 2555,
+      "sha256": "b94df10f63387bd3dc6ff05847ec556577aea6f8ec8c00c58db369e41913e4e2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/assessment.json",
+      "bytes": 14561,
+      "sha256": "25edb29bf9348e10f576d3028738b3985ba954f4c108bfe91c78110066af16bf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/coverage.json",
+      "bytes": 20711,
+      "sha256": "8b0d934af52562f8c7dbf5bd8ae368e9ebcfe9b8a03a68d0659fe0f4a56b153c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/defects.json",
+      "bytes": 3087,
+      "sha256": "0368c61606f177fec54f299d21e7208e70627acd2685abf23a5451d140422b83"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/primary-source-index.json",
+      "bytes": 27726,
+      "sha256": "54bef9a6020eae79c2d0336b801d97d8b98ee61b08691b7df3103e7149168677"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/claim-boundaries.md",
+      "bytes": 2736,
+      "sha256": "136ab393990177ef40d3bc1f1ab4e02603054f17b7c67231f5791b5cb679757d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/manifest.json",
+      "bytes": 2469,
+      "sha256": "d61bcfebb708587716c42ab61b011099d72ae7d6b5c8ad3a4cc0406a7d722422"
+    }
+  ],
+  "self_hash_rule": "Root manifest excludes itself; its exact SHA256 is reported externally. Comparison outputs are separate and cannot modify original files."
+}

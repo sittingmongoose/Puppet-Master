@@ -1,0 +1,338 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "C-R2-P02-control",
+  "scope": "FULL",
+  "definition": "COMPLETE is finite coverage of all consequential supplied obligations/claims and lineage, not all upstream software behavior. No early failed-screen termination used.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "reason": "O01-O04 and N01-N03 are addressed; O05 lacks researched allocation/capacity enforcement for all converter-writable scratch (D01)."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Consequential cited mechanism claims checked against primary definitions, source code/callers/tests where relevant, versions and exceptions; only nonmaterial S06 wording issue D02 found."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "reason": "Useful WIT/WASI, CLI/manifest, cgroup/Job and converter-history findings are present; required storage-capacity mechanism research is missing (D01)."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "All four substantive provisional paragraphs and every critic finding receive valid retain/strengthen/reject/conditional dispositions."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Supported discovery/draft meaning and all four critic findings survive in the complete final package; no material supported loss found."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Required hang, excess-output, transfer, contention and upgrade scenarios plus snapshot/omission/progress races have domains and oracles; all are honestly proposed, not executed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "subobligations": [
+        "Data-only scoped discovery and stable identity",
+        "Required/optional capability preflight and unsupported rejection",
+        "Process/WASM/trusted in-process alternatives",
+        "Bounded/coalesced progress with separate control/terminal path",
+        "Conditional fair admission, aging and editing reserve"
+      ],
+      "locator": "final.md Recommendation; Clauses 1, 2 and 4"
+    },
+    {
+      "id": "O02",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "subobligations": [
+        "Per-job snapshot/staging/accounting",
+        "Cooperative cancel then tracked-tree stop/reap",
+        "Input/original/sibling authority separately required",
+        "Commit-point cancellation race and terminal-state distinction"
+      ],
+      "locator": "final.md Clauses 1-2; Snapshot authority and Hanging worker witnesses"
+    },
+    {
+      "id": "O03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "subobligations": [
+        "Host-known expected set before launch",
+        "Manifest omission/extra/duplicate rejection",
+        "Independent path/length/hash/available-format checks",
+        "Host-owned destination temporary transfer, verification and supported commit",
+        "Atomicity, durability and provider guarantees kept conditional"
+      ],
+      "locator": "final.md Clause 1; incomplete-set and failed-transfer witnesses"
+    },
+    {
+      "id": "O04",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "subobligations": [
+        "Build/digest/protocol/schema/canonical settings identity",
+        "Recoverable original preset",
+        "Explicit deterministic migration and review",
+        "Version range alone rejected as semantics proof"
+      ],
+      "locator": "final.md Clause 3; Converter upgrade witness"
+    },
+    {
+      "id": "O05",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "subobligations": [
+        "File authority and temp-output policy",
+        "Host-conditional memory/CPU/process controls",
+        "Errors and applied-versus-requested enforcement",
+        "Per-file/aggregate quotas and scratch protection"
+      ],
+      "locator": "final.md Clause 1 Optional hardening; Clause 2 Memory and other limits; Excess output / memory witness",
+      "defects": [
+        "D01"
+      ]
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "No real-user plugin installation or broad home access recommended/reported."
+    },
+    {
+      "id": "N02",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Process/sandbox labels explicitly separated from memory enforcement and per-memory/committed-memory scopes."
+    },
+    {
+      "id": "N03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Exit or cancellation explicitly denied as proof of semantic artifact integrity or completed destination transfer."
+    }
+  ],
+  "source_families": [
+    {
+      "primary_id": "P01",
+      "family": "declarative discovery and explicit converter formats",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Metadata is not authentication, isolation, semantic preset compatibility, or output-completeness proof."
+    },
+    {
+      "primary_id": "P02",
+      "family": "protocol capability/progress/cancellation",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "A research analogy, not an export ABI or forced cancellation guarantee."
+    },
+    {
+      "primary_id": "P03",
+      "family": "typed component interface and versions",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Interface typing/version information does not enforce runtime resources or saved-option semantics."
+    },
+    {
+      "primary_id": "P04",
+      "family": "WASM memory limits and installation in Store",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Does not cover all host/runtime allocations or total RSS; multiple memories need aggregate accounting."
+    },
+    {
+      "primary_id": "P05",
+      "family": "WASM fuel/interruption",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Guest execution budget is neither wall time nor a bound on blocking host calls/native components."
+    },
+    {
+      "primary_id": "P06",
+      "family": "WASI filesystem capabilities",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "These are configured WASI-call rights, not arbitrary host-import/native process confinement. The shown API has no WriteOnly variant."
+    },
+    {
+      "primary_id": "P07",
+      "family": "Linux process/resource hierarchy and aggregate overcommit",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Resource cgroups are not file-access authority, app admission order, guaranteed interactive latency, or storage-capacity quotas. Prevent migration out before relying on tree teardown."
+    },
+    {
+      "primary_id": "P08",
+      "family": "Windows job membership, termination, memory and CPU",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Verify membership and explicit flags. Job Objects do not set file ACLs. CPU rate controls have Remote Desktop DFSS restrictions."
+    },
+    {
+      "primary_id": "P09",
+      "family": "Windows file authority and AppContainer",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Actual identities, inherited handles, grants and compatibility must be selected/tested; no universal home isolation or memory quota follows from the label."
+    },
+    {
+      "primary_id": "P10",
+      "family": "macOS filesystem authority and inheritance",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Archived deployment behavior needs version revalidation. Reviewed sources do not establish general converter CPU/memory quotas or descendant kill guarantees."
+    },
+    {
+      "primary_id": "P13",
+      "family": "Linux process groups versus descendants",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Signalling the original group cannot establish whole-descendant teardown. No synthetic escape was executed."
+    },
+    {
+      "primary_id": "P14",
+      "family": "scratch storage capacity enforcement",
+      "coverage": "COMPLETE",
+      "purpose": "Independent required-omission check",
+      "limits": "Not portable by default; configuration and coverage of all writable paths are required. Does not select a required filesystem or numeric quota."
+    },
+    {
+      "primary_id": "P15",
+      "family": "output commit and durability",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "No universal bundle atomicity, semantic output validity, destination persistence, or provider-specific transfer success follows."
+    },
+    {
+      "primary_id": "P16",
+      "family": "Linux read-only handles",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "It does not prevent path replacement, deletion, additional opens, or cross-job access under an unrestricted native identity."
+    },
+    {
+      "primary_id": "P17",
+      "family": "Pandoc 3.12.1 implementation/fix history",
+      "coverage": "COMPLETE",
+      "purpose": "Consequential claim/context or correction check",
+      "limits": "Static code/tests reading supports actual mechanisms and regression context; tests were not run and no assertion of exhaustive defect detection is made."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "1 snapshot boundary",
+      "disposition": "Accept/amend",
+      "assessment": "VALID; file authority is distinct from cgroup/Job membership and read-only handle mode.",
+      "preserved_at": "final.md Clause 1 authority; Snapshot authority witness",
+      "primary_ids": [
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P16"
+      ]
+    },
+    {
+      "finding": "2 independent expected output set",
+      "disposition": "Accept/amend",
+      "assessment": "VALID; host-known cardinality/required companions detects a self-consistent manifest omission.",
+      "preserved_at": "final.md Clause 1 expected set; incomplete-output witness",
+      "primary_ids": [
+        "P15",
+        "P17"
+      ]
+    },
+    {
+      "finding": "3 unconditional bounded queue progress",
+      "disposition": "Accept objection/reject wording",
+      "assessment": "VALID; eligibility, available capacity and arrival assumptions are now explicit.",
+      "preserved_at": "final.md Recommendation and Clause 4 Fairness",
+      "primary_ids": [
+        "P07",
+        "P08"
+      ]
+    },
+    {
+      "finding": "4 WASI latest alias version",
+      "disposition": "Accept",
+      "assessment": "VALID; original ID preserved and exact historical alias release remains unconfirmed. Independent versioned 49.0.2 content supports mechanism.",
+      "preserved_at": "final.md Critique disposition; source-map.json S06",
+      "primary_ids": [
+        "P06"
+      ]
+    }
+  ],
+  "preservation": [
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Nonexecuting discovery, explicit formats, required/optional capability rejection and stable descriptor identity",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Independent snapshots/stages and native/WASM/trusted in-process tradeoffs",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Configured limits, descendants, platform conditions, progress/cancel/error/state distinctions",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Host verification, destination commit and byte identity versus semantic completeness",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Preset pinning/migration/recoverable old payload and converter release/fix examples",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Age-aware admission with editor reserve and no unsupported fixed-latency guarantee",
+      "result": "RETAINED"
+    },
+    {
+      "lineage": "Discovery/draft -> final",
+      "coverage": "COMPLETE",
+      "meaning": "Every named validation scenario, proposed/executed distinction and unresolved owner choices",
+      "result": "RETAINED"
+    }
+  ],
+  "limits": [
+    "No executable converter/OS/storage/commit/scheduler witness run by candidate or evaluator.",
+    "Exact supported host policies, budgets, destination adapters and format validators remain legitimate owner decisions.",
+    "Historical contents behind mutable aliases and authenticated native-to-task linkage are not fully observable."
+  ]
+}

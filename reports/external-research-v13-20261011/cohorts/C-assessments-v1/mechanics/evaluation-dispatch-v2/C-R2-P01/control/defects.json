@@ -1,0 +1,93 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "C-R2-P01-control",
+  "source_judgment": "FAIL",
+  "material_defects": [
+    {
+      "defect_id": "C-M01",
+      "severity": "MATERIAL",
+      "category": "required governing parser-condition omission",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "obligations": [
+        "O01",
+        "O05",
+        "O06"
+      ],
+      "final_locators": [
+        "final.md:25",
+        "final.md:64",
+        "final.md:97",
+        "final.md:154"
+      ],
+      "source_ids": [
+        "P01",
+        "P05",
+        "P07",
+        "P08"
+      ],
+      "finding": "The complete final researches arity errors and Result iteration but omits csv 1.4.0's governing liberal-syntax contract. Default width checking and a full scan can return a well-shaped row at EOF from an unclosed quote, or swallow later physical rows into an allowed multiline field. The proposed malformed/truncated-row gate is not grounded in that available mechanism boundary.",
+      "materiality": "The brief specifically requires reliable handling of truncation and a late malformed row. Catching returned errors or validating field count cannot identify this structural failure; disk staging and a final transaction do not restore missing records. This is a material research/design omission, not a claim that a deployed application failed.",
+      "counterevidence_considered": "Final requires full validation and future strict-policy tests and leaves library selection open. Those are sound intentions, but neither describes the known permissive behavior or the independent syntactic validation obligation needed for this candidate.",
+      "evidence": "Code-derived, unexecuted witness and exact public primary links in claim-boundaries.md."
+    }
+  ],
+  "nonmaterial_findings": [
+    {
+      "defect_id": "C-N01",
+      "severity": "NONMATERIAL",
+      "category": "version-context error in carried source map",
+      "axes": [
+        2
+      ],
+      "final_locators": [
+        "source-map.json: sources S15 and R15"
+      ],
+      "source_ids": [
+        "P18"
+      ],
+      "finding": "Carried records say DO UPDATE requires a conflict target. SQLite 3.35.0+ permits omission on the last clause. Final prose merely requires declared uniqueness and does not prohibit that capability.",
+      "materiality": "An inaccurate source condition survives the maps, but no consequential architectural exclusion or wrong final reconciliation policy rests on it."
+    },
+    {
+      "defect_id": "C-N02",
+      "severity": "NONMATERIAL",
+      "category": "inaccurate activity/context in carried failure history",
+      "axes": [
+        2,
+        3
+      ],
+      "final_locators": [
+        "final.md:29",
+        "source-map.json: sources S07 and R07"
+      ],
+      "source_ids": [
+        "P32"
+      ],
+      "finding": "The no-activity description is false: a February 23 comment discusses equal-width input and the post-read line counter with missing final newline. Final correctly keeps this an unconfirmed report, but the boundary is more specific than ragged rows.",
+      "materiality": "The still-open issue is not generalized to a confirmed parser defect; the proposed locator test remains relevant."
+    },
+    {
+      "defect_id": "C-N03",
+      "severity": "NONMATERIAL",
+      "category": "optional capability preservation loss",
+      "axes": [
+        5
+      ],
+      "draft_locators": [
+        "draft.md:90"
+      ],
+      "final_locators": [
+        "Final lineage/history sections and owner decisions"
+      ],
+      "source_ids": [],
+      "finding": "Draft explicitly proposes searchable import history by digest/profile/observation/decision. Final retains the underlying lineage but drops the explicit search capability.",
+      "materiality": "Optional product capability loss; it does not remove the required ability to explain an imported value or discard history."
+    }
+  ],
+  "no_candidate_repair": "These are original assessment findings; no candidate author was contacted and no revised candidate was produced.",
+  "unresolved_external_inputs": "Actual logger semantics and target builds/performance remain unknown and are not graded as erroneous."
+}

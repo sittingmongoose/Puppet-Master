@@ -1,0 +1,51 @@
+{
+  "schema": "er13.finite-paired-comparison.v1",
+  "block_id": "C-R1-P02",
+  "written_after_original_freeze_utc": "2026-10-12T03:18:00.607686+00:00",
+  "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/manifest.json",
+  "original_manifest_sha256": "205736c2ab1f627af1ab49ac5abfb04a82ed923f6a0fd1b414f5050871896c69",
+  "originals_unaltered": true,
+  "arm_count": 2,
+  "source_judgments": {
+    "control": "FAIL",
+    "treatment": "PASS"
+  },
+  "declared_source_coverage": {
+    "control": "All six axes COMPLETE",
+    "treatment": "All six axes COMPLETE"
+  },
+  "material_defect_comparison": "Control C-PRES-01 is loss of supported maintained-tool alternatives; no material defect found in treatment under this finite audit. Nonmaterial defects and historical repairs remain in each original.",
+  "timing": [
+    {
+      "metric": "T0_to_final_native_terminal_proxy_seconds",
+      "control": 1319.634,
+      "treatment": 1251.759,
+      "treatment_minus_control": -67.875,
+      "units": "seconds",
+      "quality_equivalent_savings_claim": false,
+      "qualification": "Captured lifecycle/custody proxy only; exact quiet/scientific-artifact time and activity unknown."
+    },
+    {
+      "metric": "T0_to_final_stage_post_terminal_custody_proxy_seconds",
+      "control": 1451.384996,
+      "treatment": 1281.076246,
+      "treatment_minus_control": -170.30875,
+      "units": "seconds",
+      "quality_equivalent_savings_claim": false,
+      "qualification": "Captured lifecycle/custody proxy only; exact quiet/scientific-artifact time and activity unknown."
+    }
+  ],
+  "captured_native_lifecycle_sums": {
+    "control": 1085,
+    "treatment": 1198,
+    "units": "seconds",
+    "meaning": "Sum of captured native create-to-terminal intervals; not provider activity, full context occupancy or billing."
+  },
+  "delivery_and_time": "Both final documents delivered and frozen within original whole/stage caps; clocks unchanged.",
+  "resource_billing": "UNKNOWN active provider work, billing, subscription consumption and full context residency; no affordability or consumption-per-pass number supportable.",
+  "stratum": "Identical brief and revealed-plan hashes; FULL contract and 60-minute maximum. Requested model/reasoning/tier match in frozen routing records; actual provider/task linkage remains unknown.",
+  "causal_limits": "Topology and critic-prompt addition differ together. One pair cannot isolate their effects, show repeatability, establish noninferiority or measure universal discovery recall. Imperfect blinding disclosed.",
+  "quality_equivalent_speedup": "NOT_ESTABLISHED; control source failure prevents equal-quality savings inference.",
+  "selection": "NONE; root alone owns campaign recipe selection.",
+  "independent_evaluation": "Separate evaluation category; its active-provider/billing amounts UNKNOWN and not treated as candidate cost."
+}

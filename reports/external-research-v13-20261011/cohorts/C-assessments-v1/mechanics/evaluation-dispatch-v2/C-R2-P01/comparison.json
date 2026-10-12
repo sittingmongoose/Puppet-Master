@@ -1,0 +1,84 @@
+{
+  "schema": "er13.post-original-paired-comparison.v1",
+  "assignment_id": "C-R2-P01",
+  "case_id": "C-P03",
+  "arm_count": 2,
+  "recorded_at_utc": "2026-10-12T03:29:21.315640+00:00",
+  "original_manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/manifest.json",
+  "original_manifest_sha256": "40a25145795d587afb99ff8b9c269ff48d21afdbaad279be543637682a8239b6",
+  "original_freeze_preceded_comparison": true,
+  "originals_unchanged_verified": true,
+  "source_judgments": [
+    {
+      "arm_id": "C-R2-P01-control",
+      "source_judgment": "FAIL",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "consequential_unknown_families": [
+        "actual_logger_conventions_and_real_data",
+        "target_deployment_performance_and_physical_failure_execution"
+      ],
+      "material_defect_ids": [
+        "C-M01"
+      ]
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "source_judgment": "FAIL",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "consequential_unknown_families": [
+        "actual_logger_conventions_and_real_data",
+        "target_deployment_performance_and_physical_failure_execution"
+      ],
+      "material_defect_ids": [
+        "T-M01"
+      ]
+    }
+  ],
+  "finite_quality_signal": "Both finals have distinct material defects. No equal-quality source-pass or recipe effect is demonstrated. This is one pair on one case, with imperfect blinding.",
+  "quality_observations": [
+    "Control retains the in-write-boundary conflict recheck and integrates configuration-specific durability, but omits the liberal parser syntax boundary.",
+    "Treatment researches parser salvage, adds numeric/snapshot policies and scoped WAL/outer-rollback conditions, but loses the protected generation check from its own draft.",
+    "Different defects and supported strengths do not establish a universal ordering or causal benefit of the declared topology."
+  ],
+  "descriptive_timing_only": {
+    "endpoint": "T0 to native final-terminal receipt proxy; not scientific last-write or exact T3 quiet time",
+    "control_seconds": 1668.95,
+    "treatment_seconds": 1472.148,
+    "treatment_minus_control_seconds": -196.802,
+    "equal_quality_savings_claim": false,
+    "all_tasks_terminal_observation": "Common packet freeze supplies only upper bounds for per-arm quiet.",
+    "actual_last_complete_artifact_times": "UNKNOWN",
+    "stage_deadline_failures_observed_in_native_receipts": [],
+    "time_maximum_minutes_full": 60,
+    "frozen_clocks_unchanged": true
+  },
+  "resource_dimensions": {
+    "declared_context_counts": {
+      "control": 3,
+      "treatment": 4
+    },
+    "actual_context_occupancy_active_work_usage_billing": "UNKNOWN beyond documentary/native receipt proxies; no private usage values or inferred zero cost.",
+    "native_task_recipe_operator_linkage": "UNKNOWN beyond frozen receipt custody",
+    "candidate_source_passes": 0,
+    "assigned_original_arm_denominator": 2,
+    "consumption_per_passing_final": null,
+    "consumption_per_passing_final_status": "UNDEFINED with zero passing finals; total candidate consumption also UNKNOWN",
+    "independent_evaluation_cost": "Separate; evaluator observation window in each original is shared work, not charged twice or added to candidate product.",
+    "preparation_support_publication_cold_pipeline_cost": "UNKNOWN; no component or cold end-to-end effectiveness claim."
+  },
+  "selection": "NONE. Root alone chooses recipes; this comparison supplies uncertain finite observations without promotion, repair, repeated grading or held-out access."
+}

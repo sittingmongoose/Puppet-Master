@@ -1,0 +1,100 @@
+{
+  "arm_id": "C-R1-P02-control",
+  "defects": [
+    {
+      "id": "C-PRES-01",
+      "severity": "MATERIAL",
+      "axes": [
+        3,
+        5
+      ],
+      "kind": "supported_alternative_preservation_loss",
+      "status": "FOUND_IN_FROZEN_FINAL",
+      "input_locators": [
+        "investigator/discovery.md — Scope and recommendation, Candidate directions",
+        "investigator/draft.md — Optional improvements / Source and confidence notes",
+        "critic/critique.md — Source and validation assessment"
+      ],
+      "final_locators": [
+        "reviser/final.md — User requirements covered, line 23",
+        "reviser/final.md — Architecture and behavior / Navigable source map",
+        "reviser/source-map.json — retained S006–S011 and C005–C009"
+      ],
+      "finding": "The self-contained final removes the substantive ELAN pilot/interchange and Kdenlive+MLT human-factors prototype alternatives and their decision trade-offs. It supplies source links and copied source facts, but no retained comparison or evidence-based disposition of those supported routes; it points to an absent Alternatives and boundaries section.",
+      "why_material": "The lost routes could change whether the team builds a new workspace or pilots maintained software. Preserving bibliography/API facts is not preservation of that decision-bearing comparison. The explicit reviser assignment required supported alternatives to survive. Core time/playback comparisons remain, so this is a bounded loss, not a claim that the entire proposal is unusable.",
+      "primary_sources": [
+        "P09",
+        "P10",
+        "P12",
+        "P14",
+        "P15"
+      ],
+      "scope_limit": "No mandatory product winner or inclusion of a particular tool is imposed; the finding concerns this arm's own supported lineage and the unexplained loss."
+    },
+    {
+      "id": "C-SRC-02",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2
+      ],
+      "kind": "release_history_misattribution",
+      "status": "UNRESOLVED_IN_CARRIED_FINAL_SOURCE_MAP",
+      "input_locators": [
+        "investigator/discovery.md — Release and issue-history signals",
+        "reviser/source-map.json — S012"
+      ],
+      "finding": "The carried S012/discovery associates introduction of Clip.2/multiple media references and downgrade with v0.18.0. The governing release list places their introduction in v0.15.",
+      "why_nonmaterial": "The final still advises schema/version checks and tests and selects no compatibility baseline dependent on this introduction date. The architecture recommendation survives, but this provenance assertion is inaccurate.",
+      "primary_sources": [
+        "P16"
+      ]
+    },
+    {
+      "id": "C-LIM-03",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2
+      ],
+      "kind": "unqualified_default_behavior",
+      "status": "FOUND_IN_FROZEN_FINAL",
+      "input_locators": [
+        "reviser/final.md — Portable package and file resolution",
+        "reviser/source-map.json — S013/C010/R007"
+      ],
+      "finding": "Timeline-only bundle reading is described without the extract_to_directory exception. It is the default read behavior; an explicit extraction argument unzips media.",
+      "why_nonmaterial": "No extraction path was executed or promised storage-free and package-mode limits are otherwise explicit. This is a missing default qualifier, not proof OTIO cannot bundle or resolve media.",
+      "primary_sources": [
+        "P17"
+      ]
+    },
+    {
+      "id": "C-HIST-04",
+      "severity": "HISTORICAL_CORRECTED",
+      "axes": [
+        2,
+        4
+      ],
+      "kind": "wrong_issue_identity",
+      "status": "CORRECTED_BEFORE_FINAL",
+      "finding": "Frozen discovery names #1990 as the target_url issue. Draft, critique and final disclose the correction to #1985; no final grade penalty for the repaired association.",
+      "primary_sources": [
+        "P18",
+        "P19"
+      ]
+    },
+    {
+      "id": "C-HIST-05",
+      "severity": "HISTORICAL_CORRECTED",
+      "axes": [
+        2,
+        4
+      ],
+      "kind": "stale_latest_claim",
+      "status": "CORRECTED_AND_TIME_QUALIFIED_IN_FINAL",
+      "finding": "Discovery/S004 says v7.40.0 is current/latest. Final separately identifies v7.42.0 and the Oct 3 displayed date, with historical-snapshot limits; it reasonably rejects the critic's suggested nine-minute release explanation.",
+      "primary_sources": [
+        "P07"
+      ]
+    }
+  ]
+}

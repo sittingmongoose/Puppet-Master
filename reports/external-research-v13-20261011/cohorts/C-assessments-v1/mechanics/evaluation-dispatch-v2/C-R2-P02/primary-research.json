@@ -1,0 +1,626 @@
+{
+  "schema": "er13.independent-primary-research.v1",
+  "evaluator_id": "er13-original-grader-v2-C-R2-P02-001",
+  "recorded_at_utc": "2026-10-12T03:23:06.719570+00:00",
+  "cost_category": "independent_evaluation",
+  "coverage_definition": "COMPLETE means all consequential claims in the stated family and supplied arms were assessed; not a full upstream corpus audit or universal correctness.",
+  "records": [
+    {
+      "id": "P01",
+      "family": "declarative discovery and explicit converter formats",
+      "coverage": "COMPLETE",
+      "version_context": "Living vendor docs; examples, not adopted converter ABI.",
+      "locator": "VS Code manifest fields; Pandoc specifying formats; LibreOffice convert-to syntax.",
+      "observations": "Descriptor identity and host compatibility are metadata. Pandoc supports format enumeration and explicit writers, with HTML fallback for unknown output extension/stdout. LibreOffice distinguishes extension, filter identifier and parameter payload.",
+      "applicability_limits": "Metadata is not authentication, isolation, semantic preset compatibility, or output-completeness proof.",
+      "sources": [
+        {
+          "url": "https://code.visualstudio.com/api/references/extension-manifest",
+          "access_utc": "2026-10-12T03:17:57.498307+00:00",
+          "raw_bytes": 92701,
+          "raw_sha256": "baeeb75d6c440687584db56d0ab63048fb581544b210a9dc4e4428e9ebaa307c",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://pandoc.org/MANUAL.html",
+          "access_utc": "2026-10-12T03:17:37.224371+00:00",
+          "raw_bytes": 595738,
+          "raw_sha256": "bf8bbdcebae4e089c00c3a6b34a3eabc81976b26db8085238d2cfe54f4558420",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": [
+            "HTTP Error 403: Forbidden"
+          ]
+        },
+        {
+          "url": "https://help.libreoffice.org/latest/en-US/text/shared/guide/convertfilters.html",
+          "access_utc": "2026-10-12T03:17:37.231594+00:00",
+          "raw_bytes": 123286,
+          "raw_sha256": "40d684c22802d6349cf578e2ef75c0ae2726805fe44988497c10f13a7ad759ba",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P02",
+      "family": "protocol capability/progress/cancellation",
+      "coverage": "COMPLETE",
+      "version_context": "LSP 3.17 path on mutable gh-pages; progress introduced 3.15.",
+      "locator": "Base protocol cancellation/progress and initialize.",
+      "observations": "Cancelled requests must still respond. Progress tokens differ from request IDs. Synchronous peers may be unable to react and dollar-prefixed notifications may be ignored. Initialize exchanges capabilities.",
+      "applicability_limits": "A research analogy, not an export ABI or forced cancellation guarantee.",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/microsoft/language-server-protocol/gh-pages/_specifications/lsp/3.17/specification.md",
+          "access_utc": "2026-10-12T03:17:37.225096+00:00",
+          "raw_bytes": 42538,
+          "raw_sha256": "6553187ee72c18eb71d583ed25323843f66d70695097d2e0c1b1f0dad00e4363",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P03",
+      "family": "typed component interface and versions",
+      "coverage": "COMPLETE",
+      "version_context": "Mutable upstream main; raw counterpart fetched with digest.",
+      "locator": "Package Names; WIT Worlds; feature gates.",
+      "observations": "Worlds describe complete imports/exports; package versions can use full SemVer. Since gates constrain target interface availability.",
+      "applicability_limits": "Interface typing/version information does not enforce runtime resources or saved-option semantics.",
+      "sources": [
+        {
+          "url": "https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md",
+          "access_utc": "2026-10-12T03:14:00.410547+00:00",
+          "raw_bytes": 74099,
+          "raw_sha256": "56d661602a66623d856f28a2d10eeaa10323dc33c5dcb65b985291015ca50415",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P04",
+      "family": "WASM memory limits and installation in Store",
+      "coverage": "COMPLETE",
+      "version_context": "49.0.1 and 49.0.2 versioned APIs independently fetched; 49.0.2 dated 2026-10-02.",
+      "locator": "memory_size; Store limiter; ResourceLimiter memory_growing/default.",
+      "observations": "Each linear memory receives its own configured allowance; default memory_size is absent/unlimited. The limiter must be installed in the Store. Source implementation rejects desired growth above the limit.",
+      "applicability_limits": "Does not cover all host/runtime allocations or total RSS; multiple memories need aggregate accounting.",
+      "sources": [
+        {
+          "url": "https://docs.rs/wasmtime/49.0.1/wasmtime/struct.StoreLimitsBuilder.html",
+          "access_utc": "2026-10-12T03:14:00.411200+00:00",
+          "raw_bytes": 75927,
+          "raw_sha256": "3db42b33eff1849c775023726b4764cdf944496f617f6c18e907000113c5c4c7",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://docs.rs/wasmtime/49.0.2/wasmtime/struct.StoreLimitsBuilder.html",
+          "access_utc": "2026-10-12T03:15:09.221504+00:00",
+          "raw_bytes": 75399,
+          "raw_sha256": "a94e381a7b419981284cd39d664f8cb95771d54d22d685b8099a1899e304fab8",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/bytecodealliance/wasmtime/v49.0.2/crates/wasmtime/src/runtime/limits.rs",
+          "access_utc": "2026-10-12T03:17:37.231957+00:00",
+          "raw_bytes": 14929,
+          "raw_sha256": "07d25368279a57e5767601f8e98c8401452bfe60534570f4d6d1035621ca49ac",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://docs.rs/wasmtime/49.0.2/wasmtime/struct.Store.html",
+          "access_utc": "2026-10-12T03:17:37.279834+00:00",
+          "raw_bytes": 154080,
+          "raw_sha256": "68f02f3e55e1c7d84fa898998e2538c42b35dd275b6e170fe8a666ab1b99c15e",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": "Wasmtime: Apache-2.0 WITH LLVM-exception; no source body reproduced.",
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P05",
+      "family": "WASM fuel/interruption",
+      "coverage": "COMPLETE",
+      "version_context": "Wasmtime 49.0.2 versioned API.",
+      "locator": "consume_fuel; epoch_interruption; set_fuel.",
+      "observations": "Fuel instrumentation is disabled by default. Enabled stores start with no fuel and require allocation. Epoch checks can interrupt instrumented guest execution.",
+      "applicability_limits": "Guest execution budget is neither wall time nor a bound on blocking host calls/native components.",
+      "sources": [
+        {
+          "url": "https://docs.rs/wasmtime/49.0.2/wasmtime/struct.Config.html",
+          "access_utc": "2026-10-12T03:15:09.222265+00:00",
+          "raw_bytes": 243390,
+          "raw_sha256": "d9b2a13f3f1d0b11d8b96a8aed8d601ad13c6fed68963a0bdc11774387dfdd02",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://docs.rs/wasmtime/49.0.2/wasmtime/struct.Store.html",
+          "access_utc": "2026-10-12T03:17:37.279834+00:00",
+          "raw_bytes": 154080,
+          "raw_sha256": "68f02f3e55e1c7d84fa898998e2538c42b35dd275b6e170fe8a666ab1b99c15e",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P06",
+      "family": "WASI filesystem capabilities",
+      "coverage": "COMPLETE",
+      "version_context": "49.0.2 versioned content confirms current behavior; candidate latest aliases remain historically mutable.",
+      "locator": "preopened_dir and FsPerms.",
+      "observations": "No preopens means no default filesystem access through WASI. Selected host roots and guest names constrain traversal. FsPerms has ReadOnly and ReadWrite variants; ReadOnly denies creation/deletion/content mutation.",
+      "applicability_limits": "These are configured WASI-call rights, not arbitrary host-import/native process confinement. The shown API has no WriteOnly variant.",
+      "sources": [
+        {
+          "url": "https://docs.rs/wasmtime-wasi/49.0.2/wasmtime_wasi/struct.WasiCtxBuilder.html",
+          "access_utc": "2026-10-12T03:15:09.221108+00:00",
+          "raw_bytes": 89984,
+          "raw_sha256": "4c9034d0e2e2c045517a87691b8388bb551b07783865f265e5f61f7f39ba145e",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://docs.rs/wasmtime-wasi/49.0.2/wasmtime_wasi/filesystem/enum.FsPerms.html",
+          "access_utc": "2026-10-12T03:21:22.094792+00:00",
+          "raw_bytes": 72956,
+          "raw_sha256": "c0b999231262d58bc5f1ff214fa388544f3438f6db0146612acd41390c0f903a",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P07",
+      "family": "Linux process/resource hierarchy and aggregate overcommit",
+      "coverage": "COMPLETE",
+      "version_context": "Version 7.1 doc plus mutable latest alias separately fetched.",
+      "locator": "Process organization; controller enablement/delegation; limits; cpu.weight/max; memory.max; pids.max; io.max; cgroup.kill.",
+      "observations": "Fork inherits membership. Controllers need availability/enabling and suitable rights. Memory defaults unlimited and may temporarily exceed max; CPU weights apply to eligible scheduler classes. Child limits may overcommit parent capacity. io.max throttles device throughput. Non-root, non-threaded cgroup.kill covers the subtree and concurrent forks.",
+      "applicability_limits": "Resource cgroups are not file-access authority, app admission order, guaranteed interactive latency, or storage-capacity quotas. Prevent migration out before relying on tree teardown.",
+      "sources": [
+        {
+          "url": "https://docs.kernel.org/7.1/admin-guide/cgroup-v2.html",
+          "access_utc": "2026-10-12T03:16:27.510116+00:00",
+          "raw_bytes": 164827,
+          "raw_sha256": "2df02c72c3ab82800cad8a82a3cd371090de5e92d0d3f5375265ed736db58705",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+          "access_utc": "2026-10-12T03:14:00.816127+00:00",
+          "raw_bytes": 172971,
+          "raw_sha256": "accd07d731de0c1567117c4d632c8de35bbc49d6e8c26833d5e8e6217a1fe914",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P08",
+      "family": "Windows job membership, termination, memory and CPU",
+      "coverage": "COMPLETE",
+      "version_context": "Living Win32 docs; nested jobs and CPU rate control require Windows 8/Server 2012+.",
+      "locator": "Create/assign/terminate job; breakaway; LimitFlags and extended structures; CPU interval/DFSS.",
+      "observations": "CreateProcess children usually join; breakaway and WMI creation are exceptions. Memory flags constrain committed virtual memory. Job time is user-mode execution, not wall time. CPU hard caps pause members after interval consumption.",
+      "applicability_limits": "Verify membership and explicit flags. Job Objects do not set file ACLs. CPU rate controls have Remote Desktop DFSS restrictions.",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+          "access_utc": "2026-10-12T03:16:27.510836+00:00",
+          "raw_bytes": 61690,
+          "raw_sha256": "c8522199938a3dfc6e84d67b443ca5a464eae017bc775d66f2b593d4015e6e00",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+          "access_utc": "2026-10-12T03:16:27.511730+00:00",
+          "raw_bytes": 67933,
+          "raw_sha256": "bc4ef3afc4ba486163cc8fa530db1df8a0bc6a95413f484ce822c1ec3b216b62",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+          "access_utc": "2026-10-12T03:16:27.511255+00:00",
+          "raw_bytes": 53215,
+          "raw_sha256": "e225c7f3be7d0484d729761afcbd43adf6ffcfee27d321553807631c4c6b2ddb",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_cpu_rate_control_information",
+          "access_utc": "2026-10-12T03:16:27.512365+00:00",
+          "raw_bytes": 57801,
+          "raw_sha256": "27ecefe4a18d88ad52854406e0b74212f058790ebb6bcaa8c589a17fa7e6a514",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P09",
+      "family": "Windows file authority and AppContainer",
+      "coverage": "COMPLETE",
+      "version_context": "Living Win32 security docs.",
+      "locator": "Access-token/security-descriptor comparison; AppContainer file/network/process isolation.",
+      "observations": "Windows evaluates requested file rights against token and object descriptor. New-object ACL defaults can inherit; moving a file does not reset its descriptor. AppContainer adds least-privilege resource access distinct from job budgets.",
+      "applicability_limits": "Actual identities, inherited handles, grants and compatibility must be selected/tested; no universal home isolation or memory quota follows from the label.",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/file-security-and-access-rights",
+          "access_utc": "2026-10-12T03:16:27.513279+00:00",
+          "raw_bytes": 61060,
+          "raw_sha256": "11dcb4855cbcfad651006b14940754f4213a6bc2167fb1c254c4b51e832a6082",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+          "access_utc": "2026-10-12T03:16:27.514576+00:00",
+          "raw_bytes": 50270,
+          "raw_sha256": "6fb861c33f4ca250c2569dff65229394dc752e94c1d9d765ade43d37033b37db",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P10",
+      "family": "macOS filesystem authority and inheritance",
+      "coverage": "COMPLETE",
+      "version_context": "Current Apple documentation JSON plus explicitly archived entitlement guide.",
+      "locator": "Container/granted scopes; helper sharing; read-only bookmark option; inheritance section.",
+      "observations": "Current docs cover scoped user-selected URLs, recursive folder grants, read-only bookmark options and other ACL/MAC denial. Archived child-inherit setup describes exactly two sandbox entitlements and static rights, with later-selected data/bookmark handoff.",
+      "applicability_limits": "Archived deployment behavior needs version revalidation. Reviewed sources do not establish general converter CPU/memory quotas or descendant kill guarantees.",
+      "sources": [
+        {
+          "url": "https://developer.apple.com/tutorials/data/documentation/security/accessing-files-from-the-macos-app-sandbox.json",
+          "access_utc": "2026-10-12T03:15:09.226588+00:00",
+          "raw_bytes": 61868,
+          "raw_sha256": "8d5ab464773640f41250cc6e439656d6f37c8382a5b15ecc619bc28747d44688",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html",
+          "access_utc": "2026-10-12T03:15:09.298735+00:00",
+          "raw_bytes": 59623,
+          "raw_sha256": "24d3c018b85ccd9a18eb9ed15e8f2723b8be58d50f63d0ecfa07400058762fad",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P11",
+      "family": "macOS XPC/Process architectural alternative",
+      "coverage": "COMPLETE",
+      "version_context": "Current Apple documentation, structured JSON body read rather than JavaScript shell.",
+      "locator": "Service-type table; Process sandbox notice.",
+      "observations": "XPC services are app/framework-bundled, with process-per-client lifetime; other service types have different environments. Process-launched children of sandboxed apps inherit the sandbox; XPC permits distinct helper entitlements.",
+      "applicability_limits": "This supports a broker/helper option, not arbitrary third-party packaging, one worker per export, resource quotas, or teardown proof.",
+      "sources": [
+        {
+          "url": "https://developer.apple.com/tutorials/data/documentation/xpc.json",
+          "access_utc": "2026-10-12T03:15:09.229581+00:00",
+          "raw_bytes": 35120,
+          "raw_sha256": "1e78b763112a4a2a3aa10c542808027fa8440eabf37bf7f57f731899f21793d5",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://developer.apple.com/tutorials/data/documentation/foundation/process.json",
+          "access_utc": "2026-10-12T03:15:09.267488+00:00",
+          "raw_bytes": 62450,
+          "raw_sha256": "ddba3349b0e34fb65230c18dfd83d26a9986965cd0b23eb3d9f1bd66641fa2f4",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P12",
+      "family": "Linux native access-control alternative",
+      "coverage": "COMPLETE",
+      "version_context": "Living kernel doc; first available Linux 5.13; rights and thread scope vary by ABI.",
+      "locator": "Ruleset enforcement example; ABI fallback; descriptor rights; build/boot configuration.",
+      "observations": "Landlock provides additive irreversible access restrictions for the enforcing thread/children, with later multithread flags. ABI checks, configured LSM and no-new-privileges conditions matter. Already opened descriptors can carry authority.",
+      "applicability_limits": "Apply before untrusted work and close inherited excess handles. Available rights differ; this is neither a cgroup resource budget nor a portable sandbox.",
+      "sources": [
+        {
+          "url": "https://www.kernel.org/doc/html/latest/userspace-api/landlock.html",
+          "access_utc": "2026-10-12T03:16:27.605223+00:00",
+          "raw_bytes": 150991,
+          "raw_sha256": "b869c18e3d7522ea1358cffb06b507caaabf939292a34f6270f20719e7e02fff",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P13",
+      "family": "Linux process groups versus descendants",
+      "coverage": "COMPLETE",
+      "version_context": "Primary cached manual description/notes inspected; direct fetch timed out; POSIX.1-2024 behavior.",
+      "locator": "DESCRIPTION, ERRORS, NOTES.",
+      "observations": "A non-group-leader child can create a new session and process group. Fork inherits a session until changed.",
+      "applicability_limits": "Signalling the original group cannot establish whole-descendant teardown. No synthetic escape was executed.",
+      "sources": [
+        {
+          "url": "https://man7.org/linux/man-pages/man2/setsid.2.html",
+          "access_utc": "2026-10-12T03:14:01.690680+00:00",
+          "raw_bytes": null,
+          "raw_sha256": null,
+          "retrieval": "Official cached primary search text inspected; direct fetch unavailable",
+          "failed_attempts": [
+            "<urlopen error timed out>"
+          ]
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P14",
+      "family": "scratch storage capacity enforcement",
+      "coverage": "COMPLETE",
+      "version_context": "Current Linux XFS documentation; filesystem/mount-dependent.",
+      "locator": "uquota/usrquota/uqnoenforce; pquota/prjquota/pqnoenforce.",
+      "observations": "XFS distinguishes quota accounting from enabled enforcement for users/projects. Quotas are an available capacity mechanism separate from I/O rate control.",
+      "applicability_limits": "Not portable by default; configuration and coverage of all writable paths are required. Does not select a required filesystem or numeric quota.",
+      "sources": [
+        {
+          "url": "https://docs.kernel.org/admin-guide/xfs.html",
+          "access_utc": "2026-10-12T03:15:09.225599+00:00",
+          "raw_bytes": 40235,
+          "raw_sha256": "a1d41f1d1089362e73f8aa6545c6ba97a7e98daf3630897b3ed7263d3246abe0",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P15",
+      "family": "output commit and durability",
+      "coverage": "COMPLETE",
+      "version_context": "Linux man-pages 6.19 (2026-02-08) governing cached sections; living ReplaceFileW doc.",
+      "locator": "rename DESCRIPTION/EXDEV/NFS; fsync directory caveat; ReplaceFileW error states/same volume/write-through.",
+      "observations": "Rename provides atomic supported name replacement within a mounted filesystem; NFS failure can follow a performed rename. File fsync alone does not establish persisted directory entry. ReplaceFileW requires same-volume inputs and documents partial failures; write-through flag is unsupported.",
+      "applicability_limits": "No universal bundle atomicity, semantic output validity, destination persistence, or provider-specific transfer success follows.",
+      "sources": [
+        {
+          "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+          "access_utc": "2026-10-12T03:14:00.574201+00:00",
+          "raw_bytes": null,
+          "raw_sha256": null,
+          "retrieval": "Official cached primary search text inspected; direct fetch unavailable",
+          "failed_attempts": [
+            "<urlopen error timed out>"
+          ]
+        },
+        {
+          "url": "https://www.man7.org/linux/man-pages/man2/fsync.2.html",
+          "access_utc": "2026-10-12T03:14:01.499759+00:00",
+          "raw_bytes": null,
+          "raw_sha256": null,
+          "retrieval": "Official cached primary search text inspected; direct fetch unavailable",
+          "failed_attempts": [
+            "<urlopen error timed out>"
+          ]
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew",
+          "access_utc": "2026-10-12T03:16:27.515627+00:00",
+          "raw_bytes": 62061,
+          "raw_sha256": "35fe77beaf32afa93c02068ade74c7363aa4ee7c0318cdadf5947cf7050eb3f7",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P16",
+      "family": "Linux read-only handles",
+      "coverage": "COMPLETE",
+      "version_context": "Primary cached access-mode section inspected; direct fetch timed out.",
+      "locator": "O_RDONLY/O_WRONLY/O_RDWR and open-file-description access modes.",
+      "observations": "Read-only access mode constrains that opened handle.",
+      "applicability_limits": "It does not prevent path replacement, deletion, additional opens, or cross-job access under an unrestricted native identity.",
+      "sources": [
+        {
+          "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+          "access_utc": "2026-10-12T03:14:00.793033+00:00",
+          "raw_bytes": null,
+          "raw_sha256": null,
+          "retrieval": "Official cached primary search text inspected; direct fetch unavailable",
+          "failed_attempts": [
+            "<urlopen error timed out>"
+          ]
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P17",
+      "family": "Pandoc 3.12.1 implementation/fix history",
+      "coverage": "COMPLETE",
+      "version_context": "Release 3.12.1 dated 2026-10-07. Tagged caller/parser/test code inspected.",
+      "locator": "Release FODT/ODT fixes; readODT/readFODT; read_spaces; parent-style seen-set; ODT/FODT test registry.",
+      "observations": "Release documents ODF loop, expansion and content-loss defects. Code caps expanded spaces at 1000 and avoids revisiting style names. Tagged test code registers ODT/FODT fixture comparisons.",
+      "applicability_limits": "Static code/tests reading supports actual mechanisms and regression context; tests were not run and no assertion of exhaustive defect detection is made.",
+      "sources": [
+        {
+          "url": "https://pandoc.org/releases.html",
+          "access_utc": "2026-10-12T03:14:00.409627+00:00",
+          "raw_bytes": 2038338,
+          "raw_sha256": "458417932994414082ffc2c72ff2b83488e17493bb9de88c37cd70cfc1c341d4",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/src/Text/Pandoc/Readers/ODT.hs",
+          "access_utc": "2026-10-12T03:17:57.496719+00:00",
+          "raw_bytes": 5695,
+          "raw_sha256": "8dd9bb9a73bff09d13ab2424c9e9425a0e41a746593ef217c4fc7a62d1112f34",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/src/Text/Pandoc/Readers/ODT/ContentReader.hs",
+          "access_utc": "2026-10-12T03:17:57.497399+00:00",
+          "raw_bytes": 42841,
+          "raw_sha256": "ce1d9f452c4b5d49025aa62a3931a84818b7c61b21a7df75cd5e97b8b2fc3798",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/src/Text/Pandoc/Readers/ODT/StyleReader.hs",
+          "access_utc": "2026-10-12T03:17:57.497844+00:00",
+          "raw_bytes": 24054,
+          "raw_sha256": "5855128ef7073f890d10d5396c8612d216d523b6b7fa3bff1c8c4e73578708af",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/test/Tests/Readers/ODT.hs",
+          "access_utc": "2026-10-12T03:17:37.226813+00:00",
+          "raw_bytes": 12871,
+          "raw_sha256": "135417833ed1d2f07b9c640a00ced6e3ba2e911384a4b67932ad8d6e56aaf513",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": "Pandoc: GNU GPL version 2 or above; original source copyright notices not reproduced because no source body is saved.",
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P18",
+      "family": "Pandoc 3.8.3 regression/issue/fix context",
+      "coverage": "COMPLETE",
+      "version_context": "Tag resolves to 568dab14533940ecee16824097400f1eabf13869. Release dated 2025-12-01 by official history.",
+      "locator": "WeasyPrint SVG and Typst quotes issues; makePDF isTeXFormat branch.",
+      "observations": "Issues identify regressions from 3.8; the PDF caller in 3.8.3 restricts SVG conversion and smart-extension changes to TeX engines, matching the restored non-TeX behavior.",
+      "applicability_limits": "Specific output paths demonstrate semantic update risk; they do not prove every version range unsafe. No binary executed.",
+      "sources": [
+        {
+          "url": "https://github.com/jgm/pandoc/releases/tag/3.8.3",
+          "access_utc": "2026-10-12T03:14:01.143949+00:00",
+          "raw_bytes": 225187,
+          "raw_sha256": "5e19e20f0d650b1b4c080f03c51afe520f9f87ef5c97ae3693182c2228eb0db1",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://api.github.com/repos/jgm/pandoc/git/ref/tags/3.8.3",
+          "access_utc": "2026-10-12T03:17:57.503595+00:00",
+          "raw_bytes": 323,
+          "raw_sha256": "03bdc15607bfc23c5a919d830d27b381ae41b9996dae97a3c7b41908af38fa6d",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://api.github.com/repos/jgm/pandoc/issues/11275",
+          "access_utc": "2026-10-12T03:17:57.505653+00:00",
+          "raw_bytes": 6130,
+          "raw_sha256": "099143799acb36c4ea4ec88b549b027b69d3fccbdc352c59bb40192263ae0ffb",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://api.github.com/repos/jgm/pandoc/issues/11256",
+          "access_utc": "2026-10-12T03:17:57.505992+00:00",
+          "raw_bytes": 5248,
+          "raw_sha256": "986a1bdf7a26531b335b65287834f7ad62f47f9f73aa82438195ee01738ddfaa",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jgm/pandoc/3.8.3/src/Text/Pandoc/PDF.hs",
+          "access_utc": "2026-10-12T03:17:37.225543+00:00",
+          "raw_bytes": 29676,
+          "raw_sha256": "24a2e597815ecc233d26a881bae4c2812e9b712ebd31829a3516e6e9a547d89b",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        }
+      ],
+      "source_license_notice": "Pandoc: GNU GPL version 2 or above; no source body saved.",
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    },
+    {
+      "id": "P19",
+      "family": "external filter/in-process alternative and sandbox scope",
+      "coverage": "COMPLETE",
+      "version_context": "Living Pandoc docs, example mechanism only.",
+      "locator": "Executable JSON AST filter pipeline; embedded Lua; sandbox/security notes.",
+      "observations": "Pandoc offers executable JSON AST filters and embedded Lua. Its sandbox option limits reader/writer I/O while filters and PDF production remain separate risks.",
+      "applicability_limits": "A product pattern and caution, not an export runtime choice or safety proof.",
+      "sources": [
+        {
+          "url": "https://pandoc.org/filters.html",
+          "access_utc": "2026-10-12T03:17:37.230618+00:00",
+          "raw_bytes": 48030,
+          "raw_sha256": "a9a860e5344d32fe709166a534951b817bbcbfc5aed7c1f6168de3de3e940980",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": []
+        },
+        {
+          "url": "https://pandoc.org/MANUAL.html",
+          "access_utc": "2026-10-12T03:17:37.224371+00:00",
+          "raw_bytes": 595738,
+          "raw_sha256": "bf8bbdcebae4e089c00c3a6b34a3eabc81976b26db8085238d2cfe54f4558420",
+          "retrieval": "HTTP body statically inspected",
+          "failed_attempts": [
+            "HTTP Error 403: Forbidden"
+          ]
+        }
+      ],
+      "source_license_notice": null,
+      "execution": "Static documentation/code/issue reading only; no converter or integration executed."
+    }
+  ],
+  "access_limits": [
+    "man7 direct opens timed out; governing primary cached search text was inspected.",
+    "Apple HTML pages were JavaScript shells; official structured documentation JSON independently resolved substantive text.",
+    "Mutable/latest candidate URLs do not establish historical immutable revisions; separately fetched versioned APIs confirm described mechanisms."
+  ],
+  "raw_capture_policy": "No full pages, native transcripts, account routing identities, private credentials or machine state copied."
+}

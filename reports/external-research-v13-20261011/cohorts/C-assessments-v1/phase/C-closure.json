@@ -1,0 +1,84 @@
+{
+  "original_sha256": "44e02a3ce1f41258835339543770704a987473c99f3fe8887bffe162d4262ec0",
+  "actual_phase_fields": {
+    "scope": "C original grading cohort mechanics closure only; no scientific selection or all80 completion",
+    "recorded_utc": "2026-10-12T03:34:08.187491+00:00",
+    "C_original_records": 8,
+    "completed_C_contexts": 4,
+    "active_contexts": 0,
+    "all_original_records_delivered": 64,
+    "A_B_original_records_unchanged": 56,
+    "D_original_records_pending_root": 16,
+    "separate_root_B10_completion_excluded": true,
+    "dimensions_separate": [
+      "delivery",
+      "source",
+      "coverage",
+      "time",
+      "method",
+      "native",
+      "resource"
+    ],
+    "source_grade_pairs": {
+      "C-R1-P01": "PASS/FAIL; control direct-terminal capture method failure separate",
+      "C-R1-P02": "FAIL/PASS",
+      "C-R2-P01": "FAIL/FAIL",
+      "C-R2-P02": "FAIL/PASS"
+    },
+    "all_C_six_axes_complete_finite_coverage": true,
+    "equal_quality_savings_established": false,
+    "native_task_linkage_activity_billing": "UNKNOWN",
+    "no_new_goal_global_block_scheduler_or_recipe_selection": true
+  },
+  "exact_C_receipt_index": [
+    {
+      "block_id": "C-R1-P02",
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R1-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R1-P02-001",
+      "verification": "ER13_RUNTIME/state/eval-coordinator-v2/C-R1-P02-output-verification.json",
+      "verification_sha256": "84841e63ddd0c6ccbb913a81f6338b6c9a96bc9d8ad482e53078c40b91e81174",
+      "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/manifest.json",
+      "original_manifest_sha256": "205736c2ab1f627af1ab49ac5abfb04a82ed923f6a0fd1b414f5050871896c69",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "each_original_root_dual_delivered": true
+    },
+    {
+      "block_id": "C-R2-P01",
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R2-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R2-P01-001",
+      "verification": "ER13_RUNTIME/state/eval-coordinator-v2/C-R2-P01-output-verification.json",
+      "verification_sha256": "dad9ada33035a77c6ca11a385b5fba8e71d3a8d4abb9228a37e462e3af3afffc",
+      "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/manifest.json",
+      "original_manifest_sha256": "40a25145795d587afb99ff8b9c269ff48d21afdbaad279be543637682a8239b6",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "each_original_root_dual_delivered": true
+    },
+    {
+      "block_id": "C-R2-P02",
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R2-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R2-P02-001",
+      "verification": "ER13_RUNTIME/state/eval-coordinator-v2/C-R2-P02-output-verification.json",
+      "verification_sha256": "ec6baf569afe8400cf3532018290558e3ce26dd69b0009dfbe88f01e69ef5743",
+      "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/manifest.json",
+      "original_manifest_sha256": "f143e6f240bd907ac5f96ce0e32ad628f25c22325b4b0e9e528b394e42de7892",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "each_original_root_dual_delivered": true
+    },
+    {
+      "block_id": "C-R1-P01",
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R1-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-C-R1-P01-001",
+      "verification": "ER13_RUNTIME/state/eval-coordinator-v2/C-R1-P01-output-verification.json",
+      "verification_sha256": "a84b9cc92d620aad4d7c8916deee9cf7ce441d0ac61b4b87b113918aeddc459a",
+      "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/manifest.json",
+      "original_manifest_sha256": "8919b4a0a521177560c31f6b0f6540f513915171f6d613193c6ec618a4279753",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "each_original_root_dual_delivered": true
+    }
+  ],
+  "scope": "C mechanics closure only; 64 delivered original records include limited/partial/unassessed/failure records and are not all80 comparable complete grades."
+}

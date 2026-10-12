@@ -1,0 +1,546 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "C-R2-P01-control",
+  "scope": "FULL",
+  "six_axes": [
+    {
+      "axis_id": 1,
+      "axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "finding": "Requirements and negative constraints are textually covered; C-M01 leaves the central late-malformed/truncation mechanism incomplete.",
+      "defect_ids": [
+        "C-M01"
+      ]
+    },
+    {
+      "axis_id": 2,
+      "axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "finding": "Independent governing facts checked. C-M01 is material; C-N01 and C-N02 are bounded source-map/context errors.",
+      "defect_ids": [
+        "C-M01",
+        "C-N01",
+        "C-N02"
+      ]
+    },
+    {
+      "axis_id": 3,
+      "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "finding": "Useful row/batch/integrated scanner, conditional storage, three matching strategies and indeterminate-link discovery are supported. Liberal syntax context is materially missing; history limits are recorded.",
+      "defect_ids": [
+        "C-M01",
+        "C-N02"
+      ]
+    },
+    {
+      "axis_id": 4,
+      "axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "finding": "All exact plan and four critic dispositions assessed; valid corrections accepted, unknowns not invented; no material false rejection found.",
+      "defect_ids": []
+    },
+    {
+      "axis_id": 5,
+      "axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "finding": "Material supported meaning is retained; optional search capability C-N03 is lost, explicitly recorded as nonmaterial.",
+      "defect_ids": [
+        "C-N03"
+      ]
+    },
+    {
+      "axis_id": 6,
+      "axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "finding": "Proposed domains and all-or-none/lineage/ambiguity oracles are meaningful; current execution is explicitly research only. No deployment requirement or fabricated executed test is imposed.",
+      "defect_ids": []
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "obligation_id": "O01",
+      "text": "Streaming intake, schema interpretation, complete preview and local transactional application",
+      "coverage": "COMPLETE",
+      "result": "MATERIAL_DEFECT_FOUND",
+      "defect_ids": [
+        "C-M01"
+      ],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O02",
+      "text": "At least two overlap/revision identity alternatives beyond timestamp and row position",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O03",
+      "text": "Correct interpretation, full rerun, explicit supplement/revision/retain outcomes",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O04",
+      "text": "Original lineage, ambiguous zones, changed units and missing values",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O05",
+      "text": "Larger-than-memory responsiveness, late errors, cancellation and restart",
+      "coverage": "COMPLETE",
+      "result": "MATERIAL_DEFECT_FOUND",
+      "defect_ids": [
+        "C-M01"
+      ],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "N01",
+      "text": "No source rewrite or service upload",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "N02",
+      "text": "No silent ambiguity coercion or fabricated missing values",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "N03",
+      "text": "No filename-only discard of prior accepted observations",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O06",
+      "text": "Maintained parser/storage alternatives, format/caller and bounded failure history without a winner",
+      "coverage": "COMPLETE",
+      "result": "MATERIAL_DEFECT_FOUND",
+      "defect_ids": [
+        "C-M01"
+      ],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O07",
+      "text": "Proposed versus executed validation distinguished, including stress/restart/corruption",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    },
+    {
+      "obligation_id": "O08",
+      "text": "Each material exact revealed-plan decision disposed without treating provisional plan as gold",
+      "coverage": "COMPLETE",
+      "result": "NO_MATERIAL_DEFECT_FOUND",
+      "defect_ids": [],
+      "locators": [
+        "Final complete pipeline/profile/identity/lineage/owner/validation sections"
+      ],
+      "unknown_user_inputs_permitted": true
+    }
+  ],
+  "source_families": [
+    {
+      "source_family": "formats_and_schema",
+      "coverage": "COMPLETE",
+      "scope": "CSV dialect/quotes, metadata/null/header and declared meaning",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "incremental_parsers_and_errors",
+      "coverage": "COMPLETE",
+      "scope": "Result/default/caller/core semantics and resource bounds",
+      "primary_source_ids": [
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "integrated_csv_scanner",
+      "coverage": "COMPLETE",
+      "scope": "Sampling/overrides/header/date, errors, rejects, projection and record limits",
+      "primary_source_ids": [
+        "P11",
+        "P12"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "identity_and_reconciliation",
+      "coverage": "COMPLETE",
+      "scope": "Declared keys, composites, equal content, candidates and manual uncertainty",
+      "primary_source_ids": [
+        "P18",
+        "P29"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "datetime_context",
+      "coverage": "COMPLETE",
+      "scope": "Offset versus wall time, fold/gap/errors, named-zone/version context",
+      "primary_source_ids": [
+        "P24",
+        "P25",
+        "P26",
+        "P27"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "units_numeric_and_missingness",
+      "coverage": "COMPLETE",
+      "scope": "Confirmed unit/quantity conversion and raw/null/numeric conventions",
+      "primary_source_ids": [
+        "P02",
+        "P28"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "transaction_visibility_and_concurrency",
+      "coverage": "COMPLETE",
+      "scope": "Statement versus outer rollback, uniqueness, isolation and stale preview",
+      "primary_source_ids": [
+        "P13",
+        "P15",
+        "P18",
+        "P22",
+        "P23"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "durability_recovery_versions",
+      "coverage": "COMPLETE",
+      "scope": "Journal/VFS/flush assumptions, failure classes, WAL fix scope and cross-file limits",
+      "primary_source_ids": [
+        "P19",
+        "P20",
+        "P21"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "bounded_issue_fix_caller_history",
+      "coverage": "COMPLETE",
+      "scope": "Original reports, comments, versions, concrete caller/fix/test boundaries",
+      "primary_source_ids": [
+        "P31",
+        "P32",
+        "P33"
+      ],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "proposal_validation_truth",
+      "coverage": "COMPLETE",
+      "scope": "Synthetic illustrative examples, domains/oracles and explicit nonexecution",
+      "primary_source_ids": [],
+      "limit": "Coverage is the consequential stated/proposed decisions, not all code, all possible failures or all external mechanisms."
+    },
+    {
+      "source_family": "actual_logger_conventions_and_real_data",
+      "coverage": "UNASSESSED",
+      "reason": "No actual logger specification/files supplied; explicitly retained as owner inputs. No source-fact shortcut is taken."
+    },
+    {
+      "source_family": "target_deployment_performance_and_physical_failure_execution",
+      "coverage": "UNASSESSED",
+      "reason": "Proposal deliverable; no implementation or stress/crash/corruption run required or observed."
+    }
+  ],
+  "exact_plan_dispositions": [
+    {
+      "clause_id": "P1.1",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "retain conditional streaming/private stage",
+      "result": "SUPPORTED_WITH_RECORDED_MATERIAL_LIMIT"
+    },
+    {
+      "clause_id": "P1.2",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "revise inference authority",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P1.3",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "retain and strengthen review",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P1.4",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "retain fixed profile with EOF validation",
+      "result": "SUPPORTED_WITH_RECORDED_MATERIAL_LIMIT"
+    },
+    {
+      "clause_id": "P1.5",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "explicit confirmation and contradiction gate",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P2.1",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "revise universal logger+time identity",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P2.2",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "retain history; reject automatic replacement",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P2.3",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "reject filename fallback",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P2.4",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "compare distinct keys/content/manual candidates",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P3.1",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "retain final atomic accepted store; recheck state",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P3.2",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "phase-defined cancel and cleanup",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P3.3",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "restart scan baseline; conditional resume/recovery",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P3.4",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "reject disk-only memory guarantee",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P3.5",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "reject transaction-only crash guarantee",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P4.1",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "explicit correction and supplement/revise/retain preview",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P4.2",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "identity alternatives and manual ambiguity handling",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P4.3",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "future tests and supported failure configurations",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P4.4",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "no executed synthetic/application tests claimed",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P4.5",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "raw/versioned original-source lineage",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    },
+    {
+      "clause_id": "P5",
+      "coverage": "COMPLETE",
+      "disposition_assessed": "unchanged 60-minute maximum, independent time dimension",
+      "result": "NO_MATERIAL_FALSE_DISPOSITION_FOUND"
+    }
+  ],
+  "every_critic_disposition": [
+    {
+      "finding_id": "C-01",
+      "coverage": "COMPLETE",
+      "judgment": "Accepted; valid durability distinction; final includes setting-specific PRIMARY check and failure-class tests",
+      "primary_source_ids": [
+        "P19",
+        "P20",
+        "P21"
+      ]
+    },
+    {
+      "finding_id": "C-02",
+      "coverage": "COMPLETE",
+      "judgment": "Accepted; final distinguishes leave intact from unresolved hold",
+      "primary_source_ids": []
+    },
+    {
+      "finding_id": "C-03",
+      "coverage": "COMPLETE",
+      "judgment": "Correctly retains unknown logger conventions as required owner inputs",
+      "primary_source_ids": []
+    },
+    {
+      "finding_id": "C-04",
+      "coverage": "COMPLETE",
+      "judgment": "Correctly retains critic-package process limitation; evaluator now has wider frozen receipt custody, without proving live linkage",
+      "primary_source_ids": []
+    }
+  ],
+  "supported_preservation": [
+    {
+      "topic": "dialect versus semantic profiles; full confirmed-profile rerun",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "raw original values/source digest/profile/parser lineage",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "distinct duplicate/revision/supplement/retain/hold outcomes",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "declared keys/composite/content/manual matching with limitations",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "ambiguous local time and unknown logger rules",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "confirmed units, conversion and missingness",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "private bounded staging and paged preview",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "atomic accepted observations plus receipt/lineage",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "cancel phases, rollback, failed cleanup and restart/resume conditions",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "no source rewrite/upload/filename replacement",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "conditional parser/storage choices without a winner",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "proposed validation domains and nonexecution truth",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "topic": "critic durability/failure-class and no-op wording corrections",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_AND_EXPANDED"
+    },
+    {
+      "topic": "optional searchable import history",
+      "coverage": "COMPLETE",
+      "result": "LOST_NONMATERIAL",
+      "defect_id": "C-N03"
+    }
+  ],
+  "reading_status": "Complete original brief, exact revealed plan, every investigator discovery/draft, every critic/final scientific document, complete source maps, source indexes and plan-reveal records read at exact verified snapshot mappings. Duplicate carried source-map records were equality-checked and every changed/new field read.",
+  "expensive_review_early_stop": false,
+  "limits": [
+    "Finite assessment of a research planning proposal; no deployment, real logger files, target performance, crash execution, or universal correctness is established.",
+    "Technique-bearing arm names, stage paths and critic topology make blinding imperfect. No cross-arm quality or timing calculation preceded original freezes.",
+    "Unknown logger conventions, limits and target builds remain legitimate owner inputs. Their absence is not substituted for available mechanism research.",
+    "Public source history was inspected at exact relevant pages/files, without repository tree/history scans. First fixed DuckDB release for PR13597 is not established.",
+    "Custody hashes and native receipt consistency do not prove live tool invocation, prior-input order, private account identity, actual applied operator/recipe, billing or semantic truth.",
+    "No native full transcripts, private routing identities, usage values or local machine state are published. Evaluation resource cost is independent_evaluation."
+  ]
+}

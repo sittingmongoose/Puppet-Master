@@ -1,0 +1,339 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "C-R1-P01",
+  "case_id": "C-P01",
+  "evaluator_id": "er13-original-grader-v2-C-R1-P01-001",
+  "original": true,
+  "cost_category": "independent_evaluation",
+  "arms": [
+    {
+      "arm_id": "C-R1-P01-treatment",
+      "scope": "FULL",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "basis": "T-P01: material supported discovery about transient filter-control identity loses actionable meaning in the self-contained final. Remaining six-axis assessment completed; no fast-fail short circuit.",
+        "is_universal_correctness": false,
+        "material_defect_ids": [
+          "T-P01"
+        ],
+        "discovery_effectiveness": "Useful focus, error-association, architecture and failure mechanisms are independently supported in discovery. No external/universal recall score."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_PRESERVATION_FINDING"
+          },
+          {
+            "id": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_NONMATERIAL_LIMITS"
+          },
+          {
+            "id": 3,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL_SUPPORTED_HISTORY_CARRY_FORWARD"
+          },
+          {
+            "id": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_MINOR_CRITIC_CLASSIFICATION_LIMIT"
+          },
+          {
+            "id": 5,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "id": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "obligations": [
+          {
+            "id": "O01",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O02",
+            "coverage": "COMPLETE",
+            "result": "MET_FOR_FINAL_RECORD_STATE"
+          },
+          {
+            "id": "O03",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O04",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O05",
+            "coverage": "COMPLETE",
+            "result": "MET_RENDERING_WITH_HISTORY_PRESERVATION_FAILURE"
+          },
+          {
+            "id": "N01",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "N02",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "N03",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          }
+        ],
+        "source_families": [
+          {
+            "id": "keyboard_focus",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "web_semantics",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "validation_status",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "native_platform",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "grid_implementations",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "identity_local_data",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "regression_history",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "web_interoperability",
+            "coverage": "COMPLETE"
+          }
+        ],
+        "supplemental_ARIA_AT_underlying_report": "PARTIAL; underlying per-command tests UNASSESSED",
+        "details_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/treatment/coverage.json"
+      },
+      "defects": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/treatment/defects.json",
+        "material_source_defect_ids": [
+          "T-P01"
+        ],
+        "nonmaterial_source_finding_ids": [
+          "T-N01",
+          "T-N02",
+          "T-N03"
+        ],
+        "method_finding_ids": []
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/critic/files/final.md",
+          "bytes": 18978,
+          "sha256": "d35c26c1eaafc1fbfce6d49e522edacc26a46da0e146cada48285cddc74858a5"
+        },
+        "required_science_files_present": true,
+        "available_lineage": "Complete investigator discovery/draft/map/index and critic/finalizer critique/final/map/index; exact brief/plan and all assigned frozen custody receipts.",
+        "all_notified_tasks_terminal": true,
+        "pending_child_runs": false,
+        "missing_final": false,
+        "last_complete_scientific_artifact_time": "UNKNOWN; final-stage auxiliary freeze supplies a receipt-based upper bound.",
+        "final_semantic_completion_limit": "T-P01"
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_RECEIPT_UPPER_BOUNDS",
+        "maximum_elapsed_seconds": 3600,
+        "clock_corrections": 0,
+        "t0_utc": "2026-10-12T02:38:06.649Z",
+        "whole_deadline_utc": "2026-10-12T03:38:06.649Z",
+        "final_auxiliary_freeze_utc": "2026-10-12T03:04:09.705145+00:00",
+        "t0_to_final_auxiliary_freeze_seconds": 1563.056145,
+        "whole_deadline_met": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T02:38:07.316Z",
+            "requested_at_utc": "2026-10-12T02:38:07.316Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T02:38:08.167Z",
+            "native_birth_utc": "2026-10-12T02:38:20+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T02:54:14+00:00",
+            "auxiliary_freeze_utc": "2026-10-12T02:55:21.145323+00:00",
+            "stage_deadline_utc": "2026-10-12T03:08:07.316Z",
+            "stage_deadline_met_by_auxiliary_freeze": true,
+            "native_birth_to_terminal_updated_seconds": 954,
+            "native_reported_elapsed_seconds": 954,
+            "request_to_auxiliary_freeze_seconds": 1033.829323,
+            "request_to_native_birth_seconds": 12.684,
+            "prior_auxiliary_freeze_to_request_seconds": null,
+            "receipt_fields_consistent": true,
+            "exact_objective_matches_freeze": true,
+            "activation_status": "active",
+            "terminal_status": "complete",
+            "raw_task_status": "completed",
+            "pending_child_runs": false,
+            "native_identity_tuple_sha256": "8e0d0d0fc9dd98df85295594d551f2251a0443b72642726d529d104e4e8eca80",
+            "native_create_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+              "bytes": 534,
+              "sha256": "96102220f089132c8887fbc2103e03250e7503ff20fd7518eab178379a2203a6"
+            },
+            "native_terminal_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+              "bytes": 863,
+              "sha256": "cc01c0c830a15c555ee721ea5f620ee725ba501669fe0501fc4ff8b53bb24a07"
+            },
+            "status_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/investigator/files/status.json",
+              "bytes": 6499,
+              "sha256": "e411acb4ba5472a28c69302c4f25ead841e3a069923eded5d0149a0a095ae755"
+            },
+            "actual_status_raw_receipt": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R1-P01-treatment/investigator-eval-ready-status.raw.json",
+              "bytes": 13019,
+              "sha256": "b5ad1867bb6fe9cbb5a773f4d42ac45413e7adbd90740800a1ba55e3ffb64a03"
+            },
+            "auxiliary_manifest": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R1-P01-treatment-investigator-capture-aux/authored-manifest.json",
+              "bytes": 617,
+              "sha256": "ba540cb6d8a687f3fc3df6b3e4671b154bd2bb9615f5f2c9f0a90f2c9f5f605c"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T02:55:23.274Z",
+            "requested_at_utc": "2026-10-12T02:55:23.274Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T02:55:24.256Z",
+            "native_birth_utc": "2026-10-12T02:55:37+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T03:03:46+00:00",
+            "auxiliary_freeze_utc": "2026-10-12T03:04:09.705145+00:00",
+            "stage_deadline_utc": "2026-10-12T03:25:23.274Z",
+            "stage_deadline_met_by_auxiliary_freeze": true,
+            "native_birth_to_terminal_updated_seconds": 489,
+            "native_reported_elapsed_seconds": 489,
+            "request_to_auxiliary_freeze_seconds": 526.431145,
+            "request_to_native_birth_seconds": 13.726,
+            "prior_auxiliary_freeze_to_request_seconds": 2.128677,
+            "receipt_fields_consistent": true,
+            "exact_objective_matches_freeze": true,
+            "activation_status": "active",
+            "terminal_status": "complete",
+            "raw_task_status": "completed",
+            "pending_child_runs": false,
+            "native_identity_tuple_sha256": "dc5534b57a235cc728903d6ca482aebad639e871e3babafca825ee6dfdfb1505",
+            "native_create_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+              "bytes": 522,
+              "sha256": "c2eda16da31087e31dbaf5f5d806a6f2c4e534cc3b9cf1337ace3be5114cadd6"
+            },
+            "native_terminal_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+              "bytes": 852,
+              "sha256": "17db2d547566a68dce0776feff920e2e44660c3cd0e33e9fbe180457e65f4e61"
+            },
+            "status_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/critic/files/status.json",
+              "bytes": 4801,
+              "sha256": "6cd767e456f08e71a4025a8e08ebdddede7fd4a0ddd8bf8f2335acd384235eed"
+            },
+            "actual_status_raw_receipt": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R1-P01-treatment/critic-eval-ready-status.raw.json",
+              "bytes": 9621,
+              "sha256": "47a4244a00e1f516ea805fbf2ce42945ea8cbaf57c058b5889f119971fca8462"
+            },
+            "auxiliary_manifest": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R1-P01-treatment-critic-capture-aux/authored-manifest.json",
+              "bytes": 617,
+              "sha256": "e839ca2cd928286159d161bf89c5d9528590ed34cea08fe3f5297a6813f7b0fb"
+            }
+          }
+        ],
+        "proxy_definition": "T0/request to final/stage auxiliary freeze, after notified terminal custody. Not exact last scientific write, provider start, active work, billing or context occupancy.",
+        "actual_queue_start_finish_boundaries": "UNKNOWN beyond frozen request/dispatch capture and native fields."
+      },
+      "method_compliance": {
+        "judgment": "OBSERVED_TOPOLOGY_AND_CAPTURE_CONFORM; SEMANTIC_PRESERVATION_FAIL",
+        "requested_topology": "investigator -> independent critic/finalizer in the same critic Goal; no fresh reviser",
+        "observed_named_stages": [
+          "investigator",
+          "critic"
+        ],
+        "prospective_prompt_delta": "Frozen critic addition challenges consequential defaults/limits and architecture criticism; C1–C3 dispositions assessed.",
+        "science_semantic_preservation": "FAIL: T-P01",
+        "known_capture_deviation": "None found in supplied treatment receipts; actual direct-response freshness remains UNKNOWN.",
+        "pre_input_goal_activation_order": "UNKNOWN beyond frozen receipts and self-report; no full native transcripts inspected.",
+        "discovery_plan_reveal_hash_binding": "Verified exact frozen discovery and plan hashes against the reveal record.",
+        "actual_recipe_operator_provenance": "UNKNOWN beyond frozen configuration/request/status receipts."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "birth_active_terminal_consistency": "Verified exact identity tuple and objective against frozen freeze fields in every named stage.",
+        "identity_values": "Not reproduced; equality observations and exact receipt paths/hashes retained.",
+        "direct_terminal_capture_observation": "Assigned terminal files and summaries report direct completion responses; external freshness/native-to-task linkage not independently established.",
+        "independent_native_to_task_linkage": "UNKNOWN",
+        "native_response_freshness": "UNKNOWN",
+        "extra_or_replacement_goal_absence": "UNKNOWN beyond supplied receipts; no replacement reported.",
+        "qualification": "Custody consistency only; no independent complete native execution provenance claim."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "named_stage_contexts": 2,
+          "elapsed_goal_fields": "Observed in frozen receipts; included in time_eligibility.",
+          "active_provider_seconds": null,
+          "created_context_occupancy_seconds": null,
+          "started_context_occupancy_seconds": null,
+          "context_union_seconds": null,
+          "context_overlap_seconds": null,
+          "cached_input_subset": null,
+          "reasoning_subset": null,
+          "subscription_consumption": null,
+          "billing": null,
+          "usage_counter_observation": "Private frozen Goal counters are present. No token values reproduced or equated with billing."
+        },
+        "independent_evaluation": {
+          "category": "independent_evaluation",
+          "started_at_utc": "2026-10-12T03:06:43Z",
+          "cost_allocation": "Shared paired evaluation; per-arm allocation UNKNOWN; do not count evidence research twice.",
+          "active_provider_seconds": null,
+          "billing": null
+        },
+        "preparation": {
+          "billing": null
+        },
+        "support": {
+          "billing": null
+        },
+        "publication": {
+          "billing": null
+        },
+        "root_observations": {
+          "billing": null
+        },
+        "unknown_policy": "null is unavailable/unassessed or deliberately withheld with stated reason, never zero.",
+        "denominator": "This assigned source-failing arm remains in candidate denominators."
+      }
+    }
+  ],
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "rubric_sha256": "c1c39a608a74a7ac56e1f91564e82d97fe59d95890f3a4433d89f642b4436347",
+  "input_verification_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/input-verification.json",
+  "blinding": "Imperfect: technique-bearing paths, topology and output expose arm/method. This original contains no cross-arm comparison.",
+  "comparative_analysis_performed_before_freeze": false
+}

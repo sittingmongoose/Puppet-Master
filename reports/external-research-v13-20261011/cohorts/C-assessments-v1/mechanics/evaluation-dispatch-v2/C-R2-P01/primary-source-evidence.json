@@ -1,0 +1,443 @@
+{
+  "schema": "er13.public-primary-retrieval-evidence.v1",
+  "cost_class": "independent_evaluation",
+  "notes": [
+    "Only exact public primary URLs were requested; no corpus copies or full native transcripts are retained.",
+    "Response digests identify bytes retrieved; they do not by themselves establish semantic truth.",
+    "Direct DuckDB HTTP returned 403; official web retrieval and linked upstream Markdown provided governing text.",
+    "Some docs.rs web opens failed; direct HTTP returned version-pinned governing content.",
+    "Publisher direct HTTP returned 403; original paper reprint and publisher indexed abstract were inspected.",
+    "An exact CHANGELOG.md probe returned 404; package-version identity was checked at exact Cargo.toml instead."
+  ],
+  "receipts": [
+    {
+      "id": "CsvReaderDocs",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "accessed_utc": "2026-10-12T03:18:32.204088+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "bytes": 105953,
+      "sha256": "43648959a0b102711ac4b073d93b81873282c8fe8fbb68721dbba89c80956418"
+    },
+    {
+      "id": "CsvBuilderDocs",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "accessed_utc": "2026-10-12T03:18:32.204594+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "bytes": 74131,
+      "sha256": "74dd40152a257b89e52173412355bb02bfcecf052f73d7b3a75484acca09bd59"
+    },
+    {
+      "id": "RusqliteDocs",
+      "url": "https://docs.rs/rusqlite/0.40.2/rusqlite/struct.Transaction.html",
+      "accessed_utc": "2026-10-12T03:18:32.204988+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/rusqlite/0.40.2/rusqlite/struct.Transaction.html",
+      "bytes": 157013,
+      "sha256": "7feb15a8fdf73fc19072274706fe53175deb3144acad186f1d61fbdb52c3962b"
+    },
+    {
+      "id": "ChronoMappingDocs",
+      "url": "https://docs.rs/chrono/0.4.45/chrono/offset/enum.LocalResult.html",
+      "accessed_utc": "2026-10-12T03:18:32.205414+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/chrono/0.4.45/chrono/offset/enum.LocalResult.html",
+      "bytes": 78050,
+      "sha256": "81e6e22acc626baff57ca92f1ffc6b14a5be6a65214bcd6cc1c9b4c01b4bd45c"
+    },
+    {
+      "id": "SQLitePragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "accessed_utc": "2026-10-12T03:18:32.205821+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/pragma.html",
+      "bytes": 139936,
+      "sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034"
+    },
+    {
+      "id": "SQLiteUPSERT",
+      "url": "https://www.sqlite.org/lang_UPSERT.html",
+      "accessed_utc": "2026-10-12T03:18:32.206251+00:00",
+      "http_status": 200,
+      "final_url": "https://sqlite.org/lang_upsert.html",
+      "bytes": 329973,
+      "sha256": "32b85ae78ce6d6aa8cf759ecc32a8b3a80f0d3600be89c2fef1952fed38a9307"
+    },
+    {
+      "id": "CsvIssue422",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/422",
+      "accessed_utc": "2026-10-12T03:18:32.207057+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/BurntSushi/rust-csv/issues/422",
+      "bytes": 272519,
+      "sha256": "03766ec95952aa1956fca17bd7f5c5bf96f643aad61a5a1c26b377b2da8fe752"
+    },
+    {
+      "id": "CsvIssue427",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/427",
+      "accessed_utc": "2026-10-12T03:18:32.210593+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/BurntSushi/rust-csv/issues/427",
+      "bytes": 337097,
+      "sha256": "78bae618ee97dc3ea1a6254117b594d404c930e07db4d27944e263d69ff14a6b"
+    },
+    {
+      "id": "CsvDiscussion402",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/402",
+      "accessed_utc": "2026-10-12T03:18:32.377002+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/BurntSushi/rust-csv/discussions/402",
+      "bytes": 300959,
+      "sha256": "0c994bbdd295dacd3b7c17a68b53158a068c8b0e0143ace622a204e281d5aa39"
+    },
+    {
+      "id": "CsvDiscussion327",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/327",
+      "accessed_utc": "2026-10-12T03:18:32.407974+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/BurntSushi/rust-csv/discussions/327",
+      "bytes": 291060,
+      "sha256": "d1be31b23294e5c3f6950560c52ece56aaac414466be569e7cd3619ba9af618e"
+    },
+    {
+      "id": "OGC1.1",
+      "url": "https://docs.ogc.org/is/18-088/18-088.pdf",
+      "accessed_utc": "2026-10-12T03:18:32.417868+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.ogc.org/is/18-088/18-088.pdf",
+      "bytes": 3166281,
+      "sha256": "a764b693eb238aeed3c220b8b241ff37dd366209b4a991ffbc8ac6bfba786990"
+    },
+    {
+      "id": "Fellegi1969",
+      "url": "https://nhis.ipums.org/nhis/resources/Fellegi69.pdf",
+      "accessed_utc": "2026-10-12T03:18:32.421256+00:00",
+      "http_status": 200,
+      "final_url": "https://nhis.ipums.org/nhis/resources/Fellegi69.pdf",
+      "bytes": 2705571,
+      "sha256": "77262e3c19b5a5afa1d4753e4cb1dd24bac16dbc9af396baa78b61ca2220b4b0"
+    },
+    {
+      "id": "DuckDBIssue13660",
+      "url": "https://github.com/duckdb/duckdb/issues/13660",
+      "accessed_utc": "2026-10-12T03:18:32.552517+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/duckdb/duckdb/issues/13660",
+      "bytes": 422103,
+      "sha256": "5b3feb54aa540ea30287b1b39119d7b1f8d9d4d847d0b64444ece35410858eef"
+    },
+    {
+      "id": "DuckDBIssue12338",
+      "url": "https://github.com/duckdb/duckdb/issues/12338",
+      "accessed_utc": "2026-10-12T03:18:32.666486+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/duckdb/duckdb/issues/12338",
+      "bytes": 507297,
+      "sha256": "734f2efd565e0c09eb3482d1c59db54d74357133877b3fdc074b8a0a5f4d447b"
+    },
+    {
+      "id": "RFC4180",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180.html",
+      "accessed_utc": "2026-10-12T03:10:04.002669+00:00",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc4180.html",
+      "bytes": 17719,
+      "sha256": "4bf1745ec3d09096ef691dba2de1c8c6ce2578881752ec8c2dca03116d191be9"
+    },
+    {
+      "id": "CSVWmetadata",
+      "url": "https://www.w3.org/TR/tabular-metadata/",
+      "accessed_utc": "2026-10-12T03:10:04.003175+00:00",
+      "http_status": 200,
+      "final_url": "https://www.w3.org/TR/tabular-metadata/",
+      "bytes": 331392,
+      "sha256": "f067ee63d1bc32c57e2075499aa415474b69b240c664aad91ffb071dcad15bfc"
+    },
+    {
+      "id": "CSVWmodel",
+      "url": "https://www.w3.org/TR/tabular-data-model/",
+      "accessed_utc": "2026-10-12T03:10:04.003594+00:00",
+      "http_status": 200,
+      "final_url": "https://www.w3.org/TR/tabular-data-model/",
+      "bytes": 353203,
+      "sha256": "e55d28c7805c1573129336a8ae11c189e6ad48886993693799ce0d49b92feb93"
+    },
+    {
+      "id": "csvtutorial",
+      "url": "https://docs.rs/csv/1.4.0/csv/tutorial/",
+      "accessed_utc": "2026-10-12T03:10:04.003974+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/csv/1.4.0/csv/tutorial/",
+      "bytes": 147039,
+      "sha256": "1d37762735fd6e3847d49ef47080266c5a1318ea4aa020d3f793fb5a0a9d9490"
+    },
+    {
+      "id": "csvcore",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "accessed_utc": "2026-10-12T03:10:04.004725+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "id": "csvreader",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "accessed_utc": "2026-10-12T03:10:04.008597+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "bytes": 90075,
+      "sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c"
+    },
+    {
+      "id": "DuckDBdetect",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "accessed_utc": "2026-10-12T03:10:04.009588+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "DuckDBfaulty",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "accessed_utc": "2026-10-12T03:10:04.012626+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "SQLiteTx",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "accessed_utc": "2026-10-12T03:11:45.688290+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/lang_transaction.html",
+      "bytes": 27068,
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e"
+    },
+    {
+      "id": "SQLiteSavepoint",
+      "url": "https://www.sqlite.org/lang_savepoint.html",
+      "accessed_utc": "2026-10-12T03:11:45.688815+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/lang_savepoint.html",
+      "bytes": 18660,
+      "sha256": "989be778c28732deeb4475ee9e686612456592ff91b2653f6119a9d3c42093a9"
+    },
+    {
+      "id": "SQLiteConflict",
+      "url": "https://www.sqlite.org/lang_conflict.html",
+      "accessed_utc": "2026-10-12T03:11:45.689193+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/lang_conflict.html",
+      "bytes": 15964,
+      "sha256": "772b9b3f407bed4cdf59a32f1dd5828c3bc8293744bc40a3f25d07e15973b75f"
+    },
+    {
+      "id": "SQLiteAtomic",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "accessed_utc": "2026-10-12T03:11:45.689566+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "id": "SQLiteWAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "accessed_utc": "2026-10-12T03:11:45.690014+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/wal.html",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "id": "RFC3339",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "accessed_utc": "2026-10-12T03:11:45.690513+00:00",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "bytes": 44033,
+      "sha256": "c53b2d121b9f284e2cb28e2989c907470ae26a9db441bcd8a3236c6004a60bee"
+    },
+    {
+      "id": "RFC9557",
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "accessed_utc": "2026-10-12T03:11:45.691494+00:00",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "bytes": 109831,
+      "sha256": "d7cc2c033d8e4f4e3f7149003023567374997129c553dca1c68cf914bc2cd827"
+    },
+    {
+      "id": "UCUM",
+      "url": "https://ucum.org/ucum",
+      "accessed_utc": "2026-10-12T03:11:45.692353+00:00",
+      "http_status": 200,
+      "final_url": "https://ucum.org/ucum",
+      "bytes": 545722,
+      "sha256": "6bcf017c304a9b85adfddd7abfcf353162f556fcd1ddb13d98a23a8555b65dd2"
+    },
+    {
+      "id": "DuckDBdetectRaw",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/auto_detection.md",
+      "accessed_utc": "2026-10-12T03:12:59.041688+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/auto_detection.md",
+      "bytes": 12270,
+      "sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa"
+    },
+    {
+      "id": "DuckDBfaultyRaw",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "accessed_utc": "2026-10-12T03:12:59.042186+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "bytes": 12080,
+      "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad"
+    },
+    {
+      "id": "DuckDBTxRaw",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/sql/statements/transactions.md",
+      "accessed_utc": "2026-10-12T03:12:59.042637+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/sql/statements/transactions.md",
+      "bytes": 2534,
+      "sha256": "eae6d050474d785e513fddc82502c309128db38fcf843b8c9f12c06c5339244c"
+    },
+    {
+      "id": "DuckDBconcurrencyRaw",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/connect/concurrency.md",
+      "accessed_utc": "2026-10-12T03:12:59.043039+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/connect/concurrency.md",
+      "bytes": 3565,
+      "sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f"
+    },
+    {
+      "id": "SQLiteIsolation",
+      "url": "https://www.sqlite.org/isolation.html",
+      "accessed_utc": "2026-10-12T03:12:59.043567+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/isolation.html",
+      "bytes": 17364,
+      "sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7"
+    },
+    {
+      "id": "csvcoreExact",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "accessed_utc": "2026-10-12T03:12:59.044199+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308"
+    },
+    {
+      "id": "csvlib",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/lib.rs",
+      "accessed_utc": "2026-10-12T03:12:59.046594+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/lib.rs",
+      "bytes": 9234,
+      "sha256": "cb4a4b10c6e89542c5bb0810c780730fa711149da108770070567ca23bc8591e"
+    },
+    {
+      "id": "SQLiteTx",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "accessed_utc": "2026-10-12T03:13:15.537870+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/lang_transaction.html",
+      "bytes": 27068,
+      "sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e"
+    },
+    {
+      "id": "SQLiteConflict",
+      "url": "https://www.sqlite.org/lang_conflict.html",
+      "accessed_utc": "2026-10-12T03:13:15.538377+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/lang_conflict.html",
+      "bytes": 15964,
+      "sha256": "772b9b3f407bed4cdf59a32f1dd5828c3bc8293744bc40a3f25d07e15973b75f"
+    },
+    {
+      "id": "SQLiteAtomic",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "accessed_utc": "2026-10-12T03:13:15.538827+00:00",
+      "http_status": 200,
+      "final_url": "https://www.sqlite.org/atomiccommit.html",
+      "bytes": 77968,
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+    },
+    {
+      "id": "UCUM",
+      "url": "https://ucum.org/ucum",
+      "accessed_utc": "2026-10-12T03:13:15.539229+00:00",
+      "http_status": 200,
+      "final_url": "https://ucum.org/ucum",
+      "bytes": 545722,
+      "sha256": "6bcf017c304a9b85adfddd7abfcf353162f556fcd1ddb13d98a23a8555b65dd2"
+    },
+    {
+      "id": "ChronoCrate",
+      "url": "https://docs.rs/chrono/0.4.45/chrono/",
+      "accessed_utc": "2026-10-12T03:13:15.539599+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/chrono/0.4.45/chrono/",
+      "bytes": 72466,
+      "sha256": "11e82145e20c2f32a67f75511775e761f70238b7ec2ff11c646510c933346625"
+    },
+    {
+      "id": "ArrowReader",
+      "url": "https://docs.rs/arrow-csv/59.3.0/arrow_csv/reader/index.html",
+      "accessed_utc": "2026-10-12T03:13:15.540398+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.rs/arrow-csv/59.3.0/arrow_csv/reader/index.html",
+      "bytes": 31635,
+      "sha256": "cb39ff7e5d099b977927debda9a0acd0760d30150ee52c86922ed152ae25267e"
+    },
+    {
+      "id": "FellegiAbstract",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/01621459.1969.10501049",
+      "accessed_utc": "2026-10-12T03:13:15.542578+00:00",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "CsvCargo",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml",
+      "accessed_utc": "2026-10-12T03:15:22.668774+00:00",
+      "http_status": 200,
+      "bytes": 952,
+      "sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e",
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml"
+    },
+    {
+      "id": "CsvChanges",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/CHANGELOG.md",
+      "accessed_utc": "2026-10-12T03:15:22.793461+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "id": "CsvCoreTest",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "accessed_utc": "2026-10-12T03:15:22.872179+00:00",
+      "http_status": 200,
+      "bytes": 69459,
+      "sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+      "final_url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs"
+    },
+    {
+      "id": "DuckDBFix",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13597",
+      "accessed_utc": "2026-10-12T03:15:22.943834+00:00",
+      "http_status": 200,
+      "bytes": 16444,
+      "sha256": "1d2f232fe41fbce113146b397a5f0c691ca61239158626cf54b24b43af9c828c",
+      "final_url": "https://api.github.com/repos/duckdb/duckdb/pulls/13597"
+    },
+    {
+      "id": "DuckDBFixFiles",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/13597/files",
+      "accessed_utc": "2026-10-12T03:15:23.129139+00:00",
+      "http_status": 200,
+      "bytes": 12963,
+      "sha256": "6865c1d4d5272115e10c3e7c199ae689ac7b6dc5e76caddaf8c495b350ef9bec",
+      "final_url": "https://api.github.com/repos/duckdb/duckdb/pulls/13597/files"
+    }
+  ]
+}

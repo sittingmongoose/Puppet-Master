@@ -1,0 +1,55 @@
+{
+  "schema": "er13.evaluator-governing-custody.v1",
+  "notified_expected_hashes_verified": true,
+  "records": [
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/C-R2-P02.json",
+      "bytes": 22198,
+      "sha256": "77bcaa06618f5c67b4e26a8c86536d46d36bb446d573f959754da1be9e9ff1fb",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-v2/C-R2-P02-input-verification.json",
+      "bytes": 33013,
+      "sha256": "d2333a422d2544193ed3cd617269022b5408763e9792be63a0944dccb62f7ae0",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "bytes": 3800,
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluator-custody-v1/C-P04/er13-original-grader-v2-C-R2-P02-001/rubric.json",
+      "bytes": 4087,
+      "sha256": "9f85525c97ef48b6d3f2b168c3f3524e29a8d4ada29722f692a7d850ea114166",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluator-custody-v1/C-P04/er13-original-grader-v2-C-R2-P02-001/rubric.json.release.json",
+      "bytes": 417,
+      "sha256": "141062bf1fd52ffb99a3f440ee0d7eb1851d55e3b547fcaebfd9930ef9e5eac9",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluator-custody-v1/C-P04/er13-original-grader-v2-C-R2-P02-001/rubric-release-lock.json",
+      "bytes": 979,
+      "sha256": "57ce9152c17da820fa0661b088a7a18ef3ac5aa1009642a87769f4ae5a3a1c5b",
+      "inspection_scope": "Complete notified governing input"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "bytes": 43132,
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "inspection_scope": "Sections 10 and 12 only"
+    },
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "bytes": 20950,
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+      "inspection_scope": "Complete actual workspace AGENTS.md; task-specific prohibition overrides Git/canon workflows"
+    }
+  ],
+  "custody": "Only C-P04 rubric released to this evaluator; no other case, active candidate, private key or held-out content inspected."
+}

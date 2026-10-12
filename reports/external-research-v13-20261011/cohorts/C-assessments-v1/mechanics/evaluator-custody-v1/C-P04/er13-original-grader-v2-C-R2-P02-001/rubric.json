@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "case_id": "C-P04",
+  "access": "evaluator-only",
+  "derived_from": [
+    "brief.md",
+    "plan.md"
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "text": "Discovery/capability admission, isolation, bounded progress and fair export scheduling",
+      "required": true
+    },
+    {
+      "id": "O02",
+      "text": "Cancel one converter without harming snapshots or other exports",
+      "required": true
+    },
+    {
+      "id": "O03",
+      "text": "Complete output and destination transfer success semantics",
+      "required": true
+    },
+    {
+      "id": "O04",
+      "text": "Preset meaning under converter updates",
+      "required": true
+    },
+    {
+      "id": "O05",
+      "text": "Filesystem/temp-output limits, resource enforcement and host-platform applicability with alternatives",
+      "required": true
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N01",
+      "text": "No real-user plugin installation or broad home access",
+      "required": true
+    },
+    {
+      "id": "N02",
+      "text": "No sandbox-label inference of memory enforcement",
+      "required": true
+    },
+    {
+      "id": "N03",
+      "text": "No process-exit inference of artifact integrity",
+      "required": true
+    }
+  ],
+  "mechanism_breadth": [
+    "plugin_isolation_resource",
+    "import_export"
+  ],
+  "alternatives_required": "Compare materially different mechanisms relevant to the brief; no product winner or fixed hidden implementation is required.",
+  "plan_dispositions_required": "Address each significant provisional decision in plan.md. The plan is not a gold answer and may contain unsafe assumptions; justified retain/revise/reject/unresolved decisions are admissible.",
+  "six_axes": [
+    {
+      "id": 1,
+      "name": "material_original_obligations",
+      "assessment": "Assess every obligation and negative constraint below; do not substitute a convenient subset."
+    },
+    {
+      "id": 2,
+      "name": "consequential_source_facts_applicability",
+      "assessment": "Inspect governing primary context for consequential claims, version/platform applicability, and unsupported generalizations."
+    },
+    {
+      "id": 3,
+      "name": "useful_unfamiliar_discovery_alternatives_history",
+      "assessment": "Assess supported alternatives, useful discoveries, and relevant mechanism/history breadth without rewarding trivia or citation counts."
+    },
+    {
+      "id": 4,
+      "name": "valid_corrections_rejections_dispositions",
+      "assessment": "Assess reasons and evidence for retaining, revising, rejecting, or leaving provisional plan decisions unresolved."
+    },
+    {
+      "id": 5,
+      "name": "supported_meaning_preservation",
+      "assessment": "Trace material supported meaning from draft and criticism to the complete final; identify losses independently of wording."
+    },
+    {
+      "id": 6,
+      "name": "meaningful_validation_and_execution_honesty",
+      "assessment": "Assess proposed witnesses, domains, oracles and limits; distinguish actual executed work from future tests."
+    }
+  ],
+  "validation_contract": {
+    "deliverable": "Research-backed planning proposal, not deployment or proof of all possible behavior.",
+    "executed_vs_proposed": "Require explicit separation; a sensible proposal can pass without implementing the future application.",
+    "unknown_data": "Unknown user data/devices may remain limitations; available governing mechanism research remains required."
+  },
+  "evaluation_rules": [
+    "Assess original frozen final independently; do not repair it.",
+    "No material unsupported claim, required omission, false rejection, or preservation loss for full source pass under declared coverage.",
+    "A failed screen may leave remainder UNASSESSED; do not imply complete comparable grading.",
+    "No citation-count, length, token-copy, agreeing-agent, mandatory novel-product, or universal-recall proxy.",
+    "Record useful supported discoveries and material missing mechanism families; finite observed comparisons are not universal external recall."
+  ]
+}

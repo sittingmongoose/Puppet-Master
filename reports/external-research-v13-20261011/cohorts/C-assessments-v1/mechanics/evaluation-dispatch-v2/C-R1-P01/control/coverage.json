@@ -1,0 +1,481 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "C-R1-P01-control",
+  "assessment_scope": "FULL frozen original; finite planning-proposal assessment, not deployment",
+  "axes": [
+    {
+      "id": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "The complete proposal covers keyboard browsing/editing/selection, large results, label disambiguation, durable edits, hidden/deleted-record recovery and record-addressable errors. All three negative constraints remain explicit."
+    },
+    {
+      "id": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+      "finding": "Primary definitions, native pattern conditions, maintained-grid APIs and issue/fix context support the consequential claims. Web guidance is scoped; toolkit/AT behavior remains a hypothesis. Minor product/index qualifications are recorded in defects.json."
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Paging/windowing, headless row-model separation, native realization and transient filter-control identity are useful mechanisms. Public regression and merged-fix context remain bounded and meaningful."
+    },
+    {
+      "id": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Every significant proposal has a disposition. Rejecting automatic adjacency for a disappearing active edit is a justified product policy. Realize versus scrolling is correctly distinguished. Critic agreement was checked independently."
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Identity, focus, edit/conflict state, error/recovery routes, alternatives, owner decisions, useful historical mechanisms and evidence limits survive. The final's concise error wording remains record/field-addressable; no material association loss was found."
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Targeted scenarios identify domains and observable failure signals. Paged/windowed comparison and supported-platform inspection are proposed. Neither candidate nor evaluator executed application, demo, synthetic-fixture or AT tests."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Keyboard browsing, editing, selection and validation",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Keyboard and accessible presentation; validation 1, 3, 5",
+      "reason": "Navigation/editor key ownership, visible focus, keyboard sort/filter/save/recovery and independent selection are retained."
+    },
+    {
+      "id": "O02",
+      "obligation": "Stable record identity and focus/selection under changes",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "State model and behavior; sort/update event table",
+      "reason": "Canonical record/field keys survive reorder, projection and external updates; view positions and duplicate labels do not become identity."
+    },
+    {
+      "id": "O03",
+      "obligation": "Unsaved edits and disappearance recovery",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Edit coordinator; filter/deletion/conflict events",
+      "reason": "Draft/base-version/dirty state outlive widgets; filter hiding differs from deletion; recovery and explicit resolution remain keyboard reachable."
+    },
+    {
+      "id": "O04",
+      "obligation": "Accessible error association and return",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Disposition table validation/recovery rows; validation 4",
+      "reason": "Issues identify record and field, include text, reveal the correct real editor and preserve the prior query/return route. No required ARIA attribute spelling is imposed on an unknown native toolkit."
+    },
+    {
+      "id": "O05",
+      "obligation": "Responsive rendering, applicability and alternatives",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Rendering alternatives; native adapter; evidence limits",
+      "reason": "Measured paging/windowing and separate query/renderer responsibilities preserve thousands-record scope; platform contracts and historical risks are researched without declaring interoperability."
+    },
+    {
+      "id": "N01",
+      "obligation": "No pointer-only recovery",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Keyboard and accessible presentation",
+      "reason": "Every ordinary operation and recovery path is required to work without a pointer."
+    },
+    {
+      "id": "N02",
+      "obligation": "No lost accessible navigation or tiny-data cap",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Recommendation; rendering table; performance validation",
+      "reason": "Page/window sizes bound rendering, with the full result set retained."
+    },
+    {
+      "id": "N03",
+      "obligation": "No announcement for every background update",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Announcement dispositions; state event table",
+      "reason": "Routine background updates stay quiet; meaningful outcomes and bulk selection use concise coalescing proposals."
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "id": "P01",
+      "proposal": "Windowed rendering",
+      "coverage": "COMPLETE",
+      "disposition": "retain candidate / revise baseline",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P02",
+      "proposal": "Stable record keys",
+      "coverage": "COMPLETE",
+      "disposition": "retain",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P03",
+      "proposal": "Logical focus outside widgets",
+      "coverage": "COMPLETE",
+      "disposition": "retain / make explicit",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P04",
+      "proposal": "Logical movement, scrolling and actual focus",
+      "coverage": "COMPLETE",
+      "disposition": "revise; realize/reveal then focus",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P05",
+      "proposal": "Full logical accessibility metadata",
+      "coverage": "COMPLETE",
+      "disposition": "revise; native/web conditions and measured behavior",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P06",
+      "proposal": "Inline draft keyed by record/field",
+      "coverage": "COMPLETE",
+      "disposition": "revise; external draft store",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P07",
+      "proposal": "Sort/filter while draft remains open",
+      "coverage": "COMPLETE",
+      "disposition": "revise; explicit transition and sort-key policy",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P08",
+      "proposal": "Next-row focus after disappearance",
+      "coverage": "COMPLETE",
+      "disposition": "reject as default",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P09",
+      "proposal": "Recovery list",
+      "coverage": "COMPLETE",
+      "disposition": "retain / strengthen",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P10",
+      "proposal": "Field error and navigable summary",
+      "coverage": "COMPLETE",
+      "disposition": "retain",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P11",
+      "proposal": "No detached/duplicate accessible row",
+      "coverage": "COMPLETE",
+      "disposition": "revise / validate",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P12",
+      "proposal": "One polite channel",
+      "coverage": "COMPLETE",
+      "disposition": "revise; coalescing and duplicate avoidance",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P13",
+      "proposal": "Quiet routine updates",
+      "coverage": "COMPLETE",
+      "disposition": "retain",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P14",
+      "proposal": "Alternative rendering architectures",
+      "coverage": "COMPLETE",
+      "disposition": "retain / complete comparison",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P15",
+      "proposal": "Counts/indices sufficiency",
+      "coverage": "COMPLETE",
+      "disposition": "reject sufficiency",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P16",
+      "proposal": "Targeted test scenarios",
+      "coverage": "COMPLETE",
+      "disposition": "proposed tests specified",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P17",
+      "proposal": "Executed versus proposed checks",
+      "coverage": "COMPLETE",
+      "disposition": "explicit separation",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    },
+    {
+      "id": "P18",
+      "proposal": "Compatibility hypotheses",
+      "coverage": "COMPLETE",
+      "disposition": "retained as unresolved platform tests",
+      "evaluator_result": "JUSTIFIED",
+      "final_locator": "Disposition of every significant released-plan proposal; corresponding behavior/validation section"
+    }
+  ],
+  "preservation": [
+    {
+      "id": "identity_focus_selection",
+      "coverage": "COMPLETE",
+      "from": "investigator discovery findings 2–3; draft state model",
+      "to": "final state model and sort/update events",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "keyboard_editor_modes",
+      "coverage": "COMPLETE",
+      "from": "investigator discovery finding 1; draft keyboard behavior",
+      "to": "final keyboard/accessibility section and validation 1",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "draft_dirty_base_version_conflict",
+      "coverage": "COMPLETE",
+      "from": "discovery finding 4; draft edit coordinator",
+      "to": "final edit/persistence responsibilities and event table",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "hidden_vs_deleted_recovery",
+      "coverage": "COMPLETE",
+      "from": "draft disappearance and recovery dispositions",
+      "to": "final deliberate recovery and true-deletion events",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "error_identity_field_route_prior_view",
+      "coverage": "COMPLETE",
+      "from": "draft validation disposition and test 3",
+      "to": "final validation disposition and test 4",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "labels_full_missing_disambiguated",
+      "coverage": "COMPLETE",
+      "from": "discovery finding 3; draft test 4",
+      "to": "final accessible presentation and test 5",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "rendering_alternatives_data_boundary",
+      "coverage": "COMPLETE",
+      "from": "discovery alternatives; draft comparison",
+      "to": "final alternatives and query/renderer boundaries",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "native_realization_and_scroll_conditions",
+      "coverage": "COMPLETE",
+      "from": "draft metadata/reveal dispositions; critic UIA review",
+      "to": "final realization-versus-view distinction and native tests",
+      "result": "PRESERVED_AND_CLARIFIED"
+    },
+    {
+      "id": "transient_filter_control_identity",
+      "coverage": "COMPLETE",
+      "from": "discovery failure history #8119/#8603",
+      "to": "final failure history, line 89",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "bounded_header_sort_report",
+      "coverage": "COMPLETE",
+      "from": "discovery #4124; critic report limitation",
+      "to": "final failure history, line 91",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "source_access_version_uncertainty",
+      "coverage": "COMPLETE",
+      "from": "critic S08/S20/S21 caveats",
+      "to": "final critique disposition, source map and evidence limits",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "owner_decisions_validation_truth",
+      "coverage": "COMPLETE",
+      "from": "draft unresolved inputs and performed-check list",
+      "to": "final owner inputs and proposed/unrun tests",
+      "result": "PRESERVED"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "criticism": "No material wrong/omitted claim; no unsupported guarantee",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept",
+      "evaluator_finding": "Independent primary checks support the substance; agreement itself supplies no authority."
+    },
+    {
+      "criticism": "Mutable TanStack latest guide",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept and record v9 observation without pinning a release",
+      "evaluator_finding": "Appropriate caveat; v9 body independently visible."
+    },
+    {
+      "criticism": "Apple/TanStack v8 retrieval failures",
+      "coverage": "COMPLETE",
+      "final_disposition": "retain uncertainty and corroborating sources",
+      "evaluator_finding": "Honest limits retained; evaluator obtained the public Apple data endpoint and TanStack page."
+    },
+    {
+      "criticism": "Unspecified owner/platform/data/conflict choices",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept",
+      "evaluator_finding": "Unknown user facts are not fabricated and do not postpone available mechanism research."
+    }
+  ],
+  "source_families": [
+    {
+      "id": "keyboard_focus",
+      "evidence": [
+        "E02",
+        "E03",
+        "E18",
+        "E19"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Managed navigation/editor modes, focus/selection and removal policy assessed."
+    },
+    {
+      "id": "web_semantics",
+      "evidence": [
+        "E01",
+        "E04"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Sparse counts/indices, selection, sorting and semantics-versus-support boundary assessed."
+    },
+    {
+      "id": "validation_status",
+      "evidence": [
+        "E06",
+        "E07",
+        "E08",
+        "E09"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Record/field error identity, summary routing, status scope and native applicability assessed."
+    },
+    {
+      "id": "native_platform",
+      "evidence": [
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "UIA patterns and client realization, AppKit table concepts and AT-SPI visibility/selection conditions independently checked."
+    },
+    {
+      "id": "grid_implementations",
+      "evidence": [
+        "E15",
+        "E18",
+        "E19",
+        "E22",
+        "E23"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Exact vendor conditions, version/tier limits, overscan and custom-control responsibilities assessed."
+    },
+    {
+      "id": "identity_local_data",
+      "evidence": [
+        "E16",
+        "E17",
+        "E20",
+        "E21",
+        "E24",
+        "E25",
+        "E26"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Stable IDs, immutable updates, client/query split and edit callback limitations checked."
+    },
+    {
+      "id": "regression_history",
+      "evidence": [
+        "E27",
+        "E28"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Named historical report, maintainer explanation, merged patch/test and bounded currentness checked."
+    },
+    {
+      "id": "web_interoperability",
+      "evidence": [
+        "E05"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "No actual interoperability assertion; proposed target-stack validation assessed."
+    }
+  ],
+  "unassessed": [
+    {
+      "family": "future_console_and_physical_AT_matrix",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_source_grade": false,
+      "reason": "Proposal deliverable; no deployment or future software execution required."
+    },
+    {
+      "family": "universal_discovery_recall_and_all_possible_toolkits",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_source_grade": false,
+      "reason": "Finite assessment does not establish universal correctness or recall."
+    }
+  ],
+  "limitations": [
+    "No physical or product interoperability result.",
+    "Mutable documentation is assessed at the reviewed context.",
+    "Candidate operations/read order and billing require unavailable telemetry, assessed separately."
+  ],
+  "decisive_failure_short_circuit_used": false
+}

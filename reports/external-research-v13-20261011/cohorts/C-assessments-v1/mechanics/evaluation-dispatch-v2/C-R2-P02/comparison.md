@@ -1,0 +1,9 @@
+# Post-freeze comparison — C-R2-P02
+
+Both originals were frozen at 2026-10-12T03:28:15.556160+00:00 before this comparison. Their grades remain unchanged: control **FAIL** (material storage-capacity mechanism research omission D01; nonmaterial WASI wording D02), treatment **PASS** under finite complete coverage. Every axis and consequential obligation/source family was assessed in each original. This is one C-P04 pair, not a universal reliability or discovery-recall result.
+
+The frozen native final-terminal proxies are 1825.366s for control and 1740.615s for treatment, a treatment-minus-control difference of -84.751s (-4.64%). These are reported timestamp proxies, not exact science-write or quiet-finish observations. Both finals were frozen before their original 60-minute caps. Different source judgments and unavailable authenticated finish linkage prevent an equal-quality savings claim.
+
+All assigned attempts remain in the denominator: one per arm, with zero/one source-passing finals respectively. Context occupancy, active provider time, attributed consumption and billing are UNKNOWN, not zero. The control consumption-per-source-pass quotient is undefined; treatment and pooled consumption quotients are unknown. No native cumulative counter was treated as billable per-task activity. This grader's shared lookup is independent_evaluation and is separate from candidate product cost.
+
+Technique-bearing paths/prompts and critique topology made blinding imperfect. Native receipt birth/objective/status consistency is established within frozen custody; authenticated native-to-delegated-task linkage, actual route/operator recipe and pre-input execution order are UNKNOWN. This comparison selects no campaign recipe and supplies no candidate repair or author feedback. Any dispute needs a separate adjudication preserving these originals.

@@ -1,0 +1,53 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "C-R1-P01-control",
+  "material_source_defects": [],
+  "nonmaterial_source_findings": [
+    {
+      "id": "C-N01",
+      "category": "minor condition/wording",
+      "locator": "reviser source-map S15; inherited sources index",
+      "finding": "The v8 100-row wording needs a component/tier boundary. Tagged pagination code limits the community DataGrid page size and offers Pro/Premium for larger pages.",
+      "materiality": "The final does not cap product data or claim a universal virtualizer ceiling; no material architectural consequence found.",
+      "evidence": [
+        "E22",
+        "E23"
+      ]
+    },
+    {
+      "id": "C-N02",
+      "category": "minor scope qualification",
+      "locator": "reviser source-map S21 governing condition",
+      "finding": "TanStack's default index is the original input index. Sorting/filtering that unchanged model alone does not reassign it.",
+      "materiality": "The brief includes external updates and paging, so the final's durable domain-key recommendation remains sound.",
+      "evidence": [
+        "E25",
+        "E26"
+      ]
+    }
+  ],
+  "method_findings": [
+    {
+      "id": "C-M01",
+      "category": "known terminal-capture noncompliance",
+      "locator": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/status.json",
+        "bytes": 4801,
+        "sha256": "cfcf7fc0a2e609bdaafb7307f88266f5de01c89005a1d8c848b065fe4484cd6d"
+      },
+      "related_receipt": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+        "bytes": 525,
+        "sha256": "c150757e0f33837c98b3dd7eb3f59f9c17c2cad24ee5870767c014f40893763d"
+      },
+      "finding": "The critic's frozen terminal summary reports a TextEncoder save failure and says native-goal-terminal.json is the exact subsequent get_goal response, not the direct completion response required by assignment.",
+      "consequence": "The direct-terminal-response preservation instruction was not met. The same-birth/objective complete-state receipt remains assessable; no missing native Goal or source failure is inferred."
+    }
+  ],
+  "telemetry_limits": [
+    "Receipt consistency is not independently verified native-to-task linkage or freshness.",
+    "Goal elapsed counters and timestamp spans differ; neither is provider activity/billing.",
+    "Actual application/demonstration/AT execution is not evidenced or claimed."
+  ],
+  "original_grade_change_policy": "Frozen once by manifest; any dispute requires a new separate adjudication."
+}

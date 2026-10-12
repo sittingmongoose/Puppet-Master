@@ -1,0 +1,50 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "C-R2-P02-control",
+  "evaluator_id": "er13-original-grader-v2-C-R2-P02-001",
+  "frozen_at_utc": "2026-10-12T03:25:10.579696+00:00",
+  "before_comparative_analysis": true,
+  "self_excluded": "A manifest cannot hash itself; its external SHA256 is reported separately.",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/assessment.md",
+      "bytes": 4626,
+      "sha256": "b8dcb47c7e75928254373af57945ed592c231386dcdbf24f749ecc14c131ef96"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/assessment.json",
+      "bytes": 25372,
+      "sha256": "fe08ee770c46e31fc2bb9b9ba8d0e9edee21ddccc930438839da7ce8df1f160d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/coverage.json",
+      "bytes": 14055,
+      "sha256": "6d45f4b2163514c144b28a935d11d9affeb8f89b4875df620964a0f782e4f55c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/defects.json",
+      "bytes": 2619,
+      "sha256": "f2faa71d2702ce2b4585e3602148704c97dca36c339a844d9360ba964f259c80"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/primary-source-index.json",
+      "bytes": 27568,
+      "sha256": "62250580b0551683017290ac607bfe3cc80700526d63675c9b5e15a5378544fc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/input-verification.json",
+      "bytes": 48374,
+      "sha256": "8df80f3487b889dc46b77aa849a4841b43604a3a567bf8e72031b5f696292ad1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/governing-inputs.json",
+      "bytes": 2774,
+      "sha256": "7f68c649ea14df89b50d395095639f429804672305d9af7a0ad9a3939fd158d8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/primary-research.json",
+      "bytes": 34769,
+      "sha256": "95987409ab9e27e52fd82a7844e6a9eccfeacbdd09b0026abeef9dfc847b520c"
+    }
+  ]
+}

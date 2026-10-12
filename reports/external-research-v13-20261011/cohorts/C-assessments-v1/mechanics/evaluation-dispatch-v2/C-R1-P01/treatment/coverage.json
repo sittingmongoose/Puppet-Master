@@ -1,0 +1,507 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "C-R1-P01-treatment",
+  "assessment_scope": "FULL frozen original; all axes assessed without decisive-failure early stopping",
+  "axes": [
+    {
+      "id": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_PRESERVATION_FINDING",
+      "finding": "The final's operating design covers the five functional obligations and three negative constraints. Historical supported meaning has a separate material preservation defect."
+    },
+    {
+      "id": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+      "finding": "Consequential web definitions, vendor conditions and update/persistence APIs are supported. Unverified index reporting is honestly scoped. Alias pinning and component-limit precision have minor limits."
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL_SUPPORTED_HISTORY_CARRY_FORWARD",
+      "finding": "Discovery includes useful focus strategies, error relations, architecture alternatives and bounded regression history. The complete final loses the actionable transient filter-control identity finding identified in T-P01."
+    },
+    {
+      "id": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_MINOR_CRITIC_CLASSIFICATION_LIMIT",
+      "finding": "Every significant plan proposal is addressed. C1's neutral architecture gate is an optional refinement of an already conditional prototype, rather than demonstrated repair of a material defect. Windowing and other capabilities remain available."
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "finding": "T-P01: the investigator's supported distinction between stable row data and stable focus-bearing filter UI is not carried into the self-contained final proposal or its targeted witnesses. Retaining S13 in the source map preserves custody, but not that actionable final design meaning."
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Proposed scenarios identify data/update domains and observable oracles; actual checks are limited to research/hash inspection. No application, demo, synthetic fixture or AT execution is claimed or demanded."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Keyboard browsing, editing, selection and validation",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Keyboard and focus behavior; validation 1–6",
+      "reason": "Managed navigation and editor modes, distinct selection and visible focus, keyboard recovery and error navigation remain."
+    },
+    {
+      "id": "O02",
+      "obligation": "Stable record identity and focus/selection under changes",
+      "coverage": "COMPLETE",
+      "result": "MET_FOR_FINAL_RECORD_STATE",
+      "final_locator": "Record and view state; sorting/recovery sections",
+      "reason": "Domain IDs, field keys, base versions and ID-based focus survive reorder and updates. T-P01 concerns the additional supported transient filter-control distinction."
+    },
+    {
+      "id": "O03",
+      "obligation": "Unsaved edits and disappearance recovery",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Draft, filtering, sorting and recovery",
+      "reason": "External drafts survive row unmount/hide/delete; deliberate recovery and conditional server conflict actions are preserved."
+    },
+    {
+      "id": "O04",
+      "obligation": "Accessible error association and return",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Validation and announcements; validation 3",
+      "reason": "Record/field identity, meaningful text, invalid/error relations, summary actions and hidden-record reveal precede real-editor focus."
+    },
+    {
+      "id": "O05",
+      "obligation": "Responsive rendering, applicability and alternatives",
+      "coverage": "COMPLETE",
+      "result": "MET_RENDERING_WITH_HISTORY_PRESERVATION_FAILURE",
+      "final_locator": "Architecture candidates; sparse rendering; evidence navigation",
+      "reason": "Paging/windowing and alternative ownership boundaries retain large-scale scope and honest platform conditions; supported regression meaning has T-P01."
+    },
+    {
+      "id": "N01",
+      "obligation": "No pointer-only recovery",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Keyboard behavior; pending-edit actions",
+      "reason": "Ordinary operations and every described recovery action have keyboard paths."
+    },
+    {
+      "id": "N02",
+      "obligation": "No removed navigation or tiny-data cap",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Architecture comparison; scale validation",
+      "reason": "Full dataset remains available; realistic thousands-record and actual-maximum tests are proposed."
+    },
+    {
+      "id": "N03",
+      "obligation": "No announcement for every background update",
+      "coverage": "COMPLETE",
+      "result": "MET",
+      "final_locator": "Validation and announcements",
+      "reason": "Routine refresh stays silent; selection and meaningful user-triggered status remain distinct."
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "id": "P01",
+      "proposal": "Windowed rendering",
+      "coverage": "COMPLETE",
+      "disposition": "retain as candidate / neutral comparison",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P02",
+      "proposal": "Stable record keys",
+      "coverage": "COMPLETE",
+      "disposition": "retain / immutable domain IDs",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P03",
+      "proposal": "Logical focus independent of widgets",
+      "coverage": "COMPLETE",
+      "disposition": "retain / separate state",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P04",
+      "proposal": "Move, scroll and focus logical cell",
+      "coverage": "COMPLETE",
+      "disposition": "retain with direct/active-descendant decision",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P05",
+      "proposal": "Full logical accessibility metadata",
+      "coverage": "COMPLETE",
+      "disposition": "retain with strict view/count/index and AT conditions",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P06",
+      "proposal": "Inline record/field draft",
+      "coverage": "COMPLETE",
+      "disposition": "retain with external session store",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P07",
+      "proposal": "Sort/filter during edit",
+      "coverage": "COMPLETE",
+      "disposition": "retain with explicit commit/recovery policy",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P08",
+      "proposal": "Next-row focus after disappearance",
+      "coverage": "COMPLETE",
+      "disposition": "revise to recovery or deliberately mounted real row",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P09",
+      "proposal": "Recovery list",
+      "coverage": "COMPLETE",
+      "disposition": "retain as one external pending-edit task",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P10",
+      "proposal": "Inline error and navigable summary",
+      "coverage": "COMPLETE",
+      "disposition": "retain / strengthen error association",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P11",
+      "proposal": "No detached/duplicate accessibility row",
+      "coverage": "COMPLETE",
+      "disposition": "revise / prohibit fake row and focus real editor",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P12",
+      "proposal": "One polite channel",
+      "coverage": "COMPLETE",
+      "disposition": "revise / field association and tested coalesced status",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P13",
+      "proposal": "Suppress routine announcements",
+      "coverage": "COMPLETE",
+      "disposition": "retain",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P14",
+      "proposal": "Rendering alternatives",
+      "coverage": "COMPLETE",
+      "disposition": "retain / broaden neutral comparison",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P15",
+      "proposal": "Counts/indices sufficient",
+      "coverage": "COMPLETE",
+      "disposition": "reject sufficiency",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P16",
+      "proposal": "Targeted tests",
+      "coverage": "COMPLETE",
+      "disposition": "retain / expand proposed scenarios",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P17",
+      "proposal": "Executed versus proposed checks",
+      "coverage": "COMPLETE",
+      "disposition": "explicit separation",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    },
+    {
+      "id": "P18",
+      "proposal": "Compatibility hypotheses",
+      "coverage": "COMPLETE",
+      "disposition": "web/native applicability remains conditional",
+      "evaluator_result": "JUSTIFIED_WITH_C1_SEVERITY_LIMIT",
+      "final_locator": "Disposition of the released plan; corresponding state/recovery/validation sections"
+    }
+  ],
+  "preservation": [
+    {
+      "id": "record_field_identity",
+      "coverage": "COMPLETE",
+      "from": "discovery state framing; draft domain layer",
+      "to": "final record/view and edit state",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "focus_selection",
+      "coverage": "COMPLETE",
+      "from": "discovery identity/focus; draft keyboard controller",
+      "to": "final independent focus and selection; validation 6",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "direct_focus_active_descendant",
+      "coverage": "COMPLETE",
+      "from": "draft per-clause focus strategy",
+      "to": "final focus-mode disposition and measured ownership/scroll conditions",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "durable_draft_conflict",
+      "coverage": "COMPLETE",
+      "from": "draft edit-session proposal",
+      "to": "final external session, filter/deletion and conflict paths",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "record_field_error_summary",
+      "coverage": "COMPLETE",
+      "from": "draft validation relation and hidden-row actions",
+      "to": "final validation/error association and test 3",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "missing_long_duplicate_labels",
+      "coverage": "COMPLETE",
+      "from": "draft labels and tests",
+      "to": "final safe discriminators/full values; validation 4",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "sparse_structure_conditions",
+      "coverage": "COMPLETE",
+      "from": "draft header totals/index consistency/noncontiguous columns",
+      "to": "final sparse rendering and validation 5",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "rendering_choices_and_tier_context",
+      "coverage": "COMPLETE",
+      "from": "draft alternatives and conditional prototypes",
+      "to": "final neutral candidates and release/tier boundary",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "canvas_semantic_representation_risk",
+      "coverage": "COMPLETE",
+      "from": "draft custom-renderer alternative",
+      "to": "final measured fallback and parallel-representation risk",
+      "result": "PRESERVED"
+    },
+    {
+      "id": "transient_filter_control_identity",
+      "coverage": "COMPLETE",
+      "from": "discovery line 42 and source S13; draft packaged-grid/filter-update risk",
+      "to": "final record/view, keyboard, recovery and validation sections",
+      "result": "MATERIAL_LOSS",
+      "defect_id": "T-P01"
+    },
+    {
+      "id": "roving_entry_focus_visibility",
+      "coverage": "COMPLETE",
+      "from": "discovery #1291/#1575; draft entry/focus validation",
+      "to": "final predictable Tab entry and visible-focus validation",
+      "result": "FUNCTIONAL_MEANING_PRESERVED; named history only in carried map"
+    },
+    {
+      "id": "mixed_content_AT_modes",
+      "coverage": "COMPLETE",
+      "from": "draft S20 discussion and edit/navigation handoff",
+      "to": "final scoped AT testing and editor-key ownership; detailed historical observation only in map",
+      "result": "PARTIAL_NARRATIVE_RETENTION; no additional material defect established"
+    },
+    {
+      "id": "ARIA_AT_index_uncertainty",
+      "coverage": "COMPLETE",
+      "from": "draft search-only Candidate snapshot; critique C3",
+      "to": "final unverified index statement and unchanged map record",
+      "result": "PRESERVED_WITH_HONEST_LIMIT"
+    },
+    {
+      "id": "owner_inputs_validation_truth",
+      "coverage": "COMPLETE",
+      "from": "draft unknowns and unrun tests; critique C4",
+      "to": "final owner decisions and executed-check limits",
+      "result": "PRESERVED"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "coverage": "COMPLETE",
+      "final_disposition": "amend to neutral paired comparison",
+      "evaluator_finding": "Vendor risks support comparison. Calling the already provisional first prototype materially incomplete overstates the evidence; the final retains its capability as a candidate, so no material false rejection follows."
+    },
+    {
+      "id": "C2",
+      "coverage": "COMPLETE",
+      "final_disposition": "amend limit wording; retain release-specific uncertainty",
+      "evaluator_finding": "Avoiding a product cap is correct. Tagged primary code provides a community pagination boundary; final makes no unsupported universal cap claim."
+    },
+    {
+      "id": "C3",
+      "coverage": "COMPLETE",
+      "final_disposition": "retain dated search-only signal as unverified",
+      "evaluator_finding": "The evaluator independently reproduces the official index figures/denominator. Direct page remains an app shell; underlying reports/versions are unassessed. Final uses no numeric product/toolkit verdict."
+    },
+    {
+      "id": "C4",
+      "coverage": "COMPLETE",
+      "final_disposition": "retain owner decisions",
+      "evaluator_finding": "Unknown toolkit, data, server behavior and privacy policy remain honest limitations; proposed mechanisms remain substantive."
+    }
+  ],
+  "source_families": [
+    {
+      "id": "keyboard_focus",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E18",
+        "E19"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Both focus methods and keyboard/editor conditions independently assessed."
+    },
+    {
+      "id": "web_semantics",
+      "evidence": [
+        "E01",
+        "E04"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Counts, header rows, sparse-column conditions and ownership checked."
+    },
+    {
+      "id": "validation_status",
+      "evidence": [
+        "E06",
+        "E07",
+        "E08",
+        "E09"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Error relations, summary routes, known-suggestion exceptions and announcement boundaries checked."
+    },
+    {
+      "id": "native_platform",
+      "evidence": [
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Assessment of applicability/omission boundary complete: candidate native API exploration is generic, actual target stack unknown; no concrete native support result claimed."
+    },
+    {
+      "id": "grid_implementations",
+      "evidence": [
+        "E15",
+        "E18",
+        "E19",
+        "E22",
+        "E23"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Maintained API, tier, overscan and version-specific implementation context checked."
+    },
+    {
+      "id": "identity_local_data",
+      "evidence": [
+        "E16",
+        "E17",
+        "E20",
+        "E21",
+        "E24"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Snapshot identity/state, client/query split and save lifecycle limitations assessed."
+    },
+    {
+      "id": "regression_history",
+      "evidence": [
+        "E27",
+        "E29",
+        "E30"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Reports, merged patches/tests and AT-mode discussion checked; final carry-forward defect found."
+    },
+    {
+      "id": "web_interoperability",
+      "evidence": [
+        "E05",
+        "E31"
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Example warnings and dated official-index observation assessed; underlying ARIA-AT report is separately PARTIAL/UNASSESSED.",
+      "supplemental_report_coverage": "PARTIAL",
+      "underlying_report_tests": "UNASSESSED",
+      "consequential_final_interop_claim": false
+    }
+  ],
+  "unassessed": [
+    {
+      "family": "ARIA_AT_underlying_per_command_reports_and_version_matrix",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_source_grade": false,
+      "reason": "Candidate final does not rely on these as executed or current console results; dated index/search observation checked independently."
+    },
+    {
+      "family": "future_console_physical_AT_and_native_toolkit_implementation",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_source_grade": false,
+      "reason": "Research proposal; future deployment/testing is not required."
+    },
+    {
+      "family": "universal_discovery_recall_and_all_toolkits",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_source_grade": false,
+      "reason": "Finite evaluation cannot establish universal recall/correctness."
+    }
+  ],
+  "limitations": [
+    "Historical source records remain in custody even where actionable final meaning is lost.",
+    "Native source research in the candidate is generic; target-specific contracts remain open rather than claimed verified.",
+    "No actual demo/application/AT execution.",
+    "No universal quality inference or citation-count score."
+  ],
+  "decisive_failure_short_circuit_used": false
+}

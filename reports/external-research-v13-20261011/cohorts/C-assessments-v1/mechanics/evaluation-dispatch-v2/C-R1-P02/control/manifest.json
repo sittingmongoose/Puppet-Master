@@ -1,0 +1,34 @@
+{
+  "schema": "er13.original-evaluation-manifest.v1",
+  "arm_id": "C-R1-P02-control",
+  "frozen_at_utc": "2026-10-12T03:14:48.764233+00:00",
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/assessment.md",
+      "bytes": 6099,
+      "sha256": "fc3e662e3106fbc377b94bcddd88a56e93b7474ed4a0601b439b8b9dcbadcd2e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/assessment.json",
+      "bytes": 13916,
+      "sha256": "07cfe707bcce87b7d762aeaf2bbfa3b5cfcd098bef677104305c10ca6e6b7e4b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/coverage.json",
+      "bytes": 10216,
+      "sha256": "eeb5356aed4a3d532016a6a86b2162aeb4b3a980db71c4bf69d98f3ad48a94db"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/defects.json",
+      "bytes": 4494,
+      "sha256": "cce6767dc07ab50370fa85855dc8cf4b4959ed52c10606493a92b3de23a21f9a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/primary-source-index.json",
+      "bytes": 14574,
+      "sha256": "a62fd5f0104fdd0aacc63fef101e985abd492b6d003a1d28fb6f3f062f31dc09"
+    }
+  ],
+  "immutability": "Original grades/evidence will not be rewritten. Disputes require new separate adjudication."
+}

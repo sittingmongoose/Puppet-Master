@@ -1,0 +1,450 @@
+{
+  "schema": "er13.original-primary-source-index.v1",
+  "arm_id": "C-R2-P01-control",
+  "cost_class": "independent_evaluation",
+  "sources": [
+    {
+      "source_id": "P01",
+      "title": "RFC 4180",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180.html",
+      "version_context": "October 2005; Informational; RFC 7111 update",
+      "inspected_locator": "§§1–3; escaped-field grammar",
+      "governing_context": "Common CSV profile; closing quotes, optional final newline, spaces and dialect differences matter. It is not universal logger semantics.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.002669+00:00",
+        "response_sha256": "4bf1745ec3d09096ef691dba2de1c8c6ce2578881752ec8c2dca03116d191be9",
+        "response_bytes": 17719
+      }
+    },
+    {
+      "source_id": "P02",
+      "title": "W3C CSVW metadata",
+      "url": "https://www.w3.org/TR/tabular-metadata/",
+      "version_context": "Recommendation 2015-12-17",
+      "inspected_locator": "Column properties, inherited null rules, dialect §5.9, security",
+      "governing_context": "Dialect, schema, datatype, primaryKey and null markers are declarative. Empty-string default and metadata transformations are not logger facts.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.003175+00:00",
+        "response_sha256": "f067ee63d1bc32c57e2075499aa415474b69b240c664aad91ffb071dcad15bfc",
+        "response_bytes": 331392
+      }
+    },
+    {
+      "source_id": "P03",
+      "title": "W3C tabular model",
+      "url": "https://www.w3.org/TR/tabular-data-model/",
+      "version_context": "Recommendation 2015-12-17",
+      "inspected_locator": "Cells/null/default; parsing tabular data §8",
+      "governing_context": "Model separates string and semantic values; configurable dialect and nonnormative parsing guidance do not establish instrument conventions.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.003594+00:00",
+        "response_sha256": "e55d28c7805c1573129336a8ae11c189e6ad48886993693799ce0d49b92feb93",
+        "response_bytes": 353203
+      }
+    },
+    {
+      "source_id": "P04",
+      "title": "csv ReaderBuilder",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "version_context": "csv 1.4.0",
+      "inspected_locator": "has_headers, flexible, buffer_capacity",
+      "governing_context": "Headers enabled and equal widths checked by default. flexible disables arity checking; buffer capacity is not a maximum record size.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.204594+00:00",
+        "response_sha256": "74dd40152a257b89e52173412355bb02bfcecf052f73d7b3a75484acca09bd59",
+        "response_bytes": 74131
+      }
+    },
+    {
+      "source_id": "P05",
+      "title": "csv Reader",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "version_context": "csv 1.4.0",
+      "inspected_locator": "Error handling; records/read_record/read_byte_record; positions",
+      "governing_context": "Syntax parser prefers a parse even for malformed CSV. Width, I/O, UTF-8 and typed-deserialization errors are separate; success is not lexical validity.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.204088+00:00",
+        "response_sha256": "43648959a0b102711ac4b073d93b81873282c8fe8fbb68721dbba89c80956418",
+        "response_bytes": 105953
+      }
+    },
+    {
+      "source_id": "P06",
+      "title": "csv tutorial callers",
+      "url": "https://docs.rs/csv/1.4.0/csv/tutorial/",
+      "version_context": "csv 1.4.0",
+      "inspected_locator": "Late unequal-width example; headers; invalid UTF-8",
+      "governing_context": "An earlier record can be returned before a later arity error. Header handling is configured, and byte APIs preserve undecoded data.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.003974+00:00",
+        "response_sha256": "1d37762735fd6e3847d49ef47080266c5a1318ea4aa020d3f793fb5a0a9d9490",
+        "response_bytes": 147039
+      }
+    },
+    {
+      "source_id": "P07",
+      "title": "csv-core reader implementation",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/csv-core/src/reader.rs",
+      "version_context": "Exact csv 1.4.0 repository commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "inspected_locator": "read_record/read_record_dfa EOF caller around 622–654; transition_final_dfa around 748–758; transition_final_nfa around 960–971; nearby parser test module",
+      "governing_context": "Core has no syntax-error result. Quoted-field state at EOF finalizes a record; an open quote can absorb following physical rows without an arity error.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.004725+00:00",
+        "response_sha256": "f6afc1ff07b4bcc50aa609b758a3a15f777f1985c89f97739e0de4745057b308",
+        "response_bytes": 69459
+      }
+    },
+    {
+      "source_id": "P08",
+      "title": "csv reader caller/state implementation",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/src/reader.rs",
+      "version_context": "Exact commit; package identity checked at Cargo.toml",
+      "inspected_locator": "read_byte_record_impl, seek_raw, ReaderState::add_record",
+      "governing_context": "Wrapper enforces field count separately from liberal core parsing. Position arithmetic and caller-installed seek positions explain the bounded overflow report.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:10:04.008597+00:00",
+        "response_sha256": "a08c188f0442390e9b57abd92b94bc7cc401f044848dfeb5cd10f5a9244f4a0c",
+        "response_bytes": 90075
+      }
+    },
+    {
+      "source_id": "P09",
+      "title": "csv package version identity",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/4a3997e91d668ea1d8595bdef15625a77cf2308a/Cargo.toml",
+      "version_context": "csv 1.4.0; Unlicense/MIT",
+      "inspected_locator": "Package version and csv-core dependency",
+      "governing_context": "Confirms commit package version and permissive-core dependency. Exact runtime dependency resolution remains a future packaging input.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:15:22.668774+00:00",
+        "response_sha256": "9edf0f197e736f3eeb49798b2c3fd777cef6e0c63df678967beb94c982808d9e",
+        "response_bytes": 952
+      }
+    },
+    {
+      "source_id": "P10",
+      "title": "Arrow CSV reader",
+      "url": "https://docs.rs/arrow-csv/59.3.0/arrow_csv/reader/index.html",
+      "version_context": "arrow-csv 59.3.0; Apache-2.0; 2026-09-01",
+      "inspected_locator": "Basic Usage; async Decoder caller including final empty-input flush",
+      "governing_context": "Explicit schemas produce columnar batches; async caller must flush EOF. Batch processing alone does not establish syntax validity or bounded oversized records.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:13:15.540398+00:00",
+        "response_sha256": "cb39ff7e5d099b977927debda9a0acd0760d30150ee52c86922ed152ae25267e",
+        "response_bytes": 31635
+      }
+    },
+    {
+      "source_id": "P11",
+      "title": "DuckDB CSV detection",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/auto_detection.md",
+      "version_context": "Rolling current docs; rendered edition 1.5",
+      "inspected_locator": "Sample Size, sniff_csv, type/header/date detection",
+      "governing_context": "Default type sample 20,480; -1 samples entire file. Seekability changes sampling. Header/all-text and date ambiguities require explicit settings.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:12:59.041688+00:00",
+        "response_sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa",
+        "response_bytes": 12270
+      }
+    },
+    {
+      "source_id": "P12",
+      "title": "DuckDB faulty CSV handling",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "version_context": "Rolling current docs; rendered edition 1.5",
+      "inspected_locator": "Structural errors, reject options, projection pushdown example",
+      "governing_context": "Default errors, optional skipped rejects and line cap 2,097,152 are supported. Projecting away a column can suppress its cast error.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:12:59.042186+00:00",
+        "response_sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+        "response_bytes": 12080
+      }
+    },
+    {
+      "source_id": "P13",
+      "title": "DuckDB transactions",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/refs/heads/main/docs/current/sql/statements/transactions.md",
+      "version_context": "Rolling current docs; rendered edition 1.5",
+      "inspected_locator": "BEGIN/COMMIT/ROLLBACK; multi-statement batches; isolation",
+      "governing_context": "Implicit submitted multi-statement batches roll back earlier statements after error; snapshot isolation is documented, not a workload or deployment benchmark.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:12:59.042637+00:00",
+        "response_sha256": "eae6d050474d785e513fddc82502c309128db38fcf843b8c9f12c06c5339244c",
+        "response_bytes": 2534
+      }
+    },
+    {
+      "source_id": "P15",
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_context": "Rolling official docs; no selected shipped build",
+      "inspected_locator": "§§2.1–2.3 and §3",
+      "governing_context": "One writer; DEFERRED does not immediately lock. Busy commit may remain active. Error rollback extent varies; autocommit/transaction-state APIs reveal it.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.688290+00:00",
+        "response_sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+        "response_bytes": 27068
+      }
+    },
+    {
+      "source_id": "P18",
+      "title": "SQLite UPSERT",
+      "url": "https://www.sqlite.org/lang_UPSERT.html",
+      "version_context": "Added 3.24.0; generalized 3.35.0 on 2021-03-12",
+      "inspected_locator": "Description, limitations, history",
+      "governing_context": "Uses declared uniqueness, not domain identity. Last conflict target can be omitted for DO UPDATE in 3.35.0+; virtual tables are excluded.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.206251+00:00",
+        "response_sha256": "32b85ae78ce6d6aa8cf759ecc32a8b3a80f0d3600be89c2fef1952fed38a9307",
+        "response_bytes": 329973
+      }
+    },
+    {
+      "source_id": "P19",
+      "title": "SQLite atomic commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_context": "Rolling official docs; rollback-journal scope",
+      "inspected_locator": "Introduction, hardware assumptions, single-file commit/recovery",
+      "governing_context": "Rollback journal explanation is not WAL evidence. Storage/flush assumptions bound crash guarantees; a separate spool is not automatically covered.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.689566+00:00",
+        "response_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "response_bytes": 77968
+      }
+    },
+    {
+      "source_id": "P20",
+      "title": "SQLite WAL and reset history",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_context": "Official §11: fixed 3.51.3+, backports 3.44.6/3.50.7",
+      "inspected_locator": "Overview/ATTACH exception; §11 conditions and race sequence",
+      "governing_context": "Reset defect needs WAL, multiple connections and overlapping checkpoint/write timing. Cross-ATTACH WAL transactions are not atomic across the set.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.690014+00:00",
+        "response_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "response_bytes": 42143
+      }
+    },
+    {
+      "source_id": "P21",
+      "title": "SQLite synchronous settings",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_context": "Rolling official docs",
+      "inspected_locator": "PRAGMA synchronous FULL/NORMAL/EXTRA; durability matrix",
+      "governing_context": "WAL NORMAL can lose acknowledged commits on system/power failure; FULL adds commit sync. Rollback EXTRA adds directory sync in DELETE mode.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.205821+00:00",
+        "response_sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034",
+        "response_bytes": 139936
+      }
+    },
+    {
+      "source_id": "P22",
+      "title": "SQLite isolation",
+      "url": "https://www.sqlite.org/isolation.html",
+      "version_context": "Rolling official docs",
+      "inspected_locator": "Connection isolation, snapshots, write serialization, BEGIN IMMEDIATE",
+      "governing_context": "Writes serialize within transactions. A completed pre-transaction read does not protect a later write against an intervening committed writer.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:12:59.043567+00:00",
+        "response_sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7",
+        "response_bytes": 17364
+      }
+    },
+    {
+      "source_id": "P23",
+      "title": "rusqlite Transaction",
+      "url": "https://docs.rs/rusqlite/0.40.2/rusqlite/struct.Transaction.html",
+      "version_context": "rusqlite 0.40.2; MIT",
+      "inspected_locator": "Note, caller example, commit/rollback/finish/drop behavior",
+      "governing_context": "Drop defaults to rollback but is configurable; explicit finish exposes errors. Wrapper behavior does not prove filesystem durability.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.204988+00:00",
+        "response_sha256": "7feb15a8fdf73fc19072274706fe53175deb3144acad186f1d61fbdb52c3962b",
+        "response_bytes": 157013
+      }
+    },
+    {
+      "source_id": "P24",
+      "title": "Chrono local-time result",
+      "url": "https://docs.rs/chrono/0.4.45/chrono/offset/enum.LocalResult.html",
+      "version_context": "chrono 0.4.45; MIT OR Apache-2.0",
+      "inspected_locator": "Single/Ambiguous/None definitions",
+      "governing_context": "Fold has two ordered candidates. None can mean a gap or resolution error, including missing zone data or overflow.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.205414+00:00",
+        "response_sha256": "81e6e22acc626baff57ca92f1ffc6b14a5be6a65214bcd6cc1c9b4c01b4bd45c",
+        "response_bytes": 78050
+      }
+    },
+    {
+      "source_id": "P25",
+      "title": "Chrono crate context",
+      "url": "https://docs.rs/chrono/0.4.45/chrono/",
+      "version_context": "chrono 0.4.45",
+      "inspected_locator": "Timezone support and feature/platform notes",
+      "governing_context": "Named-zone data is not shipped by default. Local uses OS context; application must deliberately provide required named-zone data.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:13:15.539599+00:00",
+        "response_sha256": "11e82145e20c2f32a67f75511775e761f70238b7ec2ff11c646510c933346625",
+        "response_bytes": 72466
+      }
+    },
+    {
+      "source_id": "P26",
+      "title": "RFC 3339",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "version_context": "2002; updated by RFC 9557",
+      "inspected_locator": "§§4.2–4.4, §5.6",
+      "governing_context": "Offset-qualified timestamp expresses an instant; unknown local offset does not mean UTC itself is unknown. Unqualified wall time needs context.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.690513+00:00",
+        "response_sha256": "c53b2d121b9f284e2cb28e2989c907470ae26a9db441bcd8a3236c6004a60bee",
+        "response_bytes": 44033
+      }
+    },
+    {
+      "source_id": "P27",
+      "title": "RFC 9557",
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "version_context": "2024 update to RFC 3339",
+      "inspected_locator": "§2 offset update; §3 time-zone definitions",
+      "governing_context": "Updates Z/unknown-local-offset semantics while UTC is known; named-zone reverse mapping can have zero/multiple instants and changing rules.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.691494+00:00",
+        "response_sha256": "d7cc2c033d8e4f4e3f7149003023567374997129c553dca1c68cf914bc2cd827",
+        "response_bytes": 109831
+      }
+    },
+    {
+      "source_id": "P28",
+      "title": "UCUM",
+      "url": "https://ucum.org/ucum",
+      "version_context": "UCUM 2.2 dated 2024-06-17",
+      "inspected_locator": "Syntax/case; special units §21–23; arbitrary units §24",
+      "governing_context": "Unit semantics include non-scalar functions; arbitrary/procedure-defined units are not commensurable. Confirm label/quantity before conversion.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:11:45.692353+00:00",
+        "response_sha256": "6bcf017c304a9b85adfddd7abfcf353162f556fcd1ddb13d98a23a8555b65dd2",
+        "response_bytes": 545722
+      }
+    },
+    {
+      "source_id": "P29",
+      "title": "Fellegi and Sunter original paper",
+      "url": "https://nhis.ipums.org/nhis/resources/Fellegi69.pdf",
+      "version_context": "JASA 64(328), 1969, 1183–1210; original reprint",
+      "inspected_locator": "Opening abstract and comparison/error/decision definitions",
+      "governing_context": "Three actions include possible link under insufficient evidence. Model does not supply logger keys or automatic thresholds; no performance theorem is claimed here.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.421256+00:00",
+        "response_sha256": "77262e3c19b5a5afa1d4753e4cb1dd24bac16dbc9af396baa78b61ca2220b4b0",
+        "response_bytes": 2705571
+      }
+    },
+    {
+      "source_id": "P31",
+      "title": "csv issue 427",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/427",
+      "version_context": "Open report, 2026-03-16; comments June/August 2026",
+      "inspected_locator": "Public seek_raw reproducer, record-position follow-up, proposed fix comment",
+      "governing_context": "Extreme supplied positions can overflow; ordinary sequential workload is not established defective. No merged fix is shown.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.210593+00:00",
+        "response_sha256": "78bae618ee97dc3ea1a6254117b594d404c930e07db4d27944e263d69ff14a6b",
+        "response_bytes": 337097
+      }
+    },
+    {
+      "source_id": "P32",
+      "title": "csv issue 422",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/422",
+      "version_context": "Open report 2026-01-27; comment 2026-02-23",
+      "inspected_locator": "Report and trailing-newline/regular-width follow-up",
+      "governing_context": "Page has activity: commenter reproduces equal widths and explains post-read line counter versus final missing newline; no maintainer fix is shown.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.207057+00:00",
+        "response_sha256": "03766ec95952aa1956fca17bd7f5c5bf96f643aad61a5a1c26b377b2da8fe752",
+        "response_bytes": 272519
+      }
+    },
+    {
+      "source_id": "P33",
+      "title": "csv discussion 402",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/402",
+      "version_context": "Maintainer answer 2025-09-13",
+      "inspected_locator": "set_headers caller and accepted flexible answer",
+      "governing_context": "Changing declared header does not change established expected arity; flexible bypasses checking and is not semantic validation.",
+      "assessment_coverage": "COMPLETE",
+      "operation": "Independent public primary-source read; documentation/code/callers/tests were inspected, not executed.",
+      "retrieval_receipt": {
+        "accessed_utc": "2026-10-12T03:18:32.377002+00:00",
+        "response_sha256": "0c994bbdd295dacd3b7c17a68b53158a068c8b0e0143ace622a204e281d5aa39",
+        "response_bytes": 300959
+      }
+    }
+  ],
+  "shared_independent_research": true,
+  "evidence_manifest_reference": "../primary-source-evidence.json",
+  "evidence_sha256": "d11be9d936182b88fd30b0d39804a4540636631a26694582392c463d136d6121",
+  "public_source_notice": "Sources are linked and paraphrased rather than recopied. Rust csv: Unlicense/MIT; Arrow: Apache-2.0; rusqlite: MIT; Chrono: MIT OR Apache-2.0; OGC copyright ©2021 OGC and its license remain at the linked original; Fellegi/Sunter reprint retains publisher permission notice. No downstream code or entire pages were redistributed.",
+  "limits": [
+    "Only consequential authority context was inspected; no universal corpus recall or all-upstream-tests audit is claimed.",
+    "Original research reprint was used after publisher access denial. Public linked source hashes are byte identities, not semantic scores."
+  ]
+}

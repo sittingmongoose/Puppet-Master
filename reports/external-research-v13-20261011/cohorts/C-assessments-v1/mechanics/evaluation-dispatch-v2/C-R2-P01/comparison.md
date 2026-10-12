@@ -1,0 +1,9 @@
+# Post-freeze pair comparison — C-R2-P01
+
+Both independent original source judgments are **FAIL**, with COMPLETE finite assessment of all six axes and explicitly UNASSESSED real-logger and future-deployment families. Control has material available parser-condition omission C-M01. Treatment has material protected-generation preservation loss T-M01. Their original records/manifests were frozen first and remain unchanged.
+
+Control retains the protected write-boundary recheck and adds setting-specific durability; treatment retains the parser-salvage caveat and adds numeric grammar, snapshot scope and conditional WAL/outer-rollback detail. These supported strengths and different defects are a finite signal from one matched pair, not universal quality or a causal recipe ranking. Paths and topology reveal technique, so blinding is imperfect. No recipe is selected.
+
+The native final-terminal receipt proxy is 1668.950 seconds from control T0 and 1472.148 seconds from treatment T0: treatment minus control is **−196.802 seconds** for that proxy only. Exact last scientific write and per-arm request-to-quiet completion are unknown; common frozen status gives upper bounds. Both are observed terminal within the unchanged 60-minute window. A FAIL/FAIL pair cannot establish equal-quality latency savings.
+
+Declared product topology has three control and four treatment contexts, including parallel treatment critics. Actual created/started occupancy, active provider work, usage attribution, subscription consumption and billing are UNKNOWN, not zero. Native receipt consistency does not prove independent task/session linkage or actual operator/recipe execution. There are zero passing originals in two assigned arms, so consumption per passing final is undefined. Grader cost is independent_evaluation, shared across this pair and separate from candidate product, preparation/support/publication. No cold pipeline or component discovery claim is made.

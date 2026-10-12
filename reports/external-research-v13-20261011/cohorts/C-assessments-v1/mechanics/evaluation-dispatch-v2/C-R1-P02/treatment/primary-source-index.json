@@ -1,0 +1,254 @@
+{
+  "arm_id": "C-R1-P02-treatment",
+  "access_utc_window": {
+    "start": "2026-10-12T03:03:55Z",
+    "end": "2026-10-12T03:16:59.853127+00:00",
+    "precision": "Evaluation-wide bound; exact per-request browser timestamps unavailable"
+  },
+  "coverage_semantics": "COMPLETE for declared consequential planning claims/context, not corpus completeness or execution",
+  "sources": [
+    {
+      "id": "P01",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_or_context": "live manual, exact build UNKNOWN",
+      "locator": "stream specifiers; -show_streams/-show_packets/-show_frames/-read_intervals",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Explicit stream selection and packet/frame reports are available; interval seeking is approximate.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P02",
+      "url": "https://ffmpeg.org/doxygen/trunk/frame_8h_source.html",
+      "version_or_context": "trunk API; build UNKNOWN",
+      "locator": "frame.h pts/time_base; lines 590–596 and 745–750",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Frame PTS needs a time base; best_effort_timestamp is heuristic in stream units. AVFrame.time_base is not guaranteed populated by every decoder.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P03",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/fftools/ffprobe.c",
+      "version_or_context": "n9.0.2; LGPL-2.1-or-later source notice",
+      "locator": "show_frame; open_input_file; probe_file, web lines 1419–1431, 2474, 2512–2514",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Caller pairs reported frame timestamps with AVStream.time_base and sets decoder pkt_timebase; deeper frame reporting differs from inventory.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P04",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version_or_context": "live CLI manual; build UNKNOWN",
+      "locator": "-ss; -isync; streamcopy and -map",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Input seeking has preroll; accurate transcoding discards it, streamcopy preserves it. -isync expects common-clock timestamps.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P05",
+      "url": "https://www.ffmpeg.org/ffmpeg-formats.html",
+      "version_or_context": "live format manual; build UNKNOWN",
+      "locator": "use_wallclock_as_timestamps; avoid_negative_ts",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Wall-clock timestamps default off. auto may shift output timestamps; common shifts retain relative stream differences.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P06",
+      "url": "https://ffmpeg.org/download.html",
+      "version_or_context": "9.0.2 Lei, 2026-09-18; other maintained branches",
+      "locator": "Releases and library version table",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "9.0.2 is the latest stable 9.0 branch release shown. A release label does not identify a locally shipped build.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P11",
+      "url": "https://docs.kdenlive.org/en/getting_started/configure_kdenlive/configuration_proxy_clips.html",
+      "version_or_context": "26.08 manual",
+      "locator": "profile/hardware controls and external proxies",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Proxy profiles depend on hardware; external camera proxies and parameter controls are documented. This page does not establish revision or alignment semantics.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P16",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/releases",
+      "version_or_context": "v0.18.0 209d723; v0.18.1 4423671; v0.15 3703ac7",
+      "locator": "0.18.1 packaging fix; v0.15 compatibility section",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Clip.2/multiple references and schema downgrade were introduced in v0.15, not v0.18.0. v0.18.1 is marked prerelease and fixes Linux wheels.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P17",
+      "url": "https://opentimelineio.readthedocs.io/en/v0.18.1/tutorials/otio-filebundles.html",
+      "version_or_context": "0.18.1",
+      "locator": "bundle layout; extraction args; write policies",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Flat bundles require unique basenames and copy media. Default reads parse timeline only; extract_to_directory can extract media. AllMissing preserves reference metadata without media.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P20",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "version_or_context": "RFC 8493, BagIt 1.0, October 2018",
+      "locator": "1.3; 2.1.2–2.1.3; 3; 5.1; interoperability",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Fixity/containment governs opaque included payload. Completeness and checksum validity differ; external-file search and timeline meaning require application rules.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P21",
+      "url": "https://www.ffmpeg.org/fate.html",
+      "version_or_context": "live test docs",
+      "locator": "samples, test subsets, assert level",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "FATE tests FFmpeg/build behavior; some assertions default off. Public samples do not validate application alignment/revision semantics.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P22",
+      "url": "https://opentimelineio.readthedocs.io/en/v0.18.1/tutorials/time-ranges.html",
+      "version_or_context": "0.18.1",
+      "locator": "available/source/trimmed ranges, parent coordinates, markers",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Clip and parent coordinates differ; unknown available ranges are explicit. This is useful interchange context, not a complete source-clock model.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P23",
+      "url": "https://opentimelineio.readthedocs.io/en/v0.18.0/tutorials/write-an-adapter.html",
+      "version_or_context": "0.18.0",
+      "locator": "native lossless format and Metadata section",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Native .otio preserves OTIO objects and metadata; namespaced custom dictionaries are supported. External adapters can be lossy and custom semantics remain application-owned.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P24",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/pull/1477",
+      "version_or_context": "merged 2024-11-14; merge 383cfda",
+      "locator": "conversation, files and test changes",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Rate helpers and timecode handling changed. The merge is not proof that all adapter callers adopted normalization.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P25",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1983",
+      "version_or_context": "closed duplicate; report for OTIO/plugins 0.18.1",
+      "locator": "ALE reproduction and exact-rate example",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Reported truncated decimal ALE failures are version/caller-specific; exact fractional input reportedly succeeds. No evaluator reproduction.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P26",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1980",
+      "version_or_context": "open; 0.19.0 milestone",
+      "locator": "90fps report and maintainer policy discussion",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "SMPTE helper restrictions and contemplated changes do not mean RationalTime cannot hold arbitrary rates. A milestone is not a shipped fix.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P27",
+      "url": "https://github.com/OpenTimelineIO/otio-ale-adapter/blob/cc9e7a1016f00c67345d0be3b427208be528edf6/src/otio_ale_adapter/ale.py",
+      "version_or_context": "cc9e7a1016f00c67345d0be3b427208be528edf6; Apache-2.0",
+      "locator": "Start/Duration/End from_timecode caller and exception path",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Caller passes fps into timecode parsing and converts parsing failures to ALEParseError; static inspection only.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P28",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/ad449d8122e778e80e57ac7e6b1b1a38afe7f91b/src/opentime/rationalTime.cpp",
+      "version_or_context": "ad449d8122e778e80e57ac7e6b1b1a38afe7f91b; Apache-2.0",
+      "locator": "is_smpte_timecode_rate; from_timecode",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Exact membership validation guards from_timecode. Rate-helper policy must be distinguished from general timeline representation.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P29",
+      "url": "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/v0.18.1/tests/test_opentime.py",
+      "version_or_context": "v0.18.1; Apache-2.0",
+      "locator": "test_nearest_smpte_timecode_rate and time string/frame tests",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Tests cover normalization helpers and time operations; they do not establish every ALE caller round trip. Tests inspected, not run.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P31",
+      "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+      "version_or_context": "W3C Candidate Recommendation Draft, 2026-05-20",
+      "locator": "status; 4.1 cue syntax/timestamps; parsing",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Cue identifiers are optional but must be file-unique when present; ordered starts and overlaps are permitted. This is a draft, not a completed Recommendation.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P32",
+      "url": "https://tech.ebu.ch/docs/tech/tech3285.pdf",
+      "version_or_context": "EBU Tech 3285 v2, May 2011",
+      "locator": "PDF page 10, printed 11, TimeReference",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "64-bit first-sample count since midnight uses file sample frequency. No assertion of agreement between independent clocks follows.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P33",
+      "url": "https://github.com/ResearchObject/ro-crate/blob/1.2.0/docs/_specification/1.2/data-entities.md",
+      "version_or_context": "RO-Crate 1.2.0 tag",
+      "locator": "path encoding; attached/detached File rules",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Attached relative IDs identify present files under the crate root; detached File entities use absolute web references. Offline relinking remains a separate application concern.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P34",
+      "url": "https://mediaarea.net/en/MediaInfo/Support/Fields",
+      "version_or_context": "field dictionary explicitly 23.10",
+      "locator": "stream fields and MIXML mapping limits",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Metadata vocabulary is useful for cross-checks; pivot-format compatibility and source-dependent mappings are limited.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    },
+    {
+      "id": "P35",
+      "url": "https://www.matroska.org/downloads/test_suite.html",
+      "version_or_context": "eight-file public catalog; no per-fixture version/hash checked",
+      "locator": "test1–test8 and container-versus-codec note",
+      "observed_operation": "Independent primary-page/context read; no software execution",
+      "observation": "Fixtures include nondefault time scale, multiple tracks, cue-less seeking, damage and gaps. Their purpose is container robustness, not codec or application completeness.",
+      "coverage": "COMPLETE",
+      "limits": "Finite claim-level review; no universal compatibility or runtime certification"
+    }
+  ],
+  "shared_lookup": "Evaluator-owned primary lookup reused across matched arms; no candidate assistance",
+  "evidence_policy": "Compact observations and exact public URLs/versions/locators; no corpus copies or private telemetry",
+  "unexecuted": "No media processing, software tests, fixture downloads, product deployment or public-source code execution"
+}

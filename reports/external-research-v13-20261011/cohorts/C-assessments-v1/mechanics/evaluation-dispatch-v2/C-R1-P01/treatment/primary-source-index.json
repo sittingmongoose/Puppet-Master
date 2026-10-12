@@ -1,0 +1,220 @@
+{
+  "schema": "er13.original-primary-source-index.v1",
+  "arm_id": "C-R1-P01-treatment",
+  "independent_research_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/evidence/primary-research.json",
+  "independent_research_evidence": "Exact links, version context, definitions, adjacent code/tests and observations in the frozen shared evidence.",
+  "candidate_source_bindings": [
+    {
+      "candidate_source_id": "S01",
+      "independent_source_id": "E01",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S02",
+      "independent_source_id": "E02",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S03",
+      "independent_source_id": "E03",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S04",
+      "independent_source_id": "E15",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S05",
+      "independent_source_id": "E18",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S06",
+      "independent_source_id": "E16",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S07",
+      "independent_source_id": "E17",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S08",
+      "independent_source_id": "E24",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S09",
+      "independent_source_id": "E19",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S10",
+      "independent_source_id": "E22",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S11",
+      "independent_source_id": "E21",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S12",
+      "independent_source_id": "E20",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S13",
+      "independent_source_id": "E27",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S14",
+      "independent_source_id": "E29",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S15",
+      "independent_source_id": "E29",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S16",
+      "independent_source_id": "E06",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S17",
+      "independent_source_id": "E04",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S18",
+      "independent_source_id": "E05",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S19",
+      "independent_source_id": "E31",
+      "assessment_coverage": "COMPLETE",
+      "underlying_report_coverage": "PARTIAL",
+      "underlying_per_command_tests": "UNASSESSED"
+    },
+    {
+      "candidate_source_id": "S20",
+      "independent_source_id": "E30",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S21",
+      "independent_source_id": "E17",
+      "assessment_coverage": "COMPLETE"
+    },
+    {
+      "candidate_source_id": "S22",
+      "independent_source_id": "E22",
+      "assessment_coverage": "COMPLETE"
+    }
+  ],
+  "additional_governing_context": [
+    "E07",
+    "E08",
+    "E09",
+    "E10",
+    "E11",
+    "E12",
+    "E13",
+    "E14",
+    "E23"
+  ],
+  "source_family_coverage": [
+    {
+      "id": "keyboard_focus",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E18",
+        "E19"
+      ]
+    },
+    {
+      "id": "web_semantics",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E01",
+        "E04"
+      ]
+    },
+    {
+      "id": "validation_status",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E06",
+        "E07",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "native_platform",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "id": "grid_implementations",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E15",
+        "E18",
+        "E19",
+        "E22",
+        "E23"
+      ]
+    },
+    {
+      "id": "identity_local_data",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E16",
+        "E17",
+        "E20",
+        "E21",
+        "E24"
+      ]
+    },
+    {
+      "id": "regression_history",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E27",
+        "E29",
+        "E30"
+      ]
+    },
+    {
+      "id": "web_interoperability",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E05",
+        "E31"
+      ],
+      "supplemental_report_coverage": "PARTIAL"
+    }
+  ],
+  "applicability": "Web mechanism claims assessed as conditional references. Native toolkit/AT support remains a future measured question, not established by these sources.",
+  "limitations": [
+    "Underlying ARIA-AT report/versions UNASSESSED; its dated index usage assessed.",
+    "Candidate historic source retention does not resolve T-P01 final preservation loss.",
+    "No deployment, physical-AT or universal recall claim."
+  ],
+  "cost_category": "independent_evaluation"
+}

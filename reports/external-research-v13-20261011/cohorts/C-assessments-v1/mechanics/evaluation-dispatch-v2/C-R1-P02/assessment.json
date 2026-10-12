@@ -1,0 +1,345 @@
+{
+  "schema": "er13.original-paired-assessment.v1",
+  "block_id": "C-R1-P02",
+  "arm_count": 2,
+  "scope": "FULL",
+  "evaluator_id": "er13-original-grader-v2-C-R1-P02-001",
+  "original_per_arm_manifests": [
+    {
+      "arm_id": "C-R1-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/manifest.json",
+      "sha256": "2ee531518c357c1dd5bff5fbc89473c75212400fd9e493bacb8121dd812cbda4"
+    },
+    {
+      "arm_id": "C-R1-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/treatment/manifest.json",
+      "sha256": "7632cadc356f3e9c1579c7a919d65a4f2128d1305427754e8047db6b56016343"
+    }
+  ],
+  "arms": [
+    {
+      "arm_id": "C-R1-P02-control",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "material_defect_ids": [
+          "C-PRES-01"
+        ],
+        "nonmaterial_defect_ids": [
+          "C-SRC-02",
+          "C-LIM-03"
+        ],
+        "reason": "Supported decision-bearing ELAN/Kdenlive alternatives are lost from the self-contained final without a supported rejection/disposition. Core behavioral planning remains useful; this finite source FAIL is not universal incorrectness.",
+        "deployment_required": false
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "O01–O05 and N01–N03; all four substantive plan paragraphs read and disposition crosswalk checked."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED_WITH_NONMATERIAL_ERRORS",
+            "evidence": "Primary FFmpeg docs/API/caller, MLT history, Kdenlive/ELAN manuals, OTIO bundle/release/URL context, BagIt and FATE; C-SRC-02 and C-LIM-03."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and failure/fix history",
+            "coverage": "COMPLETE",
+            "result": "NOT_SATISFIED",
+            "evidence": "Meaningful mechanisms and rate/XML history exist; decision-bearing maintained-tool alternatives do not survive into the complete final (C-PRES-01)."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan/critic dispositions",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Every final plan row and five critic findings checked; OTIO issue correction, MLT chronology, paragraph order, API locator and unlisted receipt pointer resolved."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained through complete final",
+            "coverage": "COMPLETE",
+            "result": "NOT_SATISFIED",
+            "evidence": "Core source clocks, revisions, stream selection, package modes, optional models and validation survive; ELAN/Kdenlive alternative comparison lost (C-PRES-01)."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation and truthful executed-work distinction",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Known-answer timing, VFR/multiple streams, uncertainty, revision/pin/rebase, immutability, interrupted proxies, relinking and public-fixture matrix are proposals; no product/media checks claimed executed."
+          }
+        ],
+        "obligations_and_source_families": "coverage.json",
+        "full_declared_coverage": true
+      },
+      "defects": {
+        "file": "defects.json",
+        "material_ids": [
+          "C-PRES-01"
+        ],
+        "historical_corrections": [
+          "C-HIST-04",
+          "C-HIST-05"
+        ]
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "required_science_present": true,
+        "final_present": true,
+        "missing_final": false,
+        "science_read": "Complete brief, plan, investigator discovery/draft/source-map/index/reveal; complete critic critique/map; complete reviser final/map and all notified witnesses. No other critics in exact manifest inventory.",
+        "final_sha256": "4aac21f9ea0fb30878997638b45509944cd1f4278ef57c8ddcd70e738777fbd4"
+      },
+      "time_eligibility": {
+        "maximum_minutes": 60,
+        "judgment": "ELIGIBLE_ON_FROZEN_TIMESTAMPS",
+        "clock_adjusted": false,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "proxy_definition": "T0 to final-stage auxiliary freeze is an observed post-terminal custody upper bound, not precise last-artifact or active-provider latency. Native-terminal span reported separately.",
+        "t0_utc": "2026-10-12T02:38:08.366Z",
+        "whole_deadline_utc": "2026-10-12T03:38:08.366Z",
+        "final_science_snapshot_observed_by_utc": "2026-10-12T03:02:21.355848+00:00",
+        "all_science_snapshot_before_whole_deadline": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T02:38:09.251Z",
+            "dispatch_return_captured_utc": "2026-10-12T02:38:10.101Z",
+            "native_created_utc": "2026-10-12T02:38:22+00:00",
+            "native_terminal_updated_utc": "2026-10-12T02:46:07+00:00",
+            "captured_native_lifecycle_seconds": 465,
+            "stage_deadline_utc": "2026-10-12T03:08:09.251Z",
+            "within_stage_deadline": true,
+            "post_terminal_auxiliary_freeze_utc": "2026-10-12T02:48:39.511946+00:00",
+            "task_status": "completed",
+            "pending_children": false
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T02:48:48.336Z",
+            "dispatch_return_captured_utc": "2026-10-12T02:48:49.129Z",
+            "native_created_utc": "2026-10-12T02:48:57+00:00",
+            "native_terminal_updated_utc": "2026-10-12T02:54:43+00:00",
+            "captured_native_lifecycle_seconds": 346,
+            "stage_deadline_utc": "2026-10-12T03:00:48.336Z",
+            "within_stage_deadline": true,
+            "post_terminal_auxiliary_freeze_utc": "2026-10-12T02:55:21.961704+00:00",
+            "task_status": "completed",
+            "pending_children": false
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T02:55:26.142Z",
+            "dispatch_return_captured_utc": "2026-10-12T02:55:27.291Z",
+            "native_created_utc": "2026-10-12T02:55:34+00:00",
+            "native_terminal_updated_utc": "2026-10-12T03:00:08+00:00",
+            "captured_native_lifecycle_seconds": 274,
+            "stage_deadline_utc": "2026-10-12T03:13:26.142Z",
+            "within_stage_deadline": true,
+            "post_terminal_auxiliary_freeze_utc": "2026-10-12T03:02:19.750996+00:00",
+            "task_status": "completed",
+            "pending_children": false
+          }
+        ],
+        "T0_to_final_native_terminal_proxy_seconds": 1319.634,
+        "T0_to_final_stage_post_terminal_custody_proxy_seconds": 1451.384996,
+        "exact_queue_setup_admission_boundaries": "UNKNOWN beyond notified T0/request/dispatch/native timestamps",
+        "exact_request_to_quiet_time": "UNKNOWN; post-terminal custody freeze is a conservative named proxy, not exact quiet time"
+      },
+      "method_compliance": {
+        "judgment": "OBSERVED_PRESERVATION_NONCOMPLIANCE",
+        "scientific_fidelity_defect": "C-PRES-01",
+        "observed_topology": "investigator → independent critic → fresh reviser",
+        "discovery_freeze": "Recorded discovery/plan hashes match terminal snapshot; single-use reveal receipt present. Pre-reveal cognition not independently observable.",
+        "mechanical_status": "Notified stages completed with zero pending; lifecycle receipts internally consistent. Manifest qualification flags remain false; no retrospective replacement/qualification invented.",
+        "unobserved_execution": "UNKNOWN beyond frozen custody"
+      },
+      "native_identity_provenance": {
+        "judgment": "CAPTURE_CONSISTENCY_VERIFIED; INDEPENDENT_LINKAGE_UNKNOWN",
+        "checks": "Create and active receipts equal; exact objective and same native birth identity retained to complete terminal response for each stage.",
+        "real_execution_linkage": "UNKNOWN beyond assigned objective/capture custody",
+        "pre_input_activation_chronology": "UNKNOWN independently",
+        "no_replacement_goal_proof": "UNKNOWN; one lifecycle captured per notified stage",
+        "attempt_marker": "UNKNOWN activation-attempt metadata is not a native receipt."
+      },
+      "resource_billing_coverage": {
+        "category": "candidate_product",
+        "coverage": "PARTIAL",
+        "observed": "Three terminal stage records and captured native open-lifecycle intervals; native counters are not independent activity or billing evidence.",
+        "active_provider_activity": "UNKNOWN",
+        "billed_cost": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "context_occupancy": "UNKNOWN beyond captured native lifecycle spans",
+        "failed_or_missing_denominator": "This assigned arm retained; no missing stage/final in notified snapshot.",
+        "public_usage_quantities": "Not published under privacy contract",
+        "independent_evaluation": "Separate category; never included as candidate product consumption"
+      }
+    },
+    {
+      "arm_id": "C-R1-P02-treatment",
+      "source_judgment": {
+        "judgment": "PASS",
+        "material_defect_ids": [],
+        "nonmaterial_defect_ids": [
+          "T-SRC-01",
+          "T-SRC-02"
+        ],
+        "reason": "No material unsupported claim, required omission, false rejection or preservation loss found under complete finite declared assessment. Two nonmaterial source metadata errors do not change the proposal's governing mechanisms.",
+        "deployment_required": false
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "All O01–O05/N01–N03 and significant provisional plan clauses examined."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED_WITH_NONMATERIAL_SOURCE_METADATA_ERRORS",
+            "evidence": "Independent governing spec/API/caller/test/release/issue reads support consequential claims; T-SRC-01/T-SRC-02 do not change proposed behavior."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and failure/fix history",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Native OTIO custom metadata option, WebVTT precision boundary, BWF definition, BagIt/RO-Crate packaging, MediaInfo parser cross-check, Kdenlive proxy option and concrete OTIO caller history."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan/critic dispositions",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Every CR-01–CR-07 disposition and significant plan clause examined; no material false rejection found."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained through complete final",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Source/session basis, approval impacts, cue lineage, storage/reference alternatives, tool/format opportunities, owner choices and validation truth preserved; OTIO alternative strengthened."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation and truthful executed-work distinction",
+            "coverage": "COMPLETE",
+            "result": "SATISFIED",
+            "evidence": "Independent timing oracles, validation anchors distinct from two-point fit, VFR/multiple streams, revisions, preview interruption/maps, moved roots and public parser fixtures; no execution falsely claimed."
+          }
+        ],
+        "obligations_and_source_families": "coverage.json",
+        "full_declared_coverage": true
+      },
+      "defects": {
+        "file": "defects.json",
+        "material_ids": [],
+        "nonmaterial_ids": [
+          "T-SRC-01",
+          "T-SRC-02"
+        ]
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "required_science_present": true,
+        "final_present": true,
+        "missing_final": false,
+        "science_read": "Complete original brief/revealed plan, investigator discovery/draft/source-map/index/reveal, entire combined critic/finalizer critique/final/map/index and all notified witnesses. No parallel/breadth/truth critic documents appear in this arm's manifest inventory.",
+        "final_sha256": "e1c7551683507c705fd607856908e7aa136b0a63a3a1b640ee7bd73a84d6ebd2"
+      },
+      "time_eligibility": {
+        "maximum_minutes": 60,
+        "judgment": "ELIGIBLE_ON_FROZEN_TIMESTAMPS",
+        "clock_adjusted": false,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "proxy_definition": "T0 to final-stage auxiliary freeze is an observed post-terminal custody upper bound, not precise last-artifact or active-provider latency. Native-terminal span reported separately.",
+        "t0_utc": "2026-10-12T02:38:10.241Z",
+        "whole_deadline_utc": "2026-10-12T03:38:10.241Z",
+        "final_science_snapshot_observed_by_utc": "2026-10-12T03:02:21.355848+00:00",
+        "all_science_snapshot_before_whole_deadline": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T02:38:10.969Z",
+            "dispatch_return_captured_utc": "2026-10-12T02:38:11.855Z",
+            "native_created_utc": "2026-10-12T02:38:18+00:00",
+            "native_terminal_updated_utc": "2026-10-12T02:49:51+00:00",
+            "captured_native_lifecycle_seconds": 693,
+            "stage_deadline_utc": "2026-10-12T03:08:10.969Z",
+            "within_stage_deadline": true,
+            "post_terminal_auxiliary_freeze_utc": "2026-10-12T02:50:20.509256+00:00",
+            "task_status": "completed",
+            "pending_children": false
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T02:50:28.142Z",
+            "dispatch_return_captured_utc": "2026-10-12T02:50:29.060Z",
+            "native_created_utc": "2026-10-12T02:50:37+00:00",
+            "native_terminal_updated_utc": "2026-10-12T02:59:02+00:00",
+            "captured_native_lifecycle_seconds": 505,
+            "stage_deadline_utc": "2026-10-12T03:20:28.142Z",
+            "within_stage_deadline": true,
+            "post_terminal_auxiliary_freeze_utc": "2026-10-12T02:59:31.317246+00:00",
+            "task_status": "completed",
+            "pending_children": false
+          }
+        ],
+        "T0_to_final_native_terminal_proxy_seconds": 1251.759,
+        "T0_to_final_stage_post_terminal_custody_proxy_seconds": 1281.076246,
+        "exact_queue_setup_admission_boundaries": "UNKNOWN beyond notified T0/request/dispatch/native timestamps",
+        "exact_request_to_quiet_time": "UNKNOWN; post-terminal custody freeze is a conservative named proxy, not exact quiet time"
+      },
+      "method_compliance": {
+        "judgment": "CONSISTENT_WITH_OBSERVED_SCIENTIFIC_METHOD",
+        "observed_topology": "investigator → independent critic/finalizer in the same second-stage captured lifecycle",
+        "negative_claim_challenge": "Native OTIO metadata capability checked and categorical exclusion avoided; other consequential conditions/source versions explicitly reviewed.",
+        "discovery_freeze": "Discovery and plan hashes match single-use reveal receipt; actual pre-reveal cognition UNKNOWN.",
+        "mechanical_status": "All notified tasks terminal and zero pending; receipts internally consistent. Manifest qualification flags remain false.",
+        "metadata_limit": "Supplement run.json retains method_id R0 while frozen assignments explicitly specify the two-context topology and critic addition. Actual recipe/operator provenance remains UNKNOWN beyond custody.",
+        "unobserved_execution": "UNKNOWN beyond frozen custody"
+      },
+      "native_identity_provenance": {
+        "judgment": "CAPTURE_CONSISTENCY_VERIFIED; INDEPENDENT_LINKAGE_UNKNOWN",
+        "checks": "Create/active receipts equal; exact objective and same native birth identity retained to complete terminal response for each stage.",
+        "real_execution_linkage": "UNKNOWN beyond assigned objective/capture custody",
+        "pre_input_activation_chronology": "UNKNOWN independently",
+        "no_replacement_goal_proof": "UNKNOWN; one lifecycle captured per notified stage",
+        "attempt_marker": "UNKNOWN activation-attempt metadata is not a native receipt."
+      },
+      "resource_billing_coverage": {
+        "category": "candidate_product",
+        "coverage": "PARTIAL",
+        "observed": "Two terminal stage records and captured native open-lifecycle intervals; native counters do not establish independent provider activity or billing.",
+        "active_provider_activity": "UNKNOWN",
+        "billed_cost": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "context_occupancy": "UNKNOWN beyond captured native lifecycle spans",
+        "failed_or_missing_denominator": "This assigned arm retained; no missing stage/final in notified snapshot.",
+        "public_usage_quantities": "Not published under privacy contract",
+        "independent_evaluation": "Separate category; never included as candidate product consumption"
+      }
+    }
+  ],
+  "comparative_analysis_started": false,
+  "notice": "Assembly of separately frozen original records; no grades changed and no comparison yet.",
+  "independent_evaluation": {
+    "category": "independent_evaluation",
+    "start_utc": "2026-10-12T03:03:55Z",
+    "originals_assembled_utc": "2026-10-12T03:17:17.903230+00:00",
+    "active_provider_activity": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "context_occupancy": "UNKNOWN"
+  }
+}

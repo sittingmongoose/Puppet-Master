@@ -1,0 +1,303 @@
+{
+  "arm_id": "C-R1-P02-treatment",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "All O01–O05/N01–N03 and significant provisional plan clauses examined."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED_WITH_NONMATERIAL_SOURCE_METADATA_ERRORS",
+      "evidence": "Independent governing spec/API/caller/test/release/issue reads support consequential claims; T-SRC-01/T-SRC-02 do not change proposed behavior."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and failure/fix history",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Native OTIO custom metadata option, WebVTT precision boundary, BWF definition, BagIt/RO-Crate packaging, MediaInfo parser cross-check, Kdenlive proxy option and concrete OTIO caller history."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan/critic dispositions",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Every CR-01–CR-07 disposition and significant plan clause examined; no material false rejection found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained through complete final",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Source/session basis, approval impacts, cue lineage, storage/reference alternatives, tool/format opportunities, owner choices and validation truth preserved; OTIO alternative strengthened."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation and truthful executed-work distinction",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Independent timing oracles, validation anchors distinct from two-point fit, VFR/multiple streams, revisions, preview interruption/maps, moved roots and public parser fixtures; no execution falsely claimed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "connected inspection/alignment/transcript/export",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Component boundaries and common asset/stream/map/revision model."
+    },
+    {
+      "id": "O02",
+      "obligation": "original preservation and excerpt/comment revision stability",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Managed-copy vs externally managed modes distinguished; source/session excerpts, before/after approvals and old state retained."
+    },
+    {
+      "id": "O03",
+      "obligation": "different starts/VFR/multiple streams/uncertain clocks",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Source origins, stream identity, decoded presentation observations, sample positions and uncertain metadata."
+    },
+    {
+      "id": "O04",
+      "obligation": "reproducible time/manual correction/visible uncertainty",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Exact coordinate records, requested/resolved boundaries and manual/uncertain states; independent drift validation."
+    },
+    {
+      "id": "O05",
+      "obligation": "portable relinking/storage alternatives",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Link-only vs unique-original attached package; lazy reusable derivatives, path/collision/digest and stream resolution."
+    },
+    {
+      "id": "N01",
+      "obligation": "no upload/original overwrite",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "No-write local operation and explicit no-upload constraints."
+    },
+    {
+      "id": "N02",
+      "obligation": "no common reliable wall-clock assumption",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "BWF/timecode/container observations distinct from accepted map authority."
+    },
+    {
+      "id": "N03",
+      "obligation": "no transcript timing oracle",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Transcript revisions/lineage never establish media clock alignment."
+    },
+    {
+      "id": "B01",
+      "obligation": "useful mechanisms/alternatives and failure/fix context",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "App schema vs native OTIO metadata remains credible; standards and adapter-specific history retain applicability limits."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "FFmpeg inspection/timing/API/caller/release",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06"
+      ],
+      "limit": "Declared planning behavior, not every container/decoder or future app."
+    },
+    {
+      "family": "OTIO time frames, bundle/plugin/native custom-metadata alternatives",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P17",
+        "P22",
+        "P23"
+      ],
+      "limit": "Native storage possibility distinct from externally lossy adapters and tested application semantics."
+    },
+    {
+      "family": "OTIO rate fix, release, issue, exact code/caller and adjacent tests",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P16",
+        "P24",
+        "P25",
+        "P26",
+        "P27",
+        "P28",
+        "P29"
+      ],
+      "limit": "Specific report/version/caller scope; no evaluator reproduction or claimed shipped universal fix."
+    },
+    {
+      "family": "WebVTT identity/time syntax and status",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P31"
+      ],
+      "limit": "Current 2026 Candidate Recommendation Draft; no conformance parser run."
+    },
+    {
+      "family": "BWF first-sample TimeReference",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P32"
+      ],
+      "limit": "Definition does not certify device agreement; user recorder facts remain unknown."
+    },
+    {
+      "family": "BagIt and RO-Crate fixity/attached/detached/path semantics",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P20",
+        "P33"
+      ],
+      "limit": "Neither replaces offline missing-media resolution; all proposal claims bounded."
+    },
+    {
+      "family": "Kdenlive preview and MediaInfo metadata cross-check",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P11",
+        "P34"
+      ],
+      "limit": "No assumption that these tools implement application annotation/alignment semantics."
+    },
+    {
+      "family": "FATE and Matroska public fixture purpose",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P21",
+        "P35"
+      ],
+      "limit": "Catalog/test docs read only; no fixtures acquired or executed; no task-specific timing guarantee."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "CR-01",
+      "subject": "externally managed in-place preservation",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified: no-write policy differs from retained verified bytes; mode caveat and rechecks preserved.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-02",
+      "subject": "source boundary/origin/resolution convention",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified at proposal level: stored resolved identity/coordinates and unresolved cases support reproducibility; implementation selection algorithms remain future work.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-03",
+      "subject": "two-anchor fit versus independent drift validation",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified mathematical distinction; separate validation anchors or metrology required.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-04",
+      "subject": "native OTIO metadata capability versus forced app model",
+      "final_disposition": "AMEND",
+      "independent_judgment": "Justified by native serialization/custom metadata; app schema remains recommendation, not impossibility claim.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-05",
+      "subject": "portable resolver contract and move/collision safety",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified; reference and included-file standards remain distinct.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-06",
+      "subject": "playback reference versus cross-device clock authority",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified; source decoding checks content/boundaries, accepted mapping establishes review coordinates.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "CR-07",
+      "subject": "OTIO caller/version and RO-Crate locator context",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "Justified with nonmaterial release-label metadata issue T-SRC-02; specific ALE report not overgeneralized.",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "preservation": [
+    {
+      "meaning": "asset/stream identity and managed vs in-place storage",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_AND_CLARIFIED"
+    },
+    {
+      "meaning": "source/session clocks, VFR boundaries, uncertainty and drift models",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_AND_CLARIFIED"
+    },
+    {
+      "meaning": "source/session excerpt basis, comments, transcript lineage and orphan handling",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "inspection/decode/preview separation and interruption/lineage semantics",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "link-only/included media modes and moved-root/digest/stream resolver",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "tool/format alternatives and concrete history with version limits",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_AND_NATIVE_OTIO_ALTERNATIVE_ADDED"
+    },
+    {
+      "meaning": "owner choices and unexecuted synthetic/public validation",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "result": "Every significant provisional clause and each final crosswalk row examined. Approved-excerpt semantics are expressed through basis, revision and explicit change approval; remaining defaults are owner choices."
+  },
+  "out_of_assessment": [
+    {
+      "subject": "future implementation, deployment/private recordings and user hardware facts",
+      "coverage": "UNASSESSED",
+      "reason": "Outside research-proposal deliverable; unknowns are honestly retained."
+    },
+    {
+      "subject": "universal source correctness/discovery recall and all codec/OS/version combinations",
+      "coverage": "UNASSESSED",
+      "reason": "Finite audit is not these claims."
+    },
+    {
+      "subject": "actual native pre-input chronology, independent task linkage and billing/activity",
+      "coverage": "UNASSESSED",
+      "reason": "Unavailable independent telemetry; receipts alone do not prove it."
+    }
+  ]
+}

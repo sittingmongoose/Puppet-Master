@@ -1,0 +1,43 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "C-R2-P02-control",
+  "records": [
+    {
+      "id": "D01",
+      "severity": "material",
+      "classification": "material incomplete / required research omission",
+      "axes": [
+        1,
+        3
+      ],
+      "obligations": [
+        "O05"
+      ],
+      "candidate_locator": "final.md Clause 1 Optional hardening; Clause 2 Memory and other limits/Progress and responsiveness; Excess output / memory witness",
+      "candidate_excerpt": "Optional hardening: ... per-file and aggregate output quotas ...; Enforcement domain: Host byte/disk quotas ...",
+      "finding": "The final names quotas and aggregate temp-space caps but supplies no governing storage-allocation/capacity mechanism or confinement/accounting of all native converter-writable temporary/intermediate paths. Verification of declared files after tree stop cannot itself keep an in-flight converter from exhausting the shared volume and harming editing or sibling exports. Calling quotas optional leaves the resource obligation unresolved by mechanism research.",
+      "independent_basis": [
+        "P07",
+        "P14"
+      ],
+      "why_material": "The brief explicitly requires temporary outputs, resource limits, concurrent fair use and protection of other exports. Available quota mechanisms have documented applicability conditions that can be researched without knowing user budgets or deploying the host. This is an omission in the planning research, not a requirement to execute future integration.",
+      "bounds": "No filesystem product, numerical budget, universal quota guarantee or actual deployment is demanded. No executable disk-exhaustion check was run."
+    },
+    {
+      "id": "D02",
+      "severity": "nonmaterial",
+      "classification": "minor source-map wording",
+      "axes": [
+        2
+      ],
+      "obligations": [],
+      "candidate_locator": "investigator/source-map.json S06 applicability, carried into final source-map.json",
+      "candidate_excerpt": "Useful for read-only input and write-only staging roots in a WASM worker.",
+      "finding": "The demonstrated Wasmtime-WASI 49.0.2 FsPerms interface offers ReadOnly/ReadWrite, not a WriteOnly variant. The final body asks for a writable private stage and does not base safety on write-only permissions, so this wording does not change the material architecture judgment.",
+      "independent_basis": [
+        "P06"
+      ],
+      "bounds": "This finding is confined to the cited API; additional host mediation could provide other capabilities but is not established by this source."
+    }
+  ]
+}

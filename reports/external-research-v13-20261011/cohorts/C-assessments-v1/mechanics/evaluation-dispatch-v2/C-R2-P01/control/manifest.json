@@ -1,0 +1,53 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "C-R2-P01-control",
+  "evaluator": "er13-original-grader-v2-C-R2-P01-001",
+  "frozen_at_utc": "2026-10-12T03:28:32.536446+00:00",
+  "original_immutable": true,
+  "before_any_comparative_analysis": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.md",
+      "bytes": 2520,
+      "sha256": "9a1ef5857a30fd170f45a6076d4064b60d10981cf0e567d3a6d00107cebf4141"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.json",
+      "bytes": 13671,
+      "sha256": "e844e4d38c55344bbd863b11b357cac1ad7b34bb9e82ac196656b5bb8eeae674"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/coverage.json",
+      "bytes": 19766,
+      "sha256": "bf0c67287b86d2891aa1262bd1e8e78eeb4fcd98be223424ef6a15206db2ac7a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/defects.json",
+      "bytes": 4219,
+      "sha256": "b0c6428083e465f222e5c8ff454695b035143ca45c550b3b31b9c6b3e36d4daa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/primary-source-index.json",
+      "bytes": 26007,
+      "sha256": "f9912f459ec3575c98d449b24eacd6ed9c0d5e7f8f7e68d3f0a98d2fb0876427"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/claim-boundaries.md",
+      "bytes": 2329,
+      "sha256": "6a8556ff343dd045f83de93c63e80c3ff255451eb65126d18083dd8adf4d79df"
+    }
+  ],
+  "shared_original_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/input-verification.json",
+      "bytes": 7674,
+      "sha256": "d3e9050aac4984d920337d0984eadde4666fa280347b268cfada2621f49e840e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/primary-source-evidence.json",
+      "bytes": 19174,
+      "sha256": "d11be9d936182b88fd30b0d39804a4540636631a26694582392c463d136d6121"
+    }
+  ],
+  "self_hash_rule": "Manifest excludes itself; root manifest and terminal reply identify its exact size/hash."
+}

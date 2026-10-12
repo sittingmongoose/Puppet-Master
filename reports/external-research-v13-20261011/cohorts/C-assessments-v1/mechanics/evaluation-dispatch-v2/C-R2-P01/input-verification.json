@@ -1,0 +1,148 @@
+{
+  "schema": "er13.independent-input-verification.v1",
+  "packet_sha256": "9fc6b90c60ee3a7b7b7479ccd5fd24a1d40340f64b49ed054f6daf194cd5d273",
+  "verification_receipt_sha256": "c849cfa5a1a43129dc9057ee35750b838f1eacdcd19e06973472618f9e0e68c4",
+  "all_manifest_members_verified": true,
+  "record_count": 141,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-control-eval-inputs/authored-manifest.json",
+      "bytes": 795,
+      "sha256": "8c731c2bb60a0432f7d8811520232925aca894fab48081db8890b071ca85d6b9",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2868,
+      "sha256": "15efe1bc054e7f4de8d87d1972584148d84092b177be9028fce841da9a0c8d10",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2384,
+      "sha256": "f27abdb53d3b665bca4fb92afbe05396204d962dd6bd98e1566e8bb468b44990",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2383,
+      "sha256": "323ca9629decafc589f005254e9cf440179cc8f0259f43977c831a386213dea8",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-control-investigator-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "211a126bc9e6eb76e2d3e5b0523a6f722cd379b6d1d2c0895c963887e21d7716",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-control-critic-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "690deb1472e710768c578dc28b390a0fe243c913bd3294447fb7b24ae56b3f31",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-control-reviser-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "25dc35ed2b25adc9f5d31852af3de18ecf4ded1abe83c56da349a755f909283e",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-control/investigator-eval-ready-status.raw.json",
+      "bytes": 10815,
+      "sha256": "e29ce0f3b4dca0b7b1b13b96f570ae534290c3375497f460026463bdab377580",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-control/critic-eval-ready-status.raw.json",
+      "bytes": 10023,
+      "sha256": "42703b06f2406659c16653a8283855d45c46496686010e19ee61682213a58409",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-control/reviser-eval-ready-status.raw.json",
+      "bytes": 9797,
+      "sha256": "5368ad3a637f083fe983337fe9747766be94dc8d93b60b539a53612bb5dcd3f2",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-treatment-eval-inputs/authored-manifest.json",
+      "bytes": 800,
+      "sha256": "e41476a0419dd695d6c3cc74ecf2fb258b695af2d5340600463e0fad0ff22c11",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2872,
+      "sha256": "d8c235d158280f60c4df732ce946f5c1c900eeebe0bdda0cae2ffbd5e0c1e349",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/critic-truth/manifest.json",
+      "bytes": 2210,
+      "sha256": "e5ea32bc0d259e72aa2caf4f39933d8d64af753079f3cb825205dd0e0d63f507",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/critic-breadth/manifest.json",
+      "bytes": 2402,
+      "sha256": "3d3ca9b52e220533efc20ffa4f06d090c6857f5fd4e644975ee2513bac72263f",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2387,
+      "sha256": "2b064480fa296e94f4bcc98246d41ba9eba776e8578122f6bcb01fd9ac22a254",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-treatment-investigator-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "5e1654ede4e598f6ffc1924c80123c770b3dc5e225b75105e443bb1a3a93a379",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-treatment-critic-truth-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "a8c9eeeb5e53685b900dcae9514933b6256a3c1eef5ba06196d03c5f221457d1",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-treatment-critic-breadth-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "7f5e2387e98c5b8582c2fb2430e86b15244477a1625e0253a2d8501e6a1dab90",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R2-P01-treatment-reviser-capture-aux/authored-manifest.json",
+      "bytes": 617,
+      "sha256": "f16c271f83895cf46f897405a1f58058baed844a6fd34dcce2cb7db670d36d0c",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-treatment/investigator-eval-ready-status.raw.json",
+      "bytes": 11289,
+      "sha256": "c86e25607be28a9fcc1a3ec95e82349e03305fb85f8d0e75e2f228d47e41ca5e",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-treatment/critic-truth-eval-ready-status.raw.json",
+      "bytes": 10265,
+      "sha256": "3295d490fae6eb873fcd0da44086fda362da3ccdec095081181289b39e9ea47d",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-treatment/critic-breadth-eval-ready-status.raw.json",
+      "bytes": 9167,
+      "sha256": "6c435c53d3515cdd900772b14bc8eeac9a6485433415f9e8e86fe3ddd640c04d",
+      "verified": true
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R2-P01-treatment/reviser-eval-ready-status.raw.json",
+      "bytes": 8833,
+      "sha256": "d5039f40f5fcc2e11f12a9f4d39b4875a802a2194ca4dc61ab1f3f1bd75fdc04",
+      "verified": true
+    }
+  ],
+  "verification_method": "Independently recomputed size and SHA256 for every stage/authored manifest member and all notified status receipts before science reads; 141 successful checks. List retains exact governing manifests and status receipts; full allowlist remains in the hashed coordinator receipt."
+}

@@ -1,0 +1,588 @@
+{
+  "schema": "er13.immutable-original-assessment.v1",
+  "evaluator_id": "er13-original-grader-v2-C-R2-P02-001",
+  "arm_id": "C-R2-P02-treatment",
+  "case_id": "C-P04",
+  "scope": "FULL",
+  "recorded_at_utc": "2026-10-12T03:27:33.161308+00:00",
+  "source_judgment": {
+    "judgment": "PASS",
+    "finite_assessment": true,
+    "rule": "All declared coverage complete and no material unsupported claim, required omission, false rejection or supported preservation loss found.",
+    "material_defects": [],
+    "nonmaterial_defects": [],
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "All O01-O05 and N01-N03 are substantively addressed, including actual scratch-capacity alternatives, aggregate admission and platform-dependent containment."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Governing versions, definitions, conditions, source code/callers, tests and release/issue/fix context checked where consequential. No material unsupported claim found."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Useful executable-filter, WASI, Landlock, AppContainer, XFS quota and macOS XPC/broker alternatives have decision-relevant limits and implementation history; no product winner required."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "All 16 clause dispositions and both critics' findings/overlap are independently assessed; objections accepted with valid qualifications and owner decisions retained."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Supported investigator findings, both critiques and source-ID/version/operation context remain in the self-contained final package; no material meaning loss found."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Eight proposed witness families have target domains/oracles and limits; source retrieval is distinguished from future software execution and no executable witness is claimed."
+      }
+    ],
+    "does_not_establish": "Universal correctness, external discovery recall, selected recipe superiority, executed deployment or cold pipeline qualification."
+  },
+  "coverage": {
+    "schema": "er13.original-coverage.v1",
+    "arm_id": "C-R2-P02-treatment",
+    "scope": "FULL",
+    "definition": "COMPLETE means finite coverage of all consequential supplied obligations/claims and lineage, not exhaustive upstream behavior or execution of proposed integration. No early termination used.",
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "All O01-O05 and N01-N03 are substantively addressed, including actual scratch-capacity alternatives, aggregate admission and platform-dependent containment."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Governing versions, definitions, conditions, source code/callers, tests and release/issue/fix context checked where consequential. No material unsupported claim found."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Useful executable-filter, WASI, Landlock, AppContainer, XFS quota and macOS XPC/broker alternatives have decision-relevant limits and implementation history; no product winner required."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "All 16 clause dispositions and both critics' findings/overlap are independently assessed; objections accepted with valid qualifications and owner decisions retained."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Supported investigator findings, both critiques and source-ID/version/operation context remain in the self-contained final package; no material meaning loss found."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Eight proposed witness families have target domains/oracles and limits; source retrieval is distinguished from future software execution and no executable witness is claimed."
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O01",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "subobligations": [
+          "Data-only verified package discovery before code loading",
+          "Empty restricted capability preflight before document/outputs exposure",
+          "Required capabilities/protocol/schema/output-shape rejection",
+          "Three primary architecture alternatives plus host-specific broker sub-option",
+          "Bounded/coalesced advisory progress and terminal/error path",
+          "Aged compatible-slot admission with editor reserve and bounded-service conditions"
+        ],
+        "locator": "final.md Clause dispositions C1/C6/C12/C13; Discovery; Options table; Progress/cancellation/fairness"
+      },
+      {
+        "id": "O02",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "subobligations": [
+          "Digest-pinned stable snapshot and per-job stage lifetime",
+          "Authority excludes original/home/sibling/network by default",
+          "Cooperative cancel, verified per-platform membership, forced stop and teardown before verification",
+          "Linux setsid escape distinguished from cgroup containment",
+          "Windows breakaway/membership and macOS unspecified mechanism limits",
+          "Cancel-one-of-two and late-write witnesses"
+        ],
+        "locator": "final.md Snapshot/filesystem; platform paragraphs; Cancellation; validation 2-3"
+      },
+      {
+        "id": "O03",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "subobligations": [
+          "Negotiated output contract independent of worker claims",
+          "Actual tree enumeration, safe paths/counts/types/read/hash and available parser checks",
+          "Destination-side transfer/read-back/commit success",
+          "Same-volume/cross-volume/NFS/ReplaceFile partial failures and durability distinction",
+          "No semantic completeness inferred from exit/hash alone"
+        ],
+        "locator": "final.md Completion manifest; Transfer and success; validation 4-5"
+      },
+      {
+        "id": "O04",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "subobligations": [
+          "Verified build/package/protocol/schema/dependency identity",
+          "Original build retained where practical or reviewed incompatibility/migration",
+          "No silent changed defaults/dropped options",
+          "Versioned output regressions motivate golden upgrade witnesses"
+        ],
+        "locator": "final.md Discovery/identity; C9-C11; validation 7"
+      },
+      {
+        "id": "O05",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "subobligations": [
+          "Conditional OS/runtime resource enforcement and error outcomes",
+          "All writable temporary/intermediate/sidecar paths bounded",
+          "Quota-backed scratch or fully mediating write broker; requested/applied/unsupported states",
+          "Aggregate capacity reservation and shared export envelope",
+          "Linux cgroup/Landlock, Windows Job/AppContainer and macOS entitlements/XPC conditions",
+          "Unsupported-host reject or explicit degraded owner policy"
+        ],
+        "locator": "final.md Isolation/platforms; Scratch capacity and aggregate admission; validation 4/6/8"
+      }
+    ],
+    "negative_constraints": [
+      {
+        "id": "N01",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "No real-user plugin installation was recommended/reported; job authority excludes broad home access."
+      },
+      {
+        "id": "N02",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Explicitly separates process/sandbox access boundaries, opt-in guest memory and actual configured OS resource limits."
+      },
+      {
+        "id": "N03",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "reason": "Converter or cancelled process exit is never used as integrity or destination-transfer proof."
+      }
+    ],
+    "source_families": [
+      {
+        "primary_id": "P01",
+        "family": "declarative discovery and explicit converter formats",
+        "coverage": "COMPLETE",
+        "limits": "Metadata is not authentication, isolation, semantic preset compatibility, or output-completeness proof."
+      },
+      {
+        "primary_id": "P02",
+        "family": "protocol capability/progress/cancellation",
+        "coverage": "COMPLETE",
+        "limits": "A research analogy, not an export ABI or forced cancellation guarantee."
+      },
+      {
+        "primary_id": "P04",
+        "family": "WASM memory limits and installation in Store",
+        "coverage": "COMPLETE",
+        "limits": "Does not cover all host/runtime allocations or total RSS; multiple memories need aggregate accounting."
+      },
+      {
+        "primary_id": "P05",
+        "family": "WASM fuel/interruption",
+        "coverage": "COMPLETE",
+        "limits": "Guest execution budget is neither wall time nor a bound on blocking host calls/native components."
+      },
+      {
+        "primary_id": "P06",
+        "family": "WASI filesystem capabilities",
+        "coverage": "COMPLETE",
+        "limits": "These are configured WASI-call rights, not arbitrary host-import/native process confinement. The shown API has no WriteOnly variant."
+      },
+      {
+        "primary_id": "P07",
+        "family": "Linux process/resource hierarchy and aggregate overcommit",
+        "coverage": "COMPLETE",
+        "limits": "Resource cgroups are not file-access authority, app admission order, guaranteed interactive latency, or storage-capacity quotas. Prevent migration out before relying on tree teardown."
+      },
+      {
+        "primary_id": "P08",
+        "family": "Windows job membership, termination, memory and CPU",
+        "coverage": "COMPLETE",
+        "limits": "Verify membership and explicit flags. Job Objects do not set file ACLs. CPU rate controls have Remote Desktop DFSS restrictions."
+      },
+      {
+        "primary_id": "P09",
+        "family": "Windows file authority and AppContainer",
+        "coverage": "COMPLETE",
+        "limits": "Actual identities, inherited handles, grants and compatibility must be selected/tested; no universal home isolation or memory quota follows from the label."
+      },
+      {
+        "primary_id": "P10",
+        "family": "macOS filesystem authority and inheritance",
+        "coverage": "COMPLETE",
+        "limits": "Archived deployment behavior needs version revalidation. Reviewed sources do not establish general converter CPU/memory quotas or descendant kill guarantees."
+      },
+      {
+        "primary_id": "P11",
+        "family": "macOS XPC/Process architectural alternative",
+        "coverage": "COMPLETE",
+        "limits": "This supports a broker/helper option, not arbitrary third-party packaging, one worker per export, resource quotas, or teardown proof."
+      },
+      {
+        "primary_id": "P12",
+        "family": "Linux native access-control alternative",
+        "coverage": "COMPLETE",
+        "limits": "Apply before untrusted work and close inherited excess handles. Available rights differ; this is neither a cgroup resource budget nor a portable sandbox."
+      },
+      {
+        "primary_id": "P13",
+        "family": "Linux process groups versus descendants",
+        "coverage": "COMPLETE",
+        "limits": "Signalling the original group cannot establish whole-descendant teardown. No synthetic escape was executed."
+      },
+      {
+        "primary_id": "P14",
+        "family": "scratch storage capacity enforcement",
+        "coverage": "COMPLETE",
+        "limits": "Not portable by default; configuration and coverage of all writable paths are required. Does not select a required filesystem or numeric quota."
+      },
+      {
+        "primary_id": "P15",
+        "family": "output commit and durability",
+        "coverage": "COMPLETE",
+        "limits": "No universal bundle atomicity, semantic output validity, destination persistence, or provider-specific transfer success follows."
+      },
+      {
+        "primary_id": "P16",
+        "family": "Linux read-only handles",
+        "coverage": "COMPLETE",
+        "limits": "It does not prevent path replacement, deletion, additional opens, or cross-job access under an unrestricted native identity."
+      },
+      {
+        "primary_id": "P17",
+        "family": "Pandoc 3.12.1 implementation/fix history",
+        "coverage": "COMPLETE",
+        "limits": "Static code/tests reading supports actual mechanisms and regression context; tests were not run and no assertion of exhaustive defect detection is made."
+      },
+      {
+        "primary_id": "P18",
+        "family": "Pandoc 3.8.3 regression/issue/fix context",
+        "coverage": "COMPLETE",
+        "limits": "Specific output paths demonstrate semantic update risk; they do not prove every version range unsafe. No binary executed."
+      },
+      {
+        "primary_id": "P19",
+        "family": "external filter/in-process alternative and sandbox scope",
+        "coverage": "COMPLETE",
+        "limits": "A product pattern and caution, not an export runtime choice or safety proof."
+      }
+    ],
+    "critic_dispositions": [
+      {
+        "finding": "CB-01 storage capacity",
+        "disposition": "Accept",
+        "assessment": "VALID; capacity accounting/enforcement differs from throughput and post-exit counters. XFS example remains conditional and unselected.",
+        "preserved_at": "Scratch capacity and aggregate admission; validation 4/8",
+        "primary_ids": [
+          "P07",
+          "P14"
+        ]
+      },
+      {
+        "finding": "CB-02 aggregate load",
+        "disposition": "Accept",
+        "assessment": "VALID; child limits and concurrency do not themselves bound an aggregate envelope. Maximum reservations, editing headroom and explicit overcommit are specified.",
+        "preserved_at": "Scratch capacity and aggregate admission; validation 6",
+        "primary_ids": [
+          "P07",
+          "P08"
+        ]
+      },
+      {
+        "finding": "CB-03 XPC role",
+        "disposition": "Accept/refine",
+        "assessment": "VALID; bundled service, per-client lifetime and entitlement distinction are researched without assuming arbitrary converter packaging, per-export teardown or quotas.",
+        "preserved_at": "XPC table row; macOS platform limits; validation 8",
+        "primary_ids": [
+          "P10",
+          "P11"
+        ]
+      },
+      {
+        "finding": "CT process-group escape",
+        "disposition": "Accept",
+        "assessment": "VALID; setsid permits eligible children to leave the original group; cgroup membership/escape prevention and empty-subtree verification are stated, with platform alternatives conditional.",
+        "preserved_at": "Linux paragraph; criticism dispositions; validation 3",
+        "primary_ids": [
+          "P07",
+          "P08",
+          "P13"
+        ]
+      },
+      {
+        "finding": "CT output-manifest integrity",
+        "disposition": "Accept",
+        "assessment": "VALID; manifest values remain claims, actual closed-tree files are enumerated/read/hashed and checked against negotiated outputs/destination.",
+        "preserved_at": "Completion manifest; transfer; validation 4-5",
+        "primary_ids": [
+          "P15",
+          "P17",
+          "P18"
+        ]
+      },
+      {
+        "finding": "CT platform/runtime/preset/history/destination/progress/fairness conditions",
+        "disposition": "Retain",
+        "assessment": "VALID; the reviewed macOS docs do not establish universal absence of quotas, fuel is not wall time, API/version compatibility is not semantics, and rate controls are not product queue fairness.",
+        "preserved_at": "Options/platform paragraphs; discovery; transfer; fairness; own source map",
+        "primary_ids": [
+          "P02",
+          "P04",
+          "P05",
+          "P06",
+          "P07",
+          "P08",
+          "P10",
+          "P15",
+          "P18"
+        ]
+      },
+      {
+        "finding": "CB lower-priority identity binding and extended witnesses",
+        "disposition": "Accept",
+        "assessment": "VALID; host verifies actual package identity rather than trusting self-declared metadata; scratch/overcommit/heterogeneous arrivals added.",
+        "preserved_at": "Discovery/identity; validation 1/4/6",
+        "primary_ids": [
+          "P01",
+          "P07",
+          "P14"
+        ]
+      },
+      {
+        "finding": "Numerical quotas, compatibility ranges and degraded modes",
+        "disposition": "Owner decisions",
+        "assessment": "VALID; available mechanism research is completed, while unknown user/platform budgets and product policy remain honestly open.",
+        "preserved_at": "Owner decisions and remaining uncertainty",
+        "primary_ids": [
+          "P07",
+          "P08",
+          "P10",
+          "P11",
+          "P14",
+          "P15"
+        ]
+      }
+    ],
+    "preservation": [
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Manifest/verified executable binding, required negotiation before document exposure and canonical versioned presets",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Snapshot/sibling authority, scrubbing/inherited-handle/default-network restrictions and read-only context limits",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Native/WASI/trusted in-process options, plus AppContainer/Landlock/XPC and host applicability",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Process-tree membership, setsid counterexample, control-specific termination and no macOS kill guarantee",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Per-memory limits/fuel defaults, committed-memory accounting, controller/ABI conditions and unavailable-host behavior",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Independent output-tree integrity, format validator limits, destination atomicity/durability/error-context separation",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Real Pandoc release/issue regressions and external filter/Lua/security patterns in final source map/index",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Scratch and aggregate admission corrections, service-bound fairness and editing headroom",
+        "result": "RETAINED"
+      },
+      {
+        "lineage": "Investigator/critics -> final",
+        "coverage": "COMPLETE",
+        "meaning": "Complete validation scenarios with concrete denials/bytes/membership/queue/migration oracles and honest unexecuted status",
+        "result": "RETAINED"
+      }
+    ],
+    "limits": [
+      "No converter/sandbox/quota/cancellation/destination/scheduler witness executed.",
+      "Exact historical revisions behind candidate latest aliases remain unknown; versioned current APIs and applicable primary context were separately checked.",
+      "Numerical budgets, supported host privileges, final teardown mechanisms on macOS, format validators and destination policies remain legitimate owner decisions.",
+      "Static selected code/caller/tests/issue reading is not a passing test run or universal discovery recall."
+    ]
+  },
+  "defects": [],
+  "delivery": {
+    "status": "DELIVERED",
+    "final_present": true,
+    "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+    "sha256": "b6bb534e9fc436da4ede82ec4f503d3f232bd5d87b7d54e76ae670b67f9f5bb6",
+    "bytes": 27648,
+    "all_required_stage_outputs_present": true,
+    "all_assigned_tasks_terminal": true,
+    "pending_child_runs": false,
+    "attempt_denominator": 1,
+    "delivery_is_separate_from_source_quality": true
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_BY_FROZEN_FINAL_BOUND",
+    "maximum_seconds": 3600,
+    "t0_utc": "2026-10-12T02:38:17.385Z",
+    "whole_deadline_utc": "2026-10-12T03:38:17.385Z",
+    "final_frozen_by_utc": "2026-10-12T03:09:08.643162+00:00",
+    "t0_to_frozen_final_upper_bound_seconds": 1851.258162,
+    "t0_to_native_final_terminal_proxy_seconds": 1740.615,
+    "stages": [
+      {
+        "stage": "investigator",
+        "request_utc": "2026-10-12T02:38:18.083Z",
+        "dispatch_capture_utc": "2026-10-12T02:38:19.249Z",
+        "native_birth_utc": "2026-10-12T02:38:28+00:00",
+        "native_terminal_utc": "2026-10-12T02:53:11+00:00",
+        "stage_deadline_utc": "2026-10-12T03:08:18.083Z",
+        "request_to_native_terminal_proxy_seconds": 892.917,
+        "native_reported_elapsed_seconds": 883,
+        "receipt_terminal_before_stage_deadline": true,
+        "receipt_consistency": true
+      },
+      {
+        "stage": "critic-truth",
+        "request_utc": "2026-10-12T02:53:39.313Z",
+        "dispatch_capture_utc": "2026-10-12T02:53:40.343Z",
+        "native_birth_utc": "2026-10-12T02:53:48+00:00",
+        "native_terminal_utc": "2026-10-12T02:56:07+00:00",
+        "stage_deadline_utc": "2026-10-12T02:59:39.313Z",
+        "request_to_native_terminal_proxy_seconds": 147.687,
+        "native_reported_elapsed_seconds": 138,
+        "receipt_terminal_before_stage_deadline": true,
+        "receipt_consistency": true
+      },
+      {
+        "stage": "critic-breadth",
+        "request_utc": "2026-10-12T02:53:37.146Z",
+        "dispatch_capture_utc": "2026-10-12T02:53:38.028Z",
+        "native_birth_utc": "2026-10-12T02:53:46+00:00",
+        "native_terminal_utc": "2026-10-12T02:59:07+00:00",
+        "stage_deadline_utc": "2026-10-12T02:59:37.146Z",
+        "request_to_native_terminal_proxy_seconds": 329.854,
+        "native_reported_elapsed_seconds": 320,
+        "receipt_terminal_before_stage_deadline": true,
+        "receipt_consistency": true
+      },
+      {
+        "stage": "reviser",
+        "request_utc": "2026-10-12T02:59:35.588Z",
+        "dispatch_capture_utc": "2026-10-12T02:59:36.478Z",
+        "native_birth_utc": "2026-10-12T02:59:46+00:00",
+        "native_terminal_utc": "2026-10-12T03:07:18+00:00",
+        "stage_deadline_utc": "2026-10-12T03:17:35.588Z",
+        "request_to_native_terminal_proxy_seconds": 462.412,
+        "native_reported_elapsed_seconds": 451,
+        "receipt_terminal_before_stage_deadline": true,
+        "receipt_consistency": true
+      }
+    ],
+    "limitations": "Last complete science write and request-to-quiet exact finish are UNKNOWN. Native timestamps are frozen reported observations at integer-second resolution, not authenticated provider activity. No clock was reset."
+  },
+  "method_compliance": {
+    "status": "CONSISTENT_FROZEN_RECORDS_WITH_PROVENANCE_LIMITS",
+    "declared_topology": "investigator -> two parallel complementary critics -> complete reviser; four root-dispatched contexts",
+    "discovery_reveal_digest_matches": true,
+    "revealed_plan_matches_notified_plan": true,
+    "both_critic_packages_and_all_dispositions_examined": true,
+    "critic_integration": "Explicit findings and overlapping platform/artifact/fairness conditions integrated; no direct unresolved factual contradiction found.",
+    "source_identity_binding_preserved": true,
+    "raw_native_create_active_terminal_present": true,
+    "unverified": [
+      "Pre-input actual execution order",
+      "Exactly-one creation beyond retained captures",
+      "Actual context freshness/absence of parent-history access",
+      "Actual operator recipe execution beyond frozen receipts"
+    ],
+    "evaluator": "No Goal/subagent, active candidate read, author contact, Git/canon/provider change or repair performed."
+  },
+  "native_identity_provenance": {
+    "frozen_identity_birth_objective_status_consistency": "PASS for each assigned stage",
+    "required_native_receipts_missing": false,
+    "attempt_marker_is_receipt": false,
+    "independent_native_to_task_linkage": "UNKNOWN beyond frozen custody",
+    "native_response_freshness_authentication": "UNKNOWN",
+    "requested_model": "gpt-6-luna; max; default service tier",
+    "actual_model_provider_route": "UNKNOWN beyond receipts; private routing identity omitted"
+  },
+  "resource_billing_coverage": {
+    "cost_category_for_grader": "independent_evaluation",
+    "candidate_attempts": 1,
+    "candidate_product_billing": null,
+    "independent_evaluation_billing": null,
+    "provider_active_time": null,
+    "context_occupancy": null,
+    "cached_input_output_reasoning_attribution": "UNKNOWN",
+    "opaque_native_counters_present": true,
+    "native_counters_are_independently_billable_per_task": "UNKNOWN",
+    "unknown_is_zero": false,
+    "latency_proxy_is_not_billing_or_context_occupancy": true,
+    "component_preparation_or_cold_full_success_inference": false
+  },
+  "blinding": "Imperfect: arm paths, assignments, parallel topology and critique text expose technique-bearing information. Judged independently; no comparative artifact/selection precedes original freeze.",
+  "independent_evaluation": {
+    "first_observed_start_utc": "2026-10-12T03:10:14Z",
+    "assessment_recorded_utc": "2026-10-12T03:27:33.161308+00:00",
+    "actual_pre-observation_queue_setup": "UNKNOWN",
+    "resource_category": "independent_evaluation",
+    "billing": "UNKNOWN"
+  }
+}

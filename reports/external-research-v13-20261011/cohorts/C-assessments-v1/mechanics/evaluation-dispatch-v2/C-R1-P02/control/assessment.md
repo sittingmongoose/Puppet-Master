@@ -1,0 +1,30 @@
+# Original assessment — C-R1-P02-control
+
+Source judgment: **FAIL**, with COMPLETE finite assessment of all six contract axes. Delivery and observed time eligibility pass separately. The decisive defect is **C-PRES-01**, a loss of supported alternatives from the complete final; the core architecture and behavioral coverage remain useful.
+
+The frozen investigator discovery compares a new FFmpeg-based workspace with an ELAN pilot/interchange route and a Kdenlive+MLT prototype. Those choices affect whether the team builds application behavior or first evaluates maintained software. Official [ELAN synchronization](https://www.mpi.nl/tools/elan/docs/manual/Sec_Synchronizing_video_files.html) and [annotation-file](https://www.mpi.nl/tools/elan/docs/manual/Sec_Media_Files_and_Annotation_Files.html) context support those bounded opportunities, while [Kdenlive project](https://docs.kdenlive.org/en/project_and_asset_management/file_management/project_files.html) and [proxy](https://docs.kdenlive.org/en/project_and_asset_management/project_settings/proxy_settings.html) docs support its prototype role and compatibility caveats. ELAN's precision/platform limitations remain relevant; none of this proves either existing application satisfies the entire brief.
+
+The final supplies copied source records and links but drops the decision-bearing ELAN/Kdenlive comparison and does not give a supported reason to reject those routes. Its requirement table points to an absent “Alternatives and boundaries” section. This finding distinguishes preserved source facts from lost planning meaning; it does not require a particular product winner. The reviser assignment expressly required preservation of supported alternatives, conditions and optional capabilities in a self-contained final.
+
+| Contract axis | Coverage | Judgment |
+|---|---|---|
+| 1. Obligations and negative constraints | COMPLETE | Satisfied |
+| 2. Source facts, conditions, versions/applicability | COMPLETE | Satisfied with nonmaterial errors |
+| 3. Useful mechanisms, alternatives and history | COMPLETE | Alternative-preservation failure |
+| 4. Plan and critic corrections/dispositions | COMPLETE | Satisfied |
+| 5. Supported meaning preservation | COMPLETE | C-PRES-01 |
+| 6. Proposed validation and execution honesty | COMPLETE | Satisfied |
+
+O01–O05 and N01–N03 were individually examined. The proposal connects stream inventory, source clocks, manual alignment, transcript revisions, excerpt/comment impact review, derived media and three portable modes. It handles VFR/multiple streams without a common-wall-clock assumption, retains exact requested/resolved boundaries and uncertainty, separates text edits from reanchoring, and proposes pin/rebase behavior. Offset/affine/piecewise and source/proxy trade-offs remain present. Unknown support matrix, tolerance and default choices are legitimate owner inputs; no deployment or private-recording execution is demanded.
+
+Every critic finding and final disposition was examined. Correcting the target_url issue from #1990 to [#1985](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1985) is supported; [#1990](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1990) concerns release automation. The final's MLT chronology correction is reasonable under the [displayed release date](https://github.com/mltframework/mlt/releases), with historical-page limits acknowledged. Paragraph-order repair, exact API locator and removal of the inaccessible Goal pointer are sound.
+
+Two nonmaterial issues remain. Carried source S012 attributes introduction of Clip.2 and downgrade support to 0.18.0; the [release list](https://github.com/AcademySoftwareFoundation/OpenTimelineIO/releases) places these in 0.15. No proposed supported-version baseline depends on that date. Bundle reading is described without the explicit extraction exception: [0.18.1 bundle docs](https://opentimelineio.readthedocs.io/en/v0.18.1/tutorials/otio-filebundles.html) describe a timeline-only default and optional extraction. Neither issue is used as an independent second material failure.
+
+Validation is a meaningful proposal: independent synthetic timing values, drift/VFR/stream cases, immutability, revisions, interruption and moved-package/hash/path tests, plus licensed/pinned public-fixture work. No media, product, fixture or integration check is represented as executed. Governing API/caller context supports precise time-base provenance, while unavailable timestamps/decoder behavior remain uncertain rather than silently repaired.
+
+The exact manifest members, statuses and authorized packet/contract/rubric hashes were independently verified before grading. All scientific documents and source maps were read, including repeated records checked for exact preservation. Detailed obligations, source families, lineage and critique decisions are in coverage.json; primary-source-index.json records bounded governing research. ELAN live reads timed out; official indexed page bodies and their age were explicitly used. Some live documentation lacks a commit pin. These limits do not establish an exhaustive codec/platform guarantee.
+
+Each notified stage has internally consistent active/create/complete capture fields and a matching frozen objective/birth record. That does not independently establish native-to-task linkage, pre-input activation, actual operator recipe, or absence of uncaptured activity. Stage/whole clocks are unchanged and final custody predates the 60-minute cap. Exact last-scientific-artifact time, active provider activity, billing and subscription consumption remain UNKNOWN; native lifecycle intervals are reported separately from provider activity.
+
+Technique-bearing paths and assignments make blinding imperfect. Shared independent lookup is evaluation work, not candidate assistance. No candidate author was contacted, no live candidate path or other case was read, and no Goal, worker, deployment, Git or canon operation was performed. This assessment is original and immutable; any dispute requires a separate adjudication.

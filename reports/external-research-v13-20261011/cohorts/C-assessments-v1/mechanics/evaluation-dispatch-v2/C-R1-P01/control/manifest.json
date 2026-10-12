@@ -1,0 +1,51 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "C-R1-P01-control",
+  "frozen_at_utc": "2026-10-12T03:25:51.240912+00:00",
+  "comparative_analysis_started": false,
+  "original_outputs_never_amended": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/assessment.md",
+      "bytes": 4272,
+      "sha256": "4914dfc93195a573b963d88aa4df59278add9e2d60440b0e27dcf9d3bfed6ee5",
+      "role": "original_arm_output"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/assessment.json",
+      "bytes": 18526,
+      "sha256": "5690cb939ce50e26cc97c553a731d410e15abc7ecf8aab0bd2398b782ade15db",
+      "role": "original_arm_output"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/coverage.json",
+      "bytes": 18824,
+      "sha256": "57abce3a73c9d3ced756cea3d5958429b1538f9e64284d8b5b97bc466661cdfe",
+      "role": "original_arm_output"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/defects.json",
+      "bytes": 2800,
+      "sha256": "c0011f50e72ed6c616094d7d44d732d1bd4264f81680f119f779cff71c972d2d",
+      "role": "original_arm_output"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/primary-source-index.json",
+      "bytes": 4863,
+      "sha256": "1510e6d4b3ca505af75b8dac709e79713ef920fcc0b01190c577bb9130f0f2bc",
+      "role": "original_arm_output"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/input-verification.json",
+      "bytes": 38779,
+      "sha256": "d06a9ef7b35eadd81143b26078be5525919948d549bc01ccf8f763f265e2c5e3",
+      "role": "shared_independent_evidence"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/evidence/primary-research.json",
+      "bytes": 30358,
+      "sha256": "fd503fd0e1155500ebbbd1c32a6fa1a77dc443b579e170cb31933fc778db340e",
+      "role": "shared_independent_evidence"
+    }
+  ]
+}

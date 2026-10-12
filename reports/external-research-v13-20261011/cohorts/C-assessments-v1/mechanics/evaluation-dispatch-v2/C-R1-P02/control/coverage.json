@@ -1,0 +1,293 @@
+{
+  "arm_id": "C-R1-P02-control",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "O01–O05 and N01–N03; all four substantive plan paragraphs read and disposition crosswalk checked."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED_WITH_NONMATERIAL_ERRORS",
+      "evidence": "Primary FFmpeg docs/API/caller, MLT history, Kdenlive/ELAN manuals, OTIO bundle/release/URL context, BagIt and FATE; C-SRC-02 and C-LIM-03."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and failure/fix history",
+      "coverage": "COMPLETE",
+      "result": "NOT_SATISFIED",
+      "evidence": "Meaningful mechanisms and rate/XML history exist; decision-bearing maintained-tool alternatives do not survive into the complete final (C-PRES-01)."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan/critic dispositions",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Every final plan row and five critic findings checked; OTIO issue correction, MLT chronology, paragraph order, API locator and unlisted receipt pointer resolved."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained through complete final",
+      "coverage": "COMPLETE",
+      "result": "NOT_SATISFIED",
+      "evidence": "Core source clocks, revisions, stream selection, package modes, optional models and validation survive; ELAN/Kdenlive alternative comparison lost (C-PRES-01)."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation and truthful executed-work distinction",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Known-answer timing, VFR/multiple streams, uncertainty, revision/pin/rebase, immutability, interrupted proxies, relinking and public-fixture matrix are proposals; no product/media checks claimed executed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "connected inspection/alignment/transcript/export",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Component boundaries and versioned local manifest cover connected behavior."
+    },
+    {
+      "id": "O02",
+      "obligation": "originals and excerpt/comment revision stability",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Immutable source ranges, coordinate basis, stable transcript IDs, impact preview, pin/rebase and history."
+    },
+    {
+      "id": "O03",
+      "obligation": "different starts/VFR/multiple streams/uncertain clocks",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Separate clocks; explicit audio/stream inventory; native timestamps and uncertainty."
+    },
+    {
+      "id": "O04",
+      "obligation": "reproducible time/manual correction/visible uncertainty",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Rational ticks/sample coordinates, requested/resolved bounds, manual anchors and abstention."
+    },
+    {
+      "id": "O05",
+      "obligation": "portable relinking/storage alternatives",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Original/proxy/reference modes, unique-source copies, quotas and explicit digest/stream/role resolution."
+    },
+    {
+      "id": "N01",
+      "obligation": "no upload/original overwrite",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Offline/no-write behavior expressly required."
+    },
+    {
+      "id": "N02",
+      "obligation": "no common reliable wall clock assumption",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Metadata is provenance-bearing observation, not automatic alignment authority."
+    },
+    {
+      "id": "N03",
+      "obligation": "no transcript timing oracle",
+      "coverage": "COMPLETE",
+      "result": "SATISFIED",
+      "evidence": "Text and timing revisions separated; manual timing changes explicit."
+    },
+    {
+      "id": "B01",
+      "obligation": "maintained-tool alternatives and useful history preservation",
+      "coverage": "COMPLETE",
+      "result": "NOT_SATISFIED",
+      "evidence": "C-PRES-01; historical evidence remains but decision-bearing alternatives disappear."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "FFmpeg time/probe/decoder/caller and seek/timestamp transforms",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "limit": "Declared planning claims only; no execution or all-demuxer certification."
+    },
+    {
+      "family": "MLT fix/release/XML and Kdenlive project/proxy context",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P07",
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "limit": "Release notes substantiate named fixes, not every camera input."
+    },
+    {
+      "family": "ELAN sync/annotation/media-link/display context",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P12",
+        "P13",
+        "P14",
+        "P15"
+      ],
+      "limit": "Official indexed page bodies used after live timeouts; historical/manual-family bounds explicit."
+    },
+    {
+      "family": "OTIO format/schema/native metadata/bundle/read exceptions",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P16",
+        "P17",
+        "P22",
+        "P23"
+      ],
+      "limit": "No external-adapter lossless or full-app claim."
+    },
+    {
+      "family": "OTIO URL issues and path-conversion tests",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P18",
+        "P19",
+        "P30"
+      ],
+      "limit": "Issue observations not independently reproduced; local unit tests not cross-product proof."
+    },
+    {
+      "family": "BagIt integrity/path/complete-valid definitions",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P20"
+      ],
+      "limit": "Opaque-file integrity distinct from media semantics."
+    },
+    {
+      "family": "FATE/public fixture validation scope",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P21"
+      ],
+      "limit": "No samples acquired, licensed for redistribution, or executed."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "control-critic-1",
+      "subject": "wrong #1990 target_url identity",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "JUSTIFIED; repaired final retains frozen-record correction",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P18",
+        "P19"
+      ]
+    },
+    {
+      "id": "control-critic-2",
+      "subject": "MLT latest timing uncertainty",
+      "final_disposition": "AMEND",
+      "independent_judgment": "JUSTIFIED within displayed date and historical-snapshot limits",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P07"
+      ]
+    },
+    {
+      "id": "control-critic-3",
+      "subject": "paragraph ordering",
+      "final_disposition": "ACCEPT",
+      "independent_judgment": "JUSTIFIED; final plan crosswalk follows original order",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "control-critic-4",
+      "subject": "exact timestamp/time-base API locator",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_judgment": "JUSTIFIED; API/caller context supports recommendation; frame field population remains build-dependent",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "P02",
+        "P03"
+      ]
+    },
+    {
+      "id": "control-critic-5",
+      "subject": "unlisted investigator Goal receipt pointer",
+      "final_disposition": "ACCEPT_AND_REMOVE",
+      "independent_judgment": "JUSTIFIED; final does not use process receipt as product/source evidence",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "preservation": [
+    {
+      "meaning": "source/stream identity, exact timing, uncertainty and manual path",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "transcript correction vs reanchor, comments/excerpts, approval pin/rebase",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "offset/affine/piecewise choices and source-versus-preview tradeoffs",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "original/proxy/external package modes, quota/cache/relink safety",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "owner decisions, synthetic/public witnesses and no executed media tests",
+      "coverage": "COMPLETE",
+      "result": "RETAINED"
+    },
+    {
+      "meaning": "ELAN pilot and Kdenlive+MLT prototype routes with tradeoffs",
+      "coverage": "COMPLETE",
+      "result": "LOST",
+      "defect_id": "C-PRES-01"
+    },
+    {
+      "meaning": "source identities, correction lineage and named rate/XML history",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_WITH_VERSION_ERROR",
+      "defect_id": "C-SRC-02"
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "result": "All significant provisional clauses and final crosswalk rows examined; proposed architecture choices are recommendations, not implementation results."
+  },
+  "out_of_assessment": [
+    {
+      "subject": "future product implementation/deployment/private-recording behavior",
+      "coverage": "UNASSESSED",
+      "reason": "Outside research-proposal deliverable; no requirement to execute."
+    },
+    {
+      "subject": "universal mechanism recall and all supported-version/platform combinations",
+      "coverage": "UNASSESSED",
+      "reason": "No finite review establishes these."
+    },
+    {
+      "subject": "actual pre-input native chronology, independent native/task identity, provider billing/activity",
+      "coverage": "UNASSESSED",
+      "reason": "Frozen receipts cannot independently establish linkage or billing."
+    }
+  ]
+}

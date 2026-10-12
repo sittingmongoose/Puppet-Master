@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "case_id": "C-P03",
+  "selection_lock_sha256": "a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67",
+  "recipient_role": "independent-evaluator",
+  "evaluator_id": "er13-original-grader-v2-C-R2-P01-001",
+  "candidate_outputs_frozen": true,
+  "candidate_output_manifest_sha256": "9fc6b90c60ee3a7b7b7479ccd5fd24a1d40340f64b49ed054f6daf194cd5d273",
+  "authorized_by": "ROOT",
+  "authorization": {
+    "path": "ER13_RUNTIME/state/c-rubric-mechanical-authorization-v1.json",
+    "sha256": "2ef96bf076cbfda302267edb8c06291fa9ed045712a9051d5160bcbe56f618bc",
+    "mail_id": "1012025359-a9ee"
+  },
+  "verified_input_receipt": "ER13_RUNTIME/state/eval-coordinator-v2/C-R2-P01-input-verification.json",
+  "verified_input_receipt_sha256": "c849cfa5a1a43129dc9057ee35750b838f1eacdcd19e06973472618f9e0e68c4",
+  "recorded_utc": "2026-10-12T03:07:11.207665+00:00"
+}

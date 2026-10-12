@@ -1,0 +1,382 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "C-R1-P01",
+  "case_id": "C-P01",
+  "evaluator_id": "er13-original-grader-v2-C-R1-P01-001",
+  "original": true,
+  "cost_category": "independent_evaluation",
+  "arms": [
+    {
+      "arm_id": "C-R1-P01-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "judgment": "PASS",
+        "basis": "No material unsupported claim, required omission, false rejection or preservation loss found in the finite complete declared assessment. Nonmaterial condition qualifications are preserved.",
+        "is_universal_correctness": false,
+        "discovery_effectiveness": "Useful independently supported mechanisms identified; no universal/external-recall score.",
+        "material_defect_ids": []
+      },
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "id": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_NONMATERIAL_LIMITS"
+          },
+          {
+            "id": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "id": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "id": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "id": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "obligations": [
+          {
+            "id": "O01",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O02",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O03",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O04",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "O05",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "N01",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "N02",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          },
+          {
+            "id": "N03",
+            "coverage": "COMPLETE",
+            "result": "MET"
+          }
+        ],
+        "source_families": [
+          {
+            "id": "keyboard_focus",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "web_semantics",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "validation_status",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "native_platform",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "grid_implementations",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "identity_local_data",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "regression_history",
+            "coverage": "COMPLETE"
+          },
+          {
+            "id": "web_interoperability",
+            "coverage": "COMPLETE"
+          }
+        ],
+        "details_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/coverage.json"
+      },
+      "defects": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/defects.json",
+        "material_source_defect_ids": [],
+        "nonmaterial_source_finding_ids": [
+          "C-N01",
+          "C-N02"
+        ],
+        "method_finding_ids": [
+          "C-M01"
+        ]
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/final.md",
+          "bytes": 21013,
+          "sha256": "7c187181d60a1b09ef8c07856e15046008064fd02d701e0e0fd8b2e6e4b55768"
+        },
+        "required_science_files_present": true,
+        "available_lineage": "Complete investigator discovery/draft/map/index; complete critic/map/index; complete reviser final/map/index; exact brief/plan and all assigned custody receipts.",
+        "all_notified_tasks_terminal": true,
+        "pending_child_runs": false,
+        "missing_final": false,
+        "last_complete_scientific_artifact_time": "UNKNOWN; final-stage auxiliary freeze supplies a receipt-based upper bound."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_RECEIPT_UPPER_BOUNDS",
+        "maximum_elapsed_seconds": 3600,
+        "clock_corrections": 0,
+        "t0_utc": "2026-10-12T02:37:02.191Z",
+        "whole_deadline_utc": "2026-10-12T03:37:02.191Z",
+        "final_auxiliary_freeze_utc": "2026-10-12T03:05:29.307108+00:00",
+        "t0_to_final_auxiliary_freeze_seconds": 1707.116108,
+        "whole_deadline_met": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T02:37:34.219Z",
+            "requested_at_utc": "2026-10-12T02:37:34.219Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T02:37:35.133Z",
+            "native_birth_utc": "2026-10-12T02:37:43+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T02:45:12+00:00",
+            "auxiliary_freeze_utc": "2026-10-12T02:46:02.262272+00:00",
+            "stage_deadline_utc": "2026-10-12T03:07:34.219Z",
+            "stage_deadline_met_by_auxiliary_freeze": true,
+            "native_birth_to_terminal_updated_seconds": 449,
+            "native_reported_elapsed_seconds": 448,
+            "request_to_auxiliary_freeze_seconds": 508.043272,
+            "request_to_native_birth_seconds": 8.781,
+            "prior_auxiliary_freeze_to_request_seconds": null,
+            "receipt_fields_consistent": true,
+            "exact_objective_matches_freeze": true,
+            "activation_status": "active",
+            "terminal_status": "complete",
+            "raw_task_status": "completed",
+            "pending_child_runs": false,
+            "native_identity_tuple_sha256": "8624c591c707db96d9b3c8664d6a502001555e126a454870fcdaf2eb96467114",
+            "native_create_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+              "bytes": 528,
+              "sha256": "4d7e1a9b50402e4a38098a8d5aab4abacf6047b9193011c6cdb5b08433cfbf29"
+            },
+            "native_terminal_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+              "bytes": 858,
+              "sha256": "2b8a2eca35380a0cd15f4b9a986480be083583b1f349b44870576d35ee56f6f2"
+            },
+            "status_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/investigator/files/status.json",
+              "bytes": 6313,
+              "sha256": "2f45e1cc190902bf1f881363d308671f4f6034d0ec846a69ec6f1ec3b0dfec29"
+            },
+            "actual_status_raw_receipt": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R1-P01-control/investigator-eval-ready-status.raw.json",
+              "bytes": 12647,
+              "sha256": "bb138dc68037286428d7c8e255551d63a85d68549c5013b2d26a7871020be1ee"
+            },
+            "auxiliary_manifest": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R1-P01-control-investigator-capture-aux/authored-manifest.json",
+              "bytes": 617,
+              "sha256": "1beeefa58779627eed89261a4f7a48d82b7545c84c3146a645a2ed8b6c2a44d8"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T02:46:03.416Z",
+            "requested_at_utc": "2026-10-12T02:46:03.416Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T02:46:04.170Z",
+            "native_birth_utc": "2026-10-12T02:46:14+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T02:54:43+00:00",
+            "auxiliary_freeze_utc": "2026-10-12T02:57:00.622069+00:00",
+            "stage_deadline_utc": "2026-10-12T02:58:03.416Z",
+            "stage_deadline_met_by_auxiliary_freeze": true,
+            "native_birth_to_terminal_updated_seconds": 509,
+            "native_reported_elapsed_seconds": 508,
+            "request_to_auxiliary_freeze_seconds": 657.206069,
+            "request_to_native_birth_seconds": 10.584,
+            "prior_auxiliary_freeze_to_request_seconds": 1.153728,
+            "receipt_fields_consistent": true,
+            "exact_objective_matches_freeze": true,
+            "activation_status": "active",
+            "terminal_status": "complete",
+            "raw_task_status": "completed",
+            "pending_child_runs": false,
+            "native_identity_tuple_sha256": "86e56769f7718f605f6fb8d0b5da60222de8ed31309f99b338e85db55e3b6dbe",
+            "native_create_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+              "bytes": 516,
+              "sha256": "780dbd1804dbabd21428cd217a7538206c565ecc3a234449411259dde179d39e"
+            },
+            "native_terminal_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+              "bytes": 525,
+              "sha256": "c150757e0f33837c98b3dd7eb3f59f9c17c2cad24ee5870767c014f40893763d"
+            },
+            "status_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/status.json",
+              "bytes": 4801,
+              "sha256": "cfcf7fc0a2e609bdaafb7307f88266f5de01c89005a1d8c848b065fe4484cd6d"
+            },
+            "actual_status_raw_receipt": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R1-P01-control/critic-eval-ready-status.raw.json",
+              "bytes": 9627,
+              "sha256": "19c642004527abccd497b6797a5d8b7ced2458fcb1112dbe679c283b06c7b47d"
+            },
+            "auxiliary_manifest": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R1-P01-control-critic-capture-aux/authored-manifest.json",
+              "bytes": 617,
+              "sha256": "491f7c04f475fee9a8360ac811aed5835569d34545d79e5f1d79a55311434331"
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T02:57:02.294Z",
+            "requested_at_utc": "2026-10-12T02:57:02.294Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T02:57:03.197Z",
+            "native_birth_utc": "2026-10-12T02:57:17+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T03:04:35+00:00",
+            "auxiliary_freeze_utc": "2026-10-12T03:05:29.307108+00:00",
+            "stage_deadline_utc": "2026-10-12T03:15:02.294Z",
+            "stage_deadline_met_by_auxiliary_freeze": true,
+            "native_birth_to_terminal_updated_seconds": 438,
+            "native_reported_elapsed_seconds": 391,
+            "request_to_auxiliary_freeze_seconds": 507.013108,
+            "request_to_native_birth_seconds": 14.706,
+            "prior_auxiliary_freeze_to_request_seconds": 1.671931,
+            "receipt_fields_consistent": true,
+            "exact_objective_matches_freeze": true,
+            "activation_status": "active",
+            "terminal_status": "complete",
+            "raw_task_status": "completed",
+            "pending_child_runs": false,
+            "native_identity_tuple_sha256": "57c74e5c7c3d687b3a78bbc65e3b1f90cfa88240575c9cf04ca9b66847a02d56",
+            "native_create_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+              "bytes": 518,
+              "sha256": "685dfcc5a55a55eebf9fe0a4b5dca81becd5d2ebbfa86d3b10f9dcb4f3e3b6d1"
+            },
+            "native_terminal_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+              "bytes": 847,
+              "sha256": "be418673d1cea9264ab87f90c9a1b29627c29a9c3783b3bd7e4c83c44def7b74"
+            },
+            "status_receipt": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/status.json",
+              "bytes": 4408,
+              "sha256": "5b10f24dad7787ae5a54614ffa41e1729506a7d2e293bb9ab75084990055b031"
+            },
+            "actual_status_raw_receipt": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/C-R1-P01-control/reviser-eval-ready-status.raw.json",
+              "bytes": 8833,
+              "sha256": "d37d68d7c217b638042dcd570503c9b461bf26768b9e8aa68932b45add284ebc"
+            },
+            "auxiliary_manifest": {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/C-R1-P01-control-reviser-capture-aux/authored-manifest.json",
+              "bytes": 617,
+              "sha256": "fec822c82fa98122360d7e5132d809e684128a7cbb88b430ffccc6bef14d92e5"
+            }
+          }
+        ],
+        "proxy_definition": "T0/request to final/stage auxiliary freeze, after notified terminal custody. Not exact last-write time, provider start, active work, billing or context occupancy.",
+        "actual_queue_start_finish_boundaries": "UNKNOWN beyond request/dispatch capture and native-field observations. Proxy gaps include multiple causes."
+      },
+      "method_compliance": {
+        "judgment": "NONCOMPLIANT_DIRECT_TERMINAL_CAPTURE",
+        "requested_topology": "investigator -> independent critic -> fresh reviser",
+        "observed_named_stages": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "science_semantic_preservation": "PASS under declared finite coverage",
+        "known_deviation": "C-M01",
+        "pre_input_goal_activation_order": "UNKNOWN beyond assigned receipts and self-report; no full native transcripts inspected.",
+        "discovery_plan_reveal_hash_binding": "Verified frozen discovery and released-plan hashes against the exact reveal record.",
+        "actual_recipe_operator_provenance": "UNKNOWN beyond frozen configuration/request/status receipts."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "birth_active_terminal_consistency": "Verified exact identity tuple and objective against frozen freeze fields in every named stage.",
+        "identity_values": "Not reproduced; receipt paths/hashes and equality observations retained.",
+        "direct_terminal_response_limit": "Control critic supplied subsequent get_goal complete-state capture; original direct completion response missing from the assigned frozen file.",
+        "independent_native_to_task_linkage": "UNKNOWN",
+        "native_response_freshness": "UNKNOWN",
+        "extra_or_replacement_goal_absence": "UNKNOWN beyond supplied named receipts; no replacement reported.",
+        "qualification": "No complete direct-receipt method qualification; this does not revoke the source-content judgment."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "named_stage_contexts": 3,
+          "elapsed_goal_fields": "Observed in frozen receipts; values included in time_eligibility.",
+          "active_provider_seconds": null,
+          "created_context_occupancy_seconds": null,
+          "started_context_occupancy_seconds": null,
+          "context_union_seconds": null,
+          "context_overlap_seconds": null,
+          "cached_input_subset": null,
+          "reasoning_subset": null,
+          "subscription_consumption": null,
+          "billing": null,
+          "usage_counter_observation": "Private frozen Goal counters are present. No token values reproduced; counters are not converted into provider billing."
+        },
+        "independent_evaluation": {
+          "category": "independent_evaluation",
+          "started_at_utc": "2026-10-12T03:06:43Z",
+          "cost_allocation": "Shared paired evaluation; per-arm allocation UNKNOWN; do not count this evidence research twice.",
+          "active_provider_seconds": null,
+          "billing": null
+        },
+        "preparation": {
+          "billing": null
+        },
+        "support": {
+          "billing": null
+        },
+        "publication": {
+          "billing": null
+        },
+        "root_observations": {
+          "billing": null
+        },
+        "unknown_policy": "null means unavailable/unassessed or deliberately withheld with stated reason, never zero.",
+        "denominator": "This assigned arm remains in the candidate denominator despite capture noncompliance."
+      }
+    }
+  ],
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "rubric_sha256": "c1c39a608a74a7ac56e1f91564e82d97fe59d95890f3a4433d89f642b4436347",
+  "input_verification_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/input-verification.json",
+  "blinding": "Imperfect: technique-bearing paths, topology and output reveal arm/method. This original judgment contains no cross-arm comparison.",
+  "comparative_analysis_performed_before_freeze": false
+}

@@ -1,0 +1,41 @@
+{
+  "arm_id": "C-R1-P02-treatment",
+  "defects": [
+    {
+      "id": "T-SRC-01",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2
+      ],
+      "kind": "specification_status_metadata_error",
+      "status": "UNRESOLVED_IN_FINAL_SOURCE_MAP",
+      "input_locators": [
+        "critic/source-map.json — C07 version/status and critic operation",
+        "critic/sources/00-index.md — C07"
+      ],
+      "finding": "WebVTT is described as a W3C Recommendation. The governing current publication identifies itself as the 20 May 2026 Candidate Recommendation Draft.",
+      "why_nonmaterial": "The consequential syntax claims checked in that version are supported, including optional file-unique IDs, ordered start times, millisecond syntax and permitted overlap. No deploy/conformance maturity guarantee depends on the mislabeled status.",
+      "primary_sources": [
+        "P31"
+      ]
+    },
+    {
+      "id": "T-SRC-02",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2
+      ],
+      "kind": "release_label_identity_imprecision",
+      "status": "UNRESOLVED_IN_FINAL_SOURCE_MAP",
+      "input_locators": [
+        "critic/source-map.json — C16 released_version_or_commit/governing conditions",
+        "critic/critique.md — CR-07"
+      ],
+      "finding": "The v0.18.1 release and Beta 18.1 prerelease label are phrased as separate successive entries. The inspected release page labels the v0.18.1 tag itself Beta 18.1 and prerelease.",
+      "why_nonmaterial": "Tag/commit and actual 0.18.1 issue scope remain correct; the final makes no false stable-release or general-compatibility claim.",
+      "primary_sources": [
+        "P16"
+      ]
+    }
+  ]
+}

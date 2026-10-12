@@ -1,0 +1,73 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "C-R1-P01-treatment",
+  "material_source_defects": [
+    {
+      "id": "T-P01",
+      "category": "material supported-meaning preservation loss",
+      "axes": [
+        3,
+        5
+      ],
+      "original_witness": {
+        "path": "investigator/files/discovery.md",
+        "locator": "Public failure and regression history, line 42; source-map S13",
+        "supported_meaning": "Stable identity must include active filter/editor UI state, not just row data, because a placeholder filter item can change identity when incoming rows rerender the panel."
+      },
+      "final_locator": "final.md Record and view state (line 31), Keyboard and focus behavior (line 44), Draft/filtering recovery (line 62), validation plan (line 94), evidence navigation (line 122)",
+      "finding": "The final omits the transient filter-control identity mechanism and its row-update focus-loss implication. Its record-ID focus/draft contract and edited-cell update tests do not carry that distinct finding; S13 remains only in the inherited source map/index.",
+      "materiality": "The independently supported failure class can defeat ordinary keyboard filtering while record keys remain stable. The assignment requires supported discovery meaning in a self-contained complete final. Source custody alone does not preserve this actionable planning meaning.",
+      "evidence": [
+        "E27"
+      ],
+      "public_primary_urls": [
+        "https://github.com/mui/mui-x/issues/8119#issuecomment-1456257208",
+        "https://github.com/mui/mui-x/pull/8603",
+        "https://api.github.com/repos/mui/mui-x/pulls/8603/files"
+      ],
+      "scope_limit": "No claim that current MUI is defective or that a specific toolkit/patch must be adopted. This is one consequential preservation loss, counted once across axes."
+    }
+  ],
+  "nonmaterial_source_findings": [
+    {
+      "id": "T-N01",
+      "category": "minor critic-severity error",
+      "locator": "critique.md C1; final recommendation",
+      "finding": "The first-prototype draft was explicitly provisional and required comparison. Neutral architecture sequencing is a supported optional refinement; a material defect was not independently demonstrated.",
+      "materiality": "The final retains row-windowing and alternative architectures, so no material false rejection or forced product winner results.",
+      "evidence": [
+        "E15",
+        "E22"
+      ]
+    },
+    {
+      "id": "T-N02",
+      "category": "minor locator/version wording",
+      "locator": "source-map S01 and S16",
+      "finding": "The /TR/wai-aria-1.2/ and /TR/WCAG22/ URLs select standard versions but are not date-pinned editions despite the record's pinning wording.",
+      "materiality": "Reviewed Recommendation content supports the final's cited mechanisms; no consequential version mismatch found.",
+      "evidence": [
+        "E01",
+        "E06"
+      ]
+    },
+    {
+      "id": "T-N03",
+      "category": "nonmaterial public-report coverage limit",
+      "locator": "source-map S19; critique C3; final executed-check limits",
+      "finding": "Official search output independently confirms the dated Candidate index observation. Direct HTML has no report content; underlying test/AT-version context remains unassessed.",
+      "materiality": "Final labels this unverified and uses no percentages as an app or toolkit result.",
+      "evidence": [
+        "E31",
+        "E05"
+      ]
+    }
+  ],
+  "method_findings": [],
+  "telemetry_limits": [
+    "Only frozen request/status/native receipts are available; complete native-to-task linkage and receipt freshness UNKNOWN.",
+    "Actual read order, provider activity, context occupancy and billing UNKNOWN.",
+    "Semantic preservation failure is graded separately from the observed two-stage execution topology."
+  ],
+  "original_grade_change_policy": "Frozen once by manifest; any dispute requires a new separate adjudication."
+}

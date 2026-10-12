@@ -1,0 +1,67 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "C-R2-P01-treatment",
+  "source_judgment": "FAIL",
+  "material_defects": [
+    {
+      "defect_id": "T-M01",
+      "severity": "MATERIAL",
+      "category": "protected preview-generation check lost in revision",
+      "axes": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "obligations": [
+        "O01",
+        "O03"
+      ],
+      "draft_locators": [
+        "draft.md:72"
+      ],
+      "final_locators": [
+        "final.md:54",
+        "final.md:56",
+        "final.md:58",
+        "final.md:88",
+        "final.md:102"
+      ],
+      "source_ids": [
+        "P15",
+        "P22",
+        "P13",
+        "P14"
+      ],
+      "finding": "Draft requires generation comparison inside the transaction and rollback/re-preview after a concurrent import. Final explicitly compares before opening the write transaction and supplies no protected recheck, guarded write, or serialization spanning that read and apply. General before-apply wording does not retain the lost boundary.",
+      "materiality": "A second writer can commit after the successful precheck and before the importing transaction begins. The later transaction can be atomic yet apply a stale reviewed revision/active-view decision. That breaks what-will-change review and loses consequential supported draft meaning.",
+      "counterevidence_considered": "Final names a generation, states never apply stale decisions, and proposes a database-change test. It might have intended the stronger invariant; its specific pre-transaction sequence does not require it. A transaction protects its own operations, not a prior completed read. No single-worker serialization rule is declared.",
+      "evidence": "Primary isolation definitions, exact draft/final locators, and unexecuted two-connection interleaving in claim-boundaries.md."
+    }
+  ],
+  "nonmaterial_findings": [
+    {
+      "defect_id": "T-N01",
+      "severity": "NONMATERIAL",
+      "category": "failure/fix context incompletely preserved in final summary",
+      "axes": [
+        2,
+        3
+      ],
+      "final_locators": [
+        "final.md:23",
+        "source-map.json: S09",
+        "sources/README.md: S09"
+      ],
+      "source_ids": [
+        "P36",
+        "P37",
+        "P38"
+      ],
+      "finding": "S09 is framed as historical StringIO/encoding behavior across versions. The closing PR specifically rejects invalid Python kwargs: quote was used instead of quotechar and could previously be ignored. This useful caller/fix boundary is absent from the final summary.",
+      "materiality": "Final labels historical reports as prompts, does not assert a current engine defect, and leaves first fixed release unknown. Imprecise opportunity/context, not an independent material exclusion."
+    }
+  ],
+  "no_candidate_repair": "These are original assessment findings; no candidate author was contacted and no revised candidate was produced.",
+  "unresolved_external_inputs": "Actual logger semantics and target builds/performance remain unknown and are not graded as erroneous."
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "C-R2-P02-treatment",
+  "evaluator_id": "er13-original-grader-v2-C-R2-P02-001",
+  "frozen_at_utc": "2026-10-12T03:27:33.164850+00:00",
+  "before_comparative_analysis": true,
+  "self_excluded": "A manifest cannot hash itself; its external SHA256 is reported separately.",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/assessment.md",
+      "bytes": 5778,
+      "sha256": "8d5bfe6fa0d63a66b40fe8705b385d6d7c47c8221ddafe067877436463d15ea8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/assessment.json",
+      "bytes": 27527,
+      "sha256": "43deae7acf7da577026befe6205fba0d38bfbe101b37bcea0da1cbf21f870752"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/coverage.json",
+      "bytes": 17723,
+      "sha256": "406dd580d3ec843bcbe62941a3389f23a5236e4832af13070cf48af248f3895e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/defects.json",
+      "bytes": 643,
+      "sha256": "0c0c1f404abd1c73172dc793529c6e17c9814b95e6d23fdcefc2fef9298d25ea"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/primary-source-index.json",
+      "bytes": 33961,
+      "sha256": "c88dfcb01ad525258643db548d8959306966a4b2e63ec892d3bcc8bfdec5ae39"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/input-verification.json",
+      "bytes": 48374,
+      "sha256": "8df80f3487b889dc46b77aa849a4841b43604a3a567bf8e72031b5f696292ad1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/governing-inputs.json",
+      "bytes": 2774,
+      "sha256": "7f68c649ea14df89b50d395095639f429804672305d9af7a0ad9a3939fd158d8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/primary-research.json",
+      "bytes": 34769,
+      "sha256": "95987409ab9e27e52fd82a7844e6a9eccfeacbdd09b0026abeef9dfc847b520c"
+    }
+  ]
+}

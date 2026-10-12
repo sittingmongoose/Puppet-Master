@@ -1,0 +1,91 @@
+{
+  "schema": "er13.post-freeze-finite-comparison.v1",
+  "block_id": "C-R2-P02",
+  "case_id": "C-P04",
+  "created_at_utc": "2026-10-12T03:29:26.324078+00:00",
+  "originals_frozen_at_utc": "2026-10-12T03:28:15.556160+00:00",
+  "original_manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/manifest.json",
+  "original_manifest_sha256": "f143e6f240bd907ac5f96ce0e32ad628f25c22325b4b0e9e528b394e42de7892",
+  "arm_count": 2,
+  "scope": "FULL",
+  "original_judgments_unchanged": true,
+  "records": [
+    {
+      "arm_id": "C-R2-P02-control",
+      "assigned_attempts": 1,
+      "source_judgment": "FAIL",
+      "axes_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "material_defects": [
+        "D01"
+      ],
+      "delivery": "DELIVERED",
+      "whole_time_eligibility": "ELIGIBLE_BY_FROZEN_FINAL_BOUND",
+      "native_final_terminal_proxy_seconds": 1825.366,
+      "context_occupancy": "UNKNOWN",
+      "active_provider_activity": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "actual_native_task_linkage": "UNKNOWN beyond frozen custody"
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "assigned_attempts": 1,
+      "source_judgment": "PASS",
+      "axes_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "material_defects": [],
+      "delivery": "DELIVERED",
+      "whole_time_eligibility": "ELIGIBLE_BY_FROZEN_FINAL_BOUND",
+      "native_final_terminal_proxy_seconds": 1740.615,
+      "context_occupancy": "UNKNOWN",
+      "active_provider_activity": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "actual_native_task_linkage": "UNKNOWN beyond frozen custody"
+    }
+  ],
+  "quality_signal": "One finite matched-case observation: control has a material temporary-storage mechanism research omission; treatment has no material defect found under complete declared coverage. Not universal correctness, discovery recall or confirmed recipe qualification.",
+  "latency": {
+    "metric": "T0 to frozen reported native final-terminal timestamp; not science-write or quiet-finish time",
+    "control_seconds": 1825.366,
+    "treatment_seconds": 1740.615,
+    "paired_difference_treatment_minus_control_seconds": -84.75099999999998,
+    "observed_difference_percent_of_control": -4.642959275016626,
+    "all_assigned_proxy_sum_seconds": 3565.9809999999998,
+    "equal_quality_savings": "NOT_ESTABLISHED; original source quality differs and authentic actual finish linkage is unavailable",
+    "bounds": "Both frozen finals existed within the original 60-minute whole cap. Per-stage reported native terminals are before their stage deadlines. No retrospective clock correction."
+  },
+  "resource": {
+    "candidate_product_cost": "UNKNOWN",
+    "independent_evaluation_cost": "UNKNOWN; separately categorized independent_evaluation",
+    "opaque_native_counters": "Present but no independently attributable billing/context units; not summed",
+    "source_passing_final_counts": {
+      "control": 0,
+      "treatment": 1
+    },
+    "candidate_consumption_per_source_passing_final": {
+      "control": "UNDEFINED: zero observed source passes",
+      "treatment": "UNKNOWN: attributable consumption unavailable",
+      "pooled": "UNKNOWN: attributable consumption unavailable"
+    },
+    "no_unknown_as_zero": true,
+    "no_cold_full_pipeline_or_component_discovery_inference": true
+  },
+  "method_limits": [
+    "Paths/prompts/topology made blinding imperfect.",
+    "Three-context control and four-context complementary-critic topology are declared in frozen records; actual execution order, operator recipe and native-to-task linkage remain unknown beyond custody.",
+    "This evaluator reused its own primary lookup across the pair; that research cost is independent_evaluation, not candidate support/product."
+  ],
+  "selection": "NONE; root alone chooses campaign recipes. No further scientific candidates, repeat grader or author feedback."
+}

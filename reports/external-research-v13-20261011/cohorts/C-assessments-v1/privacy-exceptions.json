@@ -1,0 +1,37 @@
+{
+  "scope": "These exact files/hashes only; private route/account/home/host literals never exempt",
+  "exceptions": [
+    {
+      "path": "state/eval-coordinator-v2/C-R2-P02-output-verification.json",
+      "sha256": "ffb9edef2bb64727a058c8c36aed96f21e19e7e7423acda5b02373253ed178e9",
+      "literals": [
+        "original/home/sibling/network"
+      ],
+      "basis": "Authority shorthand in original planning obligations, not a machine/home path or private identity; retained unchanged."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/assessment.json",
+      "sha256": "0ba0cb78d837351015223d521d4ab0534bbe73f40304b10edf0650cd9698a943",
+      "literals": [
+        "original/home/sibling/network"
+      ],
+      "basis": "Authority shorthand in original planning obligations, not a machine/home path or private identity; retained unchanged."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/coverage.json",
+      "sha256": "406dd580d3ec843bcbe62941a3389f23a5236e4832af13070cf48af248f3895e",
+      "literals": [
+        "original/home/sibling/network"
+      ],
+      "basis": "Authority shorthand in original planning obligations, not a machine/home path or private identity; retained unchanged."
+    },
+    {
+      "path": "assessment-rows.json",
+      "sha256": "4ff02b1fa7c9c90bc5ae42386d5adb0ed6cb76c8560bedf0ac68a586d6e5f040",
+      "literals": [
+        "original/home/sibling/network"
+      ],
+      "basis": "Same exact original obligation shorthand in copied verification rows; not private machine metadata."
+    }
+  ]
+}
