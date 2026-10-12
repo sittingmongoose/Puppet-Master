@@ -1,0 +1,46 @@
+{
+  "status": "IN_PROGRESS",
+  "checkpoint": "Normal hardware admission and immutable input custody verified; N1-N4 acceptance outstanding.",
+  "tested_candidate_source_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
+  "actual_admission_worktree_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
+  "environment": {
+    "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "DPR": 1,
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+  },
+  "recording": {
+    "codec": "h264",
+    "resolution": "1920x1080",
+    "fps": 60,
+    "encoder": "h264_nvenc",
+    "status": "complete"
+  },
+  "input_custody": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/input-custody.json",
+    "sha256": "f3c9d9104cfa72b01cfdea4a178e4111963a6f28d330020508bd39032394d68b"
+  },
+  "admission_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/admission/SHA256SUMS",
+    "sha256": "4768d61863587f4b73c5d201cd32ca0da87ee72302e463a1aacc534176adb26d"
+  },
+  "immutable_original_raw_manifest_sha256": "defde16dd3b2a5a271b41ad9864dbcfb47c5b9e4c775ecffd4d92491bb817d9e",
+  "sealed_review_manifest_sha256": "d20508c4ca8cc92cdda076af5dc004d3b885ac378ad0a2979392345087b74c51",
+  "N1": "NOT_RUN",
+  "N2": "NOT_RUN",
+  "N3": "NOT_RUN",
+  "N4": "NOT_RUN",
+  "original_collector_coverage_limitation": "#o55-tourchip excluded by frozen gate; original gate is unchanged. Same-channel amendment authorizes a separate exact-two-site supplemental collector.",
+  "supplemental_criteria": "Add only #o55-tourchip to scopeOf and floaters roots; inverse projection must recover original bytes.",
+  "production_changes": [],
+  "no_look_or_landing_acceptance": true,
+  "accidental_direct_Chromium": "Failed SSH diagnostic invocation aborted with No usable sandbox; retained as diagnostic only, corrected census found no surviving browser; no direct retry/configuration override.",
+  "remaining": [
+    "Implement and perform exact N1-N4 case checks, visuals and contrast; any failure stops relevant acceptance for owner.",
+    "Transport separately authorized classA6 68e at this clean checkpoint, preserving all page/driver/other production blobs.",
+    "Windows rail review and GLY4/Jared gates remain external."
+  ]
+}
