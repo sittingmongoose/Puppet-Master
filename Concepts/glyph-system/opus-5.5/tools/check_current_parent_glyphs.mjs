@@ -561,6 +561,7 @@ async function reducedNative(page, id, host, selector, fields, outside) {
   await page.emulateMedia({ reducedMotion: 'reduce' }); await sleep(1000);
   await page.mouse.move(outside.x, outside.y);
   if (await page.locator(host).evaluate((e) => e.matches(':focus'))) await page.keyboard.press('Tab');
+  const before = await page.evaluate(nativeSample, selector);
   await beginNativeTrace(page, selector, id);
   await page.locator(host).hover(); await sleep(1400);
   const active = await page.evaluate(nativeSample, selector);
@@ -568,9 +569,12 @@ async function reducedNative(page, id, host, selector, fields, outside) {
   const trace = await endNativeTrace(page);
   const late = trace.rows.filter((r) => r.at >= trace.rows.at(-1).at - 700);
   const shapes = new Set(late.map((r) => JSON.stringify(r.glyphs.map((g) => g.moving_parts))));
-  const probeLit = active.glyphs.every((g) => g.host?.hover && g.halo_visibility === 'visible' && Number(g.halo_alpha) > 0);
+  // Frozen neon-icons.css says light looks carry "lit" by ink alone; dark looks carry their same-ink bloom.
+  // These are supporting probes. Required hardware frames still decide whether the native lit pose is visible.
+  const probeLit = active.glyphs.every((g, i) => g.visible && g.host?.hover &&
+    ((g.halo_visibility === 'visible' && Number(g.halo_alpha) > 0) || g.ink !== before.glyphs[i]?.ink));
   const probeStill = shapes.size === 1 && late.every((r) => r.glyphs.every((g) => !g.animations.some((a) => a.play_state === 'running')));
-  result.cases.push({ id, ...fields, reduced: true, active, trace, probe_lit: probeLit, probe_still: probeStill,
+  result.cases.push({ id, ...fields, reduced: true, before, active, trace, probe_lit: probeLit, probe_still: probeStill,
     status: probeLit && probeStill ? 'MEASURED_PENDING_FRAME_REVIEW' : 'UNVERIFIED' }); save();
   await page.mouse.move(outside.x, outside.y); await page.emulateMedia({ reducedMotion: 'no-preference' }); await sleep(800);
 }
