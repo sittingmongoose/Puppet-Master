@@ -1,6 +1,6 @@
 {
   "schema": "pm7.glass.performance-integration.v1",
-  "status": "BASELINE_VERIFIED_AWAITING_PEER_HEADS",
+  "status": "PREPARATION_CHECKPOINT_PEER_IMPLEMENTATION_PENDING",
   "input": {
     "created_utc": "2026-10-12T16:37:28.929384+00:00",
     "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
@@ -59,7 +59,8 @@
     "baseline_diff_check": "PASS",
     "integration_lifecycle": "NOT_RUN_PEERS_PENDING",
     "live_performance": "NOT_RUN_PROFILER_OWNS",
-    "visual_parity": "NOT_RUN_PROFILER_OWNS"
+    "visual_parity": "NOT_RUN_PROFILER_OWNS",
+    "protected_source_and_page": "PASS_19_FILES_9_DECLARATIONS_ON_BASELINE"
   },
   "outstanding": [
     "Review runtime, baking, and lens minimal diffs and focused tests.",
@@ -74,6 +75,38 @@
     "new_extra_agents": 0,
     "main_landings": 0,
     "t3_account_or_server_changes": 0,
-    "mail_waiters": 1
-  }
+    "running_tests": 0,
+    "owned_servers": 0,
+    "owned_forwarders": 0,
+    "mail_waiters": 0,
+    "auto_wakes": 0,
+    "retained_task_artifacts": [
+      "unlanded private branch/worktree",
+      "external frozen receipts and candidate-preservation validator for continuation"
+    ]
+  },
+  "updated_utc": "2026-10-12T16:51:25.427951+00:00",
+  "evidence": {
+    "frozen_source_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/frozen-source-manifest.json",
+      "bytes": 3603,
+      "sha256": "5cd27403e89c1c5079c5f6c4eccee90dea9143c792b1ca0025b3c0d72908b542"
+    },
+    "preparation_static_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/preparation-static-check.json",
+      "bytes": 3645,
+      "sha256": "14cef70e8bed1585a6a6fe5274f42641dd146110519d32ff6aad9ea24bf31b62"
+    },
+    "candidate_validator": {
+      "path": "/home/sittingmongoose/PM-Experiments/pm7-glass-integration-20261012/check_candidate.py",
+      "bytes": 3133,
+      "sha256": "13004a2e0e9cc064a32d065bc3322bee585a8500f70d7ae2a487f326fb1a8ab2"
+    }
+  },
+  "review_notes": [
+    "Runtime confirms exact BASE reconstruction and idempotent applyWall fix with cancellation-aware scheduling.",
+    "Runtime confirms optional internal unmount and pruneLenses hooks; baking/lens ownership coordinated before source merge.",
+    "Lens worker preserves baseline shared-filter scale behavior; existing animation cross-talk remains a disclosed limitation. No independent optical choice is made here.",
+    "Sole profiler acquired a distinct performance P1000 lease and keeps global admission and existing campaigns intact."
+  ]
 }

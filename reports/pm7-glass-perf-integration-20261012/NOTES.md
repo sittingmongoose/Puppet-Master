@@ -9,3 +9,9 @@ The runtime lane owns scheduling and observer behavior, baking owns optical comp
 Preserved contracts: wallpaper and art files, CSS/palette/geometry, optical parameters and equations, spring outputs/timings, picker and first-visit defaults, focus behavior, reduced motion and accessibility, all other looks, and the existing `PM_LG` version and methods. A scoped source performance patch does not approve visual choices, canon, or main landing.
 
 Peer implementation heads and the sole profiler's P1000 comparison are pending. This preparation checkpoint makes no runtime improvement or visual parity claim. No browser, GPU, video, additional agent, T3/account/server change, or main landing has been started by integration. The private unlanded branch and worktree remain in parent custody. Raw evidence is external; exact paths and SHA-256 values are in `result.json`.
+
+The exact preservation validator passed on the baseline: all 19 non-JS package files and nine parameter/API/default declarations were unchanged. Its later candidate check requires the entire page to equal presented v2.2 with only the injected `glass.js` bytes replaced. It has no browser or GPU dependency.
+
+The lens lane explicitly retains baseline sharing of a filter record by cache key. Concurrent lens travel can therefore still share temporary scale changes; integration did not authorize a separate optical behavior choice. The planned patch bounds inactive filters and cancels obsolete tickers while preserving connected references. Record that limitation in the measured candidate review.
+
+This bounded preparation handoff has no peer source merge or runtime candidate yet. Resume this same native integration worker once concrete peer heads and external focused harnesses are ready. The profiler owns the only live P1000 campaign. All integration processes and the mailbox waiter are stopped at handoff; the unlanded branch/worktree and needed task artifacts remain for parent custody.
