@@ -517,6 +517,7 @@ async function n3Baseline(page) {
   result.status = 'BASELINE_REPRODUCTION_ONLY';
 }
 async function newBytePose(page, measure, id, host, selector, pose, fields, outside) {
+  let focusRoute = null;
   await page.mouse.move(outside.x, outside.y);
   if (await page.locator(host).evaluate((e) => e.matches(':focus'))) await page.keyboard.press('Tab');
   await sleep(800);
@@ -530,7 +531,17 @@ async function newBytePose(page, measure, id, host, selector, pose, fields, outs
   if (pose === 'focus-visible') {
     // Setup on the existing own button, then trusted Tab leaves it and Shift+Tab returns through browser navigation.
     // The trace begins after the setup focus has left; no focus class or geometry is forced.
-    await page.locator(host).focus(); await page.keyboard.press('Tab'); await sleep(400);
+    if (host === '.o55-demopill') {
+      // The modal traps Tab inside its own window. The demo's published menu has its own ordinary Tab order,
+      // so a trusted Shift+Tab from its first existing row reaches the demo button without crossing that trap.
+      await page.locator(host).click();
+      await page.locator('.o55-demomenu .o55-demoitem').first().focus();
+      await page.mouse.move(outside.x, outside.y); await sleep(400);
+      focusRoute = 'trusted demo-menu open, setup focus on its unchanged first row, trusted Shift+Tab to its own demo button; menu remains open during this focus pose';
+    } else {
+      await page.locator(host).focus(); await page.keyboard.press('Tab'); await sleep(400);
+      focusRoute = 'existing own-button setup focus, trusted Tab, trace, trusted Shift+Tab return, trusted Tab leave';
+    }
   }
   const before = await page.evaluate(nativeSample, selector);
   await beginNativeTrace(page, selector, id + '-native-act');
@@ -538,7 +549,11 @@ async function newBytePose(page, measure, id, host, selector, pose, fields, outs
   await sleep(1000);
   const active = await page.evaluate(nativeSample, selector);
   const reached = active.glyphs.length && active.glyphs.every((g) => pose === 'hover' ? g.host?.hover : g.host?.focus_visible);
-  if (!reached) throw new Error('UNVERIFIED: trusted native route did not reach requested pose: ' + id);
+  if (!reached) {
+    result.cases.push({ id: id + '-native-route', ...fields, pose, before, active, trace: await endNativeTrace(page), focus_route: focusRoute, status: 'UNVERIFIED' });
+    result.inputs = await page.evaluate(() => window.__pmgInputs || []); save();
+    throw new Error('UNVERIFIED: trusted native route did not reach requested pose: ' + id);
+  }
   await page.screenshot({ path: join(out, id + '--native-active.png') });
   const row = await measureGlyphs(page, measure, id, selector, { ...fields, pose });
   row.exact_zero_hide_layout_shift = row.actual_glyphs.length === row.after_glyphs.length && row.actual_glyphs.every((g, i) =>
@@ -552,10 +567,11 @@ async function newBytePose(page, measure, id, host, selector, pose, fields, outs
     ['ink', 'halo_alpha', 'halo_visibility', 'halo_stroke_opacity', 'halo_opacity'].every((k) => g[k] === before.glyphs[i]?.[k]) &&
     JSON.stringify(g.moving_parts) === JSON.stringify(before.glyphs[i]?.moving_parts));
   result.cases.push({ id: id + '-native-act', ...fields, pose, before, active, left, trace,
-    focus_route: pose === 'focus-visible' ? 'existing own-button setup focus, trusted Tab, trace, trusted Shift+Tab return, trusted Tab leave' : null,
+    focus_route: focusRoute,
     no_stuck_native_paint_after_leave_and_blur: noStuck,
     status: noStuck ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
   if (row.contrast_status !== 'MEASURED' || !row.exact_zero_hide_layout_shift || !noStuck) throw new Error('HOLD: new-byte contrast/layout/native criterion failed: ' + id);
+  if (pose === 'focus-visible' && host === '.o55-demopill') await page.keyboard.press('Escape');
 }
 async function reducedNative(page, id, host, selector, fields, outside) {
   await page.emulateMedia({ reducedMotion: 'reduce' }); await sleep(1000);
