@@ -361,6 +361,9 @@
     { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
     { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, box: function (i) { return i.querySelector('.symbol') || i; } },
+    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6,
+      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on' },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -371,23 +374,36 @@
   }
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together and magnifies them as one, and no sheet can cover it. */
+  /* one layer per host surface: the app shell, or a window that floats above it (onboarding), so a lens is never
+     covered by the surface its strip lives in */
   var lenses = new Map(), layer = null;
-  function lensLayer() {
+  function lensLayer(strip) {
+    var host = strip && strip.closest && strip.closest('#pm-o55-onboarding .o55-win');
+    if (host) {
+      var own = host.querySelector(':scope > .lg-lenses-local');
+      if (!own) { own = el('div', { class: 'lg-lenses-local', 'aria-hidden': 'true' }); host.appendChild(own); }
+      return own;
+    }
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
   }
   /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel: only the strip's
      own edge and the surroundings bend at the rim, never the letters (they had split into coloured specks) */
+  function unionRect(list) {
+    var r = null; list.forEach(function (e) { if (!e) return; var b = e.getBoundingClientRect(); if (b.width < 1) return;
+      r = r ? { left: Math.min(r.left, b.left), top: Math.min(r.top, b.top), right: Math.max(r.right, b.right), bottom: Math.max(r.bottom, b.bottom) } : { left: b.left, top: b.top, right: b.right, bottom: b.bottom }; });
+    if (r) { r.width = r.right - r.left; r.height = r.bottom - r.top; } return r;
+  }
   function rectIn(strip, t, pad) {
-    var r = t.getBoundingClientRect(), lr = lensLayer().getBoundingClientRect(); pad = pad || 0;
+    var r = t.getBoundingClientRect ? t.getBoundingClientRect() : t, lr = lensLayer(strip).getBoundingClientRect(); pad = pad || 0;
     return { x: r.left - lr.left - pad, y: r.top - lr.top - pad, w: r.width + 2 * pad, h: r.height + 2 * pad };
   }
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
     if (L && L.lens.isConnected) return L;
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind });
-    lensLayer().appendChild(lens);
+    lensLayer(strip).appendChild(lens);
     L = { lens: lens, rect: null, anim: null, cfg: cfg }; lenses.set(strip, L); return L;
   }
   function setLensBox(L, R) {
@@ -417,7 +433,7 @@
   }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
-    var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + '.active');
+    var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (!target || !visible(target) || !visible(strip)) { L.lens.style.opacity = '0'; L.rect = null; return; }
     L.lens.style.opacity = '';
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
@@ -439,7 +455,7 @@
         var dx = ev.clientX - sx;
         if (!moved && Math.abs(dx) < 6) return;
         if (!moved) { moved = true; L.dragging = true; if (L.anim) L.anim.cancel(); L.lens.setAttribute('data-lg-lifted', ''); }
-        var sr = strip.getBoundingClientRect(), lr = lensLayer().getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
+        var sr = strip.getBoundingClientRect(), lr = lensLayer(strip).getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
         L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.14,1.16)';
         ev.preventDefault();
@@ -449,7 +465,7 @@
         if (!moved) return;
         var sr = strip.getBoundingClientRect(), best = null, bd = 1e9;
         items.forEach(function (it) { var r = it.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
-        var cur = L.lens.getBoundingClientRect(), lr2 = lensLayer().getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
+        var cur = L.lens.getBoundingClientRect(), lr2 = lensLayer(strip).getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
         L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
         if (best && !best.classList.contains('active')) { L.rect = from; best.click(); } else { travel(L, from, L.rect, false); }
         var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); document.removeEventListener('click', swallow, true); };
@@ -469,6 +485,9 @@
     /* Settings: its domain rail and section index are sheets, every section is a card */
     ['#pm-settings-root aside.domain-rail', 'panel'], ['#pm-settings-root .document-layout > :is(nav, aside):not(.document-main)', 'panel'],
     ['#pm-settings-root section.settings-section', 'card'],
+    /* onboarding: the window is a sheet over a frosted veil of the wallpaper; the tour floats over the live app, so its
+       callout and bar blur what is behind them */
+    ['#pm-o55-onboarding .o55-win', 'panel'], ['.o55t-callout', 'menu'], ['.o55t-bar', 'menu'],
   ];
   function segTracks() {   /* the rail's tab strips get a track element to be the glass (the strip itself is a full-width plate) */
     document.querySelectorAll('#sidePanelSlot .pm-segtab').forEach(function (s) {
@@ -503,7 +522,7 @@
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0) return;
-    var g = e.target.closest && e.target.closest('.page-tab, #pmuRange > button, .pmu-navbtn, #activityBar .icon, .pm-segtab-item, .pmu-ctlbtn, .pmu-iconbtn');
+    var g = e.target.closest && e.target.closest('.page-tab, #pmuRange > button, .pmu-navbtn, #activityBar .icon, .pm-segtab-item, .pmu-ctlbtn, .pmu-iconbtn, .o55-btn, .o55-card, .o55-tile, .o55t-btn, .o55t-barbtn');
     if (!g || reduced()) return;
     var r = g.getBoundingClientRect(), glow = el('i', { class: 'lg-press', 'aria-hidden': 'true' });
     glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
@@ -554,9 +573,9 @@
   var SWITCHES = '#panel-usage .pmu-toggle, #panel-usage .pmu-wswitch-track, [role="switch"].pm-switch';
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0) return;
-    var sw = e.target.closest && e.target.closest('#panel-usage .pmu-toggle, #panel-usage .pmu-wswitch');
+    var sw = e.target.closest && e.target.closest('#panel-usage .pmu-toggle, #panel-usage .pmu-wswitch, #pm-o55-onboarding .o55-toggle');
     if (!sw) return;
-    var host = sw.classList.contains('pmu-wswitch') ? sw.querySelector('.pmu-wswitch-track') : sw;
+    var host = sw.classList.contains('pmu-wswitch') ? sw.querySelector('.pmu-wswitch-track') : sw.classList.contains('o55-toggle') ? sw.querySelector('.o55-switch') : sw;
     if (!host) return;
     host.setAttribute('data-lg-held', '');
     var up = function () { document.removeEventListener('pointerup', up, true); document.removeEventListener('pointercancel', up, true); setTimeout(function () { host.removeAttribute('data-lg-held'); }, 160); };
@@ -634,7 +653,7 @@
     syncAll();
   }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
-  var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu';
+  var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var mo = new MutationObserver(function (recs) {
     var hot = false;
