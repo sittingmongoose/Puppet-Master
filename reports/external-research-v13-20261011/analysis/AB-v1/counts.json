@@ -1,0 +1,76 @@
+{
+  "original_records": 56,
+  "receipt_count": 26,
+  "A_factorial_blocks": 2,
+  "A_original_records": 8,
+  "B_pairs": 24,
+  "B_original_records": 48,
+  "FULL_original_records": 40,
+  "COMPONENT_original_records": 16,
+  "source_quality": {
+    "PASS": 24,
+    "FAIL": 28,
+    "UNASSESSED": 4
+  },
+  "source_coverage": {
+    "COMPLETE": 36,
+    "PARTIAL": 18,
+    "COMPLETE for required proposal-level assessment": 2
+  },
+  "scope_quality": {
+    "FULL": {
+      "PASS": 20,
+      "FAIL": 18,
+      "UNASSESSED": 2
+    },
+    "COMPONENT": {
+      "FAIL": 10,
+      "UNASSESSED": 2,
+      "PASS": 4
+    }
+  },
+  "scope_coverage": {
+    "FULL": {
+      "COMPLETE": 26,
+      "PARTIAL": 12,
+      "COMPLETE for required proposal-level assessment": 2
+    },
+    "COMPONENT": {
+      "PARTIAL": 6,
+      "COMPLETE": 10
+    }
+  },
+  "normalized_source_coverage": {
+    "COMPLETE": 38,
+    "PARTIAL": 18
+  },
+  "quality_by_coverage": {
+    "COMPLETE": {
+      "PASS": 24,
+      "FAIL": 14
+    },
+    "PARTIAL": {
+      "UNASSESSED": 4,
+      "FAIL": 14
+    }
+  },
+  "complete_final_source_UNASSESSED_arms": [
+    "A-F02-A8",
+    "B01-P01-treatment",
+    "B01-P02-treatment",
+    "B10-P02-control"
+  ],
+  "formal_contract_axes_UNASSESSED_arms": [
+    "B10-P02-control",
+    "B10-P02-treatment"
+  ],
+  "malformed_JSON_delivery_FAIL_source_PASS_arm": "B11-P01-treatment",
+  "recorded_overall_coverage_is_separate_from_formal_complete_final_axes": true,
+  "all_six_formal_complete_final_axes_UNASSESSED_arms": [
+    "A-F02-A8",
+    "B01-P01-treatment",
+    "B01-P02-treatment",
+    "B10-P02-control",
+    "B10-P02-treatment"
+  ]
+}

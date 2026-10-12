@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "owner": "ROOT",
+  "error": "Historical C selection intents v1/v2/v3 transpose B06-P01 native summed residence labels. Originals are preserved; this separate erratum does not change recipes, admissions, clocks, grades or selection locks.",
+  "corrected_observation": {
+    "control_context_residence_seconds": 1739,
+    "treatment_context_residence_seconds": 1961,
+    "treatment_minus_control_seconds": 222,
+    "control_union_seconds": 1739,
+    "treatment_union_seconds": 1725,
+    "treatment_overlap_seconds": 236,
+    "control_native_final_proxy_seconds": 2411.515,
+    "treatment_native_final_proxy_seconds": 2066.564
+  },
+  "source": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+  "source_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e",
+  "interpretation": "Single-case finite source PASS/PASS with a faster native completion proxy and more summed residence. Neither residence nor proxy is actual inference/billing; no joint resource saving or repeatable optimizer is established.",
+  "original_intent_lineage": "c-selection-intent-v1/v2/v3 remain unchanged.",
+  "c_locked_version": "c-selection-lock-v1.json SHA a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67",
+  "reported_by": "er13-ab-synthesis-v1",
+  "new_adjudication": false
+}

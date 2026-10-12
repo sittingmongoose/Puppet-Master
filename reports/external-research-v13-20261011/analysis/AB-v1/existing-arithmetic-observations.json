@@ -1,0 +1,823 @@
+{
+  "frozen_metrics_manifest": {
+    "path": "link-availability.md#unpublished-historical-pointers",
+    "sha256": "b44ded32d7118905875ffb5c024423625beeaa78a06e2f7738be656b5eacb963"
+  },
+  "old_cut_utc": "2026-10-12T01:23:50.933024+00:00",
+  "old_quality_and_terminal_unknowns_not_used_for_final_outcomes": true,
+  "observations": [
+    {
+      "block_id": "A-F01",
+      "reference_arm": "A-F01-R0",
+      "candidate_arm": "A-F01-A1",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        2459.460958957672
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1529.0069999694824,
+        2284.838000059128
+      ]
+    },
+    {
+      "block_id": "A-F01",
+      "reference_arm": "A-F01-R0",
+      "candidate_arm": "A-F01-A8",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        2703.740336894989
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1529.0069999694824,
+        2128.24799990654
+      ]
+    },
+    {
+      "block_id": "A-F01",
+      "reference_arm": "A-F01-R0",
+      "candidate_arm": "A-F01-A1_A8",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1529.0069999694824,
+        2118.595999956131
+      ]
+    },
+    {
+      "block_id": "A-F02",
+      "reference_arm": "A-F02-R0",
+      "candidate_arm": "A-F02-A1",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1925.6846339702606,
+        2848.6693868637085
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1691.619999885559,
+        2546.856000185013
+      ]
+    },
+    {
+      "block_id": "A-F02",
+      "reference_arm": "A-F02-R0",
+      "candidate_arm": "A-F02-A8",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1925.6846339702606,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 2,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1691.619999885559,
+        1929.0279998779297
+      ]
+    },
+    {
+      "block_id": "A-F02",
+      "reference_arm": "A-F02-R0",
+      "candidate_arm": "A-F02-A1_A8",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1925.6846339702606,
+        2789.94354391098
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1691.619999885559,
+        2375.366000175476
+      ]
+    },
+    {
+      "block_id": "B01-P01",
+      "reference_arm": "B01-P01-control",
+      "candidate_arm": "B01-P01-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1087.1249051094055,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1086.792000055313,
+        1548.7249999046326
+      ]
+    },
+    {
+      "block_id": "B01-P02",
+      "reference_arm": "B01-P02-control",
+      "candidate_arm": "B01-P02-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1483.7672760486603,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1482.9930000305176,
+        1619.1600000858307
+      ]
+    },
+    {
+      "block_id": "B02-P01",
+      "reference_arm": "B02-P01-control",
+      "candidate_arm": "B02-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        2712.7326459884644,
+        2215.663293838501
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 2,
+          "actual": 2,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        2107.1340000629425,
+        2042.329999923706
+      ]
+    },
+    {
+      "block_id": "B02-P02",
+      "reference_arm": "B02-P02-control",
+      "candidate_arm": "B02-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        1615.3610520362854
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 2,
+          "actual": 2,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1781.1749999523163,
+        1578.3819999694824
+      ]
+    },
+    {
+      "block_id": "B03-P01",
+      "reference_arm": "B03-P01-control",
+      "candidate_arm": "B03-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 0,
+          "actual": 1,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 0,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        0,
+        0
+      ]
+    },
+    {
+      "block_id": "B03-P02",
+      "reference_arm": "B03-P02-control",
+      "candidate_arm": "B03-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 0,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        502.6470000743866,
+        0
+      ]
+    },
+    {
+      "block_id": "B04-P01",
+      "reference_arm": "B04-P01-control",
+      "candidate_arm": "B04-P01-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1052.0035121440887,
+        1003.5965628623962
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1051.7000000476837,
+        1003.3179998397827
+      ]
+    },
+    {
+      "block_id": "B04-P02",
+      "reference_arm": "B04-P02-control",
+      "candidate_arm": "B04-P02-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        560.360190153122,
+        896.8934459686279
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        559.8600001335144,
+        896.4189999103546
+      ]
+    },
+    {
+      "block_id": "B05-P01",
+      "reference_arm": "B05-P01-control",
+      "candidate_arm": "B05-P01-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        897.1742308139801,
+        917.132287979126
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        896.7359998226166,
+        916.7409999370575
+      ]
+    },
+    {
+      "block_id": "B05-P02",
+      "reference_arm": "B05-P02-control",
+      "candidate_arm": "B05-P02-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        648.715765953064,
+        969.8819329738617
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        648.3510000705719,
+        969.5009999275208
+      ]
+    },
+    {
+      "block_id": "B06-P01",
+      "reference_arm": "B06-P01-control",
+      "candidate_arm": "B06-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        2419.7921040058136,
+        2081.655709028244
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 4,
+          "actual": 4,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1812.824000120163,
+        2077.547000169754
+      ]
+    },
+    {
+      "block_id": "B06-P02",
+      "reference_arm": "B06-P02-control",
+      "candidate_arm": "B06-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        2586.737830877304
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 4,
+          "actual": 4,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1671.3510003089905,
+        2058.7030000686646
+      ]
+    },
+    {
+      "block_id": "B07-P01",
+      "reference_arm": "B07-P01-control",
+      "candidate_arm": "B07-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        2319.4999029636383
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1637.6520001888275,
+        1628.2599999904633
+      ]
+    },
+    {
+      "block_id": "B07-P02",
+      "reference_arm": "B07-P02-control",
+      "candidate_arm": "B07-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1836.643000125885,
+        1506.957999944687
+      ]
+    },
+    {
+      "block_id": "B08-P01",
+      "reference_arm": "B08-P01-control",
+      "candidate_arm": "B08-P01-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1102.7020740509033,
+        721.6500840187073
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1102.3970000743866,
+        721.1789999008179
+      ]
+    },
+    {
+      "block_id": "B08-P02",
+      "reference_arm": "B08-P02-control",
+      "candidate_arm": "B08-P02-treatment",
+      "scope": "COMPONENT",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        875.9012839794159,
+        723.5935139656067
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 1,
+          "actual": 1,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        875.6060001850128,
+        723.2219998836517
+      ]
+    },
+    {
+      "block_id": "B09-P01",
+      "reference_arm": "B09-P01-control",
+      "candidate_arm": "B09-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1584.811999797821,
+        1600.598000049591
+      ]
+    },
+    {
+      "block_id": "B09-P02",
+      "reference_arm": "B09-P02-control",
+      "candidate_arm": "B09-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        2399.6004230976105,
+        2606.579020023346
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        2088.7369997501373,
+        2243.49599981308
+      ]
+    },
+    {
+      "block_id": "B10-P01",
+      "reference_arm": "B10-P01-control",
+      "candidate_arm": "B10-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        2168.8573060035706,
+        2560.749748945236
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1431.7070000171661,
+        2102.226999759674
+      ]
+    },
+    {
+      "block_id": "B10-P02",
+      "reference_arm": "B10-P02-control",
+      "candidate_arm": "B10-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        1482.9713010787964,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 3,
+          "actual": 3,
+          "future_or_unstarted_unknown": false
+        },
+        {
+          "observed": 2,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1233.8069999217987,
+        1480.8099999427795
+      ]
+    },
+    {
+      "block_id": "B11-P01",
+      "reference_arm": "B11-P01-control",
+      "candidate_arm": "B11-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        930.0220000743866,
+        1115.441999912262
+      ]
+    },
+    {
+      "block_id": "B11-P02",
+      "reference_arm": "B11-P02-control",
+      "candidate_arm": "B11-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        906.6490001678467,
+        972.7339999675751
+      ]
+    },
+    {
+      "block_id": "B12-P01",
+      "reference_arm": "B12-P01-control",
+      "candidate_arm": "B12-P01-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 1,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        829.5720000267029,
+        972.5750000476837
+      ]
+    },
+    {
+      "block_id": "B12-P02",
+      "reference_arm": "B12-P02-control",
+      "candidate_arm": "B12-P02-treatment",
+      "scope": "FULL",
+      "original_denominator": 2,
+      "delivery_proxy_seconds": [
+        null,
+        null
+      ],
+      "occupancy_coverage": [
+        {
+          "observed": 1,
+          "actual": 2,
+          "future_or_unstarted_unknown": true
+        },
+        {
+          "observed": 1,
+          "actual": 3,
+          "future_or_unstarted_unknown": true
+        }
+      ],
+      "created_occupancy_known_subtotal_seconds": [
+        1128.2999999523163,
+        465.4260001182556
+      ]
+    }
+  ],
+  "domain": "These are frozen cut-specific context/boundary observations, including censoring; no late task scan or new paired arithmetic. Native Goal windows differ from context residence, scientific write, task quiet, user latency and inference/billing.",
+  "comparison_mapping_has_later_frozen_original_source_labels": true,
+  "no_new_optimizer_claim": true
+}

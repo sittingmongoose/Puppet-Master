@@ -1,0 +1,125 @@
+{
+  "original_manifest_members": 21,
+  "retained_original_members": [
+    {
+      "path": "mechanics/ab-synthesis-v1/AB-synthesis.md",
+      "bytes": 18843,
+      "sha256": "49fd446d07483d921986766ed1dcaad20aae1d050161a6c643ec64095c7883bb"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/arm-records.json",
+      "bytes": 465478,
+      "sha256": "cc1a04749554904b97b11257ccab72ad2a76fd8459d9fb11515d8ea1a0956e2e"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/block-pointers.json",
+      "bytes": 17256,
+      "sha256": "2b4aae3258cb5a025bdf33763451130cd76d14ec2e51f1c9d0807db6ee18a9d6"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/candidate-document-pointers.json",
+      "bytes": 110447,
+      "sha256": "78fda631ba3159519868fe94868db5951a76cc7231e694947c77f5133e3b0a42"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/comparison-mapping.json",
+      "bytes": 163533,
+      "sha256": "dabfa961402fdc095bb856879d561e72a9715a2ec62a6e72dd9caeca8b52ef48"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/counts.json",
+      "bytes": 1618,
+      "sha256": "e20dca52d7c7f2b2e09e23978ad769cfb70f0124e0a8a30a3187da02f95c842b"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/discovery-digest.json",
+      "bytes": 48918,
+      "sha256": "b880588b64a2654b073325415c885bef634de392215163f89620bd2dcf29d201"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/existing-arithmetic-observations.json",
+      "bytes": 20181,
+      "sha256": "72feb24df49758fbbb34e5aae690fdd33c091a3aa7573345985e81e855941b05"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/prospective-selection-rationale.json",
+      "bytes": 2997,
+      "sha256": "410f2ee0541c6fb2a4a6794233cac227e52447721f37c393919019e94c7f143d"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/separate-B10-P02.json",
+      "bytes": 703,
+      "sha256": "b43c430fb267ee3ad3411de1a9aa803d5008c94648507709467cc1832e339bb0"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/source-family-assessments.json",
+      "bytes": 273129,
+      "sha256": "573c184fea13db8ecfec3dc37089a2e0cd64707c6d908b846d71a4b7d46bd2d1"
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/thin-arm-records.jsonl",
+      "bytes": 128266,
+      "sha256": "fde241aa14f01e45f25eb1e3c633e5d136c95b836d1f5248b8bcd43ce0321afb"
+    },
+    {
+      "path": "state/ab-synthesis-v1/verification.json",
+      "bytes": 923,
+      "sha256": "ff66127af1f2a3cfc6955c96079e9f81eb581bd1e7540093e5a229edffc78029"
+    }
+  ],
+  "omitted_original_members": [
+    {
+      "path": "state/ab-synthesis-v1/build_records.py",
+      "bytes": 12511,
+      "sha256": "fb0a6e2e479924bb5daaee4fb785e89db438f323c73847c60c8d21fbc0a0ca4d",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/build_summary.py",
+      "bytes": 7755,
+      "sha256": "ab11e9d1d0a4ee5cacbf39d680e241945e64d3aa85b32b7d240dedabe45b1c5b",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/hash-verification.json",
+      "bytes": 1198302,
+      "sha256": "69583c49627fc62158044c73b27757439c62d2972eed1b88d796b9f3d384f540",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/seal.py",
+      "bytes": 8574,
+      "sha256": "37652cc5e6919da864f769dffb6bff4dc14f2ef346bc09c5e89f16769c1b46e4",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/summary-input-custody.json",
+      "bytes": 6407,
+      "sha256": "e20b9683251b013b42e3bef8be61ac54ffae0717d33576b3686c9969de2c7a45",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/write_digest.py",
+      "bytes": 17363,
+      "sha256": "a0806fc1c19320d81d6680189d97021d15e0d89f4086f6711aa6cb8efd45157b",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "state/ab-synthesis-v1/write_report.py",
+      "bytes": 15345,
+      "sha256": "b489d33715af8b4bd9b10ef5d5877f427ab9eda2c22bbd6039d9a797ed478fc6",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    },
+    {
+      "path": "mechanics/ab-synthesis-v1/SHA256SUMS",
+      "bytes": 2245,
+      "sha256": "0a7a915cd3bd219867e7d66b42102185806968b83676f37a4608309fe09a8988",
+      "reason": "Private build/support/audit or redundant checksum omitted; original pin preserved, no raw outputs duplicated."
+    }
+  ],
+  "additional_exact_bound_root_erratum": {
+    "original_sha256": "d1f9885ed25f60238ed99f7059bd22098d5ee6970d0cbaa3766754a7c787dfac",
+    "public_path": "root-rationale-erratum.json"
+  },
+  "full_arm_records_retained": true
+}

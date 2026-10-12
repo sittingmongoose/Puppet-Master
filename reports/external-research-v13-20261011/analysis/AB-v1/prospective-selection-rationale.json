@@ -1,0 +1,65 @@
+{
+  "selection_owner": "ROOT",
+  "selection_metadata_only_no_case_input_rubric_or_active_read": true,
+  "lineage": [
+    {
+      "path": "link-availability.md#unpublished-historical-pointers",
+      "sha256": "c8072b5de10d739c851736d5aad38c3d6b608bcb38365d03feb9ed5787a00647"
+    },
+    {
+      "path": "link-availability.md#unpublished-historical-pointers",
+      "sha256": "26323eebf81f8681884e2a2cad14e8e6167addcf19f38759a4eb38d5a8dd359e"
+    },
+    {
+      "path": "link-availability.md#unpublished-historical-pointers",
+      "sha256": "e2dc3b2cfd253b66b43a196c79d197d29520007081d8fbcae729650ff370ec22"
+    },
+    {
+      "path": "link-availability.md#unpublished-historical-pointers",
+      "sha256": "a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67"
+    },
+    {
+      "path": "link-availability.md#unpublished-historical-pointers",
+      "sha256": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5"
+    },
+    {
+      "path": "root-rationale-erratum.json",
+      "sha256": "d1f9885ed25f60238ed99f7059bd22098d5ee6970d0cbaa3766754a7c787dfac"
+    }
+  ],
+  "prospective_label": "EXPLORATORY_NEW_INTEGRATION; no qualified optimizer claim",
+  "successors": [
+    {
+      "recipe": "C-S1-v2",
+      "composition": "R0 full obligations + B02 critic/finalizer + generic B10 critic delta",
+      "contexts": 2,
+      "stage_maxima_seconds": [
+        1800,
+        1800
+      ]
+    },
+    {
+      "recipe": "C-S2-v2",
+      "composition": "R0 full obligations + B06 complementary critics + generic B10 delta on truth critic",
+      "contexts": 4,
+      "stage_maxima_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ]
+    }
+  ],
+  "selection_reason": "B02 and B06 each have original control PASS/PASS, treatment PASS/FAIL; faster failed second cases do not establish savings. B10 first case source PASS/PASS but treatment later; its generic delta is an unproven integration hypothesis. Earlier unadmitted intents are retained. Later A/B labels cannot retroactively validate earlier locks.",
+  "attribution_limitation": {
+    "field": "B06-P01 native residence in intent v1/v2/v3",
+    "intent_wording": "treatment1739 vs control1961",
+    "exact_frozen_comparison": "control1739 vs treatment1961; treatment summed residence +222 seconds; union control1739 treatment1725, overlap treatment236",
+    "authority": {
+      "path": "../../cohorts/full-assessments-v1/../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+      "sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e"
+    },
+    "handling": "Preserve both frozen intent and comparison; disclose the transposed label attribution; no repair, selection or regrade."
+  },
+  "C_D_candidate_answers_or_outcomes": null
+}

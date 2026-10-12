@@ -1,0 +1,27 @@
+{
+  "original_count": 0,
+  "included_in_original_denominators": false,
+  "manifest": {
+    "path": "../../cohorts/full-assessments-v2/mechanics/contract-completion-v1/B10-P02/manifest.json",
+    "sha256": "d0b2b2371474920c2bd99635c38e60d9c733ddeda9bf83bd02cd595e491d1d23"
+  },
+  "single_completed_review": true,
+  "source_assessment": {
+    "B10-P02-control": {
+      "judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "material_ids": [
+        "CC-C01"
+      ]
+    },
+    "B10-P02-treatment": {
+      "judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "material_ids": [
+        "CC-T01",
+        "CC-T02"
+      ]
+    }
+  },
+  "original_judgments_and_counts_changed": false
+}

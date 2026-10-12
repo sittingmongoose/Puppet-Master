@@ -1,0 +1,15 @@
+# ER13 frozen A/B synthesis publication
+
+Open [AB-synthesis.md](AB-synthesis.md), then [publication-scope.md](publication-scope.md) for the distinction between derived aggregate coverage shorthand and verbatim original labels. This preserves 56 unique original A/B thin records, all seven dimensions and six axes, the 26-record discovery digest, source-family assessments, two A factorial blocks and 24 B pairs, existing arithmetic, prospective rationale and the separate B10 pointers. Full `arm-records.json` is retained as an optional detailed record. Original source counts are 24 PASS / 28 FAIL / 4 UNASSESSED; these are not 56 comparable complete grades, an all-80 consolidation or a winner.
+
+Root's publication target is `analysis/AB-v1`. External report/author/assessment/evidence links are relative to that position and resolve through **actual existing published A/B cohort original/private-public mappings**, with exact public body hashes recorded in `path-resolution.json`. No raw candidate outputs are copied into this synthesis. Unpublished support pointers and the intentionally omitted huge audit table are explicitly described in [link-availability.md](link-availability.md), without inventing body availability. No C/D bodies were read.
+
+The original synthesis manifest SHA is `ae7bf7d29f70518aefe6daa5dd42bcde9d44dd8012e310a1a46d6979370addf7` with 21 verified members. `original-synthesis-manifest.json` retains the original authority with privacy/path normalization; its embedded member pins are **original-byte pins**, not public-byte pins. `original-public-hashes.json` maps retained original bytes to public bytes; `source-retention.json` records deliberate omissions. Original report and data receive only path/privacy normalization. Root's separately bound `root-rationale-erratum.json` preserves 1739 control / 1961 treatment / +222 residence, with selection unchanged. Malformed delivery, grader ordering, original B10 infrastructure limits and the one separate excluded FAIL/FAIL review survive.
+
+Restore this edition into `analysis/AB-v1` within a review tree containing the linked existing published cohorts:
+
+```sh
+python3 -B restore_source_layout.py --destination /absolute/new/review/analysis/AB-v1
+```
+
+The existing script verifies exact retained manifest bytes and rejects an existing destination or unsafe/symlink paths. It restores this edition only; linked cohorts are external dependencies verified against actual published bytes, not silently bundled or fetched. No old recipe, review, Goal, candidate, evaluator, source fetch or Git operation runs. `checks/links.json`, `checks/source-integrity.json`, `checks/prior-editions-unchanged.json` and `checks/privacy.json` record finite mechanical checks. Privacy checking is bounded, not exhaustive. `public-manifest.json` uses normalized staging source hashes; original lineage is in the mapping. `FILELIST.json` and `SHA256SUMS` enumerate public bytes. Root receives separate publication-helper cost, preserving unknown billing as unknown and independent-evaluation/product costs separately.

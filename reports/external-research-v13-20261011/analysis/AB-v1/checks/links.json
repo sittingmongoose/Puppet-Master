@@ -1,0 +1,323 @@
+{
+  "result": "PASS",
+  "published_context": "analysis/AB-v1",
+  "markdown_links_checked": 52,
+  "all_report_author_assessment_evidence_body_links_resolved": true,
+  "explicit_audit_availability_note": true,
+  "historical_unretained_pointer_count": 16,
+  "no_guessed_bodies": true,
+  "links": [
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/phase/ab-closure.json",
+      "public_sha256": "406b155a8c5970cf9f2f13de67c42de592a44cd6211ac929f07709f9e7bdca16",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "link-availability.md#omitted-original-audit-table",
+      "public_sha256": "265c638b8812986186cd846ae9d65323e1d970c9c8117bb3aef32ca50c9b79b5",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "counts.json",
+      "public_sha256": "e20dca52d7c7f2b2e09e23978ad769cfb70f0124e0a8a30a3187da02f95c842b",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "thin-arm-records.jsonl",
+      "public_sha256": "e64b8b06c79341057c0281d3a9aa785eef62c2d39b1dc5673806951f57174862",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "arm-records.json",
+      "public_sha256": "f48e8ea50f33917065f18ff86e68f72a987ce77c879edf05a51915f4f6d0c402",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "source-family-assessments.json",
+      "public_sha256": "00c9c5a5ba8df458264b55ca3d41cacb271bd3bb363cc3b4b399a4904feef6b9",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/comparison.json",
+      "public_sha256": "ad208507ee76db03bdbd27ff6539ca7beffa38e0f25c032034241156675b36c5",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/comparison.json",
+      "public_sha256": "bb98e21a3b11d027436afddb0786efa911a53852c2c7353d2579a89130308144",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "comparison-mapping.json",
+      "public_sha256": "35451e75feba99470653976f39b3107b7cf77a5bae23615ecbe64ae4055ba566",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/contract-completion-v1/B10-P02/manifest.json",
+      "public_sha256": "d0b2b2371474920c2bd99635c38e60d9c733ddeda9bf83bd02cd595e491d1d23",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "separate-B10-P02.json",
+      "public_sha256": "55d8fa4a276a288ca6a691ff373cb45adf688e16beb5fc0a81bff7ab104f77ab",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "discovery-digest.json",
+      "public_sha256": "a874515906bfe0a91eb61cedeca1d5dcc13f2ebd16b6d702340ea5b00352b089",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v2/arms/A-F01-R0/stages/reviser/final.md",
+      "public_sha256": "f684f7e615350273466feb90f93e6c610ce34575b9f109f48033a8f5b862b97c",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/treatment/coverage.json",
+      "public_sha256": "97d94b972c183d72db77cb648f51c1e9b81fbcee4a77358467bd08cf01d2ae6d",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "public_sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v1/arms/A-F02-A1/stages/reviser/final.md",
+      "public_sha256": "3ba45b3f64067b63810eaf50c645cfff58fd0f66f509fbc484569f70ee7bbd06",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/treatment/coverage.json",
+      "public_sha256": "0879d12144b02339e2f2b2fd92e1564f20cdb6bc61807c3e33d25954ce6a924a",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v3/arms/B12-P01-treatment/stages/reviser/final.md",
+      "public_sha256": "ca5113e06c59bb89c769bad7b2477abc54adf889f43906845772962ad18f6e14",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v1/arms/B02-P01-treatment/stages/critic/final.md",
+      "public_sha256": "e4cdf6e967efa228400cbdf6659ba9f00f89b96de022cb407de7de4920e47ba0",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v1/arms/B06-P01-treatment/stages/reviser/final.md",
+      "public_sha256": "a1724d1a54b8891651438fd96f5fba4fe42b9165e1d7e4aeb3b3d36f9026f2bb",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/treatment/coverage.json",
+      "public_sha256": "a6218de090d052a92e316484852c53feb71884048e6223b02a1aeb80af91f545",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v2/arms/B02-P02-treatment/stages/critic/final.md",
+      "public_sha256": "fd1a46d5c88381748cb85460b036363026ed0e3dbb15b90fe2741fb795232785",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/treatment/coverage.json",
+      "public_sha256": "563dfd21a56fea51d38e9240d19c363aa84734729c6dd02d4a001b4558ef3723",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/treatment/coverage.json",
+      "public_sha256": "f489caad7ac549520be66802297b00145bc95634c73e088b6cd1490250c8dc77",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-b01-v1/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "public_sha256": "8303591f65ed299a21d39a24577fd29a35c11ce49840c6658e79e0e7b930c993",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "public_sha256": "18a82613b29dfbcf59ef841f84f19d9354fbe82777015f92470d6389a5de17fd",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v3/arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/final.md",
+      "public_sha256": "516bd37e366548b427e3473b6186b2e3015195cfe92e0f293ea98ca79536d33a",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/treatment/coverage.json",
+      "public_sha256": "43c409522c35ba9ef8087fd227d6569405af83da7298102c1633d1cf893c0fd1",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-v1/arms/B05-P02-treatment/final.md",
+      "public_sha256": "b81e6170dd26524866a64f96c4e3996a84991baf8cde1e70d47939a61873e7a6",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v2/arms/B07-P01-treatment/stages/reviser/final.md",
+      "public_sha256": "5474c5c8958bb5a4ba3b86d595c3954b0d00bcb45dc55cc34eff3377bb4013e5",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/treatment/coverage.json",
+      "public_sha256": "2fdbea78084f67aebe2588cdc8bb0deec98a82d40b49965bedbc72849b5cd4a0",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/treatment/coverage.json",
+      "public_sha256": "a917d1dd5e2a768cc3e6ccf4164b58c24d7482d7660b7b108289452fd255a4a4",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-v1/arms/B04-P02-treatment/final.md",
+      "public_sha256": "26a9d1c45433972f1f58a90b39faeee7e7ffdd44b0c46c7e77d318cc1a5a4f04",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v1/arms/B10-P01-treatment/stages/reviser/final.md",
+      "public_sha256": "aeae34085117e39b969692c10ee759ed9ba18f7c1a674d7a2bda7984fe5579c8",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/treatment/coverage.json",
+      "public_sha256": "77d117942695f9d1b8875c0d9af7db3d40ca9452130017044e04c19b81c08184",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-v1/arms/B08-P01-treatment/final.md",
+      "public_sha256": "139831a76a656c6ce30c5003ea40047212e57a7016e4498045885e12ddd50e24",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/treatment/coverage.json",
+      "public_sha256": "3669e6826102d970d86bb757fd4d455dabd281b29a514e14ef84a899a7bf4b1a",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v1/arms/B09-P02-treatment/stages/reviser/final.md",
+      "public_sha256": "67c625d2b0f548de4c3c34e0bba5748fbf8821a0555cab2999e70c8b00a4b6ca",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/treatment/coverage.json",
+      "public_sha256": "f58f759073a22608e1ebac725be9af9707a9ff6ab1c71059df8b6938480a0660",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v2/arms/B10-P02-treatment/stages/reviser/final.md",
+      "public_sha256": "73417321c2c2b8badb6f10aa9adb6d8f58c860a8e31517570f3851d6940e1e78",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/treatment/coverage.json",
+      "public_sha256": "eeb96100f2db34af3b93aa7aa92a788ad3210f00cac33569824c6c1a6a6d7e9a",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-v3/arms/B11-P01-treatment/stages/reviser/final.md",
+      "public_sha256": "d4603c99950433372f27bb891867f91bd7122bbf00522ed809ab81191b0ad914",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/treatment/coverage.json",
+      "public_sha256": "99c51bb84e965c536b3aff626d47f9b6f51b0a7202396d3a324248d3a0a5a756",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "root-rationale-erratum.json",
+      "public_sha256": "f22948ebd79f5fcdf672ae036adadd4b4bed0ed4f4bff01e9f2e1c5388f31f0e",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/comparison.md",
+      "public_sha256": "27bafa48d8ae4f2f8c3777297fb32295c61029d81d86b6b2d492d60c16ae8bf4",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "../../cohorts/full-assessments-v1/../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+      "public_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e",
+      "status": "EXISTING_PUBLISHED_BODY"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "prospective-selection-rationale.json",
+      "public_sha256": "b0ef6ab8d20eb2ce03a301601ea2696fb822273dc5d2d6edb68a46e82bc7f986",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "existing-arithmetic-observations.json",
+      "public_sha256": "4db4f323a63345a317576e2eac7f90474291acc766fb7554c3ec3125c4523f52",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "AB-synthesis.md",
+      "target": "block-pointers.json",
+      "public_sha256": "1a34e9fab9e8a49944720a4fea80ce3fcce8a6b2788b6525050aa4bf12d53956",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "README.md",
+      "target": "AB-synthesis.md",
+      "public_sha256": "26b284beced4d3222ababa36f8267ca41245e750afee00ff2dc03612cbfb52fb",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "README.md",
+      "target": "publication-scope.md",
+      "public_sha256": "50d1409dbd8c680077077d61f769cb2ac3dac975f741087be1b02a5c589b3556",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    },
+    {
+      "from": "README.md",
+      "target": "link-availability.md",
+      "public_sha256": "265c638b8812986186cd846ae9d65323e1d970c9c8117bb3aef32ca50c9b79b5",
+      "status": "RETAINED_EDITION_OR_EXPLICIT_AVAILABILITY_NOTE"
+    }
+  ]
+}

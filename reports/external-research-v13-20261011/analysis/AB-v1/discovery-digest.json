@@ -1,0 +1,626 @@
+[
+  {
+    "block_id": "A-F01",
+    "focal_arm": "A-F01-R0",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/A-F01-R0/stages/reviser/final.md",
+      "sha256": "f684f7e615350273466feb90f93e6c610ce34575b9f109f48033a8f5b862b97c",
+      "bytes": 26426
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+      "sha256": "006254869eac5606b9ba0e71f430262305c2ebd19bd117bc024e373ab1c1e70b"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/coverage.json",
+      "sha256": "bc9b317caafe29aa86d001e04218273aa65ff530d2adc598a4e2710509f0c69c"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/primary-source-index.json",
+      "sha256": "c2045f8369e24386d3e6f57cdf4d00c8045994752513a39623d05797a846f279"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "SQLite transactional operation journals and attachment staging; CouchDB revision/conflict-aware replication and Automerge causal alternatives; coherent backup is distinct from replica merge. SQLite WAL affected/fixed-version conditions and SQLite Session PK/schema/coalescing limits survive as conditional prototype gates.",
+    "preserved_criticism_versions_and_limits": "Ordinary storage, identity, media, retry and owner-policy obligations remain. The A1-only upstream attachment witness misstates the operation/oracle; the combination source-passes but fails its single-selector method. Unnamed target integration and executed product recovery remain UNASSESSED.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "A-F02",
+    "focal_arm": "A-F02-A1",
+    "authored_output": {
+      "path": "../../cohorts/full-v1/arms/A-F02-A1/stages/reviser/final.md",
+      "sha256": "3ba45b3f64067b63810eaf50c645cfff58fd0f66f509fbc484569f70ee7bbd06",
+      "bytes": 36306
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/coverage.json",
+      "sha256": "5ec28059ca870391b871b63c67215da923ab853d650eb4c2fd5cff3ee0423898"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/primary-source-index.json",
+      "sha256": "084f0593e2b9db40b49d7838273211da409716154553fa60656379c5d1c1faac"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "FFmpeg, Symphonia, GStreamer discovery and MediaInfo offer distinct probing/preview paths; BagIt and PBCore separate payload integrity from catalog/rights meaning. Separate media acceptance, preview support, transcript association and permission state; preserve originals and channel context.",
+    "preserved_criticism_versions_and_limits": "The frozen evaluator retains exact release/build and documentation-versus-code boundaries. R0 has a material DEFAULT-stream selection exception; A8 lacks the full final. Decoder/advisory/history evidence does not certify arbitrary media, catalog integration or future AT execution.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B01-P01",
+    "focal_arm": "B01-P01-control",
+    "authored_output": {
+      "path": "../../cohorts/component-b01-v1/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "sha256": "8303591f65ed299a21d39a24577fd29a35c11ce49840c6658e79e0e7b930c993",
+      "bytes": 18245
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "sha256": "4f9c7cb187db311937bf6ae40f73335f9223bb2bee991ead977209204d2d1b70"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "sha256": "08fa050d35af1899d299860dc3235bdcc399949aca4ed274edbc25275586880c"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "SQLite online backup, immutable attachment IDs with retention leases, destination-owned generation publication and optional dump/VACUUM INTO alternatives expose useful consistency and recovery choices. Progress is provisional and retry sleep is not a completion rate.",
+    "preserved_criticism_versions_and_limits": "Supported backup/callback/cancellation and no-overwrite corrections survive. CPython 3.13.9 binding is independently checked. Control lacks claimed assembly-execution evidence; treatment remains capped with missing companions/native terminal. Coverage is PARTIAL; neither is a passing complete component.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B01-P02",
+    "focal_arm": "B01-P02-control",
+    "authored_output": {
+      "path": "../../cohorts/component-b01-v1/mechanics/dispatch-v1/frozen/B01-P02-control/final.md",
+      "sha256": "952c02e024c29327fef60b22ff9f76f3e7a917f785aa18ee44b67646d01b570b",
+      "bytes": 19775
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "sha256": "18a82613b29dfbcf59ef841f84f19d9354fbe82777015f92470d6389a5de17fd"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+      "sha256": "8adc5e59f45a8f94d7cbff36fe331f7246730de91784f308f59fe1166774b611"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "ZIP import preserves selected original members through private snapshots, ZipInfo identities, owned staging, actual-byte/resource ceilings and no-execution policy; safer native publication and filename-collision alternatives remain conditional.",
+    "preserved_criticism_versions_and_limits": "Supported extraction/Path corrections survive, but the frozen 3.13.9 implementation includes a CRC-valid 0x7075 effective-name override omitted from both available plans. Treatment also loses supported critique meaning and has stale assembly consistency; its complete final remains UNASSESSED. Platform equivalence/publication coverage is PARTIAL.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B02-P01",
+    "focal_arm": "B02-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v1/arms/B02-P01-treatment/stages/critic/final.md",
+      "sha256": "e4cdf6e967efa228400cbdf6659ba9f00f89b96de022cb407de7de4920e47ba0",
+      "bytes": 17069
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/treatment/coverage.json",
+      "sha256": "7fecaed60bf87030a0ff37951ede9e600f63e37606f8882b09a78743c121d994"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Host-owned command state/lifecycle, focus ownership and live refresh are compared with VS Code examples, APG focus models, Windows UI Automation, Linux AT-SPI/Orca and alternative short-token/fuzzy-ranking policies.",
+    "preserved_criticism_versions_and_limits": "The final quarantines an investigator refresh-pointer error without deleting live-refresh obligations; all valid criticism and keyboard/reader oracles remain. Six axes and declared source families are COMPLETE, but actual desktop host/AT compatibility and future validation are not established.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B02-P02",
+    "focal_arm": "B02-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B02-P02-treatment/stages/critic/final.md",
+      "sha256": "fd1a46d5c88381748cb85460b036363026ed0e3dbb15b90fe2741fb795232785",
+      "bytes": 36949
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/treatment/coverage.json",
+      "sha256": "563dfd21a56fea51d38e9240d19c363aa84734729c6dd02d4a001b4558ef3723"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "LibreBooking, MRBS, PostgreSQL half-open exclusion constraints and calendar recurrence are compared for supervisor/resource/maintenance requirements. Reasoned history, safety holds and manual displacement decisions remain explicit.",
+    "preserved_criticism_versions_and_limits": "The original treatment falsely infers an absent multi-resource capability from scalar MRBS room_id: the frozen evaluator checks v1.12.2 form/caller/transaction context. This preserves uncertainty about workshop fit/race safety while rejecting the unsupported absence claim. All six axes are COMPLETE; treatment FAIL is retained.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B03-P01",
+    "focal_arm": "B03-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/final/final.md",
+      "sha256": "9340fad59fcaba255c7107f9a1f49292e1e64dbebc07b5028bafa9113fb68421",
+      "bytes": 23369
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/treatment/coverage.json",
+      "sha256": "2fdbea78084f67aebe2588cdc8bb0deec98a82d40b49965bedbc72849b5cd4a0"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/treatment/primary-source-index.json",
+      "sha256": "fbc30542fdce4a00633b68ffe31062f008bef3aab77039676f0855109460f881"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "SQLite FTS5 and Tantivy alternatives distinguish canonical note identity, revisioned index updates, commit/reload visibility, multilingual tokenization and recovery. Saved searches retain versioned meaning, rather than frozen results.",
+    "preserved_criticism_versions_and_limits": "Both finals retain a material character-versus-strict-UTF-8-byte tokenizer error. Control also drops supported trigram comparison and research detail. Available code/history/target-app boundaries keep overall coverage PARTIAL; retained author waiting is residence, not inference or a source-quality benefit.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B03-P02",
+    "focal_arm": "B03-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/final.md",
+      "sha256": "516bd37e366548b427e3473b6186b2e3015195cfe92e0f293ea98ca79536d33a",
+      "bytes": 37463
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/treatment/coverage.json",
+      "sha256": "b02a2d466f05019ce8f6f67c798283fbd5d80868f46ab6766d5fea40ae125943"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/treatment/primary-source-index.json",
+      "sha256": "1510fc7da94eaf8ae0fbafb5dae8702d039be380aae1f525600e87643e8214ad"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Portable ZIP archives compare BagIt integrity, Data Package resource contracts, local schema bundling, SQLite-backed snapshots and streaming ZIP implementation/history. Stable IDs, raw timing/type/permission data and loss-aware structured import remain.",
+    "preserved_criticism_versions_and_limits": "Treatment correctly rejects the false GitLab export/backup-warning criticism, retains meaningful restart/cap and source-preservation obligations and avoids self-digest recursion. Control uses an obsolete RFC3339 offset distinction despite the RFC9557 update. Six-axis COMPLETE is finite proposal assessment, not integration or executed archive tests.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B04-P01",
+    "focal_arm": "B04-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B04-P01-treatment/final.md",
+      "sha256": "26372fc13c8135bd11dbb8d085025445dd400b717df172b67e883e5d217e720e",
+      "bytes": 16402
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/treatment/assessment.json",
+      "sha256": "f47d445a2d227d3c20ded7b22c8a2113f6867c59d2fd05330b7bb7e322a69b88"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/treatment/coverage.json",
+      "sha256": "43c409522c35ba9ef8087fd227d6569405af83da7298102c1633d1cf893c0fd1"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/treatment/primary-source-index.json",
+      "sha256": "88414e916da6eb196c2c3565d341a57e220cc4a5c562614697bf3172dc358089"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Chunked streaming, CPython copy2 fast paths and a conditional archival backend expose progress/cancellation-versus-metadata tradeoffs. Destination-local staging, no-clobber publication and original preservation remain.",
+    "preserved_criticism_versions_and_limits": "Frozen 3.13.9 Windows CopyFile2 caller/history provides a native route and conditional metadata capability omitted despite older documentation wording. Treatment also omits source/final same-file exclusion. Linux manual edition retrieval is limited; concrete archival backend and real hardware behavior are UNASSESSED. Both originals FAIL with PARTIAL overall coverage.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B04-P02",
+    "focal_arm": "B04-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B04-P02-treatment/final.md",
+      "sha256": "26a9d1c45433972f1f58a90b39faeee7e7ffdd44b0c46c7e77d318cc1a5a4f04",
+      "bytes": 19205
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.json",
+      "sha256": "e3ee4a2c08c4509c1e7a5e7256a8c05cafa079c822f74012801b98978de68b20"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/treatment/coverage.json",
+      "sha256": "2b5178034fbcb735f69ac443bed3a88a909445555e1dbdbcef6e4334aea2b508"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/treatment/primary-source-index.json",
+      "sha256": "8bb946e2fb6dff12ca3de02f494530922b4c5ccfbc4e6241468d38c133923eae"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "A private RFC-aware library versus a narrow custom GET cache preserves representation bytes, Vary/age/revalidation, account partitioning and offline/history distinctions. No selected library is presumed conformant.",
+    "preserved_criticism_versions_and_limits": "Compact criticism preserves the supported F1-F5 corrections, but both finals omit mandatory RFC9111 target invalidation after successful forwarded unsafe requests. All six axes are COMPLETE; exact concrete library internals and future execution remain UNASSESSED. FAIL/FAIL is not savings.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B05-P01",
+    "focal_arm": "B05-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B05-P01-treatment/final.md",
+      "sha256": "3223a708953fb7ca59ad679754999e22b8c3a6809ec5291a452e3e6266d518aa",
+      "bytes": 17426
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.json",
+      "sha256": "781ca8b5d7655a18a2bd9f06933c96fd979cce5beb3357e62113af3d532ce6bd"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/treatment/coverage.json",
+      "sha256": "3669e6826102d970d86bb757fd4d455dabd281b29a514e14ef84a899a7bf4b1a"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/treatment/primary-source-index.json",
+      "sha256": "11025dc110d58ad5a3f2d3b07337fbb6d71b5e50c1e15862290f5f73a5036f95"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Subprocess supervisors distinguish concurrent pipe draining, bounded byte tails, persistence quotas, process exit versus pipe completion and cancellation cleanup. Structured argv is a useful boundary with target-specific exceptions.",
+    "preserved_criticism_versions_and_limits": "Supported memory/log/cancel corrections survive; treatment misses Windows implicit-shell behavior for .bat/.cmd even with a fully qualified path. Pinned CPython 3.13.9 code/caller/history coverage is COMPLETE. Neighborhood preparation is independent of semantic preservation, runtime behavior and cold pipeline cost.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B05-P02",
+    "focal_arm": "B05-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B05-P02-treatment/final.md",
+      "sha256": "b81e6170dd26524866a64f96c4e3996a84991baf8cde1e70d47939a61873e7a6",
+      "bytes": 17697
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.json",
+      "sha256": "92674df2fee04625c88297257b59709a9f0a41c15cd11fc279b92a984f06ba12"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/treatment/coverage.json",
+      "sha256": "8aae822a64508a6a8b1bf34eefa9cb3f131126d7982077936871b7a4c7bbfeb8"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/treatment/primary-source-index.json",
+      "sha256": "cc0c73602ada7666bdf9d623dba829db2031fa872e86393a1d4be5d23ee0ced9"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "CSV importer alternatives keep raw text, explicit encoding/dialect, header confirmation, separate null conventions, typed sidecars and staging limits. Field code-point ceilings differ from line/record/file byte ceilings and complete-row allocation.",
+    "preserved_criticism_versions_and_limits": "All C01-C19 and seven critique points are examined; central draft errors are corrected in treatment. CPython 3.13.9 pin/release and earlier reader-gap/fix context are independently assessed without repairing author uncertainty. Sniffer width-row counting remains a nonmaterial original error. Control FAIL/treatment PASS, six axes COMPLETE.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B06-P01",
+    "focal_arm": "B06-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v1/arms/B06-P01-treatment/stages/reviser/final.md",
+      "sha256": "a1724d1a54b8891651438fd96f5fba4fe42b9165e1d7e4aeb3b3d36f9026f2bb",
+      "bytes": 42580
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/treatment/coverage.json",
+      "sha256": "a6218de090d052a92e316484852c53feb71884048e6223b02a1aeb80af91f545"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/treatment/primary-source-index.json",
+      "sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Wasmtime/WIT/WASI and native subprocess alternatives compare typed host interfaces, fuel/memory and host-call limits, bubblewrap/cgroup conditions, Windows AppContainer/Job Objects and selected-file portal access.",
+    "preserved_criticism_versions_and_limits": "Fail-closed extension enablement and full integration/preservation duties remain. Both finite source grades PASS with COMPLETE declared families. Scoped Figma/Zed and namespace-test wording limits stay nonmaterial as originally assessed; prototype execution, target support and universal sandbox assurance remain unknown.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B06-P02",
+    "focal_arm": "B06-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B06-P02-treatment/stages/reviser/final.md",
+      "sha256": "2dd9a6216253d150d4f9f2e1b900bf8983b2fbbfb87a1636e844b9a41f6dbbfa",
+      "bytes": 35189
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/treatment/coverage.json",
+      "sha256": "97d94b972c183d72db77cb648f51c1e9b81fbcee4a77358467bd08cf01d2ae6d"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/treatment/primary-source-index.json",
+      "sha256": "b20e4b554c7f3667145bd7f42de6277e95259e17ac39bf7de6a4536e11f357d4"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "CouchDB/PouchDB, PowerSync and Automerge alternatives distinguish offline local/queued/accepted state, client-specific server validation, protected contacts, history search and causal conflict handling. PostgreSQL invariants remain conditional.",
+    "preserved_criticism_versions_and_limits": "Control preserves the contact-search correction and rejects a false historical CI-count criticism. Treatment omits available PowerSync #48 repair/version context despite useful broader access/history prose. Required six-axis assessment is COMPLETE; supplemental present-SDK trace is PARTIAL and unavailable owner/runtime facts remain unfilled.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B07-P01",
+    "focal_arm": "B07-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B07-P01-treatment/stages/reviser/final.md",
+      "sha256": "5474c5c8958bb5a4ba3b86d595c3954b0d00bcb45dc55cc34eff3377bb4013e5",
+      "bytes": 34213
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/treatment/coverage.json",
+      "sha256": "49f2ce264315612d13494dd6adb22c54dc635b92aeb905f516fbd6fc03a0a014"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Rust csv1.4.0, Polars and DuckDB parsing/sniffing provide contrasting raw-field, schema/error and sampling routes. Preview mapping, raw provenance, record-versus-line locations and staged reconciliation preserve delimited-text scope.",
+    "preserved_criticism_versions_and_limits": "Control has a material governing sampling-context omission; treatment preserves the core and resolves C-01 through C-06. Frozen open report/PR/patch/release evidence is not promoted to shipped behavior. Six axes COMPLETE; actual target application code, schema/write paths and executed importer tests remain UNASSESSED.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B07-P02",
+    "focal_arm": "B07-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B07-P02-treatment/stages/reviser/final.md",
+      "sha256": "719f4c5eef224e6cdfa88e79144e46b8b27ebfda27de6aa611efe53873af7120",
+      "bytes": 26277
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/treatment/coverage.json",
+      "sha256": "0879d12144b02339e2f2b2fd92e1564f20cdb6bc61807c3e33d25954ce6a924a"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/treatment/primary-source-index.json",
+      "sha256": "f53072d2a514297cab5bea97366b2274a692cba50656c0295d9fc7a4fa419ba8"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Replaceable playback adapters, WaveSurfer/Peaks, Audacity and ELAN/EAF alternatives separate keyboard text annotation, media-bound time bases, overlapping comments, optional waveforms/transcripts and export modes.",
+    "preserved_criticism_versions_and_limits": "Coverage-first formatting and resolved critic findings do not supply required concrete status/announcement mechanism research. Both original overall coverages are PARTIAL. Current maintained Peaks Codeberg code/release is UNASSESSED; selected history/native precision is PARTIAL; runtime AT/media execution is UNASSESSED.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B08-P01",
+    "focal_arm": "B08-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B08-P01-treatment/final.md",
+      "sha256": "139831a76a656c6ce30c5003ea40047212e57a7016e4498045885e12ddd50e24",
+      "bytes": 17175
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/treatment/assessment.json",
+      "sha256": "90e72469714e5d3b035cb49a9de42ad49cf6f65dda7952070d1b14445cb4efe7"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/treatment/coverage.json",
+      "sha256": "f24778433dca29a77f5facd16fe8724840c9c99ec0c97a79125f0481db75467e"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/treatment/primary-source-index.json",
+      "sha256": "08ed305aa2d6186cba1cea81a00da5650f33f14ae5bdae0d98c29ff9d77e1117"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "CPython3.13.9 queue shutdown and worker accounting separate admission, waiting abandonment, retrieved work acknowledgment, conversion success and cancellation-pending reporting. Output ownership and child-process conversion remain separate layers.",
+    "preserved_criticism_versions_and_limits": "Both source grades PASS with six-axis COMPLETE. The bounded witness simulates accounting and cancellation ledger states; it does not execute a four-worker cancellation pool. Nonmaterial anchor/specificity limits remain; upstream tests read are distinguished from proposed converter validation.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B08-P02",
+    "focal_arm": "B08-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/component-v1/arms/B08-P02-treatment/final.md",
+      "sha256": "4e87a3d418cfb2489638f4a23bd7dff5808f8b0715d9fe0aa0df8d57a724376b",
+      "bytes": 9741
+    },
+    "original_assessment": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.json",
+      "sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/treatment/coverage.json",
+      "sha256": "a917d1dd5e2a768cc3e6ccf4164b58c24d7482d7660b7b108289452fd255a4a4"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/treatment/primary-source-index.json",
+      "sha256": "f12a0b03750a9dbef1ec700628c4e0a3e7987633b093c891f58814fe3f2ae282"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Unicode15.1/CPython3.13.9 derived search keys preserve originals, exact versioned NFKC-then-casefold semantics, migration and post-transform byte bounds. Graphemes, confusables, formal NFKC_Casefold and locale collation have distinct boundaries.",
+    "preserved_criticism_versions_and_limits": "Both complete finals omit the mandatory normalization-only versus casefold-only alternatives and index/storage comparison. The source-supported composed pipeline and expansion witness do not close that decision omission. Six-axis COMPLETE; full generated tables, all history and future UI/index execution remain UNASSESSED.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B09-P01",
+    "focal_arm": "B09-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B09-P01-treatment/stages/reviser/final.md",
+      "sha256": "4f3fc5066b1abd80fe814adfcdaf26d234e37eae642c245df431007ab3b0225d",
+      "bytes": 25111
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/treatment/coverage.json",
+      "sha256": "f489caad7ac549520be66802297b00145bc95634c73e088b6cd1490250c8dc77"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "sha256": "2182559ccc41dbc9ebe929526df85f45f47b71b14917952008ef76d359013cf7"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Koha, Snipe-IT and SpaceWorks alternatives investigate lending state, bundle/kit returns, maintenance holds, correction history, local hosting and PostgreSQL/SQLite concurrency primitives. Stable physical identity differs from one-active-loan enforcement.",
+    "preserved_criticism_versions_and_limits": "Available checkout/checkin caller/test research is deferred instead of completed; control additionally misattributes a status-change release. Snipe-IT v8.8.0 mechanism/v8.7.2 release and database primitive families are focused COMPLETE, Koha/SpaceWorks history/callers PARTIAL. Complete delivered finals still FAIL under PARTIAL overall coverage; owner policy remains unknown.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B09-P02",
+    "focal_arm": "B09-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v1/arms/B09-P02-treatment/stages/reviser/final.md",
+      "sha256": "67c625d2b0f548de4c3c34e0bba5748fbf8821a0555cab2999e70c8b00a4b6ca",
+      "bytes": 41781
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "sha256": "407428a24a1cfa90c347bf3218eae33f5e54166cc61e187be4a0bb862beb00cf"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/treatment/coverage.json",
+      "sha256": "a2e4838499896c1db2d06eb08b3b9e5e583a5966112193c99549c5b2a63084a1"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/treatment/primary-source-index.json",
+      "sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Task admission compares interactive reserved slots, work-conserving sharing, fairness policies and task-owned processes with Windows Job Objects/Linux cgroups. Input capabilities, descendant lifecycle, output publication and journal durability are explicit contracts.",
+    "preserved_criticism_versions_and_limits": "Both source grades PASS with six-axis COMPLETE, retaining all valid criticism and concrete future fault oracles. VS Code/history and OS/durability sources are bounded precedents, not facts about the unnamed host. Progressive-write chronology and actual native/task linkage are not proved; treatment is later on existing proxies.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B10-P01",
+    "focal_arm": "B10-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v1/arms/B10-P01-treatment/stages/reviser/final.md",
+      "sha256": "aeae34085117e39b969692c10ee759ed9ba18f7c1a674d7a2bda7984fe5579c8",
+      "bytes": 23722
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/treatment/coverage.json",
+      "sha256": "77d117942695f9d1b8875c0d9af7db3d40ca9452130017044e04c19b81c08184"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/treatment/primary-source-index.json",
+      "sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Source editions, capture events, payload digests, selected HTTP representations, passage selectors and provenance relations separate reproducibility, upstream observation, applicability and truth. Archive/manual alternatives preserve older/offline editions and privacy.",
+    "preserved_criticism_versions_and_limits": "Both source grades PASS with six-axis COMPLETE. Reported errata are not adopted authority; static SQLite code/report/history is not deployment/fix certification. Stable source IDs and criticism survive without silent rebinding. Actual target repository, current fix mapping and application validation remain UNASSESSED; treatment is later.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B10-P02",
+    "focal_arm": "B10-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v2/arms/B10-P02-treatment/stages/reviser/final.md",
+      "sha256": "73417321c2c2b8badb6f10aa9adb6d8f58c860a8e31517570f3851d6940e1e78",
+      "bytes": 42541
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/treatment/coverage.json",
+      "sha256": "eeb96100f2db34af3b93aa7aa92a788ad3210f00cac33569824c6c1a6a6d7e9a"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Material for MkDocs, Docusaurus, H5P/WordPress and browser/native progress alternatives distinguish authoring, offline search, versioned lesson releases, accessible print and per-exercise-revision completion history.",
+    "preserved_criticism_versions_and_limits": "Original contract absence leaves all six formal slots UNASSESSED (overall PARTIAL; control source UNASSESSED, treatment FAIL). The one separate frozen review is excluded: both FAIL/COMPLETE for the word-processor-paste versus DOCX-file substitution; treatment additionally omits Material9.7.7 lifecycle/end-of-life/successor context. No successor is certified to fit this handbook.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B11-P01",
+    "focal_arm": "B11-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B11-P01-treatment/stages/reviser/final.md",
+      "sha256": "d4603c99950433372f27bb891867f91bd7122bbf00522ed809ab81191b0ad914",
+      "bytes": 23785
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/treatment/coverage.json",
+      "sha256": "99c51bb84e965c536b3aff626d47f9b6f51b0a7202396d3a324248d3a0a5a756"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Portable root-relative locators and deliberate relink compare Zotero history/callers, Windows file/volume identity and Distributed Link Tracking, macOS bookmarks, XDG portals and watcher hints. Digests and byte-identical copies do not supply identity or authority.",
+    "preserved_criticism_versions_and_limits": "Treatment preserves valid identity/access/permission and explicit-copy corrections and source-passes with COMPLETE assessment, but required final source-map JSON is malformed: delivery FAIL remains. All original bytes stay unrepaired; no tracking alternative or platform/runtime is universally certified.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B11-P02",
+    "focal_arm": "B11-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B11-P02-treatment/stages/reviser/final.md",
+      "sha256": "4092018d9fd34edcc559b6f274ba3075007896be8068cd636c8737fd054fb4e0",
+      "bytes": 27680
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "AutomergeRust0.12.0, Yrs0.28.0 and separate publication models compare causal conflicts, entity/order separation, stable cue anchors, trusted attribution and crash-safe synchronization. Move-JSON research is explicitly not a shipped API witness.",
+    "preserved_criticism_versions_and_limits": "Treatment omits the native State serializer shared_heads-only condition and loses supported unique-active-Yrs-ClientID meaning/tests. Control source PASS does not cure its missing critic creation capture. Both source coverages COMPLETE. The grader discloses preliminary prefreeze proxy subtraction; original hashes/grades remain unchanged.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B12-P01",
+    "focal_arm": "B12-P01-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B12-P01-treatment/stages/reviser/final.md",
+      "sha256": "ca5113e06c59bb89c769bad7b2477abc54adf889f43906845772962ad18f6e14",
+      "bytes": 35278
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P01/treatment/coverage.json",
+      "sha256": "55798effe4ebceeb11d3bb392d48529afe73884aeb0386eb0c0162415b3ddace"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P01/treatment/primary-source-index.json",
+      "sha256": "efdf3157c5c3785897701ffe85132aca2cd2664bda59c11ea0b2fa0bae9feed1"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Versioned ZIP manifests and WebVTT, TTML2, Matroska, SRT, ELAN/EAF, Praat and EPUB alternatives compare exact time bases, tracks/languages, overlap, markup, opaque preservation and loss-aware interchange.",
+    "preserved_criticism_versions_and_limits": "Treatment preserves source/critique corrections and source-passes with COMPLETE assessment; external profile/target compatibility is still proposed. WebVTT publication status and FFmpegn9.0.2 adapter limits remain distinct from generic round trips. Control is FAIL/PARTIAL. Overlapped revision does not establish free parallelism or full recipe qualification.",
+    "descriptive_only_no_new_adjudication": true
+  },
+  {
+    "block_id": "B12-P02",
+    "focal_arm": "B12-P02-treatment",
+    "authored_output": {
+      "path": "../../cohorts/full-v3/arms/B12-P02-treatment/stages/reviser/final.md",
+      "sha256": "b0c23f10675fc666a9d41529945a339c0239606fb16cb4d38ad24b6955598a78",
+      "bytes": 24761
+    },
+    "original_assessment": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4"
+    },
+    "source_family_coverage": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/treatment/coverage.json",
+      "sha256": "f58f759073a22608e1ebac725be9af9707a9ff6ab1c71059df8b6938480a0660"
+    },
+    "primary_source_index": {
+      "path": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/treatment/primary-source-index.json",
+      "sha256": "a644dda3b1ed8e888d0169253d413d71bdb074bd0ec9cd521b80ee2fba91097f"
+    },
+    "useful_mechanisms_competitors_and_alternatives": "Cancelable preview research compares Tokio blocking work, subprocess isolation, OS-owned job trees, native preview options, PDF.js, GNOME thumbnails and Slint/CPU transport alternatives. Source/request identities, output gating and subscriber interests must be separated.",
+    "preserved_criticism_versions_and_limits": "Both source grades FAIL with PARTIAL overall coverage. Treatment leaves deduplicated execution/subscriber cancellation ownership unresolved and defers available unprivileged containment research; control also has available mechanism/cancellation defects. PDF.js first-fixed release/history is PARTIAL; actual owner platforms, installed renderers and future sandbox/performance execution are UNASSESSED.",
+    "descriptive_only_no_new_adjudication": true
+  }
+]

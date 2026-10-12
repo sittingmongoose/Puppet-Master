@@ -1,0 +1,382 @@
+[
+  {
+    "block_id": "A-F01",
+    "original_count": 4,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/A-F01-output-verification.json",
+      "sha256": "e4e170381ff49a84bea13b691037a573ceb6f19342b5bfefdddd471e9d805a09"
+    },
+    "arm_ids": [
+      "A-F01-R0",
+      "A-F01-A1",
+      "A-F01-A8",
+      "A-F01-A1_A8"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/comparison.json",
+    "comparison_sha256": "ec00eb431a93ab75da23fa068cb25a121c136f579051017d8238558affe0470c"
+  },
+  {
+    "block_id": "A-F02",
+    "original_count": 4,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/A-F02-output-verification.json",
+      "sha256": "12f1b3023db439e49a96e81e724c317006464059a17e105c3bf3a70ba807c99a"
+    },
+    "arm_ids": [
+      "A-F02-R0",
+      "A-F02-A1",
+      "A-F02-A8",
+      "A-F02-A1_A8"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/comparison.json",
+    "comparison_sha256": "2f09dfb3b5f16822a6ff0f4f89b89723dd1972e4fb6b04f4130e6b3fc8ac5186"
+  },
+  {
+    "block_id": "B01-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-b01-v1/state/eval-coordinator-v2/B01-P01-output-verification.json",
+      "sha256": "67c8b8d0a3d628f40b1ae2cfaa6338baee7cab710a29ef896419e2fb0bace6bb"
+    },
+    "arm_ids": [
+      "B01-P01-control",
+      "B01-P01-treatment"
+    ],
+    "comparison": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+    "comparison_sha256": "06ec93c059942cda3e2e4da2552e1050e17483a9e43ab153d180ec4d8559493d",
+    "evaluator_method_limitation": "Early filename-only recursive locator search crossed campaign subdirectories; evaluator declares no admitted/heldout contents read and subsequent allowlist. Disclosed original unchanged."
+  },
+  {
+    "block_id": "B01-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-b01-v1/state/eval-coordinator-v2/B01-P02-output-verification.json",
+      "sha256": "5caa5eb8e27e515f96e434e8d2c99eaf17f0492a52a5236cd9c0b0c20c4eb871"
+    },
+    "arm_ids": [
+      "B01-P02-control",
+      "B01-P02-treatment"
+    ],
+    "comparison": "../../cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/comparison.json",
+    "comparison_sha256": "42692e8629ed40fa1846261c600d2411d1bb35361a0d96e821047dac29fcf446"
+  },
+  {
+    "block_id": "B02-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/B02-P01-output-verification.json",
+      "sha256": "3d0789d3b8b4fbb438c3c529afc9ebf1d0ca06d7950a5d3c9cbb7596b8c7bb40"
+    },
+    "arm_ids": [
+      "B02-P01-control",
+      "B02-P01-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/comparison.md",
+    "comparison_sha256": "27bafa48d8ae4f2f8c3777297fb32295c61029d81d86b6b2d492d60c16ae8bf4",
+    "terminal_summary_limit": "Tool terminal summary ends midphrase; complete artifact contents verified directly, no regrade/restart."
+  },
+  {
+    "block_id": "B02-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B02-P02-output-verification.json",
+      "sha256": "59e08c7efc79783acd090a00138ee2cd7f8bd5fea7d3d302cfe083121625f3c8"
+    },
+    "arm_ids": [
+      "B02-P02-control",
+      "B02-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/comparison.json",
+    "comparison_sha256": "2154e73aa801a90c8d6f1e5b09dc6b5ca197fd0737b31f0839538bb07d6ae013",
+    "separate_record_errata": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/record-errata.json",
+    "separate_record_errata_sha256": "50883feba387a8524a694ea37a5cb94231148800a6f45782c55911b9a9a7b7bc"
+  },
+  {
+    "block_id": "B03-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B03-P01-output-verification.json",
+      "sha256": "8b0777bf3d10db18cc816f7df26c4d262d4e8d3b2b3c8f7a0d2024f36aa75574"
+    },
+    "arm_ids": [
+      "B03-P01-control",
+      "B03-P01-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/comparison.json",
+    "comparison_sha256": "b8d16e32181e568f89c5d51f6e4dbed18ebc713348bf14d1c908fe90fe765d34",
+    "original_manifest": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/manifest.json",
+    "original_manifest_sha256": "81b6b08498b120d63241153c9f2924751daba01070dd1387451140b9be6d740c"
+  },
+  {
+    "block_id": "B03-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B03-P02-output-verification.json",
+      "sha256": "ff994f1d1f566972ac2cf4b17994c875d6eee09590ab4cafab2802641168a204"
+    },
+    "arm_ids": [
+      "B03-P02-control",
+      "B03-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/comparison.json",
+    "comparison_sha256": "da7b17f5db2cb8a55c651d295b041ecfcaeb639252d6fbe945145cfe6c9dbd61"
+  },
+  {
+    "block_id": "B04-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B04-P01-output-verification.json",
+      "sha256": "8cfddacfde722ec19ad6ee1a166d44ad82353ec280990899930c9c60b383b4e8"
+    },
+    "arm_ids": [
+      "B04-P01-control",
+      "B04-P01-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/comparison.json",
+    "comparison_sha256": "e6f1819a82c215e538ebbc169feb56272bd8769631e220ea00bb76ca8b6ed022"
+  },
+  {
+    "block_id": "B04-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B04-P02-output-verification.json",
+      "sha256": "516e97f9533f9dac8ab2c70967e52ab72ffe06c8d99d91dd1991ff26355d95bc"
+    },
+    "arm_ids": [
+      "B04-P02-control",
+      "B04-P02-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/comparison.json",
+    "comparison_sha256": "5062a4d2f3a21fe86a11712e02ca2721621dbfc37284fd79e7e6c65f6a7a9e50"
+  },
+  {
+    "block_id": "B05-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B05-P01-output-verification.json",
+      "sha256": "13e76f080c6b7f39cdb76175a2777d9713e66cf7be00cd50eb45b520803a9a09"
+    },
+    "arm_ids": [
+      "B05-P01-control",
+      "B05-P01-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/comparison.json",
+    "comparison_sha256": "61066411ae5407fff53a250e12c3a800fab3269cb2b7083a8a17ab4f1bb2c079"
+  },
+  {
+    "block_id": "B05-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B05-P02-output-verification.json",
+      "sha256": "0a4a00afa71ee69663e4086ad17b9206719c8198eb4c73b89ae6c0d3b5a5d597"
+    },
+    "arm_ids": [
+      "B05-P02-control",
+      "B05-P02-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/comparison.json",
+    "comparison_sha256": "9d859508a0281a28180352aab5ab6bf1ed6fcb74b2771430810e20afe16b1d8c"
+  },
+  {
+    "block_id": "B06-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/B06-P01-output-verification.json",
+      "sha256": "c676de4d4f6d6aa450bdf2a570c7e34092db306d2237b6e2da21445f81cddcc1"
+    },
+    "arm_ids": [
+      "B06-P01-control",
+      "B06-P01-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+    "comparison_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e"
+  },
+  {
+    "block_id": "B06-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B06-P02-output-verification.json",
+      "sha256": "107f9d8843a3913d2afd70386f35174ee798e50cd11e8f378cf385f8d25515eb"
+    },
+    "arm_ids": [
+      "B06-P02-control",
+      "B06-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/comparison.md",
+    "comparison_sha256": "9fa1016d2c35a5e294dd676b2c3570339b8f097d646366fcc11d8a5363121178"
+  },
+  {
+    "block_id": "B07-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B07-P01-output-verification.json",
+      "sha256": "ec5c4f15c66bd994dd98e970b8461a3c2be2e3bf571d164229393638c145826e"
+    },
+    "arm_ids": [
+      "B07-P01-control",
+      "B07-P01-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/comparison.json",
+    "comparison_sha256": "4d48a111cf33cd4d19e8fe216df90617a66149e5fbf455bb7056291e2a392f0f"
+  },
+  {
+    "block_id": "B07-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B07-P02-output-verification.json",
+      "sha256": "a752076216dc940204e1c8c8bc5429fa6d15ad94d03986677475349b3bd063db"
+    },
+    "arm_ids": [
+      "B07-P02-control",
+      "B07-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/comparison.json",
+    "comparison_sha256": "a351a052f7433b7ff7c1400001623873137833d5678feb45f3a0afd088a12375"
+  },
+  {
+    "block_id": "B08-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B08-P01-output-verification.json",
+      "sha256": "e31e92ce87a658c72012d4eef60de2fe2201b48d07f0b8340a81b6b3f75483bf"
+    },
+    "arm_ids": [
+      "B08-P01-control",
+      "B08-P01-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/comparison.json",
+    "comparison_sha256": "8c8ff9afb88d35331fdc8169b083ea1dd8aca6929825213379109643aa4b56c8"
+  },
+  {
+    "block_id": "B08-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/component-assessments-v1/state/eval-coordinator-v2/B08-P02-output-verification.json",
+      "sha256": "a4677b9b78877c884266bb23dcf56a170f9e163278742b2b2f031923e876d5ba"
+    },
+    "arm_ids": [
+      "B08-P02-control",
+      "B08-P02-treatment"
+    ],
+    "comparison": "../../cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/comparison.json",
+    "comparison_sha256": "f5079bfff5afa81420f5242f457845caa4b9d6ac3e74850fda132c327aacdae8"
+  },
+  {
+    "block_id": "B09-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B09-P01-output-verification.json",
+      "sha256": "a8948678456181b57bd137fcc602ded8bb413c21ebd37ce5c66ab37f67250bef"
+    },
+    "arm_ids": [
+      "B09-P01-control",
+      "B09-P01-treatment"
+    ],
+    "original_manifest": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/manifest.json",
+    "original_manifest_sha256": "82bc97b56c2bb6ea0b4b7e47128a7df7ff50cd8db83dca14d12fad3168b94c1c"
+  },
+  {
+    "block_id": "B09-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/B09-P02-output-verification.json",
+      "sha256": "41f29186b460f44d4c45a4434dfa034f7d7188c494e41a2456de28518cd7dbcf"
+    },
+    "arm_ids": [
+      "B09-P02-control",
+      "B09-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/comparison.md",
+    "comparison_sha256": "3da1ecc59aa0d7948d1bd9fa1326d5850dbfc703e054793c449acc1ca2406598",
+    "original_reporting_wording_limit": "Prose six dimensions corrected only in separate comparison; originals contain all7 contractdimensions and remain unchanged."
+  },
+  {
+    "block_id": "B10-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v1/state/eval-coordinator-v2/B10-P01-output-verification.json",
+      "sha256": "8695794995f6a5bcd98be668dc434c0deec91a6548b36d6e859ce1c594e926a6"
+    },
+    "arm_ids": [
+      "B10-P01-control",
+      "B10-P01-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.json",
+    "comparison_sha256": "1dff6eca8a3aa4f924724a58daf69f97f4e352e6092d0cbcb6ff5df6af8f6a52"
+  },
+  {
+    "block_id": "B10-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B10-P02-output-verification.json",
+      "sha256": "ce289bbf9d27e41c497afbbe7af73b49607a76d33539ed60783d153af7308400"
+    },
+    "arm_ids": [
+      "B10-P02-control",
+      "B10-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/comparison.json",
+    "comparison_sha256": "1e416a02f088749783b33b12ffcef81a4bcc7a68eb3d02a4674f747c25b881d8",
+    "grader_infrastructure_limitation": "Original evaluator failed to locate governing contract; all6formalaxesUNASSESSED. Contract exists at exact path now hashverified. Initialbrief gave filename without absolutepath; prospectivequeuedrequests fixed and activeB09locatorsteered, no frozenregrade."
+  },
+  {
+    "block_id": "B11-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B11-P01-output-verification.json",
+      "sha256": "34c13fa465369490d1cde77cc35a57bc6780b36b3ab0d84bd9e82b42c0f3b118"
+    },
+    "arm_ids": [
+      "B11-P01-control",
+      "B11-P01-treatment"
+    ],
+    "original_manifest": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/manifest.json",
+    "original_manifest_sha256": "783cf5649e46e89ce89864126e7f9212cfa59e57abe16d10bf7aa70c09167941"
+  },
+  {
+    "block_id": "B11-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B11-P02-output-verification.json",
+      "sha256": "619c82cdfedd5f218d3f1bf0a12b6b22f374e281ff7d41d5c2dc7f38114d0f93"
+    },
+    "arm_ids": [
+      "B11-P02-control",
+      "B11-P02-treatment"
+    ],
+    "comparison": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/comparison.json",
+    "comparison_sha256": "75f35e7fe88dbd88adebf3d8a6522e4641595402672d418b4f0d0abf44fd0550",
+    "original_manifest": "../../cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/manifest.json",
+    "original_manifest_sha256": "cdf48470c7f03b18909f41c2888000c61ea6678ff4336f355d385b50c0861bfe",
+    "evaluator_ordering_deviation": {
+      "observation": "A preliminary internal subtraction of native completion proxies was considered during telemetry planning before the original output manifest was frozen.",
+      "effect": "No comparative artifact or campaign selection existed before freeze, and original semantic judgments were not based on the latency subtraction. Nevertheless strict no-comparison-before-freeze ordering is not claimed without this qualification.",
+      "handling": "Disclosed in this new separate post-freeze record. All original grades and hashes remain unchanged; no replacement, repeat grader, repair or adjudication was performed."
+    },
+    "strict_no_comparison_before_freeze": false
+  },
+  {
+    "block_id": "B12-P01",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B12-P01-output-verification.json",
+      "sha256": "01797d738c16c28018b2dbe8c5aaca9043eef3ec875c0c42048fe0faee1edb60"
+    },
+    "arm_ids": [
+      "B12-P01-control",
+      "B12-P01-treatment"
+    ]
+  },
+  {
+    "block_id": "B12-P02",
+    "original_count": 2,
+    "receipt": {
+      "path": "../../cohorts/full-assessments-v2/state/eval-coordinator-v2/B12-P02-output-verification.json",
+      "sha256": "a78dd6259a292f8c1753647215161f095d250241d01d28dfbb32f4d9e6b0af39"
+    },
+    "arm_ids": [
+      "B12-P02-control",
+      "B12-P02-treatment"
+    ]
+  }
+]
