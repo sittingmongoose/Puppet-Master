@@ -466,7 +466,8 @@
   }
   function suspendLensMotion() {
     lenses.forEach(function (L) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
-    resetBead(); menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
+    if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
+    menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
   /* travel from A to B: the drop lifts (grows a little and magnifies more), stretches along its path with its speed,
      thins across it, overshoots and wobbles once, all from one spring */

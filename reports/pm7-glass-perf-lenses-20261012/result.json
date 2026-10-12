@@ -1,17 +1,17 @@
 {
-  "created_utc": "2026-10-12T17:02:47.903717+00:00",
+  "created_utc": "2026-10-12T17:04:59.558166+00:00",
   "agent": "codex-pm7-glass-lenses",
   "branch": "fix/pm7-glass-perf-lenses-20261012",
   "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
   "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
   "presented_preview_sha256": "41202d26c0db26de49ea25af553ce3f5520234bae88d6e7fe217f313fd386440",
   "source_path": "Concepts/liquid-glass/opus-5.5/src/glass.js",
-  "source_sha256": "58f36edccc2e221bf7e7a49ffe290501817f144337c8ea4cadd427ce3e01feea",
+  "source_sha256": "2022f6b81a1275f541246114c2eef839b6b8e0855f8d399231f61c643506abce",
   "status": "READY_FOR_INTEGRATION_AND_GPU_VALIDATION",
   "validation": {
     "node_syntax": "PASS",
     "diff_whitespace": "PASS",
-    "new_lifecycle_equivalence_cases": 14,
+    "new_lifecycle_equivalence_cases": 15,
     "lifecycle_status": "PASS",
     "source_preview_scope_status": "PASS",
     "checks": [
@@ -28,6 +28,7 @@
       "filter reuse, existing sharing and bounded replacement/resize history",
       "local onboarding layer query cache respects replacement",
       "closed menus skip lens geometry reads without changing overlap hiding",
+      "reduced transition retains visible hovered bead and exact reduced menu fade",
       "owned lens cleanup joins available unmount API once"
     ]
   },
@@ -65,7 +66,8 @@
     "Spring samples and travel/bead/menu keyframes, options, durations and offsets unchanged",
     "Same lens padding, dimensions, labels, scrubbing threshold, live geometry and nearest-tab click",
     "Changed reduced geometry retains 140ms fade, including subpixel positions",
-    "PM_LG API/version, CSS, art/wallpapers, keyboard/focus and switches unchanged"
+    "PM_LG API/version, CSS, art/wallpapers, keyboard/focus and switches unchanged",
+    "Motion preference transition retains the current hovered bead visibly at rest"
   ],
   "limits": [
     "Selected-function deterministic Node sandbox is not a GPU/browser benchmark or full runtime acceptance.",
@@ -78,8 +80,8 @@
   "artifacts": [
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/lens-regression.mjs",
-      "bytes": 23452,
-      "sha256": "782b3d7c2b14825a1f0408d4c7de2d5d7fb798bbe98eaa42c0bc21cecf66288e"
+      "bytes": 24422,
+      "sha256": "662af65f2d24e8d578040240ac24164d0543e568fd1a92f9f7ea2ac4f5851276"
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/lens-scope.py",
@@ -88,18 +90,18 @@
     },
     {
       "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/PMConcept7-LiquidGlass-lenses.html",
-      "bytes": 19367575,
-      "sha256": "230dc35789d14b61c3bc2c9b7b9ca7ee319bd0ac8e36666da0b829500eb918a0"
+      "bytes": 19367694,
+      "sha256": "ec769631a9ad018c9dd3af3eb4fad93679c0992ede82d247792ac60e7e971548"
     },
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/lenses/lifecycle-equivalence-result.json",
-      "bytes": 8579,
-      "sha256": "23752265be98b785dac68b953c57bcf6f6b52ca488255a5bf937ef536bae975d"
+      "bytes": 8818,
+      "sha256": "28c0cce7355d8bb56f4aed8fe0166c7fe8c590b94a81c7525e1dc5cedc60f1df"
     },
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/lenses/source-preview-scope-result.json",
       "bytes": 689,
-      "sha256": "d1f810d298da82c17b448ce75bbbd3fdbeb5093b89d3fea468181cad60da53c4"
+      "sha256": "ab27056160f104dea6a5ba2f47a0ff16608441043078154cd419a57e7e593e31"
     }
   ]
 }
