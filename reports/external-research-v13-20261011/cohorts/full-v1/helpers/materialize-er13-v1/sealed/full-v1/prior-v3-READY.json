@@ -1,0 +1,33 @@
+{
+  "version": "materialize-v3",
+  "status": "READY_FOR_INDEPENDENT_ROOT_MECHANICAL_REVIEW",
+  "saved_at_utc": "2026-10-10T07:15:13.141347+00:00",
+  "methods": [
+    "R0",
+    "A1",
+    "A1+A8"
+  ],
+  "activation_capture_versions": [
+    "exact-v1",
+    "exact-capture-v21"
+  ],
+  "default": "exact-v1",
+  "new_offline_delta_checks": 194,
+  "prior_edition_checks": 236,
+  "prior_edition_rerun": false,
+  "check_results_sha256": "ba76f9c639c871cc902b9af7472ef92dc085045fe37693a0988ab240f6987d2e",
+  "runtime_source_closure_sha256": "862be184daf97b8487b1cbaff3097543b87deaef41357bd008490c7863d9346a",
+  "source_lineage_sha256": "8a3e70326ce6b1b79987a1ba2028aaade7906bcd1f83460e46db634f3cf4260b",
+  "native_candidate_calls": 0,
+  "dispatches": 0,
+  "reveal_executions": 0,
+  "root_review_pending": true,
+  "root_publication_pending": true,
+  "prospective_mechanical_version_only": true,
+  "science_qualified": false,
+  "native_provenance_freshness_lifecycle_qualified": false,
+  "billing_qualified": false,
+  "historical_exact_replay": false,
+  "private_setup_goal_receipts_excluded": true,
+  "original_v1_v2_D1_D2_pins_edited": false
+}

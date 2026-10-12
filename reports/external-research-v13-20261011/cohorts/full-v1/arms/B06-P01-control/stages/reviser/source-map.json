@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "stage": "reviser",
+  "run_id": "B06-P01-control",
+  "source_id_policy": "S01-S20 retain the investigator meanings and records; C01-C16 retain the critic meanings and records; R01-R05 are new direct reviser checks, not aliases. No source ID is silently rebound. Critique prose says C01-C17 once, but its map/index list only C01-C16; no C17 record was provided.",
+  "reviewed_material": {
+    "brief": "../../inputs/brief.md",
+    "investigator_discovery": "../investigator/discovery.md",
+    "investigator_draft": "../investigator/draft.md",
+    "investigator_source_map": "../investigator/source-map.json",
+    "revealed_plan": "../investigator/revealed-plan.md",
+    "plan_reveal": "../investigator/plan-reveal.json",
+    "critic_critique": "../critic/critique.md",
+    "critic_source_map": "../critic/source-map.json",
+    "investigator_index": "../investigator/sources/index.md",
+    "critic_index": "../critic/sources/index.md"
+  },
+  "inherited_catalogs": [
+    {
+      "ids": "S01-S20",
+      "identity_records": "../investigator/source-map.json",
+      "index": "../investigator/sources/index.md"
+    },
+    {
+      "ids": "C01-C16",
+      "identity_records": "../critic/source-map.json",
+      "index": "../critic/sources/index.md"
+    }
+  ],
+  "direct_reviser_verification_batch": {
+    "access_utc_sample": "2026-10-12T01:08:20Z",
+    "note": "Clock sampled immediately before the batched direct primary-source opens/finds; page visits followed immediately. Per-source records preserve the exact URLs, locators and conditions."
+  },
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Wasmtime Security",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/docs/security.md",
+      "version_or_commit": "Release tag v49.0.2; the inherited S10 record notes signed commit prefix 3c8a3e7; full SHA was not retrieved in this stage.",
+      "locator": "Security section, core WebAssembly/imports and Filesystem Access, lines 191-220.",
+      "access_utc": "2026-10-12T01:08:20Z",
+      "observed_operation": "Opened the release-pinned official repository page and read the security overview, imports/exports boundary, and filesystem section.",
+      "governing_condition_default_exception": "WebAssembly outside-world interaction uses explicitly linked imports/exports; Wasmtime implements memory isolation; WASI filesystem access follows a capability model. The embedder chooses interfaces and filesystem access; bugs and configuration remain material.",
+      "applicability": "Supports a narrowly imported WASM candidate, not a claim that an embedder or this proposal is safe."
+    },
+    {
+      "id": "R02",
+      "title": "Landlock: unprivileged access control",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "version_or_commit": "Current online Linux kernel documentation; ABI history described, no single kernel release pinned.",
+      "locator": "Rights associated with file descriptors and compatibility/runtime ABI detection, lines 279-308 and 368-390; kernel support, lines 877-888.",
+      "access_utc": "2026-10-12T01:08:20Z",
+      "observed_operation": "Opened the official kernel documentation; found the file-descriptor and ABI sections and read their conditions.",
+      "governing_condition_default_exception": "Some rights are checked at open and associated with the created descriptor; pre-opened descriptors are not subject to later hierarchy restrictions. Supported rights vary by ABI; runtime detection and kernel configuration matter.",
+      "applicability": "Supports descriptor hygiene, runtime feature detection, and platform tests; not evidence that any proposed worker policy has been applied."
+    },
+    {
+      "id": "R03",
+      "title": "AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version_or_commit": "Microsoft Learn page; inherited S15 metadata says last updated 2025-07-08; no Windows release or commit pinned.",
+      "locator": "Isolation and least-privilege overview, lines 31-32; inherited S15 record maps file/network/process grant discussion around lines 32-51.",
+      "access_utc": "2026-10-12T01:08:20Z",
+      "observed_operation": "Opened the official Microsoft page at its isolation overview and checked the stated purpose and least-privilege condition; the earlier S15 record preserves the full-page inspection details.",
+      "governing_condition_default_exception": "Isolation depends on resources granted to the AppContainer; the page says access beyond granted rights is restricted. Exact launch policy and resource grants remain an implementation choice.",
+      "applicability": "Supports considering AppContainer as a Windows candidate; does not prove a concrete launcher policy or cross-platform parity."
+    },
+    {
+      "id": "R04",
+      "title": "VS Code Extension Runtime Security",
+      "url": "https://code.visualstudio.com/docs/configure/extensions/extension-runtime-security",
+      "version_or_commit": "Live official documentation; no immutable revision. Inherited S06 records page date 2026-10-07 and trust-prompt condition since VS Code 1.97.",
+      "locator": "Runtime permissions and publisher trust, lines 213-229.",
+      "access_utc": "2026-10-12T01:08:20Z",
+      "observed_operation": "Opened the official page and read the extension-host permissions and publisher-trust paragraphs.",
+      "governing_condition_default_exception": "The extension host has VS Code's permissions, including file read/write, network requests, and external processes. Publisher trust is prompted on first third-party install under the documented release condition; it is a trust decision, not a restriction on runtime permissions.",
+      "applicability": "Direct evidence that process placement and publisher trust do not themselves create least-privilege runtime access."
+    },
+    {
+      "id": "R05",
+      "title": "VS Code Extension API Reference",
+      "url": "https://code.visualstudio.com/api/references/vscode-api",
+      "version_or_commit": "Live official API reference; no immutable revision.",
+      "locator": "workspace.applyEdit semantics, lines 2348-2359.",
+      "access_utc": "2026-10-12T01:08:20Z",
+      "observed_operation": "Opened the API reference at workspace.applyEdit and searched the exact all-or-nothing wording.",
+      "governing_condition_default_exception": "The documented all-or-nothing strategy applies to workspace edits consisting only of text edits. Resource creations/deletions abort subsequent edits after a failure; the method resolves to a boolean.",
+      "applicability": "Analogy only; the diagram editor must define and test its own transaction/rollback guarantee."
+    }
+  ]
+}

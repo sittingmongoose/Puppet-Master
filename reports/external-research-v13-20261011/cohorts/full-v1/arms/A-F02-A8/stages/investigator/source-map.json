@@ -1,0 +1,250 @@
+{
+  "run_id": "A-F02-A8",
+  "stage": "investigator",
+  "discovery_phase": "brief-only; exact plan not yet released",
+  "source_set_reviewed_utc": "2026-10-12T00:42:52Z",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "FFmpeg official download and release page",
+      "url": "https://ffmpeg.org/download.html",
+      "version_commit": "FFmpeg 9.0.2, latest stable at access; release date 2026-09-18",
+      "locator": "Releases; 9.0.2 library versions; release vs development-branch guidance",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened and read current official download/release page.",
+      "condition_default_exception": "The page distinguishes slow-moving stable release branches from more rapidly updated development, and says FFmpeg only provides source code while linking to separately built packages.",
+      "applicability": "Pin and verify the actual parser/runtime build; do not infer platform support from project name."
+    },
+    {
+      "id": "S02",
+      "title": "ffprobe Documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_commit": "Online FFmpeg documentation, live page accessed 2026-10-12; related current stable release S01",
+      "locator": "Description; -show_format, -show_streams, -show_error, -of json, -formats/-demuxers/-codecs; JSON optional-field behavior",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the official manual; earlier read its description/options.",
+      "condition_default_exception": "The manual says a positive exit code occurs when input cannot be opened or recognized; JSON is machine-readable, optional invalid/non-applicable fields may be omitted under auto behavior.",
+      "applicability": "Technical metadata and diagnostics only; not a promise of successful playback or accurate duration."
+    },
+    {
+      "id": "S03",
+      "title": "FFmpeg Formats Documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg-formats.html",
+      "version_commit": "Online FFmpeg documentation, live page accessed 2026-10-12",
+      "locator": "Input options analyzeduration and duration_probesize; format_whitelist; probe defaults",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened documentation and reviewed probing behavior.",
+      "condition_default_exception": "analyzeduration is documented as defaulting to 5,000,000 microseconds; increasing it may improve detection but raises latency. Duration probes are not extended at all costs and extra probing can have a performance cost.",
+      "applicability": "Record probe limits and duration provenance; bounded metadata extraction needs explicit timeout/uncertain duration states."
+    },
+    {
+      "id": "S04",
+      "title": "FFmpeg ffprobe source",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/fftools/ffprobe.c",
+      "version_commit": "FFmpeg tag n9.0.2",
+      "locator": "File header and imports; section definitions for format, streams, errors, and output writer; option/state tables",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened released source text at the pinned tag.",
+      "condition_default_exception": "Source identifies ffprobe as a media prober built on FFmpeg libraries and makes output sections/options explicit; supported sections vary with build and selected options.",
+      "applicability": "Evidence for a concrete metadata adapter and version-specific source review, not a live execution."
+    },
+    {
+      "id": "S05",
+      "title": "FFmpeg FATE ffprobe tests",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/tests/fate/ffprobe.mak",
+      "version_commit": "FFmpeg tag n9.0.2",
+      "locator": "Entire 23-line test recipe, especially ffprobe command and output-mode test targets",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened released FATE test recipe at the pinned tag.",
+      "condition_default_exception": "Tests create a deterministic short NUT test file with audio/video/metadata and assert compact, CSV, default, flat, INI, JSON, XML, and optionally schema output; target existence is conditioned on build components.",
+      "applicability": "A repository caller/test pattern for metadata/report regressions; does not cover the museum's codecs, channels, or workflow."
+    },
+    {
+      "id": "S06",
+      "title": "FFmpeg stack-exhaustion advisory GHSA-rp4v-7m3g-89vg",
+      "url": "https://github.com/advisories/GHSA-rp4v-7m3g-89vg",
+      "version_commit": "Advisory published 2026-10-08; affected through FFmpeg 9.0.2",
+      "locator": "Description and references to mov_read_pssh and av_encryption_init_info_free",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the advisory and its affected-version/source references.",
+      "condition_default_exception": "Crafted MP4 with many small PSSH boxes can exhaust stack and consume quadratic CPU in recursive free path; local availability impact, high complexity; advisory identifies versions through 9.0.2.",
+      "applicability": "Donated files are untrusted parser input. Do not deploy the affected build unchanged; recheck upstream fix/release and isolate parsing. Different crafted files/features may have other risks."
+    },
+    {
+      "id": "S07",
+      "title": "GStreamer Releases",
+      "url": "https://gstreamer.freedesktop.org/releases/",
+      "version_commit": "Stable 1.28.8; development 1.29.2 at access",
+      "locator": "Current stable release and release-series list",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened current official release index.",
+      "condition_default_exception": "The index distinguishes stable from development and lists older supported API/ABI-stable series.",
+      "applicability": "Pin an exact runtime/plugin bundle rather than consume a floating system installation."
+    },
+    {
+      "id": "S08",
+      "title": "GstDiscoverer API reference",
+      "url": "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html",
+      "version_commit": "Live official API reference; core Discoverer API is in GStreamer 1.x, with some unrelated page entries marked Since 1.30",
+      "locator": "GstDiscovererResult; get_result; get_duration; stream info; asynchronous discover_uri/start requirements",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened and searched API documentation for result, duration, and async behavior.",
+      "condition_default_exception": "Results separately include URI_INVALID, ERROR, TIMEOUT, BUSY, and MISSING_PLUGINS; missing plugins mean some plugins are missing for full discovery. Async mode needs an iterating GLib main loop/context.",
+      "applicability": "Good source for per-item error categories and responsive GUI discovery; plugin/build matrix still defines coverage."
+    },
+    {
+      "id": "S09",
+      "title": "GStreamer Basic Tutorial 9: Media information gathering",
+      "url": "https://gstreamer.freedesktop.org/documentation/tutorials/basic/media-information-gathering.html",
+      "version_commit": "Live official tutorial source accessed 2026-10-12",
+      "locator": "Overview lines on sync vs async; example code's result switch, duration/tags/stream topology; non-OK playback branch",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the official tutorial and read its example caller code.",
+      "condition_default_exception": "Synchronous discover_uri blocks; async is suggested for GUI use. Code logs missing plugins distinctly, then treats any result other than OK as cannot-play.",
+      "applicability": "A concrete caller example; proposal should improve on its blanket playability message by retaining parse vs preview distinctions."
+    },
+    {
+      "id": "S10",
+      "title": "GStreamer Security Advisory 2026-0088",
+      "url": "https://gstreamer.freedesktop.org/security/sa-2026-0088.html",
+      "version_commit": "Advisory dated 2026-10-08; fixed in gst-plugins-base/good 1.28.8",
+      "locator": "Summary, affected versions, details, impact, solution",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the official project security advisory.",
+      "condition_default_exception": "Heap out-of-bounds write is through RTP raw-audio depayloaders for crafted SDP/RTSP; base/good <1.28.8 affected; 1.28.8 addresses it.",
+      "applicability": "The museum's stated local-file route is not this attack path; still use patched plugin bundles and do not enable unnecessary network-source workflows."
+    },
+    {
+      "id": "S11",
+      "title": "Symphonia 0.6.1 source README",
+      "url": "https://docs.rs/crate/symphonia/0.6.1/source/README.md",
+      "version_commit": "Crate release 0.6.1; crate/source release metadata on docs.rs",
+      "locator": "Current Support, status definitions, format/codec tables, quality, tools",
+      "accessed_utc": "2026-10-12T00:34:21Z",
+      "observed_operation": "Opened the version-pinned crate README source.",
+      "condition_default_exception": "README distinguishes Good/Great/Excellent, explains feature-flagged formats/codecs and defaults, and describes all-format/all-codec feature flags; status does not guarantee every stream works.",
+      "applicability": "Rust-native alternative with explicit narrower build profile; support must be selected and tested."
+    },
+    {
+      "id": "S12",
+      "title": "Symphonia 0.6.1 normalized Cargo manifest",
+      "url": "https://docs.rs/crate/symphonia/0.6.1/source/Cargo.toml",
+      "version_commit": "Crate release 0.6.1; docs.rs reports release source",
+      "locator": "[features], default, all-codecs, all-formats, AAC/ALAC/AIFF/CAF/MP3/MP4 features",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened released Cargo.toml source.",
+      "condition_default_exception": "Optional dependencies are gated by feature flags; default list enables only a subset of all advertised capabilities.",
+      "applicability": "Build default-feature choices materially change input/preview support."
+    },
+    {
+      "id": "S13",
+      "title": "Symphonia v0.6.1 release history",
+      "url": "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1",
+      "version_commit": "v0.6.1 release commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee",
+      "locator": "Bug fixes and improvements, including MP3 silent-section behavior, Xing/VBRI, mono MP1, memory allocation hardening, fuzz-found panics",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the official release and commit-linked notes.",
+      "condition_default_exception": "Fixes are version-specific; 0.6.1 also changed behavior by fixing conditions and parser hardening but cannot guarantee absence of future defects.",
+      "applicability": "Demonstrates consequential decoder bug/security fixes; pin reviewed release and regression-test representative media."
+    },
+    {
+      "id": "S14",
+      "title": "RFC 8493: The BagIt File Packaging Format",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "version_commit": "RFC 8493 (2018), BagIt 1.0",
+      "locator": "Sections 1.3, 2.1.2\u20132.1.3, 2.4, and 3",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the standards-track informational RFC and read structure/manifest/validity provisions.",
+      "condition_default_exception": "Payload contents are opaque octet streams; payload manifests list every file; valid means complete with all manifest checksums verified; SHA-256/SHA-512 support required in BagIt 1.0 tools.",
+      "applicability": "Portable handoff packaging and integrity check without transcoding or changing payload bytes."
+    },
+    {
+      "id": "S15",
+      "title": "W3C WCAG 2.2 Understanding Focus Order",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html",
+      "version_commit": "WCAG 2.2 Understanding document, live W3C WAI page accessed 2026-10-12",
+      "locator": "SC 2.4.3 and intent/benefits",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the W3C WAI Understanding page.",
+      "condition_default_exception": "When sequential navigation is available and affects meaning/operation, focus order must preserve meaning and operability; visual order need not be identical.",
+      "applicability": "Keyboard-only validation target for any web/desktop UI, interpreted for the selected native toolkit."
+    },
+    {
+      "id": "S16",
+      "title": "W3C WCAG 2.2 Understanding Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_commit": "WCAG 2.2 Understanding document, live W3C WAI page accessed 2026-10-12",
+      "locator": "SC 4.1.3, status-message definition, success/error/progress guidance",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the W3C WAI Understanding page.",
+      "condition_default_exception": "For markup-based content, status messages must be programmatically determinable without focus; examples distinguish progress, action result, waiting, and error.",
+      "applicability": "Accessible textual and assistive-technology announcements for asynchronous batch/review state; validate equivalent behavior in native accessibility APIs."
+    },
+    {
+      "id": "S17",
+      "title": "Library of Congress PREMIS tools page: DROID/PRONOM description",
+      "url": "https://loc.gov/standards/premis/tools_for_premis.php",
+      "version_commit": "Live Library of Congress preservation-metadata resource accessed 2026-10-12",
+      "locator": "DROID paragraph and linked PRONOM description",
+      "accessed_utc": "2026-10-12T00:34:03Z",
+      "observed_operation": "Opened the Library of Congress tool-description page.",
+      "condition_default_exception": "Describes DROID as a batch signature-identification tool using PRONOM; identifies format names/version/PUID where possible.",
+      "applicability": "Optional independent format-identity signal; not a decoder, corruption test, permission source, or proof of preview support."
+    },
+    {
+      "id": "S18",
+      "title": "GStreamer audioconvert plugin reference",
+      "url": "https://gstreamer.freedesktop.org/documentation/audioconvert/",
+      "version_commit": "Live plugin reference; audioconvert is in gst-plugins-base, stable series 1.28.8 at access",
+      "locator": "mix-matrix example; channel reordering for unpositioned inputs; package and raw-audio pad templates",
+      "accessed_utc": "2026-10-12T00:40:08Z",
+      "observed_operation": "Opened the official GStreamer plugin page and read matrix/reordering examples.",
+      "condition_default_exception": "The mix matrix explicitly maps input to output channels; unpositioned inputs can be automatically positioned by channel index or forced into a chosen standard layout. This transforms decoded audio in the preview pipeline and can change speaker interpretation.",
+      "applicability": "Evidence that channel-selective preview is feasible in a decoded pipeline; preserve the original file, do not assume mapping or export the transformed preview as source."
+    },
+    {
+      "id": "S19",
+      "title": "SQLite Atomic Commit",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "version_commit": "Live official SQLite technical documentation accessed 2026-10-12",
+      "locator": "Transaction atomicity after crash/power failure; assumptions about fsync and locks; sections 3, 8, and 9.1",
+      "accessed_utc": "2026-10-12T00:40:08Z",
+      "observed_operation": "Opened official documentation and searched crash/power-loss and transaction atomicity details.",
+      "condition_default_exception": "Transactions appear atomic under the documented filesystem/VFS assumptions; broken flush/fsync can undermine it, and documentation warns against using SQLite on network filesystems because locking may be broken.",
+      "applicability": "Suitable candidate for local per-item resume journal only on local storage with documented durability settings; do not store active job DB on network share."
+    },
+    {
+      "id": "S20",
+      "title": "GStreamer Audio Channel Positions",
+      "url": "https://gstreamer.freedesktop.org/documentation/audio/gstaudiochannels.html",
+      "version_commit": "Live GStreamer API reference accessed 2026-10-12; channel API includes stable 1.x elements",
+      "locator": "Channel-mask conversion; channel-position rules; mono/position-less/two-channel no-mask conventions",
+      "accessed_utc": "2026-10-12T00:40:08Z",
+      "observed_operation": "Opened official audio channel API docs and reviewed channel-position semantics.",
+      "condition_default_exception": "A channel mask of zero means positions absent; two channels without a mask conventionally imply front-left/front-right in GStreamer audio caps, not speaker identity.",
+      "applicability": "Do not automatically call left/right channels interviewer/narrator. Preserve raw indices and distinguish technical positions from staff labels."
+    },
+    {
+      "id": "S21",
+      "title": "GStreamer Modules",
+      "url": "https://gstreamer.freedesktop.org/modules/",
+      "version_commit": "Official module index accessed 2026-10-12; stable modules listed as 1.28.8, development 1.29.2",
+      "locator": "Module table for core, gst-plugins-base, good, ugly, bad, gst-libav, and Cerbero",
+      "accessed_utc": "2026-10-12T00:42:52Z",
+      "observed_operation": "Opened official module index and reviewed current stable versions and module descriptions.",
+      "condition_default_exception": "GStreamer is divided into independently versioned modules; many users need core/base/good, while other plugin groups and gst-libav are separate.",
+      "applicability": "A GStreamer parser/preview capability report must identify each installed module/version, not merely the core runtime."
+    },
+    {
+      "id": "S22",
+      "title": "GStreamer Download and platform packaging page",
+      "url": "https://gstreamer.freedesktop.org/download/",
+      "version_commit": "Official download page accessed 2026-10-12; page listed 1.28.7 installers while module/release pages listed 1.28.8",
+      "locator": "Platform installers, toolchain compatibility, Linux/BSD package notes, distribution plugin omissions",
+      "accessed_utc": "2026-10-12T00:42:52Z",
+      "observed_operation": "Opened official download page and reviewed platform-specific bundle and distribution-package notes.",
+      "condition_default_exception": "The live page states distributions may split packages or omit bad/ugly/libav plugin modules; at access it still listed 1.28.7 installers, a lag behind the stable module index at 1.28.8.",
+      "applicability": "A bundle update can lag the framework's stable release; verify the exact platform package includes fixed module versions before relying on its capabilities."
+    }
+  ]
+}

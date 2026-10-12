@@ -1,0 +1,160 @@
+{
+  "run_id": "A-F02-A1_A8",
+  "stage": "investigator",
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "FFmpeg ffprobe manual (released source)",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n8.1.1/doc/ffprobe.texi",
+      "released_version_or_commit": "FFmpeg release tag n8.1.1 (tagged source; exact commit not captured)",
+      "locator": "Sections: General Options (-output_format/-of JSON); -show_streams; -show_format; -show_error; JSON writer; invalid/non-applicable fields may be omitted under auto writer policy.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Searched official FFmpeg manual; opened tagged source; read relevant option and writer sections.",
+      "governing_condition_default_exception": "Output format can be JSON; stream and container info are separate sections; error info appears when -show_error is requested; JSON may omit invalid/non-applicable values in auto policy.",
+      "applicability": "Candidate local metadata probe and machine-readable output. Field absence cannot establish source absence; pin build/config and validate relevant files."
+    },
+    {
+      "id": "SRC-02",
+      "title": "FFmpeg FATE ffprobe tests",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n8.1.1/tests/fate/ffprobe.mak",
+      "released_version_or_commit": "FFmpeg n8.1.1 tag",
+      "locator": "FFPROBE_COMMAND and FFPROBE_OUTPUT_MODES_TESTS; synthetic NUT fixture; writers include JSON; source lines 258-280.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened tagged test makefile and inspected fixture/targets.",
+      "governing_condition_default_exception": "Test exercises ffprobe output writers including json with streams, packets, format, and frames on generated test input; it is project regression coverage, not a guarantee for all formats or museum media.",
+      "applicability": "Evidence that JSON interface is tested; supports proposal to add local test corpus, not claim that tests were run here."
+    },
+    {
+      "id": "SRC-03",
+      "title": "FFmpeg libavformat format options",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n8.1.1/doc/formats.texi",
+      "released_version_or_commit": "FFmpeg n8.1.1 tag",
+      "locator": "Format Options: probesize (lines 799-807); analyzeduration (lines 899-904).",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened official tagged source and read option defaults/descriptions.",
+      "governing_condition_default_exception": "probesize is 5,000,000 bytes by default; analyzeduration is 5,000,000 microseconds (5 seconds) by default. Larger values can detect more dispersed information but increase latency.",
+      "applicability": "Duration/stream probe completeness and 500-file latency must be evaluated; avoid treating a bounded probe's omission as a negative fact."
+    },
+    {
+      "id": "SRC-04",
+      "title": "MediaInfo v26.10 release notes",
+      "url": "https://github.com/MediaArea/MediaInfo/releases/tag/v26.10",
+      "released_version_or_commit": "MediaInfo v26.10, release commit f057dd3",
+      "locator": "Release notes, especially Opus 5.0/center-channel ordering fix and MP3 headerless VBR detection after parsing.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened release tag and read release metadata and notes.",
+      "governing_condition_default_exception": "Release history records parser behavior fixes; a later release may change parsing, so record exact version and rerun representative samples after upgrades.",
+      "applicability": "Evidence for version pinning and channel/duration regression fixtures; not a support guarantee for any particular collection."
+    },
+    {
+      "id": "SRC-05",
+      "title": "MediaInfoLib audio stream field definitions",
+      "url": "https://github.com/MediaArea/MediaInfoLib/blob/v26.10/Source/Resource/Text/Stream/Audio.csv",
+      "released_version_or_commit": "MediaInfoLib v26.10 tag",
+      "locator": "Audio fields Channel(s), ChannelPositions, ChannelLayout, SamplingRate, SamplingCount, Source_SamplingCount.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened released tag source and inspected audio-field definitions.",
+      "governing_condition_default_exception": "Field definitions distinguish channel count, reported positions, layout, and sample counts; defined fields may be unavailable or inferred differently for a format.",
+      "applicability": "Useful normalization candidates. Preserve raw fields and do not infer speaker identity from count/layout."
+    },
+    {
+      "id": "SRC-06",
+      "title": "MediaInfo open duration discrepancy issue",
+      "url": "https://github.com/MediaArea/MediaInfo/issues/373",
+      "released_version_or_commit": "Issue #373, opened 2019-08-16; no release tag applies; observed Open at access.",
+      "locator": "Issue description includes QuickTime/MOV example and conflicting tkhd/mdhd duration fields.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened upstream issue; read current status and sample report.",
+      "governing_condition_default_exception": "The report describes inconsistent container and audio-track durations; user notes audio appears intact. Issue is an example, not proof all duration conflicts are parser bugs.",
+      "applicability": "Keep duration source and scope; if values conflict, surface both and request review rather than silently choosing."
+    },
+    {
+      "id": "SRC-07",
+      "title": "MediaInfo JSON cardinality issue and proposed fix",
+      "url": "https://github.com/MediaArea/MediaInfo/issues/1103",
+      "released_version_or_commit": "Issue #1103 and linked MediaInfoLib PR #2295 / commit d2d4c05; PR still Open and unmerged at access.",
+      "locator": "Issue description documents object for one CLI input vs array for 2+; PR conversation/commit proposes uniform array.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened issue and linked PR; read status, proposal, and commit reference.",
+      "governing_condition_default_exception": "The described difference occurs across invocation cardinality. A proposed change is not a released fix while its PR remains open.",
+      "applicability": "For integration, invoke one file at a time or normalize and schema-check JSON with the exact deployed version."
+    },
+    {
+      "id": "SRC-08",
+      "title": "Siegfried signature-based identification documentation and release",
+      "url": "https://github.com/richardlehane/siegfried/blob/v1.11.9/README.md",
+      "released_version_or_commit": "Siegfried v1.11.9, release commit 7fb430b",
+      "locator": "About/signature support; JSON/CSV/DROID outputs; Signature files (default latest PRONOM signatures, no buffer limits; potentially full-file scans); -update behavior.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened released README and release page; inspected supported signature families and default scanning behavior.",
+      "governing_condition_default_exception": "Signature matching uses an independently updated signature file; default may scan entire files. The exact signature-file database version is not identified by the README snapshot.",
+      "applicability": "Optional preservation-oriented identity layer; freeze binary plus signature file/version/hash. It does not establish readability, duration, or preview support."
+    },
+    {
+      "id": "SRC-09",
+      "title": "libsndfile 1.2.2 API and supported formats",
+      "url": "https://github.com/libsndfile/libsndfile/blob/1.2.2/docs/api.md",
+      "released_version_or_commit": "libsndfile 1.2.2 tag",
+      "locator": "File Open Function / SF_INFO fields; read-only SFM_READ; RAW exception requiring caller-supplied samplerate, channels, and format; formats list.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened tagged API docs and supported-format documentation.",
+      "governing_condition_default_exception": "SF_INFO exposes frames, samplerate, channels, format; on read, fields are filled by library except RAW which requires caller parameters. Supported format/encoding combinations are finite.",
+      "applicability": "A viable narrow audio-focused option for known formats; not sufficient as the sole unknown-codec intake gate. Never supply guessed RAW values."
+    },
+    {
+      "id": "SRC-10",
+      "title": "W3C Web Content Accessibility Guidelines 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "released_version_or_commit": "W3C Recommendation WCAG 2.2, 2023-10-05",
+      "locator": "Success Criteria 2.1.1 Keyboard; 2.1.2 No Keyboard Trap; 2.4.7 Focus Visible; 4.1.2 Name, Role, Value; 4.1.3 Status Messages.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:42:08Z (first read through the later exact-criterion lookup; individual web-call timestamps unavailable)",
+      "observed_operation": "Opened W3C Recommendation and its understanding page for status messages; read criterion text.",
+      "governing_condition_default_exception": "Keyboard success criterion requires all functionality by keyboard; status messages in markup must be programmatically determinable without focus; criterion levels vary (2.1.1 A, 4.1.3 AA).",
+      "applicability": "Use for web UI; if target is native desktop, map to native accessibility APIs and test equivalent behaviors rather than claim WCAG markup conformance."
+    },
+    {
+      "id": "SRC-11",
+      "title": "BagIt File Packaging Format v1.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "released_version_or_commit": "RFC 8493, BagIt v1.0, published October 2018 (Informational RFC).",
+      "locator": "Sections 1.1, 2.1.2-2.1.3, 3, and 5.1.",
+      "accessed_utc": "2026-10-12T00:31:25Z/2026-10-12T00:33:33Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Opened RFC Editor text and read structure, payload manifest, validation, and path-safety provisions.",
+      "governing_condition_default_exception": "Bag is a directory containing tags plus data/; payload is opaque bytes; manifests list every payload file and checksum. A checksum must be validated before declaring a bag valid. RFC warns path inputs must not escape the bag.",
+      "applicability": "Candidate portable handoff package; still needs catalog owner acceptance and safe path validation. It does not define transcript or rights semantics."
+    },
+    {
+      "id": "SRC-12",
+      "title": "W3C Web Audio API 1.1",
+      "url": "https://www.w3.org/TR/webaudio/",
+      "released_version_or_commit": "Web Audio API 1.1 W3C technical report; current report page accessed 2026-10-12, no repository commit.",
+      "locator": "MediaElementAudioSourceNode; ChannelSplitterNode overview and Section 1.15 interface (including active outputs per input channel).",
+      "accessed_utc": "2026-10-12T00:33:33Z/2026-10-12T00:37:22Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Searched W3C technical report; opened and read channel routing sections.",
+      "governing_condition_default_exception": "A ChannelSplitterNode provides outputs for the input stream's individual channels, e.g. two active outputs for stereo. It operates on an audio stream supplied to the graph and does not itself guarantee that the browser can decode every source format.",
+      "applicability": "If the UI is web-based, channel audition can be routed live without writing a converted media file when the browser decodes the original. This does not solve unsupported-codec preview; other UI targets need equivalent backend research."
+    },
+    {
+      "id": "SRC-13",
+      "title": "W3C WebVTT 1 timed text specification",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "released_version_or_commit": "WebVTT 1 W3C technical report; current report page accessed 2026-10-12, no repository commit.",
+      "locator": "Cue timing syntax and rule that cue timestamps are interpreted relative to current playback position; lines 888-905.",
+      "accessed_utc": "2026-10-12T00:33:33Z/2026-10-12T00:37:22Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Searched W3C report; opened and read cue time and synchronization provisions.",
+      "governing_condition_default_exception": "A timed cue has a start and end timestamp relative to the media playback timeline. Plain transcript text without cue times has no such synchronization data.",
+      "applicability": "Preserve supplied timing if present in a supported format; do not infer timings or require synchronized transcript preview absent an owner requirement."
+    },
+    {
+      "id": "SRC-14",
+      "title": "SQLite transaction control documentation",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "released_version_or_commit": "Current SQLite transaction documentation accessed 2026-10-12; living documentation, no release/commit pinned.",
+      "locator": "Transactions; explicit BEGIN/COMMIT/ROLLBACK; single simultaneous writer; SQLITE_BUSY conditions.",
+      "accessed_utc": "2026-10-12T00:33:33Z/2026-10-12T00:37:22Z (web-call interval; individual call timestamps unavailable)",
+      "observed_operation": "Searched and opened official SQLite documentation; read transaction behavior and busy conditions.",
+      "governing_condition_default_exception": "A BEGIN...COMMIT transaction groups database changes; SQLite allows only one simultaneous write transaction and COMMIT/BEGIN IMMEDIATE can report SQLITE_BUSY. The transaction does not include copied media or an external catalog.",
+      "applicability": "Candidate local per-item checkpoint store; recovery must also reconcile the copied file and any later catalog import by hash/idempotency key."
+    }
+  ]
+}

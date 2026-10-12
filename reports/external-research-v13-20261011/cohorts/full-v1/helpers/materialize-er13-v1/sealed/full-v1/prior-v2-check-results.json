@@ -1,0 +1,969 @@
+{
+  "checked_at_utc": "2026-10-10T05:57:51.089468+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "R0 new 60-minute config outside run",
+      "passed": true
+    },
+    {
+      "check": "R0 30/12/18 and original priority guard",
+      "passed": true
+    },
+    {
+      "check": "R0 no store dependence",
+      "passed": true
+    },
+    {
+      "check": "R0 missing live Standard option blocks before prepare",
+      "passed": true
+    },
+    {
+      "check": "R0 bootstrap dry stops before actual dispatch",
+      "passed": true
+    },
+    {
+      "check": "R0 actual prepared target Standard",
+      "passed": true
+    },
+    {
+      "check": "R0 exact leaf objective",
+      "passed": true
+    },
+    {
+      "check": "R0 reveal helper closed and unexecuted",
+      "passed": true
+    },
+    {
+      "check": "R0 no fake task/native receipts",
+      "passed": true
+    },
+    {
+      "check": "R0 exact binding guard prepared before offline stop",
+      "passed": true
+    },
+    {
+      "check": "R0 all transform markers and exact frozen assignment hash",
+      "passed": true
+    },
+    {
+      "check": "R0 full source binding present",
+      "passed": true
+    },
+    {
+      "check": "R0 full source additions reject retry",
+      "passed": true
+    },
+    {
+      "check": "R0 carried source changed bytes reject retry",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "R0 stable retry request key",
+      "passed": true
+    },
+    {
+      "check": "R0 premature critic missing exact taskID rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "R0 public-to-relocated explicit provenance",
+      "passed": true
+    },
+    {
+      "check": "R0 all actual composite pins/paths/bytes",
+      "passed": true
+    },
+    {
+      "check": "R0 private guard matches selected components",
+      "passed": true
+    },
+    {
+      "check": "R0 final relocation provenance is actual bytes",
+      "passed": true
+    },
+    {
+      "check": "R0 no historical replay/science qualification",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator full original obligations",
+      "passed": true
+    },
+    {
+      "check": "R0 critic complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "R0 critic full original obligations",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser full original obligations",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator no A8 delta",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "R0 investigator expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "R0 critic unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "R0 critic unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "R0 critic immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "R0 critic common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "R0 critic no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "R0 critic saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "R0 critic exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "R0 critic used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "R0 critic expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "R0 reviser expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "R0 synthetic exact guard explicitly lacks provenance",
+      "passed": true
+    },
+    {
+      "check": "R0 exact guard rejects objective",
+      "passed": true
+    },
+    {
+      "check": "R0 exact guard rejects status",
+      "passed": true
+    },
+    {
+      "check": "R0 exact guard rejects partial",
+      "passed": true
+    },
+    {
+      "check": "R0 exact guard rejects duplicate",
+      "passed": true
+    },
+    {
+      "check": "R0 unsafe runtime root rejected",
+      "passed": true
+    },
+    {
+      "check": "R0 expired clocks rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1 new 60-minute config outside run",
+      "passed": true
+    },
+    {
+      "check": "A1 30/12/18 and original priority guard",
+      "passed": true
+    },
+    {
+      "check": "A1 no store dependence",
+      "passed": true
+    },
+    {
+      "check": "A1 missing live Standard option blocks before prepare",
+      "passed": true
+    },
+    {
+      "check": "A1 bootstrap dry stops before actual dispatch",
+      "passed": true
+    },
+    {
+      "check": "A1 actual prepared target Standard",
+      "passed": true
+    },
+    {
+      "check": "A1 exact leaf objective",
+      "passed": true
+    },
+    {
+      "check": "A1 reveal helper closed and unexecuted",
+      "passed": true
+    },
+    {
+      "check": "A1 no fake task/native receipts",
+      "passed": true
+    },
+    {
+      "check": "A1 exact binding guard prepared before offline stop",
+      "passed": true
+    },
+    {
+      "check": "A1 all transform markers and exact frozen assignment hash",
+      "passed": true
+    },
+    {
+      "check": "A1 full source binding present",
+      "passed": true
+    },
+    {
+      "check": "A1 full source additions reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1 carried source changed bytes reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1 stable retry request key",
+      "passed": true
+    },
+    {
+      "check": "A1 premature critic missing exact taskID rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1 public-to-relocated explicit provenance",
+      "passed": true
+    },
+    {
+      "check": "A1 all actual composite pins/paths/bytes",
+      "passed": true
+    },
+    {
+      "check": "A1 private guard matches selected components",
+      "passed": true
+    },
+    {
+      "check": "A1 final relocation provenance is actual bytes",
+      "passed": true
+    },
+    {
+      "check": "A1 no historical replay/science qualification",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1 critic complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1 critic full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator no A8 delta",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1 investigator expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1 critic unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1 critic unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1 critic immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1 critic common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1 critic no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1 critic saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1 critic exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1 critic used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1 critic expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1 reviser expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1 synthetic exact guard explicitly lacks provenance",
+      "passed": true
+    },
+    {
+      "check": "A1 exact guard rejects objective",
+      "passed": true
+    },
+    {
+      "check": "A1 exact guard rejects status",
+      "passed": true
+    },
+    {
+      "check": "A1 exact guard rejects partial",
+      "passed": true
+    },
+    {
+      "check": "A1 exact guard rejects duplicate",
+      "passed": true
+    },
+    {
+      "check": "A1 unsafe runtime root rejected",
+      "passed": true
+    },
+    {
+      "check": "A1 expired clocks rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 new 60-minute config outside run",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 30/12/18 and original priority guard",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 no store dependence",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 missing live Standard option blocks before prepare",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 bootstrap dry stops before actual dispatch",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 actual prepared target Standard",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact leaf objective",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reveal helper closed and unexecuted",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 no fake task/native receipts",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact binding guard prepared before offline stop",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 all transform markers and exact frozen assignment hash",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 full source binding present",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 full source additions reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 carried source changed bytes reject retry",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 repinned frozen input",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 stable retry request key",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 premature critic missing exact taskID rejected",
+      "passed": true
+    },
+    {
+      "check": "CLI accept",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 public-to-relocated explicit provenance",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 all actual composite pins/paths/bytes",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 private guard matches selected components",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 final relocation provenance is actual bytes",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 no historical replay/science qualification",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser complete prompt plus only exact delta",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser full original obligations",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator no A8 delta",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 investigator expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 critic expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser unchanged timing contract",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser unused std/clarify/exact preparation",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser immutable objective/deadline/key",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser common Standard request and pre-input guard",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser no actual lifecycle/reveal artifacts",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser saved retry preserves exact guarded request",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser exact overlay retry idempotent",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser used-stage overlay rejected",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 reviser expired retry cannot reset clocks",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 synthetic exact guard explicitly lacks provenance",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact guard rejects objective",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact guard rejects status",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact guard rejects partial",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 exact guard rejects duplicate",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 unsafe runtime root rejected",
+      "passed": true
+    },
+    {
+      "check": "A1+A8 expired clocks rejected",
+      "passed": true
+    },
+    {
+      "check": "public exact A8 critic bytes equal original frozen source",
+      "passed": true
+    },
+    {
+      "check": "public exact A8 reviser bytes equal original frozen source",
+      "passed": true
+    },
+    {
+      "check": "source lineage binds every actual public dependency",
+      "passed": true
+    },
+    {
+      "check": "public sources free of actual machine paths/email/UUID routes",
+      "passed": true
+    },
+    {
+      "check": "portable public closure materializes independently",
+      "passed": true
+    },
+    {
+      "check": "portable materialized final hash closure verifies",
+      "passed": true
+    },
+    {
+      "check": "portable composite guard points only to new resulting copies",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "unlisted public dependency rejected before output",
+      "passed": true
+    },
+    {
+      "check": "tampered exact delta pin rejected before output",
+      "passed": true
+    },
+    {
+      "check": "reject new config --whole-budget-s 7200",
+      "passed": true
+    },
+    {
+      "check": "reject new config --stage-budgets-s 1800,721,1080",
+      "passed": true
+    },
+    {
+      "check": "reject new config --whole-deadline-utc 2000-01-01T00:00:00Z",
+      "passed": true
+    },
+    {
+      "check": "reject new config --whole-deadline-utc 2030-01-01T00:00:00Z",
+      "passed": true
+    },
+    {
+      "check": "reject new config --whole-deadline-utc 2030-01-01T00:00:00",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    },
+    {
+      "check": "CLI reject",
+      "passed": true
+    }
+  ],
+  "mode": "OFFLINE_LOCAL_MECHANICAL_ONLY",
+  "provider_calls": 0,
+  "candidate_launches": 0,
+  "reveal_executions": 0,
+  "live_catalog_observed": false,
+  "leaf_native_goals_observed": false,
+  "production_qualified": false,
+  "native_response_provenance_independently_proved": false,
+  "freshness_proved": false,
+  "lifecycle_proved": false,
+  "science_qualified": false,
+  "original_53_mechanical_assertions_preserved": true,
+  "scratch_removed": true,
+  "public_privacy_scan_passed": true,
+  "original_files_checked_unchanged": 29,
+  "public_dependency_files": 14,
+  "root_publication_pending": true,
+  "delegations_performed": 0,
+  "actual_leaf_goals_created": 0
+}

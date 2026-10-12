@@ -1,0 +1,322 @@
+{
+  "stage": "investigator",
+  "run_id": "B02-P01-control",
+  "observed_at_utc": "2026-10-12T00:43:33Z",
+  "source_id_policy": "Stable IDs; entries are primary sources or first-party repository artifacts. No raw captures saved.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "WAI-ARIA APG Combobox Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+      "version_commit": "Living WAI-ARIA APG guidance; no page release/version stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "About this pattern; autocomplete behaviors; Keyboard Interaction.",
+      "observed_operation": "Opened the primary W3C pattern page; compared manual-selection, automatic-selection, and Escape/arrow behavior.",
+      "governing_condition_default_exception": "Popup is collapsed by default; editable combobox offers manual or automatic list selection; Escape dismisses a visible popup; popup descendants are outside the page Tab sequence.",
+      "applicability": "Web widget interaction reference only. Helps compare a filter input plus popup, but does not require ARIA in a native desktop app or guarantee AT behavior.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "APG About/Autocomplete lines 23-41; keyboard interaction lines 51-97",
+        "operation": "Opened W3C page; reviewed editable/manual-selection behavior, Escape, arrow keys, and focus model.",
+        "condition": "Web combobox popup patterns only; manual selection leaves typed text as the value until option selection; Escape dismisses."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "WAI-ARIA APG Modal Dialog Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "version_commit": "Living WAI-ARIA APG guidance; no page release/version stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Keyboard Interaction; focus placement/return notes; WAI-ARIA Roles, States, and Properties.",
+      "observed_operation": "Opened the primary W3C dialog pattern; inspected initial focus, Tab containment, Escape, invoker focus return, and aria-modal conditions.",
+      "governing_condition_default_exception": "Focus enters dialog on open, remains in a modal sequence, Escape closes, and returns to invoker unless removed/workflow warrants another destination. Modal semantics require outside interaction to be blocked for all users.",
+      "applicability": "Supports dismissal and focus-restoration requirements. Editor caret/selection restoration is an additional native-editor state concern.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "About lines 21-24; Keyboard Interaction lines 32-55; modal truthfulness lines 68-70",
+        "operation": "Opened W3C page; checked focus entry/containment, Escape, return, and requirement that modal content block outside interaction.",
+        "condition": "Modal dialog contains its Tab sequence and outside content is inert; return to logical destination if invoker no longer exists."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "WAI-ARIA APG Listbox Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/",
+      "version_commit": "Living WAI-ARIA APG guidance; no page release/version stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "About; Keyboard Interaction; roles/states/properties and notes.",
+      "observed_operation": "Opened the primary W3C pattern; reviewed selection/focus distinction, arrow navigation, option naming, and nested-control limitations.",
+      "governing_condition_default_exception": "Single-select listbox focus may optionally follow selection; long option names are spoken as a unit; listbox interaction does not operate nested buttons/links.",
+      "applicability": "Use to evaluate concise single-action rows and separate focus from invocation; do not pack nested actions into a listbox option.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "About This Pattern lines 21-25",
+        "operation": "Opened W3C page; verified flat option naming and nested-control limitation.",
+        "condition": "Listbox presents options; option names are flat strings and listbox interaction does not operate nested buttons/links."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "WCAG 2.2 Understanding Success Criterion 4.1.3 Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_commit": "WCAG 2.2 supporting Understanding document; living page, no separate page version stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "In Brief; Success Criterion; Intent.",
+      "observed_operation": "Opened W3C guidance and reviewed non-focus status communication and avoiding unnecessary interruption.",
+      "governing_condition_default_exception": "Status changes that do not receive focus should be programmatically determinable for AT; intent includes informing without unnecessarily interrupting.",
+      "applicability": "Supports concise polite result/status announcements. It does not set an exact debounce interval or guarantee a particular screen-reader utterance.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "SC/Intent lines 29-46; chattiness note lines 99-103",
+        "operation": "Opened correct WAI URL and reviewed non-focus status communication, scope, and interruption guidance.",
+        "condition": "Understanding page explains web markup scope, while also discussing API-exposed status messages; examples include results/no-results; no delay is specified."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Microsoft Accessibility Best Practices",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winauto/accessibility-best-practices",
+      "version_commit": "Microsoft Learn living documentation; no toolkit release stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Programmatic Access; Keyboard Navigation; Multi-modal Interface.",
+      "observed_operation": "Opened Windows guidance on accessible names/properties/events, keyboard focus, and color alternatives.",
+      "governing_condition_default_exception": "All UI elements need accessible labels, property values, and appropriate events; visible keyboard focus is needed; color should not convey information alone.",
+      "applicability": "Windows/UI Automation requirements inform platform checks. This is not evidence about Linux or a guarantee of usable screen-reader interaction.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Keyboard focus lines 106-123; color alternatives lines 136-142",
+        "operation": "Opened Microsoft Learn page and checked focus visibility and alternatives to color.",
+        "condition": "Windows accessibility guidance; visible focus and non-color alternatives are recommended."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Microsoft UI Automation Control Types Overview",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-controltypesoverview",
+      "version_commit": "Microsoft Learn living documentation; page states last updated 2025-07-14.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "UI Automation Control Type Requisites; LocalizedControlType Property.",
+      "observed_operation": "Opened the primary UIA control-type overview; reviewed required control patterns, properties, events, and tree structure.",
+      "governing_condition_default_exception": "A predefined control type has required properties/patterns/events/tree conditions; use custom control type and concise localized type when those conditions are not met.",
+      "applicability": "Supports testing actual exposed Windows semantics rather than choosing a role by appearance. It does not choose combobox vs dialog for this product.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "UI Automation Control Type Requisites lines 38-40",
+        "operation": "Opened Microsoft Learn page; checked that assigned control types carry required conditions.",
+        "condition": "Provider must meet the conditions associated with the chosen UIA control type."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "GNOME AT-SPI Accessibility Architecture",
+      "url": "https://gnome.pages.gitlab.gnome.org/at-spi2-core/devel-docs/architecture.html",
+      "version_commit": "AT-SPI2 docs; related libatspi API page identifies library 2.62.0.1, API 2.0.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Screen readers and other Assistive Technologies; Toolkit integration.",
+      "observed_operation": "Opened GNOME's primary accessibility-stack guide; traced toolkit exposure through AT-SPI/DBus to Orca and other ATs.",
+      "governing_condition_default_exception": "Toolkits translate controls into AT-SPI concepts; Orca consumes accessible names/actions and navigates focus; modern toolkits may connect directly rather than through ATK.",
+      "applicability": "Justifies a separate Linux AT-SPI/Orca check; the stack is distinct from Windows UIA and behavior must be tested end to end.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "AT-SPI/Orca architecture lines 33-45",
+        "operation": "Opened GNOME architecture guide; traced toolkit information through accessibility stack to Orca.",
+        "condition": "GNOME/Linux stack description; separate from Windows UIA."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "VS Code 1.137.0 command palette provider",
+      "url": "https://github.com/microsoft/vscode/blob/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts",
+      "version_commit": "VS Code 1.137.0 release snapshot; commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c (release tag points to 645f29c).",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Lines 933-1008, 1050-1087, 1225-1329.",
+      "observed_operation": "Read provider setup, the one-time extension registration race, global command construction, action filtering, and palette keybindings.",
+      "governing_condition_default_exception": "Waits for extension registration or 800 ms once; obtains editor/global picks; global actions are filtered to enabled MenuItemAction entries; category prefixes label; Show All Commands uses Ctrl/Cmd+Shift+P except Firefox and F1 secondary.",
+      "applicability": "Comparative implementation only. Enabled-only filtering cannot explain relevant unavailable actions; no explicit live add/remove subscription was found in this provider, which does not prove behavior of lower layers.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Pinned source lines 1006 and 1230-1250",
+        "operation": "Opened source at commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c; checked one-time extension registration wait and global action filtering/category labels.",
+        "condition": "The shown provider races extension registration against 800 ms once and keeps enabled MenuItemAction entries."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "VS Code 1.137.0 command quick-input model and search",
+      "url": "https://github.com/microsoft/vscode/blob/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/platform/quickinput/browser/commandsQuickAccess.ts",
+      "version_commit": "VS Code 1.137.0 release snapshot; commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Lines 1260-1438, 1440-1529, 1628-1744.",
+      "observed_operation": "Read command pick data fields, match/rank/disambiguate flow, keybinding accessibility label, and accept handler.",
+      "governing_condition_default_exception": "Matches label/alias by contiguous substring or word matcher; exact ID match; for query length >=3, TF-IDF fallback threshold 0.5 and max five; duplicate labels expose command IDs; MRU then name sort; execution is in accept callback.",
+      "applicability": "Useful code and trade-off evidence for search and stable IDs. IDs are not human-readable scope; this implementation is not a typo-tolerance guarantee.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Pinned source lines 1384-1415, 1419-1436, 1640-1715",
+        "operation": "Opened pinned quick-input model; checked ID and TF-IDF fallback, duplicate-label IDs, keybinding ARIA label, and accept handler.",
+        "condition": "TF-IDF runs for unmatched filter length at least three; accepted command is executed in accept callback; not proof about target AT."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "VS Code 1.137.0 quick-access tests",
+      "url": "https://github.com/microsoft/vscode/blob/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/test/browser/quickAccess.test.ts",
+      "version_commit": "VS Code 1.137.0 release snapshot; commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Provider registry and when-condition tests; provider cancellation tests; PickerEditorState test at lines 1948-2019.",
+      "observed_operation": "Read tests for context-gated quick-access providers, cancellation/disposal on provider changes, and restoring active editor/selection after transient editors.",
+      "governing_condition_default_exception": "Provider visibility follows when context; replacing active provider cancels/disposes prior provider; editor restoration test verifies active resource/order and editor selection.",
+      "applicability": "A test pattern for keyboard/controller state. It does not test command palette AT behavior, live extension command additions/removals, or scroll restoration.",
+      "critic_check": {
+        "status": "carried_forward_only",
+        "locator": "Investigator source-map locator retained.",
+        "operation": "Read the carried evidence description; did not independently reopen this test file in critic.",
+        "condition": "No new critic claim relies on the test as target or AT evidence."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "VS Code issue #268450: command missing from palette",
+      "url": "https://github.com/microsoft/vscode/issues/268450",
+      "version_commit": "Issue opened 2025-09-26 against VS Code 1.104.2.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Issue summary and referenced precondition in chatSetup.ts.",
+      "observed_operation": "Read user report that a discoverability command was absent because setup-state preconditions excluded the already-installed case.",
+      "governing_condition_default_exception": "Command had a restrictive precondition based on setup state; issue was fixed by widening that condition.",
+      "applicability": "Concrete history for hidden conditional commands; supports explicit visibility policy and regression test.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Issue code excerpt around precondition lines 185-201",
+        "operation": "Opened issue page and checked the restrictive command precondition excerpt.",
+        "condition": "The displayed condition requires setup neither hidden nor installed."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "VS Code PR #268462",
+      "url": "https://github.com/microsoft/vscode/pull/268462",
+      "version_commit": "Merged into VS Code main on 2025-10-22; merge commit 0734942.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "PR overview, merge record, issue linkage.",
+      "observed_operation": "Read PR description and merge status; it removes a restrictive precondition to show Learn How to Hide AI Features in more situations.",
+      "governing_condition_default_exception": "Changes visibility predicate to only require that chat setup is not already hidden.",
+      "applicability": "Issue-to-fix evidence that visibility gating can remove useful command discovery.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "PR merge record lines 131-154; overview lines 202-207",
+        "operation": "Opened PR; verified merge date and summary of removing installed-state predicate.",
+        "condition": "Merged 2025-10-22; change makes action available in more situations."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Visual Studio Code 1.106 release notes",
+      "url": "https://code.visualstudio.com/updates/v1_106",
+      "version_commit": "VS Code 1.106 (October 2025 release notes), released 2025-11-12.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Pull Requests contribution list includes PR #268462.",
+      "observed_operation": "Read release notes to verify that the merged conditional-visibility change was recorded in a release.",
+      "governing_condition_default_exception": "The change is listed as a 1.106 contribution; no claim that release notes describe all user-impact detail.",
+      "applicability": "Closes issue-to-fix-to-release trace for a comparable palette visibility bug.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Release contribution list around line 761",
+        "operation": "Opened VS Code 1.106 release notes and verified PR #268462 listing.",
+        "condition": "Release entry verifies inclusion, not all user impact."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Obsidian API command definitions",
+      "url": "https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts",
+      "version_commit": "Current master branch; package version 1.13.2 per S15; exact Git commit UNKNOWN in this capture.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Command interface and Plugin.addCommand/removeCommand declarations.",
+      "observed_operation": "Read command ID/name, checkCallback, editor-specific callback, registration and removal API comments.",
+      "governing_condition_default_exception": "False/undefined from checkCallback hides a command from the palette; editorCallback is scoped to an active editor and supplies editor/view.",
+      "applicability": "Writing-oriented plugin API comparison. It models hidden unavailable commands but no displayed reason and is a floating branch.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Raw d.ts lines 2804-2853 and 6914-6937",
+        "operation": "Opened raw Obsidian API type file; checked hidden-on-false/undefined checkCallback, editorCallback, registration and removal declarations.",
+        "condition": "Floating master branch; exact Git commit remains unknown in the carried source record; comparator only, no target inference."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "Obsidian API package metadata",
+      "url": "https://github.com/obsidianmd/obsidian-api/blob/master/package.json",
+      "version_commit": "Package obsidian version 1.13.2; current master branch; exact Git commit UNKNOWN in this capture.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Top-level package version and types fields.",
+      "observed_operation": "Read package metadata to identify the API type-definition release associated with S14.",
+      "governing_condition_default_exception": "API types package version 1.13.2 points to obsidian.d.ts; no app runtime version is asserted.",
+      "applicability": "Version identity for the comparison API only; not the version of the target editor.",
+      "critic_check": {
+        "status": "carried_forward_only",
+        "locator": "Investigator source-map locator retained.",
+        "operation": "Read carried package-version observation; did not reopen package metadata in critic.",
+        "condition": "No critic claim depends on an independently checked package version."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Fuse.js fuzzy-search guide",
+      "url": "https://www.fusejs.io/fuzzy-search.html",
+      "version_commit": "Current documentation; no release/version stated.",
+      "access_utc": "2026-10-12T00:42:43Z",
+      "locator": "Bitap description; threshold/location/distance defaults and example.",
+      "observed_operation": "Read primary library documentation for approximate search and threshold/location tuning.",
+      "governing_condition_default_exception": "Default threshold 0.6, location 0, distance 100; effective default window approx. 60 characters from location; ignoreLocation disables location scoring.",
+      "applicability": "Search-alternative evidence only; default configuration should not be adopted without testing short command labels and long descriptions.",
+      "critic_check": {
+        "status": "independently_reopened",
+        "locator": "Fuzzy Search sections lines 41-97 and 119-140",
+        "operation": "Opened Fuse.js guide; checked Bitap, threshold/location/distance defaults, effective location window, and diacritic option.",
+        "condition": "Current guide shows 0.6/0/100 defaults and a roughly 60-character default window; tune on actual command data."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "VS Code User Interface and Command Palette docs",
+      "url": "https://code.visualstudio.com/docs/editing/getting-started/userinterface",
+      "version_commit": "Current product documentation; no specific release/version stated.",
+      "access_utc": "2026-10-12T00:43:03Z",
+      "locator": "Command Palette section.",
+      "observed_operation": "Opened the page and reviewed palette description and Windows/Linux Ctrl+Shift+P shortcut.",
+      "governing_condition_default_exception": "Shortcut opens a searchable command palette; docs describe it as keyboard access to broad functionality. This is a product-specific default.",
+      "applicability": "Interaction precedent for a command chooser, not an obligation to copy the shortcut or interaction.",
+      "critic_check": {
+        "status": "carried_forward_only",
+        "locator": "Investigator source-map locator retained.",
+        "operation": "Read carried product-doc observation; did not independently reopen in critic.",
+        "condition": "Shortcut remains a comparative precedent only; draft does not choose it for target."
+      }
+    },
+    {
+      "id": "S18",
+      "title": "VS Code Accessibility documentation",
+      "url": "https://code.visualstudio.com/docs/configure/accessibility/accessibility",
+      "version_commit": "Current product documentation; no specific release/version stated.",
+      "access_utc": "2026-10-12T00:43:33Z",
+      "locator": "Keyboard navigation; Screen readers; input/results navigation.",
+      "observed_operation": "Opened the accessibility page and reviewed keybinding guidance and stated tested AT list.",
+      "governing_condition_default_exception": "Lists NVDA/JAWS on Windows and Orca on Linux among tested readers; describes keyboard command palette, keybinding display, input/result navigation and accessible help. It does not promise universal cross-product behavior.",
+      "applicability": "A concrete Windows/Linux test-matrix precedent. The target must run its own checks.",
+      "critic_check": {
+        "status": "carried_forward_only",
+        "locator": "Investigator source-map locator retained.",
+        "operation": "Read carried accessibility-doc observation; did not independently reopen in critic.",
+        "condition": "No universal target guarantee is inferred; actual target readers still require testing."
+      }
+    }
+  ],
+  "critic_stage": {
+    "run_id": "B02-P01-control",
+    "stage": "critic",
+    "critic_access_window_utc": "2026-10-12T00:56:22Z/2026-10-12T00:58:20Z",
+    "source_ids_preserved": true,
+    "method": "Primary references were opened directly for the IDs marked independently_reopened. Other IDs and their original identity records are carried forward with their original IDs and URLs, clearly marked as not independently reopened. No raw page capture was saved.",
+    "sources_index": "sources/index.md"
+  }
+}

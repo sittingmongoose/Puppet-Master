@@ -1,0 +1,593 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B09-P02-control",
+  "stage": "reviser",
+  "source_ids_are_immutable": true,
+  "source_id_policy": "S00-S16 investigator records and C01-C09 critic records are carried from their original maps without rebinding. R01-R08 are separate reviser observations. Historical S12 is preserved as written; R07 supplies the later/current correction.",
+  "carried_source_maps": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/source-map.json",
+      "role": "investigator source map",
+      "sha256": "7bfd2a164e09207cf441b8ae8fdd1e7018a1104956ebb8e46bd441637aff5fe3",
+      "sources": [
+        {
+          "id": "S00",
+          "title": "Admitted brief: Background extension task admission and fairness",
+          "kind": "local_input",
+          "url": null,
+          "local_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/inputs/brief.md",
+          "released_version_or_commit": "N/A — task brief input",
+          "locator": "whole file",
+          "access_utc": "2026-10-12T00:38:30Z",
+          "observed_operation": "Read the exact brief directly before external source discovery.",
+          "governing_condition_default_exception": "Defines Windows/Linux desktop extension tasks, queue/fairness/resource/cancellation/progress/restart requirements, negative constraints and proposal-only scope.",
+          "applicability": "Direct governing input for this investigation.",
+          "sha256": "24de7b9093dfa2d349000db9d6c39880adfe588dbb5a7644cb92a3e849b19934"
+        },
+        {
+          "id": "S01",
+          "title": "Job Objects — Win32 apps | Microsoft Learn",
+          "kind": "primary_platform_documentation",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+          "released_version_or_commit": "Windows desktop API reference; page last updated 2025-07-14; live documentation accessed 2026-10-12",
+          "locator": "Creating Jobs; Managing Processes in Jobs; Job Limits and Notifications; Managing Job Objects; Managing a Process Tree that Uses Job Objects",
+          "access_utc": "2026-10-12T00:39:45Z",
+          "observed_operation": "Opened Microsoft Learn page and located process association/inheritance, termination and close semantics.",
+          "governing_condition_default_exception": "CreateJobObject creates empty job; AssignProcessToJobObject attaches process and association cannot be broken. CreateProcess children normally inherit job, but Win32_Process.Create children do not; breakaway flags alter inheritance. TerminateJobObject affects associated members. Last handle close kills members only with KILL_ON_JOB_CLOSE. Nested jobs supported starting Windows 8; older Windows versions support one job only.",
+          "applicability": "Candidate Windows per-task process-tree boundary; test assignment and host-in-job cases; not a complete security sandbox."
+        },
+        {
+          "id": "S02",
+          "title": "JOBOBJECT_BASIC_LIMIT_INFORMATION — Win32 apps | Microsoft Learn",
+          "kind": "primary_platform_documentation",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+          "released_version_or_commit": "Windows desktop API reference; live page accessed 2026-10-12",
+          "locator": "LimitFlags table: JOB_OBJECT_LIMIT_JOB_MEMORY, JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE, JOB_OBJECT_LIMIT_PROCESS_MEMORY",
+          "access_utc": "2026-10-12T00:39:45Z",
+          "observed_operation": "Opened current structure reference and inspected exact limit semantics.",
+          "governing_condition_default_exception": "JOB_OBJECT_LIMIT_JOB_MEMORY caps job-wide sum of committed memory and blocks commits beyond limit; it is not a host-wide memory cap. KILL_ON_JOB_CLOSE terminates members when last handle closes. PROCESS_MEMORY is per process, with most restrictive nested limit.",
+          "applicability": "Supports per-task resource/cancellation design and metric choice on Windows; validate runtime semantics in the target app."
+        },
+        {
+          "id": "S03",
+          "title": "Control Group v2 — The Linux Kernel documentation",
+          "kind": "primary_platform_documentation",
+          "url": "https://docs.kernel.org/6.14/admin-guide/cgroup-v2.html",
+          "released_version_or_commit": "Linux kernel documentation snapshot 6.14",
+          "locator": "Memory controller, memory.current, memory.peak, memory.high, memory.max, memory.events and Delegation sections",
+          "access_utc": "2026-10-12T00:39:45Z",
+          "observed_operation": "Opened version-pinned kernel documentation and inspected memory accounting, limit, peak and delegation text.",
+          "governing_condition_default_exception": "memory.current counts cgroup and descendants, memory.peak tracks maximum since cgroup creation/reset; memory.high throttles/reclaims but may be breached and does not invoke OOM killer; memory.max is hard but may be exceeded temporarily and can invoke OOM kill inside the cgroup. Delegation requires permission and only distributes resources the parent made available; controllers are hierarchical.",
+          "applicability": "Candidate Linux per-task accounting/containment only if cgroup v2 memory controller is enabled and a writable delegated subtree exists."
+        },
+        {
+          "id": "S04",
+          "title": "Control Group APIs and Delegation — systemd.io",
+          "kind": "primary_platform_documentation",
+          "url": "https://systemd.io/CGROUP_DELEGATION/",
+          "released_version_or_commit": "Live systemd documentation; includes v256/v258 hierarchy history; accessed 2026-10-12",
+          "locator": "Single-writer rule; hierarchy support; Delegation; controller enablement",
+          "access_utc": "2026-10-12T00:40:00Z",
+          "observed_operation": "Read systemd guidance on ownership/delegation and version-specific hierarchy transitions.",
+          "governing_condition_default_exception": "cgroup v2 is governed by a single-writer rule; direct management outside the delegated subtree is not allowed. Delegate is available to services/scopes, but setting it makes requested controllers available without enabling them; enable memory in the delegated subtree. systemd documentation says legacy/hybrid hierarchies deprecated in v256 and removed in v258.",
+          "applicability": "Explains why Linux support must detect actual user delegation/controller availability rather than assume rootless hard limits."
+        },
+        {
+          "id": "S05",
+          "title": "The New Control Group Interfaces — systemd.io",
+          "kind": "primary_platform_documentation",
+          "url": "https://systemd.io/CONTROL_GROUP_INTERFACE/",
+          "released_version_or_commit": "Live systemd documentation; accessed 2026-10-12",
+          "locator": "single-writer cgroup v2 statement; transient scope/service creation; delegation and accounting properties",
+          "access_utc": "2026-10-12T00:40:00Z",
+          "observed_operation": "Read API guidance returned from official systemd search results.",
+          "governing_condition_default_exception": "systemd exposes transient units over its manager API, controls the main tree, and allows explicitly delegated subtrees; resource accounting includes current/peak memory properties where supported.",
+          "applicability": "Alternative managed Linux worker lifecycle/monitoring route; support and privileges must be verified per user session."
+        },
+        {
+          "id": "S06",
+          "title": "Semaphore in tokio::sync — Rust docs.rs",
+          "kind": "primary_library_documentation",
+          "url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+          "released_version_or_commit": "Tokio 1.53.2 shown in retrieved page on 2026-10-12; latest URL is mutable",
+          "locator": "Struct Semaphore overview; acquire_many; cancel safety",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Read published API contract for permits, FIFO behavior and acquire_many interactions.",
+          "governing_condition_default_exception": "Waiters receive permits in FIFO request order, including acquire_many; a large request at queue head can block smaller requests despite available permits. Cancelling acquire loses its position.",
+          "applicability": "Useful bounded-concurrency primitive example; does not persist tenant queue state, explain wait reasons, or enforce byte memory limits."
+        },
+        {
+          "id": "S07",
+          "title": "Tokio semaphore implementation — release-tagged source",
+          "kind": "primary_repository_code",
+          "url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/src/sync/batch_semaphore.rs",
+          "released_version_or_commit": "Tokio release tag tokio-1.53.2 (2026-10-03); source URL pinned to tag, commit SHA not resolved",
+          "locator": "module implementation comments and waiter queue; permit assignment and cancellation cleanup around lines 1-16, 280-355, 380-515, 570-611",
+          "access_utc": "2026-10-12T00:43:49Z",
+          "observed_operation": "Opened raw source at exact release tag; reviewed linked waiter queue, FIFO order and drop cleanup behavior.",
+          "governing_condition_default_exception": "Implementation uses intrusive waiter list, places waiters at tail and assigns released permits from head; Acquire::drop removes waiter/returns assigned permits. This implementation governs Tokio's in-process semaphore, not durable host jobs.",
+          "applicability": "Inspected as a candidate primitive's real implementation, not selected as the task scheduler."
+        },
+        {
+          "id": "S08",
+          "title": "Tokio semaphore tests — release-tagged source",
+          "kind": "primary_repository_test_code",
+          "url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/tests/sync_semaphore.rs",
+          "released_version_or_commit": "Tokio release tag tokio-1.53.2 (2026-10-03); source URL pinned to tag",
+          "locator": "no_permits; try_acquire; acquire/add_permits; stress_test; permit operations",
+          "access_utc": "2026-10-12T00:43:49Z",
+          "observed_operation": "Inspected release-tagged tests; no tests were executed.",
+          "governing_condition_default_exception": "Tests exercise permit accounting, acquiring after release, closing, permit merge/split, and 1000-waiter stress; these tests do not establish extension-level fairness, persistence, bytes limits, task cancellation, or restart guarantees.",
+          "applicability": "Bounded evidence for inspected candidate tests; a product scheduler needs additional host-specific validation."
+        },
+        {
+          "id": "S09",
+          "title": "Fairness problem with semaphore acquire — Tokio issue #4612",
+          "kind": "primary_issue_history",
+          "url": "https://github.com/tokio-rs/tokio/issues/4612",
+          "released_version_or_commit": "Issue opened 2022-04-11; reports Tokio 1.17.0 on macOS; current issue page accessed 2026-10-12",
+          "locator": "issue body and status/relationship to issue #4624",
+          "access_utc": "2026-10-12T00:43:49Z",
+          "observed_operation": "Opened issue page and read reproducer/context.",
+          "governing_condition_default_exception": "Reporter observes a spawned task not progressing when another task loops acquiring a permit without a cooperative yield; issue links to #4624. This is a runtime/task-cooperation report, not evidence of broken semaphore FIFO.",
+          "applicability": "Warns that an in-process async task/scheduler still needs cooperation and isolation; does not establish the host's implementation behavior."
+        },
+        {
+          "id": "S10",
+          "title": "Efficient Fair Queueing Using Deficit Round-Robin",
+          "kind": "primary_research_paper",
+          "url": "https://web.stanford.edu/class/ee384x/EE384X/papers/DRR.pdf",
+          "released_version_or_commit": "IEEE/ACM Transactions on Networking, vol. 4 no. 3, June 1996; paper first presented at SIGCOMM 1995",
+          "locator": "title, abstract and discussion of application to non-breakable service/load balancing",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened primary paper search result and reviewed bibliographic information and abstract.",
+          "governing_condition_default_exception": "DRR approximates fair queuing across network flows using deficit accounting; paper says it can apply to non-breakable service such as load balancing. Its demonstrated domain is packet flows.",
+          "applicability": "Conceptual basis for comparing weighted extension turns; transfer to variable duration/memory jobs remains an inference requiring tests."
+        },
+        {
+          "id": "S11",
+          "title": "Write-Ahead Logging — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/wal.html",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12; WAL available since 3.7.0",
+          "locator": "Overview; Concurrency; checkpoints; WAL-reset bug (section 11)",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official WAL documentation and inspected concurrency, constraints, checkpoint behavior and bug report.",
+          "governing_condition_default_exception": "WAL permits reader/writer overlap but only one writer; all users must be on same host and WAL is unsupported over network filesystems. Checkpoint progress can be blocked by long readers. WAL-reset corruption bug affects concurrent write/checkpoint conditions through 3.51.2 and is fixed in 3.51.3+ and listed backports.",
+          "applicability": "Candidate embedded local queue ledger; pin/fix SQLite build and test WAL/recovery before adopting."
+        },
+        {
+          "id": "S12",
+          "title": "SQLite Release History",
+          "kind": "primary_release_history",
+          "url": "https://www.sqlite.org/changes.html",
+          "released_version_or_commit": "Live release history; retrieved page shows SQLite 3.53.4 dated 2026-07-24 as top release",
+          "locator": "3.51.3 release entry (2026-03-13); later 3.53.0/3.53.4 entries",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official release timeline; confirmed named fix and later release entries.",
+          "governing_condition_default_exception": "3.51.3 is the patch release that lists fixing WAL-reset corruption; 3.53.0 and subsequent 3.53 releases also include the fix. Version 3.52.0 was withdrawn, so do not select it as a baseline.",
+          "applicability": "Release gate for any WAL queue design: require fixed release/backport; verify the actual library bundled with the application."
+        },
+        {
+          "id": "S13",
+          "title": "PRAGMA synchronous — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+          "locator": "synchronous values FULL/NORMAL and WAL-mode behavior",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official pragma reference and compared FULL versus NORMAL semantics.",
+          "governing_condition_default_exception": "In WAL, NORMAL remains consistent but a just-committed transaction can roll back after system/power failure; FULL syncs the WAL at every commit, adding durability and I/O cost.",
+          "applicability": "Owner decision for queue-state durability/performance and crash-recovery semantics."
+        },
+        {
+          "id": "S14",
+          "title": "Transaction — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+          "locator": "Transactions; DEFERRED/IMMEDIATE modes",
+          "access_utc": "2026-10-12T00:43:49Z",
+          "observed_operation": "Read official transaction semantics returned by SQLite search.",
+          "governing_condition_default_exception": "BEGIN IMMEDIATE starts a write transaction immediately and may fail SQLITE_BUSY if another writer is active; deferred read-to-write upgrade may fail later.",
+          "applicability": "Supports short transactional CAS/state transitions in an embedded local queue; caller still handles busy and never wraps long-running work in a transaction."
+        },
+        {
+          "id": "S15",
+          "title": "Result and Error Codes — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/rescode.html#busy",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+          "locator": "SQLITE_BUSY and SQLITE_BUSY_SNAPSHOT sections",
+          "access_utc": "2026-10-12T00:43:49Z",
+          "observed_operation": "Read official SQLite concurrency/error guidance returned by search.",
+          "governing_condition_default_exception": "SQLite supports one writer; concurrent write can yield SQLITE_BUSY. Busy timeout/handler are available; BEGIN IMMEDIATE can move the conflict to transaction start.",
+          "applicability": "Supports bounded busy/retry handling for short queue-state mutations."
+        },
+        {
+          "id": "S16",
+          "title": "VS Code API — Visual Studio Code Extension API",
+          "kind": "primary_product_documentation",
+          "url": "https://code.visualstudio.com/api/references/vscode-api",
+          "released_version_or_commit": "Live VS Code extension API documentation accessed 2026-10-12",
+          "locator": "window.withProgress and ProgressOptions/CancellationToken",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened API reference for the host's user-facing progress/cancellation semantics.",
+          "governing_condition_default_exception": "Progress updates include increment/message and receive a CancellationToken; only notification progress supports cancel button and discrete progress according to the reference.",
+          "applicability": "UX/API precedent for cancellable progress; not a requirement or implementation dependency for the unnamed desktop host."
+        }
+      ],
+      "evidence_limitations": [
+        "No target application's repository, callers, or tests were specified, so no app-specific source audit was possible.",
+        "Tokio released implementation and test files were inspected but not executed; Tokio is an alternative primitive, not an assumed target runtime.",
+        "The DRR-to-job scheduling transfer is an inference from the paper's packet-flow design and non-breakable-service note.",
+        "No Windows/Linux machine was queried for actual support/capabilities and no performance/load/crash tests were run."
+      ]
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/critic/source-map.json",
+      "role": "critic source map",
+      "sha256": "baf5f4b0d5ae3104873419f5c857406cb1f31675717ae815d97618e0a67e4ac0",
+      "sources": [
+        {
+          "id": "C01",
+          "inherited_source_id": "S01",
+          "title": "Job Objects — Win32 apps | Microsoft Learn",
+          "kind": "primary_platform_documentation",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+          "released_version_or_commit": "Live Microsoft Learn page; last updated 2025-07-14",
+          "locator": "Creating Jobs; Managing Processes in Jobs; managing a process tree; closing a job object handle",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the exact page and inspected process association, CreateProcess inheritance exceptions, breakaway, termination, nested-job and last-handle close behavior.",
+          "governing_condition_default_exception": "CreateJobObject starts empty; AssignProcessToJobObject associates a process. CreateProcess descendants normally inherit except Win32_Process.Create; breakaway flags change this. Nested jobs were added in Windows 8. KILL_ON_JOB_CLOSE terminates members when the last handle closes.",
+          "applicability": "Checks the proposed task-specific Windows process boundary and F01 shutdown/reaping gap; does not prove target-host assignment capability."
+        },
+        {
+          "id": "C02",
+          "inherited_source_id": "S02",
+          "title": "JOBOBJECT_BASIC_LIMIT_INFORMATION — Win32 apps | Microsoft Learn",
+          "kind": "primary_platform_documentation",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+          "released_version_or_commit": "Live Microsoft Learn API reference; page last updated 2022-08-23",
+          "locator": "JOB_OBJECT_LIMIT_JOB_MEMORY, JOB_OBJECT_LIMIT_PROCESS_MEMORY, JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the exact API reference and inspected limit flag definitions.",
+          "governing_condition_default_exception": "JOB_MEMORY limits the job-wide sum of committed memory and rejects commits beyond the limit; KILL_ON_JOB_CLOSE terminates members when the last handle closes. This is not a host-wide memory cap.",
+          "applicability": "Checks the draft's Windows metric and boundary wording."
+        },
+        {
+          "id": "C03",
+          "inherited_source_id": "S03",
+          "title": "Control Group v2 — Linux Kernel documentation 6.14",
+          "kind": "primary_platform_documentation",
+          "url": "https://docs.kernel.org/6.14/admin-guide/cgroup-v2.html",
+          "released_version_or_commit": "Version-pinned Linux kernel documentation snapshot 6.14",
+          "locator": "Memory controller: memory.current, memory.peak, memory.high, memory.max; Delegation",
+          "access_utc": "2026-10-12T00:59:10Z",
+          "observed_operation": "Opened the version-pinned reference and inspected the accounting, peak, throttle/hard-limit and delegation sections.",
+          "governing_condition_default_exception": "memory.current covers a cgroup and descendants; memory.peak tracks maximum use since creation/reset. memory.high throttles/reclaims but may be exceeded and does not invoke OOM; memory.max is the hard control but may be exceeded temporarily and can invoke OOM inside the cgroup. Controller behavior is hierarchical and delegation has permission boundaries.",
+          "applicability": "Checks Linux resource-accounting and conditional-enforcement claims; does not establish host availability."
+        },
+        {
+          "id": "C04",
+          "inherited_source_id": "S04",
+          "title": "Control Group APIs and Delegation — systemd.io",
+          "kind": "primary_platform_documentation",
+          "url": "https://systemd.io/CGROUP_DELEGATION/",
+          "released_version_or_commit": "Live systemd documentation; accessed 2026-10-12",
+          "locator": "Single-writer rule; Delegate=; controller availability and enablement",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the page and inspected ownership, delegated subtree, requested-controller caveat, and manual memory-controller enablement text.",
+          "governing_condition_default_exception": "Each cgroup has a single manager. Delegate= on service/scope makes a subtree available, but the requested controllers may not be available and systemd does not itself enable them; memory must be enabled within the delegated subtree.",
+          "applicability": "Checks the draft's capability-detection and ownership caveats for rootless Linux execution."
+        },
+        {
+          "id": "C05",
+          "inherited_source_id": "S11",
+          "title": "Write-Ahead Logging — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/wal.html",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+          "locator": "WAL constraints, concurrency, checkpointing, WAL-reset bug (sections 1, 2, 3, 11)",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the official WAL documentation and inspected same-host constraint, single-writer, checkpoint and bug-fix sections.",
+          "governing_condition_default_exception": "WAL readers and writers can overlap but only one writer exists; all database processes must be on the same host; checkpoint progress can be constrained by readers. The WAL-reset bug is fixed in 3.51.3 and later, with listed backports.",
+          "applicability": "Checks the local embedded queue candidate and the draft's stated release floor; not a decision to use SQLite."
+        },
+        {
+          "id": "C06",
+          "inherited_source_id": "S13",
+          "title": "PRAGMA synchronous — SQLite",
+          "kind": "primary_database_documentation",
+          "url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+          "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+          "locator": "FULL and NORMAL semantics under WAL mode",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the synchronous pragma reference and compared power-loss and application-crash behavior.",
+          "governing_condition_default_exception": "In WAL mode NORMAL is consistent and survives application crashes, but a recently committed transaction may roll back after system/power failure. FULL adds a WAL sync after each commit to improve power-loss durability.",
+          "applicability": "Checks the draft's explicit durability/performance owner decision."
+        },
+        {
+          "id": "C07",
+          "inherited_source_id": "S12",
+          "title": "Release History Of SQLite",
+          "kind": "primary_release_history",
+          "url": "https://www.sqlite.org/changes.html",
+          "released_version_or_commit": "Live official release history; SQLite 3.54.0 dated 2026-10-09 at critic access",
+          "locator": "Top release entry 3.54.0; 3.53.4 entry; 3.51.3 WAL-reset fix entry",
+          "access_utc": "2026-10-12T00:59:10Z",
+          "observed_operation": "Opened the official release history and located the current release, 3.53.4 entry and 3.51.3 WAL-reset fix record.",
+          "governing_condition_default_exception": "The page lists 3.54.0 dated 2026-10-09 above 3.53.4 dated 2026-07-24; it records the WAL-reset fix in 3.51.3 and later releases.",
+          "applicability": "Supports F03's source-record correction and confirms the draft's minimum fixed-release floor."
+        },
+        {
+          "id": "C08",
+          "inherited_source_id": "S06",
+          "title": "Semaphore in tokio::sync — Rust docs.rs",
+          "kind": "primary_library_documentation",
+          "url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+          "released_version_or_commit": "Tokio 1.53.2 shown by the retrieved API page; latest URL is mutable",
+          "locator": "Semaphore fairness and acquire_many head-of-line behavior; acquire_many cancel safety",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the published API reference and inspected FIFO order and large acquire_many behavior.",
+          "governing_condition_default_exception": "Permits are given in request order; an acquire_many at the queue head can prevent a smaller acquire from completing even when the semaphore has enough permits for the smaller request. Canceling acquire_many loses queue position.",
+          "applicability": "Checks the semaphore comparison only; it does not establish extension-queue fairness."
+        },
+        {
+          "id": "C09",
+          "inherited_source_id": "S16",
+          "title": "Visual Studio Code Extension API",
+          "kind": "primary_product_documentation",
+          "url": "https://code.visualstudio.com/api/references/vscode-api",
+          "released_version_or_commit": "Live VS Code API documentation accessed 2026-10-12",
+          "locator": "window.withProgress; ProgressOptions; CancellationToken",
+          "access_utc": "2026-10-12T00:58:41Z",
+          "observed_operation": "Opened the extension API reference and inspected withProgress's progress callback and cancellation-token signature.",
+          "governing_condition_default_exception": "withProgress receives a progress callback and CancellationToken while its operation is pending; the API is a product precedent, not a dependency or host design.",
+          "applicability": "Checks the draft's limited progress/cancellation precedent."
+        }
+      ],
+      "reviewed_inputs": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/inputs/brief.md",
+          "role": "governing brief"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/discovery.md",
+          "role": "complete investigator discovery",
+          "bytes": 13916,
+          "sha256": "e2710b14aff19dc31a87f3f5c0abbfd48b24cc907d2a90ba4cb3786008aaae7f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/draft.md",
+          "role": "complete investigator draft"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/source-map.json",
+          "role": "investigator source identity records"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/revealed-plan.md",
+          "role": "exact released plan",
+          "bytes": 2391,
+          "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/plan-reveal.json",
+          "role": "one-time plan reveal record"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/sources/index.md",
+          "role": "investigator navigable source index"
+        }
+      ],
+      "review_findings": [
+        {
+          "id": "F01",
+          "classification": "material incomplete",
+          "locator": "draft P2.3; Corrected lifecycle contract — Restart",
+          "summary": "Host-shutdown stop/reaping sequence is absent."
+        },
+        {
+          "id": "F02",
+          "classification": "material incomplete",
+          "locator": "draft Fairness candidate; open owner decisions 1–2",
+          "summary": "Aging/barrier language promises no indefinite bypass without specifying the rule or bound."
+        },
+        {
+          "id": "F03",
+          "classification": "minor locator/wording",
+          "locator": "investigator source-map S12; draft Embedded queue candidate",
+          "summary": "3.53.4 is recorded as the top release on 2026-10-12, but official history lists 3.54.0 on 2026-10-09."
+        },
+        {
+          "id": "F04",
+          "classification": "unsupported",
+          "locator": "draft Memory candidate",
+          "summary": "Reservation formula is an unmeasured heuristic; draft presents it as a candidate and proposes measurements."
+        },
+        {
+          "id": "F05",
+          "classification": "honestly unresolved external input",
+          "locator": "brief and draft Open owner decisions",
+          "summary": "Target host repository/contracts/runtime/build were not identified in the brief."
+        }
+      ],
+      "evidence_limitations": [
+        "No target application or repository was named, so app-specific source/caller/test and bundled-SQLite inspection was unavailable.",
+        "The investigator's Tokio implementation/tests, Tokio issue history, and DRR paper are carried as non-governing comparison evidence but were not independently re-read in this critic pass; the draft labels the DRR transfer as inference, and critic findings do not rely on these records.",
+        "No source establishes product-specific fairness units, thresholds, resource defaults, checkpoint contracts, shutdown grace, or supported OS configurations.",
+        "No code, downloaded executable, test, workload experiment, crash test, or machine capability query was run."
+      ]
+    }
+  ],
+  "reviser_sources": [
+    {
+      "id": "R01",
+      "title": "Job Objects — Win32 apps | Microsoft Learn",
+      "kind": "primary_platform_documentation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "released_version_or_commit": "Windows desktop API reference; page last updated 2025-07-14; reopened 2026-10-12",
+      "locator": "Creating Jobs; Managing Processes in Jobs; Managing a Process Tree that Uses Job Objects; closing a job object handle",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the exact official page and inspected process assignment, CreateProcess child inheritance, Win32_Process.Create exception, breakaway, termination, nested-job and last-handle close behavior.",
+      "governing_condition_default_exception": "CreateJobObject starts empty; AssignProcessToJobObject associates a process. CreateProcess children normally inherit except Win32_Process.Create; breakaway settings alter inheritance. KILL_ON_JOB_CLOSE terminates members only when the last handle closes. Nested jobs began in Windows 8.",
+      "applicability": "Supports a conditional task-specific Windows process boundary and shutdown/reaping sequence; does not prove target-host assignment capability or capture escaped descendants."
+    },
+    {
+      "id": "R02",
+      "title": "JOBOBJECT_BASIC_LIMIT_INFORMATION — Win32 apps | Microsoft Learn",
+      "kind": "primary_platform_documentation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "released_version_or_commit": "Windows desktop API reference; page last updated 2022-08-23; reopened 2026-10-12",
+      "locator": "JOB_OBJECT_LIMIT_JOB_MEMORY; JOB_OBJECT_LIMIT_PROCESS_MEMORY; JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the exact structure reference and checked the job-memory and close-kill flag definitions.",
+      "governing_condition_default_exception": "JOB_MEMORY limits the job-wide sum of committed memory and blocks commits beyond the limit; PROCESS_MEMORY applies per process; KILL_ON_JOB_CLOSE terminates members when the last handle closes.",
+      "applicability": "Supports a per-job Windows boundary and metric choice; it is not a host-wide memory guarantee."
+    },
+    {
+      "id": "R03",
+      "title": "Control Group v2 — The Linux Kernel documentation",
+      "kind": "primary_platform_documentation",
+      "url": "https://docs.kernel.org/6.14/admin-guide/cgroup-v2.html",
+      "released_version_or_commit": "Version-pinned Linux kernel documentation snapshot 6.14",
+      "locator": "Memory controller: memory.current, memory.peak, memory.high, memory.max; Delegation",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the official version-pinned page and inspected the memory accounting, peak, throttle/hard-limit, and delegation sections.",
+      "governing_condition_default_exception": "memory.current counts the cgroup and descendants; memory.peak tracks maximum use since creation/reset. memory.high throttles/reclaims and does not invoke OOM but may be exceeded. memory.max is the hard control, may be exceeded temporarily, and may invoke an OOM kill in the cgroup. Controller behavior is hierarchical and delegation requires permissions.",
+      "applicability": "Supports conditional Linux task accounting/containment only when cgroup v2 memory controller and writable delegation are available."
+    },
+    {
+      "id": "R04",
+      "title": "Control Group APIs and Delegation — systemd.io",
+      "kind": "primary_platform_documentation",
+      "url": "https://systemd.io/CGROUP_DELEGATION/",
+      "released_version_or_commit": "Live systemd documentation reopened 2026-10-12",
+      "locator": "Single-writer rule; Delegate=; controller availability and enablement",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the official page and inspected exclusive ownership, delegated-subtree limits, controller request availability, and manual memory-controller enablement.",
+      "governing_condition_default_exception": "A cgroup has one manager. Delegate= on a service/scope exposes a subtree but requested controllers may not be available; systemd does not enable memory in the delegated subtree itself.",
+      "applicability": "Supports capability detection and management only inside a user-owned/delegated Linux subtree."
+    },
+    {
+      "id": "R05",
+      "title": "Write-Ahead Logging — SQLite",
+      "kind": "primary_database_documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live SQLite documentation reopened 2026-10-12; WAL since 3.7.0",
+      "locator": "WAL constraints; concurrency; checkpointing; WAL-reset bug",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened official WAL docs and checked same-host use, one-writer behavior, checkpoint progress, and fix history.",
+      "governing_condition_default_exception": "WAL requires all processes on the same host, has one writer, and long readers can block checkpoint progress. The WAL-reset corruption bug is fixed in 3.51.3 and later, with documented backports.",
+      "applicability": "Supports SQLite WAL only as an optional same-host embedded ledger with a verified fixed build and checkpoint/recovery tests."
+    },
+    {
+      "id": "R06",
+      "title": "PRAGMA synchronous — SQLite",
+      "kind": "primary_database_documentation",
+      "url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+      "released_version_or_commit": "Live SQLite pragma documentation reopened 2026-10-12",
+      "locator": "FULL and NORMAL under WAL mode",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the official pragma reference and compared FULL/NORMAL sync and power-loss behavior in WAL mode.",
+      "governing_condition_default_exception": "NORMAL in WAL remains consistent and survives application crashes but may lose a recent commit after power loss/system crash. FULL adds a WAL sync after each transaction commit to improve power-loss durability.",
+      "applicability": "Supports an explicit product durability/performance owner decision; does not choose a queue durability requirement."
+    },
+    {
+      "id": "R07",
+      "title": "Release History Of SQLite",
+      "kind": "primary_release_history",
+      "url": "https://www.sqlite.org/changes.html",
+      "released_version_or_commit": "Official release history as observed 2026-10-12; 3.54.0 dated 2026-10-09",
+      "locator": "Top 3.54.0 entry; 3.51.3 entry; 3.52.0 withdrawal",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the release history and located 3.54.0, 3.51.3, and the withdrawn 3.52.0 entry.",
+      "governing_condition_default_exception": "The page lists SQLite 3.54.0 dated 2026-10-09 above 3.53.4 and records that 3.51.3 fixes the WAL-reset corruption bug; 3.52.0 is withdrawn.",
+      "applicability": "Corrects the stale historical top-release metadata and confirms the fixed-release floor; actual target bundle remains unknown."
+    },
+    {
+      "id": "R08",
+      "title": "Semaphore in tokio::sync — Rust documentation",
+      "kind": "primary_library_documentation",
+      "url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+      "released_version_or_commit": "Tokio 1.53.2 shown on page at recheck; latest URL is mutable",
+      "locator": "Fairness and acquire_many head-of-line behavior",
+      "access_utc": "2026-10-12T01:10:29Z",
+      "observed_operation": "Reopened the published API page and inspected FIFO permit order and acquire_many interaction.",
+      "governing_condition_default_exception": "Permits are granted in request order. A large acquire_many request at queue head can block smaller acquires despite enough permits for the smaller request; canceling acquire_many loses its queue position.",
+      "applicability": "Supports only the semaphore comparison; it does not establish fairness for persistent extension jobs."
+    }
+  ],
+  "local_materials": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/inputs/brief.md",
+      "role": "governing admitted brief",
+      "sha256": "24de7b9093dfa2d349000db9d6c39880adfe588dbb5a7644cb92a3e849b19934"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/discovery.md",
+      "role": "assigned predecessor input",
+      "sha256": "e2710b14aff19dc31a87f3f5c0abbfd48b24cc907d2a90ba4cb3786008aaae7f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/draft.md",
+      "role": "assigned predecessor input",
+      "sha256": "cf7b7f8fcb469520a004ddb62a7e20817be4e6b8fd2506466ec5e304b1191ee7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/source-map.json",
+      "role": "assigned predecessor input",
+      "sha256": "7bfd2a164e09207cf441b8ae8fdd1e7018a1104956ebb8e46bd441637aff5fe3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/revealed-plan.md",
+      "role": "assigned predecessor input",
+      "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/plan-reveal.json",
+      "role": "assigned predecessor input",
+      "sha256": "0dd20e7f63ff7481d4a518d6ce4d7d6d5901a780622040f9276a9b877d6d7ee4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/critic/critique.md",
+      "role": "assigned predecessor input",
+      "sha256": "5561035e9c6629037030ab4cb3f156c3e30aa0150b6d09f085e8c3d2187c2f58"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/critic/source-map.json",
+      "role": "assigned predecessor input",
+      "sha256": "baf5f4b0d5ae3104873419f5c857406cb1f31675717ae815d97618e0a67e4ac0"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/sources/index.md",
+      "role": "assigned predecessor input",
+      "sha256": "f40ca56b665ecc23047f740a4852e3bfc2359e9d40235b26bb015a96e4cc2482"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/critic/sources/index.md",
+      "role": "assigned predecessor input",
+      "sha256": "cdde3301ed85306a47a7e67699ec06e0a53501e9dbac715ea54312f5edad067e"
+    }
+  ],
+  "evidence_limitations": [
+    "No target application/repository/runtime/callers/tests/bundled database were named in the brief; app-specific inspection was not possible.",
+    "No machine capability query, code execution, automated test, workload/load experiment, crash test, or performance measurement was run.",
+    "The proposed reservation, fairness, state-fencing and shutdown rules are design proposals to validate; upstream sources do not establish product defaults.",
+    "DRR application to extension jobs remains an analogy. Tokio API behavior does not establish host-level tenant fairness.",
+    "No target application's exact bundled SQLite version or supported OS configurations were verified."
+  ],
+  "critique_dispositions": {
+    "F01": "accept; add concrete shutdown/reaping flow",
+    "F02": "accept and amend; define bounded-bypass candidate, no wall-clock guarantee",
+    "F03": "accept; preserve historical S12, add separate corrected R07 record",
+    "F04": "amend; retain reservation formula only as unmeasured candidate",
+    "F05": "retain uncertainty; no target-host input provided"
+  },
+  "output_artifacts": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md"
+  ]
+}

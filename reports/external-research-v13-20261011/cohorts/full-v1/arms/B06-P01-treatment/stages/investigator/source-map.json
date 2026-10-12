@@ -1,0 +1,272 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B06-P01-treatment",
+  "stage": "investigator",
+  "access_time_note": "Web tools expose no per-request timestamps. UTC windows below record the observed research window, not fabricated per-page seconds.",
+  "sources": [
+    {
+      "id": "WSEC",
+      "title": "Wasmtime security model, pinned source",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/docs/security.md",
+      "version": "Wasmtime v49.0.2 tag; commit 3c8a3e7 (verified by release page)",
+      "locator": "Sections Security, WebAssembly Core, Defense-in-depth, Filesystem Access; source lines approximately 191-214",
+      "access_utc": "2026-10-12T00:35Z–00:38Z; request-level seconds are not surfaced by the web reader",
+      "observed_operation": "Opened official repository file at the v49.0.2 tag and read the sandbox/interface/defense-in-depth sections.",
+      "governing_condition_default_exception": "Guest I/O is through explicitly linked imports; WASI filesystem access is capability-oriented. Runtime implementation bugs can still undermine the sandbox; defense-in-depth controls are not proofs of absence of escape.",
+      "applicability": "Supports explicit host APIs and an additional process boundary; does not certify the proposed host embedding."
+    },
+    {
+      "id": "WCONFIG",
+      "title": "Wasmtime execution interruption settings, pinned source",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/crates/wasmtime/src/config.rs#L3306-L3517",
+      "version": "Wasmtime v49.0.2 tag; commit 3c8a3e7",
+      "locator": "consume_fuel, epoch_interruption, and interaction with blocking host calls",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened source and located fuel/epoch configuration documentation.",
+      "governing_condition_default_exception": "Fuel is disabled by default and must be supplied to each Store. Epochs are nondeterministic. Fuel/epochs do not time out guest code blocked in a host call; embedder must make the host operation cancellable/bounded.",
+      "applicability": "Directly informs responsiveness budgets for a Wasmtime execution path."
+    },
+    {
+      "id": "WLIMIT",
+      "title": "Wasmtime resource limiter implementation, pinned source",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/crates/wasmtime/src/runtime/limits.rs#L1017-L1058",
+      "version": "Wasmtime v49.0.2 tag; commit 3c8a3e7",
+      "locator": "ResourceLimiter caveat and StoreLimitsBuilder defaults",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official tagged Rust implementation and located resource limiter docs/defaults.",
+      "governing_condition_default_exception": "Limiter caps instance resources; it does not account for all Store/runtime or embedder-specific host allocations. StoreLimitsBuilder memory/table caps default to unlimited; instance/table/memory count defaults are 10,000.",
+      "applicability": "Requires explicit caps plus host allocation quotas and/or OS process limits."
+    },
+    {
+      "id": "WREL",
+      "title": "Wasmtime v49.0.2 release and fixes",
+      "url": "https://github.com/bytecodealliance/wasmtime/releases/tag/v49.0.2",
+      "version": "v49.0.2, commit 3c8a3e7, released 2026-10-02",
+      "locator": "Release notes, lines 129-195; latest release observed at visit",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official release page; read tag/commit and security-fix list.",
+      "governing_condition_default_exception": "This release fixed fuel bypass, host allocation, and component/runtime issues. A version pin must be kept current; release fixes show isolation remains implementation-dependent.",
+      "applicability": "Current observed baseline for the Wasmtime candidate, not a future update guarantee."
+    },
+    {
+      "id": "WFUEL",
+      "title": "Wasmtime WASI poll_oneoff fuel bypass advisory",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version": "Advisory published 2026-10-02; fixed in 49.0.2, 48.0.4, 36.0.17",
+      "locator": "Affected versions, impact, affected embeddings, patches",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official Wasmtime security advisory and read exact affected conditions and patch versions.",
+      "governing_condition_default_exception": "WASI Preview 0 poll_oneoff performed O(n) host work without fuel check; library embeddings affected only when Preview 0 was explicitly enabled, while CLI enabled it by default. Preview 1/2/3 were stated unaffected.",
+      "applicability": "Proves quotas must cover host calls and use patched runtime plus only required WASI interfaces."
+    },
+    {
+      "id": "WMEM",
+      "title": "Wasmtime unbounded host allocation advisory",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-gqmc-89g8-p25r",
+      "version": "Advisory published 2026-10-02; fixed in 49.0.2, 48.0.4, 36.0.17",
+      "locator": "Impact, affected embeddings, patches",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official advisory and checked stream/default conditions.",
+      "governing_condition_default_exception": "WASIp2 SinkOutputStream without configured stdout/stderr allowed an unbounded host allocation; configured streams typically applied limits. Fixed in listed patch releases.",
+      "applicability": "Host-side memory must be bounded even if guest linear memory is limited."
+    },
+    {
+      "id": "WASI-REL",
+      "title": "WASI release and toolchain status",
+      "url": "https://github.com/bytecodealliance/wasi.dev/blob/main/docs/releases/index.md",
+      "version": "Current documentation on main as observed 2026-10-12; no commit surfaced",
+      "locator": "Modules and components; WASI releases; toolchain compatibility note",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official WASI project release matrix.",
+      "governing_condition_default_exception": "WASI 0.3 described as current/stable; Wasmtime 46+ and Rust had 0.3 support, Node jco shim described experimental, most other toolchains still target 0.2; Wasmtime/jco also run 0.2.",
+      "applicability": "Do not promise equal guest-language support; prove selected toolchain matrix before SDK commitment."
+    },
+    {
+      "id": "WIT",
+      "title": "WebAssembly Component Model WIT reference",
+      "url": "https://component-model.bytecodealliance.org/design/wit.html",
+      "version": "Current official Component Model docs as observed 2026-10-12; not release-pinned",
+      "locator": "WIT overview and contract/interface sections",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official Bytecode Alliance WIT guide.",
+      "governing_condition_default_exception": "WIT defines interfaces/types/contracts, not component behavior; interface feature gates/versioning may apply.",
+      "applicability": "Candidate typed schema for Wasm and language-neutral extension API, with behavior/invariants specified separately."
+    },
+    {
+      "id": "BWRAP-REL",
+      "title": "Bubblewrap current release",
+      "url": "https://github.com/containers/bubblewrap/releases/tag/v0.13.0",
+      "version": "v0.13.0 tag; commit 719a4fd; released 2026-09-22",
+      "locator": "Release dependencies, kernel requirements, enhancements and bug fixes",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official release page and read release metadata.",
+      "governing_condition_default_exception": "Newer mount_setattr path depends on build/runtime kernel 5.12+ where compiled that way; distribution packaging and kernel support can change behavior.",
+      "applicability": "Linux-native execution candidate needs packaging/version and startup probes."
+    },
+    {
+      "id": "BWRAP-README",
+      "title": "Bubblewrap design, limits and invocation model",
+      "url": "https://github.com/containers/bubblewrap/blob/v0.13.0/README.md",
+      "version": "v0.13.0 tag; commit 719a4fd",
+      "locator": "Sandbox security, namespace features, limitations, lines 205-269",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened tagged README and read sandbox construction and limitation sections.",
+      "governing_condition_default_exception": "Bubblewrap is a low-level sandbox constructor, not a ready policy. Protection depends on arguments; every mount adds risk; D-Bus can enable host actions; TIOCSTI requires --new-session or seccomp filtering.",
+      "applicability": "Policy generation, mount allowlist, bus exclusion, session isolation, and strict launch failure belong to the host."
+    },
+    {
+      "id": "BWRAP-TEST",
+      "title": "Bubblewrap security tests",
+      "url": "https://github.com/containers/bubblewrap/blob/v0.13.0/tests/test-run.sh",
+      "version": "v0.13.0 tag; commit 719a4fd",
+      "locator": "No network and unreadable file tests around test-run.sh lines 1698-1734",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened tagged test suite and read tests for network namespace and /etc/shadow denial.",
+      "governing_condition_default_exception": "Tests call --unshare-net and test access denial; some setup paths can skip or vary with test environment. They were not executed in this task.",
+      "applicability": "Useful host integration test patterns; not evidence this proposal is already validated."
+    },
+    {
+      "id": "FP-CALLER",
+      "title": "Flatpak bubblewrap caller source",
+      "url": "https://github.com/flatpak/flatpak/blob/main/common/flatpak-run.c#L2842-L2859",
+      "version": "main branch at observed access; mutable commit not surfaced",
+      "locator": "Caller condition adding --unshare-net when shared-network permission is absent",
+      "access_utc": "2026-10-12T00:38Z",
+      "observed_operation": "Opened current Flatpak caller source and read the policy-to-argument branch.",
+      "governing_condition_default_exception": "No network sharing adds --unshare-net; allowing devices or resources has other explicit branches. This caller demonstrates policy is constructed by a higher-level host.",
+      "applicability": "Supports separate policy compiler as product responsibility; branch snapshot is not a pinned release."
+    },
+    {
+      "id": "FLATPAK-USERNS",
+      "title": "Flatpak user namespace requirements",
+      "url": "https://github.com/flatpak/flatpak/wiki/User-namespace-requirements",
+      "version": "Wiki last edited 2024-03-05; mutable wiki",
+      "locator": "Unprivileged bubblewrap requirements and setuid fallback tradeoff",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Read official project wiki for kernel/sysctl prerequisites and fallback.",
+      "governing_condition_default_exception": "Unprivileged mode requires user namespaces and sufficient namespace sysctls; fallback setuid mode is not recommended and is a security tradeoff. Listed distro examples are dated.",
+      "applicability": "Treat as a compatibility signal only; feature-probe actual supported systems and do not silently weaken policy."
+    },
+    {
+      "id": "CGROUP",
+      "title": "Linux cgroup v2 resource controls",
+      "url": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+      "version": "Latest kernel documentation as observed 2026-10-12; not release-pinned",
+      "locator": "Limits and memory.max sections",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official kernel docs and read cgroup limit semantics.",
+      "governing_condition_default_exception": "Limits default to max/no-op unless configured. memory.max is hard limit but may briefly be exceeded; control requires host-managed cgroup access.",
+      "applicability": "Linux CPU/memory/pids controls need a manager/delegation and failure tests; bubblewrap alone does not establish these budgets."
+    },
+    {
+      "id": "WIN-APP",
+      "title": "Windows AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version": "Current Microsoft Win32 docs, no specific API release tag",
+      "locator": "File, network, process isolation sections",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened Microsoft Learn and read AppContainer isolation categories.",
+      "governing_condition_default_exception": "Filesystem/network access can be granted narrowly; process/kernel object isolation prevents cross-process influence when properly contained. The page notes some resources may be available by default and brokers may mediate others.",
+      "applicability": "Windows native worker candidate; maintain minimal capability grants and validate default resources on supported Windows versions."
+    },
+    {
+      "id": "WIN-LAUNCH",
+      "title": "Launching AppContainer or LPAC process",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer",
+      "version": "Current Microsoft Win32 docs; AppContainer introduced with Windows 8 per page",
+      "locator": "Capability SIDs and launching via STARTUPINFOEX/attribute list",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened launch guide and read process-start steps.",
+      "governing_condition_default_exception": "CreateProcess startup attributes must include AppContainer attributes; capabilities are explicit. Regular AppContainer has some base resources; LPAC is narrower but requires more explicit grants.",
+      "applicability": "Real native launch integration work; validate the exact package/unpackaged setup rather than assume process creation applies a sandbox."
+    },
+    {
+      "id": "WIN-JOB",
+      "title": "Windows Job Objects process and resource management",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version": "Current Microsoft Win32 docs",
+      "locator": "Kill-on-job-close and managing a process tree sections",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened Microsoft Learn and read process-tree/termination constraints.",
+      "governing_condition_default_exception": "JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE terminates associated processes; allowing breakaway can leave children untracked. Nested jobs are supported beginning Windows 8, with older-version caveats.",
+      "applicability": "Use a killable job, avoid breakaway, set resource limits, and test child process behavior in addition to AppContainer."
+    },
+    {
+      "id": "WIN-CAPS",
+      "title": "Windows file picker versus library capabilities",
+      "url": "https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/app-capability-declarations",
+      "version": "Current Microsoft Learn docs",
+      "locator": "Music/Pictures/Videos/Documents and picker guidance around lines 69-84 and 249-255",
+      "access_utc": "2026-10-12T00:38Z",
+      "observed_operation": "Opened capability declaration table and file-picker guidance.",
+      "governing_condition_default_exception": "Library capabilities permit programmatic broad access; docs recommend a picker when the user can select files/folders. A selected location can be remembered through FutureAccessList if the app chooses.",
+      "applicability": "Use host picker and one-operation read grant; do not ask for broad library access for optional file input."
+    },
+    {
+      "id": "XDG-FILE",
+      "title": "XDG FileChooser portal",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.FileChooser.html",
+      "version": "FileChooser interface version 4 per page",
+      "locator": "OpenFile, filters, selected URI/result",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened portal interface specification and read user dialog, filters, and result semantics.",
+      "governing_condition_default_exception": "Portal presents a chooser and selected files become accessible; filters are only a usability aid and backend may allow files outside filters. Document access may persist across sessions.",
+      "applicability": "Use host-controlled picker/broker; treat filters as hints, not enforcement."
+    },
+    {
+      "id": "XDG-DOCS",
+      "title": "XDG Documents portal",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Documents.html",
+      "version": "Documents interface version 5 per page",
+      "locator": "Add/AddFull persistent flag and Grant/RevokePermissions",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened portal interface page and read document permissions and persistence methods.",
+      "governing_condition_default_exception": "Document exports can have per-app read/write permissions and may be persistent; Add accepts an open fd and explicit persistent flag. Version 5 also exposes host paths to authorized readers.",
+      "applicability": "For a single operation prefer nonpersistent export or pass bytes through the host, and avoid exposing host paths."
+    },
+    {
+      "id": "JSONRPC",
+      "title": "JSON-RPC 2.0 specification",
+      "url": "https://www.jsonrpc.org/specification",
+      "version": "JSON-RPC 2.0; page states updated 2013-01-04",
+      "locator": "Notifications, error responses, batch semantics",
+      "access_utc": "2026-10-12T00:36Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened official protocol specification and read notifications and batch sections.",
+      "governing_condition_default_exception": "Notifications have no response/error delivery; batches may be processed concurrently and responses can be out of order. Transport is agnostic and framing must be defined separately.",
+      "applicability": "Require request/response for transformations; avoid batching until ordering/idempotency semantics are specified."
+    },
+    {
+      "id": "MOZ-PERM",
+      "title": "Firefox permission and update UX precedent",
+      "url": "https://extensionworkshop.com/documentation/develop/request-the-right-permissions/",
+      "version": "Mozilla Extension Workshop page, observed current; page last updated 2021-03-19",
+      "locator": "Install/update permission prompts, optional runtime permissions, denial fallback",
+      "access_utc": "2026-10-12T00:37Z–00:38Z; request-level seconds unavailable",
+      "observed_operation": "Opened Mozilla extension developer guidance and read runtime/update permission pattern.",
+      "governing_condition_default_exception": "Firefox prompts when updates add permissions; declining leaves old version installed. Optional permissions can be requested at a user action and denied features should degrade gracefully.",
+      "applicability": "UX precedent only; not a native desktop security control or guarantee."
+    },
+    {
+      "id": "WIN-JOB-BASIC",
+      "title": "Windows Job Object basic limits",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "version": "Current Microsoft Win32 API documentation; no specific API release tag",
+      "locator": "JOBOBJECT_BASIC_LIMIT_INFORMATION fields and LimitFlags: per-process/per-job user time, active process count, breakaway behavior, kill-on-job-close, and related limits",
+      "access_utc": "2026-10-12T00:43Z–00:45Z; request-level seconds unavailable",
+      "observed_operation": "Opened the Microsoft Learn structure reference and read its limit fields and flag descriptions.",
+      "governing_condition_default_exception": "Limits are configured through the job object; kill-on-job-close is a configured flag, and breakaway flags alter whether child processes remain associated. Windows-version support can differ by individual limit.",
+      "applicability": "Configure and test the actual job policy for the supported Windows versions; do not assume process-tree termination or quotas from merely creating a job."
+    },
+    {
+      "id": "WIN-JOB-EXTENDED",
+      "title": "Windows Job Object extended limits and memory accounting",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+      "version": "Current Microsoft Win32 API documentation; no specific API release tag",
+      "locator": "JOBOBJECT_EXTENDED_LIMIT_INFORMATION ProcessMemoryLimit, JobMemoryLimit, and peak memory fields",
+      "access_utc": "2026-10-12T00:43Z–00:45Z; request-level seconds unavailable",
+      "observed_operation": "Opened the Microsoft Learn structure reference and read process/job memory limit and peak-accounting fields.",
+      "governing_condition_default_exception": "Memory limits are explicit job settings; the structure documents configured process/job commit limits and peak accounting, not a default quota.",
+      "applicability": "Use explicit memory limits and verify their behavior under the deployed Windows version and launch sequence."
+    }
+  ]
+}

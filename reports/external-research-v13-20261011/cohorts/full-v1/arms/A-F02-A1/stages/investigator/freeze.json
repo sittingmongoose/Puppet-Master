@@ -1,0 +1,41 @@
+{
+  "prepared_at_utc": "2026-10-12T00:30:35.629Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T01:00:35.058Z",
+  "whole_deadline_utc": "2026-10-12T01:30:35.058Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/inputs/brief.md",
+      "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+      "bytes": 2340
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/assignment.md",
+      "sha256": "0f81a3d48180f782c409e0aca9c78adf7325bd91df7a4e2acfadbab30b751a54",
+      "bytes": 10185
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/input-map.json",
+      "sha256": "42711b297896aabd896c409b9bca4f286f0d32c5dd79e6cc2e094b9cd261ea22",
+      "bytes": 810
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run A-F02-A1: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A1",
+  "stage_prompt_delta": null,
+  "time_contract": "absolute_T0_30_42_60",
+  "available_stage_seconds_at_prepare": 1799.428303,
+  "request_sha256": "ec8ca39550a5f3df8342dae9d9ff68e57c0085190fa0f5435570efd1ae88733e"
+}

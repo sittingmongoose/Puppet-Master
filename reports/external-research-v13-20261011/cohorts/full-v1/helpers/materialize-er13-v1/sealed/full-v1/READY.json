@@ -1,0 +1,40 @@
+{
+  "schema": "er13.materializer-readiness.v1",
+  "version": "materialize-er13-v1-full",
+  "mechanical_ready": true,
+  "ready_methods": [
+    "R0",
+    "A1",
+    "A8",
+    "A1+A8",
+    "B02",
+    "B06",
+    "B07",
+    "B09",
+    "B10"
+  ],
+  "supplied_method_API_ready": [
+    "B11",
+    "B12"
+  ],
+  "root_method_card_readiness_separate": true,
+  "core_checks": 265,
+  "B_delta_checks": 218,
+  "native_candidate_calls": 0,
+  "reserve_starts": 0,
+  "dispatches": 0,
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "route_status": {
+    "luna": "MECHANICAL_READY_MAX_STANDARD",
+    "muse": "NATIVE_GOAL_EXISTS_DIRECT_T3_CAPTURE_UNESTABLISHED",
+    "zcode": "NATIVE_BACKEND_GOAL_EXISTS_DIRECT_T3_CAPTURE_UNESTABLISHED"
+  },
+  "unsupported_methods": {
+    "B03": "required retained native Goal resume not implemented; no substitution"
+  },
+  "components": "separate helpers/component-admit-v1 owner",
+  "immutable_admission_snapshot": "sealed/full-v1",
+  "prior_snapshot": "sealed/luna-core-v1 unchanged",
+  "usage": "Use only sealed snapshots for admission; never apply a newer version to started/frozen arms"
+}

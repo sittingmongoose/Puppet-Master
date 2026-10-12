@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "source_id_policy": "IDs are immutable for this stage. The recorded UTC is the clock sample immediately before the web retrieval batch.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Figma Plugin Manifest",
+      "url": "https://developers.figma.com/docs/plugins/manifest/",
+      "version_or_commit": "Live docs; no immutable API revision displayed.",
+      "locator": "Plugin Manifest: lines 17–33, 41–48, 65–97; documentAccess/networkAccess.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official page; inspected manifest, API version and permission sections.",
+      "governing_condition_default_exception": "When configured, allowedDomains limits plugin requests; none blocks external plugin requests, wildcard needs a reason. Limits do not affect resources loaded by a website in an iframe. New plugins require dynamic-page; legacy omission can load all pages.",
+      "applicability": "Permission-manifest UX precedent only; not a native desktop sandbox."
+    },
+    {
+      "id": "S02",
+      "title": "Figma Making Network Requests",
+      "url": "https://developers.figma.com/docs/plugins/making-network-requests/",
+      "version_or_commit": "Live docs; no immutable API revision displayed.",
+      "locator": "Test access and Specify network access: lines 78–107, 110–174, 192–217.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official page; inspected deny-all/allowlist steps, reasons and CSP failure behavior.",
+      "governing_condition_default_exception": "Workflow starts at allowedDomains none, then adds only observed domains/paths. Unauthorized requests are blocked. wildcard requires a displayed reason.",
+      "applicability": "Informs least-privilege disclosure UX; product-specific enforcement."
+    },
+    {
+      "id": "S03",
+      "title": "Figma Creating a User Interface",
+      "url": "https://developers.figma.com/docs/plugins/creating-ui/",
+      "version_or_commit": "Live docs; no immutable API revision displayed.",
+      "locator": "UI-to-plugin messages and non-null origin iframes: lines 36–104.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official page; inspected serialization and sensitive message-origin guidance.",
+      "governing_condition_default_exception": "UI runs in iframe and messages serialize values; for sensitive custom-origin flows docs advise specific pluginId and target origin; wildcard examples also exist.",
+      "applicability": "Data-exchange/UX precedent, not independent sandbox evidence."
+    },
+    {
+      "id": "S04",
+      "title": "Figma Resource Links",
+      "url": "https://developers.figma.com/docs/plugins/resource-links/",
+      "version_or_commit": "Live docs; no immutable API revision displayed.",
+      "locator": "Remote resource and eval bridge caveat: lines 22–25.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official page; inspected remote resource instructions.",
+      "governing_condition_default_exception": "External resources load in UI iframe; documentation describes fetching code there, forwarding through postMessage and eval in plugin main context.",
+      "applicability": "Caveat against treating an iframe/message split as a security boundary."
+    },
+    {
+      "id": "S05",
+      "title": "VS Code Extension Host",
+      "url": "https://code.visualstudio.com/api/advanced-topics/extension-host",
+      "version_or_commit": "Live docs; no immutable revision displayed.",
+      "locator": "Extension host configurations and Stability and Performance; original official search result excerpt inspected; later direct open timed out.",
+      "access_utc": "2026-10-12T00:35:00Z",
+      "observed_operation": "Searched official docs and inspected returned page excerpt; later open failed with timeout.",
+      "governing_condition_default_exception": "Different local, browser and remote hosts are selected by configuration/capability. Runtime permissions are separately stated by S06.",
+      "applicability": "Architecture precedent only; do not infer unseen page details."
+    },
+    {
+      "id": "S06",
+      "title": "VS Code Extension Runtime Security",
+      "url": "https://code.visualstudio.com/docs/configure/extensions/extension-runtime-security",
+      "version_or_commit": "Live docs page dated 2026-10-07; trust prompt condition since VS Code 1.97.",
+      "locator": "Runtime permissions, publisher trust, marketplace protections: lines 212–257.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official page; inspected privileges, publisher prompt and signature statements.",
+      "governing_condition_default_exception": "Extensions get VS Code permissions (files/network/process). First third-party install prompts publisher trust since 1.97; signatures verify package integrity/source, not restricted runtime access.",
+      "applicability": "Distinguishes host process/trust indicators from least-privilege sandboxing."
+    },
+    {
+      "id": "S07",
+      "title": "VS Code API Reference — WorkspaceEdit",
+      "url": "https://code.visualstudio.com/api/references/vscode-api",
+      "version_or_commit": "Live API reference; no immutable revision displayed.",
+      "locator": "workspace.applyEdit around lines 2348–2352; WorkspaceEditEntryMetadata.needsConfirmation around 19088–19107.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened/searched official API reference for edit and confirmation semantics.",
+      "governing_condition_default_exception": "Docs say text-only workspace edits use all-or-nothing strategy; resource edits abort subsequent edits when one fails; API returns boolean.",
+      "applicability": "Precedent for atomic edit and preview metadata, not a guarantee for a new diagram host."
+    },
+    {
+      "id": "S08",
+      "title": "VS Code issue #146964",
+      "url": "https://github.com/microsoft/vscode/issues/146964",
+      "version_or_commit": "Opened 2022-04-06; closed and labeled Insiders patch released/verified; exact fix PR/release note not located.",
+      "locator": "Status and labels lines 144–159; repro lines 168–177.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened issue and inspected reproduction/status.",
+      "governing_condition_default_exception": "Create-overwrite followed by text edit on a nonempty file could leave empty file and return false; issue marked patched/verified.",
+      "applicability": "Regression test precedent for whole-result rollback; exact implementation remains unverified."
+    },
+    {
+      "id": "S09",
+      "title": "WIT Reference — WebAssembly Component Model",
+      "url": "https://component-model.bytecodealliance.org/design/wit.html",
+      "version_or_commit": "Live guide; no immutable revision displayed.",
+      "locator": "WIT overview lines 13–17 and interface/world examples.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official Bytecode Alliance guide.",
+      "governing_condition_default_exception": "WIT describes typed component interfaces/worlds; it is not a general-purpose language and defines contracts rather than behavior.",
+      "applicability": "Candidate for versioned cross-language component ABI; language/toolchain readiness needs a prototype."
+    },
+    {
+      "id": "S10",
+      "title": "Wasmtime Security",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/docs/security.md",
+      "version_or_commit": "Release tag v49.0.2; release page reports signed commit prefix 3c8a3e7.",
+      "locator": "Core WebAssembly and Filesystem Access around lines 191–220.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened release-pinned source file.",
+      "governing_condition_default_exception": "WebAssembly outside-world access uses imports/exports; WASI filesystem is capability-based. Embedder choice and runtime bugs remain material.",
+      "applicability": "Supports WASM candidate and minimal import policy."
+    },
+    {
+      "id": "S11",
+      "title": "Wasmtime StoreLimitsBuilder API",
+      "url": "https://docs.wasmtime.dev/api/wasmtime/struct.StoreLimitsBuilder.html",
+      "version_or_commit": "Page explicitly shows Wasmtime 51.0.0-dev; not release-pinned.",
+      "locator": "memory_size/table_elements/instances/memories around lines 65–124.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened current API reference and inspected resource limit semantics/defaults.",
+      "governing_condition_default_exception": "Memory unbounded by default; memory_size applies separately to each linear memory. Current dev defaults must not be projected onto 49.0.2.",
+      "applicability": "Requires explicit resource limits and pin-specific verification."
+    },
+    {
+      "id": "S12",
+      "title": "Wasmtime GHSA-j366-h8gg-77pm fuel bypass",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version_or_commit": "Published 2026-10-02; patched in 36.0.17, 48.0.4, 49.0.2.",
+      "locator": "Affected/patched versions, impact and patches around lines 129–159.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official repository advisory.",
+      "governing_condition_default_exception": "WASI Preview 0 poll_oneoff did O(n) host work without fuel. Library embeddings affected only when enabling Preview 0 linker API; advisory says P1/P2/P3 unaffected.",
+      "applicability": "Runtime patch and complete import/host-call budget precedent."
+    },
+    {
+      "id": "S13",
+      "title": "Wasmtime Releases",
+      "url": "https://github.com/bytecodealliance/wasmtime/releases",
+      "version_or_commit": "v49.0.2 released 2026-10-02; signed commit prefix 3c8a3e7.",
+      "locator": "v49.0.2 release entry/artifacts.",
+      "access_utc": "2026-10-12T00:36:35Z",
+      "observed_operation": "Inspected official release search-result entry and artifact list.",
+      "governing_condition_default_exception": "Release includes fixes to fuel, host memory, WASI and component callback behavior; C API artifacts are listed.",
+      "applicability": "Patch cadence/runtime maintenance burden; pin and update ownership required."
+    },
+    {
+      "id": "S14",
+      "title": "Linux Kernel Landlock",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "version_or_commit": "Current online kernel docs; ABI history through 11; no kernel release pinned.",
+      "locator": "Current/prior limitations around lines 812–868; rights and descriptors elsewhere in page.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official kernel documentation and inspected current/prior limitation sections.",
+      "governing_condition_default_exception": "Unprivileged self-restriction; rights vary by ABI; special /proc resources and pre-opened descriptors require care.",
+      "applicability": "Linux native-process sandbox option; feature-detect actual ABI and fail closed for promised rights."
+    },
+    {
+      "id": "S15",
+      "title": "Windows AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version_or_commit": "Microsoft Learn last updated 2025-07-08.",
+      "locator": "Isolation overview and file/network/process sections around lines 32–51.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened Microsoft Learn documentation.",
+      "governing_condition_default_exception": "Can restrict file/registry, network and process object access, with granular grants; some resources are brokered or always available.",
+      "applicability": "Windows sandbox candidate; broker user-picked file instead of broad filesystem access."
+    },
+    {
+      "id": "S16",
+      "title": "Zed Developing Extensions",
+      "url": "https://zed.dev/docs/extensions/developing-extensions",
+      "version_or_commit": "Live Zed docs retrieved 2026-10-12.",
+      "locator": "Extension manifest and Rust/WebAssembly authoring, lines 11–98.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official authoring docs.",
+      "governing_condition_default_exception": "Procedural extensions compile to wasm32-wasip2 and use Rust for custom code such as language servers/debuggers; most extensions can avoid Rust code.",
+      "applicability": "Desktop editor precedent for a declarative/procedural split and author toolchain cost."
+    },
+    {
+      "id": "S17",
+      "title": "Zed tar symlink extension sandbox escape",
+      "url": "https://github.com/zed-industries/zed/security/advisories/GHSA-59p4-3mhm-qm3r",
+      "version_or_commit": "Published 2026-02-25; affected <v0.224.4; patched >=v0.224.4.",
+      "locator": "Summary/code paths around lines 130–159; fix/patch range around 217–239.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official GitHub security advisory.",
+      "governing_condition_default_exception": "Unvalidated tar symlink plus lexical path guard could write outside extension workdir. Patch range v0.224.4+.",
+      "applicability": "Archive handling and filesystem bridge remain sensitive with WASM; not a full vendor audit."
+    },
+    {
+      "id": "S18",
+      "title": "Zed archive extraction source/tests",
+      "url": "https://github.com/zed-industries/zed/blob/v0.224.4/crates/util/src/archive.rs",
+      "version_or_commit": "Release tag v0.224.4; commit SHA not independently retrieved.",
+      "locator": "archive_path_is_normal/extract_zip around lines 965–1126; traversal tests around 1473–1569.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened release-tagged implementation and inspected regression tests.",
+      "governing_condition_default_exception": "Rejects/skips non-normal path components; tests parent/grandparent/absolute ZIP paths. Inspected tests do not cover tar symlink behavior.",
+      "applicability": "Concrete repository code and tests for package path defense; limited to the cases shown."
+    },
+    {
+      "id": "S19",
+      "title": "Zed extension host source",
+      "url": "https://github.com/zed-industries/zed/blob/v0.224.4/crates/extension_host/src/wasm_host.rs",
+      "version_or_commit": "Release tag v0.224.4; commit SHA not independently retrieved.",
+      "locator": "build_wasi_ctx/writeable_path_from_extension around lines 3435–3558; worker loop around 3377–3415.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened release-tagged source and inspected host context/path guard.",
+      "governing_condition_default_exception": "Host preopens extension workdir with all file/dir permissions and inherits stdio; guard canonicalizes nearest existing ancestor before checking containment.",
+      "applicability": "Shows actual embedding choices and host-side checks need their own adversarial tests."
+    },
+    {
+      "id": "S20",
+      "title": "The Update Framework security properties",
+      "url": "https://theupdateframework.io/docs/security/",
+      "version_or_commit": "Live TUF docs; no spec version displayed in page snapshot.",
+      "locator": "Attack list and security principles around lines 11–41.",
+      "access_utc": "2026-10-12T00:42:20Z",
+      "observed_operation": "Opened official TUF security page.",
+      "governing_condition_default_exception": "Documents arbitrary package, rollback, fast-forward, freeze, endless data, mix-and-match and key compromise; relies on expiring/compartmentalized trust metadata.",
+      "applicability": "Potential mature registry option; adds metadata/key-lifecycle burden."
+    }
+  ]
+}

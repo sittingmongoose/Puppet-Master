@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B10-P01-treatment",
+  "stage": "critic",
+  "boundary": "Independent critic review after the released plan; original stable source IDs and identity records are carried forward unchanged, with critic access events appended.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "RFC 9110 — HTTP Semantics",
+      "source_type": "IETF Standards Track RFC; primary protocol specification",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "released_version_or_commit": "RFC 9110, STD 97, published June 2022",
+      "locator": "§8.8.1–8.8.3 (validators, Last-Modified, ETag); §13.1.2–13.1.3 (If-None-Match, If-Modified-Since); §15.4.5 (304); §12.5.5 Vary; §15.4.5 304 Not Modified",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run search/open/find on the official RFC HTML; no request was sent to a case URL.",
+      "governing_conditions_defaults_exceptions": [
+        "Last-Modified reports the origin server's believed modification time of the selected representation; the determination is implementation-specific.",
+        "Last-Modified is implicitly weak unless RFC clock/resolution conditions permit it to be treated as strong.",
+        "ETag is an opaque validator for selected representations, not necessarily a cryptographic digest.",
+        "If-None-Match uses weak comparison for GET cache validation, so matching may validate even if representation data changed.",
+        "If-Modified-Since is ignored when If-None-Match is present; dates are fallback validators, not proof of byte identity.",
+        "Vary identifies request fields that may have selected the response representation; it expands the matching key, and Vary:* means the variant may depend on other factors the client cannot fully reproduce.",
+        "A 304 response has no content body and returns only specified metadata for cache updates; it is not the new representation body and cannot itself re-resolve passage anchors."
+      ],
+      "applicability": "Defines online-check claims; keep validator outcome separate from local byte hash, source version and claim applicability. Record the selected representation's media type/language, Vary fields and safe variant inputs; treat Vary:* or non-reproducible selection as variant-unknown.",
+      "additional_access_events": [
+        {
+          "accessed_utc": "2026-10-12T00:46:37Z",
+          "observed_operation": "web__run opened RFC 9110 §12.5.5 and §15.4.5 and found Vary/304 passages."
+        },
+        {
+          "accessed_utc": "2026-10-12T01:00:19Z",
+          "observed_operation": "Independent critic web__run open/find on RFC Editor HTML §§8.8.1–8.8.3, 12.5.5, 13.1.2, 15.4.2–15.4.9: validators, Vary, 304, and redirect status meanings."
+        }
+      ]
+    },
+    {
+      "source_id": "S02",
+      "title": "RFC 9111 — HTTP Caching",
+      "source_type": "IETF Standards Track RFC; primary caching specification",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "released_version_or_commit": "RFC 9111, STD 98, published June 2022",
+      "locator": "§4.2.2 Calculating Heuristic Freshness; §4.3 Validation",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run search/open/find on official RFC HTML sections on heuristic freshness and validation.",
+      "governing_conditions_defaults_exceptions": [
+        "A cache may calculate heuristic freshness only when explicit freshness is absent and the response is eligible; Last-Modified can inform an estimate.",
+        "Freshness is cache-reuse policy, and successful validation can update cache metadata; neither determines whether a technical claim applies to a release.",
+        "Conditional validators support cache revalidation; handbook evidence semantics are a separate layer."
+      ],
+      "applicability": "Avoid presenting cache-fresh/cache-stale policy as a conclusion about note validity."
+    },
+    {
+      "source_id": "S03",
+      "title": "RFC 6920 — Naming Things with Hashes",
+      "source_type": "IETF Standards Track RFC; primary hash-name specification",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc6920.html",
+      "released_version_or_commit": "RFC 6920, published April 2013",
+      "locator": "§2 Hashes Are What Count; §3 Named Information URI; §10 Security Considerations",
+      "accessed_utc": "2026-10-12T00:41:56Z",
+      "observed_operation": "web__run opened the official RFC HTML and read hash-based naming, SHA-256 support and security context.",
+      "governing_conditions_defaults_exceptions": [
+        "A full digest and algorithm can identify digital-object bytes and bind retrieved bytes to a name if integrity is checked.",
+        "RFC 6920 leaves hash input to the application/protocol; specify whether the digest is over raw bytes or normalized text.",
+        "A hash alone does not prove publisher identity, semantic version or applicability; a hash does not protect confidentiality."
+      ],
+      "applicability": "Supports raw-byte and extracted-text digests, with separate publisher/version metadata; do not send note-derived digests upstream."
+    },
+    {
+      "source_id": "S04",
+      "title": "RFC 7089 — HTTP Memento",
+      "source_type": "IETF Informational RFC; primary description of Memento",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc7089.html",
+      "released_version_or_commit": "RFC 7089, published December 2013",
+      "locator": "§2.1.1 Accept-Datetime/Memento-Datetime; §3.1 Datetime Negotiation; §4.5.6 Sticky Memento-Datetime/original link",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run search/open/find on RFC Editor HTML, including datetime negotiation and byte-equivalence caveat.",
+      "governing_conditions_defaults_exceptions": [
+        "A TimeGate chooses a best-fit Memento at its discretion; returned date may differ significantly from requested date.",
+        "A Memento response carries Memento-Datetime and a link to the original; conforming Memento servers keep these identifiers sticky.",
+        "A replay may not be byte-for-byte equal to the original because of format migrations, URI rewriting or archive banners."
+      ],
+      "applicability": "Optional recovery trail for moved pages; retrieved archive capture is another edition and should be hashed locally."
+    },
+    {
+      "source_id": "S05",
+      "title": "Web Annotation Data Model",
+      "source_type": "W3C Recommendation; primary passage-annotation model",
+      "exact_url": "https://www.w3.org/TR/2017/REC-annotation-model-20170223/",
+      "released_version_or_commit": "W3C Recommendation dated 2017-02-23",
+      "locator": "§4.2.4 Text Quote Selector; §4.2.5 Text Position Selector; §4.3 States; §4.3.1 Time State; §4.3.2 Request Header State",
+      "accessed_utc": "2026-10-12T00:40:58Z",
+      "observed_operation": "web__run opened the dated Recommendation and selector anchors; find located selector definitions and brittleness note.",
+      "governing_conditions_defaults_exceptions": [
+        "TextQuoteSelector stores normalized exact text and may store prefix/suffix context.",
+        "TextPositionSelector uses normalized Unicode code-point offsets, zero-based with end exclusive.",
+        "Position selectors are brittle under edits; the Recommendation recommends an additional State to identify the correct representation.",
+        "A State describes how to retrieve the intended representation; Time State can identify a historical representation and Request Header State describes headers for the intended variant.",
+        "A response representation may also depend on non-header context such as client IP; recording headers may not be sufficient to recreate it."
+      ],
+      "applicability": "Use quote/context plus edition identity and structural locator; position is only a hint within the pinned edition. Keep copied note excerpts local. Store only safe representation-selection metadata needed for public sources; never persist/replay credentials or unrelated private headers.",
+      "additional_access_events": [
+        {
+          "accessed_utc": "2026-10-12T00:46:37Z",
+          "observed_operation": "web__run opened the dated Recommendation's Time State and Request Header State anchors."
+        },
+        {
+          "accessed_utc": "2026-10-12T01:00:19Z",
+          "observed_operation": "Independent critic web__run open/find on the dated W3C Recommendation: Text Quote/Position Selectors and §4.3 States, including representation state and position-selector brittleness."
+        }
+      ]
+    },
+    {
+      "source_id": "S06",
+      "title": "PROV-O: The PROV Ontology",
+      "source_type": "W3C Recommendation; primary provenance vocabulary",
+      "exact_url": "https://www.w3.org/TR/2013/REC-prov-o-20130430/",
+      "released_version_or_commit": "W3C Recommendation dated 2013-04-30",
+      "locator": "prov:wasDerivedFrom; prov:wasRevisionOf; prov:wasQuotedFrom; prov:hadPrimarySource",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run opened the dated W3C Recommendation and located derivation/revision entries.",
+      "governing_conditions_defaults_exceptions": [
+        "PROV distinguishes entities and derivation/revision relations and provides specific relations for applicable cases.",
+        "Using the vocabulary does not require deploying RDF/OWL; edges still need evidence and assertion context."
+      ],
+      "applicability": "Represent explicit edition lineage and note-to-evidence provenance without claiming semantic interchangeability."
+    },
+    {
+      "source_id": "S07",
+      "title": "Git data model documentation",
+      "source_type": "Official Git documentation; living reference",
+      "exact_url": "https://git-scm.com/docs/gitdatamodel",
+      "released_version_or_commit": "No numbered edition or immutable commit is identified on the accessed page; living documentation accessed 2026-10-12",
+      "locator": "Objects and References sections",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run search/open/find on git-scm.com documentation.",
+      "governing_conditions_defaults_exceptions": [
+        "Git commits/files are objects with IDs derived from object type and contents; objects do not change after creation and their contents can be recovered while retained.",
+        "References/tags name objects; preserve repository identity and full resolved object ID rather than relying only on a human-readable name."
+      ],
+      "applicability": "For Git-hosted docs, retain repository URI, release/tag label, resolved full commit/object ID and path. Other media need other edition identity."
+    },
+    {
+      "source_id": "S08",
+      "title": "SQLite FTS5 Extension documentation",
+      "source_type": "Official SQLite primary documentation; living page",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Living docs; FTS5 is included in the amalgamation since SQLite 3.9.0 (2015-10-14); source-tree builds require enablement and build defaults differ.",
+      "locator": "§2.1 build/enablement; §4.4.3 External Content Tables; §4.4.4 External Content Table Pitfalls; §6.3 Rebuild; §6.4 Integrity Check",
+      "accessed_utc": "2026-10-12T00:38:50Z",
+      "observed_operation": "web__run opened official FTS5 documentation and located external-content behavior, trigger example, rebuild and integrity-check.",
+      "governing_conditions_defaults_exceptions": [
+        "External-content FTS5 reads row values from a separate content table; the application is responsible for consistency.",
+        "Triggers only track later mutations; an initial build/rebuild is required for rows that predate triggers.",
+        "Rebuild can repopulate from current content; integrity-check can compare the external content when configured as documented.",
+        "FTS5 availability depends on the linked SQLite build; verify the actual runtime."
+      ],
+      "applicability": "Candidate for local search over edition text; result rows must map to immutable edition IDs. Performance is unmeasured.",
+      "additional_access_events": [
+        {
+          "accessed_utc": "2026-10-12T01:00:19Z",
+          "observed_operation": "Independent critic web__run open/find on official FTS5 build and external-content synchronization documentation, including trigger/backfill and rebuild behavior."
+        }
+      ]
+    },
+    {
+      "source_id": "S09",
+      "title": "SQLite Fossil source test ext/fts5/test/fts5content.test",
+      "source_type": "Pinned upstream source repository test file",
+      "exact_url": "https://sqlite.org/src/raw/ext/fts5/test/fts5content.test?ci=version-3.53.2",
+      "released_version_or_commit": "SQLite 3.53.2 (2026-06-03); SQLITE_SOURCE_ID/Fossil check-in d6e03d8c777cfa2d35e3b60d8ec3e0187f3e9f99d8e2ee9cac695fd6fcdf1a24",
+      "locator": "lines 102–143 (external-content setup and insert/delete/update triggers, integrity-check); lines 197–221 (rebuild and delete tests)",
+      "accessed_utc": "2026-10-12T00:41:19Z",
+      "observed_operation": "HTTP GET of tagged raw file; read named ranges only; SHA-256 d748292f425e6fbbc69a4291b3d7e5ecfcc067ac1e4600a4cefe0b6f36f626df, 10,460 bytes; test/code not executed.",
+      "governing_conditions_defaults_exceptions": [
+        "Upstream tests exercise external-content setup, insert/delete/update synchronization and integrity-check.",
+        "Tests exercise rebuilding from existing external content and consistency after deletion.",
+        "This 3.53.2 test does not cover the later-reported nested multiple-AFTER-UPDATE-trigger combination."
+      ],
+      "applicability": "Primary pattern for proposed index tests; pin to this release source and extend for the application schema."
+    },
+    {
+      "source_id": "S10",
+      "title": "SQLite bug forum: FTS5 external-content index and nested AFTER UPDATE triggers",
+      "source_type": "Public SQLite Fossil bug-forum report and maintainer discussion; report record, not specification",
+      "exact_url": "https://sqlite.org/bugs/info/d3b14ada9b81056914d0e6f9a6d23b7a804008c82b3481fae225d8a514dbd180?t=c",
+      "released_version_or_commit": "Thread opened 2026-08-04; report says reproduced on 3.45.1, 3.45.3 and 3.53.2; maintainer response 2026-08-05; no fix commit identified in this thread.",
+      "locator": "initial report/correction §§1–3; maintainer response #4, lines 164–203",
+      "accessed_utc": "2026-10-12T00:43:30Z",
+      "observed_operation": "web__run opened the official SQLite forum thread and read report, reporter correction, and maintainer response.",
+      "governing_conditions_defaults_exceptions": [
+        "The first reproduction omitted an insert-sync trigger and was challenged; the reporter corrected it and posted a refined case.",
+        "Maintainer confirmed an illustrative nested-trigger ordering issue and said FTS5 advice does not work in that combination; suggested FTS trigger creation last may work in practice.",
+        "This does not establish that all external-content FTS uses fail. No local reproduction or fix was performed here."
+      ],
+      "applicability": "Risk for mutable external-content rows plus nested AFTER UPDATE triggers. Prefer append-only edition text; if mutable integration remains, test exact packaged build and inspect later release history.",
+      "additional_access_events": [
+        {
+          "accessed_utc": "2026-10-12T01:00:19Z",
+          "observed_operation": "Independent critic web__run open on the SQLite Fossil report and maintainer reply, including correction of the first reproduction, refined trigger combination, token-superset example, reported 3.53.2 build, and trigger-order workaround."
+        }
+      ]
+    },
+    {
+      "source_id": "S11",
+      "title": "SQLite Release 3.43.0",
+      "source_type": "Official SQLite release notes",
+      "exact_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "released_version_or_commit": "SQLite 3.43.0, released 2023-08-24",
+      "locator": "Release item 1: FTS5 contentless-delete indexes",
+      "accessed_utc": "2026-10-12T00:43:30Z",
+      "observed_operation": "web__run searched/opened the official SQLite release log and confirmed feature introduction.",
+      "governing_conditions_defaults_exceptions": [
+        "Contentless-delete is an FTS5 index mode introduced in 3.43.0; it omits indexed content but permits deletion.",
+        "It does not replace a separate local source edition needed to show the exact passage."
+      ],
+      "applicability": "Alternative only if index duplication matters and linked runtime is at least 3.43.0; otherwise use external-content mode."
+    },
+    {
+      "source_id": "S12",
+      "title": "SQLite Release History",
+      "source_type": "Official SQLite high-level release history",
+      "exact_url": "https://www.sqlite.org/changes.html",
+      "released_version_or_commit": "Captured 2026-10-12; lists 3.54.0 dated 2026-10-09, SQLITE_SOURCE_ID be8d059e9a49089ab2dce5ed26dd87aaf598fdc5fbe0b107c0dd758464bcd5e3.",
+      "locator": "2026-10-09 (3.54.0) block; 2026-07-24 (3.53.4) block; page introduction",
+      "accessed_utc": "2026-10-12T00:43:30Z",
+      "observed_operation": "web__run opened official SQLite release history and inspected the current release and 3.53.x patch summaries.",
+      "governing_conditions_defaults_exceptions": [
+        "3.54.0 is the latest release shown at access; its summary does not identify a trigger-specific FTS fix.",
+        "3.53.4 says it fixes problems in earlier 3.53 releases but does not map a fix to this later forum report.",
+        "No named fix in a high-level changelog is not proof that no code change exists or that a report remains unfixed."
+      ],
+      "applicability": "Treat the forum issue as a test risk, not a settled release-history conclusion; check the exact packaged SQLite version.",
+      "additional_access_events": [
+        {
+          "accessed_utc": "2026-10-12T01:00:19Z",
+          "observed_operation": "Independent critic web__run find/open on official SQLite release history: 3.54.0 dated 2026-10-09 and the page's high-level-summary scope."
+        }
+      ]
+    }
+  ],
+  "updated_utc": "2026-10-12T01:00:19Z"
+}

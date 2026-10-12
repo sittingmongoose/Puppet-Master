@@ -1,0 +1,97 @@
+{
+  "prepared_at_utc": "2026-10-12T00:30:32.399Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T01:00:31.731Z",
+  "whole_deadline_utc": "2026-10-12T01:30:31.731Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/inputs/brief.md",
+      "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+      "bytes": 2340
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/assignment.md",
+      "sha256": "df09333ade2a4fa949a9728178a3302ab0d49ef1e1c647e01a82c916e8cb1c2e",
+      "bytes": 10251
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/input-map.json",
+      "sha256": "404af59cad0bcaaa07c66db7fa2c5e261e9e3b41de99b6897303b4f92c38005e",
+      "bytes": 831
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/prepare.py",
+      "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+      "bytes": 32148
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "1c64fdb51b5168ff07e650b2c0bbbd79cf6bd17f7f2bb4679555b9d2e3402bb5",
+      "bytes": 9560
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run A-F02-A1_A8: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A1",
+  "stage_prompt_delta": null,
+  "time_contract": "absolute_T0_30_42_60",
+  "available_stage_seconds_at_prepare": 1799.331992,
+  "composite_guard": {
+    "recipe_id": "er12-composite-A1-A8-v1",
+    "components": {
+      "base_prepare": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/prepare.py",
+        "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+        "bytes": 32148
+      },
+      "base_reveal": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/reveal.py",
+        "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+        "bytes": 2880
+      },
+      "base_bootstrap": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/bootstrap.js",
+        "sha256": "1c64fdb51b5168ff07e650b2c0bbbd79cf6bd17f7f2bb4679555b9d2e3402bb5",
+        "bytes": 9560
+      },
+      "critic_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/critic_prompt_delta.txt",
+        "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+        "bytes": 3398
+      },
+      "reviser_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/reviser_prompt_delta.txt",
+        "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+        "bytes": 1715
+      }
+    }
+  },
+  "composite_stage_delta": null,
+  "request_sha256": "b867d6e081c1a5c048b2d20fe1e34e2b2a99ce4c711fee6adaaa0930be75b29d"
+}

@@ -1,0 +1,1 @@
+async function clarifySpec(spec){if(spec.alreadyDispatched)return spec;const R="ER12_RUNTIME",q=s=>"'"+s.replaceAll("'","'\\''")+"'";const p=await tools.exec_command({cmd:"python3 -B "+R+"/mechanics/invocation-clarification-v1/transform.py --stage-dir "+q(spec.stageDir),max_output_tokens:10000});if(p.exit_code!==0)throw Error(p.output);return {...spec,...JSON.parse(p.output)}}

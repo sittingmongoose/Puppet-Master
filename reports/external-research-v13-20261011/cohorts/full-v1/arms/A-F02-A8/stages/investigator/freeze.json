@@ -1,0 +1,97 @@
+{
+  "prepared_at_utc": "2026-10-12T00:30:25.581Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T01:00:25.581Z",
+  "whole_deadline_utc": "2026-10-12T01:30:25.046Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/inputs/brief.md",
+      "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+      "bytes": 2340
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/stages/investigator/assignment.md",
+      "sha256": "a5ca7fcb0c23d814ec868b72cc6ff46796b295790b3c89191ea2375ed9f9ce0b",
+      "bytes": 10185
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/stages/investigator/input-map.json",
+      "sha256": "6fae8641bbbd0250c38132c403a54c50c50a2b5c4083526bec66d193e4ec3c31",
+      "bytes": 810
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/prepare.py",
+      "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+      "bytes": 32148
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "2574a74e1e221bba3cb7a7b436ffa18d33ae4dc4e246ba7bf17d3f20d8fb40a4",
+      "bytes": 9524
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run A-F02-A8: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0,
+  "composite_guard": {
+    "recipe_id": "er12-composite-A1-A8-v1",
+    "components": {
+      "base_prepare": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/prepare.py",
+        "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+        "bytes": 32148
+      },
+      "base_reveal": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/reveal.py",
+        "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+        "bytes": 2880
+      },
+      "base_bootstrap": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/helpers/er12-screen-v1/bootstrap.js",
+        "sha256": "2574a74e1e221bba3cb7a7b436ffa18d33ae4dc4e246ba7bf17d3f20d8fb40a4",
+        "bytes": 9524
+      },
+      "critic_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/methods/A8/critic_prompt_delta.txt",
+        "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+        "bytes": 3398
+      },
+      "reviser_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/methods/A8/reviser_prompt_delta.txt",
+        "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+        "bytes": 1715
+      }
+    }
+  },
+  "composite_stage_delta": null,
+  "request_sha256": "cecf21c1ddfe9763d953a1ce605e4a0e23e5c9992c1763e21c928cf1a514cf69"
+}

@@ -1,0 +1,28 @@
+{
+  "run_id": "A-F02-A1",
+  "stage": "critic",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/inputs/brief.md",
+  "predecessors": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/plan-reveal.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/sources/README.md"
+  ],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/critic",
+  "stage_deadline_utc": "2026-10-12T01:12:35.058Z",
+  "whole_deadline_utc": "2026-10-12T01:30:35.058Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/investigator/revealed-plan.md"
+}

@@ -1,0 +1,96 @@
+{
+  "run_id": "B06-P01-treatment",
+  "stage": "critic-truth",
+  "purpose": "Independent primary-source notes supporting critique.md. Stable source IDs retain the investigator package's existing meanings.",
+  "access_window_utc": "2026-10-12T00:47Z–2026-10-12T00:47:55Z; request-level seconds unavailable.",
+  "sources": [
+    {
+      "id": "WCONFIG",
+      "title": "Wasmtime v49.0.2 configuration and interruption comments",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/crates/wasmtime/src/config.rs#L3488-L3503",
+      "version": "Wasmtime v49.0.2 tag; investigator source map identifies commit 3c8a3e7",
+      "locator": "Interaction with blocking host calls, lines 3488–3503",
+      "access_utc": "2026-10-12T00:47Z–00:47:28Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the tagged source file and inspected the blocking-host-call comment with a targeted text lookup.",
+      "governing_condition_default_exception": "Epochs and fuel affect running WebAssembly code but do not wake or time out code blocked in a host call; embedder must bound and wake such host work.",
+      "applicability": "Supports explicit host-call cancellation in addition to guest fuel/epoch controls."
+    },
+    {
+      "id": "WLIMIT",
+      "title": "Wasmtime v49.0.2 resource limiter implementation",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/crates/wasmtime/src/runtime/limits.rs#L1037-L1045",
+      "version": "Wasmtime v49.0.2 tag; investigator source map identifies commit 3c8a3e7",
+      "locator": "ResourceLimiter allocation caveat, lines 1037–1045",
+      "access_utc": "2026-10-12T00:47Z–00:47:28Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the tagged source file and inspected the resource-limiter caveat with a targeted text lookup.",
+      "governing_condition_default_exception": "The limiter constrains resources allocated by a WebAssembly instance, not every Store allocation or embedder-specific allocation.",
+      "applicability": "Supports complementary host allocation and process-level resource limits."
+    },
+    {
+      "id": "WREL",
+      "title": "Wasmtime v49.0.2 release notes",
+      "url": "https://github.com/bytecodealliance/wasmtime/releases/tag/v49.0.2",
+      "version": "v49.0.2; release dated 2026-10-02",
+      "locator": "Fixed items, lines 173–196",
+      "access_utc": "2026-10-12T00:47Z–00:47:28Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the tagged release and inspected its fixed-item list.",
+      "governing_condition_default_exception": "The notes list a WASI Preview 0 poll_oneoff fuel bypass, excessive host allocation when guests lack stdio, and a component async-lifted callback result-count validation issue causing native stack buffer overflow, among other fixes.",
+      "applicability": "Confirms the draft's examples of maintenance-sensitive runtime issues; fixes do not certify a host embedding."
+    },
+    {
+      "id": "BWRAP-README",
+      "title": "Bubblewrap v0.13.0 README",
+      "url": "https://github.com/containers/bubblewrap/blob/v0.13.0/README.md",
+      "version": "v0.13.0 tag; investigator source map identifies commit 719a4fd",
+      "locator": "Sandbox argument responsibility, namespaces, seccomp, and limitations, lines 208–268",
+      "access_utc": "2026-10-12T00:47Z–00:47:28Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the tagged README and inspected the sandboxing and limitations sections.",
+      "governing_condition_default_exception": "Protection is determined by the invoking framework's arguments; mounts and exposed D-Bus matter; seccomp can restrict syscalls; without TIOCSTI filtering, --new-session is needed.",
+      "applicability": "Supports requiring a host-owned policy builder and tests; the README does not itself define a quota for temporary storage."
+    },
+    {
+      "id": "WIN-APP",
+      "title": "Microsoft AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version": "Current Microsoft Learn Win32 documentation; page says last updated 2025-07-08",
+      "locator": "File isolation and process isolation, lines 39–47; device exceptions, line 38",
+      "access_utc": "2026-10-12T00:47:28Z–00:47:55Z; request-level seconds unavailable.",
+      "observed_operation": "Opened Microsoft Learn documentation and read file, process, and device isolation statements.",
+      "governing_condition_default_exception": "Read-write access may be granted narrowly; read-only access is less restricted; each AppContainer can access its own memory-resident files; keyboard/mouse are listed among resources always available to AppContainer and resident application.",
+      "applicability": "Supports AppContainer as a meaningful boundary but requires exact-mode negative tests and qualified claims about zero filesystem/device access."
+    },
+    {
+      "id": "WIN-JOB",
+      "title": "Microsoft Job Objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version": "Current Microsoft Learn Win32 documentation; page says last updated 2025-07-14",
+      "locator": "Child process association, termination, and tree management, lines 42–55 and 86–95",
+      "access_utc": "2026-10-12T00:47:28Z–00:47:55Z; request-level seconds unavailable.",
+      "observed_operation": "Opened Microsoft Learn documentation and read process association, termination, and breakaway rules.",
+      "governing_condition_default_exception": "CreateProcess children normally join the job, but Win32_Process.Create children do not by default; breakaway flags alter association; KILL_ON_JOB_CLOSE acts when the last job handle closes; job nesting varies by Windows version.",
+      "applicability": "Supports Job Objects for resource and lifecycle controls only when launch paths, handle inheritance, nesting, and breakaway are configured and validated."
+    },
+    {
+      "id": "XDG-FILE",
+      "title": "XDG Desktop Portal FileChooser",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.FileChooser.html",
+      "version": "FileChooser interface version 4 per investigator source map",
+      "locator": "OpenFile filters, lines 143–153",
+      "access_utc": "2026-10-12T00:47Z–00:47:28Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the official portal page and read filter semantics.",
+      "governing_condition_default_exception": "Filters aid user selection; the portal may still allow files that do not match them and applications must handle that.",
+      "applicability": "Supports treating file-picker filters as usability only, not an access-control test."
+    },
+    {
+      "id": "XDG-DOCS",
+      "title": "XDG Desktop Portal Documents",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Documents.html",
+      "version": "Documents interface version 5, stated by the page",
+      "locator": "Sandboxed file view and persistence flag, lines 94–102 and 125–150",
+      "access_utc": "2026-10-12T00:47:28Z–00:47:55Z; request-level seconds unavailable.",
+      "observed_operation": "Opened the official portal page and read the sandbox filesystem view and Add() persistence semantics.",
+      "governing_condition_default_exception": "Exported files are exposed through a restricted sandbox filesystem; Add() takes an open fd and a persistent boolean that selects session-only or permanent access.",
+      "applicability": "Supports one-run, host-mediated bytes or nonpersistent document grants; do not infer chooser selection alone makes a grant ephemeral."
+    }
+  ]
+}

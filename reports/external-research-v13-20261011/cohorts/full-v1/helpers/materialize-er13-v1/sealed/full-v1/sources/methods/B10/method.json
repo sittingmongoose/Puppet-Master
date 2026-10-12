@@ -1,0 +1,16 @@
+{
+  "schema": "er13.prospective-method-fragment.v1",
+  "method_id": "B10",
+  "version": "B10-v1",
+  "scope": "FULL",
+  "topology": "investigator -> independent critic -> fresh reviser",
+  "candidate_contexts": 3,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "authority": "ER13 execution handoff section 7; treatment prescription only; no case/source answers",
+  "full_obligations_retained": true,
+  "state": "PROSPECTIVE_UNSTARTED_ONLY"
+}

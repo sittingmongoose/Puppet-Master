@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "stage": "critic",
+  "source_id_policy": "S01-S20 retain the investigator source-map meanings. C01-C16 are new critic-stage IDs and are not aliases or silent rebindings. Inherited S records remain authoritative in the linked predecessor map.",
+  "inherited_catalog": {
+    "source_map_path": "../../investigator/source-map.json",
+    "navigable_index_path": "../../investigator/sources/index.md",
+    "ids": "S01-S20"
+  },
+  "verification_batch": {
+    "access_utc_sample_before_direct_open_batch": "2026-10-12T00:59:42Z",
+    "note": "The UTC clock sample immediately preceded the batched direct opens below. Later locator finds used the loaded pages. Source pages are linked, not copied."
+  },
+  "sources": [
+    {
+      "id": "C01",
+      "title": "Figma Plugin Manifest",
+      "url": "https://developers.figma.com/docs/plugins/manifest/",
+      "version_or_commit": "Live docs; no immutable revision.",
+      "locator": "Manifest/networkAccess/documentAccess lines 19-33, 65-80, 84-104.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened official page; inspected manifest, domain conditions and iframe caveat.",
+      "governing_condition_default_exception": "allowedDomains none blocks plugin network; iframe website resources are outside that rule; new plugins require dynamic-page.",
+      "applicability": "UX/declaration precedent, not desktop OS enforcement."
+    },
+    {
+      "id": "C02",
+      "title": "Figma Making Network Requests",
+      "url": "https://developers.figma.com/docs/plugins/making-network-requests/",
+      "version_or_commit": "Live docs; no immutable revision.",
+      "locator": "Best practice and network setup, lines 31-38 and specify-access sections.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened official page; inspected least-domain guidance and workflow.",
+      "governing_condition_default_exception": "Develop/test then specify only needed domains before publish; Figma-specific enforcement.",
+      "applicability": "Least-privilege UX precedent only."
+    },
+    {
+      "id": "C03",
+      "title": "Figma Creating a User Interface",
+      "url": "https://developers.figma.com/docs/plugins/creating-ui/",
+      "version_or_commit": "Live docs; no immutable revision.",
+      "locator": "Messaging and origin guidance, lines 39-92.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened page; checked structured message serialization and origin/plugin-ID advice.",
+      "governing_condition_default_exception": "Messages behave like serialized values; sensitive custom-origin messages should specify plugin ID and target origin; wildcard examples also exist.",
+      "applicability": "Data exchange precedent, not process sandbox."
+    },
+    {
+      "id": "C04",
+      "title": "Figma Resource Links",
+      "url": "https://developers.figma.com/docs/plugins/resource-links/",
+      "version_or_commit": "Live docs; no immutable revision.",
+      "locator": "Iframe external resources and fetch/postMessage/eval, lines 24-25.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened page; inspected remote-script bridge caveat.",
+      "governing_condition_default_exception": "Script fetched in UI iframe can be posted to main thread and eval'd there.",
+      "applicability": "Caveat against treating UI/message split as runtime isolation."
+    },
+    {
+      "id": "C05",
+      "title": "WIT Reference — Component Model",
+      "url": "https://component-model.bytecodealliance.org/design/wit.html",
+      "version_or_commit": "Live Bytecode Alliance guide; no immutable revision.",
+      "locator": "WIT overview and interface/world examples around lines 13-17 and examples.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened official guide; checked typed contract claim.",
+      "governing_condition_default_exception": "WIT describes component interfaces/worlds, not implementation behavior or runtime authority.",
+      "applicability": "ABI candidate only; language/tooling fit requires prototype."
+    },
+    {
+      "id": "C06",
+      "title": "VS Code Extension Runtime Security",
+      "url": "https://code.visualstudio.com/docs/configure/extensions/extension-runtime-security",
+      "version_or_commit": "Live page dated 2026-10-07; trust prompts since 1.97.",
+      "locator": "Permissions/trust/signature sections, lines 213-229, 245-258.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened page; checked runtime permissions and publisher/signature claims.",
+      "governing_condition_default_exception": "Extension host has VS Code file/network/process permissions; signing checks package integrity/source, not permission isolation.",
+      "applicability": "Direct evidence to separate host/trust from enforcement."
+    },
+    {
+      "id": "C07",
+      "title": "VS Code WorkspaceEdit API",
+      "url": "https://code.visualstudio.com/api/references/vscode-api",
+      "version_or_commit": "Live API reference; no immutable revision.",
+      "locator": "workspace.applyEdit, lines 2348-2359.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened API reference; checked ordering and failure semantics.",
+      "governing_condition_default_exception": "Text-only edits are all-or-nothing; resource edits abort subsequent operations on failure, not a general rollback guarantee.",
+      "applicability": "Analog only; validate diagram engine itself."
+    },
+    {
+      "id": "C08",
+      "title": "VS Code issue #146964",
+      "url": "https://github.com/microsoft/vscode/issues/146964",
+      "version_or_commit": "Issue opened 2022-04-06; timeline commit 4ea02de, Insiders patch released/verified labels; release note not established.",
+      "locator": "Repro/status/timeline, lines 129-165, 394-410.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened issue; inspected reproduction, labels, timeline.",
+      "governing_condition_default_exception": "Create/overwrite then text edit could leave empty file and return false in reported case; issue closed and verified patched.",
+      "applicability": "Regression precedent, not general unreliability claim."
+    },
+    {
+      "id": "C09",
+      "title": "Wasmtime Security v49.0.2",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/docs/security.md",
+      "version_or_commit": "Release tag v49.0.2; full SHA not separately retrieved.",
+      "locator": "Security overview, core and filesystem, lines 191-220.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened release-pinned docs; checked import boundary and filesystem section.",
+      "governing_condition_default_exception": "WASM imports outside functionality; memory isolation; WASI filesystem capability model; embedder choice and bugs remain.",
+      "applicability": "Supports candidate, requires host API review."
+    },
+    {
+      "id": "C10",
+      "title": "Wasmtime fuel-bypass advisory",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version_or_commit": "Published 2026-10-02; patched 36.0.17, 48.0.4, 49.0.2.",
+      "locator": "Affected range, conditions and fix, lines 129-155.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened advisory; checked affected versions and Preview 0 condition.",
+      "governing_condition_default_exception": "O(n) Preview 0 poll_oneoff host work bypassed fuel; library affected only when explicitly enabling Preview 0 linker; p1/p2/p3 stated unaffected.",
+      "applicability": "Pin/patch and host-call budget precedent, bounded to condition."
+    },
+    {
+      "id": "C11",
+      "title": "Wasmtime StoreLimitsBuilder",
+      "url": "https://docs.wasmtime.dev/api/wasmtime/struct.StoreLimitsBuilder.html",
+      "version_or_commit": "Explicitly Wasmtime 51.0.0-dev; not release pinned.",
+      "locator": "memory_size/defaults, lines 65-115.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened API reference; checked defaults/per-memory limit semantics.",
+      "governing_condition_default_exception": "Linear memory unlimited by default; memory_size applies per memory; other defaults belong to this dev version.",
+      "applicability": "Explicit and pinned resource-limit verification needed."
+    },
+    {
+      "id": "C12",
+      "title": "Linux Kernel Landlock",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "version_or_commit": "Current online kernel docs; ABI history described, no kernel release pinned.",
+      "locator": "Descriptor rights and ABI detection, lines 279-308; limitations 812-832.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened kernel docs; checked descriptor authority, ABI detection and limitations.",
+      "governing_condition_default_exception": "Rights vary by ABI; preopened descriptors retain associated authority; runtime ABI check recommended; some inherited/special resources require care.",
+      "applicability": "Linux candidate; feature-detect and test actual worker policy."
+    },
+    {
+      "id": "C13",
+      "title": "Windows AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version_or_commit": "Microsoft Learn page last updated 2025-07-08.",
+      "locator": "Isolation/file/network/process, lines 31-47.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened page (authorization banner displayed while article text was returned); checked grant conditions.",
+      "governing_condition_default_exception": "Access is by grants; file/registry, network and process controls described; some resources brokered or always available.",
+      "applicability": "Windows candidate; not proof of a concrete launch policy."
+    },
+    {
+      "id": "C14",
+      "title": "Zed tar-symlink advisory",
+      "url": "https://github.com/zed-industries/zed/security/advisories/GHSA-59p4-3mhm-qm3r",
+      "version_or_commit": "Published 2026-02-25; <v0.224.4 affected, >=v0.224.4 patched.",
+      "locator": "Summary/paths lines 130-159; patch range 237-239.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened advisory; checked fixed versions and failure path.",
+      "governing_condition_default_exception": "Unvalidated tar symlink plus lexical path guard allowed write outside extension workdir before patch.",
+      "applicability": "Bounded archive-bridge case, not vendor audit."
+    },
+    {
+      "id": "C15",
+      "title": "Zed archive source/tests",
+      "url": "https://github.com/zed-industries/zed/blob/v0.224.4/crates/util/src/archive.rs",
+      "version_or_commit": "Tag v0.224.4; full SHA not retrieved.",
+      "locator": "ZIP traversal tests lines 1473-1533; implementation around 965-1126.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened pinned source; located parent/grandparent/absolute path tests.",
+      "governing_condition_default_exception": "Inspected tests cover shown ZIP traversal cases, not tar symlinks.",
+      "applicability": "Concrete but limited package-path precedent."
+    },
+    {
+      "id": "C16",
+      "title": "Zed extension WASM host",
+      "url": "https://github.com/zed-industries/zed/blob/v0.224.4/crates/extension_host/src/wasm_host.rs",
+      "version_or_commit": "Tag v0.224.4; full SHA not retrieved.",
+      "locator": "Worker loop 3377-3415; WASI context/preopens 3435-3467; path guard 3471-3535.",
+      "access_utc": "2026-10-12T00:59:42Z",
+      "observed_operation": "Opened pinned source; inspected worker loop, preopens, inherited stdio, canonicalization.",
+      "governing_condition_default_exception": "Embedder chooses preopens/stdio; path guard canonicalizes nearest existing ancestor.",
+      "applicability": "Shows host bridge authority is implementation-specific."
+    }
+  ]
+}

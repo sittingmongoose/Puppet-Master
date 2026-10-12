@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B09-P02-control",
+  "stage": "critic",
+  "source_ids_are_immutable": true,
+  "source_id_policy": "C01-C09 are independent critic observations. The investigator's S00-S16 identities remain unchanged and are not rebound here. C01-C09 crosswalk to applicable investigator IDs in inherited_source_id.",
+  "reviewed_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/inputs/brief.md",
+      "role": "governing brief"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/discovery.md",
+      "role": "complete investigator discovery",
+      "bytes": 13916,
+      "sha256": "e2710b14aff19dc31a87f3f5c0abbfd48b24cc907d2a90ba4cb3786008aaae7f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/draft.md",
+      "role": "complete investigator draft"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/source-map.json",
+      "role": "investigator source identity records"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/revealed-plan.md",
+      "role": "exact released plan",
+      "bytes": 2391,
+      "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/plan-reveal.json",
+      "role": "one-time plan reveal record"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/investigator/sources/index.md",
+      "role": "investigator navigable source index"
+    }
+  ],
+  "sources": [
+    {
+      "id": "C01",
+      "inherited_source_id": "S01",
+      "title": "Job Objects — Win32 apps | Microsoft Learn",
+      "kind": "primary_platform_documentation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "released_version_or_commit": "Live Microsoft Learn page; last updated 2025-07-14",
+      "locator": "Creating Jobs; Managing Processes in Jobs; managing a process tree; closing a job object handle",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the exact page and inspected process association, CreateProcess inheritance exceptions, breakaway, termination, nested-job and last-handle close behavior.",
+      "governing_condition_default_exception": "CreateJobObject starts empty; AssignProcessToJobObject associates a process. CreateProcess descendants normally inherit except Win32_Process.Create; breakaway flags change this. Nested jobs were added in Windows 8. KILL_ON_JOB_CLOSE terminates members when the last handle closes.",
+      "applicability": "Checks the proposed task-specific Windows process boundary and F01 shutdown/reaping gap; does not prove target-host assignment capability."
+    },
+    {
+      "id": "C02",
+      "inherited_source_id": "S02",
+      "title": "JOBOBJECT_BASIC_LIMIT_INFORMATION — Win32 apps | Microsoft Learn",
+      "kind": "primary_platform_documentation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "released_version_or_commit": "Live Microsoft Learn API reference; page last updated 2022-08-23",
+      "locator": "JOB_OBJECT_LIMIT_JOB_MEMORY, JOB_OBJECT_LIMIT_PROCESS_MEMORY, JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the exact API reference and inspected limit flag definitions.",
+      "governing_condition_default_exception": "JOB_MEMORY limits the job-wide sum of committed memory and rejects commits beyond the limit; KILL_ON_JOB_CLOSE terminates members when the last handle closes. This is not a host-wide memory cap.",
+      "applicability": "Checks the draft's Windows metric and boundary wording."
+    },
+    {
+      "id": "C03",
+      "inherited_source_id": "S03",
+      "title": "Control Group v2 — Linux Kernel documentation 6.14",
+      "kind": "primary_platform_documentation",
+      "url": "https://docs.kernel.org/6.14/admin-guide/cgroup-v2.html",
+      "released_version_or_commit": "Version-pinned Linux kernel documentation snapshot 6.14",
+      "locator": "Memory controller: memory.current, memory.peak, memory.high, memory.max; Delegation",
+      "access_utc": "2026-10-12T00:59:10Z",
+      "observed_operation": "Opened the version-pinned reference and inspected the accounting, peak, throttle/hard-limit and delegation sections.",
+      "governing_condition_default_exception": "memory.current covers a cgroup and descendants; memory.peak tracks maximum use since creation/reset. memory.high throttles/reclaims but may be exceeded and does not invoke OOM; memory.max is the hard control but may be exceeded temporarily and can invoke OOM inside the cgroup. Controller behavior is hierarchical and delegation has permission boundaries.",
+      "applicability": "Checks Linux resource-accounting and conditional-enforcement claims; does not establish host availability."
+    },
+    {
+      "id": "C04",
+      "inherited_source_id": "S04",
+      "title": "Control Group APIs and Delegation — systemd.io",
+      "kind": "primary_platform_documentation",
+      "url": "https://systemd.io/CGROUP_DELEGATION/",
+      "released_version_or_commit": "Live systemd documentation; accessed 2026-10-12",
+      "locator": "Single-writer rule; Delegate=; controller availability and enablement",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the page and inspected ownership, delegated subtree, requested-controller caveat, and manual memory-controller enablement text.",
+      "governing_condition_default_exception": "Each cgroup has a single manager. Delegate= on service/scope makes a subtree available, but the requested controllers may not be available and systemd does not itself enable them; memory must be enabled within the delegated subtree.",
+      "applicability": "Checks the draft's capability-detection and ownership caveats for rootless Linux execution."
+    },
+    {
+      "id": "C05",
+      "inherited_source_id": "S11",
+      "title": "Write-Ahead Logging — SQLite",
+      "kind": "primary_database_documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+      "locator": "WAL constraints, concurrency, checkpointing, WAL-reset bug (sections 1, 2, 3, 11)",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the official WAL documentation and inspected same-host constraint, single-writer, checkpoint and bug-fix sections.",
+      "governing_condition_default_exception": "WAL readers and writers can overlap but only one writer exists; all database processes must be on the same host; checkpoint progress can be constrained by readers. The WAL-reset bug is fixed in 3.51.3 and later, with listed backports.",
+      "applicability": "Checks the local embedded queue candidate and the draft's stated release floor; not a decision to use SQLite."
+    },
+    {
+      "id": "C06",
+      "inherited_source_id": "S13",
+      "title": "PRAGMA synchronous — SQLite",
+      "kind": "primary_database_documentation",
+      "url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+      "released_version_or_commit": "Live SQLite documentation accessed 2026-10-12",
+      "locator": "FULL and NORMAL semantics under WAL mode",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the synchronous pragma reference and compared power-loss and application-crash behavior.",
+      "governing_condition_default_exception": "In WAL mode NORMAL is consistent and survives application crashes, but a recently committed transaction may roll back after system/power failure. FULL adds a WAL sync after each commit to improve power-loss durability.",
+      "applicability": "Checks the draft's explicit durability/performance owner decision."
+    },
+    {
+      "id": "C07",
+      "inherited_source_id": "S12",
+      "title": "Release History Of SQLite",
+      "kind": "primary_release_history",
+      "url": "https://www.sqlite.org/changes.html",
+      "released_version_or_commit": "Live official release history; SQLite 3.54.0 dated 2026-10-09 at critic access",
+      "locator": "Top release entry 3.54.0; 3.53.4 entry; 3.51.3 WAL-reset fix entry",
+      "access_utc": "2026-10-12T00:59:10Z",
+      "observed_operation": "Opened the official release history and located the current release, 3.53.4 entry and 3.51.3 WAL-reset fix record.",
+      "governing_condition_default_exception": "The page lists 3.54.0 dated 2026-10-09 above 3.53.4 dated 2026-07-24; it records the WAL-reset fix in 3.51.3 and later releases.",
+      "applicability": "Supports F03's source-record correction and confirms the draft's minimum fixed-release floor."
+    },
+    {
+      "id": "C08",
+      "inherited_source_id": "S06",
+      "title": "Semaphore in tokio::sync — Rust docs.rs",
+      "kind": "primary_library_documentation",
+      "url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+      "released_version_or_commit": "Tokio 1.53.2 shown by the retrieved API page; latest URL is mutable",
+      "locator": "Semaphore fairness and acquire_many head-of-line behavior; acquire_many cancel safety",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the published API reference and inspected FIFO order and large acquire_many behavior.",
+      "governing_condition_default_exception": "Permits are given in request order; an acquire_many at the queue head can prevent a smaller acquire from completing even when the semaphore has enough permits for the smaller request. Canceling acquire_many loses queue position.",
+      "applicability": "Checks the semaphore comparison only; it does not establish extension-queue fairness."
+    },
+    {
+      "id": "C09",
+      "inherited_source_id": "S16",
+      "title": "Visual Studio Code Extension API",
+      "kind": "primary_product_documentation",
+      "url": "https://code.visualstudio.com/api/references/vscode-api",
+      "released_version_or_commit": "Live VS Code API documentation accessed 2026-10-12",
+      "locator": "window.withProgress; ProgressOptions; CancellationToken",
+      "access_utc": "2026-10-12T00:58:41Z",
+      "observed_operation": "Opened the extension API reference and inspected withProgress's progress callback and cancellation-token signature.",
+      "governing_condition_default_exception": "withProgress receives a progress callback and CancellationToken while its operation is pending; the API is a product precedent, not a dependency or host design.",
+      "applicability": "Checks the draft's limited progress/cancellation precedent."
+    }
+  ],
+  "evidence_limitations": [
+    "No target application or repository was named, so app-specific source/caller/test and bundled-SQLite inspection was unavailable.",
+    "The investigator's Tokio implementation/tests, Tokio issue history, and DRR paper are carried as non-governing comparison evidence but were not independently re-read in this critic pass; the draft labels the DRR transfer as inference, and critic findings do not rely on these records.",
+    "No source establishes product-specific fairness units, thresholds, resource defaults, checkpoint contracts, shutdown grace, or supported OS configurations.",
+    "No code, downloaded executable, test, workload experiment, crash test, or machine capability query was run."
+  ],
+  "review_findings": [
+    {
+      "id": "F01",
+      "classification": "material incomplete",
+      "locator": "draft P2.3; Corrected lifecycle contract — Restart",
+      "summary": "Host-shutdown stop/reaping sequence is absent."
+    },
+    {
+      "id": "F02",
+      "classification": "material incomplete",
+      "locator": "draft Fairness candidate; open owner decisions 1–2",
+      "summary": "Aging/barrier language promises no indefinite bypass without specifying the rule or bound."
+    },
+    {
+      "id": "F03",
+      "classification": "minor locator/wording",
+      "locator": "investigator source-map S12; draft Embedded queue candidate",
+      "summary": "3.53.4 is recorded as the top release on 2026-10-12, but official history lists 3.54.0 on 2026-10-09."
+    },
+    {
+      "id": "F04",
+      "classification": "unsupported",
+      "locator": "draft Memory candidate",
+      "summary": "Reservation formula is an unmeasured heuristic; draft presents it as a candidate and proposes measurements."
+    },
+    {
+      "id": "F05",
+      "classification": "honestly unresolved external input",
+      "locator": "brief and draft Open owner decisions",
+      "summary": "Target host repository/contracts/runtime/build were not identified in the brief."
+    }
+  ]
+}

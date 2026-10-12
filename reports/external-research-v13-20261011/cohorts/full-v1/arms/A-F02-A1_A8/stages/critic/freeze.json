@@ -1,0 +1,145 @@
+{
+  "prepared_at_utc": "2026-10-12T00:46:10.482Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-12T01:12:31.731Z",
+  "whole_deadline_utc": "2026-10-12T01:30:31.731Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-A-F02-A1_A8-investigator-A1-A8-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/inputs/brief.md",
+      "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+      "bytes": 2340
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/critic/assignment.md",
+      "sha256": "19eb0007c57d8347f668ca53a3b8b022c78a726a0d5315724bef5b8dce602989",
+      "bytes": 13078
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/critic/input-map.json",
+      "sha256": "b8e7b58c5db5de12e208b1c2ab44947b225747a10075bcc3a8a57490af99a29c",
+      "bytes": 1901
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/discovery.md",
+      "sha256": "50573864e254413b3ac021bbac967e2d5affb3c5f9c7e590ea28dfdbd6323267",
+      "bytes": 8991
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/draft.md",
+      "sha256": "b52edb1de19252e979f40a4bcb35a1ab36efddf843a997a2c5ffe505acfcf39f",
+      "bytes": 30103
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/source-map.json",
+      "sha256": "0200df1d41bfe18b400cc0f2a98e193a3dabe171bf92c87fc2101098fbf9975a",
+      "bytes": 14638
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/revealed-plan.md",
+      "sha256": "5f7ff916807818307634a6a4b42dea7ed030547adae267d936cce489384d6ab2",
+      "bytes": 2449
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/plan-reveal.json",
+      "sha256": "863d8eaeb5e8c21598318f9c1763028b103c173efe0dd7098e6d7b1ed1cfc9a2",
+      "bytes": 462
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/sources/index.md",
+      "sha256": "431a50403d9f3c21c722933cd617493eecf9e29efd64790ea59e4b91ae9df0dd",
+      "bytes": 2626
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/prepare.py",
+      "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+      "bytes": 32148
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "1c64fdb51b5168ff07e650b2c0bbbd79cf6bd17f7f2bb4679555b9d2e3402bb5",
+      "bytes": 9560
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 critic stage, run A-F02-A1_A8: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A1",
+  "stage_prompt_delta": null,
+  "time_contract": "absolute_T0_30_42_60",
+  "available_stage_seconds_at_prepare": 1581.248961,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/investigator/sources/index.md"
+      ]
+    }
+  ],
+  "composite_guard": {
+    "recipe_id": "er12-composite-A1-A8-v1",
+    "components": {
+      "base_prepare": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/prepare.py",
+        "sha256": "c7912799e270afae6e013a0e5e6e0d40eea2094634aa23fcc9ddffc489c484d5",
+        "bytes": 32148
+      },
+      "base_reveal": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/reveal.py",
+        "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+        "bytes": 2880
+      },
+      "base_bootstrap": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/helpers/er12-screen-v1/bootstrap.js",
+        "sha256": "1c64fdb51b5168ff07e650b2c0bbbd79cf6bd17f7f2bb4679555b9d2e3402bb5",
+        "bytes": 9560
+      },
+      "critic_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/critic_prompt_delta.txt",
+        "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+        "bytes": 3398
+      },
+      "reviser_delta": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/reviser_prompt_delta.txt",
+        "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+        "bytes": 1715
+      }
+    }
+  },
+  "composite_stage_delta": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/methods/A8/critic_prompt_delta.txt",
+    "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+    "bytes": 3398
+  },
+  "request_sha256": "54e689c03ccbc4055f51e9593939d6bed9a32b7542961e44a745e56264cb8014"
+}

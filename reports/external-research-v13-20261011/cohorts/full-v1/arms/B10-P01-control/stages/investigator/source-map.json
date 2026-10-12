@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "stage": "investigator",
+  "run_id": "B10-P01-control",
+  "review_timestamp_utc": "2026-10-12T00:40:25Z",
+  "sources": [
+    {
+      "id": "RFC9110",
+      "title": "HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110, Standards Track, June 2022; current errata must be checked before implementation",
+      "locator": "§§ 8.8.1–8.8.3 (validators and ETag); 9.3.2 (HEAD); 13.1.2–13.1.3 (If-None-Match, If-Modified-Since)",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Searched and opened the RFC; inspected section text for validators, conditional requests, 304 behavior, HEAD, and modification dates.",
+      "governing_conditions_defaults_exceptions": "ETag is an opaque server-chosen validator; it is weak unless marked strong. If-None-Match uses weak comparison, primarily for conditional GET and can produce 304 when the supplied tag matches. Last-Modified comparison is implicitly weak unless stringent conditions are met; If-Modified-Since is ignored when If-None-Match is present and in several invalid/inapplicable cases. HEAD carries no representation body and reports metadata that would accompany GET.",
+      "applicability": "Basis for optional, conditional upstream revalidation and honest status labels; does not establish product release identity, semantic applicability, or claim truth."
+    },
+    {
+      "id": "RFC9111",
+      "title": "HTTP Caching",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "version": "RFC 9111, Standards Track, June 2022",
+      "locator": "§§ 3–4.3, especially 4.2–4.3.4; § 5.2.2.2",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Searched and opened the RFC; inspected freshness calculation, disconnected use, validation, and response update conditions.",
+      "governing_conditions_defaults_exceptions": "Freshness is cache reuse without validation, determined by explicit max-age/Expires or permitted heuristic rules. Freshness applies to cache operation and does not force an application display refresh. Stale responses can be served in specified disconnected/explicitly permitted conditions, but must-revalidate forbids reuse while stale and disconnected. A 304 updates eligible stored response metadata under validator/key matching rules.",
+      "applicability": "Separates cache freshness and offline usability from handbook evidence status; supports preserving cached versions and recording revalidation events."
+    },
+    {
+      "id": "W3C-WA",
+      "title": "Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version": "W3C Recommendation, 23 February 2017 (stable recommendation; publication page says other documents may supersede it)",
+      "locator": "§§ 3.2.3, 4.2.4 Text Quote Selector, 4.2.5 Text Position Selector, 4.3 States",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened the W3C Recommendation and reviewed model and selector sections and examples.",
+      "governing_conditions_defaults_exceptions": "A quote selector stores normalized exact text and may include immediately preceding/following context. Text positions use normalized Unicode code points, end-exclusive; positions are explicitly brittle under edits/dynamic content, for which a State is recommended. When exact/prefix/suffix yield multiple matches, the model says the selector should be treated as matching all of them. The spec warns that copying large text into shared annotations can be rights-sensitive.",
+      "applicability": "Useful, interoperable shape for a local passage anchor: short exact/context quote plus offsets and source snapshot/parser identity; ambiguous matches must stay ambiguous. It is not a revision identity scheme."
+    },
+    {
+      "id": "W3C-PROV-O",
+      "title": "PROV-O: The PROV Ontology",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "version": "W3C Recommendation, 30 April 2013",
+      "locator": "§ 3.2 expanded terms: wasQuotedFrom, wasRevisionOf, specializationOf, alternateOf; §§ 3.1–3.2 entity/activity relationships",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened the Recommendation and inspected the derivation and entity-relationship definitions.",
+      "governing_conditions_defaults_exceptions": "wasRevisionOf means the derived entity retains substantial content from the original; wasQuotedFrom describes content repeated from a possibly larger entity; specializationOf relates a more specific, time/context-specific entity to a general one; alternateOf relates aspects of the same thing that need not be identical in aspect or time.",
+      "applicability": "Guides typed provenance edges so the system does not label a URL redirect, byte variant, release, or superseding document as the same relation."
+    },
+    {
+      "id": "GIT-DATAMODEL",
+      "title": "Git core data model",
+      "url": "https://git-scm.com/docs/gitdatamodel.html",
+      "version": "Rolling online documentation; page does not expose a release pin, reviewed 12 October 2026 UTC",
+      "locator": "OBJECTS and REFERENCES sections, especially object IDs, commits, branches, and tags",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened the official Git documentation and reviewed object and ref semantics.",
+      "governing_conditions_defaults_exceptions": "Git objects are immutable after creation and named by a hash of type and contents; a commit names a tree and parents. Branch references move as new commits are made; tags usually do not change, but are refs rather than a general proof that the vendor’s stated version is authentic.",
+      "applicability": "Excellent exact locator for docs hosted in Git when the full commit plus repository/path is retained; inadequate for non-repository sites and release labels alone."
+    },
+    {
+      "id": "GITHUB-PERMALINKS",
+      "title": "Getting permanent links to files",
+      "url": "https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files",
+      "version": "Rolling GitHub documentation, reviewed 12 October 2026 UTC",
+      "locator": "Sections “File views show the latest version on a branch” and “Press Y to permalink to a file in a specific commit”",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened current official documentation and inspected pinned vs branch URL guidance.",
+      "governing_conditions_defaults_exceptions": "A branch URL displays its current head and may change; replacing the branch segment with a commit ID pins exact file content, and line/range links can identify a code passage. The behavior applies to GitHub repository files.",
+      "applicability": "Practical result-link format for repository-hosted handbooks/docs; source commit remains separate from the requested product/version."
+    },
+    {
+      "id": "SWHID-1.6",
+      "title": "Software Heritage persistent identifiers",
+      "url": "https://docs.softwareheritage.org/devel/swh-model/persistent-identifiers.html",
+      "version": "Software Heritage documentation version 1.6, last modified 30 April 2021 (as stated on page); rolling docs URL",
+      "locator": "Overview, syntax, semantics, context qualifiers (origin/visit/anchor/path) and fragment qualifier (lines)",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Searched the official Software Heritage docs and inspected the indexed specification text; direct open later returned an access-denied page, so specific-version semantics are based on the search-exposed page text, not an independent full-page fetch.",
+      "governing_conditions_defaults_exceptions": "SWHIDs identify archived software objects (snapshot/release/revision/directory/content) by intrinsic object identifiers and may carry origin, visit, anchor, path, or line qualifiers. The reviewed v1.6 spec uses SHA-1 Git-style object hashes. Identifier stability does not by itself promise that a target document is archived or that the archive resolver is online.",
+      "applicability": "Useful optional identifier/archive route for code and repository docs; not a default for arbitrary web pages and not a reason to adopt its SHA-1 scheme for new local digests."
+    },
+    {
+      "id": "RFC7089",
+      "title": "HTTP Framework for Time-Based Access to Resource States (Memento)",
+      "url": "https://datatracker.ietf.org/doc/rfc7089/",
+      "version": "RFC 7089, Informational, December 2013",
+      "locator": "§§ 2.1–2.2 (Memento-Datetime and relation types), § 3 (datetime negotiation)",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Searched and opened the RFC; inspected Memento/TimeGate/TimeMap and temporal navigation relations.",
+      "governing_conditions_defaults_exceptions": "Memento-Datetime labels a response as reflecting a prior state; Accept-Datetime requests date negotiation through a TimeGate. The protocol can navigate archived states where an archive implements it; it does not force coverage, guarantee availability, or define the vendor’s product release.",
+      "applicability": "Optional fallback discovery route for relocated/disappeared public pages, explicitly shown as an archive copy and never silently substituted for a product-specific official source."
+    },
+    {
+      "id": "NIST-FIPS180-4",
+      "title": "Secure Hash Standard",
+      "url": "https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf",
+      "version": "FIPS PUB 180-4, August 2015",
+      "locator": "§ 1 and SHA-256 algorithm definition",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Searched NIST’s publication repository for the standard and reviewed the indexed text.",
+      "governing_conditions_defaults_exceptions": "The standard specifies SHA-256 among secure hash algorithms and describes message digests as useful for detecting message changes with very high probability; a digest is an integrity fingerprint, not proof of origin, provenance, or meaning.",
+      "applicability": "Supports storing algorithm-tagged local byte fingerprints for exact cached payload comparison, alongside (not instead of) source/version metadata."
+    },
+    {
+      "id": "HYPOTHESIS-ISSUE-3705",
+      "title": "Select best match for quote selectors in PDFs when position-based anchoring fails",
+      "url": "https://github.com/hypothesis/client/issues/3705",
+      "version": "hypothesis/client issue #3705, opened 24 August 2021; resolved by merged PR #3743",
+      "locator": "Issue description, particularly interaction of position hint, page search order, fuzzy score threshold and early return",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened the public issue. The report says PDF.js text extraction can shift across versions and first sufficiently close match may be returned even when a better match occurs elsewhere.",
+      "governing_conditions_defaults_exceptions": "Problem is specific to PDF text extraction and the cited anchoring implementation: positions can become unreliable across PDF.js versions; approximate match threshold and search order can select a wrong passage before the global best candidate.",
+      "applicability": "Concrete caution against silent fuzzy reattachment and against treating a position as durable. It is one product’s issue report, not proof all anchor systems have the same bug."
+    },
+    {
+      "id": "HYPOTHESIS-FIX-3743",
+      "title": "Hypothesis PDF quote anchoring code, tests, and merged fix",
+      "url": "https://github.com/hypothesis/client/pull/3743/files",
+      "version": "Merged 13 September 2021 as hypothesis/client commit 904810bde556c58043672b61f0ea33748fd0e00a; core change 3515716f91fcb650f53d29b58628601834576b4a and detailed-test change 72729b1b79c915ead33025344f22d4125a2f42de",
+      "locator": "Pinned files: https://github.com/hypothesis/client/blob/904810bde556c58043672b61f0ea33748fd0e00a/src/annotator/anchoring/pdf.js and https://github.com/hypothesis/client/blob/904810bde556c58043672b61f0ea33748fd0e00a/src/annotator/anchoring/test/pdf-test.js; PR diff and merge record",
+      "accessed_utc": "2026-10-12T00:40:25Z",
+      "observed_operation": "Opened GitHub PR and inspected changed source/test hunks plus merge commit history. The code strips selected PDF whitespace, retains offsets, searches candidate pages, and scores candidates; new tests cover exact, whitespace-insensitive, near-match and context cases across pages. No tests were executed in this research task.",
+      "governing_conditions_defaults_exceptions": "The change balances best-match quality and latency, tolerates selected renderer whitespace differences, uses position only as a search hint, and adds tests for the reported issue. Its special normalization (ASCII whitespace) is a PDF.js-specific engineering choice, not a universal canonicalization rule.",
+      "applicability": "Evidence for testing anchor ambiguity, candidate scoring, parser/version changes, and performance tradeoffs; adapt principles, not PDF-specific normalization."
+    }
+  ]
+}

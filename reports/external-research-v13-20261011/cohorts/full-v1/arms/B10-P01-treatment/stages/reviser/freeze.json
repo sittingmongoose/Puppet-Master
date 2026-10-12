@@ -1,0 +1,126 @@
+{
+  "prepared_at_utc": "2026-10-12T01:07:50.065Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-12T01:25:50.065Z",
+  "whole_deadline_utc": "2026-10-12T01:37:00.725Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B10-P01-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B10-P01-treatment-critic-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/inputs/brief.md",
+      "sha256": "634643274eb2e70cef310bc4c1f017650e63acbb81d5540f6ee33e152142592c",
+      "bytes": 2304
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/reviser/assignment.md",
+      "sha256": "bfa79ce21c74456337b475b9340c957c8b514c3599d449a04392b4c512a3e151",
+      "bytes": 9768
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/reviser/input-map.json",
+      "sha256": "c57d326bad2499f654a6e602e6eb672cdf39642d12c93ccc74c8a3e4f72e3862",
+      "bytes": 2656
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "2db9fc9fc6b37fac06cd0144501d3366d3b6cf224bbe471794db2a99e676b1f8",
+      "bytes": 12037
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/draft.md",
+      "sha256": "5e648494f18676dddafbea4169c779ace9f02a0ed5c78ffe198cac3868942a65",
+      "bytes": 25798
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "946816d6c16d60c5953dc54d5db03c1b6dea1741a40dd04aa10efb4e6919db4f",
+      "bytes": 16813
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "acb36080380afebc5669cf45ac5ffd78c7bf760d9593263537903df66dea0957",
+      "bytes": 2309
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "51c487784b0265b0b00542db3e6c5cc42a6320daa33aebed09bac3525382be02",
+      "bytes": 475
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/critique.md",
+      "sha256": "71e5b9c913741e78282ef71bbb90586994487007807ce528be3444f85eb24752",
+      "bytes": 9977
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/source-map.json",
+      "sha256": "e4ccd03c3525fe9f1ac8e2294884dc2f3759625fc5c4fe7205a4aa37ce4bae60",
+      "bytes": 18409
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/sources/README.md",
+      "sha256": "69e7b5be391c6cf9a3abad4711b9267006423cadb7a2e445bc0c67556f4d7ec6",
+      "bytes": 2197
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/sources/README.md",
+      "sha256": "f3eef9925436ec686d60813ee271f88f197ff05f045ec2ea7b0524a6dc4964c9",
+      "bytes": 1259
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 reviser stage, run B10-P01-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": "",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/investigator/sources/README.md"
+      ]
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/sources/README.md"
+      ]
+    }
+  ],
+  "request_sha256": "9f34fa108a8eff6ce20e3ae0ee8db5f4c41039883aeb291d6c07ae95a6745f93"
+}

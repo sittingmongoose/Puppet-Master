@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.1",
+  "stage": "reviser",
+  "run_id": "B10-P01-control",
+  "review_timestamp_utc": "2026-10-12T01:11:00Z",
+  "predecessor_artifacts": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/inputs/brief.md",
+      "sha256": "634643274eb2e70cef310bc4c1f017650e63acbb81d5540f6ee33e152142592c",
+      "bytes": 2304
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/investigator/discovery.md",
+      "sha256": "dc33b876145ade3e4e15aa280250f3ac362281a0c3294094e37420f7ebf600dc",
+      "bytes": 9164
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/investigator/draft.md",
+      "sha256": "d2120744aad41a1023026bf96778fcdda8d6adf1fabad6602626e2262bd51d6d",
+      "bytes": 26078
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/investigator/source-map.json",
+      "sha256": "cb5463769196adc7c3309a4d897d794e9299d779633fdc086e78da1b662b4130",
+      "bytes": 13241
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "acb36080380afebc5669cf45ac5ffd78c7bf760d9593263537903df66dea0957",
+      "bytes": 2309
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "c1ccc34373c272b958fc8fe093c0d37e966cf73bd9b0f222b7e0b624599a9f93",
+      "bytes": 470
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/critic/critique.md",
+      "sha256": "296f965e5651e86fa5e733c1d7bde7a0ffd0351a4aa0085b1c27024c1de6d79f",
+      "bytes": 9784
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/critic/source-map.json",
+      "sha256": "3a2bceccbd86e946de7e3f18929b18bba41284579a1d55837c4fc37941ec40fc",
+      "bytes": 11966
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/reviser/assignment.md",
+      "sha256": "43f46a845d9903da3d8a996572eced12686279d84cddb2a58e27c36522e70d6d",
+      "bytes": 9734
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/reviser/input-map.json",
+      "sha256": "358b065abab2cf507dc240c02f1c5b9d85b190b9860d881d1813898a3650c7fb",
+      "bytes": 2440
+    }
+  ],
+  "access_time_note": "The carried critic map records its own retrieval window as 2026-10-12T00:47:19Z–2026-10-12T00:55:38Z; its per-request timestamps were not exposed. Reviser RFC checks are separately recorded with the UTC clock observation immediately after grouped retrieval; exact per-request browser timestamps were also unavailable.",
+  "sources": [
+    {
+      "id": "RFC9110",
+      "title": "HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110, Standards Track, June 2022",
+      "locator": "§§ 8.8.1–8.8.3.2, 9.3.2, 12.5.5, 13.1.2–13.1.3, 15.4.5",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the RFC and inspected ETag weak/strong comparison, If-None-Match and If-Modified-Since precedence, Vary selection fields and 304 semantics.",
+      "governing_conditions_defaults_exceptions": "If-None-Match uses weak comparison; Last-Modified is implicitly weak except narrow conditions; If-None-Match takes precedence over If-Modified-Since. Vary names request fields that may select a representation, and Vary:* means request syntax alone cannot establish an equivalent later selection.",
+      "applicability": "Supports correcting the draft's 304 inference and identifies the missing selected-variant key in the checker."
+    },
+    {
+      "id": "RFC9111",
+      "title": "HTTP Caching",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "version": "RFC 9111, Standards Track, June 2022",
+      "locator": "§§ 3–4.3.4, especially 4.1, 4.3.1–4.3.4; § 5.2.2.2",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the RFC and inspected Vary cache-key matching, conditional validation request construction, 304 updates, freshness and disconnected reuse.",
+      "governing_conditions_defaults_exceptions": "A stored response's Vary-selected request fields must match or be revalidated; an independently initiated validation request is synthesized using the stored method, target and Vary fields. A cache may participate in validation, so a 304 observation does not itself prove direct origin contact.",
+      "applicability": "Supports variant-aware validator records, the wording correction for the UI, and separation of cache freshness from source version."
+    },
+    {
+      "id": "W3C-WA",
+      "title": "Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version": "W3C Recommendation, 23 February 2017",
+      "locator": "§§ 4.2.4 Text Quote Selector, 4.2.5 Text Position Selector, 4.3 State",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the Recommendation and inspected quote normalization/context, code-point position rules, multiple-match behavior, position brittleness and representation State.",
+      "governing_conditions_defaults_exceptions": "Text Quote Selectors may use exact text and prefix/suffix; multiple matches are all matches. Text Position Selector end is exclusive, uses Unicode code points and is brittle under source edits/dynamic content; a State can identify a representation.",
+      "applicability": "Supports the draft's paired passage selectors and its refusal to silently resolve ambiguity or carry offsets across representations."
+    },
+    {
+      "id": "W3C-PROV-O",
+      "title": "PROV-O: The PROV Ontology",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "version": "W3C Recommendation, 30 April 2013",
+      "locator": "§§ 3.1–3.2; wasQuotedFrom, wasRevisionOf, specializationOf, alternateOf",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the Recommendation; compared the draft's relation vocabulary with the carried investigator source-map locators and definitions.",
+      "governing_conditions_defaults_exceptions": "The relations distinguish quoted derivation, revision with substantial retained content, context-specific specialization and alternate aspects; they do not make a redirect equivalent to a revision.",
+      "applicability": "Supports the draft's typed, evidence-backed source relationships."
+    },
+    {
+      "id": "GIT-DATAMODEL",
+      "title": "Git core data model",
+      "url": "https://git-scm.com/docs/gitdatamodel.html",
+      "version": "Rolling official documentation; page identifies latest Git manual as 2.56.0, updated 28 September 2026",
+      "locator": "OBJECTS and REFERENCES sections, especially immutable objects, branches and tags",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the official manual and inspected object immutability and ref semantics.",
+      "governing_conditions_defaults_exceptions": "Git objects do not change after creation and IDs hash type/content; branch refs move as commits are added, while tags are usually not changed. A full commit plus repository/path is more exact than a moving branch URL.",
+      "applicability": "Supports the repository-hosted source alternative and the draft's caveat about tag/version assertions."
+    },
+    {
+      "id": "GITHUB-PERMALINKS",
+      "title": "Getting permanent links to files",
+      "url": "https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files",
+      "version": "Rolling official GitHub documentation, accessed 12 October 2026",
+      "locator": "“Getting permanent links to files”; commit-pinned file links",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the official documentation and confirmed GitHub's permalink description for an exact file version.",
+      "governing_conditions_defaults_exceptions": "GitHub's Y-key permalink records the exact commit version shown; scope is files displayed in GitHub repositories.",
+      "applicability": "Supports a practical repository-specific source locator, not a general web-document identity."
+    },
+    {
+      "id": "RFC7089",
+      "title": "HTTP Framework for Time-Based Access to Resource States (Memento)",
+      "url": "https://datatracker.ietf.org/doc/rfc7089/",
+      "version": "RFC 7089, Informational, December 2013",
+      "locator": "§§ 2–3, temporal negotiation and Memento relations",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the RFC from the carried source index.",
+      "governing_conditions_defaults_exceptions": "The protocol provides temporal state navigation where implemented; archive coverage, uptime and relation to a vendor product release are not guaranteed.",
+      "applicability": "Supports the draft's optional archive route and warning against silent substitution."
+    },
+    {
+      "id": "NIST-FIPS180-4",
+      "title": "Secure Hash Standard",
+      "url": "https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf",
+      "version": "FIPS PUB 180-4, August 2015",
+      "locator": "§ 1 and SHA-256 algorithm",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the NIST publication PDF from the carried source index; detailed digest interpretation remains limited as stated in the investigator's source-map.",
+      "governing_conditions_defaults_exceptions": "SHA-256 is a specified message-digest algorithm; a digest is a local integrity fingerprint, not a publisher or version assertion.",
+      "applicability": "Supports the draft's algorithm-tagged local byte fingerprint alongside source identity."
+    },
+    {
+      "id": "SWHID-1.6",
+      "title": "Software Heritage persistent identifiers",
+      "url": "https://docs.softwareheritage.org/devel/swh-model/persistent-identifiers.html",
+      "version": "Documentation version 1.6, last modified 30 April 2021 per carried source map; rolling docs URL",
+      "locator": "Overview, syntax, object types and context/path qualifiers",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Attempted direct open; site returned access-denied, matching carried limitation. Did not treat this as full-page independent review.",
+      "governing_conditions_defaults_exceptions": "Only carried indexed text was available for specific v1.6 semantics; identifier scope is software archives, not arbitrary web pages.",
+      "applicability": "The draft appropriately presents this as an optional, evidence-limited alternative rather than a general identifier."
+    },
+    {
+      "id": "HYPOTHESIS-ISSUE-3705",
+      "title": "Select best match for quote selectors in PDFs when position-based anchoring fails",
+      "url": "https://github.com/hypothesis/client/issues/3705",
+      "version": "hypothesis/client issue #3705, opened 24 August 2021",
+      "locator": "Issue description on position-hint page ordering, fuzzy match threshold and early return",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened the issue and inspected its description and activity.",
+      "governing_conditions_defaults_exceptions": "The issue concerns PDF.js text-rendering shifts and one anchoring implementation that returned the first sufficiently good match in page order, potentially before a better match on a later page.",
+      "applicability": "A bounded example of anchor drift and false fuzzy matches; not evidence every selector system shares the bug."
+    },
+    {
+      "id": "HYPOTHESIS-FIX-3743",
+      "title": "Find best match for quote selectors in PDFs across all pages (v2)",
+      "url": "https://github.com/hypothesis/client/pull/3743/files",
+      "version": "Merged 13 September 2021 at 904810bde556c58043672b61f0ea33748fd0e00a; pinned implementation and test files at that commit",
+      "locator": "PR merge record/commit list; https://github.com/hypothesis/client/blob/904810bde556c58043672b61f0ea33748fd0e00a/src/annotator/anchoring/pdf.js; https://github.com/hypothesis/client/blob/904810bde556c58043672b61f0ea33748fd0e00a/src/annotator/anchoring/test/pdf-test.js",
+      "accessed_utc": "2026-10-12T00:55:38Z",
+      "observed_operation": "Opened merged PR and pinned implementation/test files; inspected cross-page whitespace-normalized search and exact, whitespace-different, near and context-sensitive cases. Did not run tests.",
+      "governing_conditions_defaults_exceptions": "PDF.js-specific matching/normalization and performance tradeoff. PR/code inspection does not establish tests pass in the current environment; no test was executed.",
+      "applicability": "Supports the draft's validation design and carefully bounded issue-to-fix example."
+    }
+  ],
+  "review_notes": [
+    "Carried source IDs and URLs were preserved without reassignment.",
+    "Individual web request timestamps were not exposed; review timestamp is the last observed UTC capture time and the review window is recorded above.",
+    "Retrieved pages were treated as untrusted research data. No downloaded code was run.",
+    "Reviser independently rechecked RFC 9110 and RFC 9111 through the official RFC Editor; each per-request browser timestamp was unavailable, so the recorded UTC is the clock observation immediately after the grouped review.",
+    "No predecessor source ID was rebound. Direct Software Heritage page retrieval remains denied per carried record."
+  ],
+  "source_lineage": {
+    "carried_map_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/critic/source-map.json",
+    "carried_map_sha256": "3a2bceccbd86e946de7e3f18929b18bba41284579a1d55837c4fc37941ec40fc",
+    "source_ids_preserved": [
+      "RFC9110",
+      "RFC9111",
+      "W3C-WA",
+      "W3C-PROV-O",
+      "GIT-DATAMODEL",
+      "GITHUB-PERMALINKS",
+      "RFC7089",
+      "NIST-FIPS180-4",
+      "SWHID-1.6",
+      "HYPOTHESIS-ISSUE-3705",
+      "HYPOTHESIS-FIX-3743"
+    ],
+    "carried_source_records": "Retained from critic source-map without ID reassignment; predecessor access operations remain attributed to that map, not this reviser."
+  },
+  "independent_primary_source_rechecks": [
+    {
+      "source_id": "RFC9110",
+      "title": "HTTP Semantics",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110, Standards Track, June 2022",
+      "locator": "§12.5.5 Vary; §§8.8.1–8.8.3.2 validators; §§13.1.2–13.1.3 conditional requests; §15.4.5 304 Not Modified",
+      "accessed_utc": "2026-10-12T01:11:00Z",
+      "observed_operation": "Opened the official RFC Editor HTML and directly inspected Vary, If-None-Match, If-Modified-Since, and 304 sections during independent review. Exact per-request browser retrieval timestamp was not exposed; accessed_utc is the UTC clock observation immediately after this grouped source review.",
+      "governing_conditions_defaults_exceptions": "Vary lists request fields that may select response content; Vary:* can reflect unlisted request aspects and a recipient cannot determine later appropriateness without forwarding to origin. If-None-Match requires weak comparison even for strong tags and weak comparison may match changed representation data. If-Modified-Since is ignored when If-None-Match is present. 304 applies to a conditional GET/HEAD whose condition evaluated false; it is not a local digest.",
+      "applicability": "Supports variant-bound checks and precise status wording; does not establish whether any particular handbook server emits correct Vary or validators."
+    },
+    {
+      "source_id": "RFC9111",
+      "title": "HTTP Caching",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "version": "RFC 9111, Standards Track, June 2022",
+      "locator": "§4.1 Vary cache-key matching; §§4.3.1–4.3.4 validation request construction, cache handling, and 304 update",
+      "accessed_utc": "2026-10-12T01:11:00Z",
+      "observed_operation": "Opened the official RFC Editor HTML and directly inspected Vary matching, independently synthesized validation requests, intermediary-cache evaluation of conditions, and 304 handling. Exact per-request browser retrieval timestamp was not exposed; accessed_utc is the UTC clock observation immediately after this grouped source review.",
+      "governing_conditions_defaults_exceptions": "Reuse without revalidation requires nominated Vary request fields to match the original request; absent fields match only absent fields and Vary:* always fails a cache match. An independent validation request copies the stored method, target URI, and Vary-nominated fields. A cache receiving a conditional request may evaluate it against stored responses; 304 allows a suitable stored response to be updated/reused.",
+      "applicability": "Supports retaining selected-variant metadata and avoiding claims that any observed 304 proves direct origin contact or passage validity."
+    }
+  ],
+  "critique_dispositions": {
+    "C1": {
+      "disposition": "accept_and_amend",
+      "detail": "Add Vary and safe selected-variant identity; unavailable when not safely reproducible."
+    },
+    "C2": {
+      "disposition": "accept_and_correct",
+      "detail": "Say conditional request returned 304; do not infer origin contact."
+    },
+    "C3": {
+      "disposition": "retain_uncertainty",
+      "detail": "No handbook repository/callers/tests/release history were supplied."
+    }
+  },
+  "reviser_deliverables": [
+    {
+      "path": "final.md",
+      "sha256": "455bdacf2e718692fe150c66d0ce559ce46ab8a2b2dc573b4e1a22570e14cd3d",
+      "bytes": 29520
+    },
+    {
+      "path": "sources/index.md",
+      "sha256": "7abcbf2742a7ec72ea1d6b5b06af4c824f40192c3b2631613878c631461fcf0e",
+      "bytes": 4531
+    }
+  ]
+}

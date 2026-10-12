@@ -1,0 +1,62 @@
+{
+  "schema_version": "1",
+  "stage": "critic-breadth",
+  "run_id": "B06-P01-treatment",
+  "sources": [
+    {
+      "id": "CRIT-WSEC",
+      "title": "Wasmtime security guide",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/docs/security.md",
+      "version": "Wasmtime v49.0.2 tag; commit 3c8a3e7",
+      "locator": "WebAssembly Core and Defense-in-depth, especially checked linear memory and imports; Filesystem Access; lines 197-220",
+      "access_utc": "2026-10-12T00:48Z–00:49Z; request-level seconds unavailable",
+      "observed_operation": "Opened the official tagged source page and read its sandbox model, host-interface boundary, defense-in-depth, and filesystem-access sections.",
+      "governing_condition_default_exception": "WebAssembly modules access the outside world through explicitly linked imports; Wasmtime describes memory isolation and mitigations. These are implementation design claims and do not establish immunity from runtime or embedder defects.",
+      "applicability": "Supports treating in-process Wasmtime as a distinct comparator while keeping runtime/host-call defects and shared-process resource failure in the comparison."
+    },
+    {
+      "id": "CRIT-WCONFIG",
+      "title": "Wasmtime Config fuel and epoch controls",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/v49.0.2/crates/wasmtime/src/config.rs#L3306-L3517",
+      "version": "Wasmtime v49.0.2 tag; commit 3c8a3e7",
+      "locator": "Config::consume_fuel and epoch-based interruption; fuel defaults to false; a Store must receive fuel",
+      "access_utc": "2026-10-12T00:49Z; request-level seconds unavailable",
+      "observed_operation": "Opened the official tagged implementation and read the fuel and epoch-interruption configuration comments.",
+      "governing_condition_default_exception": "Fuel instrumentation is disabled by default and requires Store fuel; epochs are nondeterministic and require embedder configuration. These controls concern Wasm execution and do not by themselves bound host calls or all process resources.",
+      "applicability": "Supports comparing execution control and host integration burden for an embedded Wasmtime option."
+    },
+    {
+      "id": "CRIT-BWRAP",
+      "title": "Bubblewrap README",
+      "url": "https://github.com/containers/bubblewrap/blob/v0.13.0/README.md",
+      "version": "Bubblewrap v0.13.0 tag; commit 719a4fd",
+      "locator": "Sandbox security, namespaces, and limitations; lines 205-268",
+      "access_utc": "2026-10-12T00:48Z–00:49Z; request-level seconds unavailable",
+      "observed_operation": "Opened the official tagged README and read the policy-construction, namespace, mount, D-Bus, and TIOCSTI sections.",
+      "governing_condition_default_exception": "Bubblewrap is a low-level sandbox constructor, not a ready policy; its protection depends on caller-supplied arguments and mounted resources. Network namespaces provide loopback only; TIOCSTI requires filtering or a new session.",
+      "applicability": "Confirms the investigator's Linux alternative is a host policy implementation with explicit integration and support burden, not a plug-and-play boundary."
+    },
+    {
+      "id": "CRIT-JSONRPC",
+      "title": "JSON-RPC 2.0 specification",
+      "url": "https://www.jsonrpc.org/specification",
+      "version": "JSON-RPC 2.0; specification page reports update 2013-01-04",
+      "locator": "Request IDs and response correlation; Notification behavior, sections 4–5",
+      "access_utc": "2026-10-12T00:49Z; request-level seconds unavailable",
+      "observed_operation": "Opened the protocol specification and read request ID, notification, and response requirements.",
+      "governing_condition_default_exception": "An omitted request ID defines a notification; notifications must receive no response and are not confirmable, so client-side error awareness is absent. Request/response calls require a response correlated by ID.",
+      "applicability": "Supports explicit comparison of error-reporting semantics for a serialized extension protocol."
+    },
+    {
+      "id": "CRIT-WIT",
+      "title": "WIT reference, WebAssembly Component Model",
+      "url": "https://component-model.bytecodealliance.org/design/wit.html",
+      "version": "Current official Component Model documentation as accessed 2026-10-12; page/commit not release-pinned",
+      "locator": "User-defined records, variants, resources; typed interfaces and handles",
+      "access_utc": "2026-10-12T00:49Z; request-level seconds unavailable",
+      "observed_operation": "Opened the official Component Model reference and read its type/resource descriptions.",
+      "governing_condition_default_exception": "WIT provides typed declarations and resource handles; domain behavior, validation invariants, and host authorization still have to be defined by the application.",
+      "applicability": "Supports the typed component-interface exchange option and the need to compare it with serialized IPC and shared memory."
+    }
+  ]
+}

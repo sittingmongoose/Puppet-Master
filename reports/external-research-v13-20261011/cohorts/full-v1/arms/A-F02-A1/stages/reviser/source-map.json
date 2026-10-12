@@ -1,0 +1,707 @@
+{
+  "run_id": "A-F02-A1",
+  "stage": "reviser",
+  "basis": "Fresh complete reviser proposal for the supplied oral-history intake brief and exact released plan.",
+  "released_plan": {
+    "path": "../investigator/revealed-plan.md",
+    "sha256": "5f7ff916807818307634a6a4b42dea7ed030547adae267d936cce489384d6ab2",
+    "reveal_record": "../investigator/plan-reveal.json"
+  },
+  "source_id_policy": "S01-S22 retain the exact identities and IDs from the investigator source map; critic and reviser access notes are nested on the same identities. S23-S25 are additive recovery sources.",
+  "source_map_provenance": {
+    "investigator_map": "../investigator/source-map.json",
+    "investigator_map_sha256": "e348b5dd224ebe2e69ee169ecb8aa19f6a3054f15d1b49802467ccfa667c5931",
+    "critic_map": "../critic/source-map.json",
+    "critic_map_sha256": "5fb8492a8ce5d3962045c238dabe9e1d544ffc67d177aab002d07a84ad2b0521",
+    "critic_revealed_plan_sha256": "5f7ff916807818307634a6a4b42dea7ed030547adae267d936cce489384d6ab2",
+    "critic_access_time_basis": "Per-source critic access_utc values are clock timestamps observed immediately after each web-research group; web__run does not expose per-request timestamps."
+  },
+  "reviewed_inputs": [
+    "../../inputs/brief.md",
+    "../investigator/discovery.md",
+    "../investigator/draft.md",
+    "../investigator/source-map.json",
+    "../investigator/revealed-plan.md",
+    "../investigator/plan-reveal.json",
+    "../investigator/sources/README.md",
+    "../critic/critique.md",
+    "../critic/source-map.json",
+    "../critic/sources/README.md",
+    "assignment.md",
+    "input-map.json"
+  ],
+  "review_dispositions": [
+    {
+      "finding": "F01",
+      "disposition": "accepted",
+      "reason": "Lossy lowercasing/space removal can collapse distinct supplied IDs; automatic linking stays off pending verified schema and uniqueness."
+    },
+    {
+      "finding": "F02",
+      "disposition": "accepted",
+      "reason": "A probe failure is scoped to the selected build; keep unreadable-by-this-build, preview capability, and transcript state separate."
+    },
+    {
+      "finding": "F03",
+      "disposition": "accepted",
+      "reason": "Folder copying does not establish portable path resolution; require relative packaged media or a receiver-verified durable URI."
+    },
+    {
+      "finding": "F04",
+      "disposition": "accepted_and_amended",
+      "reason": "Added deterministic ID-plus-source-hash reconciliation, states for missing/stale rows and files, source rehashing, and fault injection at rename/checkpoint and changed-source boundaries."
+    },
+    {
+      "finding": "F05",
+      "disposition": "accepted_with_qualification",
+      "reason": "MediaInfo documents default Internet contact and Internet=No. Disable and validate the selected build if used; the documentation does not establish audio upload or transcription."
+    },
+    {
+      "finding": "F06",
+      "disposition": "retained_as_unresolved_external_input",
+      "reason": "No museum application repository, data schema, catalog contract, rights vocabulary, target OS, or sample record was supplied; do not infer these facts."
+    },
+    {
+      "finding": "Unsupported consequential claims",
+      "disposition": "none_identified_by_critic_in_claims_checked",
+      "reason": "Not a validation result; S08/S12/S22/S20 evidence-access caveats remain explicit."
+    }
+  ],
+  "review_caveats": [
+    "S08: critic opened the pinned check-tool source but no detailed excerpt was exposed; its detailed behavior remains inherited from investigator notes, not independently confirmed in the critic stage.",
+    "S12 and S22: identities/notes are inherited only in the critic map; not independently reopened there.",
+    "S20: search excerpt only; direct page open failed, so conditions should be rechecked against the selected FFmpeg build.",
+    "S24: official POSIX search excerpt exposed the atomic rename condition, but direct page open returned 403."
+  ],
+  "source_index": [
+    {
+      "id": "S01",
+      "title": "FFprobe Documentation",
+      "url": "https://ffmpeg.org/ffprobe.html"
+    },
+    {
+      "id": "S02",
+      "title": "FFmpeg Download and Release Branches",
+      "url": "https://ffmpeg.org/download.html"
+    },
+    {
+      "id": "S03",
+      "title": "GStreamer GstDiscoverer API",
+      "url": "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html"
+    },
+    {
+      "id": "S04",
+      "title": "GStreamer Missing-Plugin Design",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html"
+    },
+    {
+      "id": "S05",
+      "title": "Symphonia crate support matrix",
+      "url": "https://docs.rs/symphonia/0.6.1/symphonia/"
+    },
+    {
+      "id": "S06",
+      "title": "Symphonia Cargo feature defaults (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia/Cargo.toml"
+    },
+    {
+      "id": "S07",
+      "title": "Symphonia player caller (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia-play/src/main.rs"
+    },
+    {
+      "id": "S08",
+      "title": "Symphonia Check Tool (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia-check/src/main.rs"
+    },
+    {
+      "id": "S09",
+      "title": "Symphonia v0.6.1 release",
+      "url": "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1"
+    },
+    {
+      "id": "S10",
+      "title": "Symphonia ADPCM issue",
+      "url": "https://github.com/pdeljanov/Symphonia/issues/41"
+    },
+    {
+      "id": "S11",
+      "title": "Symphonia ADPCM decoder PR",
+      "url": "https://github.com/pdeljanov/Symphonia/pull/160"
+    },
+    {
+      "id": "S12",
+      "title": "Symphonia regression-pack discussion",
+      "url": "https://github.com/pdeljanov/Symphonia/discussions/337"
+    },
+    {
+      "id": "S13",
+      "title": "MediaInfo SDK Quick Start",
+      "url": "https://mediaarea.net/en/MediaInfo/Support/SDK/Quick_Start"
+    },
+    {
+      "id": "S14",
+      "title": "SQLite Transaction Control",
+      "url": "https://www.sqlite.org/lang_transaction.html"
+    },
+    {
+      "id": "S15",
+      "title": "BagIt RFC 8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493"
+    },
+    {
+      "id": "S16",
+      "title": "PBCore instantiation fields",
+      "url": "https://pbcore.org/elements/pbcoreinstantiationdocument.html"
+    },
+    {
+      "id": "S17",
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/"
+    },
+    {
+      "id": "S18",
+      "title": "Slint accessibility properties",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/common/"
+    },
+    {
+      "id": "S19",
+      "title": "Slint FocusScope keyboard input",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/keyboard-input/focusscope/"
+    },
+    {
+      "id": "S20",
+      "title": "FFmpeg audio filter pan",
+      "url": "https://ffmpeg.org/ffmpeg-filters.html"
+    },
+    {
+      "id": "S21",
+      "title": "Understanding WCAG 2.2 Success Criterion 4.1.3: Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+    },
+    {
+      "id": "S22",
+      "title": "WAI-ARIA 1.2 status role",
+      "url": "https://www.w3.org/TR/wai-aria-1.2/#status"
+    },
+    {
+      "id": "S23",
+      "title": "Rust std::fs::rename",
+      "url": "https://doc.rust-lang.org/std/fs/fn.rename.html"
+    },
+    {
+      "id": "S24",
+      "title": "POSIX rename specification",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+    },
+    {
+      "id": "S25",
+      "title": "SQLite Atomic Commit",
+      "url": "https://www.sqlite.org/atomiccommit.html"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "FFprobe Documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_or_commit": "Live FFmpeg web documentation; page not release-stamped. Pair with S02 for version context.",
+      "locator": "Description; stream specifiers; -show_error/-show_format/-show_streams; JSON writer.",
+      "condition": "Reports recognized container/streams for formats enabled in the binary; positive exit on input that cannot be opened or recognized. Output fields/options and stream indexes depend on probe/build.",
+      "applicability": "Content-based identification, stream/metadata extraction, explicit errors, structured result parsing.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s01",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on https://ffmpeg.org/ffprobe.html; inspected the description and stream/format/error options.",
+        "note": "Opened official live ffprobe docs; checked open/recognize distinction, stream fields, structured output and error section.",
+        "index": "../critic/sources/README.md#s01",
+        "inherited_index": "sources/README.md#s01"
+      },
+      "inherited_evidence_index": "sources/README.md#s01"
+    },
+    {
+      "id": "S02",
+      "title": "FFmpeg Download and Release Branches",
+      "url": "https://ffmpeg.org/download.html",
+      "version_or_commit": "FFmpeg 9.0.2 release; 2026-09-18; 9.0 branch cut 2026-06-26.",
+      "locator": "Releases section; 9.0.2 and release/development branch policy.",
+      "condition": "Project says stable point releases backport selected fixes while dev receives faster changes; release binary features depend on distributor build.",
+      "applicability": "Pin binary version/build; publish and test actual demuxer/decoder capabilities.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s02",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query on the official FFmpeg release page.",
+        "note": "Searched official FFmpeg release page; result identified 9.0.2 on the 9.0 branch. Live page; pin the eventual deployed binary separately.",
+        "index": "../critic/sources/README.md#s02",
+        "inherited_index": "sources/README.md#s02"
+      },
+      "inherited_evidence_index": "sources/README.md#s02"
+    },
+    {
+      "id": "S03",
+      "title": "GStreamer GstDiscoverer API",
+      "url": "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html",
+      "version_or_commit": "Live GStreamer documentation, API page not release-pinned; accessor APIs include since-version annotations.",
+      "locator": "DiscovererInfo duration; DiscovererAudioInfo channels/channel_mask; stream topology.",
+      "condition": "Returns reported duration and audio stream/channel information; depends on installed GStreamer plugins and underlying stream metadata.",
+      "applicability": "Candidate integrated metadata discovery; stream and channel information.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s03",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:25Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open, then find for duration and channel accessors, on the official GstDiscoverer API.",
+        "note": "Opened official GstDiscoverer docs and located duration and audio-channel accessors; values remain input/plugin dependent.",
+        "index": "../critic/sources/README.md#s03",
+        "inherited_index": "sources/README.md#s03"
+      },
+      "inherited_evidence_index": "sources/README.md#s03"
+    },
+    {
+      "id": "S04",
+      "title": "GStreamer Missing-Plugin Design",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html",
+      "version_or_commit": "Project design document; historical API says core/base >= 0.10.12; current applicability must be confirmed against selected GStreamer release.",
+      "locator": "Missing typefind/demuxer/decoder; app-level handling and policy.",
+      "condition": "Unrecognized typefind differs from plugin lookup failure; missing demuxer and decoder are both surfaced with message type decoder; application selects the user-facing policy.",
+      "applicability": "Separate unreadable/probe failure from preview capability and report missing playback components.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s04",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned the official GStreamer missing-plugin design page excerpt.",
+        "note": "Searched official missing-plugin design page; confirmed typefind distinction, shared decoder type for missing demuxer/decoder, and application policy.",
+        "index": "../critic/sources/README.md#s04",
+        "inherited_index": "sources/README.md#s04"
+      },
+      "inherited_evidence_index": "sources/README.md#s04"
+    },
+    {
+      "id": "S05",
+      "title": "Symphonia crate support matrix",
+      "url": "https://docs.rs/symphonia/0.6.1/symphonia/",
+      "version_or_commit": "Crate 0.6.1; versioned docs.rs release.",
+      "locator": "Formats/codecs/metadata feature matrices and defaults.",
+      "condition": "Codec/container support is individually feature-gated; documented matrix is for this exact crate version; docs.rs renders all-feature docs.",
+      "applicability": "Exact Rust embedded alternative and a model for feature/build-specific support tables.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s05",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned the versioned docs.rs Symphonia feature matrix.",
+        "note": "Checked versioned docs.rs 0.6.1 support matrix; feature-gated formats/codecs and defaults.",
+        "index": "../critic/sources/README.md#s05",
+        "inherited_index": "sources/README.md#s05"
+      },
+      "inherited_evidence_index": "sources/README.md#s05"
+    },
+    {
+      "id": "S06",
+      "title": "Symphonia Cargo feature defaults (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia/Cargo.toml",
+      "version_or_commit": "Pinned release commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee; v0.6.1.",
+      "locator": "[features] lines 18–77; default, individual flags, all-codecs/all-formats/all.",
+      "condition": "Defaults omit AAC, ALAC, MP1/MP2/MP3, AIFF, CAF and ISO/MP4; enabling all is a deliberate build choice.",
+      "applicability": "Distinguish available support from default compiled support.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s06",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:55Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the pinned raw GitHub Cargo.toml at release commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee.",
+        "note": "Opened Cargo.toml at the exact v0.6.1 commit; checked default and all-feature lists.",
+        "index": "../critic/sources/README.md#s06",
+        "inherited_index": "sources/README.md#s06"
+      },
+      "inherited_evidence_index": "sources/README.md#s06"
+    },
+    {
+      "id": "S07",
+      "title": "Symphonia player caller (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia-play/src/main.rs",
+      "version_or_commit": "Pinned commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee; v0.6.1 release source.",
+      "locator": "Probe/run setup; --probe-only/--verify-only/play paths (approx. lines 142–229); track selection and decode/output failure handling (lines 239–282, 301–460).",
+      "condition": "Extension is passed as a Hint, not a guarantee; probing and decoder creation are distinct; output device can fail after decode succeeds; decode errors may be nonfatal and logged.",
+      "applicability": "Concrete caller example for independent probe/preview states and actual track/channel pathway.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s07",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:55Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the pinned raw GitHub player caller at release commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee.",
+        "note": "Opened caller at the exact v0.6.1 commit; checked extension-as-hint, probe-only/decode-only/play, track selection, decoder and output-device paths.",
+        "index": "../critic/sources/README.md#s07",
+        "inherited_index": "sources/README.md#s07"
+      },
+      "inherited_evidence_index": "sources/README.md#s07"
+    },
+    {
+      "id": "S08",
+      "title": "Symphonia Check Tool (source)",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee/symphonia-check/src/main.rs",
+      "version_or_commit": "Pinned commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee; v0.6.1 release source.",
+      "locator": "Reference decoders and test setup lines 27–123, 139–164, 319–340; sample comparison lines 210–317; user-facing CLI/test result lines 342–454.",
+      "condition": "Compares decoded samples against configured reference decoders; audio sample comparison does not establish correct museum IDs, permissions, batch recovery, or accessibility.",
+      "applicability": "Regression/decoder validation approach and inspected upstream test utility.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s08",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:55Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the pinned raw GitHub test tool at release commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee; response exposed no detailed excerpt.",
+        "note": "Opened exact pinned test-tool source; web output exposed no source excerpt for detailed review. Treat carried locator/description as inherited, not independently confirmed.",
+        "index": "../critic/sources/README.md#s08",
+        "inherited_index": "sources/README.md#s08"
+      },
+      "inherited_evidence_index": "sources/README.md#s08"
+    },
+    {
+      "id": "S09",
+      "title": "Symphonia v0.6.1 release",
+      "url": "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1",
+      "version_or_commit": "Tag v0.6.1; commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee; released 2026-08-13.",
+      "locator": "New features and Bug Fixes & Improvements.",
+      "condition": "Release fixes certain MP3 decode/tag and mono MP1 bugs, parses channel information for Opus tracks in ISO BMFF, and reports parser hardening/fuzz-found panics. Opus track metadata parsing is not evidence of an Opus decoder in v0.6.1.",
+      "applicability": "Pin/test release; regression evidence for silent sections, tags, channel metadata and malformed inputs.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s09",
+      "critic_access": {
+        "access_utc": "2026-10-12T01:01:26Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open then find on the v0.6.1 GitHub release notes.",
+        "note": "Opened release v0.6.1 and found release notes for MP3, mono MP1, Opus channel metadata and parser hardening/fuzz fixes.",
+        "index": "../critic/sources/README.md#s09",
+        "inherited_index": "sources/README.md#s09"
+      },
+      "inherited_evidence_index": "sources/README.md#s09"
+    },
+    {
+      "id": "S10",
+      "title": "Symphonia ADPCM issue",
+      "url": "https://github.com/pdeljanov/Symphonia/issues/41",
+      "version_or_commit": "Issue #41; opened 2021-07-09; closed in association with PR #160.",
+      "locator": "Requested Microsoft and IMA/DVI ADPCM support for RIFF/WAV and discussed ambiguous variant naming/channel counts.",
+      "condition": "Issue describes real variant gaps and compatibility uncertainty; linked PR changes support but does not imply every ADPCM subvariant is covered.",
+      "applicability": "Codec names/containers may hide incompatible subvariants; define support in terms of tested sample variants.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s10",
+      "critic_access": {
+        "access_utc": "2026-10-12T01:01:26Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open then find on Symphonia issue #41.",
+        "note": "Opened issue #41 and located its ADPCM variant discussion and release/PR relationship.",
+        "index": "../critic/sources/README.md#s10",
+        "inherited_index": "sources/README.md#s10"
+      },
+      "inherited_evidence_index": "sources/README.md#s10"
+    },
+    {
+      "id": "S11",
+      "title": "Symphonia ADPCM decoder PR",
+      "url": "https://github.com/pdeljanov/Symphonia/pull/160",
+      "version_or_commit": "PR #160; merged change associated with issue #41.",
+      "locator": "Pull request change and linkage from issue #41.",
+      "condition": "Implementation/fix evidence for the reported Microsoft/IMA ADPCM need; coverage must be checked against exact build/version.",
+      "applicability": "Issue-to-fix trace showing format matrix changes through release history.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s11",
+      "critic_access": {
+        "access_utc": "2026-10-12T01:01:26Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open then find on Symphonia PR #160.",
+        "note": "Opened PR #160; checked merge status and explicit decoder limits (Microsoft/IMA, mono/stereo, 4-bit).",
+        "index": "../critic/sources/README.md#s11",
+        "inherited_index": "sources/README.md#s11"
+      },
+      "inherited_evidence_index": "sources/README.md#s11"
+    },
+    {
+      "id": "S12",
+      "title": "Symphonia regression-pack discussion",
+      "url": "https://github.com/pdeljanov/Symphonia/discussions/337",
+      "version_or_commit": "Discussion #337; maintainer reply dated 2025-01-15.",
+      "locator": "Suggested fixture/check framework; maintainer note on testing against personal media and submitted problem files.",
+      "condition": "Maintainer describes private personal-media regression checks and poor reproducibility due to copyright/size; this is a maintainer report, not a formal project test guarantee.",
+      "applicability": "Use openly licensed/synthetic fixtures and reproducible acceptance-test manifests.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s12",
+      "critic_access": {
+        "status": "inherited_only",
+        "note": "Identity and investigator notes are preserved unchanged; this critic did not independently reopen this source."
+      },
+      "inherited_evidence_index": "sources/README.md#s12"
+    },
+    {
+      "id": "S13",
+      "title": "MediaInfo SDK Quick Start",
+      "url": "https://mediaarea.net/en/MediaInfo/Support/SDK/Quick_Start",
+      "version_or_commit": "Live SDK documentation; no version-stamped release in page.",
+      "locator": "Open/Get/Inform; stream kinds and stream numbers; Unicode note.",
+      "condition": "Metadata reader API must be paired with a playback backend; docs warn the Windows command line is not Unicode-capable, whereas the library is Unicode-enabled.",
+      "applicability": "Metadata-focused alternative/cross-check and international filename requirements.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s13",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:59:46Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the official MediaInfo SDK quick-start.",
+        "note": "Opened MediaInfo SDK quick-start; checked Open/Get/Inform, Unicode, version pinning and documented default Internet contact plus Internet=No option.",
+        "index": "../critic/sources/README.md#s13",
+        "inherited_index": "sources/README.md#s13"
+      },
+      "reviser_access": {
+        "access_utc": "2026-10-12T01:12:08Z",
+        "time_basis": "Clock timestamp captured immediately after the web research group; web__run does not expose per-request timestamps.",
+        "observed_operation": "web__run search_query and open on the official MediaInfo SDK quick-start.",
+        "note": "Independently confirmed the documented default Internet contact reasons and Internet=No option; the page does not establish that audio bytes are uploaded or transcribed."
+      },
+      "inherited_evidence_index": "sources/README.md#s13"
+    },
+    {
+      "id": "S14",
+      "title": "SQLite Transaction Control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "Current SQLite documentation; no version stamped on page.",
+      "locator": "Transactions, BEGIN/COMMIT/ROLLBACK; single writer; SQLITE_BUSY conditions.",
+      "condition": "Transactions group state updates atomically, but SQLite allows only one simultaneous write transaction and commits can return SQLITE_BUSY under concurrency.",
+      "applicability": "Possible local per-item restart checkpoint, with locking/retry policy to design.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s14",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned the official SQLite transaction documentation excerpt.",
+        "note": "Searched official SQLite transaction docs; checked one-writer and SQLITE_BUSY conditions.",
+        "index": "../critic/sources/README.md#s14",
+        "inherited_index": "sources/README.md#s14"
+      },
+      "reviser_access": {
+        "access_utc": "2026-10-12T01:12:08Z",
+        "time_basis": "Clock timestamp captured immediately after the web research group; web__run does not expose per-request timestamps.",
+        "observed_operation": "web__run open on the official SQLite transaction documentation.",
+        "note": "Rechecked the official transaction page for one-writer and SQLITE_BUSY conditions."
+      },
+      "inherited_evidence_index": "sources/README.md#s14"
+    },
+    {
+      "id": "S15",
+      "title": "BagIt RFC 8493",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "version_or_commit": "BagIt File Packaging Format 1.0; RFC 8493, October 2018; informational, not Internet Standards Track.",
+      "locator": "Abstract; payload definition; manifest and validation requirements.",
+      "condition": "Payload files are opaque octet sequences; manifests record checksums. BagIt provides structure/fixity, not catalog metadata semantics or permission interpretation.",
+      "applicability": "Portable package candidate carrying unchanged media, transcripts and metadata sidecars.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s15",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned the RFC Editor RFC 8493 excerpt.",
+        "note": "Searched official RFC Editor RFC 8493 text; checked opaque payload, manifest/fixity and validation semantics.",
+        "index": "../critic/sources/README.md#s15",
+        "inherited_index": "sources/README.md#s15"
+      },
+      "inherited_evidence_index": "sources/README.md#s15"
+    },
+    {
+      "id": "S16",
+      "title": "PBCore instantiation fields",
+      "url": "https://pbcore.org/elements/pbcoreinstantiationdocument.html",
+      "version_or_commit": "PBCore 2.1 current release according to project site; page itself not revision-pinned.",
+      "locator": "InstantiationIdentifier, Digital, Duration, Tracks, ChannelConfiguration; optionality and narrative channel description.",
+      "condition": "Duration/channel configuration are optional; PBCore describes the instantiation and does not supply a catalog API. Verify current XSD/order and receiving catalog.",
+      "applicability": "Possible audiovisual-catalog mapping for identifier, duration and channel arrangement.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s16",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:25Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open then find on the PBCore instantiation document.",
+        "note": "Opened PBCore instantiation document; located required instantiation identifier and optional duration/channel configuration.",
+        "index": "../critic/sources/README.md#s16",
+        "inherited_index": "sources/README.md#s16"
+      },
+      "inherited_evidence_index": "sources/README.md#s16"
+    },
+    {
+      "id": "S17",
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "WCAG 2.2 W3C Recommendation, published 2023-10-05.",
+      "locator": "Success Criteria 2.1.1 Keyboard, 2.1.2 No Keyboard Trap, 4.1.3 Status Messages.",
+      "condition": "WCAG is framed for web content; use as an accessibility reference here, not as proof of conformance by a native desktop app.",
+      "applicability": "Keyboard access, non-trapped focus and programmatically available text status.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s17",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:25Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open then find on the W3C WCAG 2.2 Recommendation.",
+        "note": "Opened WCAG 2.2 Recommendation and located Keyboard and Status Messages criteria; web-content scope preserved.",
+        "index": "../critic/sources/README.md#s17",
+        "inherited_index": "sources/README.md#s17"
+      },
+      "inherited_evidence_index": "sources/README.md#s17"
+    },
+    {
+      "id": "S18",
+      "title": "Slint accessibility properties",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/common/",
+      "version_or_commit": "Live latest Slint docs; no release pin visible.",
+      "locator": "Accessibility Properties; accessible-role required for other accessibility props; accessible-label and Text role.",
+      "condition": "Properties expose accessible semantics but do not prove that every OS/screen-reader combination announces dynamic state as desired.",
+      "applicability": "Native UI labels, roles, state text and accessibility IDs.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s18",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the official Slint common properties documentation.",
+        "note": "Opened Slint common properties docs; checked accessibility-role prerequisite and label/state properties.",
+        "index": "../critic/sources/README.md#s18",
+        "inherited_index": "sources/README.md#s18"
+      },
+      "inherited_evidence_index": "sources/README.md#s18"
+    },
+    {
+      "id": "S19",
+      "title": "Slint FocusScope keyboard input",
+      "url": "https://docs.slint.dev/latest/docs/slint/reference/keyboard-input/focusscope/",
+      "version_or_commit": "Live latest Slint docs; no release pin visible.",
+      "locator": "FocusScope key-event delivery and KeyBinding behavior.",
+      "condition": "FocusScope handles events only when focused or containing a focused child; shortcuts use logical keys and duplicate bindings are undefined.",
+      "applicability": "Keyboard-operated review flow, focus traversal and shortcut design.",
+      "access_utc": "2026-10-12T00:35:33Z",
+      "observed_operation": "web__run search_query/open; reviewed returned source page excerpts; no code downloaded or executed.",
+      "evidence_index": "../investigator/sources/README.md#s19",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:57:32Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run open on the official Slint FocusScope documentation.",
+        "note": "Opened Slint FocusScope docs; checked focus-delivered key handling and KeyBinding.",
+        "index": "../critic/sources/README.md#s19",
+        "inherited_index": "sources/README.md#s19"
+      },
+      "inherited_evidence_index": "sources/README.md#s19"
+    },
+    {
+      "id": "S20",
+      "title": "FFmpeg audio filter pan",
+      "url": "https://ffmpeg.org/ffmpeg-filters.html",
+      "version_or_commit": "Live FFmpeg filter docs, not release-stamped; verify against the pinned deployed version.",
+      "locator": "Audio filter pan; channel remapping examples and conditions for pure mapping.",
+      "access_utc": "2026-10-12T00:41:19Z",
+      "observed_operation": "web__run search_query returned an official FFmpeg page excerpt about pan and pure channel mapping; a subsequent open call returned Internal Error. No code was executed.",
+      "condition": "Pan can select/remap channels; docs say a pure channel mapping requires zero/one gains and one input per output. A decoder/output path still needs target-device testing.",
+      "applicability": "Evidence that channel-specific audition can happen as a playback remap without writing a converted archival file.",
+      "evidence_index": "../investigator/sources/README.md#s20",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:25Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned the official FFmpeg filters documentation excerpt.",
+        "note": "Searched official FFmpeg filters docs; checked pan/channel mapping and pure 0/1 mapping condition; playback-device integration remains unverified.",
+        "index": "../critic/sources/README.md#s20",
+        "inherited_index": "sources/README.md#s20"
+      },
+      "inherited_evidence_index": "sources/README.md#s20"
+    },
+    {
+      "id": "S21",
+      "title": "Understanding WCAG 2.2 Success Criterion 4.1.3: Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_or_commit": "W3C WCAG 2.2 Understanding document, live page; last-modified of this exact page not established.",
+      "locator": "Progress status message situation C; intent that status changes be available without focus and avoid unnecessary interruption.",
+      "access_utc": "2026-10-12T00:41:19Z",
+      "observed_operation": "web__run search_query then open; inspected progress-status locator and recommendations.",
+      "condition": "Guidance is for WCAG web content; cited as behavior guidance, not as native desktop conformance evidence.",
+      "applicability": "Accessible progress announcements that do not seize focus; rate/coalescing still requires user testing.",
+      "evidence_index": "../investigator/sources/README.md#s21",
+      "critic_access": {
+        "access_utc": "2026-10-12T00:58:25Z",
+        "time_basis": "Clock timestamp recorded immediately after the web-research group; web__run exposes no per-request timestamp.",
+        "observed_operation": "web__run search_query returned official WAI WCAG 2.2 Understanding status-message guidance.",
+        "note": "Searched official WAI WCAG 2.2 Understanding page; checked progress/status guidance. Web guidance only.",
+        "index": "../critic/sources/README.md#s21",
+        "inherited_index": "sources/README.md#s21"
+      },
+      "inherited_evidence_index": "sources/README.md#s21"
+    },
+    {
+      "id": "S22",
+      "title": "WAI-ARIA 1.2 status role",
+      "url": "https://www.w3.org/TR/wai-aria-1.2/#status",
+      "version_or_commit": "WAI-ARIA 1.2 W3C Recommendation, published 2023-06-06.",
+      "locator": "Status role definition and implicit polite live/atomic values.",
+      "access_utc": "2026-10-12T00:41:19Z",
+      "observed_operation": "web__run search_query then open; inspected status-role section.",
+      "condition": "Applies to markup-based web accessibility; native UI must use its own accessibility API, then be validated with target assistive technologies.",
+      "applicability": "Useful progress/status behavior model; does not dictate implementation inside Slint.",
+      "evidence_index": "../investigator/sources/README.md#s22",
+      "critic_access": {
+        "status": "inherited_only",
+        "note": "Identity and investigator notes are preserved unchanged; this critic did not independently reopen this source."
+      },
+      "inherited_evidence_index": "sources/README.md#s22"
+    },
+    {
+      "id": "S23",
+      "title": "Rust std::fs::rename",
+      "url": "https://doc.rust-lang.org/std/fs/fn.rename.html",
+      "version_or_commit": "Rust standard-library documentation 1.97.0; source commit 2d8144b78, dated 2026-07-07 on page.",
+      "locator": "Function description and Platform-specific behavior, especially rename replacement, cross-mount failure, and Unix/Windows differences.",
+      "condition": "A rename is one filesystem operation; behavior differs by platform and fails across mount points. Do not infer atomicity across a separate manifest/database update.",
+      "applicability": "Keep staging and final paths on the same target filesystem; verify behavior on each supported OS and reconcile a crash between file finalization and manifest commit.",
+      "access_utc": "2026-10-12T01:12:08Z",
+      "observed_operation": "web__run search_query and open on the official Rust standard-library rename documentation.",
+      "time_basis": "Clock timestamp captured immediately after the web research group; web__run does not expose per-request timestamps."
+    },
+    {
+      "id": "S24",
+      "title": "POSIX rename specification",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "version_or_commit": "The Open Group Base Specifications Issue 8, POSIX.1-2024; live standards page.",
+      "locator": "rename() rationale: the action of the function is required to be atomic; description and error conditions.",
+      "condition": "The atomicity statement applies to a conforming POSIX rename operation on that filesystem; it says nothing about Windows behavior or atomic coordination with a separate database transaction. Search results exposed the relevant excerpt; direct page open returned HTTP 403.",
+      "applicability": "Evidence for treating a single POSIX rename as an operation boundary, while still designing restart reconciliation across independent resources.",
+      "access_utc": "2026-10-12T01:12:08Z",
+      "observed_operation": "web__run search_query on the official Open Group POSIX rename page; follow-up open returned 403 Forbidden.",
+      "time_basis": "Clock timestamp captured immediately after the web research group; web__run does not expose per-request timestamps."
+    },
+    {
+      "id": "S25",
+      "title": "SQLite Atomic Commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current official SQLite documentation; page not release-stamped.",
+      "locator": "Introduction and sections 3.11–3.12 on transaction commit; section 8 on crash tests; rollback-mode/WAL qualification.",
+      "condition": "SQLite describes atomic commit for database transaction changes, including crash/power-loss handling subject to filesystem/OS assumptions; the detailed algorithm at the page's start is for rollback mode, with WAL using another mechanism.",
+      "applicability": "A local manifest row can be transactionally committed, but this guarantee does not cover a separate media file; inject faults at the boundary between the file operation and row transaction.",
+      "access_utc": "2026-10-12T01:12:08Z",
+      "observed_operation": "web__run open on the official SQLite atomic-commit page.",
+      "time_basis": "Clock timestamp captured immediately after the web research group; web__run does not expose per-request timestamps."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "existing_public_mapper_restore": {
+    "restored": true,
+    "retained_files": 661,
+    "resolved_source_paths": 0,
+    "dispatches": 0,
+    "native_calls": 0
+  },
+  "existing_repinner": {
+    "repinned": true,
+    "source_files": 33,
+    "bundle_files": 58,
+    "dispatches": 0
+  },
+  "existing_helper_checks": {
+    "passed": true,
+    "checks": 265,
+    "prior_v2_checks": 236,
+    "prior_v2_rerun": false,
+    "mode": "SYNTHETIC_OFFLINE_DELTA_ONLY",
+    "native_candidate_calls": 0,
+    "dispatches": 0,
+    "reveal_executions": 0,
+    "science_qualified": false,
+    "provenance_qualified": false,
+    "scratch_removed": true
+  },
+  "scope": "Executed only against a fresh restored review copy; original frozen helper unchanged; no scientific witness or native candidate execution."
+}

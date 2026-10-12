@@ -1,0 +1,67 @@
+{
+  "run_id": "B09-P02-treatment",
+  "runtime_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment",
+  "brief_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/control-inputs/brief.md",
+  "plan_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/control-inputs/plan.md",
+  "whole_deadline_utc": "2026-10-12T01:36:58.556Z",
+  "whole_budget_s": 3600,
+  "t0_utc": "2026-10-12T00:36:58.556Z",
+  "output_selection": {
+    "investigator": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json"
+    ],
+    "critic": [
+      "source-map.json",
+      "critique.md"
+    ],
+    "reviser": [
+      "source-map.json",
+      "final.md"
+    ]
+  },
+  "final_stage": "reviser",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "R0",
+  "stage_prompt_deltas": {
+    "investigator": "Maintain one coherent source-backed working proposal as research proceeds. Still begin from the brief alone, preserve substantive discovery/source-map, and reveal the exact plan once only at the declared point. Freeze the completed investigator package for independent review. Keep every research obligation, source condition, opportunity family and immutable snapshot. No per-token watcher or publication per edit.\n",
+    "critic": "",
+    "reviser": "After full independent critique, perform one evidence-backed integration pass over the progressively complete draft, preserving supported material and resolving every criticism. Produce complete self-contained final.md with all original scope and exact plan dispositions; do not replace it with amendment IDs or a change list. Do not reconstruct supported substance unnecessarily. All ordinary finalization/source recheck duties remain.\n"
+  },
+  "method_delta_files": {
+    "investigator": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "11603cb5faf1166c3c035d2ddef8b90df312d9e5661ccf459d5ad17cd3e4be88",
+      "bytes": 416
+    },
+    "critic": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reviser": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "4797b38d36f6441e83513aed15f13bac3835534bda6185dfc9ef2e93ff6614f8",
+      "bytes": 437
+    }
+  },
+  "public_recipe_choice": "B09",
+  "activation_capture_version": "exact-capture-v21",
+  "dispatch_owner": "root"
+}

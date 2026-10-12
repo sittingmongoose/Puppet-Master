@@ -1,0 +1,74 @@
+{
+  "version": "er13.immutable-stage-handoff.v1",
+  "stage": "critic-breadth",
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B06-P01-treatment-critic-breadth-v1",
+  "status": "completed",
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "files": [
+    {
+      "relative_path": "critique.md",
+      "sha256": "35926120e38f9e08838979cc1818ebb5f53086421bde21155969b865bcc7b71c",
+      "bytes": 5249
+    },
+    {
+      "relative_path": "source-map.json",
+      "sha256": "90509528f3f0e00973f2f4234d5a6e329c1a58475f47245da214292e9ea7c9a3",
+      "bytes": 5046
+    },
+    {
+      "relative_path": "assignment.md",
+      "sha256": "9749054c663eaf453039706c231a290dc9d0b5af9c5f35dae37438aa98e4f176",
+      "bytes": 9758
+    },
+    {
+      "relative_path": "input-map.json",
+      "sha256": "912c343d24c43e02d5ef822b71a40bcbc8772e6e43a25aa5239de0b320330fc1",
+      "bytes": 2043
+    },
+    {
+      "relative_path": "freeze.json",
+      "sha256": "206ae60ad6bb51b23ee686374b70ea5385cfb8b41c6161aa975f6f6b1e76a5ea",
+      "bytes": 4492
+    },
+    {
+      "relative_path": "request.json",
+      "sha256": "9f478964f92d5e6c43207eaddd00581af58e7d169b18a7a35f2926f36578372a",
+      "bytes": 7384
+    },
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "a1499cb5a495f1648c15f2252c25e84e1c87b57a107b027dcb48e029d03beb46",
+      "bytes": 10762
+    },
+    {
+      "relative_path": "status.json",
+      "sha256": "1a197948a6aebf74b2c10c658228eafa5f3fb009f2d92d19a37f1ccd86f3c4cc",
+      "bytes": 4152
+    },
+    {
+      "relative_path": "native-goal-create.json",
+      "sha256": "5c0df32787568008a759414041b29b02bbb7d188cca5baac0635f1b845294472",
+      "bytes": 535
+    },
+    {
+      "relative_path": "native-goal-active.json",
+      "sha256": "5c0df32787568008a759414041b29b02bbb7d188cca5baac0635f1b845294472",
+      "bytes": 535
+    },
+    {
+      "relative_path": "native-goal-terminal.json",
+      "sha256": "e17b21dba20620512c2718ff331303f7d3b05156f60851e3a0d459eef9f49515",
+      "bytes": 863
+    },
+    {
+      "relative_path": "sources/index.md",
+      "sha256": "1f3bd785289d874078b5133e4f220dfea6e0f2f78763fa6e40008619073161e9",
+      "bytes": 1214
+    }
+  ],
+  "source_inventory": [
+    "sources/index.md"
+  ],
+  "enrichment": "Separate records only; never edit this terminal manifest or frozen members"
+}

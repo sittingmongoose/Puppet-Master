@@ -1,0 +1,24 @@
+{
+  "copied_v2_sources_unchanged": [
+    "sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+    "sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+    "sources/helpers/er12-screen-v1/bootstrap.js",
+    "sources/helpers/er12-screen-v1/prepare.py",
+    "sources/helpers/er12-screen-v1/reveal.py",
+    "sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+    "sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+    "sources/mechanics/invocation-clarification-v1/helper-pins.json",
+    "sources/mechanics/invocation-clarification-v1/transform.py",
+    "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+    "sources/mechanics/native-root-code-mode/exactSpecJS.js",
+    "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+    "sources/methods/A8/critic_prompt_delta.txt",
+    "sources/methods/A8/reviser_prompt_delta.txt"
+  ],
+  "copied_v2_source_count": 14,
+  "prior_v2_result_sha256": "a49bba8ab9f38e056c030058cf6c9f4228c99665433a176899e488194bd97e09",
+  "assertion_unchanged": true,
+  "original_D1_D2_pins_edited": false,
+  "original_v1_v2_edited": false,
+  "verification": "public original v2 manifest compared to all copied source bytes; all authored writes restricted to v3 directory"
+}

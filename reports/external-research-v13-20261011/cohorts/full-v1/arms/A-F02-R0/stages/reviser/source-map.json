@@ -1,0 +1,639 @@
+{
+  "schema_version": "1.0",
+  "run_id": "A-F02-R0",
+  "stage": "reviser",
+  "method": "Read-only review of assigned artifacts and bounded primary-source rechecks. No downloads, code execution, media reads, or implementation validation.",
+  "input_artifacts": [
+    {
+      "id": "ASSIGNMENT",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/reviser/assignment.md",
+      "sha256": "0336fa8da558195cffee3b2942287e373133f1a81d589f24a85e71767804b4db",
+      "role": "stage requirements"
+    },
+    {
+      "id": "INPUT_MAP",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/reviser/input-map.json",
+      "sha256": "b918982d886d427d2bcbf3295166e60004ea366523e6cecbdd4210cae59b98da",
+      "role": "permitted input manifest"
+    },
+    {
+      "id": "BRIEF",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/inputs/brief.md",
+      "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+      "role": "original user brief"
+    },
+    {
+      "id": "INVESTIGATOR_DISCOVERY",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/discovery.md",
+      "sha256": "935de492e20652c04e7ac0352fb57877bd07c6b5126fb61203dca6f63a98e22a",
+      "role": "brief-only discovery"
+    },
+    {
+      "id": "INVESTIGATOR_DRAFT",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/draft.md",
+      "sha256": "97bf1ceaabf96c4ef91df0ce3ae07d1b184a25219dd63fe92c0d5d67e4412c69",
+      "role": "research proposal"
+    },
+    {
+      "id": "INVESTIGATOR_SOURCE_MAP",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/source-map.json",
+      "sha256": "ce112c087a6aa309d438f01f491581cd2fd5833cc64b76878e39b06fd304af21",
+      "role": "source identities S01-S19 and S07A"
+    },
+    {
+      "id": "REVEALED_PLAN",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/revealed-plan.md",
+      "sha256": "5f7ff916807818307634a6a4b42dea7ed030547adae267d936cce489384d6ab2",
+      "role": "single released comparison plan"
+    },
+    {
+      "id": "PLAN_REVEAL_RECORD",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/plan-reveal.json",
+      "sha256": "dd8fbe160eb4ea5eb0619544f6d04e3debd4c6e10567d1b16bd54e1466a78c7e",
+      "role": "release time and hashes"
+    },
+    {
+      "id": "INVESTIGATOR_SOURCE_INDEX",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/sources/index.md",
+      "sha256": "47cd1d46bb3471fe1b1cfeb467f52d7e63301b62cbc73eb738c399a68d96b61e",
+      "role": "investigator navigation index"
+    },
+    {
+      "id": "CRITIQUE",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/critic/critique.md",
+      "sha256": "0239454bef8331f806d1d0f0b353f7a73ad904113901b67a035ffa02d7d496af",
+      "role": "independent critique"
+    },
+    {
+      "id": "CRITIC_SOURCE_MAP",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/critic/source-map.json",
+      "sha256": "09feaf899fe66a249138d2d7cc372d4e95d693f088837464915c7c680b115fba",
+      "role": "source identities C01-C18"
+    },
+    {
+      "id": "CRITIC_SOURCE_INDEX",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/critic/sources/index.md",
+      "sha256": "556fd060a3e3fe5c085f7dfcf204bf8c3067d91389c3081721d41a6f48e26d85",
+      "role": "critic navigation index"
+    }
+  ],
+  "source_lineage": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/investigator/source-map.json",
+      "sha256": "ce112c087a6aa309d438f01f491581cd2fd5833cc64b76878e39b06fd304af21",
+      "namespace": "S",
+      "preserved_source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S07A",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19"
+      ],
+      "original_access_metadata_preserved": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/critic/source-map.json",
+      "sha256": "09feaf899fe66a249138d2d7cc372d4e95d693f088837464915c7c680b115fba",
+      "namespace": "C",
+      "preserved_source_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18"
+      ],
+      "original_access_metadata_preserved": true
+    }
+  ],
+  "recheck_issue_map": {
+    "R01": [
+      "MI-01"
+    ],
+    "R02": [
+      "MI-01"
+    ],
+    "R03": [
+      "MIN-02"
+    ]
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "FFmpeg downloads and release branches",
+      "url": "https://ffmpeg.org/download.html",
+      "version_or_commit": "FFmpeg 9.0.2 stable release, announced 2026-09-18; release page also describes 8.1.3 and 8.0.3 branches",
+      "locator": "Releases section; description of point releases and development branch",
+      "observed_operation": "Read official release status and branch policy.",
+      "governing_condition_default_exception": "Point releases add selected important fixes; the development branch is where developers actively work and receives changes faster. Do not treat docs on a moving branch as proof of a particular binary's enabled codecs.",
+      "applicability": "Pin one FFmpeg release/build and qualify upgrades against the museum corpus."
+    },
+    {
+      "id": "S02",
+      "title": "ffprobe documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_or_commit": "Current moving upstream documentation read 2026-10-12; use with FFmpeg 9.0.2 release reference S01, but documentation URL itself is not version-pinned",
+      "locator": "-output_format json; -show_format; -show_streams; -show_error; -show_versions; -show_optional_fields",
+      "observed_operation": "Read machine-readable probing, container/stream report sections, error and version reporting.",
+      "governing_condition_default_exception": "JSON supports structured output. The default optional-field behavior is auto; JSON/XML omit invalid or non-applicable values. Missing fields therefore do not mean numeric zero.",
+      "applicability": "Support provenance-rich metadata extraction and honest unknown-duration states; exact output depends on pinned binary/build."
+    },
+    {
+      "id": "S03",
+      "title": "FFmpeg stream selection",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version_or_commit": "Current moving upstream manual; FFmpeg release baseline S01",
+      "locator": "Section 4.1.1 Automatic stream selection and 4.1.2 Manual stream selection",
+      "observed_operation": "Read the selection rules for output mapping.",
+      "governing_condition_default_exception": "Without -map, audio selection favors the stream with the most channels; equal candidates choose the lowest stream index. Explicit mapping selects only mapped streams, subject to filtergraph outputs.",
+      "applicability": "Use explicit track indexes for per-speaker review and derivatives."
+    },
+    {
+      "id": "S04",
+      "title": "FFmpeg audio filters",
+      "url": "https://www.ffmpeg.org/ffmpeg-filters.html",
+      "version_or_commit": "Current moving upstream manual; FFmpeg release baseline S01",
+      "locator": "Filter sections channelsplit, channelmap and pan",
+      "observed_operation": "Read channel split/remap options and examples.",
+      "governing_condition_default_exception": "channelsplit defaults input channel_layout to stereo; requesting channels absent from the selected layout errors. pan remapping is lossless only with zero/one gains and one input per output. Mixing is a different operation.",
+      "applicability": "Never infer speaker labels or downmix; confirm layout/index and retain any split output only as a derivative."
+    },
+    {
+      "id": "S05",
+      "title": "FFmpeg FATE ffprobe tests",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/tests/fate/ffprobe.mak",
+      "version_or_commit": "FFmpeg tag n9.0.2",
+      "locator": "FFPROBE_COMMAND and FFPROBE_OUTPUT_MODES_TESTS definitions",
+      "observed_operation": "Read upstream regression-test definitions; tests generate a known NUT fixture and test compact, CSV, default, flat, INI, JSON and XML output, with optional XML schema validation.",
+      "governing_condition_default_exception": "The suite requires selected configured components and test data; source presence does not mean this stage ran those tests or that a custom package is equivalent.",
+      "applicability": "Use as evidence for versioned structured-output test coverage and mirror output/schema tests in the proposal."
+    },
+    {
+      "id": "S06",
+      "title": "Symphonia crate support and feature table",
+      "url": "https://docs.rs/symphonia/0.6.1/symphonia/",
+      "version_or_commit": "Crate 0.6.1",
+      "locator": "Support tables: Formats, Codecs, Metadata, Warnings",
+      "observed_operation": "Read feature/default table for the released crate.",
+      "governing_condition_default_exception": "Only WAV, OGG, MKV, FLAC, PCM, ADPCM and listed metadata support are enabled by default; AIFF, CAF, ISO/MP4, AAC, ALAC, MP3/MP1/MP2 are optional features. Opus is not listed as native support; the separate libopus adapter is S07A.",
+      "applicability": "The Cargo feature set is part of the promised format/preview support and must be pinned/tested."
+    },
+    {
+      "id": "S07",
+      "title": "Symphonia getting-started caller",
+      "url": "https://github.com/pdeljanov/Symphonia/blob/v0.6.1/symphonia/examples/getting-started.rs",
+      "version_or_commit": "Symphonia tag v0.6.1; release commit short hash ee35874 is recorded on S08",
+      "locator": "Probe/decode example: optional Hint extension; default audio track selection; decoder creation; packet loop",
+      "observed_operation": "Read upstream caller code.",
+      "governing_condition_default_exception": "The example uses .expect for opening/probing/decoder creation and skips IO/decode errors in its pedagogical loop; do not copy its panic/error policy into an intake app. It selects a default audio track, not a museum-assigned speaker track.",
+      "applicability": "Evidence for integration steps and explicit need for production error taxonomy and track selection."
+    },
+    {
+      "id": "S07A",
+      "title": "Symphonia libopus adapter",
+      "url": "https://docs.rs/symphonia-adapter-libopus/0.3.0/symphonia_adapter_libopus/",
+      "version_or_commit": "Adapter 0.3.0; docs specify compatibility with Symphonia 0.6",
+      "locator": "Crate description, usage and Symphonia compatibility",
+      "observed_operation": "Read third-party adapter documentation.",
+      "governing_condition_default_exception": "The adapter supplies libopus to a custom CodecRegistry; default features bundle libopus unless disabled. This is separate dependency/linking/bundling work.",
+      "applicability": "Opus support is possible with added integration but is not a claim about native Symphonia 0.6.1 support."
+    },
+    {
+      "id": "S08",
+      "title": "Symphonia 0.6.1 release notes",
+      "url": "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1",
+      "version_or_commit": "Release tag v0.6.1; commit ee35874; page shows release day Aug 13 but not year in the retrieved text",
+      "locator": "New Features and Bug Fixes & Improvements",
+      "observed_operation": "Read release/change history.",
+      "governing_condition_default_exception": "Release describes fixes for certain MP3 silent sections, Xing/Info and VBRI CRC tags, mono MP1, large attachments/metadata loading and malformed-input memory/panic hardening. These are evidence of known corrected edges, not complete support guarantees.",
+      "applicability": "Build corpus cases around release fixes and review subsequent upgrades."
+    },
+    {
+      "id": "S09",
+      "title": "Symphonia regression-pack discussion",
+      "url": "https://github.com/pdeljanov/Symphonia/discussions/337",
+      "version_or_commit": "Discussion opened 2025-01-07; maintainer reply 2025-01-15",
+      "locator": "Maintainer response on personal-library testing, differing duration calculations, reproducibility and possible known-good metadata/audio fixtures",
+      "observed_operation": "Read project-owner discussion.",
+      "governing_condition_default_exception": "Maintainer notes FFmpeg may produce nonzero-start PTS in some MP4s and MediaInfo may calculate duration differently; private media testing was not reproducible due to copyright/size. Discussion is not a formal support guarantee.",
+      "applicability": "Preserve raw duration provenance and build a rights-cleared, reproducible fixture suite."
+    },
+    {
+      "id": "S10",
+      "title": "GstDiscoverer API",
+      "url": "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html",
+      "version_or_commit": "Current moving GStreamer documentation; API page includes per-API Since annotations",
+      "locator": "GstDiscoverer blocking/non-blocking API; get_duration; GstDiscovererResult enum",
+      "observed_operation": "Read upstream discovery API docs.",
+      "governing_condition_default_exception": "Duration is returned in nanoseconds; results distinguish OK, invalid URI, error, timeout, busy and missing plugins. Asynchronous mode requires a running GMainLoop/GMainContext.",
+      "applicability": "Possible discovery/preview backend where plugin/runtime packaging is supportable; surface result distinctions."
+    },
+    {
+      "id": "S11",
+      "title": "GStreamer missing-plugin design",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html",
+      "version_or_commit": "Current upstream design document; API notes state core/base-utils >= 0.10.12",
+      "locator": "Missing URI handler/typefind/demuxer/decoder sections; application-level policy; error reporting",
+      "observed_operation": "Read plugin absence and diagnostics behavior.",
+      "governing_condition_default_exception": "Applications receive missing-plugin messages; the API does not enforce installation policy. Missing demuxer and decoder are not distinguished at one application message layer; partial plugin availability can permit partial playback.",
+      "applicability": "Report exact readable/preview/plugin states; never auto-install or equate missing decoder with unreadable original."
+    },
+    {
+      "id": "S12",
+      "title": "DROID repository and README",
+      "url": "https://github.com/digital-preservation/droid",
+      "version_or_commit": "Current develop branch read 2026-10-12; no commit SHA captured",
+      "locator": "General information, identification and signature-file CLI sections",
+      "observed_operation": "Read primary tool documentation and examples.",
+      "governing_condition_default_exception": "DROID uses versioned PRONOM-derived internal signatures and can also identify by extension; it exports reports including CSV and allows showing/switching signature files. Signatures can update, so record the actual database versions; latest version is not established here.",
+      "applicability": "Optional batch format identifier; store method/PUID/signature versions, but do not use as evidence of decodability."
+    },
+    {
+      "id": "S13",
+      "title": "The National Archives DROID/PRONOM role guidance",
+      "url": "https://www.nationalarchives.gov.uk/information-management/manage-information/preserving-digital-records/our-role/",
+      "version_or_commit": "Current official guidance read 2026-10-12; revision not displayed",
+      "locator": "DROID identification description and PRONOM signatures coverage paragraph",
+      "observed_operation": "Read official operator guidance.",
+      "governing_condition_default_exception": "Internal signatures are more accurate than extensions when present, but the page says only around 70% of PRONOM entries have signatures. Extension-only or unidentified results remain possible.",
+      "applicability": "Do not let absent PUID or a tentative/extension match decide unreadability or admission."
+    },
+    {
+      "id": "S14",
+      "title": "RFC 8493 BagIt v1.0",
+      "url": "https://www.rfc-editor.org/info/rfc8493/",
+      "version_or_commit": "RFC 8493, BagIt File Packaging Format v1.0, October 2018; Informational",
+      "locator": "Sections 1–2, especially 2.1.3 payload manifest and 2.4 checksum algorithms",
+      "observed_operation": "Read package directory and payload checksum requirements.",
+      "governing_condition_default_exception": "A bag has tag files and a data payload; manifest lines contain checksum plus relative path. BagIt provides transfer integrity but RFC says it is not designed to secure against active attacks.",
+      "applicability": "Portable handoff with original files plus metadata tags/checksums; catalog semantics, rights and authenticity still need separate design."
+    },
+    {
+      "id": "S15",
+      "title": "SQLite transaction documentation",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "Current SQLite docs read 2026-10-12; release/API version not captured",
+      "locator": "Transactions; read versus write transactions; DEFERRED/IMMEDIATE/EXCLUSIVE",
+      "observed_operation": "Read transaction semantics.",
+      "governing_condition_default_exception": "Many concurrent readers are allowed but only one writer. DEFERRED is the default and can fail on write upgrade with SQLITE_BUSY; IMMEDIATE may also return SQLITE_BUSY.",
+      "applicability": "If selected, serialize checkpoint writes and test recovery/busy handling."
+    },
+    {
+      "id": "S16",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current SQLite docs read 2026-10-12; release/API version not captured",
+      "locator": "Sections 1 and 2: atomic commit overview and hardware assumptions",
+      "observed_operation": "Read guarantees and stated conditions.",
+      "governing_condition_default_exception": "A committed transaction appears all-or-none across interruption; the described mechanism applies only to rollback-journal mode, and WAL uses a different mechanism. Durability depends on storage/VFS/hardware assumptions; no multi-file package-and-database transaction is implied.",
+      "applicability": "Use record-sized transactions, avoid claiming atomicity across media copy and database state, and fault-test the actual environment."
+    },
+    {
+      "id": "S17",
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation, WCAG 2.2, 12 December 2024",
+      "locator": "Success Criterion 2.1.1 Keyboard; Success Criterion 4.1.3 Status Messages",
+      "observed_operation": "Read the normative standard.",
+      "governing_condition_default_exception": "2.1.1 requires functionality to work from keyboard subject to its path-dependent-input exception. 4.1.3 applies to content implemented using markup languages; it requires status messages to be programmatically determinable without focus. WCAG is for web content and does not itself specify a native widget API.",
+      "applicability": "Set user-flow acceptance tests; for native UI, verify platform accessibility semantics and screen-reader behavior separately."
+    },
+    {
+      "id": "S18",
+      "title": "Library of Congress sound curator guidance",
+      "url": "https://www.loc.gov/preservation/digital/formats/content/sound_curator.shtml",
+      "version_or_commit": "Current LoC reference page; revision not captured",
+      "locator": "Table 2: sound preferences for mono/stereo oral histories; accompanying notes",
+      "observed_operation": "Read the preservation-format context.",
+      "governing_condition_default_exception": "The page lists linear PCM WAVE/BWF and AIFF as preferred for mono/stereo while MP3/AAC variants can be acceptable; it presents LoC preference, not a rule that other donor originals must be rejected.",
+      "applicability": "Use to inform preservation metadata/fixture coverage, never to narrow intake without a museum owner policy."
+    },
+    {
+      "id": "S19",
+      "title": "FFmpeg license and legal considerations",
+      "url": "https://www.ffmpeg.org/legal.html",
+      "version_or_commit": "Current FFmpeg licensing page read 2026-10-12; applicable terms depend on exact source/build/dependencies",
+      "locator": "FFmpeg License; LGPL compliance checklist; --enable-gpl and --enable-nonfree conditions",
+      "observed_operation": "Read upstream packaging/licensing notes.",
+      "governing_condition_default_exception": "Optional GPL components can change FFmpeg licensing; --enable-nonfree produces an unredistributable binary per upstream page. This is not a legal determination for any proposed package.",
+      "applicability": "Owner must review the exact binary/configuration and distribution model before bundling."
+    },
+    {
+      "id": "C01",
+      "related_investigator_source_ids": [
+        "S02"
+      ],
+      "title": "ffprobe documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_or_commit": "Current moving upstream documentation; no tagged release is identified on the page. The investigator pairs it with FFmpeg 9.0.2, but the documentation URL itself is unpinned.",
+      "locator": "Description; -show_error, -show_format, -show_streams, -show_versions; -show_optional_fields and JSON writer.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Opened and checked the probe output and optional-field documentation.",
+      "governing_condition_default_exception": "JSON/XML omit invalid or non-applicable fields when optional-field behavior is auto, the documented default. ffprobe returns a positive exit code if input cannot be opened or recognized.",
+      "applicability": "Supports keeping omitted values unknown and separating probe failure from later preview. Qualify the actual pinned binary."
+    },
+    {
+      "id": "C02",
+      "related_investigator_source_ids": [
+        "S03"
+      ],
+      "title": "FFmpeg command-line documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version_or_commit": "Current moving manual; no release tag in URL. FFmpeg 9.0.2 is the investigator's separate release baseline.",
+      "locator": "§4.1.1 Automatic stream selection; §4.1.2 Manual stream selection.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Opened the official manual and checked the selection rule.",
+      "governing_condition_default_exception": "Without explicit mapping, audio selection favors the stream with the most channels; ties select the lowest stream index. -map restricts output to mapped streams, subject to the documented filtergraph exception.",
+      "applicability": "Supports explicit stream selection for multi-speaker review; not a guarantee that every build can decode a chosen stream."
+    },
+    {
+      "id": "C03",
+      "related_investigator_source_ids": [
+        "S04"
+      ],
+      "title": "FFmpeg audio filter documentation",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/doc/filters.texi",
+      "version_or_commit": "FFmpeg tag n9.0.2; release-pinned source documentation.",
+      "locator": "Audio Filters, channelsplit (§ around source lines 4090–4101) and pan (§ around 5722–5783).",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Opened the tag-pinned raw source and checked channel layout, absent-channel behavior and pure mapping conditions.",
+      "governing_condition_default_exception": "channelsplit defaults its input layout to stereo, defaults channels to all, and errors when requested channels are absent from that layout. pan is described as pure/lossless mapping only with zero/one gains and one input per output.",
+      "applicability": "Supports explicit layout/index confirmation and avoiding default downmix or speaker labels. Build inclusion still depends on configured filters."
+    },
+    {
+      "id": "C04",
+      "related_investigator_source_ids": [
+        "S05"
+      ],
+      "title": "FFmpeg FATE ffprobe tests",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/tests/fate/ffprobe.mak",
+      "version_or_commit": "FFmpeg tag n9.0.2.",
+      "locator": "FFPROBE_COMMAND; FFPROBE_OUTPUT_MODES_TESTS; FATE_FFPROBE configuration.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read upstream regression-test definitions.",
+      "governing_condition_default_exception": "The tests generate a known fixture and exercise multiple output modes including JSON; the test target is conditional on configured components and is not proof a custom package ran it.",
+      "applicability": "Supports proposing structured-output fixture tests while keeping execution status explicitly false."
+    },
+    {
+      "id": "C05",
+      "related_investigator_source_ids": [
+        "S06"
+      ],
+      "title": "Symphonia 0.6.1 feature manifest and crate docs",
+      "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/Cargo.toml",
+      "version_or_commit": "Symphonia tag v0.6.1; versioned source file.",
+      "locator": "[features], default, all-codecs, all-formats; docs.rs crate 0.6.1 support page.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the pinned Cargo feature manifest and crate landing page.",
+      "governing_condition_default_exception": "Default features list opt-simd, metadata, ADPCM, FLAC, MKV, OGG, PCM, Vorbis and WAV. AAC, ALAC, MP3-family, AIFF, CAF and ISO-MP4 require optional feature flags. The all-features docs build is not the default runtime configuration.",
+      "applicability": "Supports pinning and testing the exact application feature set. Opus adapter is separate integration, not native default support."
+    },
+    {
+      "id": "C06",
+      "related_investigator_source_ids": [
+        "S07"
+      ],
+      "title": "Symphonia getting-started caller",
+      "url": "https://github.com/pdeljanov/Symphonia/blob/v0.6.1/symphonia/examples/getting-started.rs",
+      "version_or_commit": "Symphonia tag v0.6.1; page identifies release commit ee35874.",
+      "locator": "Probe/decode flow; default_track(TrackType::Audio); expect/panic/skip branches.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the pinned upstream example code.",
+      "governing_condition_default_exception": "The example hints with an extension, chooses a default audio track, uses expect/panic for some errors, and skips certain decode errors.",
+      "applicability": "Supports treating the example as an integration sketch, not production error policy or museum speaker assignment."
+    },
+    {
+      "id": "C07",
+      "related_investigator_source_ids": [
+        "S08"
+      ],
+      "title": "Symphonia 0.6.1 release notes",
+      "url": "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1",
+      "version_or_commit": "Tag v0.6.1; displayed short commit ee35874; release page displays Aug 13 without a year.",
+      "locator": "New Features; Bug Fixes & Improvements.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the upstream release notes.",
+      "governing_condition_default_exception": "Notes include MP3 silent-section and CRC-tag fixes, mono MP1, large metadata/attachment performance, malformed-input memory hardening and fuzz-found panics. These are corrected cases, not universal support guarantees.",
+      "applicability": "Supports regression-corpus and upgrade review; do not claim all formats/files are safe."
+    },
+    {
+      "id": "C08",
+      "related_investigator_source_ids": [
+        "S09"
+      ],
+      "title": "Symphonia regression-pack discussion",
+      "url": "https://github.com/pdeljanov/Symphonia/discussions/337",
+      "version_or_commit": "Discussion opened 2025-01-07; maintainer reply 2025-01-15.",
+      "locator": "Maintainer response on personal-library testing; differing timestamps/durations; reproducible rights-cleared fixtures.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the primary project discussion and maintainer reply.",
+      "governing_condition_default_exception": "Maintainer describes private-library regression testing as not reproducible due to copyright/size and notes different duration/PTS behavior among tools. This is discussion evidence, not a support guarantee.",
+      "applicability": "Supports retaining duration provenance and proposing cleared, reproducible fixtures."
+    },
+    {
+      "id": "C09",
+      "related_investigator_source_ids": [
+        "S10"
+      ],
+      "title": "GstDiscoverer API",
+      "url": "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html",
+      "version_or_commit": "Current moving upstream API documentation with per-API Since annotations; no single release pinned.",
+      "locator": "GstDiscovererResult enum; duration API; blocking/asynchronous discovery.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Opened the API documentation and checked the result enum.",
+      "governing_condition_default_exception": "Result states distinguish OK, invalid URI, error, timeout, busy and missing plugins; duration is nanoseconds; async use needs a running GLib main context/loop.",
+      "applicability": "Supports explicit discovery states where plugin/runtime deployment is viable."
+    },
+    {
+      "id": "C10",
+      "related_investigator_source_ids": [
+        "S11"
+      ],
+      "title": "GStreamer missing-plugin design",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html",
+      "version_or_commit": "Current upstream design page; API note references core/base-utils >= 0.10.12; no current release pin.",
+      "locator": "Missing URI handler, typefind, demuxer and decoder discussion; application policy.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Opened the upstream design page.",
+      "governing_condition_default_exception": "Plugin absence is reported to the application; installation behavior is application policy. Partial plugin sets can allow partial discovery/playback.",
+      "applicability": "Supports surfacing qualified missing-preview states and never auto-installing a plugin as an intake side effect."
+    },
+    {
+      "id": "C11",
+      "related_investigator_source_ids": [
+        "S14"
+      ],
+      "title": "RFC 8493 BagIt File Packaging Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version_or_commit": "RFC 8493, BagIt v1.0, October 2018; Informational.",
+      "locator": "§§2.1.2–2.1.3 payload directory/manifest; §5 Security Considerations.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the standard's payload and checksum requirements.",
+      "governing_condition_default_exception": "Payload manifest lists each payload file exactly once with checksum and base-relative path; BagIt gives corruption/transfer integrity but is not designed against active attacks.",
+      "applicability": "Supports self-contained portable handoff and checksum validation; it does not supply catalog or rights semantics."
+    },
+    {
+      "id": "C12",
+      "related_investigator_source_ids": [
+        "S15"
+      ],
+      "title": "SQLite transaction documentation",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "Current moving SQLite documentation; no API/runtime version captured.",
+      "locator": "Read versus write transactions; DEFERRED/IMMEDIATE behavior.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official transaction documentation.",
+      "governing_condition_default_exception": "Multiple concurrent readers are allowed, with only one simultaneous write transaction. Write-upgrade conflicts can produce SQLITE_BUSY.",
+      "applicability": "Supports serial checkpoint writes and explicit busy/recovery tests if SQLite is chosen."
+    },
+    {
+      "id": "C13",
+      "related_investigator_source_ids": [
+        "S16"
+      ],
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current moving SQLite documentation; article describes rollback-journal behavior; WAL uses a different mechanism.",
+      "locator": "§§3.7–3.11 commit sequence; stated storage and flush assumptions.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official commit explanation and conditions.",
+      "governing_condition_default_exception": "Atomicity depends on database journaling, flushes and storage/VFS/hardware assumptions. It does not imply an atomic transaction across the application database and separately copied package files.",
+      "applicability": "Supports MI-01 and the draft's own caveat about cross-filesystem/database recovery."
+    },
+    {
+      "id": "C14",
+      "related_investigator_source_ids": [
+        "S17"
+      ],
+      "title": "WCAG 2.2 Recommendation",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "version_or_commit": "W3C Recommendation, WCAG 2.2, 12 December 2024.",
+      "locator": "SC 2.1.1 Keyboard; SC 4.1.3 Status Messages.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the normative recommendation.",
+      "governing_condition_default_exception": "Keyboard SC has a path-dependent-input exception. Status Messages says content implemented using markup languages must expose programmatically determinable status without focus.",
+      "applicability": "Supports user-flow acceptance criteria; a native UI still needs platform accessibility semantics and screen-reader verification."
+    },
+    {
+      "id": "C15",
+      "related_investigator_source_ids": [
+        "S12"
+      ],
+      "title": "DROID repository README",
+      "url": "https://github.com/digital-preservation/droid",
+      "version_or_commit": "develop branch pointer observed; full branch HEAD SHA not exposed in this review. Latest visible release 6.9.13 is a separate pin; its release page states 18 commits to develop since that release.",
+      "locator": "General Information; CLI and CSV output; managing binary/container signature-file versions.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official DROID repository README and signature CLI examples.",
+      "governing_condition_default_exception": "DROID uses versioned internal signatures, can update/switch those files, and emits CSV. A moving develop branch is not a reproducible code identity.",
+      "applicability": "Supports optional format identification and recording binary/container signature versions; supports MIN-02."
+    },
+    {
+      "id": "C16",
+      "related_investigator_source_ids": [
+        "S13"
+      ],
+      "title": "The National Archives DROID/PRONOM role guidance",
+      "url": "https://www.nationalarchives.gov.uk/information-management/manage-information/preserving-digital-records/our-role/",
+      "version_or_commit": "Current official page; revision not displayed.",
+      "locator": "DROID identification description and PRONOM signature coverage paragraph.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official guidance page via search result after direct open failed.",
+      "governing_condition_default_exception": "The page says identification may use extension or internal signature and states around 70 percent of PRONOM entries currently have signatures; internal signatures are described as more accurate than extensions.",
+      "applicability": "Confirms DROID coverage limitation; the percentage is mutable and not an audio-decoding guarantee."
+    },
+    {
+      "id": "C17",
+      "related_investigator_source_ids": [
+        "S01"
+      ],
+      "title": "FFmpeg downloads and release source",
+      "url": "https://ffmpeg.org/download.html",
+      "version_or_commit": "FFmpeg 9.0.2 source listed on the official download page at access time.",
+      "locator": "Download Source Code; compiled package links; release verification.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official release/download page.",
+      "governing_condition_default_exception": "Upstream provides source; compiled builds are linked from external packagers. Exact configured build and enabled components therefore matter.",
+      "applicability": "Supports qualification of the exact shipped artifact, not inference from an upstream release number alone."
+    },
+    {
+      "id": "C18",
+      "related_investigator_source_ids": [
+        "S19"
+      ],
+      "title": "FFmpeg License and Legal Considerations",
+      "url": "https://ffmpeg.org/legal.html",
+      "version_or_commit": "Current moving upstream licensing guidance; no package configuration is evaluated.",
+      "locator": "FFmpeg License and LGPL compliance checklist.",
+      "accessed_utc_window": "2026-10-12T00:43:22Z–2026-10-12T00:47:25Z",
+      "observed_operation": "Read the official licensing page.",
+      "governing_condition_default_exception": "Licensing depends on enabled GPL/nonfree options, linkage and redistribution facts. Page guidance is not a legal determination for a proposed bundle.",
+      "applicability": "Supports the draft's exact-build/distribution review condition and no legal sign-off claim."
+    },
+    {
+      "id": "R01",
+      "title": "SQLite transaction documentation",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "Current official documentation; page last updated 2026-02-18; SQLite runtime version not captured.",
+      "locator": "Sections 2.1–2.2: read/write transactions, DEFERRED/IMMEDIATE/EXCLUSIVE, SQLITE_BUSY.",
+      "accessed_utc_window": "2026-10-12T00:55:00Z–2026-10-12T00:57:20Z",
+      "observed_operation": "Opened the official transaction page and read its transaction and writer-concurrency sections in a read-only browser review.",
+      "governing_condition_default_exception": "Multiple simultaneous read transactions are allowed, with only one simultaneous write transaction. A DEFERRED read-to-write upgrade or IMMEDIATE start can return SQLITE_BUSY. This describes database transactions.",
+      "applicability": "Supports serial database checkpoint writes and explicit busy/recovery handling if SQLite is chosen; it does not certify external package operations."
+    },
+    {
+      "id": "R02",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current official documentation; article describes rollback-journal mode and says WAL uses a different mechanism; SQLite runtime version not captured.",
+      "locator": "Sections 1–2 and 3.7–3.11: atomic transaction scope, journal mode, storage/flush assumptions.",
+      "accessed_utc_window": "2026-10-12T00:55:00Z–2026-10-12T00:57:20Z",
+      "observed_operation": "Opened the official atomic-commit explanation and read its scope and hardware-assumption sections.",
+      "governing_condition_default_exception": "The page describes all-or-none changes within a database transaction under stated storage and flush assumptions. Its detailed mechanism is rollback mode; WAL uses another mechanism. It makes no statement that separate application package files participate in a database transaction.",
+      "applicability": "Supports limiting the proposal’s database atomicity claim; the conclusion that unrelated package filesystem operations are outside that database transaction is an application-boundary inference."
+    },
+    {
+      "id": "R03",
+      "title": "DROID 6.9.13 release page",
+      "url": "https://github.com/digital-preservation/droid/releases/tag/6.9.13",
+      "version_or_commit": "Release 6.9.13; page displayed short release commit deb91d0 and 27 commits to develop at access time.",
+      "locator": "Release summary, commit label, and commits-to-develop count.",
+      "accessed_utc_window": "2026-10-12T00:56:57Z–2026-10-12T00:57:20Z",
+      "observed_operation": "Opened the official release page. Attempted the official REST URL https://api.github.com/repos/digital-preservation/droid/commits/develop; browser tool returned that it was inaccessible, so no full current branch SHA was obtained.",
+      "governing_condition_default_exception": "The release page identifies a tagged release and a short release commit separately from a moving develop branch; the displayed number of later commits is mutable and not a branch SHA.",
+      "applicability": "Supports retaining the develop-branch identity limitation in S12/C15 and not silently substituting release 6.9.13; DROID remains optional."
+    }
+  ],
+  "notes": [
+    "S and C records are carried with original identities/access metadata; no source ID was rebound.",
+    "Released plan hash is recorded in input_artifacts and the investigator plan-reveal record.",
+    "Full current DROID develop SHA remains UNKNOWN; browser tool could not access the attempted official REST endpoint."
+  ]
+}

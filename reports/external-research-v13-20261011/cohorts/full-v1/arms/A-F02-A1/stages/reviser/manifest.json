@@ -1,0 +1,67 @@
+{
+  "version": "er13.immutable-stage-handoff.v1",
+  "stage": "reviser",
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-A-F02-A1-reviser-v1",
+  "status": "completed",
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "files": [
+    {
+      "relative_path": "final.md",
+      "sha256": "3ba45b3f64067b63810eaf50c645cfff58fd0f66f509fbc484569f70ee7bbd06",
+      "bytes": 36306
+    },
+    {
+      "relative_path": "source-map.json",
+      "sha256": "eb165c9ccb85cf185178f515733b88a599d2371d0b5d2eb25a10bdf9be0b511c",
+      "bytes": 45005
+    },
+    {
+      "relative_path": "assignment.md",
+      "sha256": "cd41d49109c35f0ad26c54b78637e4cb85315fc240c2e0557d7915253dc2e773",
+      "bytes": 9615
+    },
+    {
+      "relative_path": "input-map.json",
+      "sha256": "da80e4a0c506f8b4c7f2dcbb35df0b8b6d502d630df15dba9b3d02b6cc3c1a19",
+      "bytes": 2395
+    },
+    {
+      "relative_path": "freeze.json",
+      "sha256": "249213839c246675a290675cd696c3665152c92fd767e41fae1cb691339aa652",
+      "bytes": 5677
+    },
+    {
+      "relative_path": "request.json",
+      "sha256": "f178a36104925c941d01c4480f6d5c08452fda563e96be8406ee3b6ec2e9d226",
+      "bytes": 7136
+    },
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "864e60cfd3eb77deddd3f9ea5a04fcc9a1cbbcc06d7c4bcad196371e4d1d66d6",
+      "bytes": 10322
+    },
+    {
+      "relative_path": "status.json",
+      "sha256": "00ff0f779973b8c98e3a4b4b94cf51bc49435bcb10c515791f5238d10b08aa1c",
+      "bytes": 4052
+    },
+    {
+      "relative_path": "native-goal-create.json",
+      "sha256": "d13224ef459066e1306db396abb977a6d56633e36e327f8f409eab4afe052a8d",
+      "bytes": 494
+    },
+    {
+      "relative_path": "native-goal-active.json",
+      "sha256": "d13224ef459066e1306db396abb977a6d56633e36e327f8f409eab4afe052a8d",
+      "bytes": 494
+    },
+    {
+      "relative_path": "native-goal-terminal.json",
+      "sha256": "40e0f51ef6fc7d3e3d21a0ca6e9cdd3dc789db6945df10217b4593dba94b3f18",
+      "bytes": 823
+    }
+  ],
+  "source_inventory": [],
+  "enrichment": "Separate records only; never edit this terminal manifest or frozen members"
+}
