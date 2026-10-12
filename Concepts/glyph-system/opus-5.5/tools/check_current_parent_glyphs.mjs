@@ -393,6 +393,12 @@ async function beginNativeTrace(page, selectors, label) {
 async function endNativeTrace(page) {
   return page.evaluate(() => { const t = window.__pmgTrace; t.stop = true; cancelAnimationFrame(t.raf); delete window.__pmgTrace; return { label: t.label, selectors: t.selectors, rows: t.rows }; });
 }
+function nativePaintReturned(settled, baseline) {
+  return settled.glyphs.length === baseline.glyphs.length && settled.glyphs.every((g, i) =>
+    !g.host?.hover && !g.host?.focus_visible &&
+    ['ink', 'halo_alpha', 'halo_visibility', 'halo_stroke_opacity', 'halo_opacity'].every((k) => g[k] === baseline.glyphs[i][k]) &&
+    JSON.stringify(g.moving_parts) === JSON.stringify(baseline.glyphs[i].moving_parts));
+}
 async function nativeHover(page, id, host, selectors, fields) {
   await page.mouse.move(1850, 1000); await sleep(600);
   const rest = await page.evaluate(nativeSample, selectors);
@@ -813,6 +819,10 @@ async function r1(page) {
         { requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state, own_host: 'existing ov-skyline gear button' });
       if (hover.status === 'HOLD') { hold = true; break; }
     }
+    const menuId = 'R1-' + label + '-menu-click-Escape-focus-blur';
+    if (!completed.has(menuId)) {
+    await page.mouse.move(1850, 1000); await sleep(500);
+    const anchorBaseline = await page.evaluate(nativeSample, tool + ' > svg.nx');
     await beginNativeTrace(page, controls + ',.pmu-menu .pmu-mcheck svg.nx', 'R1-' + label + '-menu-click-and-Escape');
     await revealTools(card);
     await page.locator(tool).click();
@@ -840,11 +850,13 @@ async function r1(page) {
     await page.keyboard.press('Tab'); await sleep(900);
     const blurredAnchor = await page.evaluate(nativeSample, tool + ' > svg.nx');
     const menuTrace = await endNativeTrace(page);
-    const noStuckAnchor = blurredAnchor.glyphs.every((g) => g.host?.hover || g.host?.focus_visible || (g.halo_alpha === '0' && g.halo_visibility === 'hidden'));
+    // Published PMG-flat tools have no halo path. Absence must match the baseline, not a fabricated hidden path.
+    const noStuckAnchor = nativePaintReturned(blurredAnchor, anchorBaseline);
     result.cases.push({ id: 'R1-' + label + '-menu-click-Escape-focus-blur', requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state,
-      checkedHost, pointer_at_Escape: pointer, pointer_movement_after_Escape: [0, 0], afterClick, afterEscape, blurredAnchor, trace: menuTrace,
+      checkedHost, pointer_at_Escape: pointer, pointer_movement_after_Escape: [0, 0], anchorBaseline, afterClick, afterEscape, blurredAnchor, trace: menuTrace,
       no_stuck_blurred_anchor: noStuckAnchor, status: noStuckAnchor ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
     if (!noStuckAnchor) { hold = true; break; }
+    }
     // Existing page tabs are focusable published controls. The setup focus is recorded honestly; page activation
     // itself is a real trusted Enter while the mouse stays at the existing gear button's coordinates.
     await revealTools(card); await page.locator(tool).hover();
@@ -863,6 +875,8 @@ async function r1(page) {
     if (!noVisibleOutgoing) { hold = true; break; }
     await page.locator('.page-tab[data-page="usage"]').click();
     for (const gesture of ['drag', 'resize']) {
+      await page.mouse.move(1850, 1000); await sleep(500);
+      const gestureBaseline = await page.evaluate(nativeSample, controls);
       await revealTools(card);
       const locator = page.locator(gesture === 'drag' ? card + ' button[data-tool="grip"]' : card + ' .pmu-h[data-edge="se"]');
       const handle = await locator.boundingBox(), before = await page.locator(card).boundingBox();
@@ -874,9 +888,9 @@ async function r1(page) {
       await page.mouse.up(); await sleep(1800); await page.mouse.move(1850, 1000);
       await page.locator('.page-tab[data-page="usage"]').click(); await sleep(900);
       const after = await page.locator(card).boundingBox(), settled = await page.evaluate(nativeSample, controls), trace = await endNativeTrace(page);
-      const noStuck = settled.glyphs.every((g) => !g.host?.hover && !g.host?.focus_visible && g.halo_alpha === '0' && g.halo_visibility === 'hidden');
+      const noStuck = nativePaintReturned(settled, gestureBaseline);
       result.cases.push({ id: 'R1-' + label + '-' + gesture, requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state,
-        trusted_pointer_route: { start: { x, y }, delta: { x: dx, y: dy }, steps: 12 }, before, after, settled, trace,
+        trusted_pointer_route: { start: { x, y }, delta: { x: dx, y: dy }, steps: 12 }, before, after, gestureBaseline, settled, trace,
         no_stuck_native_paint_after_leave_and_blur: noStuck, status: noStuck ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
       if (!noStuck) { hold = true; break; }
     }

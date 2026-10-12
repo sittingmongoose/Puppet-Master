@@ -638,5 +638,40 @@
     "mark_swaps": 0,
     "console_errors": 0,
     "status": "UNVERIFIED/HOLD; no further stub attempts authorized"
+  },
+  "source64_final": {
+    "manifest_sha256": "b4a313434c08e59e205272f1ffe892edb79ec8670c08fa95bd804955ce8ccd9b",
+    "status": "HOST/Jared HOLD; no approved repair; remaining chip acceptance STOPPED",
+    "computed_predictions_not_measurements": [
+      "RetroLight2.08",
+      "NieRLight1.07"
+    ]
+  },
+  "fresh_done_label_collectors": {
+    "actual_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
+    "manifest_sha256": "a3f746ad35208f8b9e965625464513285596a05b386612740daf1ad3ac608233",
+    "rows": 10,
+    "all10looks_pass_original_and_supplementary": true,
+    "fixture_commit_state": "done via actual published Review/Create/Close",
+    "contrast_native_acceptance": "STOPPED/HOLD unchanged"
+  },
+  "R1_flat_probe_diagnostic": {
+    "original_run_status": "HOLD",
+    "original_manifest_sha256": "7a7757e37a56e2007f877de45a810e6afc0084e87955e1d11f73c2b702bb563c",
+    "actual_published_class": "nx nx-r-control nx-a-none nx-z1 pmg-flat",
+    "halo_path_absent": true,
+    "actual_paint_return_matches_old_exact_baseline": true,
+    "baseline_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+    "actual_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
+    "paint_keys": [
+      "ink",
+      "halo_alpha",
+      "halo_visibility",
+      "halo_stroke_opacity",
+      "halo_opacity",
+      "moving_parts"
+    ],
+    "frame_review": "PENDING",
+    "no_source_or_collector_change": true
   }
 }
