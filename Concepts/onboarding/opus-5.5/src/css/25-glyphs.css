@@ -45,3 +45,9 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-headctl .o55-sound[
    did, the glyph keeps the chip's ink when hovered or focused; its act and its same-ink bloom still play. It keys on
    svg.nx, so a page without window.PMG renders as before. */
 :is(#o55-resume, #o55-tourchip) svg.nx:not([class*="nx-t-"]) { --nx-ink: currentColor; }
+
+/* The concept demo's slim tab beside a narrow window (src/css/12-components.css, data-o55-narrow) sits on Glass
+   Light's translucent surface over the window's scrim, where the demo's magenta spark read 2.49:1 at rest (P1000,
+   2026-10-12; the wide pill's field passes). As in the window above, inside the glyph only the same hue is made deep
+   enough for 3.3:1 on the field it sits on; the text, the scenario's square and the hover ink keep the look's own. */
+html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx.o55-sg { color: #5f3fba; }
