@@ -395,9 +395,14 @@ async function endNativeTrace(page) {
 }
 function nativePaintReturned(settled, baseline) {
   return settled.glyphs.length === baseline.glyphs.length && settled.glyphs.every((g, i) =>
-    !g.host?.hover && !g.host?.focus_visible &&
+    g.glyph === baseline.glyphs[i].glyph && g.cls === baseline.glyphs[i].cls &&
+    g.host?.tag === baseline.glyphs[i].host?.tag && g.host?.tool === baseline.glyphs[i].host?.tool &&
+    !g.host?.hover && !g.host?.focus_visible && !g.host?.focus &&
+    ['halo_visibility', 'halo_stroke_opacity', 'halo_opacity'].every((k) =>
+      Object.hasOwn(g, k) === Object.hasOwn(baseline.glyphs[i], k)) &&
     ['ink', 'halo_alpha', 'halo_visibility', 'halo_stroke_opacity', 'halo_opacity'].every((k) => g[k] === baseline.glyphs[i][k]) &&
-    JSON.stringify(g.moving_parts) === JSON.stringify(baseline.glyphs[i].moving_parts));
+    JSON.stringify(g.moving_parts) === JSON.stringify(baseline.glyphs[i].moving_parts) &&
+    JSON.stringify(g.animations) === JSON.stringify(baseline.glyphs[i].animations));
 }
 async function nativeHover(page, id, host, selectors, fields) {
   await page.mouse.move(1850, 1000); await sleep(600);
@@ -803,10 +808,14 @@ async function r1(page) {
   const completedPath = arg('--completed-r1');
   const completed = new Set(completedPath ? JSON.parse(readFileSync(completedPath, 'utf8')).measured_case_ids : []);
   result.previous_measured_R1_case_ids = [...completed];
+  const heldPath = arg('--held-r1-menu');
+  const heldMenu = heldPath ? JSON.parse(readFileSync(heldPath, 'utf8')) : null;
   const revealTools = async (card) => { const head = await page.locator(card + ' > .pmu-cardhead').boundingBox();
     await page.mouse.move(head.x + head.width / 2, head.y + head.height / 2); await sleep(500); };
   for (const [look, reduced] of [['glass-dark', false], ['retro-dark', false], ['nier-dark', false], ['basic-dark', false], ['glass-dark', true]]) {
-    const state = await setLook(page, look, reduced), label = look + (reduced ? '-RM' : '');
+    const label = look + (reduced ? '-RM' : '');
+    if (arg('--only-r1-look') && arg('--only-r1-look') !== label) continue;
+    const state = await setLook(page, look, reduced);
     await page.evaluate(() => window.PM_PAGES.go('usage')); await sleep(2600);
     await page.locator('.page-tab[data-page="usage"]').click();
     const card = '.pmu-card[data-widget="ov-skyline"]';
@@ -820,7 +829,8 @@ async function r1(page) {
       if (hover.status === 'HOLD') { hold = true; break; }
     }
     const menuId = 'R1-' + label + '-menu-click-Escape-focus-blur';
-    if (!completed.has(menuId)) {
+    if (heldMenu?.id === menuId) { result.cases.push({ ...heldMenu, id: menuId, requirement: 'R1-native-control-hover-under-PMH-rests', retained_prior_HOLD: true }); save(); }
+    if (!completed.has(menuId) && heldMenu?.id !== menuId) {
     await page.mouse.move(1850, 1000); await sleep(500);
     const anchorBaseline = await page.evaluate(nativeSample, tool + ' > svg.nx');
     await beginNativeTrace(page, controls + ',.pmu-menu .pmu-mcheck svg.nx', 'R1-' + label + '-menu-click-and-Escape');
@@ -897,7 +907,7 @@ async function r1(page) {
     if (hold) break;
   }
   result.inputs = await page.evaluate(() => window.__pmgInputs || []);
-  result.status = hold ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
+  result.status = hold || heldMenu ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
 }
 async function countTraceStart(page, label) {
   await page.evaluate((name) => {
