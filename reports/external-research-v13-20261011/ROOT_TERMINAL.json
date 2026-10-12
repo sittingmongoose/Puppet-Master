@@ -1,11 +1,29 @@
 {
   "schema": "er13.original_root_terminal_public.v1",
-  "status": "PENDING_ACTUAL_CAPTURE",
-  "original_root_native_Goal_pre_status": "paused",
-  "birth_objective_match_checked": true,
-  "replacement_Goal_created": false,
-  "historical_paused_active_observations_unchanged": true,
-  "all_science_accounting_publication_cleanup_work_done_before_terminal_action": true,
-  "actual_terminal_will_be_captured_once_after_final_report_GitHub_readback": true,
-  "native_API_counter_not_full_campaign_cost": true
+  "status": "COMPLETE",
+  "actual_response_source": "direct_update_goal_return",
+  "whole_actual_response_sha256": "2aa503a1e377cf56489ea5a53956467bc5e13d9920cbbc3dcb948259ec045854",
+  "whole_actual_response_retained_private": true,
+  "original_birth_objective_match": true,
+  "original_goal_identity_sha256": "a678c6c1926cb6af0f5897a746e9f94bad3ceff69d4c645de2c72b20b2f65790",
+  "original_Goal_replaced": false,
+  "preterminal_actual_status": "paused",
+  "historical_active_paused_observations_unchanged": true,
+  "native_reported_tokens_used": 289415,
+  "native_reported_time_used_seconds": 151,
+  "native_API_counter_not_campaign_billing_or_compute_total": true,
+  "token_budget": null,
+  "actual_terminal_updated_utc": "2026-10-12T06:43:03+00:00",
+  "all_required_science_accounting_GitHub_readback_archive_owned_cleanup_performed_before_update": true,
+  "all_known_nonroot_contexts_closed_settled_no_pending": 264,
+  "candidate_primary_arms": 80,
+  "actual_candidate_contexts": 199,
+  "original_grader_contexts": 38,
+  "source_originals": {
+    "PASS": 33,
+    "FAIL": 38,
+    "UNASSESSED": 9
+  },
+  "no_repeatable_equal_quality_optimizer_established": true,
+  "worktree_and_unknown_owner74byte_file_retained_as_cleanup_exceptions": true
 }
