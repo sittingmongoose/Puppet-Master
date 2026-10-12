@@ -1,0 +1,98 @@
+{
+  "result": "PASS",
+  "public_exceptions": [
+    {
+      "approved_public_literal": "/Users/tarek/myarchive.tar",
+      "source_hashes": [
+        "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "/Users/tarek/myarchive.tar.gz",
+      "source_hashes": [
+        "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "fdrake@acm.org",
+      "source_hashes": [
+        "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "fielding@gbiv.com",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "iesg@ietf.org",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "ietf-http-wg@w3.org",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "julian.reschke@greenbytes.de",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "mal@lemburg.com",
+      "source_hashes": [
+        "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+        "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+        "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+        "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "martin@v.loewis.de",
+      "source_hashes": [
+        "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "mnot@mnot.net",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+        "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "skip.montanaro@gmail.com",
+      "source_hashes": [
+        "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    },
+    {
+      "approved_public_literal": "spider-admin@example.org",
+      "source_hashes": [
+        "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+      ],
+      "verification": "present unchanged in exact pinned primary bytes and immutable previous public edition"
+    }
+  ],
+  "license_path": "licenses/cpython/LICENSE",
+  "source_body_notices": "retained byte-identical; RFC notices in full bodies"
+}

@@ -1,0 +1,112 @@
+        await asyncio.gather(
+            run('ls /zzz'),
+            run('sleep 1; echo "hello"'))
+
+    asyncio.run(main())
+
+See also the `Examples`_ subsection.
+
+
+Creating Subprocesses
+=====================
+
+.. function:: create_subprocess_exec(program, *args, stdin=None, \
+                 stdout=None, stderr=None, limit=None, **kwds)
+   :async:
+
+   Create a subprocess.
+
+   The *limit* argument sets the buffer limit for :class:`StreamReader`
+   wrappers for :attr:`~asyncio.subprocess.Process.stdout` and :attr:`~asyncio.subprocess.Process.stderr`
+   (if :const:`subprocess.PIPE` is passed to *stdout* and *stderr* arguments).
+
+   Return a :class:`~asyncio.subprocess.Process` instance.
+
+   See the documentation of :meth:`loop.subprocess_exec` for other
+   parameters.
+
+   .. versionchanged:: 3.10
+      Removed the *loop* parameter.
+
+
+.. function:: create_subprocess_shell(cmd, stdin=None, \
+                 stdout=None, stderr=None, limit=None, **kwds)
+   :async:
+
+   Run the *cmd* shell command.
+
+   The *limit* argument sets the buffer limit for :class:`StreamReader`
+   wrappers for :attr:`~asyncio.subprocess.Process.stdout` and :attr:`~asyncio.subprocess.Process.stderr`
+   (if :const:`subprocess.PIPE` is passed to *stdout* and *stderr* arguments).
+
+   Return a :class:`~asyncio.subprocess.Process` instance.
+
+   See the documentation of :meth:`loop.subprocess_shell` for other
+   parameters.
+
+   .. important::
+
+      It is the application's responsibility to ensure that all whitespace and
+      special characters are quoted appropriately to avoid `shell injection
+      <https://en.wikipedia.org/wiki/Shell_injection#Shell_injection>`_
+      vulnerabilities. The :func:`shlex.quote` function can be used to properly
+      escape whitespace and special shell characters in strings that are going
+      to be used to construct shell commands.
+
+   .. versionchanged:: 3.10
+      Removed the *loop* parameter.
+
+.. note::
+
+   Subprocesses are available for Windows if a :class:`ProactorEventLoop` is
+   used. See :ref:`Subprocess Support on Windows <asyncio-windows-subprocess>`
+   for details.
+
+.. seealso::
+
+   asyncio also has the following *low-level* APIs to work with subprocesses:
+   :meth:`loop.subprocess_exec`, :meth:`loop.subprocess_shell`,
+   :meth:`loop.connect_read_pipe`, :meth:`loop.connect_write_pipe`,
+   as well as the :ref:`Subprocess Transports <asyncio-subprocess-transports>`
+   and :ref:`Subprocess Protocols <asyncio-subprocess-protocols>`.
+
+
+Constants
+=========
+
+.. data:: asyncio.subprocess.PIPE
+   :module:
+
+   Can be passed to the *stdin*, *stdout* or *stderr* parameters.
+
+   If *PIPE* is passed to *stdin* argument, the
+   :attr:`Process.stdin <asyncio.subprocess.Process.stdin>` attribute
+   will point to a :class:`~asyncio.StreamWriter` instance.
+
+   If *PIPE* is passed to *stdout* or *stderr* arguments, the
+   :attr:`Process.stdout <asyncio.subprocess.Process.stdout>` and
+   :attr:`Process.stderr <asyncio.subprocess.Process.stderr>`
+   attributes will point to :class:`~asyncio.StreamReader` instances.
+
+.. data:: asyncio.subprocess.STDOUT
+   :module:
+
+   Special value that can be used as the *stderr* argument and indicates
+   that standard error should be redirected into standard output.
+
+.. data:: asyncio.subprocess.DEVNULL
+   :module:
+
+   Special value that can be used as the *stdin*, *stdout* or *stderr* argument
+   to process creation functions.  It indicates that the special file
+   :data:`os.devnull` will be used for the corresponding subprocess stream.
+
+
+Interacting with Subprocesses
+=============================
+
+Both :func:`create_subprocess_exec` and :func:`create_subprocess_shell`
+functions return instances of the *Process* class.  *Process* is a high-level
+wrapper that allows communicating with subprocesses and watching for
+their completion.
+

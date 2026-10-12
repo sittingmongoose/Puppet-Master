@@ -1,0 +1,112 @@
+      of the stored responses nominated in the conditional request are
+      suitable.  Instead, the cache MUST use the full response to
+      satisfy the request.  The cache MAY store such a full response,
+      subject to its constraints (see Section 3).
+
+   *  However, if a cache receives a 5xx (Server Error) response while
+      attempting to validate a response, it can either forward this
+      response to the requesting client or act as if the server failed
+      to respond.  In the latter case, the cache can send a previously
+      stored response, subject to its constraints on doing so (see
+      Section 4.2.4), or retry the validation request.
+
+4.3.4.  Freshening Stored Responses upon Validation
+
+   When a cache receives a 304 (Not Modified) response, it needs to
+   identify stored responses that are suitable for updating with the new
+   information provided, and then do so.
+
+   The initial set of stored responses to update are those that could
+   have been chosen for that request -- i.e., those that meet the
+   requirements in Section 4, except the last requirement to be fresh,
+   able to be served stale, or just validated.
+
+   Then, that initial set of stored responses is further filtered by the
+   first match of:
+
+   *  If the new response contains one or more "strong validators" (see
+      Section 8.8.1 of [HTTP]), then each of those strong validators
+      identifies a selected representation for update.  All the stored
+      responses in the initial set with one of those same strong
+      validators are identified for update.  If none of the initial set
+      contains at least one of the same strong validators, then the
+      cache MUST NOT use the new response to update any stored
+      responses.
+
+   *  If the new response contains no strong validators but does contain
+      one or more "weak validators", and those validators correspond to
+      one of the initial set's stored responses, then the most recent of
+      those matching stored responses is identified for update.
+
+   *  If the new response does not include any form of validator (such
+      as where a client generates an If-Modified-Since request from a
+      source other than the Last-Modified response header field), and
+      there is only one stored response in the initial set, and that
+      stored response also lacks a validator, then that stored response
+      is identified for update.
+
+   For each stored response identified, the cache MUST update its header
+   fields with the header fields provided in the 304 (Not Modified)
+   response, as per Section 3.2.
+
+4.3.5.  Freshening Responses with HEAD
+
+   A response to the HEAD method is identical to what an equivalent
+   request made with a GET would have been, without sending the content.
+   This property of HEAD responses can be used to invalidate or update a
+   cached GET response if the more efficient conditional GET request
+   mechanism is not available (due to no validators being present in the
+   stored response) or if transmission of the content is not desired
+   even if it has changed.
+
+   When a cache makes an inbound HEAD request for a target URI and
+   receives a 200 (OK) response, the cache SHOULD update or invalidate
+   each of its stored GET responses that could have been chosen for that
+   request (see Section 4.1).
+
+   For each of the stored responses that could have been chosen, if the
+   stored response and HEAD response have matching values for any
+   received validator fields (ETag and Last-Modified) and, if the HEAD
+   response has a Content-Length header field, the value of Content-
+   Length matches that of the stored response, the cache SHOULD update
+   the stored response as described below; otherwise, the cache SHOULD
+   consider the stored response to be stale.
+
+   If a cache updates a stored response with the metadata provided in a
+   HEAD response, the cache MUST use the header fields provided in the
+   HEAD response to update the stored response (see Section 3.2).
+
+4.4.  Invalidating Stored Responses
+
+   Because unsafe request methods (Section 9.2.1 of [HTTP]) such as PUT,
+   POST, or DELETE have the potential for changing state on the origin
+   server, intervening caches are required to invalidate stored
+   responses to keep their contents up to date.
+
+   A cache MUST invalidate the target URI (Section 7.1 of [HTTP]) when
+   it receives a non-error status code in response to an unsafe request
+   method (including methods whose safety is unknown).
+
+   A cache MAY invalidate other URIs when it receives a non-error status
+   code in response to an unsafe request method (including methods whose
+   safety is unknown).  In particular, the URI(s) in the Location and
+   Content-Location response header fields (if present) are candidates
+   for invalidation; other URIs might be discovered through mechanisms
+   not specified in this document.  However, a cache MUST NOT trigger an
+   invalidation under these conditions if the origin (Section 4.3.1 of
+   [HTTP]) of the URI to be invalidated differs from that of the target
+   URI (Section 7.1 of [HTTP]).  This helps prevent denial-of-service
+   attacks.
+
+   "Invalidate" means that the cache will either remove all stored
+   responses whose target URI matches the given URI or mark them as
+   "invalid" and in need of a mandatory validation before they can be
+   sent in response to a subsequent request.
+
+   A "non-error response" is one with a 2xx (Successful) or 3xx
+   (Redirection) status code.
+
+   Note that this does not guarantee that all appropriate responses are
+   invalidated globally; a state-changing request would only invalidate
+   responses in the caches it travels through.
+

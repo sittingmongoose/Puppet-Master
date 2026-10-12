@@ -1,0 +1,306 @@
+{
+  "case": "B04-P01",
+  "arm": "control",
+  "source_map_version": 1,
+  "governing_product_scope": "User-supplied brief and plan: CPython 3.13.9 media export on Linux and Windows; proposal and future tests only.",
+  "source_provenance": {
+    "admitted_inputs": "Core copied files and listed neighborhood captures were checked against input-map.json SHA-256 values.",
+    "execution_status": "No application code, benchmark, platform test, filesystem test, or crash witness was executed."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "CPython shutil documentation",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; exact 3.13.9 tag mapping not independently verified",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "exact_locator": "Metadata warning and copyfileobj bounded-buffer documentation",
+          "lines": "14-125",
+          "cached_neighborhood": "source-cache/neighborhoods/S1-N1.txt",
+          "neighborhood_sha256": "77594c0700d6bc222e371b1ffe52530078b6cec1414efd74e5a3d26b3eb8c340"
+        },
+        {
+          "id": "S1-N2",
+          "exact_locator": "copy2 and copystat documentation",
+          "lines": "185-296",
+          "cached_neighborhood": "source-cache/neighborhoods/S1-N2.txt",
+          "neighborhood_sha256": "bf38b682b8ec75b623dd9e621e7facf9dcda3a646517eabc6551289537eb4133"
+        },
+        {
+          "id": "S1-N3",
+          "exact_locator": "shutil.move documentation",
+          "lines": "360-471",
+          "cached_neighborhood": "source-cache/neighborhoods/S1-N3.txt",
+          "neighborhood_sha256": "ba057ccaec4dbf119d346a76e4fdd9faf61c1af115a5fb65d6a89ba45a175515"
+        },
+        {
+          "id": "S1-N4",
+          "exact_locator": "Platform-dependent efficient copy operations section",
+          "lines": "505-616",
+          "cached_neighborhood": "source-cache/neighborhoods/S1-N4.txt",
+          "neighborhood_sha256": "535e8fb625902ad80037bc9dce949e91537ef34c32b6428cf8eff8773af4adca"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "CPython shutil implementation",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; exact 3.13.9 tag mapping not independently verified",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "exact_locator": "copyfile path, fast-copy selection, and fallback",
+          "lines": "218-329",
+          "cached_neighborhood": "source-cache/neighborhoods/S2-N1.txt",
+          "neighborhood_sha256": "17f4a1f0715ac1c3237069fd6378a646c4a5f1e629c2e6ec9c9b822d2358257e"
+        },
+        {
+          "id": "S2-N2",
+          "exact_locator": "copy/copy2 metadata implementation",
+          "lines": "420-531",
+          "cached_neighborhood": "source-cache/neighborhoods/S2-N2.txt",
+          "neighborhood_sha256": "c3c467adea0cc46120cbf2a4fe604ae8d465fc48c5f09e3631c6689ce5ea07fb"
+        },
+        {
+          "id": "S2-N3",
+          "exact_locator": "move rename and cross-filesystem copy-then-unlink implementation",
+          "lines": "802-913",
+          "cached_neighborhood": "source-cache/neighborhoods/S2-N3.txt",
+          "neighborhood_sha256": "552341dc4bc9aeaaaa9da1106e0e21beb0d778abcf24ff3ab5b96e2b5f3192fe"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "CPython shutil tests",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; inspected only, not executed",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "exact_locator": "test_copy2 and conditional xattr assertions",
+          "lines": "1380-1491",
+          "cached_neighborhood": "source-cache/neighborhoods/S3-N1.txt",
+          "neighborhood_sha256": "599f1e8e30e97a2f8134fbcded6b6a07b226affb0465ff43d1406d037678bb84"
+        },
+        {
+          "id": "S3-N2",
+          "exact_locator": "mocked cross-filesystem move tests",
+          "lines": "2744-2855",
+          "cached_neighborhood": "source-cache/neighborhoods/S3-N2.txt",
+          "neighborhood_sha256": "d50408ff51d1bdf0428f770b3abf27c990c4c466a332de8d1333f0b9a1235b89"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "CPython os documentation",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; exact 3.13.9 tag mapping not independently verified",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "exact_locator": "os.replace behavior",
+          "lines": "2714-2825",
+          "cached_neighborhood": "source-cache/neighborhoods/S4-N1.txt",
+          "neighborhood_sha256": "86009607e7abf077b2bbe17b7ac9dcfbafb779984c1e245f61e15e18d7ea8a5c"
+        },
+        {
+          "id": "S4-N2",
+          "exact_locator": "os.fsync and buffered-file flush guidance",
+          "lines": "1074-1185",
+          "cached_neighborhood": "source-cache/neighborhoods/S4-N2.txt",
+          "neighborhood_sha256": "06afbc47b8c1a46f8c442739ba1de2fa8a9310df072d453be6a2f2126ea9d8f9"
+        },
+        {
+          "id": "S4-X1",
+          "exact_locator": "os.rename Windows FileExistsError and POSIX atomicity text",
+          "lines": "2676-2705",
+          "cached_body": "source-cache/cpython/Doc/library/os.rst",
+          "cached_body_sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15"
+        }
+      ]
+    },
+    {
+      "id": "W1",
+      "title": "Microsoft ReplaceFileW function",
+      "url": "https://learn.microsoft.com/windows/win32/api/winbase/nf-winbase-replacefilew",
+      "version_or_pin": "Microsoft Learn page last updated 2023-06-01; no content hash captured",
+      "sha256": null,
+      "locators": [
+        {
+          "exact_locator": "Function description and replacement-file identity",
+          "lines": "24-42"
+        },
+        {
+          "exact_locator": "Access, unsupported write-through flag, and merge-error behavior",
+          "lines": "55-92"
+        },
+        {
+          "exact_locator": "Failure states, inherited attributes/streams, same-volume requirement",
+          "lines": "104-143"
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "title": "Microsoft MoveFileExW function",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "version_or_pin": "Microsoft Learn page last updated 2023-06-01; no content hash captured",
+      "sha256": null,
+      "locators": [
+        {
+          "exact_locator": "Different-volume and copy-allowed behavior",
+          "lines": "58-80"
+        },
+        {
+          "exact_locator": "MOVEFILE_REPLACE_EXISTING and MOVEFILE_WRITE_THROUGH flags",
+          "lines": "87-95"
+        },
+        {
+          "exact_locator": "Cross-volume security-descriptor behavior",
+          "lines": "121-123"
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "title": "Linux rename(2), renameat(2), renameat2(2) manual",
+      "url": "https://man7.org/linux/man-pages/man2/renameat2.2.html#RENAME_NOREPLACE",
+      "version_or_pin": "Linux man-pages 6.19 dated 2026-02-08 per search result; no content hash captured",
+      "sha256": null,
+      "locators": [
+        {
+          "exact_locator": "RENAME_NOREPLACE fails if newpath exists and requires filesystem support",
+          "section": "RENAME_NOREPLACE"
+        }
+      ],
+      "retrieval_note": "Search excerpt inspected; opening the primary page timed out, so no line-numbered full page was inspected."
+    },
+    {
+      "id": "W4",
+      "title": "Linux fsync(2) manual",
+      "url": "https://man7.org/linux/man-pages/man2/fsync.2.html#DESCRIPTION",
+      "version_or_pin": "Linux man-pages 6.19 dated 2026-02-08 per search result; no content hash captured",
+      "sha256": null,
+      "locators": [
+        {
+          "exact_locator": "DESCRIPTION: fsync(file) does not necessarily sync the containing directory entry; fsync a descriptor for the directory",
+          "section": "DESCRIPTION"
+        }
+      ],
+      "retrieval_note": "Primary-source search excerpt inspected; opening the page timed out, so no line-numbered full page was inspected."
+    }
+  ],
+  "claim_map": [
+    {
+      "claim_id": "C1",
+      "final_sections": [
+        "Bytes, source stability, and metadata"
+      ],
+      "claim": "copy2 is best effort and cannot promise archival fidelity.",
+      "primary_sources": [
+        "S1-N1",
+        "S1-N2",
+        "S2-N2",
+        "S3-N1"
+      ],
+      "governing_scope": "Pinned CPython docs/code/tests.",
+      "uncertainty": "Exact release mapping and filesystem metadata behavior remain unresolved."
+    },
+    {
+      "claim_id": "C2",
+      "final_sections": [
+        "Copy modes, progress, and cancellation"
+      ],
+      "claim": "Fast-copy may be used; availability, throughput, and cancellation latency are not universal.",
+      "primary_sources": [
+        "S1-N4",
+        "S2-N1"
+      ],
+      "governing_scope": "Pinned CPython implementation/documentation.",
+      "uncertainty": "Application performance was not measured."
+    },
+    {
+      "claim_id": "C3",
+      "final_sections": [
+        "Destination-local staging",
+        "Flush, publication, and truthful durability"
+      ],
+      "claim": "shutil.move can copy then remove across filesystems, so it is not a single atomic publication boundary.",
+      "primary_sources": [
+        "S1-N3",
+        "S2-N3",
+        "S3-N2"
+      ],
+      "governing_scope": "Pinned CPython; cross-filesystem tests mock rename failure.",
+      "uncertainty": "No real cross-volume test ran."
+    },
+    {
+      "claim_id": "C4",
+      "final_sections": [
+        "Flush, publication, and truthful durability"
+      ],
+      "claim": "CPython documents POSIX rename atomicity, Windows os.rename no-overwrite behavior, and flush-before-fsync guidance.",
+      "primary_sources": [
+        "S4-N1",
+        "S4-N2",
+        "S4-X1"
+      ],
+      "governing_scope": "Pinned CPython os docs.",
+      "uncertainty": "Windows visibility and crash persistence remain unverified."
+    },
+    {
+      "claim_id": "C5",
+      "final_sections": [
+        "Flush, publication, and truthful durability"
+      ],
+      "claim": "Linux RENAME_NOREPLACE is conditional on filesystem support; Windows exposes explicit replacement and write-through flags.",
+      "primary_sources": [
+        "W2",
+        "W3"
+      ],
+      "governing_scope": "Linux man-pages and Windows API docs.",
+      "uncertainty": "Linux page was inspected through search excerpt only; platform behavior needs tests."
+    },
+    {
+      "claim_id": "C6",
+      "final_sections": [
+        "Flush, publication, and truthful durability"
+      ],
+      "claim": "ReplaceFileW is an alternative whose metadata merging and unsupported write-through flag affect its suitability.",
+      "primary_sources": [
+        "W1"
+      ],
+      "governing_scope": "Microsoft ReplaceFileW documentation.",
+      "uncertainty": "Not selected as the default Windows replace path."
+    },
+    {
+      "claim_id": "C7",
+      "final_sections": [
+        "Flush, publication, and truthful durability"
+      ],
+      "claim": "Linux file fsync does not necessarily persist the containing directory entry; an explicit directory fsync is needed.",
+      "primary_sources": [
+        "W4"
+      ],
+      "governing_scope": "Linux fsync(2) manual.",
+      "uncertainty": "Directory fsync support and actual power-loss behavior must be tested on supported filesystems and storage."
+    }
+  ],
+  "unresolved_uncertainties": [
+    "Exact CPython release tag corresponding to commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 was not independently checked.",
+    "Linux no-replace support varies by filesystem; unsupported cases must fail closed.",
+    "Windows replacement visibility, recovery, open-handle behavior, ACLs, and alternate streams need validation on each supported local filesystem.",
+    "A race remains between target-identity recheck and replacement under an uncooperative writer; v1 scopes replacement to user-controlled local directories.",
+    "No benchmark, cross-volume test, network-share test, metadata test, or power-interruption test ran.",
+    "The native Goal receipt omits provider/model/service-tier identity. Runtime model is gpt-6-luna with max reasoning; service tier and route match are unknown."
+  ]
+}

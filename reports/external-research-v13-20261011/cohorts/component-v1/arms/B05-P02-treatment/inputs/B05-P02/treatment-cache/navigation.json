@@ -1,0 +1,476 @@
+{
+  "case": "B05-P02",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: reader(",
+          "matching_lines_1based": [
+            56
+          ],
+          "range_1based": [
+            44,
+            155
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "value :const:`None`",
+          "matching_lines_1based": [
+            101
+          ],
+          "range_1based": [
+            89,
+            200
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "function:: field_size_limit",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            241
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "class:: DictReader",
+          "matching_lines_1based": [
+            151
+          ],
+          "range_1based": [
+            139,
+            250
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "method:: has_header",
+          "matching_lines_1based": [
+            287
+          ],
+          "range_1based": [
+            275,
+            386
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "data:: QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            331
+          ],
+          "range_1based": [
+            319,
+            430
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "Footnotes",
+          "matching_lines_1based": [
+            638
+          ],
+          "range_1based": [
+            626,
+            644
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Doc/library/csv.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: reader(",
+          "matching_lines_1based": [
+            56
+          ],
+          "range_1based": [
+            44,
+            155
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N1.txt",
+          "sha256": "1898c35528896713ed261fd471f776f49b9b94eb1fbc0a61d00396c246999113",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "value :const:`None`",
+          "matching_lines_1based": [
+            101
+          ],
+          "range_1based": [
+            89,
+            200
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N2.txt",
+          "sha256": "d53cf7525e7007c9e212c1821cc476f3f941fc2473b51539a0f2604b1119b57b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "function:: field_size_limit",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            241
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N3.txt",
+          "sha256": "1e62e0b525b53e1efd1073813dade1cd3cc545866a03357aee853cc623cca590",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "class:: DictReader",
+          "matching_lines_1based": [
+            151
+          ],
+          "range_1based": [
+            139,
+            250
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N4.txt",
+          "sha256": "c9f26a381bfd64df8b095c376a026c9298a7f6a7db9f44c716be2571917dd2f2",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "method:: has_header",
+          "matching_lines_1based": [
+            287
+          ],
+          "range_1based": [
+            275,
+            386
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N5.txt",
+          "sha256": "583200e923f47b863826c691ff8094b85fec1eb9ea5dc630d23b69b4c6ec54c3",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "data:: QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            331
+          ],
+          "range_1based": [
+            319,
+            430
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N6.txt",
+          "sha256": "f9a221ba1f9d5cd0c7feb939931a864dc7eacce0b0b9cfb4f797eb03bbfcc280",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "Footnotes",
+          "matching_lines_1based": [
+            638
+          ],
+          "range_1based": [
+            626,
+            644
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N7.txt",
+          "sha256": "86a6950f794df70d62822ea98d39afe29e3f54a4a2fbcb656022222c1406e1f5",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def has_header(",
+          "matching_lines_1based": [
+            452
+          ],
+          "range_1based": [
+            440,
+            513
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "class DictReader",
+          "matching_lines_1based": [
+            145
+          ],
+          "range_1based": [
+            133,
+            244
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def sniff(",
+          "matching_lines_1based": [
+            244
+          ],
+          "range_1based": [
+            232,
+            343
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Lib/csv.py",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def has_header(",
+          "matching_lines_1based": [
+            452
+          ],
+          "range_1based": [
+            440,
+            513
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N1.txt",
+          "sha256": "3a09dd7e122dfa13bef18a0fced526a6893d67deb73b7bbf3135541c5bfbe7fb",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "class DictReader",
+          "matching_lines_1based": [
+            145
+          ],
+          "range_1based": [
+            133,
+            244
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N2.txt",
+          "sha256": "1bf173555d3e953443466c408e077537477e8ca3513154344b30eca4c6655565",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def sniff(",
+          "matching_lines_1based": [
+            244
+          ],
+          "range_1based": [
+            232,
+            343
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N3.txt",
+          "sha256": "e21d23883fa2feb6c30da911099dddc769f377b1a400186bb078b6e11f5d0e50",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "field_size_limit",
+          "matching_lines_1based": [
+            1635,
+            1646,
+            1726
+          ],
+          "range_1based": [
+            1623,
+            1734
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "parse_add_char",
+          "matching_lines_1based": [
+            704,
+            766,
+            774,
+            781,
+            811,
+            837,
+            845,
+            855,
+            872
+          ],
+          "range_1based": [
+            692,
+            803
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            90,
+            102,
+            667,
+            1325
+          ],
+          "range_1based": [
+            78,
+            189
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Modules/_csv.c",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "field_size_limit",
+          "matching_lines_1based": [
+            1635,
+            1646,
+            1726
+          ],
+          "range_1based": [
+            1623,
+            1734
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N1.txt",
+          "sha256": "a60c64dc91be0f7ac3b8afe4562557b4f806e31b994d0caafb2349277954d18f",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "parse_add_char",
+          "matching_lines_1based": [
+            704,
+            766,
+            774,
+            781,
+            811,
+            837,
+            845,
+            855,
+            872
+          ],
+          "range_1based": [
+            692,
+            803
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N2.txt",
+          "sha256": "6b58ec01f076144de8de80292156ce6cb61a1a0671f97813c09410dd5f36c4a4",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            90,
+            102,
+            667,
+            1325
+          ],
+          "range_1based": [
+            78,
+            189
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N3.txt",
+          "sha256": "68add7a014ce8bdec759632646180a7c5ba1468fd636ca877c5ee0d242b4ece3",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def test_read_bigfield(",
+          "matching_lines_1based": [
+            484
+          ],
+          "range_1based": [
+            472,
+            583
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def test_roundtrip_quoteed_newlines(",
+          "matching_lines_1based": [
+            515
+          ],
+          "range_1based": [
+            503,
+            614
+          ]
+        },
+        {
+          "id": "S4-N3",
+          "literal_needle": "def test_read_linenum(",
+          "matching_lines_1based": [
+            503
+          ],
+          "range_1based": [
+            491,
+            602
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Lib/test/test_csv.py",
+      "neighborhoods": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def test_read_bigfield(",
+          "matching_lines_1based": [
+            484
+          ],
+          "range_1based": [
+            472,
+            583
+          ],
+          "path": "treatment-cache/neighborhoods/S4-N1.txt",
+          "sha256": "9d8e10fcac65452132c5e57abfa7ca64ca8341ea95089539c364a8510823d65d",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def test_roundtrip_quoteed_newlines(",
+          "matching_lines_1based": [
+            515
+          ],
+          "range_1based": [
+            503,
+            614
+          ],
+          "path": "treatment-cache/neighborhoods/S4-N2.txt",
+          "sha256": "c8998925c3f608f946ef4e761b0c21a4fadb9546dd0bf488167fe2885d62c0ac",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S4-N3",
+          "literal_needle": "def test_read_linenum(",
+          "matching_lines_1based": [
+            503
+          ],
+          "range_1based": [
+            491,
+            602
+          ],
+          "path": "treatment-cache/neighborhoods/S4-N3.txt",
+          "sha256": "e40cfa7b7d4474bab32ff85baf16c95ef52cd1796be08a1904ac39e6bf9bc98e",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "conclusions": false
+}

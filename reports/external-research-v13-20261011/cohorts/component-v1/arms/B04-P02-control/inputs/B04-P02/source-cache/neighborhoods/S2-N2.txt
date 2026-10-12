@@ -1,0 +1,112 @@
+   received partial representation when there is no desire for a new
+   representation.  If-Range (Section 13.1.5) is better suited for range
+   requests when the client prefers to receive a new representation.
+
+   A cache or intermediary MAY ignore If-Match because its
+   interoperability features are only necessary for an origin server.
+
+   Note that an If-Match header field with a list value containing "*"
+   and other values (including other instances of "*") is syntactically
+   invalid (therefore not allowed to be generated) and furthermore is
+   unlikely to be interoperable.
+
+13.1.2.  If-None-Match
+
+   The "If-None-Match" header field makes the request method conditional
+   on a recipient cache or origin server either not having any current
+   representation of the target resource, when the field value is "*",
+   or having a selected representation with an entity tag that does not
+   match any of those listed in the field value.
+
+   A recipient MUST use the weak comparison function when comparing
+   entity tags for If-None-Match (Section 8.8.3.2), since weak entity
+   tags can be used for cache validation even if there have been changes
+   to the representation data.
+
+     If-None-Match = "*" / #entity-tag
+
+   Examples:
+
+   If-None-Match: "xyzzy"
+   If-None-Match: W/"xyzzy"
+   If-None-Match: "xyzzy", "r2d2xxxx", "c3piozzzz"
+   If-None-Match: W/"xyzzy", W/"r2d2xxxx", W/"c3piozzzz"
+   If-None-Match: *
+
+   If-None-Match is primarily used in conditional GET requests to enable
+   efficient updates of cached information with a minimum amount of
+   transaction overhead.  When a client desires to update one or more
+   stored responses that have entity tags, the client SHOULD generate an
+   If-None-Match header field containing a list of those entity tags
+   when making a GET request; this allows recipient servers to send a
+   304 (Not Modified) response to indicate when one of those stored
+   responses matches the selected representation.
+
+   If-None-Match can also be used with a value of "*" to prevent an
+   unsafe request method (e.g., PUT) from inadvertently modifying an
+   existing representation of the target resource when the client
+   believes that the resource does not have a current representation
+   (Section 9.2.1).  This is a variation on the "lost update" problem
+   that might arise if more than one client attempts to create an
+   initial representation for the target resource.
+
+   When an origin server receives a request that selects a
+   representation and that request includes an If-None-Match header
+   field, the origin server MUST evaluate the If-None-Match condition
+   per Section 13.2 prior to performing the method.
+
+   To evaluate a received If-None-Match header field:
+
+   1.  If the field value is "*", the condition is false if the origin
+       server has a current representation for the target resource.
+
+   2.  If the field value is a list of entity tags, the condition is
+       false if one of the listed tags matches the entity tag of the
+       selected representation.
+
+   3.  Otherwise, the condition is true.
+
+   An origin server that evaluates an If-None-Match condition MUST NOT
+   perform the requested method if the condition evaluates to false;
+   instead, the origin server MUST respond with either a) the 304 (Not
+   Modified) status code if the request method is GET or HEAD or b) the
+   412 (Precondition Failed) status code for all other request methods.
+
+   Requirements on cache handling of a received If-None-Match header
+   field are defined in Section 4.3.2 of [CACHING].
+
+   Note that an If-None-Match header field with a list value containing
+   "*" and other values (including other instances of "*") is
+   syntactically invalid (therefore not allowed to be generated) and
+   furthermore is unlikely to be interoperable.
+
+13.1.3.  If-Modified-Since
+
+   The "If-Modified-Since" header field makes a GET or HEAD request
+   method conditional on the selected representation's modification date
+   being more recent than the date provided in the field value.
+   Transfer of the selected representation's data is avoided if that
+   data has not changed.
+
+     If-Modified-Since = HTTP-date
+
+   An example of the field is:
+
+   If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT
+
+   A recipient MUST ignore If-Modified-Since if the request contains an
+   If-None-Match header field; the condition in If-None-Match is
+   considered to be a more accurate replacement for the condition in If-
+   Modified-Since, and the two are only combined for the sake of
+   interoperating with older intermediaries that might not implement
+   If-None-Match.
+
+   A recipient MUST ignore the If-Modified-Since header field if the
+   received field value is not a valid HTTP-date, the field value has
+   more than one member, or if the request method is neither GET nor
+   HEAD.
+
+   A recipient MUST ignore the If-Modified-Since header field if the
+   resource does not have a modification date available.
+
+   A recipient MUST interpret an If-Modified-Since field value's

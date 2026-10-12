@@ -1,0 +1,413 @@
+{
+  "case": "B05-P01",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: create_subprocess_exec",
+          "matching_lines_1based": [
+            64
+          ],
+          "range_1based": [
+            52,
+            163
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: wait()",
+          "matching_lines_1based": [
+            193
+          ],
+          "range_1based": [
+            181,
+            292
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: communicate",
+          "matching_lines_1based": [
+            208
+          ],
+          "range_1based": [
+            196,
+            307
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "method:: terminate",
+          "matching_lines_1based": [
+            252
+          ],
+          "range_1based": [
+            240,
+            351
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "ProactorEventLoop",
+          "matching_lines_1based": [
+            112,
+            320
+          ],
+          "range_1based": [
+            100,
+            211
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Doc/library/asyncio-subprocess.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: create_subprocess_exec",
+          "matching_lines_1based": [
+            64
+          ],
+          "range_1based": [
+            52,
+            163
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N1.txt",
+          "sha256": "ddbda50a17b29657a3f3d57b53f6bae8cba0ec2350f63a84333db68368aab034",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: wait()",
+          "matching_lines_1based": [
+            193
+          ],
+          "range_1based": [
+            181,
+            292
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N2.txt",
+          "sha256": "7f1010baebaab9dedb54a1ec928f32ff0fb8565141c52c1c453f9cc388848fba",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: communicate",
+          "matching_lines_1based": [
+            208
+          ],
+          "range_1based": [
+            196,
+            307
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N3.txt",
+          "sha256": "6fe9888158e62085aabdf6144e3ff1437b46a3319e09357cc9dfeb3b87b70040",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "method:: terminate",
+          "matching_lines_1based": [
+            252
+          ],
+          "range_1based": [
+            240,
+            351
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N4.txt",
+          "sha256": "37035108fd84ec8c36432be6512059a3fbe28bcdc861b35950d047f4206c2c61",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "ProactorEventLoop",
+          "matching_lines_1based": [
+            112,
+            320
+          ],
+          "range_1based": [
+            100,
+            211
+          ],
+          "path": "treatment-cache/neighborhoods/S1-N5.txt",
+          "sha256": "0e1e779b09104412d05f03c78513ecebc480c705a6115ac41cb130b8bca6151f",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def _read_stream(",
+          "matching_lines_1based": [
+            171
+          ],
+          "range_1based": [
+            159,
+            229
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "async def communicate(",
+          "matching_lines_1based": [
+            188
+          ],
+          "range_1based": [
+            176,
+            229
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def terminate(",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            229
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "async def wait(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            229
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Lib/asyncio/subprocess.py",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def _read_stream(",
+          "matching_lines_1based": [
+            171
+          ],
+          "range_1based": [
+            159,
+            229
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N1.txt",
+          "sha256": "68865ccea3e45eb42654b18644fae6175d9e2f682aa31ff88683d18847d37ceb",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "async def communicate(",
+          "matching_lines_1based": [
+            188
+          ],
+          "range_1based": [
+            176,
+            229
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N2.txt",
+          "sha256": "58e53ffe0409b5ca7c7a70504da084f91fc678925bbf42bff2c928331d404a6b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def terminate(",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            229
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N3.txt",
+          "sha256": "e2146e13c1d5e6c086f0c1de697ae1e1c24211aef53d2f99c160d1f8f77c9978",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "async def wait(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            229
+          ],
+          "path": "treatment-cache/neighborhoods/S2-N4.txt",
+          "sha256": "1534cab2f36dda74dd1ddc5197a48ec76863b87028b19561aef821d18946b0d1",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_communicate(",
+          "matching_lines_1based": [
+            143
+          ],
+          "range_1based": [
+            131,
+            242
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_cancel_process_wait(",
+          "matching_lines_1based": [
+            504
+          ],
+          "range_1based": [
+            492,
+            603
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_communicate_ignore_broken_pipe(",
+          "matching_lines_1based": [
+            326
+          ],
+          "range_1based": [
+            314,
+            425
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_communicate(",
+          "matching_lines_1based": [
+            143
+          ],
+          "range_1based": [
+            131,
+            242
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N1.txt",
+          "sha256": "6f05b99018cff5a6092e9a9c71b93f1e5bff031ea0ec643a6f2f383388c41709",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_cancel_process_wait(",
+          "matching_lines_1based": [
+            504
+          ],
+          "range_1based": [
+            492,
+            603
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N2.txt",
+          "sha256": "d9ceae2e253b18007e8916fdaf8d73b1d969728b752548ac235cc9dac9f724f8",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_communicate_ignore_broken_pipe(",
+          "matching_lines_1based": [
+            326
+          ],
+          "range_1based": [
+            314,
+            425
+          ],
+          "path": "treatment-cache/neighborhoods/S3-N3.txt",
+          "sha256": "208ed70cb74ce9aadb3fd475c995d11f45b87b03fedba83616806426fbee3abe",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "function:: wait_for",
+          "matching_lines_1based": [
+            823
+          ],
+          "range_1based": [
+            811,
+            922
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Doc/library/asyncio-task.rst",
+      "neighborhoods": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "function:: wait_for",
+          "matching_lines_1based": [
+            823
+          ],
+          "range_1based": [
+            811,
+            922
+          ],
+          "path": "treatment-cache/neighborhoods/S4-N1.txt",
+          "sha256": "eefa6da8c6ed8059fc85258f0d1e080953e26617e27af5fd9f86dbbd8e931862",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "async def wait_for(",
+          "matching_lines_1based": [
+            459
+          ],
+          "range_1based": [
+            447,
+            558
+          ]
+        }
+      ],
+      "cached_body": "treatment-cache/cpython/Lib/asyncio/tasks.py",
+      "neighborhoods": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "async def wait_for(",
+          "matching_lines_1based": [
+            459
+          ],
+          "range_1based": [
+            447,
+            558
+          ],
+          "path": "treatment-cache/neighborhoods/S5-N1.txt",
+          "sha256": "7d48acc55e2cbf3326b430abf8aff9ff49df154e3a7458331eaa3b3022b1bf78",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "conclusions": false
+}

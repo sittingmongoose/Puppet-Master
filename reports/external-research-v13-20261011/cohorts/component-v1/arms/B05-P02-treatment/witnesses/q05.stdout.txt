@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [275, 386], "full_lines": 644}
+275:    The :class:`Sniffer` class is used to deduce the format of a CSV file.
+276: 
+277:    The :class:`Sniffer` class provides two methods:
+278: 
+279:    .. method:: sniff(sample, delimiters=None)
+280: 
+281:       Analyze the given *sample* and return a :class:`Dialect` subclass
+282:       reflecting the parameters found.  If the optional *delimiters* parameter
+283:       is given, it is interpreted as a string containing possible valid
+284:       delimiter characters.
+285: 
+286: 
+287:    .. method:: has_header(sample)
+288: 
+289:       Analyze the sample text (presumed to be in CSV format) and return
+290:       :const:`True` if the first row appears to be a series of column headers.
+291:       Inspecting each column, one of two key criteria will be considered to
+292:       estimate if the sample contains a header:
+293: 
+294:       - the second through n-th rows contain numeric values
+295:       - the second through n-th rows contain strings where at least one value's
+296:         length differs from that of the putative header of that column.
+297: 
+298:       Twenty rows after the first row are sampled; if more than half of columns +
+299:       rows meet the criteria, :const:`True` is returned.
+300: 
+301:    .. note::
+302: 
+303:       This method is a rough heuristic and may produce both false positives and
+304:       negatives.
+305: 
+306: An example for :class:`Sniffer` use::
+307: 
+308:    with open('example.csv', newline='') as csvfile:
+309:        dialect = csv.Sniffer().sniff(csvfile.read(1024))
+310:        csvfile.seek(0)
+311:        reader = csv.reader(csvfile, dialect)
+312:        # ... process CSV file contents here ...
+313: 
+314: 
+315: .. _csv-constants:
+316: 
+317: The :mod:`csv` module defines the following constants:
+318: 
+319: .. data:: QUOTE_ALL
+320: 
+321:    Instructs :class:`writer` objects to quote all fields.
+322: 
+323: 
+324: .. data:: QUOTE_MINIMAL
+325: 
+326:    Instructs :class:`writer` objects to only quote those fields which contain
+327:    special characters such as *delimiter*, *quotechar*, ``'\r'``, ``'\n'``
+328:    or any of the characters in *lineterminator*.
+329: 
+330: 
+331: .. data:: QUOTE_NONNUMERIC
+332: 
+333:    Instructs :class:`writer` objects to quote all non-numeric fields.
+334: 
+335:    Instructs :class:`reader` objects to convert all non-quoted fields to type :class:`float`.
+336: 
+337:    .. note::
+338:       Some numeric types, such as :class:`bool`, :class:`~fractions.Fraction`,
+339:       or :class:`~enum.IntEnum`, have a string representation that cannot be
+340:       converted to :class:`float`.
+341:       They cannot be read in the :data:`QUOTE_NONNUMERIC` and
+342:       :data:`QUOTE_STRINGS` modes.
+343: 
+344: .. data:: QUOTE_NONE
+345: 
+346:    Instructs :class:`writer` objects to never quote fields.
+347:    When the current *delimiter*, *quotechar*, *escapechar*, ``'\r'``, ``'\n'``
+348:    or any of the characters in *lineterminator* occurs in output data
+349:    it is preceded by the current *escapechar* character.
+350:    If *escapechar* is not set, the writer will raise :exc:`Error` if
+351:    any characters that require escaping are encountered.
+352:    Set *quotechar* to ``None`` to prevent its escaping.
+353: 
+354:    Instructs :class:`reader` objects to perform no special processing of quote characters.
+355: 
+356: .. data:: QUOTE_NOTNULL
+357: 
+358:    Instructs :class:`writer` objects to quote all fields which are not
+359:    ``None``.  This is similar to :data:`QUOTE_ALL`, except that if a
+360:    field value is ``None`` an empty (unquoted) string is written.
+361: 
+362:    Instructs :class:`reader` objects to interpret an empty (unquoted) field
+363:    as ``None`` and to otherwise behave as :data:`QUOTE_ALL`.
+364: 
+365:    .. versionadded:: 3.12
+366: 
+367: .. data:: QUOTE_STRINGS
+368: 
+369:    Instructs :class:`writer` objects to always place quotes around fields
+370:    which are strings.  This is similar to :data:`QUOTE_NONNUMERIC`, except that if a
+371:    field value is ``None`` an empty (unquoted) string is written.
+372: 
+373:    Instructs :class:`reader` objects to interpret an empty (unquoted) string as ``None`` and
+374:    to otherwise behave as :data:`QUOTE_NONNUMERIC`.
+375: 
+376:    .. versionadded:: 3.12
+377: 
+378: The :mod:`csv` module defines the following exception:
+379: 
+380: 
+381: .. exception:: Error
+382: 
+383:    Raised by any of the functions when an error is detected.
+384: 
+385: .. _csv-fmt-params:
+386: 

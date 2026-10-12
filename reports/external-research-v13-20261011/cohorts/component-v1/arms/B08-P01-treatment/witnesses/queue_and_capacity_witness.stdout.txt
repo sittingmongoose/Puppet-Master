@@ -1,0 +1,72 @@
+{
+  "bounded_admission": {
+    "accepted_queue_plus_workers": 24,
+    "active_ids": [
+      "J00",
+      "J01",
+      "J02",
+      "J03"
+    ],
+    "active_workers": 4,
+    "join_after_every_item_acknowledged": true,
+    "next_put_after_graceful_shutdown": "rejected by shutdown; not accepted",
+    "next_put_blocked_before_close": true,
+    "queue_maxsize": 20,
+    "queue_waiting_before_close": 20,
+    "waiting_drained_normally": 20
+  },
+  "immediate_shutdown_counterexample": {
+    "active_cancelled_and_waiting_abandoned": {
+      "interpretation": "join returned after the active job was acknowledged as cancelled; no job succeeded",
+      "join_done_after_active_ack": true,
+      "join_done_before_active_ack": false,
+      "ledger": {
+        "active-1": "cancelled",
+        "waiting-1": "abandoned"
+      },
+      "queue_size_after_immediate_shutdown": 0,
+      "success_count": 0
+    },
+    "only_waiting_items": {
+      "join_returned_without_processing": true,
+      "ledger": {
+        "only-waiting-1": "abandoned",
+        "only-waiting-2": "abandoned"
+      },
+      "queue_size_after_immediate_shutdown": 0,
+      "success_count": 0
+    }
+  },
+  "implementation": "CPython",
+  "independent_discrete_worker_schedule": {
+    "assumptions": {
+      "all_jobs_ready_at_time_zero": true,
+      "identical_independent_jobs": true,
+      "jobs": 12,
+      "overhead_retries_contention": "excluded",
+      "service_seconds_per_job": 2.0,
+      "workers": 4
+    },
+    "long_run_schedule_check": {
+      "jobs": 120,
+      "makespan_seconds": 60.0,
+      "simulated_rate_jobs_per_second": 2.0
+    },
+    "makespan_seconds": 6.0,
+    "simulated_completion_times_seconds": [
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      6.0,
+      6.0,
+      6.0,
+      6.0
+    ]
+  },
+  "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]"
+}

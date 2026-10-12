@@ -1,0 +1,114 @@
+{
+  "schema": "er13.scoped_redactions.v1",
+  "files": [
+    {
+      "path": "arms/B05-P01-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "c13d37fb12277a7e74fc041b8c91f20fc9ba2e912266697b2f33c7bc893f9a69",
+      "public_sha256": "174a3172720630cbc9df82926e65bd83134a8ee997c193682247ed55dff13787"
+    },
+    {
+      "path": "arms/B05-P01-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "db4bc98dfe7db4d642e16998c871c2a51aa45b206b5f8ac652b940b4f5bb36f3",
+      "public_sha256": "3cc7cf80530246df3111868edc6825daf32e377d3861c88bd16b5078dbcb9059"
+    },
+    {
+      "path": "arms/B04-P01-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "86f68cdc224bd6f4db6c3c8cc91766ac5c2169dad3ac6f0639d52c31121cd727",
+      "public_sha256": "774f99aba1b61b5a27cec31653fac5d6de4d50b7ed675499cd6771d31dfb0442"
+    },
+    {
+      "path": "arms/B04-P01-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "1b542bb66d5b55604f7b4763bb35c388453cb82991108c970addee9e1336d03d",
+      "public_sha256": "627a713c08cce2c3e7ad822827c18190958a72b0af7c6c484625f0b9a9e41bd9"
+    },
+    {
+      "path": "arms/B04-P02-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "e2d956bd1bb3e01a14cc20e5f1190243d5ac47614d8a59243a76be7a0b58684b",
+      "public_sha256": "7ce071439ae321cccd7ad1bb10beda0694de8eb922f2525455b146635c474575"
+    },
+    {
+      "path": "arms/B04-P02-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "f410fa01eb3a47b37dab3e2a999afd8c21d99bd2a2f4ef43c82b4ab223bbf9e0",
+      "public_sha256": "f3f0d9e9bdd9984cfa888e1dc2a848f293ee057eaaa15efa37f4b92919e01a24"
+    },
+    {
+      "path": "arms/B05-P02-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "6fe5ece21a28e4d7ed9f2ba26bc5ce2271d3694f8899e0e7d3d481d4b80a2493",
+      "public_sha256": "72c46c76791c79a2a3ddc81cd4ea02348e8172a6740adf3898e2135787b65d5c"
+    },
+    {
+      "path": "arms/B05-P02-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "6ba45466100dd3fd4a1d2300617653b4f26a3f4dcc2bffcdd24e2d6615ae74b7",
+      "public_sha256": "6996e35b1a611fb305c4388ce5b024a102fd9e19be80bad4f21e6a8f9b3f2125"
+    },
+    {
+      "path": "arms/B08-P01-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "3a30b057c70606d50b74dee5c35b4b9c64b3c8508c791a141267ea3b6f88540c",
+      "public_sha256": "3a4af2f2389c00eceb99f332b193ab4fa8a78626715601d5f94c9286cb33454d"
+    },
+    {
+      "path": "arms/B08-P01-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "8e77782c01c28f9ca4da808494a3c6e3eadc4368f504ac1cf58d128a89d4820b",
+      "public_sha256": "013c3d0e1d38e223fd270ec02f69ee5a170ce56c457b1fed1a47d4df64886ccd"
+    },
+    {
+      "path": "arms/B08-P02-control/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "93b2ae3e70301a8014553a5515f264b2711536eed6d5379796932a146faa5094",
+      "public_sha256": "6625db265b0d8eb09d665544e314d055d636ab47f7a95cbb013f6e89a787454b"
+    },
+    {
+      "path": "arms/B08-P02-treatment/dispatch.json",
+      "omitted_fields": [
+        "/memory_available_gib_before_launch"
+      ],
+      "reason": "private host machine state; no scientific task/request/configuration/API response fields omitted",
+      "original_sha256": "3334566f77afa42d5f36846a4a11bbe44c655e774893afe7feb4fdf1650fe12c",
+      "public_sha256": "aff3acd83b73cb345c9551dde379362854c23ed18da7e61eff38066d8736c3bc"
+    }
+  ],
+  "native_creation_completion_objects": "No fields omitted: generic path/route normalization only."
+}

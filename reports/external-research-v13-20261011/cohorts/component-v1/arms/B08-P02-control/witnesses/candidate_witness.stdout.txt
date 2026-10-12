@@ -1,0 +1,237 @@
+{
+  "checks": {
+    "ascii_casefold": true,
+    "canonical_sequence_match": true,
+    "compatibility_match": true,
+    "original_fraction_run_unchanged": true,
+    "sharp_s_expands_codepoints": true,
+    "single_fraction_expands_utf8": true,
+    "under_cap_source_can_exceed_key_cap": true,
+    "visual_confusable_example_remains_distinct": true
+  },
+  "confusable_pair": {
+    "latin": "paypal",
+    "latin_key": "paypal",
+    "mixed_script": "pаypаl",
+    "mixed_script_codepoints": [
+      "U+0070",
+      "U+0430",
+      "U+0079",
+      "U+0070",
+      "U+0430",
+      "U+006C"
+    ],
+    "mixed_script_key": "pаypаl"
+  },
+  "fraction_run": {
+    "count": 820,
+    "key_prefix_codepoints": [
+      "U+0031",
+      "U+2044",
+      "U+0034",
+      "U+0031",
+      "U+2044",
+      "U+0034",
+      "U+0031",
+      "U+2044",
+      "U+0034",
+      "U+0031",
+      "U+2044",
+      "U+0034"
+    ],
+    "key_utf8_bytes": 4100,
+    "source_utf8_bytes": 1640
+  },
+  "pipeline": "unicodedata.normalize('NFKC', text).casefold()",
+  "runtime": {
+    "implementation": "cpython",
+    "unicode_database": "16.0.0",
+    "version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]"
+  },
+  "samples": [
+    {
+      "input": "ABC",
+      "input_codepoints": [
+        "U+0041",
+        "U+0042",
+        "U+0043"
+      ],
+      "input_utf8_bytes": 3,
+      "key": "abc",
+      "key_codepoints": [
+        "U+0061",
+        "U+0062",
+        "U+0063"
+      ],
+      "key_utf8_bytes": 3,
+      "label": "ascii",
+      "nfkc": "ABC",
+      "nfkc_codepoints": [
+        "U+0041",
+        "U+0042",
+        "U+0043"
+      ],
+      "nfkc_utf8_bytes": 3
+    },
+    {
+      "input": "ß",
+      "input_codepoints": [
+        "U+00DF"
+      ],
+      "input_utf8_bytes": 2,
+      "key": "ss",
+      "key_codepoints": [
+        "U+0073",
+        "U+0073"
+      ],
+      "key_utf8_bytes": 2,
+      "label": "sharp_s",
+      "nfkc": "ß",
+      "nfkc_codepoints": [
+        "U+00DF"
+      ],
+      "nfkc_utf8_bytes": 2
+    },
+    {
+      "input": "¼",
+      "input_codepoints": [
+        "U+00BC"
+      ],
+      "input_utf8_bytes": 2,
+      "key": "1⁄4",
+      "key_codepoints": [
+        "U+0031",
+        "U+2044",
+        "U+0034"
+      ],
+      "key_utf8_bytes": 5,
+      "label": "fraction_quarter",
+      "nfkc": "1⁄4",
+      "nfkc_codepoints": [
+        "U+0031",
+        "U+2044",
+        "U+0034"
+      ],
+      "nfkc_utf8_bytes": 5
+    },
+    {
+      "input": "ΐ",
+      "input_codepoints": [
+        "U+0390"
+      ],
+      "input_utf8_bytes": 2,
+      "key": "ΐ",
+      "key_codepoints": [
+        "U+03B9",
+        "U+0308",
+        "U+0301"
+      ],
+      "key_utf8_bytes": 6,
+      "label": "greek_iota_dialytika_tonos",
+      "nfkc": "ΐ",
+      "nfkc_codepoints": [
+        "U+0390"
+      ],
+      "nfkc_utf8_bytes": 2
+    },
+    {
+      "input": "İ",
+      "input_codepoints": [
+        "U+0130"
+      ],
+      "input_utf8_bytes": 2,
+      "key": "i̇",
+      "key_codepoints": [
+        "U+0069",
+        "U+0307"
+      ],
+      "key_utf8_bytes": 3,
+      "label": "dotted_capital_i",
+      "nfkc": "İ",
+      "nfkc_codepoints": [
+        "U+0130"
+      ],
+      "nfkc_utf8_bytes": 2
+    },
+    {
+      "input": "é",
+      "input_codepoints": [
+        "U+00E9"
+      ],
+      "input_utf8_bytes": 2,
+      "key": "é",
+      "key_codepoints": [
+        "U+00E9"
+      ],
+      "key_utf8_bytes": 2,
+      "label": "precomposed_e_acute",
+      "nfkc": "é",
+      "nfkc_codepoints": [
+        "U+00E9"
+      ],
+      "nfkc_utf8_bytes": 2
+    },
+    {
+      "input": "é",
+      "input_codepoints": [
+        "U+0065",
+        "U+0301"
+      ],
+      "input_utf8_bytes": 3,
+      "key": "é",
+      "key_codepoints": [
+        "U+00E9"
+      ],
+      "key_utf8_bytes": 2,
+      "label": "decomposed_e_acute",
+      "nfkc": "é",
+      "nfkc_codepoints": [
+        "U+00E9"
+      ],
+      "nfkc_utf8_bytes": 2
+    },
+    {
+      "input": "①",
+      "input_codepoints": [
+        "U+2460"
+      ],
+      "input_utf8_bytes": 3,
+      "key": "1",
+      "key_codepoints": [
+        "U+0031"
+      ],
+      "key_utf8_bytes": 1,
+      "label": "circled_one",
+      "nfkc": "1",
+      "nfkc_codepoints": [
+        "U+0031"
+      ],
+      "nfkc_utf8_bytes": 1
+    }
+  ],
+  "scope_limits": [
+    "This is a targeted, finite witness on the installed runtime, not CPython 3.13.9.",
+    "The installed runtime's Unicode database is reported above; results do not establish version identity with the requested target.",
+    "Examples falsify the draft's universal non-expansion and direct-offset claims; they do not prove all transformation behavior or product correctness.",
+    "No user-interface, persistence, migration, locale, or full Unicode conformance test ran."
+  ],
+  "sharp_s_highlight_counterexample": {
+    "interpretation": "Both one-code-point key hits map to the same full original code point; key indices are not original offsets.",
+    "key": "ss",
+    "key_matches_for_query_s": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "original": "ß",
+    "original_codepoint_span": [
+      0,
+      1
+    ]
+  }
+}

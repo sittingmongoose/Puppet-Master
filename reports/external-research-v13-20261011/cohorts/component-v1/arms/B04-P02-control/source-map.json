@@ -1,0 +1,210 @@
+{
+  "case": "B04-P02",
+  "arm": "control",
+  "final_artifact": "final.md",
+  "criticism_dispositions": "criticism-dispositions.md",
+  "protocol_target": {
+    "scope": "Single-user offline documentation reader; private user-agent cache; initial stored method GET; future shared/server cache outside scope.",
+    "product_policy_note": "RFC permissions and requirements are distinguished from stricter or narrower v1 choices."
+  },
+  "source_documents": [
+    {
+      "id": "S1",
+      "title": "HTTP Caching",
+      "public_primary_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "human_readable_primary_url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "version": "RFC 9111, STD 98, Standards Track, June 2022",
+      "sha256_of_approved_local_body": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "local_body": "inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "hash_check": "Matches the source-index/input-map hash; all 18 input-map-listed files were SHA-256 checked in this run."
+    },
+    {
+      "id": "S2",
+      "title": "HTTP Semantics",
+      "public_primary_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "human_readable_primary_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version": "RFC 9110, STD 97, Standards Track, June 2022",
+      "sha256_of_approved_local_body": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "local_body": "inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "hash_check": "Matches the source-index/input-map hash; all 18 input-map-listed files were SHA-256 checked in this run."
+    }
+  ],
+  "claim_map": [
+    {
+      "final_sections": [
+        "Decision",
+        "1. Scope, ownership, and storage",
+        "7. Alternatives and investigation history"
+      ],
+      "claims": [
+        "Private user-agent scope; method and URI minimum cache key; optional caching; storage conditions; private versus shared and authenticated-request scope; application-level caching expectations; sensitivity of cache contents."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§§1, 2, 3, 3.5, 6, 7.3; local text lines 150–171, 251–280, 282–336, 3.5 heading and body, §§6–7.3"
+        }
+      ],
+      "governing_scope": "RFC requirements govern HTTP cache behavior. Account partitioning, key custody, quota, atomic generations, and sign-out fencing are stricter product security/engineering decisions.",
+      "unresolved_uncertainty": [
+        "Filesystem and platform-key behavior has not been implemented or tested."
+      ]
+    },
+    {
+      "final_sections": [
+        "1. Scope, ownership, and storage",
+        "Directive and cacheability policy"
+      ],
+      "claims": [
+        "no-cache differs from no-store; private may be stored by a private cache; must-understand constrains status-specific caching and can permit ignoring no-store; unknown extensions are ignored; only-understood status codes are stored."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§3, §5.2.2.2–§5.2.2.7, §5.2.3; local text lines 282–336 and 1222–1353"
+        }
+      ],
+      "governing_scope": "RFC directive requirements/permissions, with first-release policies identified separately: qualified no-cache is treated as unqualified; unsupported statuses are not stored; no-store exception is used only when relevant status behavior is implemented and verified.",
+      "unresolved_uncertainty": [
+        "Whether a future implementation fully conforms for each supported status is unverified."
+      ]
+    },
+    {
+      "final_sections": [
+        "1. Scope, ownership, and storage"
+      ],
+      "claims": [
+        "Vary named fields must match the original request; absent differs from present; only known semantically safe normalization is allowed; Vary: * always fails to match."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§4.1, Calculating Cache Keys with the Vary Header Field; local text lines 526–579"
+        }
+      ],
+      "governing_scope": "HTTP response selection; keyed account partition is an additional product constraint.",
+      "unresolved_uncertainty": [
+        "Actual request-header capture and protected comparison implementation has not been built."
+      ]
+    },
+    {
+      "final_sections": [
+        "2. Directive and cacheability policy"
+      ],
+      "claims": [
+        "max-age/Expires freshness policy; stale-serving constraints; must-revalidate and no-cache stale prohibition; request cache directives; shared-only directive exclusions for this private cache."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§§4.2.1–4.2.4, 5.2.1, 5.2.2.1–5.2.2.10, 5.3; especially §4.2.4, §5.2.2.2, §5.2.2.4"
+        }
+      ],
+      "governing_scope": "The first release chooses no heuristic freshness and an explicit user stale-offline preference; these are documented restrictions on permitted behavior.",
+      "unresolved_uncertainty": [
+        "Cache-Control parser behavior and directive combinations require fixture validation."
+      ]
+    },
+    {
+      "final_sections": [
+        "3. Freshness and age"
+      ],
+      "claims": [
+        "Corrected initial/current age includes Date apparent age, upstream Age, response delay, and resident time; arithmetic overflow must not create a negative age."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§1.2.2, §4.2.3, §5.1; local text lines 719–783 include calculation"
+        }
+      ],
+      "governing_scope": "HTTP freshness/age calculations. Monotonic clock, restart persistence, and fail-closed treatment of ambiguous clock state are proposed engineering choices.",
+      "unresolved_uncertainty": [
+        "Clock persistence and rollback behavior are not executed or verified."
+      ]
+    },
+    {
+      "final_sections": [
+        "4. Conditional validation and 304 updates"
+      ],
+      "claims": [
+        "Validators are bound to selected representations; If-None-Match weak comparison; 304 has no content; selected-body matching uses strong, weak, or absent-validator rules; supplied fields update stored metadata under §3.2; no body match leads to unconditional GET."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§§3.2, 4.3.1–4.3.4; local text lines 812–989 and 369–414"
+        },
+        {
+          "source_id": "S2",
+          "exact_locator": "§8.8.1–§8.8.2, §13.1.2–§13.1.3, §15.4.5; local text lines 3393–3492, 5872–5971, 7444–7478"
+        }
+      ],
+      "governing_scope": "Protocol applies within candidate responses for a request; account partition and Vary matching additionally constrain the product cache.",
+      "unresolved_uncertainty": [
+        "304 changes to Vary, Cache-Control, and no-store need synthetic fixture coverage."
+      ]
+    },
+    {
+      "final_sections": [
+        "5. Offline behavior and visible states",
+        "6. Request path"
+      ],
+      "claims": [
+        "Disconnected stale use is conditional; must-revalidate and no-cache prohibit stale reuse; appropriate unavailable response is normally 504; application caching should be defined in relation to HTTP directives."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§4.2.4, §4.3.3, §5.2.2.2, §5.2.2.4, §6"
+        }
+      ],
+      "governing_scope": "RFC directive boundaries plus a stricter explicit reader preference. UI labels and internal 504-style presentation are product choices.",
+      "unresolved_uncertainty": [
+        "User comprehension and platform error-surface behavior have not been tested."
+      ]
+    },
+    {
+      "final_sections": [
+        "1. Scope, ownership, and storage",
+        "8. Validation plan and current evidence"
+      ],
+      "claims": [
+        "Sensitive cache contents warrant protection; representation metadata must remain consistent with stored bytes; testing must cover protocol and lifecycle cases."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "§§3.1–3.2, 7.3"
+        },
+        {
+          "source_id": "S2",
+          "exact_locator": "§§8.1–8.4 for representation data and metadata"
+        }
+      ],
+      "governing_scope": "RFC source supports semantic and security constraints; proposed encryption, integrity, test design, and performance plan are not themselves RFC mandates.",
+      "unresolved_uncertainty": [
+        "No implementation, cache fixture, library audit, network/offline test, latency measurement, or deployment test was run."
+      ]
+    }
+  ],
+  "verification_and_execution": {
+    "immutable_runtime_check": "Passed before scientific inputs: verify-runtime.py verify returned {\"ok\": true, \"dispatch_performed\": false}.",
+    "native_goal": {
+      "activation_binding_check": "Passed using the pinned assertion; raw create response is in native-goal-create.json.",
+      "native_create_response_identity": "No provider/model/tier/options fields were exposed.",
+      "host_runtime_identity_observed": "gpt-6-luna with max reasoning effort.",
+      "requested_route": "Luna Max Standard",
+      "service_tier": "unknown; runtime context does not confirm the requested service tier."
+    },
+    "primary_lookup": "Official RFC Editor text copies for RFC 9111 and RFC 9110 opened on 2026-10-12; metadata agrees with the pinned RFC versions.",
+    "protocol_behavioral_witness": "None used. No implementation or fixture execution occurred; validation remains proposed."
+  },
+  "unresolved_uncertainty": [
+    "The selected caching library, if any, and its exact version and behavior are unknown.",
+    "A custom implementation's protocol conformance, account isolation, sign-out race handling, encryption/key revocation, and corruption recovery are unverified.",
+    "Clock rollback/restart policy requires fixture validation.",
+    "No measurements establish offline usability, latency, disk consumption, quota settings, or representative performance.",
+    "No deployment or compatibility evidence exists for a specific HTTP client, operating system, account provider, or secure key store."
+  ]
+}

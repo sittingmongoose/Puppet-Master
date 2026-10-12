@@ -1,0 +1,205 @@
+{
+  "artifact": "final.md",
+  "case": "B04-P01",
+  "arm": "treatment",
+  "requested_runtime": "CPython 3.13.9",
+  "source_pin_caution": "The copied CPython files are pinned to commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0. The exact relationship between that commit and the requested release tag was not independently established.",
+  "sources": [
+    {
+      "id": "S1",
+      "public_primary_url": "https://github.com/python/cpython/tree/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "raw_pinned_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "governing_scope": "Pinned CPython shutil public documentation; claims only what this snapshot documents.",
+      "unresolved_uncertainty": "Documentation is not proof for every filesystem or hardware configuration; exact release-tag relationship is not established."
+    },
+    {
+      "id": "S2",
+      "public_primary_url": "https://github.com/python/cpython/tree/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "raw_pinned_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0",
+      "governing_scope": "Pinned CPython shutil implementation source. Static code inspection only; it was not executed.",
+      "unresolved_uncertainty": "Operating system, filesystem, and runtime behavior still require tests on supported targets."
+    },
+    {
+      "id": "S3",
+      "public_primary_url": "https://github.com/python/cpython/tree/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "raw_pinned_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "governing_scope": "Upstream tests in the pinned CPython tree. They establish only their assertions and test setup.",
+      "unresolved_uncertainty": "Tests were inspected but not run here. Mocked cross-filesystem rename tests do not establish behavior on a real mount, Windows publication behavior, or crash durability."
+    },
+    {
+      "id": "S4",
+      "public_primary_url": "https://github.com/python/cpython/tree/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "raw_pinned_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "governing_scope": "Pinned CPython os documentation, including platform distinctions explicitly stated by the docs.",
+      "unresolved_uncertainty": "Atomicity is expressly described as a POSIX requirement; Windows and filesystem-specific behavior must be validated."
+    },
+    {
+      "id": "L1",
+      "public_primary_url": "https://man7.org/linux/man-pages/man2/renameat2.2.html",
+      "version_or_pin": "Online Linux man-pages entry; exact publication edition and content hash not recorded.",
+      "sha256": null,
+      "governing_scope": "Linux renameat2 RENAME_NOREPLACE semantics only; the documentation states underlying filesystem support is required.",
+      "unresolved_uncertainty": "Availability and flag support vary by kernel and filesystem. The primitive is not a portable Python standard-library API."
+    }
+  ],
+  "claim_mappings": [
+    {
+      "final_section": "Copy and metadata path",
+      "claims": [
+        "shutil copy functions do not preserve all metadata.",
+        "copy2 attempts metadata, may preserve only what is available, and does not raise solely because metadata cannot be copied.",
+        "The platform-specific known loss examples and Linux extended-attribute qualification are scoped to the pinned docs."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 23-32",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L23-L32"
+        },
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 118-125",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L118-L125"
+        },
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 197-213",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L197-L213"
+        }
+      ],
+      "governing_scope": "CPython pinned documentation; not an assertion of complete per-file metadata reporting.",
+      "unresolved_uncertainty": "Destination filesystem and individual metadata support vary; application-level metadata inventory is future work."
+    },
+    {
+      "final_section": "Copy and metadata path; Alternatives and decisions retained",
+      "claims": [
+        "copyfileobj defaults to chunked copying to avoid uncontrolled memory use.",
+        "CPython functions may use fast-copy paths; Linux documentation names sendfile and Windows documentation names a larger buffer/memoryview path; the docs describe fallback conditions."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 40-48",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L40-L48"
+        },
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 515-538",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L515-L538"
+        },
+        {
+          "source_id": "S2",
+          "exact_locator": "Lib/shutil.py lines 230-283",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py#L230-L283"
+        }
+      ],
+      "governing_scope": "Pinned CPython docs and implementation; does not assert universal speed, progress callback support, or measured performance.",
+      "unresolved_uncertainty": "Performance and cancellation latency require application benchmarks on Linux and Windows."
+    },
+    {
+      "final_section": "Publication, collisions, and races",
+      "claims": [
+        "shutil.move uses rename on the same filesystem and copy-then-remove across filesystems.",
+        "os.rename has different overwrite behavior on Windows and Unix in the pinned Python docs.",
+        "os.replace overwrites an existing file when permitted and documents atomic rename as a POSIX requirement.",
+        "Linux renameat2 RENAME_NOREPLACE refuses an existing target where supported."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "exact_locator": "Doc/library/shutil.rst lines 372-395",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst#L372-L395"
+        },
+        {
+          "source_id": "S2",
+          "exact_locator": "Lib/shutil.py lines 814-860",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py#L814-L860"
+        },
+        {
+          "source_id": "S4",
+          "exact_locator": "Doc/library/os.rst lines 2678-2697 and lines 2726-2735",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst#L2678-L2697"
+        },
+        {
+          "source_id": "L1",
+          "exact_locator": "renameat2(2), RENAME_NOREPLACE paragraph",
+          "line_url": "https://man7.org/linux/man-pages/man2/renameat2.2.html"
+        }
+      ],
+      "governing_scope": "The Linux primitive is Linux-specific and filesystem-dependent. Python os.replace atomicity is documented as a POSIX requirement. Windows and each destination filesystem require tests.",
+      "unresolved_uncertainty": "No behavior tests were run; exact replacement-target compare-and-swap is not guaranteed by a path recheck followed by replace."
+    },
+    {
+      "final_section": "Flush, durability, completion, and cleanup",
+      "claims": [
+        "For buffered Python file objects, flush before os.fsync.",
+        "Pinned docs state Unix fsync and Windows _commit behavior.",
+        "The proposal does not infer crash durability of a renamed directory entry from file fsync or atomic visibility."
+      ],
+      "evidence": [
+        {
+          "source_id": "S4",
+          "exact_locator": "Doc/library/os.rst lines 1086-1095",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst#L1086-L1095"
+        },
+        {
+          "source_id": "S4",
+          "exact_locator": "Doc/library/os.rst lines 2726-2735",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst#L2726-L2735"
+        }
+      ],
+      "governing_scope": "Sync calls and rename semantics as documented by CPython; the proposal distinguishes these from a universal hardware persistence guarantee.",
+      "unresolved_uncertainty": "Filesystem, device, controller, Windows directory-entry, and network persistence behavior is untested."
+    },
+    {
+      "final_section": "Validation plan; Criticism dispositions F1 and F4",
+      "claims": [
+        "The pinned copy2 test verifies selected mode/time/flag behavior.",
+        "The pinned other-filesystem move tests mock rename and delegate to common move tests; they are not real-mount durability tests."
+      ],
+      "evidence": [
+        {
+          "source_id": "S3",
+          "exact_locator": "Lib/test/test_shutil.py lines 1392-1406",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py#L2755-L2763"
+        },
+        {
+          "source_id": "S3",
+          "exact_locator": "Lib/test/test_shutil.py lines 2755-2763",
+          "line_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py#L2755-L2763"
+        }
+      ],
+      "governing_scope": "Source-level test setup and assertions only.",
+      "unresolved_uncertainty": "Tests were inspected, not executed; application and platform matrix remains future work."
+    }
+  ],
+  "design_inferences_and_limits": [
+    {
+      "claim": "Destination-local exclusive staging plus same-filesystem publication avoids exposing the final name to partial-copy writes.",
+      "basis": "Implementation design derived from the publication semantics above; it is a proposal and has not been executed."
+    },
+    {
+      "claim": "An initial identity check followed by path-based os.replace retains a residual race against uncoordinated external writers.",
+      "basis": "Inference from path-based replace semantics; portable Python docs do not offer a compare-and-swap replacement conditioned on the prior file identity."
+    },
+    {
+      "claim": "Modification-time capture before the read defines which useful timestamp the application promises.",
+      "basis": "Product policy recommendation; application behavior and filesystem precision require validation."
+    }
+  ],
+  "execution_record": {
+    "research_method": "Static inspection of permitted pinned CPython sources and primary documentation lookup.",
+    "executable_behavior_witness": "None used.",
+    "requested_route": "Luna Max Standard",
+    "observed_runtime": "gpt-6-luna, max reasoning effort (T3 runtime context)",
+    "provider_account_and_service_tier": "Unknown; native Goal receipt exposed no such fields."
+  }
+}

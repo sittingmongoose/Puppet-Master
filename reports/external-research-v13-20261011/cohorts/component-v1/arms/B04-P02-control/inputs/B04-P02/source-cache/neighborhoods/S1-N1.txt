@@ -1,0 +1,112 @@
+   use the returned response for some or all of the collapsed requests,
+   it will need to forward the requests in order to satisfy them,
+   potentially introducing additional latency.
+
+   When more than one suitable response is stored, a cache MUST use the
+   most recent one (as determined by the Date header field).  It can
+   also forward the request with "Cache-Control: max-age=0" or "Cache-
+   Control: no-cache" to disambiguate which response to use.
+
+   A cache without a clock (Section 5.6.7 of [HTTP]) MUST revalidate
+   stored responses upon every use.
+
+4.1.  Calculating Cache Keys with the Vary Header Field
+
+   When a cache receives a request that can be satisfied by a stored
+   response and that stored response contains a Vary header field
+   (Section 12.5.5 of [HTTP]), the cache MUST NOT use that stored
+   response without revalidation unless all the presented request header
+   fields nominated by that Vary field value match those fields in the
+   original request (i.e., the request that caused the cached response
+   to be stored).
+
+   The header fields from two requests are defined to match if and only
+   if those in the first request can be transformed to those in the
+   second request by applying any of the following:
+
+   *  adding or removing whitespace, where allowed in the header field's
+      syntax
+
+   *  combining multiple header field lines with the same field name
+      (see Section 5.2 of [HTTP])
+
+   *  normalizing both header field values in a way that is known to
+      have identical semantics, according to the header field's
+      specification (e.g., reordering field values when order is not
+      significant; case-normalization, where values are defined to be
+      case-insensitive)
+
+   If (after any normalization that might take place) a header field is
+   absent from a request, it can only match another request if it is
+   also absent there.
+
+   A stored response with a Vary header field value containing a member
+   "*" always fails to match.
+
+   If multiple stored responses match, the cache will need to choose one
+   to use.  When a nominated request header field has a known mechanism
+   for ranking preference (e.g., qvalues on Accept and similar request
+   header fields), that mechanism MAY be used to choose a preferred
+   response.  If such a mechanism is not available, or leads to equally
+   preferred responses, the most recent response (as determined by the
+   Date header field) is chosen, as per Section 4.
+
+   Some resources mistakenly omit the Vary header field from their
+   default response (i.e., the one sent when the request does not
+   express any preferences), with the effect of choosing it for
+   subsequent requests to that resource even when more preferable
+   responses are available.  When a cache has multiple stored responses
+   for a target URI and one or more omits the Vary header field, the
+   cache SHOULD choose the most recent (see Section 4.2.3) stored
+   response with a valid Vary field value.
+
+   If no stored response matches, the cache cannot satisfy the presented
+   request.  Typically, the request is forwarded to the origin server,
+   potentially with preconditions added to describe what responses the
+   cache has already stored (Section 4.3).
+
+4.2.  Freshness
+
+   A "fresh" response is one whose age has not yet exceeded its
+   freshness lifetime.  Conversely, a "stale" response is one where it
+   has.
+
+   A response's "freshness lifetime" is the length of time between its
+   generation by the origin server and its expiration time.  An
+   "explicit expiration time" is the time at which the origin server
+   intends that a stored response can no longer be used by a cache
+   without further validation, whereas a "heuristic expiration time" is
+   assigned by a cache when no explicit expiration time is available.
+
+   A response's "age" is the time that has passed since it was generated
+   by, or successfully validated with, the origin server.
+
+   When a response is fresh, it can be used to satisfy subsequent
+   requests without contacting the origin server, thereby improving
+   efficiency.
+
+   The primary mechanism for determining freshness is for an origin
+   server to provide an explicit expiration time in the future, using
+   either the Expires header field (Section 5.3) or the max-age response
+   directive (Section 5.2.2.1).  Generally, origin servers will assign
+   future explicit expiration times to responses in the belief that the
+   representation is not likely to change in a semantically significant
+   way before the expiration time is reached.
+
+   If an origin server wishes to force a cache to validate every
+   request, it can assign an explicit expiration time in the past to
+   indicate that the response is already stale.  Compliant caches will
+   normally validate a stale cached response before reusing it for
+   subsequent requests (see Section 4.2.4).
+
+   Since origin servers do not always provide explicit expiration times,
+   caches are also allowed to use a heuristic to determine an expiration
+   time under certain circumstances (see Section 4.2.2).
+
+   The calculation to determine if a response is fresh is:
+
+      response_is_fresh = (freshness_lifetime > current_age)
+
+   freshness_lifetime is defined in Section 4.2.1; current_age is
+   defined in Section 4.2.3.
+

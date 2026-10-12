@@ -1,0 +1,112 @@
+        self.assertEqual('\u0130'.lower(), '\u0069\u0307')
+        # Special case for GREEK CAPITAL LETTER SIGMA U+03A3
+        self.assertEqual('\u03a3'.lower(), '\u03c3')
+        self.assertEqual('\u0345\u03a3'.lower(), '\u0345\u03c3')
+        self.assertEqual('A\u0345\u03a3'.lower(), 'a\u0345\u03c2')
+        self.assertEqual('A\u0345\u03a3a'.lower(), 'a\u0345\u03c3a')
+        self.assertEqual('A\u0345\u03a3'.lower(), 'a\u0345\u03c2')
+        self.assertEqual('A\u03a3\u0345'.lower(), 'a\u03c2\u0345')
+        self.assertEqual('\u03a3\u0345 '.lower(), '\u03c3\u0345 ')
+        self.assertEqual('\U0008fffe'.lower(), '\U0008fffe')
+        self.assertEqual('\u2177'.lower(), '\u2177')
+
+    def test_casefold(self):
+        self.assertEqual('hello'.casefold(), 'hello')
+        self.assertEqual('hELlo'.casefold(), 'hello')
+        self.assertEqual('ß'.casefold(), 'ss')
+        self.assertEqual('ﬁ'.casefold(), 'fi')
+        self.assertEqual('\u03a3'.casefold(), '\u03c3')
+        self.assertEqual('A\u0345\u03a3'.casefold(), 'a\u03b9\u03c3')
+        self.assertEqual('\u00b5'.casefold(), '\u03bc')
+
+    def test_upper(self):
+        string_tests.StringLikeTest.test_upper(self)
+        self.assertEqual('\U0001044F'.upper(), '\U00010427')
+        self.assertEqual('\U0001044F\U0001044F'.upper(),
+                         '\U00010427\U00010427')
+        self.assertEqual('\U00010427\U0001044F'.upper(),
+                         '\U00010427\U00010427')
+        self.assertEqual('X\U00010427x\U0001044F'.upper(),
+                         'X\U00010427X\U00010427')
+        self.assertEqual('ﬁ'.upper(), 'FI')
+        self.assertEqual('\u0130'.upper(), '\u0130')
+        self.assertEqual('\u03a3'.upper(), '\u03a3')
+        self.assertEqual('ß'.upper(), 'SS')
+        self.assertEqual('\u1fd2'.upper(), '\u0399\u0308\u0300')
+        self.assertEqual('\U0008fffe'.upper(), '\U0008fffe')
+        self.assertEqual('\u2177'.upper(), '\u2167')
+
+    def test_capitalize(self):
+        string_tests.StringLikeTest.test_capitalize(self)
+        self.assertEqual('\U0001044F'.capitalize(), '\U00010427')
+        self.assertEqual('\U0001044F\U0001044F'.capitalize(),
+                         '\U00010427\U0001044F')
+        self.assertEqual('\U00010427\U0001044F'.capitalize(),
+                         '\U00010427\U0001044F')
+        self.assertEqual('\U0001044F\U00010427'.capitalize(),
+                         '\U00010427\U0001044F')
+        self.assertEqual('X\U00010427x\U0001044F'.capitalize(),
+                         'X\U0001044Fx\U0001044F')
+        self.assertEqual('h\u0130'.capitalize(), 'H\u0069\u0307')
+        exp = '\u0399\u0308\u0300\u0069\u0307'
+        self.assertEqual('\u1fd2\u0130'.capitalize(), exp)
+        self.assertEqual('ﬁnnish'.capitalize(), 'Finnish')
+        self.assertEqual('A\u0345\u03a3'.capitalize(), 'A\u0345\u03c2')
+
+    def test_title(self):
+        super().test_title()
+        self.assertEqual('\U0001044F'.title(), '\U00010427')
+        self.assertEqual('\U0001044F\U0001044F'.title(),
+                         '\U00010427\U0001044F')
+        self.assertEqual('\U0001044F\U0001044F \U0001044F\U0001044F'.title(),
+                         '\U00010427\U0001044F \U00010427\U0001044F')
+        self.assertEqual('\U00010427\U0001044F \U00010427\U0001044F'.title(),
+                         '\U00010427\U0001044F \U00010427\U0001044F')
+        self.assertEqual('\U0001044F\U00010427 \U0001044F\U00010427'.title(),
+                         '\U00010427\U0001044F \U00010427\U0001044F')
+        self.assertEqual('X\U00010427x\U0001044F X\U00010427x\U0001044F'.title(),
+                         'X\U0001044Fx\U0001044F X\U0001044Fx\U0001044F')
+        self.assertEqual('ﬁNNISH'.title(), 'Finnish')
+        self.assertEqual('A\u03a3 \u1fa1xy'.title(), 'A\u03c2 \u1fa9xy')
+        self.assertEqual('A\u03a3A'.title(), 'A\u03c3a')
+
+    def test_swapcase(self):
+        string_tests.StringLikeTest.test_swapcase(self)
+        self.assertEqual('\U0001044F'.swapcase(), '\U00010427')
+        self.assertEqual('\U00010427'.swapcase(), '\U0001044F')
+        self.assertEqual('\U0001044F\U0001044F'.swapcase(),
+                         '\U00010427\U00010427')
+        self.assertEqual('\U00010427\U0001044F'.swapcase(),
+                         '\U0001044F\U00010427')
+        self.assertEqual('\U0001044F\U00010427'.swapcase(),
+                         '\U00010427\U0001044F')
+        self.assertEqual('X\U00010427x\U0001044F'.swapcase(),
+                         'x\U0001044FX\U00010427')
+        self.assertEqual('ﬁ'.swapcase(), 'FI')
+        self.assertEqual('\u0130'.swapcase(), '\u0069\u0307')
+        # Special case for GREEK CAPITAL LETTER SIGMA U+03A3
+        self.assertEqual('\u03a3'.swapcase(), '\u03c3')
+        self.assertEqual('\u0345\u03a3'.swapcase(), '\u0399\u03c3')
+        self.assertEqual('A\u0345\u03a3'.swapcase(), 'a\u0399\u03c2')
+        self.assertEqual('A\u0345\u03a3a'.swapcase(), 'a\u0399\u03c3A')
+        self.assertEqual('A\u0345\u03a3'.swapcase(), 'a\u0399\u03c2')
+        self.assertEqual('A\u03a3\u0345'.swapcase(), 'a\u03c2\u0399')
+        self.assertEqual('\u03a3\u0345 '.swapcase(), '\u03c3\u0399 ')
+        self.assertEqual('\u03a3'.swapcase(), '\u03c3')
+        self.assertEqual('ß'.swapcase(), 'SS')
+        self.assertEqual('\u1fd2'.swapcase(), '\u0399\u0308\u0300')
+
+    def test_center(self):
+        string_tests.StringLikeTest.test_center(self)
+        self.assertEqual('x'.center(2, '\U0010FFFF'),
+                         'x\U0010FFFF')
+        self.assertEqual('x'.center(3, '\U0010FFFF'),
+                         '\U0010FFFFx\U0010FFFF')
+        self.assertEqual('x'.center(4, '\U0010FFFF'),
+                         '\U0010FFFFx\U0010FFFF\U0010FFFF')
+
+    @unittest.skipUnless(sys.maxsize == 2**31 - 1, "requires 32-bit system")
+    @support.cpython_only
+    def test_case_operation_overflow(self):
+        # Issue #22643
+        size = 2**32//12 + 1

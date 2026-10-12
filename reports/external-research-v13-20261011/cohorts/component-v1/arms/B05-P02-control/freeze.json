@@ -1,0 +1,100 @@
+{
+  "version": "component-admit-v1",
+  "scope": "COMPONENT",
+  "case": "B05-P02",
+  "arm": "control",
+  "run_id": "B05-P02-control",
+  "prepared_at_utc": "2026-10-12T00:35:57.782487Z",
+  "t0_utc": "2026-10-12T00:35:57.728234Z",
+  "whole_deadline_utc": "2026-10-12T01:00:57.728234Z",
+  "stage_deadline_utc": "2026-10-12T01:00:57.728234Z",
+  "whole_budget_s": 1500,
+  "minimum_seconds": 0,
+  "available_seconds_at_prepare": 1499.945747,
+  "native_goal_objective": "ER13 COMPONENT B05-P02-control: complete only B05-P02 control under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-control/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal.",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "observed_route": "UNKNOWN",
+  "selection_sha256": "f8194891e1cbf2f5f37e755dd39131a2b019fedf3458288ae3bba5f9c3533fed",
+  "fixture_ready": {
+    "case": "B05-P02",
+    "ready_utc": "2026-10-12T00:24:29.312801+00:00",
+    "manifest_sha256": "7013c960bde3ced29b6555f51deb03886201dc9e5660961b897a30023e6a1ec7",
+    "pair_raw_base_sha256": "6b0630581166ff1914b7e0d6bc8f3f3103944b52e87ef08d66c3ed34659df6be",
+    "max_minutes": 25,
+    "min_minutes": 0,
+    "component_not_full_discovery": true
+  },
+  "fixture_manifest_sha256": "7013c960bde3ced29b6555f51deb03886201dc9e5660961b897a30023e6a1ec7",
+  "common_raw_sha256": {
+    "brief.md": "023c692eb8cd4eb0ed02045d7b178d7236639ca3a67a42f5db76e6ed038d2c15",
+    "plan.md": "9c04fe91aca1382827527caf5412b301670d1c7476651991e2bd13c54efb07a0",
+    "draft.md": "6b045ed1bfb5009bc403c5456cfb0c43d25012d55b5d4d4f7ec6f9f1b67dbf68",
+    "source-index.json": "cba24687b6152f83a7909b13ab54268b60b9655c7a9e894ac74903c646dbcc17"
+  },
+  "frozen_inputs": {
+    "case": "B05-P02",
+    "arm": "control",
+    "inputs": [
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-control/inputs/B05-P02/brief.md",
+        "sha256": "023c692eb8cd4eb0ed02045d7b178d7236639ca3a67a42f5db76e6ed038d2c15"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-control/inputs/B05-P02/plan.md",
+        "sha256": "9c04fe91aca1382827527caf5412b301670d1c7476651991e2bd13c54efb07a0"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-control/inputs/B05-P02/draft.md",
+        "sha256": "6b045ed1bfb5009bc403c5456cfb0c43d25012d55b5d4d4f7ec6f9f1b67dbf68"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-control/inputs/B05-P02/source-index.json",
+        "sha256": "cba24687b6152f83a7909b13ab54268b60b9655c7a9e894ac74903c646dbcc17"
+      }
+    ],
+    "independent_lookup_allowed": true,
+    "cache_access": false,
+    "semantic_conclusions_shared": false,
+    "excluded": [
+      "rubric.json",
+      "findings.json",
+      "metadata.json",
+      "preparer scripts/source pool",
+      "other arms/evaluators"
+    ]
+  },
+  "method_delta": "In this one fresh critic+finalizer role, independently look up and inspect primary sources using public URLs/locators. Do not read any treatment cache, preparer source pool, navigation, findings or another arm. Both arms may independently expand lookup; no inherited semantic conclusions.",
+  "tools": [
+    "functions.exec",
+    "tools.exec_command",
+    "tools.create_goal",
+    "tools.update_goal",
+    "tools.get_goal",
+    "existing primary-source web/search tools when available"
+  ],
+  "output_selection": [
+    "final.md",
+    "criticism-dispositions.md",
+    "source-map.json",
+    "witnesses/ actual code/results when used",
+    "native-goal-create.json",
+    "native-goal-terminal.json",
+    "critique.md"
+  ],
+  "request_sha256": "7e04b807e112b9481ba7fedfa878e0bf1ec8d920bf3ee09ea779a9affba86e1d",
+  "assignment_sha256": "73746f2a786a441a557b426c1bcd1fa3e0a8a4a393317241d86317891c77d1fb",
+  "native_pins": {
+    "assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+    "activation-snippet-template.js": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5"
+  },
+  "discovery_effectiveness_claim": false,
+  "native_provenance_freshness": "UNKNOWN beyond exact binding checker",
+  "preparation_accounting": "arm-specific preparation/queue charged from root T0; common fixture cold acquisition/preparation separately charged by root, warm reuse disclosed"
+}

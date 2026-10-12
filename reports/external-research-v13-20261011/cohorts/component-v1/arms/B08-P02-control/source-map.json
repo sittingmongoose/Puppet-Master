@@ -1,0 +1,265 @@
+{
+  "case": "B08-P02",
+  "arm": "control",
+  "method": "Claim-to-source map for final.md; inspected primary sources and planned test oracles are distinguished.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "CPython unicodedata documentation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; Unicode documentation references UCD 15.1.0",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "copied_sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "exact_locators": [
+        "lines 157–187: normalize forms and canonical/compatibility equivalence",
+        "lines 190–203: is_normalized and unidata_version",
+        "lines 214–216: Unicode 15.1.0 UCD file references"
+      ],
+      "governing_scope": "CPython documentation for its unicodedata API; supports normalization semantics and exposing data version, not a product search contract or size bound.",
+      "unresolved_uncertainty": "The pinned executable was not run in this arm."
+    },
+    {
+      "id": "S2",
+      "title": "CPython str documentation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; casefold cites Unicode 15.1.0",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "copied_sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "exact_locators": [
+        "lines 1699–1714: casefold intent, behavior, and Unicode 15.1.0 Default Case Folding reference",
+        "lines 1751–1759: UTF-8 encoding default and strict error default"
+      ],
+      "governing_scope": "CPython string API documentation; does not claim locale collation or byte-length monotonicity."
+    },
+    {
+      "id": "S3",
+      "title": "CPython string casefold tests",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "copied_sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "exact_locators": [
+        "lines 914–921: ASCII, sharp-s expansion, fi ligature, sigma, and micro sign casefold examples"
+      ],
+      "governing_scope": "Representative CPython regression examples, not an exhaustive Unicode casefold oracle; inspected, not executed in this arm."
+    },
+    {
+      "id": "S4",
+      "title": "CPython Unicode normalization tests",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "copied_sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "exact_locators": [
+        "lines 372–400: normalization test harness, version-header check, and test-data loading",
+        "lines 402–459: NFC/NFD/NFKC/NFKD conformance assertions"
+      ],
+      "governing_scope": "Upstream test source for normalization, not evidence this arm ran the suite."
+    },
+    {
+      "id": "S5",
+      "title": "CPython Unicode casefold implementation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "copied_sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "exact_locators": [
+        "lines 9715–9728: applies full fold mapping outputs per code point",
+        "lines 10682–10687: str.casefold implementation dispatch"
+      ],
+      "governing_scope": "Implementation evidence for the pinned CPython commit; generated Unicode data is part of the build and was not independently executed here."
+    },
+    {
+      "id": "UAX15",
+      "title": "Unicode Standard Annex #15, Unicode Normalization Forms",
+      "public_primary_url": "https://www.unicode.org/reports/tr15/tr15-54.html",
+      "version_or_pin": "Unicode 15.1.0, Revision 54",
+      "sha256": null,
+      "exact_locators": [
+        "§1.1, lines 70–100: canonical versus compatibility equivalence and compatibility examples, including fractions",
+        "§1.2, lines 111–153: NFKC definition and caution about erasing meaningful distinctions",
+        "§1.3, lines 158–174: decomposition, ordering, composition, and algorithm summary",
+        "§1.4, lines 177–186: normalized forms are not closed under concatenation",
+        "§3, lines 218–229: normalization stability and unassigned-character caveat",
+        "§4, lines 241–249: C3 normalization conformance oracle"
+      ],
+      "governing_scope": "Unicode normalization behavior and conformance; does not define this app’s query mode or stored-key cap.",
+      "unresolved_uncertainty": "The web source was inspected; a local content hash was not computed."
+    },
+    {
+      "id": "UAX29",
+      "title": "Unicode Standard Annex #29, Unicode Text Segmentation",
+      "public_primary_url": "https://www.unicode.org/reports/tr29/tr29-43.html",
+      "version_or_pin": "Unicode 15.1.0, Revision 43",
+      "sha256": null,
+      "exact_locators": [
+        "§2, lines 109–146: extended grapheme boundaries and user-perceived character guidance",
+        "§3, lines 135–146 and 191–203: grapheme clusters, UI interaction, matching, and limits"
+      ],
+      "governing_scope": "Default grapheme boundary guidance; not a font-aware guarantee of exact glyph selection.",
+      "unresolved_uncertainty": "The web source was inspected; a local content hash was not computed."
+    },
+    {
+      "id": "UTS39",
+      "title": "Unicode Technical Standard #39, Unicode Security Mechanisms",
+      "public_primary_url": "https://www.unicode.org/reports/tr39/tr39-28.html",
+      "version_or_pin": "Unicode 15.1.0, Revision 28",
+      "sha256": null,
+      "exact_locators": [
+        "§4, lines 338–350: separate skeleton-based confusable detection and non-display note",
+        "§4, lines 400–405: mixed-script and whole-script confusable examples"
+      ],
+      "governing_scope": "Security-oriented confusability detection for scoped cases; not ordinary note search equivalence.",
+      "unresolved_uncertainty": "The web source was inspected; a local content hash was not computed."
+    },
+    {
+      "id": "NORM-TEST-15.1",
+      "title": "Unicode 15.1.0 NormalizationTest.txt",
+      "public_primary_url": "https://www.unicode.org/Public/15.1.0/ucd/NormalizationTest.txt",
+      "version_or_pin": "Unicode 15.1.0 UCD",
+      "sha256": null,
+      "exact_locators": [
+        "File header and conformance columns as referenced by UAX15 §4 C3"
+      ],
+      "governing_scope": "Planned target-runtime normalization oracle.",
+      "status": "Planned validation source; not opened, downloaded, or run in this arm."
+    },
+    {
+      "id": "CASEFOLD-15.1",
+      "title": "Unicode 15.1.0 CaseFolding.txt",
+      "public_primary_url": "https://www.unicode.org/Public/15.1.0/ucd/CaseFolding.txt",
+      "version_or_pin": "Unicode 15.1.0 UCD",
+      "sha256": null,
+      "exact_locators": [
+        "File header and full case-fold mapping records (F status)"
+      ],
+      "governing_scope": "Planned target-runtime full case-fold oracle.",
+      "status": "Planned validation source; not opened, downloaded, or run in this arm."
+    }
+  ],
+  "claim_mappings": [
+    {
+      "final_sections": [
+        "Decision",
+        "Modes and promises"
+      ],
+      "claims": [
+        "NFKC performs compatibility normalization",
+        "casefold is for default caseless matching",
+        "the combined mode has a limited product scope"
+      ],
+      "supporting_sources": [
+        "S1",
+        "S2",
+        "UAX15"
+      ],
+      "unresolved_uncertainty": "No target-runtime or product-level semantic acceptance test ran."
+    },
+    {
+      "final_sections": [
+        "Decision",
+        "Stored representation"
+      ],
+      "claims": [
+        "the transform can expand UTF-8 bytes",
+        "a source-size threshold cannot enforce a stored-key cap",
+        "the complete output must be measured"
+      ],
+      "supporting_sources": [
+        "UAX15",
+        "S2",
+        "S5"
+      ],
+      "executed_witness": "witnesses/execution.json",
+      "unresolved_uncertainty": "Witness runtime was CPython 3.14.4 / Unicode 16.0.0; target 3.13.9 / Unicode 15.1.0 was not executed."
+    },
+    {
+      "final_sections": [
+        "Stored representation"
+      ],
+      "claims": [
+        "original note is never truncated",
+        "over-limit key is omitted and explicitly marked",
+        "overflow notes remain covered by compatibility search or visible partial-result reporting"
+      ],
+      "supporting_sources": [
+        "S2"
+      ],
+      "governing_basis": "Product brief requirements and this arm's finalizer design.",
+      "unresolved_uncertainty": "Transient fallback resource policy requires implementation testing."
+    },
+    {
+      "final_sections": [
+        "Versioning and migration"
+      ],
+      "claims": [
+        "record Unicode/runtime version",
+        "rebuild deliberately on version change",
+        "do not mix indexed and query transforms"
+      ],
+      "supporting_sources": [
+        "S1",
+        "S2",
+        "UAX15"
+      ],
+      "unresolved_uncertainty": "Target build identity and actual migration behavior were not exercised."
+    },
+    {
+      "final_sections": [
+        "Match spans and display"
+      ],
+      "claims": [
+        "transformed offsets do not directly identify original spans",
+        "highlight only with provenance and safe grapheme boundaries"
+      ],
+      "supporting_sources": [
+        "S3",
+        "S5",
+        "UAX15",
+        "UAX29"
+      ],
+      "executed_witness": "witnesses/execution.json",
+      "unresolved_uncertainty": "No UI renderer or provenance-map implementation was tested; grapheme clusters are not font-aware glyph boundaries."
+    },
+    {
+      "final_sections": [
+        "Modes and promises"
+      ],
+      "claims": [
+        "default casefold is not locale collation",
+        "visual confusable detection is separate"
+      ],
+      "supporting_sources": [
+        "S2",
+        "UTS39"
+      ],
+      "executed_witness": "witnesses/execution.json",
+      "unresolved_uncertainty": "No locale-specific product requirements were provided."
+    },
+    {
+      "final_sections": [
+        "Validation and release gates"
+      ],
+      "claims": [
+        "upstream tests were inspected but not run",
+        "target conformance and product tests remain release gates"
+      ],
+      "supporting_sources": [
+        "S3",
+        "S4",
+        "UAX15",
+        "NORM-TEST-15.1",
+        "CASEFOLD-15.1"
+      ],
+      "unresolved_uncertainty": "Future test results must be recorded under the target runtime."
+    }
+  ],
+  "execution_evidence": {
+    "witness_code": "witnesses/candidate_witness.py",
+    "witness_result_bundle": "witnesses/execution.json",
+    "stdout": "witnesses/candidate_witness.stdout.txt",
+    "stderr": "witnesses/candidate_witness.stderr.txt",
+    "runtime": "CPython 3.14.4, Unicode database 16.0.0",
+    "limits": "Targeted finite counterexamples only; not CPython 3.13.9, no exhaustive sequence domain, no UI/persistence/migration/conformance suite."
+  }
+}

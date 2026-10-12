@@ -1,0 +1,55 @@
+{
+  "schema": "er13.frozen_pair_notification.v1",
+  "block_id": "B04-P01",
+  "scope": "COMPONENT",
+  "frozen_at": "2026-10-12T00:57:36.057684+00:00",
+  "source_assessed": false,
+  "items": [
+    {
+      "arm_id": "B04-P01-control",
+      "scope": "COMPONENT",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/authored-manifest.json",
+      "manifest_sha256": "ecb0922e67bec1ca298dd733e75914b0e417010fd1844d84d819d71db2e58309",
+      "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control",
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/inputs/B04-P01/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/inputs/B04-P01/plan.md",
+      "draft": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/inputs/B04-P01/draft.md",
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/final.md",
+      "critique": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/inputs/B04-P01/critique.md",
+      "criticism_dispositions": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/criticism-dispositions.md",
+      "source_map": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-control/source-map.json",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B04-P01-control-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B04-P01-control-v1",
+      "native_identity": {
+        "threadId": "01a12d88-3677-7290-82b6-dc1eb4972c3a",
+        "createdAt": 1791765286,
+        "objective": "ER13 COMPONENT B04-P01-control: complete only B04-P01 control under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal."
+      },
+      "task_terminal_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B04-P01-control/component-terminal-task.raw.json",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "B04-P01-treatment",
+      "scope": "COMPONENT",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/authored-manifest.json",
+      "manifest_sha256": "dae20acc1ef31be6854ebc07c4974443d0055bb7323f85e6b4ff09ee09b0b44d",
+      "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment",
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/inputs/B04-P01/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/inputs/B04-P01/plan.md",
+      "draft": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/inputs/B04-P01/draft.md",
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/final.md",
+      "critique": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/inputs/B04-P01/critique.md",
+      "criticism_dispositions": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/criticism-dispositions.md",
+      "source_map": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/source-map.json",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B04-P01-treatment-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B04-P01-treatment-v1",
+      "native_identity": {
+        "threadId": "01a12d88-3232-73e3-9e26-b22427dcfc81",
+        "createdAt": 1791765286,
+        "objective": "ER13 COMPONENT B04-P01-treatment: complete only B04-P01 treatment under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-treatment/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal."
+      },
+      "task_terminal_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B04-P01-treatment/component-terminal-task.raw.json",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    }
+  ]
+}

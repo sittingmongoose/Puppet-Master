@@ -1,0 +1,32 @@
+{
+  "case": "B05-P01",
+  "arm": "control",
+  "inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P01-control/inputs/B05-P01/brief.md",
+      "sha256": "e2a39533df9487ecf9921581abd9c076adaa2026795123538c37dfec20cd9d9f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P01-control/inputs/B05-P01/plan.md",
+      "sha256": "de16e22b83b168248720670a6466e5af39d15b5bfa5b9125c91ef7d68b59a394"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P01-control/inputs/B05-P01/draft.md",
+      "sha256": "4dd448da655d824aec355147cfe71d501a4152552c3126e6548d98d03d106f55"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P01-control/inputs/B05-P01/source-index.json",
+      "sha256": "e13aeaa162af8d84836217ac1def412d73872fbe8c72a3ebd85507e29f5218bb"
+    }
+  ],
+  "independent_lookup_allowed": true,
+  "cache_access": false,
+  "semantic_conclusions_shared": false,
+  "excluded": [
+    "rubric.json",
+    "findings.json",
+    "metadata.json",
+    "preparer scripts/source pool",
+    "other arms/evaluators"
+  ]
+}

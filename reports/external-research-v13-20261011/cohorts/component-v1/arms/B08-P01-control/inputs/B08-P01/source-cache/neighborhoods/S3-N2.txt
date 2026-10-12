@@ -1,0 +1,112 @@
+        q = asyncio.PriorityQueue()
+        for i in [1, 3, 2]:
+            await q.put(i)
+
+        items = [await q.get() for _ in range(3)]
+        self.assertEqual([1, 2, 3], items)
+
+
+class _QueueJoinTestMixin:
+
+    q_class = None
+
+    def test_task_done_underflow(self):
+        q = self.q_class()
+        self.assertRaises(ValueError, q.task_done)
+
+    async def test_task_done(self):
+        q = self.q_class()
+        for i in range(100):
+            q.put_nowait(i)
+
+        accumulator = 0
+
+        # Two workers get items from the queue and call task_done after each.
+        # Join the queue and assert all items have been processed.
+        running = True
+
+        async def worker():
+            nonlocal accumulator
+
+            while running:
+                item = await q.get()
+                accumulator += item
+                q.task_done()
+
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(worker())
+                     for index in range(2)]
+
+            await q.join()
+            self.assertEqual(sum(range(100)), accumulator)
+
+            # close running generators
+            running = False
+            for i in range(len(tasks)):
+                q.put_nowait(0)
+
+    async def test_join_empty_queue(self):
+        q = self.q_class()
+
+        # Test that a queue join()s successfully, and before anything else
+        # (done twice for insurance).
+
+        await q.join()
+        await q.join()
+
+    async def test_format(self):
+        q = self.q_class()
+        self.assertEqual(q._format(), 'maxsize=0')
+
+        q._unfinished_tasks = 2
+        self.assertEqual(q._format(), 'maxsize=0 tasks=2')
+
+
+class QueueJoinTests(_QueueJoinTestMixin, unittest.IsolatedAsyncioTestCase):
+    q_class = asyncio.Queue
+
+
+class LifoQueueJoinTests(_QueueJoinTestMixin, unittest.IsolatedAsyncioTestCase):
+    q_class = asyncio.LifoQueue
+
+
+class PriorityQueueJoinTests(_QueueJoinTestMixin, unittest.IsolatedAsyncioTestCase):
+    q_class = asyncio.PriorityQueue
+
+
+class _QueueShutdownTestMixin:
+    q_class = None
+
+    def assertRaisesShutdown(self, msg="Didn't appear to shut-down queue"):
+        return self.assertRaises(asyncio.QueueShutDown, msg=msg)
+
+    async def test_format(self):
+        q = self.q_class()
+        q.shutdown()
+        self.assertEqual(q._format(), 'maxsize=0 shutdown')
+
+    async def test_shutdown_empty(self):
+        # Test shutting down an empty queue
+
+        # Setup empty queue, and join() and get() tasks
+        q = self.q_class()
+        loop = asyncio.get_running_loop()
+        get_task = loop.create_task(q.get())
+        await asyncio.sleep(0)  # want get task pending before shutdown
+
+        # Perform shut-down
+        q.shutdown(immediate=False)  # unfinished tasks: 0 -> 0
+
+        self.assertEqual(q.qsize(), 0)
+
+        # Ensure join() task successfully finishes
+        await q.join()
+
+        # Ensure get() task is finished, and raised ShutDown
+        await asyncio.sleep(0)
+        self.assertTrue(get_task.done())
+        with self.assertRaisesShutdown():
+            await get_task
+
+        # Ensure put() and get() raise ShutDown
+        with self.assertRaisesShutdown():

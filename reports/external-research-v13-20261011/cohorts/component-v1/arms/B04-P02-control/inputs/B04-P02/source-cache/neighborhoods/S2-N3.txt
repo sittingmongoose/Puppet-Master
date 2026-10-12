@@ -1,0 +1,112 @@
+   value refers to a resource that is descriptive of the target
+   resource, such that making a retrieval request on that other resource
+   might result in a representation that is useful to recipients without
+   implying that it represents the original target resource.  Note that
+   answers to the questions of what can be represented, what
+   representations are adequate, and what might be a useful description
+   are outside the scope of HTTP.
+
+   Except for responses to a HEAD request, the representation of a 303
+   response ought to contain a short hypertext note with a hyperlink to
+   the same URI reference provided in the Location header field.
+
+15.4.5.  304 Not Modified
+
+   The 304 (Not Modified) status code indicates that a conditional GET
+   or HEAD request has been received and would have resulted in a 200
+   (OK) response if it were not for the fact that the condition
+   evaluated to false.  In other words, there is no need for the server
+   to transfer a representation of the target resource because the
+   request indicates that the client, which made the request
+   conditional, already has a valid representation; the server is
+   therefore redirecting the client to make use of that stored
+   representation as if it were the content of a 200 (OK) response.
+
+   The server generating a 304 response MUST generate any of the
+   following header fields that would have been sent in a 200 (OK)
+   response to the same request:
+
+   *  Content-Location, Date, ETag, and Vary
+
+   *  Cache-Control and Expires (see [CACHING])
+
+   Since the goal of a 304 response is to minimize information transfer
+   when the recipient already has one or more cached representations, a
+   sender SHOULD NOT generate representation metadata other than the
+   above listed fields unless said metadata exists for the purpose of
+   guiding cache updates (e.g., Last-Modified might be useful if the
+   response does not have an ETag field).
+
+   Requirements on a cache that receives a 304 response are defined in
+   Section 4.3.4 of [CACHING].  If the conditional request originated
+   with an outbound client, such as a user agent with its own cache
+   sending a conditional GET to a shared proxy, then the proxy SHOULD
+   forward the 304 response to that client.
+
+   A 304 response is terminated by the end of the header section; it
+   cannot contain content or trailers.
+
+15.4.6.  305 Use Proxy
+
+   The 305 (Use Proxy) status code was defined in a previous version of
+   this specification and is now deprecated (Appendix B of [RFC7231]).
+
+15.4.7.  306 (Unused)
+
+   The 306 status code was defined in a previous version of this
+   specification, is no longer used, and the code is reserved.
+
+15.4.8.  307 Temporary Redirect
+
+   The 307 (Temporary Redirect) status code indicates that the target
+   resource resides temporarily under a different URI and the user agent
+   MUST NOT change the request method if it performs an automatic
+   redirection to that URI.  Since the redirection can change over time,
+   the client ought to continue using the original target URI for future
+   requests.
+
+   The server SHOULD generate a Location header field in the response
+   containing a URI reference for the different URI.  The user agent MAY
+   use the Location field value for automatic redirection.  The server's
+   response content usually contains a short hypertext note with a
+   hyperlink to the different URI(s).
+
+15.4.9.  308 Permanent Redirect
+
+   The 308 (Permanent Redirect) status code indicates that the target
+   resource has been assigned a new permanent URI and any future
+   references to this resource ought to use one of the enclosed URIs.
+   The server is suggesting that a user agent with link-editing
+   capability can permanently replace references to the target URI with
+   one of the new references sent by the server.  However, this
+   suggestion is usually ignored unless the user agent is actively
+   editing references (e.g., engaged in authoring content), the
+   connection is secured, and the origin server is a trusted authority
+   for the content being edited.
+
+   The server SHOULD generate a Location header field in the response
+   containing a preferred URI reference for the new permanent URI.  The
+   user agent MAY use the Location field value for automatic
+   redirection.  The server's response content usually contains a short
+   hypertext note with a hyperlink to the new URI(s).
+
+   A 308 response is heuristically cacheable; i.e., unless otherwise
+   indicated by the method definition or explicit cache controls (see
+   Section 4.2.2 of [CACHING]).
+
+      |  *Note:* This status code is much younger (June 2014) than its
+      |  sibling codes and thus might not be recognized everywhere.  See
+      |  Section 4 of [RFC7538] for deployment considerations.
+
+15.5.  Client Error 4xx
+
+   The 4xx (Client Error) class of status code indicates that the client
+   seems to have erred.  Except when responding to a HEAD request, the
+   server SHOULD send a representation containing an explanation of the
+   error situation, and whether it is a temporary or permanent
+   condition.  These status codes are applicable to any request method.
+   User agents SHOULD display any included representation to the user.
+
+15.5.1.  400 Bad Request
+
+   The 400 (Bad Request) status code indicates that the server cannot or

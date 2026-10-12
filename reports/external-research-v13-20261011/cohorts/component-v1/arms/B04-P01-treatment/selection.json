@@ -1,0 +1,72 @@
+{
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "route_resolution_owner": "root",
+  "requested_label": "Luna Max Standard",
+  "observed_route": "UNKNOWN until candidate returned identity",
+  "case": "B04-P01",
+  "arm": "treatment",
+  "root_selection_evidence": {
+    "version": "er13-dispatch-release-v1",
+    "released_at_utc": "2026-10-12T00:29:28.211081+00:00",
+    "dispatch_owner": "er13-single-dispatcher-v1",
+    "full_materializer": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/luna-core-v1",
+    "full_materializer_manifest_sha256": "9f1c955a99290eb55a2a8e9c6b9f05f01779945f7863bef90d114bd210443f2e",
+    "allow_primary_arms": [
+      "A-F01-R0",
+      "A-F01-A1",
+      "A-F01-A8",
+      "A-F01-A1_A8",
+      "A-F02-R0",
+      "A-F02-A1",
+      "A-F02-A8",
+      "A-F02-A1_A8"
+    ],
+    "route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "serviceTier": "default"
+    },
+    "sources": "Luna core immutable verified; exact A8 byte preservation covered247 synthetic checks; root bounded semantic/time review complete",
+    "case_root": "ER13_RUNTIME/inputs",
+    "first_failed_setup_record": "ER13_RUNTIME/state/first-setup-blocker.json",
+    "other_provider_release": false,
+    "B_pending": "materializer/components distinct seals and method delta cards",
+    "T0": "save exact boundary before arm-specific prep; do not reset original first failure",
+    "release_update_utc": "2026-10-12T00:33:02.065182+00:00",
+    "component_helper": "ER13_RUNTIME/helpers/component-admit-v1",
+    "component_manifest_sha256": "bbd6f310bbef443fff918db9490eb41538fd49e3a58171c3e561637f80cddc55",
+    "component_primary_allow": [
+      "B01-P01-control",
+      "B01-P01-treatment",
+      "B04-P01-control",
+      "B04-P01-treatment",
+      "B05-P01-control",
+      "B05-P01-treatment",
+      "B08-P01-control",
+      "B08-P01-treatment"
+    ],
+    "full_methods_helper": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1",
+    "full_methods_manifest_sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+    "full_method_primary_allow": [
+      "B02-P01-control",
+      "B02-P01-treatment",
+      "B06-P01-control",
+      "B06-P01-treatment"
+    ],
+    "method_release_notes": {
+      "B02": "critic-finalizer MaxStandard same common discovery, totalstage30+30; native critic same Goal reviews+fullfinal",
+      "B06": "complementary critics360+360 seconds summed allowance equalscontrol720; final disagreement within1080",
+      "B07_B09_B10": "pending required root-frozen method-directory cards",
+      "B03": "native retained-author mechanism under separate prospective engineering; do not substitute fresh reviser"
+    }
+  },
+  "root_selection_sha256": "c45a7bf3934a6dc504e2cf83401a53b559fb60e40ff8c20022d616ce8d05dba8"
+}

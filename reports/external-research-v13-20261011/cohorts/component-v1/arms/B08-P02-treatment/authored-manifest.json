@@ -1,0 +1,182 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T00:48:54.745600+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "final.md",
+      "bytes": 9741,
+      "sha256": "4e87a3d418cfb2489638f4a23bd7dff5808f8b0715d9fe0aa0df8d57a724376b"
+    },
+    {
+      "path": "criticism-dispositions.md",
+      "bytes": 5730,
+      "sha256": "470a0e06e7660a79cf160c2d53c57be4f52428109776750b2c8fd74914390f02"
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 10978,
+      "sha256": "f269d96454b7bdf024b8cb00b143627c83d3d97f1fc5e96af453a9974fd3c02a"
+    },
+    {
+      "path": "native-goal-create.json",
+      "bytes": 599,
+      "sha256": "8dc36fe52e1acd8eaebe6d247de61ff61afb92f7797fcbf541d600c01fa40f56"
+    },
+    {
+      "path": "native-goal-terminal.json",
+      "bytes": 928,
+      "sha256": "0b2cff7ae6c30748dae4422a7763e4800403ef62f690a20f44675f7c5750eb70"
+    },
+    {
+      "path": "critique.md",
+      "bytes": 3462,
+      "sha256": "e4977d94d127f8222f7a02bea885c8f4f99db08dfd6eedfaf8a6163726449d29"
+    },
+    {
+      "path": "assignment.md",
+      "bytes": 8515,
+      "sha256": "65d3d189c48efc4e2ce7d90424903da4e1b606511531b7338ad245b14f2b7009"
+    },
+    {
+      "path": "input-map.json",
+      "bytes": 5169,
+      "sha256": "2bd7881d6bab414cf5b4f08bc078118dc1949a3e232ba491c67fcdfed1fa5367"
+    },
+    {
+      "path": "freeze.json",
+      "bytes": 8931,
+      "sha256": "a074891b6af5c0196b71124ee05ca2f3add32285ff567cbb86f398780689b418"
+    },
+    {
+      "path": "request.json",
+      "bytes": 9215,
+      "sha256": "d2504b4f07f401f46d92e6a63674f3749862596dbc229a6e2d5097fd331697f7"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 12455,
+      "sha256": "3334566f77afa42d5f36846a4a11bbe44c655e774893afe7feb4fdf1650fe12c"
+    },
+    {
+      "path": "selection.json",
+      "bytes": 3662,
+      "sha256": "d6beb8cc1492a6123b8ae613d5e2c81f0aa3da4337b155a3abe413a562096bfd"
+    },
+    {
+      "path": "inputs/B08-P02/brief.md",
+      "bytes": 645,
+      "sha256": "2a5eb9018aeb5b9ba218a84f0a6272bf108a55a2d79cc7439b68e2fdc7c14fab"
+    },
+    {
+      "path": "inputs/B08-P02/plan.md",
+      "bytes": 657,
+      "sha256": "a09a6fcbabd492a8aa956c137a964b6fbb964c191d7428763451c90633e7fa5d"
+    },
+    {
+      "path": "inputs/B08-P02/draft.md",
+      "bytes": 3581,
+      "sha256": "cd045b2e16db354ebce34f93ad39eecaf3cb01af31176427f39c82e1af243677"
+    },
+    {
+      "path": "inputs/B08-P02/source-index.json",
+      "bytes": 8097,
+      "sha256": "6cc75acf7fc48dd16edc8b2038e6d6085e9ee12f32d4dd932436d84f630aa367"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Doc/library/stdtypes.rst",
+      "bytes": 222836,
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Doc/library/unicodedata.rst",
+      "bytes": 7508,
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Lib/test/test_str.py",
+      "bytes": 129386,
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Lib/test/test_unicodedata.py",
+      "bytes": 18125,
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Objects/unicodeobject.c",
+      "bytes": 474671,
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S1-N1.txt",
+      "bytes": 2797,
+      "sha256": "13e218be07cc028662f49b2901b353a82532f6bcdaacdb9c6c91fddd0a358393"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S1-N2.txt",
+      "bytes": 758,
+      "sha256": "14ff4c347daf6c16158d13d79de93d9e552cd34e8480510aab052075ba475b63"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S2-N1.txt",
+      "bytes": 3866,
+      "sha256": "d524c76d3d6e370e734c20f4dcbb9b7999ccae7209763d9cf26b364cd7d3e152"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S3-N1.txt",
+      "bytes": 5931,
+      "sha256": "24ae3283478149822b06bb40042daafd2a190b19133cd5b63b5f38bde1fb6b5b"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S4-N1.txt",
+      "bytes": 3035,
+      "sha256": "2be75884952cb34e871661d1401b81df2a509c3799d48f7dc9d43d848b2346d6"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S4-N2.txt",
+      "bytes": 2668,
+      "sha256": "f37589a51970bfc7f00b3c57fa07df1e1cd9e157235700e3d69bae3bfd725898"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S5-N1.txt",
+      "bytes": 3162,
+      "sha256": "a5eff26639754a14ea663e195dc3c8207c72007037cbb5c8162c69216b268d30"
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S5-N2.txt",
+      "bytes": 3026,
+      "sha256": "0c5bb8567aef6d8127822eb12d43f447fb5866c9a8a400760eaf91946d2ae0ec"
+    },
+    {
+      "path": "witnesses/size-and-offset-witness.py",
+      "bytes": 5233,
+      "sha256": "a6b8168b9960cff34d1f0c0e7f9ebf62b482663921056ccac4587aef1f8d4b21"
+    },
+    {
+      "path": "witnesses/execution-record.md",
+      "bytes": 2691,
+      "sha256": "ce6790c248b8de38cde841d50f2215f82e6ea650cdd3e06e479593209500d8de"
+    },
+    {
+      "path": "witnesses/size-and-offset-witness.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "witnesses/size-and-offset-witness.stdout.json",
+      "bytes": 2863,
+      "sha256": "bca5f2ea04bb27200165a8b3cc8f8a32bd7862239efe9be9f86dfe215ee11753"
+    },
+    {
+      "path": "witnesses/target-python-3.13-check.stderr.txt",
+      "bytes": 49,
+      "sha256": "82f94893f13758a97725955673f6bf5fb02f768429215573128bfe06ec1d3cb9"
+    },
+    {
+      "path": "witnesses/target-python-3.13-check.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

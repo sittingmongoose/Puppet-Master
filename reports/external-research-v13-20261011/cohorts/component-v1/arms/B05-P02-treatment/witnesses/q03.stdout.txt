@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [130, 241], "full_lines": 644}
+130: 
+131: .. function:: get_dialect(name)
+132: 
+133:    Return the dialect associated with *name*.  An :exc:`Error` is raised if
+134:    *name* is not a registered dialect name.  This function returns an immutable
+135:    :class:`Dialect`.
+136: 
+137: .. function:: list_dialects()
+138: 
+139:    Return the names of all registered dialects.
+140: 
+141: 
+142: .. function:: field_size_limit()
+143:               field_size_limit(new_limit)
+144: 
+145:    Returns the current maximum field size allowed by the parser. If *new_limit* is
+146:    given, this becomes the new limit.
+147: 
+148: 
+149: The :mod:`csv` module defines the following classes:
+150: 
+151: .. class:: DictReader(f, fieldnames=None, restkey=None, restval=None, \
+152:                       dialect='excel', *args, **kwds)
+153: 
+154:    Create an object that operates like a regular reader but maps the
+155:    information in each row to a :class:`dict` whose keys are given by the
+156:    optional *fieldnames* parameter.
+157: 
+158:    The *fieldnames* parameter is a :term:`sequence`.  If *fieldnames* is
+159:    omitted, the values in the first row of file *f* will be used as the
+160:    fieldnames and will be omitted from the results. If
+161:    *fieldnames* is provided, they will be used and the first row will be
+162:    included in the results.  Regardless of how the fieldnames are determined,
+163:    the dictionary preserves their original ordering.
+164: 
+165:    If a row has more fields than fieldnames, the remaining data is put in a
+166:    list and stored with the fieldname specified by *restkey* (which defaults
+167:    to ``None``).  If a non-blank row has fewer fields than fieldnames, the
+168:    missing values are filled-in with the value of *restval* (which defaults
+169:    to ``None``).
+170: 
+171:    All other optional or keyword arguments are passed to the underlying
+172:    :class:`reader` instance.
+173: 
+174:    If the argument passed to *fieldnames* is an iterator, it will be coerced to a :class:`list`.
+175: 
+176:    .. versionchanged:: 3.6
+177:       Returned rows are now of type :class:`OrderedDict`.
+178: 
+179:    .. versionchanged:: 3.8
+180:       Returned rows are now of type :class:`dict`.
+181: 
+182:    A short usage example::
+183: 
+184:        >>> import csv
+185:        >>> with open('names.csv', newline='') as csvfile:
+186:        ...     reader = csv.DictReader(csvfile)
+187:        ...     for row in reader:
+188:        ...         print(row['first_name'], row['last_name'])
+189:        ...
+190:        Eric Idle
+191:        John Cleese
+192: 
+193:        >>> print(row)
+194:        {'first_name': 'John', 'last_name': 'Cleese'}
+195: 
+196: 
+197: .. class:: DictWriter(f, fieldnames, restval='', extrasaction='raise', \
+198:                       dialect='excel', *args, **kwds)
+199: 
+200:    Create an object which operates like a regular writer but maps dictionaries
+201:    onto output rows.  The *fieldnames* parameter is a :mod:`sequence
+202:    <collections.abc>` of keys that identify the order in which values in the
+203:    dictionary passed to the :meth:`~csvwriter.writerow` method are written to file
+204:    *f*.  The optional *restval* parameter specifies the value to be
+205:    written if the dictionary is missing a key in *fieldnames*.  If the
+206:    dictionary passed to the :meth:`~csvwriter.writerow` method contains a key not found in
+207:    *fieldnames*, the optional *extrasaction* parameter indicates what action to
+208:    take.
+209:    If it is set to ``'raise'``, the default value, a :exc:`ValueError`
+210:    is raised.
+211:    If it is set to ``'ignore'``, extra values in the dictionary are ignored.
+212:    Any other optional or keyword arguments are passed to the underlying
+213:    :class:`writer` instance.
+214: 
+215:    Note that unlike the :class:`DictReader` class, the *fieldnames* parameter
+216:    of the :class:`DictWriter` class is not optional.
+217: 
+218:    If the argument passed to *fieldnames* is an iterator, it will be coerced to a :class:`list`.
+219: 
+220:    A short usage example::
+221: 
+222:        import csv
+223: 
+224:        with open('names.csv', 'w', newline='') as csvfile:
+225:            fieldnames = ['first_name', 'last_name']
+226:            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+227: 
+228:            writer.writeheader()
+229:            writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+230:            writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+231:            writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+232: 
+233: 
+234: .. class:: Dialect
+235: 
+236:    The :class:`Dialect` class is a container class whose attributes contain
+237:    information for how to handle doublequotes, whitespace, delimiters, etc.
+238:    Due to the lack of a strict CSV specification, different applications
+239:    produce subtly different CSV data.  :class:`Dialect` instances define how
+240:    :class:`reader` and :class:`writer` instances behave.
+241: 

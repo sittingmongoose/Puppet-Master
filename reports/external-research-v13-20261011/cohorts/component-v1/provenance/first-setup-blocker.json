@@ -1,0 +1,11 @@
+{
+  "arm": "A-F01-R0",
+  "operation": "initial_materialize",
+  "result": "finite public dependency inventory mismatch",
+  "candidate_starts": 0,
+  "original_t0_exact": "UNKNOWN: initial failed subprocess arguments not persisted",
+  "conservative_t0_bound": "2026-10-12T00:17:34.697467+00:00",
+  "whole_deadline_for_repair": "2026-10-12T01:17:34.697467+00:00",
+  "rule": "original failure retained; no later T0 reset or extended allowance; timings qualified with interval/missing-data limitation",
+  "observed_record_at": "2026-10-12T00:25:59.096934+00:00"
+}

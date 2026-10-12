@@ -1,0 +1,406 @@
+{
+  "schema_version": "1.0",
+  "case": "B05-P01",
+  "arm": "treatment",
+  "generated_artifacts": [
+    "final.md",
+    "critique.md",
+    "criticism-dispositions.md",
+    "source-map.json"
+  ],
+  "review_context": {
+    "requested_route": "Luna Max Standard",
+    "runtime_observed_model": "gpt-6-luna",
+    "runtime_observed_reasoning_effort": "max",
+    "runtime_observed_service_tier": null,
+    "note": "No service-tier field was surfaced by the native Goal or runtime metadata; it remains unknown. No alternate provider/model/tier was invoked.",
+    "native_goal_thread_id": "01a12d88-3b04-7173-bfc6-ff61f6d32219",
+    "native_goal_status_when_inspected": "active",
+    "provider_identity_source": "Runtime metadata",
+    "app_tests_or_executable_witnesses_used": false
+  },
+  "copied_input_provenance": [
+    {
+      "path": "inputs/B05-P01/brief.md",
+      "sha256": "e2a39533df9487ecf9921581abd9c076adaa2026795123538c37dfec20cd9d9f"
+    },
+    {
+      "path": "inputs/B05-P01/plan.md",
+      "sha256": "de16e22b83b168248720670a6466e5af39d15b5bfa5b9125c91ef7d68b59a394"
+    },
+    {
+      "path": "inputs/B05-P01/draft.md",
+      "sha256": "4dd448da655d824aec355147cfe71d501a4152552c3126e6548d98d03d106f55"
+    },
+    {
+      "path": "inputs/B05-P01/source-index.json",
+      "sha256": "e13aeaa162af8d84836217ac1def412d73872fbe8c72a3ebd85507e29f5218bb"
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/navigation.json",
+      "sha256": "92a0f3050b71bcec03a1e42c99e23dcfe9844916a7640d85680f5bbf43f1834a"
+    }
+  ],
+  "source_version": {
+    "version": "CPython 3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "commit_url": "https://github.com/python/cpython/commit/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "confirmation": "Pinned commit page identifies commit as Python 3.13.9; official release page records 2025-10-14 and notes that this release is superseded.",
+    "release_url": "https://www.python.org/downloads/release/python-3139/"
+  },
+  "primary_sources": [
+    {
+      "id": "S1",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "exact_locators": [
+        {
+          "locator": "Doc/library/asyncio-subprocess.rst lines 64-80",
+          "scope": "create_subprocess_exec and meaning of limit"
+        },
+        {
+          "locator": "lines 83-114",
+          "scope": "shell warning and Windows Proactor condition"
+        },
+        {
+          "locator": "lines 128-153",
+          "scope": "PIPE, STDOUT, DEVNULL"
+        },
+        {
+          "locator": "lines 164-239",
+          "scope": "Process wait deadlock, communicate lifecycle, buffered output, stdin behavior, version note"
+        },
+        {
+          "locator": "lines 241-269",
+          "scope": "send_signal, POSIX and Windows terminate/kill semantics"
+        },
+        {
+          "locator": "lines 295-335",
+          "scope": "returncode and Windows/Unix event-loop constraints"
+        }
+      ],
+      "governing_scope": "Pinned asyncio high-level subprocess API documentation for CPython 3.13.9.",
+      "unresolved_uncertainty": "The docs state StreamReader buffer limit and communicate buffering; they do not promise a process-wide RSS bound for a custom streaming implementation."
+    },
+    {
+      "id": "S2",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "exact_locators": [
+        {
+          "locator": "Lib/asyncio/subprocess.py lines 135-147",
+          "scope": "Process.wait awaits transport wait; terminate and kill forward to transport"
+        },
+        {
+          "locator": "lines 148-186",
+          "scope": "stdin feed handling and full stream read/pipe close"
+        },
+        {
+          "locator": "lines 188-203",
+          "scope": "communicate starts stdin/stdout/stderr coroutines concurrently, gathers their complete return values, then waits"
+        },
+        {
+          "locator": "lines 218-229",
+          "scope": "create_subprocess_exec passes program, args, stdio, and limit to loop.subprocess_exec"
+        }
+      ],
+      "governing_scope": "Pinned CPython asyncio subprocess implementation.",
+      "unresolved_uncertainty": "A custom pump/spooler is application code; this implementation does not validate the proposed queue, quota, tail, or cleanup logic."
+    },
+    {
+      "id": "S3",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "exact_locators": [
+        {
+          "locator": "Lib/test/test_asyncio/test_subprocess.py lines 143-177",
+          "scope": "communicate basic and no-input tests"
+        },
+        {
+          "locator": "lines 197-242",
+          "scope": "kill and terminate tests; platform-specific branch"
+        },
+        {
+          "locator": "lines 326-370",
+          "scope": "communicate broken-pipe case and reader pause/resume test"
+        },
+        {
+          "locator": "lines 504-555",
+          "scope": "cancel Process.wait then explicitly kill/reap; subprocess creation cancellation regression"
+        }
+      ],
+      "governing_scope": "Upstream regression tests for CPython's own asyncio subprocess implementation.",
+      "unresolved_uncertainty": "These tests are source evidence only; they do not test the desktop validator component or establish its behavior."
+    },
+    {
+      "id": "S4",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "exact_locators": [
+        {
+          "locator": "Doc/library/asyncio-task.rst lines 823-878",
+          "scope": "wait_for cancels awaited task on timeout, waits for cancellation, version details"
+        },
+        {
+          "locator": "lines 881-932",
+          "scope": "wait returns done/pending; timeout does not cancel pending futures"
+        }
+      ],
+      "governing_scope": "Pinned asyncio task/timeout/waiting-primitives documentation for CPython 3.13.9.",
+      "unresolved_uncertainty": "Exact app-level interaction between supervisor cancellation, GUI lifecycle, and shutdown still requires component tests."
+    },
+    {
+      "id": "S5",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "exact_locators": [
+        {
+          "locator": "Lib/asyncio/tasks.py lines 459-508",
+          "scope": "wait_for implementation and cancellation semantics"
+        }
+      ],
+      "governing_scope": "Pinned implementation of asyncio.wait_for.",
+      "unresolved_uncertainty": "Does not supervise OS subprocess termination; cancellation of a coroutine is not a process-kill primitive."
+    },
+    {
+      "id": "S6",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst",
+      "github_permalink": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst",
+      "version_or_pin": "CPython 3.13.9 commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": [
+        {
+          "locator": "Doc/library/subprocess.rst lines 333-388",
+          "scope": "executable resolution, argv sequence preference, Windows CreateProcess string conversion"
+        },
+        {
+          "locator": "lines 459-505",
+          "scope": "stdio redirection, close_fds, Windows inherited handles"
+        },
+        {
+          "locator": "lines 935-946",
+          "scope": "Windows argument-sequence quoting rules"
+        }
+      ],
+      "governing_scope": "Pinned CPython subprocess documentation, read from the public raw GitHub source; no local body hash was computed.",
+      "unresolved_uncertainty": "Child program argument parsing remains child-runtime-specific and must be round-trip tested with the actual validator."
+    },
+    {
+      "id": "S7",
+      "public_primary_url": "https://docs.python.org/3.13/library/asyncio-platforms.html#subprocess-support-on-windows",
+      "version_or_pin": "Python 3.13 documentation page observed as 3.13.16 on 2026-10-12",
+      "sha256": null,
+      "exact_locators": [
+        "Windows section: ProactorEventLoop supports subprocesses; SelectorEventLoop does not"
+      ],
+      "governing_scope": "Current minor-version docs used as a secondary confirmation; exact 3.13.9 behavior is also covered in S1.",
+      "unresolved_uncertainty": "Page is updated for 3.13.16, not an immutable 3.13.9 documentation snapshot."
+    },
+    {
+      "id": "S8",
+      "public_primary_url": "https://github.com/python/cpython/commit/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "version_or_pin": "Commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; GitHub identifies it as Python 3.13.9",
+      "sha256": null,
+      "exact_locators": [
+        "Commit page title and patchlevel.h version diff"
+      ],
+      "governing_scope": "Version identity of the exact source pin.",
+      "unresolved_uncertainty": "No local copy/hash of the GitHub commit HTML was produced."
+    },
+    {
+      "id": "S9",
+      "public_primary_url": "https://www.python.org/downloads/release/python-3139/",
+      "version_or_pin": "Official Python 3.13.9 release page, observed 2026-10-12",
+      "sha256": null,
+      "exact_locators": [
+        "Release heading and lines 21-33: release date, maintenance release, superseded status"
+      ],
+      "governing_scope": "Official release identity and current release-page status.",
+      "unresolved_uncertainty": "The release page is mutable; the pinned source commit in S8 anchors reviewed code."
+    }
+  ],
+  "sections": [
+    {
+      "artifact": "final.md",
+      "section": "Decision; §2 Runtime and scope",
+      "claims": [
+        "3.13.9 target",
+        "exact source pin",
+        "scope and no sandbox/descendant guarantee"
+      ],
+      "primary_sources": [
+        "S1",
+        "S7",
+        "S8",
+        "S9"
+      ],
+      "governing_scope": "Runtime/API claims are CPython 3.13.9-specific; scope boundaries come from the admitted brief.",
+      "unresolved_uncertainty": "No executable isolation layer is proposed; abrupt host/application failure is not covered by direct-child cleanup."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§2 Launch and input handling",
+      "claims": [
+        "argv launch",
+        "limit semantics",
+        "stdio choices",
+        "Windows argv conversion",
+        "bounded stdin"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S6"
+      ],
+      "governing_scope": "Pinned CPython 3.13.9 subprocess APIs and docs.",
+      "unresolved_uncertainty": "Configured schema, environment allowlist, and actual child argv parser require implementation/product tests."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§3 Process ownership, timeout, and cancellation",
+      "claims": [
+        "wait_for cancellation",
+        "asyncio.wait non-cancellation on timeout",
+        "explicit terminate/reap",
+        "pipe deadlock"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "governing_scope": "Pinned asyncio docs, implementation, and upstream regression tests.",
+      "unresolved_uncertainty": "120 seconds is retained as a configurable provisional default from the draft, not a source requirement; supervisor lifecycle, orderly shutdown, application caller behavior, and crash survival need separate validation."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§4 Bounded output and disk policy",
+      "claims": [
+        "concurrent pumps",
+        "fixed tail",
+        "quotas",
+        "drain after truncation/failure"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2"
+      ],
+      "governing_scope": "CPython constraints inform custom component design; byte caps and quota rules are proposed product behavior.",
+      "unresolved_uncertainty": "Queue sizing, storage throughput, exact global quota, retention, and quota-pass policy need product decisions and tests."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§5 Terminal outcomes and output publication",
+      "claims": [
+        "nonzero exit fails",
+        "explicit outcomes",
+        "private staging and ownership cleanup"
+      ],
+      "primary_sources": [
+        "S1"
+      ],
+      "governing_scope": "Return code is observable through Process; validation predicates and output ownership are product policy.",
+      "unresolved_uncertainty": "Exact output-check contract and recovery manifest schema are not supplied."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§6 Windows and Linux behavior",
+      "claims": [
+        "Proactor-only subprocess support",
+        "TerminateProcess/kill alias",
+        "argv conversion"
+      ],
+      "primary_sources": [
+        "S1",
+        "S6",
+        "S7"
+      ],
+      "governing_scope": "Pinned CPython 3.13.9 support/termination semantics; current docs secondary confirmation.",
+      "unresolved_uncertainty": "Actual desktop event-loop policy and child argument parser must be tested on Windows."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§7 Diagnostics and alternatives",
+      "claims": [
+        "redaction boundary",
+        "diagnostic fields",
+        "communicate/pumps/file redirection tradeoffs"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S6"
+      ],
+      "governing_scope": "API capabilities are source-backed; retention and sensitive-output policy are product requirements.",
+      "unresolved_uncertainty": "No product retention duration, global quota value, or full-log audit policy was specified."
+    },
+    {
+      "artifact": "final.md",
+      "section": "§8 Validation plan and execution record",
+      "claims": [
+        "future test matrix",
+        "no application tests or witness executed",
+        "No application caller source was present in the permitted input set."
+      ],
+      "primary_sources": [
+        "S3"
+      ],
+      "governing_scope": "S3 is upstream CPython test source only.",
+      "unresolved_uncertainty": "All listed component tests and an application caller audit remain future work."
+    },
+    {
+      "artifact": "critique.md",
+      "section": "Material findings 1-15",
+      "claims": [
+        "draft defects and required corrections"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S6"
+      ],
+      "governing_scope": "Each cited API claim is pinned to CPython 3.13.9; design recommendations are labeled as proposals.",
+      "unresolved_uncertainty": "Product quota policy, abrupt crashes, descendant pipe EOF, and application-level correctness remain open."
+    },
+    {
+      "artifact": "criticism-dispositions.md",
+      "section": "D01-D21",
+      "claims": [
+        "retain, correct, reject, or defer each material review point"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S6"
+      ],
+      "governing_scope": "Each disposition distinguishes CPython facts from product-policy decisions.",
+      "unresolved_uncertainty": "D20 and D21 require product/implementation decisions before code validation."
+    }
+  ],
+  "execution_record": {
+    "source_reader_used": true,
+    "primary_web_lookup_used": true,
+    "component_tests_run": false,
+    "executable_witness_used": false,
+    "witness_artifacts": [],
+    "interpretation": "Source inspection supports API claims only; it does not demonstrate that the proposed component runs.",
+    "application_caller_audit": false,
+    "application_caller_audit_note": "No application caller source was among the permitted admitted inputs."
+  }
+}

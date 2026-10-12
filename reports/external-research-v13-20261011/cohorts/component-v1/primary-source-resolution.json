@@ -1,0 +1,2226 @@
+{
+  "schema": "er13.primary_resolution.v1",
+  "files": [
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-control",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-subprocess.rst",
+      "original_index": "arms/B05-P01-control/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: create_subprocess_exec",
+          "matching_lines_1based": [
+            64
+          ],
+          "range_1based": [
+            52,
+            163
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: wait()",
+          "matching_lines_1based": [
+            193
+          ],
+          "range_1based": [
+            181,
+            292
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: communicate",
+          "matching_lines_1based": [
+            208
+          ],
+          "range_1based": [
+            196,
+            307
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "method:: terminate",
+          "matching_lines_1based": [
+            252
+          ],
+          "range_1based": [
+            240,
+            351
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "ProactorEventLoop",
+          "matching_lines_1based": [
+            112,
+            320
+          ],
+          "range_1based": [
+            100,
+            211
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-control",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/subprocess.py",
+      "original_index": "arms/B05-P01-control/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def _read_stream(",
+          "matching_lines_1based": [
+            171
+          ],
+          "range_1based": [
+            159,
+            229
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "async def communicate(",
+          "matching_lines_1based": [
+            188
+          ],
+          "range_1based": [
+            176,
+            229
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def terminate(",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            229
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "async def wait(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            229
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-control",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "original_index": "arms/B05-P01-control/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_communicate(",
+          "matching_lines_1based": [
+            143
+          ],
+          "range_1based": [
+            131,
+            242
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_cancel_process_wait(",
+          "matching_lines_1based": [
+            504
+          ],
+          "range_1based": [
+            492,
+            603
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_communicate_ignore_broken_pipe(",
+          "matching_lines_1based": [
+            326
+          ],
+          "range_1based": [
+            314,
+            425
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-control",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-task.rst",
+      "original_index": "arms/B05-P01-control/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "function:: wait_for",
+          "matching_lines_1based": [
+            823
+          ],
+          "range_1based": [
+            811,
+            922
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-control",
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/tasks.py",
+      "original_index": "arms/B05-P01-control/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "async def wait_for(",
+          "matching_lines_1based": [
+            459
+          ],
+          "range_1based": [
+            447,
+            558
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-treatment",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-subprocess.rst",
+      "original_index": "arms/B05-P01-treatment/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: create_subprocess_exec",
+          "matching_lines_1based": [
+            64
+          ],
+          "range_1based": [
+            52,
+            163
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: wait()",
+          "matching_lines_1based": [
+            193
+          ],
+          "range_1based": [
+            181,
+            292
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: communicate",
+          "matching_lines_1based": [
+            208
+          ],
+          "range_1based": [
+            196,
+            307
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "method:: terminate",
+          "matching_lines_1based": [
+            252
+          ],
+          "range_1based": [
+            240,
+            351
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "ProactorEventLoop",
+          "matching_lines_1based": [
+            112,
+            320
+          ],
+          "range_1based": [
+            100,
+            211
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-treatment",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/subprocess.py",
+      "original_index": "arms/B05-P01-treatment/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def _read_stream(",
+          "matching_lines_1based": [
+            171
+          ],
+          "range_1based": [
+            159,
+            229
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "async def communicate(",
+          "matching_lines_1based": [
+            188
+          ],
+          "range_1based": [
+            176,
+            229
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def terminate(",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            229
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "async def wait(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            229
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-treatment",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "original_index": "arms/B05-P01-treatment/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_communicate(",
+          "matching_lines_1based": [
+            143
+          ],
+          "range_1based": [
+            131,
+            242
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_cancel_process_wait(",
+          "matching_lines_1based": [
+            504
+          ],
+          "range_1based": [
+            492,
+            603
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_communicate_ignore_broken_pipe(",
+          "matching_lines_1based": [
+            326
+          ],
+          "range_1based": [
+            314,
+            425
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-treatment",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-task.rst",
+      "original_index": "arms/B05-P01-treatment/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "function:: wait_for",
+          "matching_lines_1based": [
+            823
+          ],
+          "range_1based": [
+            811,
+            922
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P01",
+      "arm_id": "B05-P01-treatment",
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "retained_path": "arms/B05-P01-treatment/inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/tasks.py",
+      "original_index": "arms/B05-P01-treatment/inputs/B05-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "async def wait_for(",
+          "matching_lines_1based": [
+            459
+          ],
+          "range_1based": [
+            447,
+            558
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-control",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/shutil.rst",
+      "original_index": "arms/B04-P01-control/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "cannot copy all file metadata",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. function:: copy2(",
+          "matching_lines_1based": [
+            197
+          ],
+          "range_1based": [
+            185,
+            296
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": ".. function:: move(",
+          "matching_lines_1based": [
+            372
+          ],
+          "range_1based": [
+            360,
+            471
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "Platform-dependent efficient copy operations",
+          "matching_lines_1based": [
+            517
+          ],
+          "range_1based": [
+            505,
+            616
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-control",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/shutil.py",
+      "original_index": "arms/B04-P01-control/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def copyfile(",
+          "matching_lines_1based": [
+            230
+          ],
+          "range_1based": [
+            218,
+            329
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def copy2(",
+          "matching_lines_1based": [
+            432
+          ],
+          "range_1based": [
+            420,
+            531
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def move(",
+          "matching_lines_1based": [
+            814
+          ],
+          "range_1based": [
+            802,
+            913
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-control",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/test/test_shutil.py",
+      "original_index": "arms/B04-P01-control/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_copy2(",
+          "matching_lines_1based": [
+            1392
+          ],
+          "range_1based": [
+            1380,
+            1491
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_move_file_other_fs(",
+          "matching_lines_1based": [
+            2756
+          ],
+          "range_1based": [
+            2744,
+            2855
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_copyfile_symlinks(",
+          "matching_lines_1based": [
+            1493
+          ],
+          "range_1based": [
+            1481,
+            1592
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-control",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/os.rst",
+      "original_index": "arms/B04-P01-control/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": ".. function:: replace(",
+          "matching_lines_1based": [
+            2726
+          ],
+          "range_1based": [
+            2714,
+            2825
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": ".. function:: fsync(",
+          "matching_lines_1based": [
+            1086
+          ],
+          "range_1based": [
+            1074,
+            1185
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-treatment",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/shutil.rst",
+      "original_index": "arms/B04-P01-treatment/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "cannot copy all file metadata",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. function:: copy2(",
+          "matching_lines_1based": [
+            197
+          ],
+          "range_1based": [
+            185,
+            296
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": ".. function:: move(",
+          "matching_lines_1based": [
+            372
+          ],
+          "range_1based": [
+            360,
+            471
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "Platform-dependent efficient copy operations",
+          "matching_lines_1based": [
+            517
+          ],
+          "range_1based": [
+            505,
+            616
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-treatment",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/shutil.py",
+      "original_index": "arms/B04-P01-treatment/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def copyfile(",
+          "matching_lines_1based": [
+            230
+          ],
+          "range_1based": [
+            218,
+            329
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def copy2(",
+          "matching_lines_1based": [
+            432
+          ],
+          "range_1based": [
+            420,
+            531
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def move(",
+          "matching_lines_1based": [
+            814
+          ],
+          "range_1based": [
+            802,
+            913
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-treatment",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/test/test_shutil.py",
+      "original_index": "arms/B04-P01-treatment/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_copy2(",
+          "matching_lines_1based": [
+            1392
+          ],
+          "range_1based": [
+            1380,
+            1491
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_move_file_other_fs(",
+          "matching_lines_1based": [
+            2756
+          ],
+          "range_1based": [
+            2744,
+            2855
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_copyfile_symlinks(",
+          "matching_lines_1based": [
+            1493
+          ],
+          "range_1based": [
+            1481,
+            1592
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P01",
+      "arm_id": "B04-P01-treatment",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "retained_path": "arms/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/os.rst",
+      "original_index": "arms/B04-P01-treatment/inputs/B04-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": ".. function:: replace(",
+          "matching_lines_1based": [
+            2726
+          ],
+          "range_1based": [
+            2714,
+            2825
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": ".. function:: fsync(",
+          "matching_lines_1based": [
+            1086
+          ],
+          "range_1based": [
+            1074,
+            1185
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P02",
+      "arm_id": "B04-P02-control",
+      "source_id": "S1",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "retained_path": "arms/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "original_index": "arms/B04-P02-control/inputs/B04-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "4.1.  Calculating Cache Keys with the Vary Header Field",
+          "matching_lines_1based": [
+            82,
+            526
+          ],
+          "range_1based": [
+            514,
+            625
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "4.2.3.  Calculating Age",
+          "matching_lines_1based": [
+            86,
+            719
+          ],
+          "range_1based": [
+            707,
+            818
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "4.3.4.  Freshening Stored Responses upon Validation",
+          "matching_lines_1based": [
+            92,
+            951
+          ],
+          "range_1based": [
+            939,
+            1050
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "5.2.2.2.  must-revalidate",
+          "matching_lines_1based": [
+            108,
+            1222
+          ],
+          "range_1based": [
+            1210,
+            1321
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "5.2.2.3.  must-understand",
+          "matching_lines_1based": [
+            109,
+            1246
+          ],
+          "range_1based": [
+            1234,
+            1345
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "5.2.2.4.  no-cache",
+          "matching_lines_1based": [
+            110,
+            1258
+          ],
+          "range_1based": [
+            1246,
+            1357
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "5.2.2.5.  no-store",
+          "matching_lines_1based": [
+            111,
+            1295
+          ],
+          "range_1based": [
+            1283,
+            1394
+          ]
+        },
+        {
+          "id": "S1-N8",
+          "literal_needle": "5.2.2.7.  private",
+          "matching_lines_1based": [
+            113,
+            1321
+          ],
+          "range_1based": [
+            1309,
+            1420
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P02",
+      "arm_id": "B04-P02-control",
+      "source_id": "S2",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "retained_path": "arms/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "original_index": "arms/B04-P02-control/inputs/B04-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "8.8.1.  Weak versus Strong",
+          "matching_lines_1based": [
+            169,
+            3393
+          ],
+          "range_1based": [
+            3381,
+            3492
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "13.1.2.  If-None-Match",
+          "matching_lines_1based": [
+            236,
+            5872
+          ],
+          "range_1based": [
+            5860,
+            5971
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "15.4.5.  304 Not Modified",
+          "matching_lines_1based": [
+            273,
+            7444
+          ],
+          "range_1based": [
+            7432,
+            7543
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P02",
+      "arm_id": "B04-P02-treatment",
+      "source_id": "S1",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "retained_path": "arms/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "original_index": "arms/B04-P02-treatment/inputs/B04-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "4.1.  Calculating Cache Keys with the Vary Header Field",
+          "matching_lines_1based": [
+            82,
+            526
+          ],
+          "range_1based": [
+            514,
+            625
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "4.2.3.  Calculating Age",
+          "matching_lines_1based": [
+            86,
+            719
+          ],
+          "range_1based": [
+            707,
+            818
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "4.3.4.  Freshening Stored Responses upon Validation",
+          "matching_lines_1based": [
+            92,
+            951
+          ],
+          "range_1based": [
+            939,
+            1050
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "5.2.2.2.  must-revalidate",
+          "matching_lines_1based": [
+            108,
+            1222
+          ],
+          "range_1based": [
+            1210,
+            1321
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "5.2.2.3.  must-understand",
+          "matching_lines_1based": [
+            109,
+            1246
+          ],
+          "range_1based": [
+            1234,
+            1345
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "5.2.2.4.  no-cache",
+          "matching_lines_1based": [
+            110,
+            1258
+          ],
+          "range_1based": [
+            1246,
+            1357
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "5.2.2.5.  no-store",
+          "matching_lines_1based": [
+            111,
+            1295
+          ],
+          "range_1based": [
+            1283,
+            1394
+          ]
+        },
+        {
+          "id": "S1-N8",
+          "literal_needle": "5.2.2.7.  private",
+          "matching_lines_1based": [
+            113,
+            1321
+          ],
+          "range_1based": [
+            1309,
+            1420
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B04-P02",
+      "arm_id": "B04-P02-treatment",
+      "source_id": "S2",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "retained_path": "arms/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "original_index": "arms/B04-P02-treatment/inputs/B04-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "8.8.1.  Weak versus Strong",
+          "matching_lines_1based": [
+            169,
+            3393
+          ],
+          "range_1based": [
+            3381,
+            3492
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "13.1.2.  If-None-Match",
+          "matching_lines_1based": [
+            236,
+            5872
+          ],
+          "range_1based": [
+            5860,
+            5971
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "15.4.5.  304 Not Modified",
+          "matching_lines_1based": [
+            273,
+            7444
+          ],
+          "range_1based": [
+            7432,
+            7543
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-control",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Doc/library/csv.rst",
+      "original_index": "arms/B05-P02-control/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: reader(",
+          "matching_lines_1based": [
+            56
+          ],
+          "range_1based": [
+            44,
+            155
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "value :const:`None`",
+          "matching_lines_1based": [
+            101
+          ],
+          "range_1based": [
+            89,
+            200
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "function:: field_size_limit",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            241
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "class:: DictReader",
+          "matching_lines_1based": [
+            151
+          ],
+          "range_1based": [
+            139,
+            250
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "method:: has_header",
+          "matching_lines_1based": [
+            287
+          ],
+          "range_1based": [
+            275,
+            386
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "data:: QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            331
+          ],
+          "range_1based": [
+            319,
+            430
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "Footnotes",
+          "matching_lines_1based": [
+            638
+          ],
+          "range_1based": [
+            626,
+            644
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-control",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Lib/csv.py",
+      "original_index": "arms/B05-P02-control/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def has_header(",
+          "matching_lines_1based": [
+            452
+          ],
+          "range_1based": [
+            440,
+            513
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "class DictReader",
+          "matching_lines_1based": [
+            145
+          ],
+          "range_1based": [
+            133,
+            244
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def sniff(",
+          "matching_lines_1based": [
+            244
+          ],
+          "range_1based": [
+            232,
+            343
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-control",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Modules/_csv.c",
+      "original_index": "arms/B05-P02-control/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "field_size_limit",
+          "matching_lines_1based": [
+            1635,
+            1646,
+            1726
+          ],
+          "range_1based": [
+            1623,
+            1734
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "parse_add_char",
+          "matching_lines_1based": [
+            704,
+            766,
+            774,
+            781,
+            811,
+            837,
+            845,
+            855,
+            872
+          ],
+          "range_1based": [
+            692,
+            803
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            90,
+            102,
+            667,
+            1325
+          ],
+          "range_1based": [
+            78,
+            189
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-control",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Lib/test/test_csv.py",
+      "original_index": "arms/B05-P02-control/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def test_read_bigfield(",
+          "matching_lines_1based": [
+            484
+          ],
+          "range_1based": [
+            472,
+            583
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def test_roundtrip_quoteed_newlines(",
+          "matching_lines_1based": [
+            515
+          ],
+          "range_1based": [
+            503,
+            614
+          ]
+        },
+        {
+          "id": "S4-N3",
+          "literal_needle": "def test_read_linenum(",
+          "matching_lines_1based": [
+            503
+          ],
+          "range_1based": [
+            491,
+            602
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-treatment",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Doc/library/csv.rst",
+      "original_index": "arms/B05-P02-treatment/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: reader(",
+          "matching_lines_1based": [
+            56
+          ],
+          "range_1based": [
+            44,
+            155
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "value :const:`None`",
+          "matching_lines_1based": [
+            101
+          ],
+          "range_1based": [
+            89,
+            200
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "function:: field_size_limit",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            241
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "class:: DictReader",
+          "matching_lines_1based": [
+            151
+          ],
+          "range_1based": [
+            139,
+            250
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "method:: has_header",
+          "matching_lines_1based": [
+            287
+          ],
+          "range_1based": [
+            275,
+            386
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "data:: QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            331
+          ],
+          "range_1based": [
+            319,
+            430
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "Footnotes",
+          "matching_lines_1based": [
+            638
+          ],
+          "range_1based": [
+            626,
+            644
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-treatment",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Lib/csv.py",
+      "original_index": "arms/B05-P02-treatment/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def has_header(",
+          "matching_lines_1based": [
+            452
+          ],
+          "range_1based": [
+            440,
+            513
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "class DictReader",
+          "matching_lines_1based": [
+            145
+          ],
+          "range_1based": [
+            133,
+            244
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def sniff(",
+          "matching_lines_1based": [
+            244
+          ],
+          "range_1based": [
+            232,
+            343
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-treatment",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Modules/_csv.c",
+      "original_index": "arms/B05-P02-treatment/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "field_size_limit",
+          "matching_lines_1based": [
+            1635,
+            1646,
+            1726
+          ],
+          "range_1based": [
+            1623,
+            1734
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "parse_add_char",
+          "matching_lines_1based": [
+            704,
+            766,
+            774,
+            781,
+            811,
+            837,
+            845,
+            855,
+            872
+          ],
+          "range_1based": [
+            692,
+            803
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "QUOTE_NONNUMERIC",
+          "matching_lines_1based": [
+            90,
+            102,
+            667,
+            1325
+          ],
+          "range_1based": [
+            78,
+            189
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B05-P02",
+      "arm_id": "B05-P02-treatment",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "retained_path": "arms/B05-P02-treatment/inputs/B05-P02/treatment-cache/cpython/Lib/test/test_csv.py",
+      "original_index": "arms/B05-P02-treatment/inputs/B05-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def test_read_bigfield(",
+          "matching_lines_1based": [
+            484
+          ],
+          "range_1based": [
+            472,
+            583
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def test_roundtrip_quoteed_newlines(",
+          "matching_lines_1based": [
+            515
+          ],
+          "range_1based": [
+            503,
+            614
+          ]
+        },
+        {
+          "id": "S4-N3",
+          "literal_needle": "def test_read_linenum(",
+          "matching_lines_1based": [
+            503
+          ],
+          "range_1based": [
+            491,
+            602
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-control",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+      "original_index": "arms/B08-P01-control/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "class:: Queue",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: shutdown",
+          "matching_lines_1based": [
+            103
+          ],
+          "range_1based": [
+            91,
+            202
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: task_done",
+          "matching_lines_1based": [
+            136
+          ],
+          "range_1based": [
+            124,
+            235
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-control",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+      "original_index": "arms/B08-P01-control/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def put_nowait(",
+          "matching_lines_1based": [
+            156
+          ],
+          "range_1based": [
+            144,
+            255
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def task_done(",
+          "matching_lines_1based": [
+            219
+          ],
+          "range_1based": [
+            207,
+            307
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "async def join(",
+          "matching_lines_1based": [
+            239
+          ],
+          "range_1based": [
+            227,
+            307
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "def shutdown(",
+          "matching_lines_1based": [
+            250
+          ],
+          "range_1based": [
+            238,
+            307
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-control",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+      "original_index": "arms/B08-P01-control/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "test_shutdown",
+          "matching_lines_1based": [
+            536,
+            570,
+            626,
+            662
+          ],
+          "range_1based": [
+            524,
+            635
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "test_task_done",
+          "matching_lines_1based": [
+            461,
+            465
+          ],
+          "range_1based": [
+            449,
+            560
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "test_join",
+          "matching_lines_1based": [
+            496
+          ],
+          "range_1based": [
+            484,
+            595
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-treatment",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+      "original_index": "arms/B08-P01-treatment/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "class:: Queue",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: shutdown",
+          "matching_lines_1based": [
+            103
+          ],
+          "range_1based": [
+            91,
+            202
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: task_done",
+          "matching_lines_1based": [
+            136
+          ],
+          "range_1based": [
+            124,
+            235
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-treatment",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+      "original_index": "arms/B08-P01-treatment/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def put_nowait(",
+          "matching_lines_1based": [
+            156
+          ],
+          "range_1based": [
+            144,
+            255
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def task_done(",
+          "matching_lines_1based": [
+            219
+          ],
+          "range_1based": [
+            207,
+            307
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "async def join(",
+          "matching_lines_1based": [
+            239
+          ],
+          "range_1based": [
+            227,
+            307
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "def shutdown(",
+          "matching_lines_1based": [
+            250
+          ],
+          "range_1based": [
+            238,
+            307
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P01",
+      "arm_id": "B08-P01-treatment",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "retained_path": "arms/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+      "original_index": "arms/B08-P01-treatment/inputs/B08-P01/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "test_shutdown",
+          "matching_lines_1based": [
+            536,
+            570,
+            626,
+            662
+          ],
+          "range_1based": [
+            524,
+            635
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "test_task_done",
+          "matching_lines_1based": [
+            461,
+            465
+          ],
+          "range_1based": [
+            449,
+            560
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "test_join",
+          "matching_lines_1based": [
+            496
+          ],
+          "range_1based": [
+            484,
+            595
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-control",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Doc/library/unicodedata.rst",
+      "original_index": "arms/B08-P02-control/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: normalize",
+          "matching_lines_1based": [
+            157
+          ],
+          "range_1based": [
+            145,
+            216
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "data:: unidata_version",
+          "matching_lines_1based": [
+            200
+          ],
+          "range_1based": [
+            188,
+            216
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-control",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Doc/library/stdtypes.rst",
+      "original_index": "arms/B08-P02-control/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "method:: str.casefold",
+          "matching_lines_1based": [
+            1699
+          ],
+          "range_1based": [
+            1687,
+            1798
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-control",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Lib/test/test_str.py",
+      "original_index": "arms/B08-P02-control/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_casefold(",
+          "matching_lines_1based": [
+            914
+          ],
+          "range_1based": [
+            902,
+            1013
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-control",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Lib/test/test_unicodedata.py",
+      "original_index": "arms/B08-P02-control/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def run_normalization_tests(",
+          "matching_lines_1based": [
+            402
+          ],
+          "range_1based": [
+            390,
+            472
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def NFKC(",
+          "matching_lines_1based": [
+            409
+          ],
+          "range_1based": [
+            397,
+            472
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-control",
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Objects/unicodeobject.c",
+      "original_index": "arms/B08-P02-control/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "do_casefold",
+          "matching_lines_1based": [
+            9715,
+            10687
+          ],
+          "range_1based": [
+            9703,
+            9814
+          ]
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "unicode_casefold_impl",
+          "matching_lines_1based": [
+            10682
+          ],
+          "range_1based": [
+            10670,
+            10781
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-treatment",
+      "source_id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Doc/library/unicodedata.rst",
+      "original_index": "arms/B08-P02-treatment/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: normalize",
+          "matching_lines_1based": [
+            157
+          ],
+          "range_1based": [
+            145,
+            216
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "data:: unidata_version",
+          "matching_lines_1based": [
+            200
+          ],
+          "range_1based": [
+            188,
+            216
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-treatment",
+      "source_id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Doc/library/stdtypes.rst",
+      "original_index": "arms/B08-P02-treatment/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "method:: str.casefold",
+          "matching_lines_1based": [
+            1699
+          ],
+          "range_1based": [
+            1687,
+            1798
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-treatment",
+      "source_id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Lib/test/test_str.py",
+      "original_index": "arms/B08-P02-treatment/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_casefold(",
+          "matching_lines_1based": [
+            914
+          ],
+          "range_1based": [
+            902,
+            1013
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-treatment",
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Lib/test/test_unicodedata.py",
+      "original_index": "arms/B08-P02-treatment/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def run_normalization_tests(",
+          "matching_lines_1based": [
+            402
+          ],
+          "range_1based": [
+            390,
+            472
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def NFKC(",
+          "matching_lines_1based": [
+            409
+          ],
+          "range_1based": [
+            397,
+            472
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    },
+    {
+      "case": "B08-P02",
+      "arm_id": "B08-P02-treatment",
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "retained_path": "arms/B08-P02-control/inputs/B08-P02/source-cache/cpython/Objects/unicodeobject.c",
+      "original_index": "arms/B08-P02-treatment/inputs/B08-P02/source-index.json",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "do_casefold",
+          "matching_lines_1based": [
+            9715,
+            10687
+          ],
+          "range_1based": [
+            9703,
+            9814
+          ]
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "unicode_casefold_impl",
+          "matching_lines_1based": [
+            10682
+          ],
+          "range_1based": [
+            10670,
+            10781
+          ]
+        }
+      ],
+      "candidate_access": "Retained for public review; does not retroactively grant B05 control cache access."
+    }
+  ],
+  "additional_authored_source_claims": "Full authored source maps are retained without manufacturing absent captures; any additional unpinned/live-source observations have only their authored locator/uncertainty, not inferred fetched bodies."
+}

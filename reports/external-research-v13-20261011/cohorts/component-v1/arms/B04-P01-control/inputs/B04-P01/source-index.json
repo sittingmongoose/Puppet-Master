@@ -1,0 +1,352 @@
+{
+  "case": "B04-P01",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "cannot copy all file metadata",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. function:: copy2(",
+          "matching_lines_1based": [
+            197
+          ],
+          "range_1based": [
+            185,
+            296
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": ".. function:: move(",
+          "matching_lines_1based": [
+            372
+          ],
+          "range_1based": [
+            360,
+            471
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "Platform-dependent efficient copy operations",
+          "matching_lines_1based": [
+            517
+          ],
+          "range_1based": [
+            505,
+            616
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/shutil.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "cannot copy all file metadata",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ],
+          "path": "source-cache/neighborhoods/S1-N1.txt",
+          "sha256": "77594c0700d6bc222e371b1ffe52530078b6cec1414efd74e5a3d26b3eb8c340",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. function:: copy2(",
+          "matching_lines_1based": [
+            197
+          ],
+          "range_1based": [
+            185,
+            296
+          ],
+          "path": "source-cache/neighborhoods/S1-N2.txt",
+          "sha256": "bf38b682b8ec75b623dd9e621e7facf9dcda3a646517eabc6551289537eb4133",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": ".. function:: move(",
+          "matching_lines_1based": [
+            372
+          ],
+          "range_1based": [
+            360,
+            471
+          ],
+          "path": "source-cache/neighborhoods/S1-N3.txt",
+          "sha256": "ba057ccaec4dbf119d346a76e4fdd9faf61c1af115a5fb65d6a89ba45a175515",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "Platform-dependent efficient copy operations",
+          "matching_lines_1based": [
+            517
+          ],
+          "range_1based": [
+            505,
+            616
+          ],
+          "path": "source-cache/neighborhoods/S1-N4.txt",
+          "sha256": "535e8fb625902ad80037bc9dce949e91537ef34c32b6428cf8eff8773af4adca",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def copyfile(",
+          "matching_lines_1based": [
+            230
+          ],
+          "range_1based": [
+            218,
+            329
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def copy2(",
+          "matching_lines_1based": [
+            432
+          ],
+          "range_1based": [
+            420,
+            531
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def move(",
+          "matching_lines_1based": [
+            814
+          ],
+          "range_1based": [
+            802,
+            913
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/shutil.py",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def copyfile(",
+          "matching_lines_1based": [
+            230
+          ],
+          "range_1based": [
+            218,
+            329
+          ],
+          "path": "source-cache/neighborhoods/S2-N1.txt",
+          "sha256": "17f4a1f0715ac1c3237069fd6378a646c4a5f1e629c2e6ec9c9b822d2358257e",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def copy2(",
+          "matching_lines_1based": [
+            432
+          ],
+          "range_1based": [
+            420,
+            531
+          ],
+          "path": "source-cache/neighborhoods/S2-N2.txt",
+          "sha256": "c3c467adea0cc46120cbf2a4fe604ae8d465fc48c5f09e3631c6689ce5ea07fb",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def move(",
+          "matching_lines_1based": [
+            814
+          ],
+          "range_1based": [
+            802,
+            913
+          ],
+          "path": "source-cache/neighborhoods/S2-N3.txt",
+          "sha256": "552341dc4bc9aeaaaa9da1106e0e21beb0d778abcf24ff3ab5b96e2b5f3192fe",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_copy2(",
+          "matching_lines_1based": [
+            1392
+          ],
+          "range_1based": [
+            1380,
+            1491
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_move_file_other_fs(",
+          "matching_lines_1based": [
+            2756
+          ],
+          "range_1based": [
+            2744,
+            2855
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_copyfile_symlinks(",
+          "matching_lines_1based": [
+            1493
+          ],
+          "range_1based": [
+            1481,
+            1592
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/test/test_shutil.py",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_copy2(",
+          "matching_lines_1based": [
+            1392
+          ],
+          "range_1based": [
+            1380,
+            1491
+          ],
+          "path": "source-cache/neighborhoods/S3-N1.txt",
+          "sha256": "599f1e8e30e97a2f8134fbcded6b6a07b226affb0465ff43d1406d037678bb84",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_move_file_other_fs(",
+          "matching_lines_1based": [
+            2756
+          ],
+          "range_1based": [
+            2744,
+            2855
+          ],
+          "path": "source-cache/neighborhoods/S3-N2.txt",
+          "sha256": "d50408ff51d1bdf0428f770b3abf27c990c4c466a332de8d1333f0b9a1235b89",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_copyfile_symlinks(",
+          "matching_lines_1based": [
+            1493
+          ],
+          "range_1based": [
+            1481,
+            1592
+          ],
+          "path": "source-cache/neighborhoods/S3-N3.txt",
+          "sha256": "4ccd510a3c81917eec3be38dcb5dda63eb75fecb3a9a2ea9da8854098193e955",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": ".. function:: replace(",
+          "matching_lines_1based": [
+            2726
+          ],
+          "range_1based": [
+            2714,
+            2825
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": ".. function:: fsync(",
+          "matching_lines_1based": [
+            1086
+          ],
+          "range_1based": [
+            1074,
+            1185
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/os.rst",
+      "neighborhoods": [
+        {
+          "id": "S4-N1",
+          "literal_needle": ".. function:: replace(",
+          "matching_lines_1based": [
+            2726
+          ],
+          "range_1based": [
+            2714,
+            2825
+          ],
+          "path": "source-cache/neighborhoods/S4-N1.txt",
+          "sha256": "86009607e7abf077b2bbe17b7ac9dcfbafb779984c1e245f61e15e18d7ea8a5c",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": ".. function:: fsync(",
+          "matching_lines_1based": [
+            1086
+          ],
+          "range_1based": [
+            1074,
+            1185
+          ],
+          "path": "source-cache/neighborhoods/S4-N2.txt",
+          "sha256": "06afbc47b8c1a46f8c442739ba1de2fa8a9310df072d453be6a2f2126ea9d8f9",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "access": "Identical cache, full bodies and adjacent source expansion available to both arms.",
+  "semantic_conclusions_shared": false
+}

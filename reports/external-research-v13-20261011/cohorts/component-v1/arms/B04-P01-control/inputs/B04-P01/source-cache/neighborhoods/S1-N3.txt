@@ -1,0 +1,112 @@
+      Exceptions other than :exc:`OSError` and subclasses of :exc:`!OSError`
+      are now always propagated to the caller.
+
+   .. attribute:: rmtree.avoids_symlink_attacks
+
+      Indicates whether the current platform and implementation provides a
+      symlink attack resistant version of :func:`rmtree`.  Currently this is
+      only true for platforms supporting fd-based directory access functions.
+
+      .. versionadded:: 3.3
+
+
+.. function:: move(src, dst, copy_function=copy2)
+
+   Recursively move a file or directory (*src*) to another location and return
+   the destination.
+
+   If *dst* is an existing directory or a symlink to a directory, then *src*
+   is moved inside that directory. The destination path in that directory must
+   not already exist.
+
+   If *dst* already exists but is not a directory, it may be overwritten
+   depending on :func:`os.rename` semantics.
+
+   If the destination is on the current filesystem, then :func:`os.rename` is
+   used. Otherwise, *src* is copied to the destination using *copy_function*
+   and then removed.  In case of symlinks, a new symlink pointing to the target
+   of *src* will be created as the destination and *src* will be removed.
+
+   If *copy_function* is given, it must be a callable that takes two arguments,
+   *src* and the destination, and will be used to copy *src* to the destination
+   if :func:`os.rename` cannot be used.  If the source is a directory,
+   :func:`copytree` is called, passing it the *copy_function*. The
+   default *copy_function* is :func:`copy2`.  Using :func:`~shutil.copy` as the
+   *copy_function* allows the move to succeed when it is not possible to also
+   copy the metadata, at the expense of not copying any of the metadata.
+
+   .. audit-event:: shutil.move src,dst shutil.move
+
+   .. versionchanged:: 3.3
+      Added explicit symlink handling for foreign filesystems, thus adapting
+      it to the behavior of GNU's :program:`mv`.
+      Now returns *dst*.
+
+   .. versionchanged:: 3.5
+      Added the *copy_function* keyword argument.
+
+   .. versionchanged:: 3.8
+      Platform-specific fast-copy syscalls may be used internally in order to
+      copy the file more efficiently. See
+      :ref:`shutil-platform-dependent-efficient-copy-operations` section.
+
+   .. versionchanged:: 3.9
+      Accepts a :term:`path-like object` for both *src* and *dst*.
+
+.. function:: disk_usage(path)
+
+   Return disk usage statistics about the given path as a :term:`named tuple`
+   with the attributes *total*, *used* and *free*, which are the amount of
+   total, used and free space, in bytes. *path* may be a file or a
+   directory.
+
+   .. note::
+
+      On Unix filesystems, *path* must point to a path within a **mounted**
+      filesystem partition. On those platforms, CPython doesn't attempt to
+      retrieve disk usage information from non-mounted filesystems.
+
+   .. versionadded:: 3.3
+
+   .. versionchanged:: 3.8
+     On Windows, *path* can now be a file or directory.
+
+   .. availability:: Unix, Windows.
+
+.. function:: chown(path, user=None, group=None, *, dir_fd=None, \
+                    follow_symlinks=True)
+
+   Change owner *user* and/or *group* of the given *path*.
+
+   *user* can be a system user name or a uid; the same applies to *group*. At
+   least one argument is required.
+
+   See also :func:`os.chown`, the underlying function.
+
+   .. audit-event:: shutil.chown path,user,group shutil.chown
+
+   .. availability:: Unix.
+
+   .. versionadded:: 3.3
+
+   .. versionchanged:: 3.13
+      Added *dir_fd* and *follow_symlinks* parameters.
+
+
+.. function:: which(cmd, mode=os.F_OK | os.X_OK, path=None)
+
+   Return the path to an executable which would be run if the given *cmd* was
+   called.  If no *cmd* would be called, return ``None``.
+
+   *mode* is a permission mask passed to :func:`os.access`, by default
+   determining if the file exists and is executable.
+
+   *path* is a "``PATH`` string" specifying the directories to look in,
+   delimited by :data:`os.pathsep`. When no *path* is specified, the
+   :envvar:`PATH` environment variable is read from :data:`os.environ`,
+   falling back to :data:`os.defpath` if it is not set.
+
+   If *cmd* contains a directory component, :func:`!which` only checks the
+   specified path directly and does not search the directories listed in
+   *path* or in the system's :envvar:`PATH` environment variable.
+

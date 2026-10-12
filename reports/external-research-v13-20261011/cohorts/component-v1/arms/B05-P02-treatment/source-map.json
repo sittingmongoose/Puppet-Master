@@ -1,0 +1,523 @@
+{
+  "case": "B05-P02",
+  "arm": "treatment",
+  "target": {
+    "requested_runtime": "CPython 3.13.9 (per brief)",
+    "cached_source_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "release_tag_relation": "Not independently verified; scope source claims to the pinned commit and validate against the actual target build.",
+    "cached_source_hashes_verified": true
+  },
+  "source_files": [
+    {
+      "id": "S1",
+      "title": "CPython csv module documentation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+      "exact_source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "cache_path": "inputs/B05-P02/treatment-cache/cpython/Doc/library/csv.rst"
+    },
+    {
+      "id": "S2",
+      "title": "CPython csv.py implementation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+      "exact_source_sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "cache_path": "inputs/B05-P02/treatment-cache/cpython/Lib/csv.py"
+    },
+    {
+      "id": "S3",
+      "title": "CPython _csv C implementation",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+      "exact_source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "cache_path": "inputs/B05-P02/treatment-cache/cpython/Modules/_csv.c"
+    },
+    {
+      "id": "S4",
+      "title": "CPython CSV test source",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+      "exact_source_sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "cache_path": "inputs/B05-P02/treatment-cache/cpython/Lib/test/test_csv.py"
+    }
+  ],
+  "section_mappings": [
+    {
+      "final_section": "Decision; Import flow §3 Parse, map, and validate",
+      "claims": [
+        "csv.reader consumes iterable text lines and returns row lists of strings by default.",
+        "The pinned QUOTE_NONNUMERIC implementation converts nonempty unquoted cells to float; quoted cells remain text and empty unquoted cells are exempt.",
+        "Keep exact-text fields as strings and convert only under an explicit schema."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "reader(csvfile) behavior",
+          "line_range_1based_inclusive": [
+            56,
+            74
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Input is an iterable of strings; rows are strings by default; QUOTE_NONNUMERIC is the conversion exception.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "QUOTE_NONNUMERIC definition",
+          "line_range_1based_inclusive": [
+            331,
+            342
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Unquoted reader fields become floats; writer quotes nonnumeric fields.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "parse_save_field",
+          "line_range_1based_inclusive": [
+            653,
+            675
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Exact implementation conditions for QUOTE_NONNUMERIC, QUOTE_STRINGS, and empty unquoted cells.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "The cache is pinned to a commit, not verified as the v3.13.9 release source."
+      ]
+    },
+    {
+      "final_section": "Import flow §2 Preview and confirm",
+      "claims": [
+        "Sniffer is only a sample-based delimiter/quote suggestion; has_header is not proof and must not discard a row.",
+        "Sniffer can fail when it cannot determine a delimiter and returns a limited candidate dialect.",
+        "The docs and pinned header implementation differ slightly on sample-row count."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "Sniffer and has_header docs",
+          "line_range_1based_inclusive": [
+            275,
+            304
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Sample-based delimiter/header behavior; rough heuristic with false positives and negatives; docs say twenty following rows.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S2",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "exact_locator": "Sniffer.sniff implementation",
+          "line_range_1based_inclusive": [
+            244,
+            270
+          ],
+          "source_sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "May raise Error; returned candidate uses QUOTE_MINIMAL and CRLF writer terminator.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S2",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "exact_locator": "has_header implementation",
+          "line_range_1based_inclusive": [
+            452,
+            513
+          ],
+          "source_sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "First row is candidate header; later row types/lengths vote; irregular-width rows are skipped.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "The loop appears to examine 21 regular-width rows because checked > 20 is tested before increment; inference from S2 lines 470-476, not a stable contract."
+      ]
+    },
+    {
+      "final_section": "Import flow §3 Parse, map, and validate",
+      "claims": [
+        "DictReader supports restkey/restval for ragged rows.",
+        "Duplicate names collapse under dict(zip(...)); this is inferred from the code and Python dict semantics.",
+        "DictReader skips blank rows.",
+        "strict defaults false; strict=True raises csv.Error on bad CSV input."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "DictReader behavior",
+          "line_range_1based_inclusive": [
+            151,
+            172
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Documented extra-value restkey and missing-value restval behavior.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S2",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "exact_locator": "DictReader implementation",
+          "line_range_1based_inclusive": [
+            145,
+            194
+          ],
+          "source_sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Blank-row skip, dict(zip), extra-field and short-row handling.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "Dialect.strict",
+          "line_range_1based_inclusive": [
+            475,
+            478
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "strict=True error behavior and false default.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "Vendor schema and business validation remain product rules."
+      ]
+    },
+    {
+      "final_section": "Import flow §3; §5 Resource limits",
+      "claims": [
+        "reader.line_num counts source lines read, not logical records; quoted records may span multiple input lines."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "csvreader.line_num",
+          "line_range_1based_inclusive": [
+            503,
+            506
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Explicit line-count versus record-count distinction.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "csv_reader_doc",
+          "line_range_1based_inclusive": [
+            1682,
+            1694
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Rows may span multiple input lines.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "Exact diagnostic line ranges depend on the application's input iterator and error bookkeeping."
+      ]
+    },
+    {
+      "final_section": "Import flow §4 Distinguish empty, missing, and null",
+      "claims": [
+        "The conventional writer's None-to-empty conversion is non-reversible.",
+        "QUOTE_NOTNULL distinguishes quoted empty text from unquoted empty null under a shared convention and was added in 3.12.",
+        "QUOTE_STRINGS also float-converts nonempty unquoted cells in the pinned implementation."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "writer None behavior",
+          "line_range_1based_inclusive": [
+            87,
+            104
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "None is written as empty string; documentation calls it non-reversible.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "QUOTE_NOTNULL and QUOTE_STRINGS",
+          "line_range_1based_inclusive": [
+            356,
+            376
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Reader/writer rules and versionadded 3.12.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "QuoteStyle enumeration",
+          "line_range_1based_inclusive": [
+            83,
+            106
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Pinned implementation includes both modes.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "parse_save_field",
+          "line_range_1based_inclusive": [
+            653,
+            675
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Pinned implementation handles empty unquoted values and float conversions.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "No behavior test was run under the target 3.13.9 build; arbitrary vendors need an explicit convention."
+      ]
+    },
+    {
+      "final_section": "Import flow §5 Bound resources in the unit each limit controls",
+      "claims": [
+        "field_size_limit checks a current field length, not row bytes or total record memory.",
+        "The upstream test source uses two 50,000-character cells in one row; it was inspected but not executed."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "field_size_limit documentation",
+          "line_range_1based_inclusive": [
+            142,
+            147
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Maximum parser field size.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "parse_add_char",
+          "line_range_1based_inclusive": [
+            703,
+            716
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Field limit checked as Py_UCS4 values are appended.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S3",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "exact_locator": "field_size_limit implementation",
+          "line_range_1based_inclusive": [
+            1634,
+            1663
+          ],
+          "source_sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "API updates/returns parser limit.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S4",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "exact_locator": "test_read_bigfield",
+          "line_range_1based_inclusive": [
+            484,
+            501
+          ],
+          "source_sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Test source demonstrates per-field limit with two fields; not run.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "The code-point interpretation follows Py_UCS4/field_len in this pinned source; actual peak memory requires a target-runtime measurement."
+      ]
+    },
+    {
+      "final_section": "Import flow §2; §3 newline and record behavior",
+      "claims": [
+        "newline='' is the documented file-opening rule and is required for correct quoted-newline handling.",
+        "An upstream test exercises newline round trips but was not executed here."
+      ],
+      "evidence": [
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "reader file-opening rule",
+          "line_range_1based_inclusive": [
+            56,
+            74
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "File object should use newline=''.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S1",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "exact_locator": "newline footnote",
+          "line_range_1based_inclusive": [
+            640,
+            644
+          ],
+          "source_sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Warning about embedded quoted newlines.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S4",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "exact_locator": "test_roundtrip_quoteed_newlines",
+          "line_range_1based_inclusive": [
+            515,
+            531
+          ],
+          "source_sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Test source exercises quoted newline round trips; text inspection only.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "Source docs/tests do not certify the proposed importer."
+      ]
+    },
+    {
+      "final_section": "Validation plan before production",
+      "claims": [
+        "Upstream test text was inspected only; no importer or vendor fixture was tested."
+      ],
+      "evidence": [
+        {
+          "source_id": "S4",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "exact_locator": "test_read_bigfield and test_read_linenum",
+          "line_range_1based_inclusive": [
+            484,
+            513
+          ],
+          "source_sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Upstream test source; not run.",
+          "evidence_status": "Source text inspected; not executed."
+        },
+        {
+          "source_id": "S4",
+          "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "exact_locator": "test_roundtrip_quoteed_newlines",
+          "line_range_1based_inclusive": [
+            515,
+            531
+          ],
+          "source_sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+          "version_or_pin": "CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+          "scope": "Upstream test source; not run.",
+          "evidence_status": "Source text inspected; not executed."
+        }
+      ],
+      "uncertainty": [
+        "Future execution must use the production runtime, supported vendor fixtures and real storage backend."
+      ]
+    }
+  ],
+  "design_claims_and_constraints": [
+    {
+      "final_section": "Scope and invariants; Import flow §§1-2",
+      "status": "Requirements/design recommendations from the brief and plan, not CPython behavior claims.",
+      "claims": [
+        "Bounded preview",
+        "Confirmed encoding, dialect, header and mapping",
+        "Preserve leading-zero SKUs and decoded text",
+        "Ragged-row policy and cancellation",
+        "Reconfirm changed input"
+      ]
+    },
+    {
+      "final_section": "Import flow §§5-6; Validation plan",
+      "status": "Architecture recommendations, not validated against an application backend.",
+      "claims": [
+        "Separate byte/code-point/record/field limits",
+        "Enforce bounds before oversized input accumulates",
+        "Isolated staging",
+        "Atomic commit",
+        "Verify unchanged inventory after failure/cancel",
+        "Digest or snapshot identity"
+      ]
+    },
+    {
+      "final_section": "Alternatives and trade-offs",
+      "status": "Qualitative comparison; no benchmark or DataFrame execution performed.",
+      "claims": [
+        "Streaming versus whole-file loading",
+        "Explicit schema versus inference",
+        "Vendor presets versus heuristic suggestions",
+        "CSV null convention versus marker or sidecar"
+      ]
+    }
+  ],
+  "inferences": [
+    {
+      "claim": "Duplicate DictReader headers collapse to one dictionary key and an earlier same-name cell is lost.",
+      "basis": "S2 lines 186-194 construct dict(zip(fieldnames,row)); loss follows Python dictionary key semantics.",
+      "confidence": "High; source-code semantics inference."
+    },
+    {
+      "claim": "field_size_limit counts Unicode code points in the pinned CPython parser.",
+      "basis": "S3 lines 703-716 compare field_len while adding Py_UCS4 values.",
+      "confidence": "High for the pinned implementation; verify on target runtime."
+    },
+    {
+      "claim": "The pinned has_header loop appears to examine 21 regular-width rows after the candidate header.",
+      "basis": "S2 lines 470-476 test checked > 20 before increment.",
+      "confidence": "Moderate; incidental implementation detail and immaterial to the nonbinding-heuristic recommendation."
+    }
+  ],
+  "provenance": {
+    "requested_route": "Luna Max Standard",
+    "actual_provider_model_tier_identity": "Unknown",
+    "observed_route_options": "Unknown; create_goal/get_goal exposed thread, objective and status fields but no provider/model/tier identity.",
+    "native_goal_create_receipt": "native-goal-create.json",
+    "source_inspection": {
+      "runtime": "Python 3.14.4",
+      "behavioral_witness_run": false,
+      "source_reader_code": "witnesses/source_reader.py",
+      "source_reader_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "commands_and_stdout_stderr": "witnesses/inspection-manifest.json and q01–q17.stdout.txt/q01–q17.stderr.txt",
+      "interpretation": "Read-only, hash-checked extraction of cached source text, not execution of CPython csv behavior or an importer."
+    }
+  }
+}

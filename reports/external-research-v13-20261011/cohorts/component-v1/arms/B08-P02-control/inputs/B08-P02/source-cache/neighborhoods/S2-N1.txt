@@ -1,0 +1,112 @@
+expression support in the :mod:`re` module).
+
+.. method:: str.capitalize()
+
+   Return a copy of the string with its first character capitalized and the
+   rest lowercased.
+
+   .. versionchanged:: 3.8
+      The first character is now put into titlecase rather than uppercase.
+      This means that characters like digraphs will only have their first
+      letter capitalized, instead of the full character.
+
+.. method:: str.casefold()
+
+   Return a casefolded copy of the string. Casefolded strings may be used for
+   caseless matching.
+
+   Casefolding is similar to lowercasing but more aggressive because it is
+   intended to remove all case distinctions in a string. For example, the German
+   lowercase letter ``'ß'`` is equivalent to ``"ss"``. Since it is already
+   lowercase, :meth:`lower` would do nothing to ``'ß'``; :meth:`casefold`
+   converts it to ``"ss"``.
+
+   The casefolding algorithm is
+   `described in section 3.13 'Default Case Folding' of the Unicode Standard
+   <https://www.unicode.org/versions/Unicode15.1.0/ch03.pdf>`__.
+
+   .. versionadded:: 3.3
+
+
+.. method:: str.center(width, fillchar=' ', /)
+
+   Return centered in a string of length *width*. Padding is done using the
+   specified *fillchar* (default is an ASCII space). The original string is
+   returned if *width* is less than or equal to ``len(s)``.  For example::
+
+      >>> 'Python'.center(10)
+      '  Python  '
+      >>> 'Python'.center(10, '-')
+      '--Python--'
+      >>> 'Python'.center(4)
+      'Python'
+
+
+.. method:: str.count(sub[, start[, end]])
+
+   Return the number of non-overlapping occurrences of substring *sub* in the
+   range [*start*, *end*].  Optional arguments *start* and *end* are
+   interpreted as in slice notation.
+
+   If *sub* is empty, returns the number of empty strings between characters
+   which is the length of the string plus one. For example::
+
+      >>> 'spam, spam, spam'.count('spam')
+      3
+      >>> 'spam, spam, spam'.count('spam', 5)
+      2
+      >>> 'spam, spam, spam'.count('spam', 5, 10)
+      1
+      >>> 'spam, spam, spam'.count('eggs')
+      0
+      >>> 'spam, spam, spam'.count('')
+      17
+
+.. method:: str.encode(encoding="utf-8", errors="strict")
+
+   Return the string encoded to :class:`bytes`.
+
+   *encoding* defaults to ``'utf-8'``;
+   see :ref:`standard-encodings` for possible values.
+
+   *errors* controls how encoding errors are handled.
+   If ``'strict'`` (the default), a :exc:`UnicodeError` exception is raised.
+   Other possible values are ``'ignore'``,
+   ``'replace'``, ``'xmlcharrefreplace'``, ``'backslashreplace'`` and any
+   other name registered via :func:`codecs.register_error`.
+   See :ref:`error-handlers` for details.
+
+   For performance reasons, the value of *errors* is not checked for validity
+   unless an encoding error actually occurs,
+   :ref:`devmode` is enabled
+   or a :ref:`debug build <debug-build>` is used.
+   For example::
+
+      >>> encoded_str_to_bytes = 'Python'.encode()
+      >>> type(encoded_str_to_bytes)
+      <class 'bytes'>
+      >>> encoded_str_to_bytes
+      b'Python'
+
+
+   .. versionchanged:: 3.1
+      Added support for keyword arguments.
+
+   .. versionchanged:: 3.9
+      The value of the *errors* argument is now checked in :ref:`devmode` and
+      in :ref:`debug mode <debug-build>`.
+
+
+.. method:: str.endswith(suffix[, start[, end]])
+
+   Return ``True`` if the string ends with the specified *suffix*, otherwise return
+   ``False``.  *suffix* can also be a tuple of suffixes to look for.  With optional
+   *start*, test beginning at that position.  With optional *end*, stop comparing
+   at that position. Using *start* and *end* is equivalent to
+   ``str[start:end].endswith(suffix)``. For example::
+
+      >>> 'Python'.endswith('on')
+      True
+      >>> 'a tuple of suffixes'.endswith(('at', 'in'))
+      False
+      >>> 'a tuple of suffixes'.endswith(('at', 'es'))

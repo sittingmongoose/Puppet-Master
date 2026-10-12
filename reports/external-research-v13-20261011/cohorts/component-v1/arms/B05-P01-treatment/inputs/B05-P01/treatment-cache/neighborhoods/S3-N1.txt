@@ -1,0 +1,112 @@
+
+            # get output and exitcode
+            data = await proc.stdout.read()
+            exitcode = await proc.wait()
+            return (exitcode, data)
+
+        task = run(b'some data')
+        task = asyncio.wait_for(task, 60.0)
+        exitcode, stdout = self.loop.run_until_complete(task)
+        self.assertEqual(exitcode, 0)
+        self.assertEqual(stdout, b'some data')
+
+    def test_communicate(self):
+        args = PROGRAM_CAT
+
+        async def run(data):
+            proc = await asyncio.create_subprocess_exec(
+                *args,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+            )
+            stdout, stderr = await proc.communicate(data)
+            return proc.returncode, stdout
+
+        task = run(b'some data')
+        task = asyncio.wait_for(task, support.LONG_TIMEOUT)
+        exitcode, stdout = self.loop.run_until_complete(task)
+        self.assertEqual(exitcode, 0)
+        self.assertEqual(stdout, b'some data')
+
+    def test_communicate_none_input(self):
+        args = PROGRAM_CAT
+
+        async def run():
+            proc = await asyncio.create_subprocess_exec(
+                *args,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+            )
+            stdout, stderr = await proc.communicate()
+            return proc.returncode, stdout
+
+        task = run()
+        task = asyncio.wait_for(task, support.LONG_TIMEOUT)
+        exitcode, stdout = self.loop.run_until_complete(task)
+        self.assertEqual(exitcode, 0)
+        self.assertEqual(stdout, b'')
+
+    def test_shell(self):
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_shell('exit 7')
+        )
+        exitcode = self.loop.run_until_complete(proc.wait())
+        self.assertEqual(exitcode, 7)
+
+    def test_start_new_session(self):
+        # start the new process in a new session
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_shell(
+                'exit 8',
+                start_new_session=True,
+            )
+        )
+        exitcode = self.loop.run_until_complete(proc.wait())
+        self.assertEqual(exitcode, 8)
+
+    def test_kill(self):
+        args = PROGRAM_BLOCKED
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_exec(*args)
+        )
+        proc.kill()
+        returncode = self.loop.run_until_complete(proc.wait())
+        if sys.platform == 'win32':
+            self.assertIsInstance(returncode, int)
+            # expect 1 but sometimes get 0
+        else:
+            self.assertEqual(-signal.SIGKILL, returncode)
+
+    def test_kill_issue43884(self):
+        if sys.platform == 'win32':
+            blocking_shell_command = f'"{sys.executable}" -c "import time; time.sleep(2)"'
+        else:
+            blocking_shell_command = 'sleep 1; sleep 1'
+        creationflags = 0
+        if sys.platform == 'win32':
+            from subprocess import CREATE_NEW_PROCESS_GROUP
+            # On windows create a new process group so that killing process
+            # kills the process and all its children.
+            creationflags = CREATE_NEW_PROCESS_GROUP
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_shell(blocking_shell_command, stdout=asyncio.subprocess.PIPE,
+            creationflags=creationflags)
+        )
+        self.loop.run_until_complete(asyncio.sleep(1))
+        if sys.platform == 'win32':
+            proc.send_signal(signal.CTRL_BREAK_EVENT)
+        # On windows it is an alias of terminate which sets the return code
+        proc.kill()
+        returncode = self.loop.run_until_complete(proc.wait())
+        if sys.platform == 'win32':
+            self.assertIsInstance(returncode, int)
+            # expect 1 but sometimes get 0
+        else:
+            self.assertEqual(-signal.SIGKILL, returncode)
+
+    def test_terminate(self):
+        args = PROGRAM_BLOCKED
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_exec(*args)
+        )
+        proc.terminate()

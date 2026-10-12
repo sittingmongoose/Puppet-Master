@@ -1,0 +1,290 @@
+{
+  "purpose": "Read-only extraction of exact cached primary-source text; not an execution test of CPython csv behavior or an inventory importer.",
+  "runtime_command": "python3 --version",
+  "runtime_stdout": "Python 3.14.4",
+  "reader_code_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+  "reader_code_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+  "reader_code_copy": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/source_reader.py",
+  "reader_copy_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+  "validation": "source_reader.py verifies each cached source body SHA-256 against treatment-cache/navigation.json before printing requested one-based inclusive lines. All 17 invocations exited 0; stderr is preserved separately per invocation.",
+  "limits": [
+    "Outputs reflect cached bytes at pinned CPython commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0.",
+    "This review did not verify that commit against the CPython v3.13.9 release tag.",
+    "The reader ran under Python 3.14.4 and does not execute CPython csv reader/writer behavior.",
+    "No inventory importer or vendor file was tested."
+  ],
+  "queries": [
+    {
+      "id": "01",
+      "source": "S1",
+      "range_1based": [
+        44,
+        155
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 44 --end 155 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q01.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q01.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q01.stdout.txt",
+      "stdout_sha256": "5ea23a42ee37d78fdd8d7bc46639b48a994025b82c5863dabc9798465bf1c4dc",
+      "stdout_bytes": 5551,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q01.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "02",
+      "source": "S1",
+      "range_1based": [
+        89,
+        200
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 89 --end 200 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q02.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q02.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q02.stdout.txt",
+      "stdout_sha256": "e650f34cd35b3c84856288d9ccfeabd801deabed297231b238b0bf43e6b2b347",
+      "stdout_bytes": 5563,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q02.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "03",
+      "source": "S1",
+      "range_1based": [
+        130,
+        241
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 130 --end 241 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q03.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q03.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q03.stdout.txt",
+      "stdout_sha256": "dd1390bc3da87db596b106728134d88da22587129b61a9c3d88b8c1d6c7d6eed",
+      "stdout_bytes": 5277,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q03.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "04",
+      "source": "S1",
+      "range_1based": [
+        139,
+        250
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 139 --end 250 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q04.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q04.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q04.stdout.txt",
+      "stdout_sha256": "c69648f575e19521e44e40934dac4c2aa1a6262c85a1f72ded7c729840a3808a",
+      "stdout_bytes": 5406,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q04.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "05",
+      "source": "S1",
+      "range_1based": [
+        275,
+        386
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 275 --end 386 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q05.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q05.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q05.stdout.txt",
+      "stdout_sha256": "e452a823e3381ebe744eca95f9744647639afcc7d0398f99b92609aadd359b05",
+      "stdout_bytes": 4739,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q05.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "06",
+      "source": "S1",
+      "range_1based": [
+        319,
+        430
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 319 --end 430 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q06.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q06.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q06.stdout.txt",
+      "stdout_sha256": "473d5b980d6b9f19817507b0d42828f5cac8a5d98195fe2be40ceb4486e9a78c",
+      "stdout_bytes": 4977,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q06.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "07",
+      "source": "S1",
+      "range_1based": [
+        387,
+        450
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 387 --end 450 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q07.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q07.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q07.stdout.txt",
+      "stdout_sha256": "45e79ae7400b3b8a96ebfcc3682635c6cda65f8b548ca9f4c31ffec9fe0132c7",
+      "stdout_bytes": 2990,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q07.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "08",
+      "source": "S1",
+      "range_1based": [
+        400,
+        525
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 400 --end 525 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q08.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q08.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q08.stdout.txt",
+      "stdout_sha256": "9b392d70ef06f666bf251b7c4eba669c8f84726dfe27e8aa58d6875a2e13e2eb",
+      "stdout_bytes": 5089,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q08.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "09",
+      "source": "S1",
+      "range_1based": [
+        525,
+        625
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 525 --end 625 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q09.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q09.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q09.stdout.txt",
+      "stdout_sha256": "d751680fb664190b4aabf7c1fb097b33f8ff81b230c755d81f3f0d18158a0bab",
+      "stdout_bytes": 3892,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q09.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "10",
+      "source": "S1",
+      "range_1based": [
+        626,
+        644
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S1 --start 626 --end 644 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q10.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q10.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q10.stdout.txt",
+      "stdout_sha256": "8707a714bb6cd60921de0250c11acd54c2b8c88d5adfd184024e95f0d0323f4f",
+      "stdout_bytes": 1055,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q10.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "11",
+      "source": "S2",
+      "range_1based": [
+        133,
+        244
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S2 --start 133 --end 244 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q11.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q11.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q11.stdout.txt",
+      "stdout_sha256": "53735d6e0d39306b88ae6e8356c53415eff6db6cb7804f142c47994f48e1bbd8",
+      "stdout_bytes": 4661,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q11.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "12",
+      "source": "S2",
+      "range_1based": [
+        232,
+        343
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S2 --start 232 --end 343 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q12.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q12.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q12.stdout.txt",
+      "stdout_sha256": "87121c18363306d13e90adef69e76442571ea0e9734e3cf3488499b427b42811",
+      "stdout_bytes": 4830,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q12.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "13",
+      "source": "S2",
+      "range_1based": [
+        440,
+        513
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S2 --start 440 --end 513 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q13.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q13.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q13.stdout.txt",
+      "stdout_sha256": "b7632ab3a4a44644552925ed6ef83ed5651528d1530899bb512a3fc9d4a140e6",
+      "stdout_bytes": 3426,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q13.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "14",
+      "source": "S3",
+      "range_1based": [
+        650,
+        692
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S3 --start 650 --end 692 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q14.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q14.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q14.stdout.txt",
+      "stdout_sha256": "d4fdf095a202499f6d29203891744af2db113850e740b2f534920c05248d9768",
+      "stdout_bytes": 1704,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q14.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "15",
+      "source": "S3",
+      "range_1based": [
+        692,
+        803
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S3 --start 692 --end 803 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q15.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q15.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q15.stdout.txt",
+      "stdout_sha256": "084f15f81445c2255ead9858d269f050166f67477ca750d58f718ca0981c799b",
+      "stdout_bytes": 4275,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q15.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "16",
+      "source": "S3",
+      "range_1based": [
+        1623,
+        1734
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S3 --start 1623 --end 1734 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q16.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q16.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q16.stdout.txt",
+      "stdout_sha256": "a16873a5e6e597bd439bac94124d882b4ffb9c3c422589f765ae8e89fa926435",
+      "stdout_bytes": 4721,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q16.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "17",
+      "source": "S4",
+      "range_1based": [
+        472,
+        614
+      ],
+      "command": "python3 -B 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/helpers/component-fixtures-v1/source_reader.py' --case B05-P02 --arm treatment --source S4 --start 472 --end 614 > 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q17.stdout.txt' 2> 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q17.stderr.txt'",
+      "exit_code": 0,
+      "stdout_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q17.stdout.txt",
+      "stdout_sha256": "efab178301449a924109b4a2fa79f815822af0d989e8da520271686e4cdb35d6",
+      "stdout_bytes": 7357,
+      "stderr_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B05-P02-treatment/witnesses/q17.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+            proc.stdin.write(data)
+            # Only exit the child process once the write buffer is filled
+            os.write(wfd, b'go')
+            await proc.stdin.drain()
+
+        coro = write_stdin(proc, large_data)
+        # drain() must raise BrokenPipeError or ConnectionResetError
+        with test_utils.disable_logger():
+            self.assertRaises((BrokenPipeError, ConnectionResetError),
+                              self.loop.run_until_complete, coro)
+        self.loop.run_until_complete(proc.wait())
+
+    def test_communicate_ignore_broken_pipe(self):
+        # buffer large enough to feed the whole pipe buffer
+        large_data = b'x' * support.PIPE_MAX_SIZE
+
+        # the program ends before the stdin can be fed
+        proc = self.loop.run_until_complete(
+            asyncio.create_subprocess_exec(
+                sys.executable, '-c', 'pass',
+                stdin=subprocess.PIPE,
+            )
+        )
+
+        # communicate() must ignore BrokenPipeError when feeding stdin
+        self.loop.set_exception_handler(lambda loop, msg: None)
+        self.loop.run_until_complete(proc.communicate(large_data))
+        self.loop.run_until_complete(proc.wait())
+
+    def test_pause_reading(self):
+        limit = 10
+        size = (limit * 2 + 1)
+
+        async def test_pause_reading():
+            code = '\n'.join((
+                'import sys',
+                'sys.stdout.write("x" * %s)' % size,
+                'sys.stdout.flush()',
+            ))
+
+            connect_read_pipe = self.loop.connect_read_pipe
+
+            async def connect_read_pipe_mock(*args, **kw):
+                transport, protocol = await connect_read_pipe(*args, **kw)
+                transport.pause_reading = mock.Mock()
+                transport.resume_reading = mock.Mock()
+                return (transport, protocol)
+
+            self.loop.connect_read_pipe = connect_read_pipe_mock
+
+            proc = await asyncio.create_subprocess_exec(
+                sys.executable, '-c', code,
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+                limit=limit,
+            )
+            stdout_transport = proc._transport.get_pipe_transport(1)
+
+            stdout, stderr = await proc.communicate()
+
+            # The child process produced more than limit bytes of output,
+            # the stream reader transport should pause the protocol to not
+            # allocate too much memory.
+            return (stdout, stdout_transport)
+
+        # Issue #22685: Ensure that the stream reader pauses the protocol
+        # when the child process produces too much data
+        stdout, transport = self.loop.run_until_complete(test_pause_reading())
+
+        self.assertEqual(stdout, b'x' * size)
+        self.assertTrue(transport.pause_reading.called)
+        self.assertTrue(transport.resume_reading.called)
+
+    def test_stdin_not_inheritable(self):
+        # asyncio issue #209: stdin must not be inheritable, otherwise
+        # the Process.communicate() hangs
+        async def len_message(message):
+            code = 'import sys; data = sys.stdin.read(); print(len(data))'
+            proc = await asyncio.create_subprocess_exec(
+                sys.executable, '-c', code,
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                close_fds=False,
+            )
+            stdout, stderr = await proc.communicate(message)
+            exitcode = await proc.wait()
+            return (stdout, exitcode)
+
+        output, exitcode = self.loop.run_until_complete(len_message(b'abc'))
+        self.assertEqual(output.rstrip(), b'3')
+        self.assertEqual(exitcode, 0)
+
+    def test_empty_input(self):
+
+        async def empty_input():
+            code = 'import sys; data = sys.stdin.read(); print(len(data))'
+            proc = await asyncio.create_subprocess_exec(
+                sys.executable, '-c', code,
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                close_fds=False,
+            )
+            stdout, stderr = await proc.communicate(b'')
+            exitcode = await proc.wait()
+            return (stdout, exitcode)
+
+        output, exitcode = self.loop.run_until_complete(empty_input())
+        self.assertEqual(output.rstrip(), b'0')
+        self.assertEqual(exitcode, 0)
+

@@ -1,0 +1,21 @@
+{
+  "scope": "COMPONENT",
+  "arm_id": "B08-P01-control",
+  "responses": [
+    {
+      "path": "arms/B08-P01-control/native-goal-create.json",
+      "original_sha256": "0c20c77851e6b1ad2f8ddfd0fd313ef78f9c5ce21e16d5868ad7002f4d20ca2b",
+      "public_sha256": "f35e94c1f0e8c57f8f81dfa97a546eae2808bbe0b75b406f7b0ec6b2b5c21dc8",
+      "capture_kind": "full returned API response object; generic path/route normalization only",
+      "source_binding_limits": "Normalized full native create/complete API response objects only; not full native transcripts. Exact assigned objective/threadId and frozen custody are observed; independent native session linkage/freshness beyond these captures is UNKNOWN. Goal counters retain their own semantics, not provider billing or product token consumption."
+    },
+    {
+      "path": "arms/B08-P01-control/native-goal-terminal.json",
+      "original_sha256": "5f19d798446989731fedce3f0d386164851f8b3787bc59d0a9ea7dbcb8e06b1f",
+      "public_sha256": "d37fef044035377436a078494c75a7655d65f68db6c9e5ac9672a0e95ca80b5b",
+      "capture_kind": "full returned API response object; generic path/route normalization only",
+      "source_binding_limits": "Normalized full native create/complete API response objects only; not full native transcripts. Exact assigned objective/threadId and frozen custody are observed; independent native session linkage/freshness beyond these captures is UNKNOWN. Goal counters retain their own semantics, not provider billing or product token consumption."
+    }
+  ],
+  "root_paused_receipt_included": false
+}

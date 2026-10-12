@@ -1,0 +1,112 @@
+      It is the application's responsibility to ensure that all whitespace and
+      special characters are quoted appropriately to avoid `shell injection
+      <https://en.wikipedia.org/wiki/Shell_injection#Shell_injection>`_
+      vulnerabilities. The :func:`shlex.quote` function can be used to properly
+      escape whitespace and special shell characters in strings that are going
+      to be used to construct shell commands.
+
+   .. versionchanged:: 3.10
+      Removed the *loop* parameter.
+
+.. note::
+
+   Subprocesses are available for Windows if a :class:`ProactorEventLoop` is
+   used. See :ref:`Subprocess Support on Windows <asyncio-windows-subprocess>`
+   for details.
+
+.. seealso::
+
+   asyncio also has the following *low-level* APIs to work with subprocesses:
+   :meth:`loop.subprocess_exec`, :meth:`loop.subprocess_shell`,
+   :meth:`loop.connect_read_pipe`, :meth:`loop.connect_write_pipe`,
+   as well as the :ref:`Subprocess Transports <asyncio-subprocess-transports>`
+   and :ref:`Subprocess Protocols <asyncio-subprocess-protocols>`.
+
+
+Constants
+=========
+
+.. data:: asyncio.subprocess.PIPE
+   :module:
+
+   Can be passed to the *stdin*, *stdout* or *stderr* parameters.
+
+   If *PIPE* is passed to *stdin* argument, the
+   :attr:`Process.stdin <asyncio.subprocess.Process.stdin>` attribute
+   will point to a :class:`~asyncio.StreamWriter` instance.
+
+   If *PIPE* is passed to *stdout* or *stderr* arguments, the
+   :attr:`Process.stdout <asyncio.subprocess.Process.stdout>` and
+   :attr:`Process.stderr <asyncio.subprocess.Process.stderr>`
+   attributes will point to :class:`~asyncio.StreamReader` instances.
+
+.. data:: asyncio.subprocess.STDOUT
+   :module:
+
+   Special value that can be used as the *stderr* argument and indicates
+   that standard error should be redirected into standard output.
+
+.. data:: asyncio.subprocess.DEVNULL
+   :module:
+
+   Special value that can be used as the *stdin*, *stdout* or *stderr* argument
+   to process creation functions.  It indicates that the special file
+   :data:`os.devnull` will be used for the corresponding subprocess stream.
+
+
+Interacting with Subprocesses
+=============================
+
+Both :func:`create_subprocess_exec` and :func:`create_subprocess_shell`
+functions return instances of the *Process* class.  *Process* is a high-level
+wrapper that allows communicating with subprocesses and watching for
+their completion.
+
+.. class:: asyncio.subprocess.Process
+   :module:
+
+   An object that wraps OS processes created by the
+   :func:`~asyncio.create_subprocess_exec` and :func:`~asyncio.create_subprocess_shell`
+   functions.
+
+   This class is designed to have a similar API to the
+   :class:`subprocess.Popen` class, but there are some
+   notable differences:
+
+   * unlike Popen, Process instances do not have an equivalent to
+     the :meth:`~subprocess.Popen.poll` method;
+
+   * the :meth:`~asyncio.subprocess.Process.communicate` and
+     :meth:`~asyncio.subprocess.Process.wait` methods don't have a
+     *timeout* parameter: use the :func:`~asyncio.wait_for` function;
+
+   * the :meth:`Process.wait() <asyncio.subprocess.Process.wait>` method
+     is asynchronous, whereas :meth:`subprocess.Popen.wait` method
+     is implemented as a blocking busy loop;
+
+   * the *universal_newlines* parameter is not supported.
+
+   This class is :ref:`not thread safe <asyncio-multithreading>`.
+
+   See also the :ref:`Subprocess and Threads <asyncio-subprocess-threads>`
+   section.
+
+   .. method:: wait()
+      :async:
+
+      Wait for the child process to terminate.
+
+      Set and return the :attr:`returncode` attribute.
+
+      .. note::
+
+         This method can deadlock when using ``stdout=PIPE`` or
+         ``stderr=PIPE`` and the child process generates so much output
+         that it blocks waiting for the OS pipe buffer to accept
+         more data. Use the :meth:`communicate` method when using pipes
+         to avoid this condition.
+
+   .. method:: communicate(input=None)
+      :async:
+
+      Interact with process:

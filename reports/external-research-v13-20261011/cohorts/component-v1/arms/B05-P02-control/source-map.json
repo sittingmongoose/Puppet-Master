@@ -1,0 +1,309 @@
+{
+  "case": "B05-P02",
+  "arm": "control",
+  "review_scope": "Independent control-arm review of brief.md, plan.md, and draft.md. No treatment cache, findings, rubric, sibling arm, or preparer source pool was accessed.",
+  "runtime_identity": {
+    "observed_agent_model": "gpt-6-luna",
+    "observed_reasoning_effort": "max",
+    "requested_route": "Luna Max Standard",
+    "provider_or_tier_confirmation": "unknown; native create receipt contains no model/tier options",
+    "activation_binding": "native create response saved and passed the provided active-goal assertion"
+  },
+  "primary_source_pin": {
+    "project": "python/cpython",
+    "version": "CPython 3.13.9",
+    "tag": "v3.13.9",
+    "tag_object": "8f61118196ba00747076def18ea7ad2c43a1dc05",
+    "peeled_commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "note": "The public v3.13.9 tag was independently resolved with git ls-remote. Raw source files were downloaded from that tag and hashed; all five digests match the immutable commit-pinned sources in this map.",
+    "files": [
+      {
+        "id": "CPY-CODECS",
+        "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/codecs.rst",
+        "sha256": "4d937cb38ed3df9821c39acc308283036a2b243e3dcddd61616cb70cb01534c0",
+        "scope": "CPython 3.13.9 public codecs documentation; strict decoding and utf-8-sig BOM behavior."
+      },
+      {
+        "id": "CPY-DOC",
+        "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+        "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+        "scope": "Normative CPython 3.13.9 csv module behavior and public API documentation."
+      },
+      {
+        "id": "CPY-LIBCSV",
+        "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+        "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+        "scope": "CPython 3.13.9 Python-level DictReader and Sniffer implementation details; implementation evidence, not a broader CSV standard."
+      },
+      {
+        "id": "CPY-C",
+        "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+        "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+        "scope": "CPython 3.13.9 C parser implementation details; supports claims about conversion and field-limit units, not a separate guarantee about application-wide memory."
+      },
+      {
+        "id": "CPY-TEST",
+        "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+        "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+        "scope": "Upstream CPython 3.13.9 regression tests, inspected but not executed in this review."
+      }
+    ]
+  },
+  "claim_mappings": [
+    {
+      "final_section": "1. User flow and confirmed import profile",
+      "claims": [
+        {
+          "claim": "CSV dialects vary across applications; reader accepts a file object opened with newline=''; Sniffer analyzes a sample; has_header can false-positive or false-negative.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 15-30, 51-64, 248-276",
+              "governing_scope": "CPython 3.13.9 public csv API; header result is a heuristic.",
+              "unresolved_uncertainty": "Which vendor presets, delimiter candidates, and encodings the product will support."
+            },
+            {
+              "id": "CPY-LIBCSV",
+              "locator": "Lib/csv.py lines 214-248 and 403-471",
+              "governing_scope": "Actual CPython 3.13.9 Sniffer/header implementation.",
+              "unresolved_uncertainty": "No dialect heuristic guarantees correctness for an arbitrary vendor file."
+            },
+            {
+              "id": "CPY-CODECS",
+              "locator": "Doc/library/codecs.rst lines 1540-1549 and 935-956",
+              "governing_scope": "The utf-8-sig codec skips an optional UTF-8 BOM at the start; docs also explain limits of encoding detection without external information.",
+              "unresolved_uncertainty": "Which candidate encodings are appropriate for supported vendors."
+            }
+          ]
+        },
+        {
+          "claim": "Duplicate headers should be rejected before dictionary mapping; profile reuse and content fingerprinting reduce stale-preview risk.",
+          "sources": [
+            {
+              "id": "CPY-LIBCSV",
+              "locator": "Lib/csv.py lines 160-179",
+              "governing_scope": "dict(zip(fieldnames, row)) behavior in CPython 3.13.9 DictReader.",
+              "unresolved_uncertainty": "Fingerprint and re-confirmation are proposed application behavior and require product implementation tests."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "final_section": "2. Parse as text first; convert by an explicit inventory schema",
+      "claims": [
+        {
+          "claim": "The normal reader yields strings without type conversion; QUOTE_NONNUMERIC converts every unquoted field to float.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 51-69 and 301-311",
+              "governing_scope": "CPython 3.13.9 reader semantics.",
+              "unresolved_uncertainty": "The recommendation to keep identifiers as strings is based on the product's exact-text requirement."
+            },
+            {
+              "id": "CPY-C",
+              "locator": "Modules/_csv.c lines 606-640",
+              "governing_scope": "Reader conversion branch in the pinned CPython implementation.",
+              "unresolved_uncertainty": "The precision risk for long identifiers is an inference from float conversion; actual vendor values need fixtures."
+            },
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 392-418",
+              "governing_scope": "Upstream tests show quoting-dependent text/float values and conversion errors.",
+              "unresolved_uncertainty": "Tests were read, not run here."
+            }
+          ]
+        },
+        {
+          "claim": "newline='' is required for correct quoted embedded newlines; line_num is physical input-line count, not logical record count.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 51-64, 579-583, and 458-461",
+              "governing_scope": "CPython 3.13.9 reader documentation and footnote.",
+              "unresolved_uncertainty": "The importer must still validate actual vendor newline and quoting conventions."
+            },
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 474-490 and 463-473",
+              "governing_scope": "Upstream multiline and reader counter tests.",
+              "unresolved_uncertainty": "Product diagnostics and vendor fixtures remain future work."
+            }
+          ]
+        },
+        {
+          "claim": "strict=True is available to raise csv.Error on malformed input.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 432-435",
+              "governing_scope": "CPython dialect strict option; default is False.",
+              "unresolved_uncertainty": "Whether any supported vendor export requires permissive parsing."
+            },
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 363-370",
+              "governing_scope": "Upstream tests for malformed end-of-file input under strict and default modes.",
+              "unresolved_uncertainty": "No component-level syntax policy was implemented or tested."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "final_section": "3. Make empty text, null, and a missing column distinct",
+      "claims": [
+        {
+          "claim": "csv.writer writes None as an empty string and the mapping is non-reversible; QUOTE_NOTNULL can represent quoted empty text versus unquoted None when the source convention agrees.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 79-95 and 323-342",
+              "governing_scope": "CPython 3.13.9 API, including QUOTE_NOTNULL/QUOTE_STRINGS availability added in Python 3.12.",
+              "unresolved_uncertainty": "Vendor files may not encode nulls through quotedness; choose per vendor."
+            },
+            {
+              "id": "CPY-C",
+              "locator": "Modules/_csv.c lines 606-640",
+              "governing_scope": "Pinned reader behavior for unquoted empty and numeric strings.",
+              "unresolved_uncertainty": "Application-level null markers and missing-value representation are design choices."
+            },
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 392-418 and 295-306",
+              "governing_scope": "Upstream tests exercise empty/null quoting modes and default writer behavior.",
+              "unresolved_uncertainty": "Tests inspected, not executed."
+            }
+          ]
+        },
+        {
+          "claim": "DictReader fills short rows with restval, puts extra fields under restkey, and skips blank rows.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 138-160",
+              "governing_scope": "Documented extra/missing field behavior.",
+              "unresolved_uncertainty": "The product must choose whether to reject, correct, or accept ragged rows."
+            },
+            {
+              "id": "CPY-LIBCSV",
+              "locator": "Lib/csv.py lines 160-179",
+              "governing_scope": "CPython 3.13.9 blank-row skip and dict construction behavior.",
+              "unresolved_uncertainty": "The proposal chooses to validate rows before dictionary mapping."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "final_section": "4. Bound resources in the units the parser actually limits",
+      "claims": [
+        {
+          "claim": "field_size_limit is a maximum field size; CPython counts each decoded parser character, not row bytes.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 129-133",
+              "governing_scope": "Public description of maximum field size.",
+              "unresolved_uncertainty": "The public docs do not quantify memory overhead."
+            },
+            {
+              "id": "CPY-C",
+              "locator": "Modules/_csv.c lines 658-671",
+              "governing_scope": "Pinned code compares field_len before appending each decoded Py_UCS4.",
+              "unresolved_uncertainty": "The suggested independent file/record/staging caps must be tuned on supported hardware."
+            },
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 445-462",
+              "governing_scope": "Upstream test changes the field limit and exercises two fields in one row.",
+              "unresolved_uncertainty": "No stress test or resource measurement was run for this component."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "final_section": "5. Stage first, publish only after full validation",
+      "claims": [
+        {
+          "claim": "Use isolated staging and atomic publish so a late failure/cancel leaves current inventory intact.",
+          "sources": [],
+          "governing_scope": "Architecture requirement from the user brief and plan; not a claim supplied by CPython.",
+          "unresolved_uncertainty": "Persistence-layer transactions, version switching, cleanup, and concurrent import behavior require implementation-specific failure-injection tests."
+        }
+      ]
+    },
+    {
+      "final_section": "6. Alternatives and choices",
+      "claims": [
+        {
+          "claim": "Explicit configuration plus confirmed Sniffer suggestions is safer for exact inventory data than unreviewed automatic inference.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 15-30 and 248-276",
+              "governing_scope": "Different CSV dialects exist and header sniffing is heuristic.",
+              "unresolved_uncertainty": "Actual error rates depend on vendor data not supplied here."
+            }
+          ]
+        },
+        {
+          "claim": "Streaming avoids loading the complete source file, while whole-file loading can still be considered for known-small files.",
+          "sources": [
+            {
+              "id": "CPY-DOC",
+              "locator": "Doc/library/csv.rst lines 51-69 and 316-330",
+              "governing_scope": "Reader iterates records; not a guarantee of whole-row memory bounds.",
+              "unresolved_uncertainty": "The dataframe comparison is a design judgment, not measured here."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "final_section": "7. History retained and open decisions",
+      "claims": [
+        {
+          "claim": "Direct writes as rows arrive remain retired because they can expose partial inventory after late failure.",
+          "sources": [],
+          "governing_scope": "Design history and safety requirement from the provided task inputs.",
+          "unresolved_uncertainty": "Final transaction mechanism depends on the unselected storage layer."
+        }
+      ]
+    },
+    {
+      "final_section": "8. Validation plan (future work, not executed here)",
+      "claims": [
+        {
+          "claim": "CPython upstream tests cover quoting conversions, limits, multiline rows, and line numbers relevant to this proposal.",
+          "sources": [
+            {
+              "id": "CPY-TEST",
+              "locator": "Lib/test/test_csv.py lines 392-418, 445-490, and 463-473",
+              "governing_scope": "Tests shipped with the CPython 3.13.9 source release.",
+              "unresolved_uncertainty": "They do not test this application, storage layer, vendors, or target hardware; they were not executed here."
+            }
+          ]
+        },
+        {
+          "claim": "Fixture matrix covers the requested values, nulls, ragged rows, resource boundaries, cancellation, and failure atomicity.",
+          "sources": [],
+          "governing_scope": "Proposed future product validation based on the brief/plan.",
+          "unresolved_uncertainty": "No fixture suite exists or was executed in this review."
+        }
+      ]
+    }
+  ],
+  "execution_evidence": {
+    "behavioral_witness_used": false,
+    "tests_executed": false,
+    "witness_artifacts": [],
+    "source_identity_check": {
+      "method": "Read-only git ls-remote plus HTTPS downloads of the four version-tagged raw source files and SHA-256 calculation.",
+      "result": "v3.13.9 peeled to 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; all five file hashes above matched.",
+      "interpretation_and_limit": "Confirms inspected source identity only; it is not a parser behavior test."
+    }
+  }
+}

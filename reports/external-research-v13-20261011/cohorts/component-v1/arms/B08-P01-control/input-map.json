@@ -1,0 +1,89 @@
+{
+  "case": "B08-P01",
+  "arm": "control",
+  "inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/brief.md",
+      "sha256": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/plan.md",
+      "sha256": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/draft.md",
+      "sha256": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-index.json",
+      "sha256": "94d988a59467f2583a56c89df29c7077e077c3d7c7e9c8a3ad9d5a2e7ff7f227"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+      "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792"
+    }
+  ],
+  "independent_lookup_allowed": true,
+  "cache_access": true,
+  "semantic_conclusions_shared": false,
+  "excluded": [
+    "rubric.json",
+    "findings.json",
+    "metadata.json",
+    "preparer scripts/source pool",
+    "other arms/evaluators"
+  ],
+  "reader": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-control/helpers/component-fixtures-v1/source_reader.py",
+    "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+    "usage": "python3 -B <reader> --case B08-P01 --arm control --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+  }
+}

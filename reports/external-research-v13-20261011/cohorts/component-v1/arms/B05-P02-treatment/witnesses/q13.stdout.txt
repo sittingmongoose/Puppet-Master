@@ -1,0 +1,75 @@
+{"case": "B05-P02", "source": "S2", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py", "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df", "range_1based": [440, 513], "full_lines": 513}
+440: 
+441:         # nothing else indicates a preference, pick the character that
+442:         # dominates(?)
+443:         items = [(v,k) for (k,v) in delims.items()]
+444:         items.sort()
+445:         delim = items[-1][1]
+446: 
+447:         skipinitialspace = (data[0].count(delim) ==
+448:                             data[0].count("%c " % delim))
+449:         return (delim, skipinitialspace)
+450: 
+451: 
+452:     def has_header(self, sample):
+453:         # Creates a dictionary of types of data in each column. If any
+454:         # column is of a single type (say, integers), *except* for the first
+455:         # row, then the first row is presumed to be labels. If the type
+456:         # can't be determined, it is assumed to be a string in which case
+457:         # the length of the string is the determining factor: if all of the
+458:         # rows except for the first are the same length, it's a header.
+459:         # Finally, a 'vote' is taken at the end for each column, adding or
+460:         # subtracting from the likelihood of the first row being a header.
+461: 
+462:         rdr = reader(StringIO(sample), self.sniff(sample))
+463: 
+464:         header = next(rdr) # assume first row is header
+465: 
+466:         columns = len(header)
+467:         columnTypes = {}
+468:         for i in range(columns): columnTypes[i] = None
+469: 
+470:         checked = 0
+471:         for row in rdr:
+472:             # arbitrary number of rows to check, to keep it sane
+473:             if checked > 20:
+474:                 break
+475:             checked += 1
+476: 
+477:             if len(row) != columns:
+478:                 continue # skip rows that have irregular number of columns
+479: 
+480:             for col in list(columnTypes.keys()):
+481:                 thisType = complex
+482:                 try:
+483:                     thisType(row[col])
+484:                 except (ValueError, OverflowError):
+485:                     # fallback to length of string
+486:                     thisType = len(row[col])
+487: 
+488:                 if thisType != columnTypes[col]:
+489:                     if columnTypes[col] is None: # add new column type
+490:                         columnTypes[col] = thisType
+491:                     else:
+492:                         # type is inconsistent, remove column from
+493:                         # consideration
+494:                         del columnTypes[col]
+495: 
+496:         # finally, compare results against first row and "vote"
+497:         # on whether it's a header
+498:         hasHeader = 0
+499:         for col, colType in columnTypes.items():
+500:             if isinstance(colType, int): # it's a length
+501:                 if len(header[col]) != colType:
+502:                     hasHeader += 1
+503:                 else:
+504:                     hasHeader -= 1
+505:             else: # attempt typecast
+506:                 try:
+507:                     colType(header[col])
+508:                 except (ValueError, TypeError):
+509:                     hasHeader += 1
+510:                 else:
+511:                     hasHeader -= 1
+512: 
+513:         return hasHeader > 0

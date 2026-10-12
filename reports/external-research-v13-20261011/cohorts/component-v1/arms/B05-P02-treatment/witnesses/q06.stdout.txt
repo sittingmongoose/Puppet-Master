@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [319, 430], "full_lines": 644}
+319: .. data:: QUOTE_ALL
+320: 
+321:    Instructs :class:`writer` objects to quote all fields.
+322: 
+323: 
+324: .. data:: QUOTE_MINIMAL
+325: 
+326:    Instructs :class:`writer` objects to only quote those fields which contain
+327:    special characters such as *delimiter*, *quotechar*, ``'\r'``, ``'\n'``
+328:    or any of the characters in *lineterminator*.
+329: 
+330: 
+331: .. data:: QUOTE_NONNUMERIC
+332: 
+333:    Instructs :class:`writer` objects to quote all non-numeric fields.
+334: 
+335:    Instructs :class:`reader` objects to convert all non-quoted fields to type :class:`float`.
+336: 
+337:    .. note::
+338:       Some numeric types, such as :class:`bool`, :class:`~fractions.Fraction`,
+339:       or :class:`~enum.IntEnum`, have a string representation that cannot be
+340:       converted to :class:`float`.
+341:       They cannot be read in the :data:`QUOTE_NONNUMERIC` and
+342:       :data:`QUOTE_STRINGS` modes.
+343: 
+344: .. data:: QUOTE_NONE
+345: 
+346:    Instructs :class:`writer` objects to never quote fields.
+347:    When the current *delimiter*, *quotechar*, *escapechar*, ``'\r'``, ``'\n'``
+348:    or any of the characters in *lineterminator* occurs in output data
+349:    it is preceded by the current *escapechar* character.
+350:    If *escapechar* is not set, the writer will raise :exc:`Error` if
+351:    any characters that require escaping are encountered.
+352:    Set *quotechar* to ``None`` to prevent its escaping.
+353: 
+354:    Instructs :class:`reader` objects to perform no special processing of quote characters.
+355: 
+356: .. data:: QUOTE_NOTNULL
+357: 
+358:    Instructs :class:`writer` objects to quote all fields which are not
+359:    ``None``.  This is similar to :data:`QUOTE_ALL`, except that if a
+360:    field value is ``None`` an empty (unquoted) string is written.
+361: 
+362:    Instructs :class:`reader` objects to interpret an empty (unquoted) field
+363:    as ``None`` and to otherwise behave as :data:`QUOTE_ALL`.
+364: 
+365:    .. versionadded:: 3.12
+366: 
+367: .. data:: QUOTE_STRINGS
+368: 
+369:    Instructs :class:`writer` objects to always place quotes around fields
+370:    which are strings.  This is similar to :data:`QUOTE_NONNUMERIC`, except that if a
+371:    field value is ``None`` an empty (unquoted) string is written.
+372: 
+373:    Instructs :class:`reader` objects to interpret an empty (unquoted) string as ``None`` and
+374:    to otherwise behave as :data:`QUOTE_NONNUMERIC`.
+375: 
+376:    .. versionadded:: 3.12
+377: 
+378: The :mod:`csv` module defines the following exception:
+379: 
+380: 
+381: .. exception:: Error
+382: 
+383:    Raised by any of the functions when an error is detected.
+384: 
+385: .. _csv-fmt-params:
+386: 
+387: Dialects and Formatting Parameters
+388: ----------------------------------
+389: 
+390: To make it easier to specify the format of input and output records, specific
+391: formatting parameters are grouped together into dialects.  A dialect is a
+392: subclass of the :class:`Dialect` class containing various attributes
+393: describing the format of the CSV file.  When creating :class:`reader` or
+394: :class:`writer` objects, the programmer can specify a string or a subclass of
+395: the :class:`Dialect` class as the dialect parameter.  In addition to, or instead
+396: of, the *dialect* parameter, the programmer can also specify individual
+397: formatting parameters, which have the same names as the attributes defined below
+398: for the :class:`Dialect` class.
+399: 
+400: Dialects support the following attributes:
+401: 
+402: 
+403: .. attribute:: Dialect.delimiter
+404: 
+405:    A one-character string used to separate fields.  It defaults to ``','``.
+406: 
+407: 
+408: .. attribute:: Dialect.doublequote
+409: 
+410:    Controls how instances of *quotechar* appearing inside a field should
+411:    themselves be quoted.  When :const:`True`, the character is doubled. When
+412:    :const:`False`, the *escapechar* is used as a prefix to the *quotechar*.  It
+413:    defaults to :const:`True`.
+414: 
+415:    On output, if *doublequote* is :const:`False` and no *escapechar* is set,
+416:    :exc:`Error` is raised if a *quotechar* is found in a field.
+417: 
+418: 
+419: .. attribute:: Dialect.escapechar
+420: 
+421:    A one-character string used by the writer to escape characters that
+422:    require escaping:
+423: 
+424:       * the *delimiter*, the *quotechar*, ``'\r'``, ``'\n'`` and any of the
+425:         characters in *lineterminator* are escaped if *quoting* is set to
+426:         :const:`QUOTE_NONE`;
+427:       * the *quotechar* is escaped if *doublequote* is :const:`False`;
+428:       * the *escapechar* itself.
+429: 
+430:    On reading, the *escapechar* removes any special meaning from

@@ -1,0 +1,75 @@
+# Asset-validator subprocess component — final proposal
+
+## Review status and decision
+
+This is a complete independent review of the B05-P01 control draft against CPython 3.13.9, pinned to commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0. All four permitted copied inputs matched their input-map SHA-256 values. The public CPython source hashes and locators are recorded in [source-map.json](source-map.json).
+
+The draft is **not safe to implement unchanged**. Its main memory, pipe-drain, and cancellation claims are incorrect. Use a manager-owned supervisor with two concurrent bounded stream pumps and explicit direct-child termination. Keep the direct-child and no-sandbox limits visible.
+
+No product code, witness program, or tests were run. The test section below is a proposed validation plan, not a report of observed behavior.
+
+The native Goal receipt identifies Goal 01a12d88-37c3-7b33-a790-fbb4685e8eef and contains no model or service-tier fields. The requested route was Luna Max Standard. The T3 runtime context identified gpt-6-luna with max reasoning effort; the actual returned service tier and whether that runtime identity was the Goal's execution route are unknown.
+
+## Supported contract
+
+- Run one configured executable with a validated executable path and a sequence of separate argument strings. Do not construct a shell command. Keep working directory and environment explicit; pass only the environment the validator needs and redact secrets from diagnostics.
+- Use stdin=DEVNULL unless the validator contract explicitly requires input. The current brief does not require feeding the tool.
+- Capture stdout and stderr separately, in raw bytes. The validator may produce unbounded output.
+- Keep the retained raw log tail at or below 1,048,576 bytes total per job across both streams. This is a tail budget, not 1 MiB per stream.
+- Set an explicit combined disk quota for the job. If the application can run multiple jobs, also enforce an aggregate quota across all job directories. Record bytes observed, bytes stored, and whether a quota truncated either log.
+- A quota truncation is an expected and visible log state: stop writing at the cap but continue draining and counting/digesting bytes. A disk write error is a separate operational failure and must never be reported as a clean validation pass.
+- Return a pass only after the direct child was reaped, its exit code is zero, and the product's validation-output checks passed. A nonzero exit is always a tool failure. Record log status independently so a permitted quota truncation cannot be confused with an I/O failure.
+- Own and supervise the direct process only. This component is not a sandbox and does not guarantee process-tree termination. Its initial supported-tool contract must also require stdout/stderr to reach EOF promptly after the direct child exits. If validators may leave descendants holding inherited pipe handles, add a separately reviewed low-level pipe-transport or OS process-management layer; do not claim the high-level Process API solves it.
+
+## Launch, draining, and storage
+
+Create the job supervisor before exposing a cancellable UI wait. The supervisor holds a strong reference to the process and owns stream readers, spool sinks, temporary output, and the terminal result. A UI cancel request sets a job cancellation event; it must not cancel the supervisor task. Cancellation requested while launch is still pending is latched and acted on as soon as a process handle is available. Process creation itself can take time that OS APIs cannot necessarily interrupt, so report “starting” separately and do not promise a hard spawn-time deadline [S6, lines 55–61](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst#L55).
+
+Launch with asyncio.create_subprocess_exec(program, *args, stdin=DEVNULL, stdout=PIPE, stderr=PIPE, limit=65536, ...). The limit tunes each StreamReader's buffering behavior. It is not a cap on the combined output or on communicate()'s returned data. CPython documents communicate() as buffering all bytes in memory and unsuitable for large or unlimited output; its implementation reads both streams concurrently and returns complete byte strings. See [S1, create_subprocess_exec and communicate](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst#L64) and [S2, communicate implementation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py#L157).
+
+Start one pump for stdout and one for stderr before waiting for process completion. Each pump repeatedly reads a fixed-size chunk (for example, at most 64 KiB), updates the shared 1 MiB raw-byte tail, and submits data to a bounded spool queue. Never read stdout to EOF and then start stderr: a child can fill stderr and block before stdout reaches EOF. Never await only proc.wait() with unread pipes. The asyncio docs warn that unread PIPEs can deadlock, while communicate() avoids that by reading both streams. See [S1, wait and communicate](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst#L179), [S2](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py#L157), and [S8, StreamReader buffering](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/streams.py#L493).
+
+Use a bounded writer worker rather than blocking the event loop on disk writes or queuing unbounded chunks in memory. Reserve quota bytes before enqueue/write so concurrent stdout and stderr pumps cannot race past the cap. Keep stdout and stderr in separate binary files. At quota exhaustion, write only the allowed prefix of the current chunk, mark the affected logs as quota-truncated, then keep draining and discard subsequent disk bytes. Continue maintaining the in-memory tail even after the disk quota is exhausted. On an I/O error, stop attempting writes, continue draining both pipes to protect process liveness, and finish with a visible log-storage error.
+
+Store bytes, not decoded lines, in the tail and spool. Decode only for display with replacement for invalid UTF-8; do not retain another unbounded decoded copy. A shared byte-budgeted tail can show the most recent combined output with stream labels. If the UI needs independently retained tails, split the same 1 MiB budget between them or use a shared eviction policy. Include per-stream bytes observed/stored, quota-truncation flags, and optionally rolling digests in the result.
+
+Write logs and validation output under an exclusively created per-job directory. Keep partial validation artifacts private and remove them on cancellation or failure. Publish successful outputs atomically only after exit status and output checks pass. Restart cleanup may remove only paths carrying this component's verified job marker beneath its own directory; it must not follow symlinks or remove arbitrary user paths. Stale-file cleanup is not process-tree cleanup and does not prove a child left running after an application crash was stopped.
+
+## Timeout, cancellation, and terminal result
+
+Keep one process-wait task owned by the supervisor. Race it against the cancel event and the runtime deadline with asyncio.wait(..., timeout=...), which leaves pending tasks running. Do not treat asyncio.wait_for(proc.wait(), timeout=...) as a kill operation. wait_for cancels the awaited task and raises TimeoutError; it does not terminate the OS child. CPython's own subprocess regression test cancels a Process.wait task, then explicitly kills and waits for the process. See [S4, wait_for and wait](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst#L761), [S5, implementation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py#L459), and [S3, cancellation regression test](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py#L504).
+
+On cancellation or timeout, keep the reader pumps active while stopping the direct child so output can still drain. On POSIX, call terminate() (SIGTERM), wait for a short configured grace interval, then call kill() (SIGKILL) if the direct child remains alive; await/reap that child before finalizing. On Windows, asyncio terminate() invokes TerminateProcess and kill() is an alias, so there is no equivalent SIGTERM-to-SIGKILL escalation. A console-aware tool may optionally receive CTRL_BREAK_EVENT if it was created with CREATE_NEW_PROCESS_GROUP, but do not rely on that for GUI or arbitrary executables. Keep this direct-child behavior explicit. See [S1, terminate/kill](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst#L222).
+
+Use terminal outcomes such as passed, tool_failed, timed_out, cancelled, launch_failed, log_io_error, output_incomplete, and supervisor_error. Include return code, validation-output result, log status, and whether the direct child was reaped. A result is not passed if exit is nonzero, required output checks fail, or log storage failed. A normal quota truncation remains explicitly visible and may be allowed by product policy. Do not mark cancellation or timeout terminal until the direct child is reaped and streams have been drained or the supported-tool EOF rule has failed visibly. If inherited handles can hold a stream open, a bounded EOF grace period and explicit pipe closure need a supported transport owner; high-level Process documents no public per-pipe close method [S1, Process API](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst#L152).
+
+## Windows and input handling
+
+On Windows, asyncio subprocesses require ProactorEventLoop; it is the default loop in CPython 3.13.9. SelectorEventLoop does not support subprocesses. If the desktop application embeds asyncio or installs a custom loop, check this at startup and return a clear unsupported-runtime error. See [S1, Windows subprocess note](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst#L103) and [S7, Windows platform constraints](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-platforms.rst#L49).
+
+An argument sequence avoids shell command construction, but Windows CreateProcess receives a command-line string and CPython converts the sequence using Microsoft C runtime rules. A target program with a custom parser may interpret it differently. Do not claim a universal quoting or injection guarantee. Reject .bat/.cmd by default when arguments can include untrusted values: CPython documents that Windows may launch batch files through a system shell and parse their arguments under shell rules. See [S6, Windows argument conversion](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst#L429) and [S6, batch-file behavior](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst#L767).
+
+## Alternatives and why this design is selected
+
+- Use communicate() for genuinely small, known-bounded output when holding both complete byte strings in memory is acceptable. It handles stdin closure, both output streams, EOF, and process wait together; it is unsuitable for this unbounded-output requirement.
+- Concurrent stream pumps plus bounded spooling are selected because the component needs live output, separate streams, a capped memory tail, and controlled disk retention. They require explicit coordination for cancellation, backpressure, log-write errors, and EOF.
+- Redirecting stdout/stderr directly to files can reduce Python buffering and simplify the pumps, but does not provide immediate live output. A file handle alone does not enforce a disk quota; use an enforced filesystem quota or a separately tested monitor/termination policy. Redirect to separate files to preserve stream identity.
+- stderr=STDOUT simplifies to one pipe but loses stream identity. It may be suitable only if combined output is more useful than separate diagnostics.
+- Low-level subprocess protocols/transports are an option if the product needs explicit pipe closure or custom backpressure beyond the high-level Process API. That choice needs focused Linux and Windows validation.
+
+## Proposed validation plan
+
+Run these in the product repository before release; none was run for this review.
+
+1. Launch a helper that writes more than the OS pipe capacity to stdout and stderr simultaneously. Assert completion without deadlock and verify byte counts/hashes in each separate file.
+2. Write well beyond both quotas. Assert the shared in-memory tail never exceeds 1,048,576 raw bytes, files never exceed configured per-job and aggregate caps, truncation metadata is correct, and the helper still reaches exit.
+3. Test exact quota boundaries and concurrent stream races. Assert the combined file bytes never exceed the cap, including the partial final chunk.
+4. Simulate a disk-full, permission, and writer error. Confirm both pipes continue draining, the direct child is reaped, and the terminal result is log_io_error rather than passed.
+5. Cover exit 0 with valid outputs, exit 0 with invalid outputs, nonzero exit, missing executable, invalid UTF-8, and output publication/removal rules.
+6. Have a helper ignore POSIX SIGTERM; request both timeout and user cancellation. Verify escalation to SIGKILL, direct-child reaping, preserved bounded diagnostics, and distinct timed_out/cancelled results. On Windows verify Proactor operation and the documented forceful terminate behavior.
+7. Cancel the UI waiter while a job runs. Confirm cancellation is delivered through the job handle and the supervisor continues cleanup rather than being cancelled with the waiter.
+8. On Windows test paths and arguments containing spaces, quotes, Unicode, and shell metacharacters with the supported executable type. Verify .bat/.cmd rejection or a separately reviewed, allowlisted policy.
+9. Test tools that exit while a descendant keeps stdout/stderr open. The initial policy must either reject that behavior with output_incomplete after bounded cleanup, or add a separately implemented pipe/tree-management layer. Do not count such a test as proof of process-tree containment.
+10. Test application restart cleanup against valid stale job directories, malformed markers, symlinks, and unrelated files. Confirm cleanup never crosses the component-owned directory.
+
+The upstream CPython tests are evidence about CPython's implementation and regression coverage, not evidence that this asset-validator component has passed any of these tests. No asset tool, leak test, Windows run, throughput measurement, or runtime witness was performed.

@@ -1,0 +1,135 @@
+{
+  "packets": [
+    {
+      "case": "B05-P01",
+      "path": "notifications/B05-P01.json",
+      "original_sha256": "f3fcc61d262bb4b7a76f51845d3a82e9178429e220844bb610a58ce3d19cb994"
+    },
+    {
+      "case": "B04-P01",
+      "path": "notifications/B04-P01.json",
+      "original_sha256": "f3131a22da06a32f8212383707b090b3805a92cb2bc91824c288d7c696ac9f44"
+    },
+    {
+      "case": "B04-P02",
+      "path": "notifications/B04-P02.json",
+      "original_sha256": "29f52472cdaa611d1828edf6ef049a33f8bcea5048619fa93696f17b7d933670"
+    },
+    {
+      "case": "B05-P02",
+      "path": "notifications/B05-P02.json",
+      "original_sha256": "3c1c10a0ee8caa621309048da6ddc487405c814eed5a456a4aeca44f0601410b"
+    },
+    {
+      "case": "B08-P01",
+      "path": "notifications/B08-P01.json",
+      "original_sha256": "310c41c4b5435d9a349bb881e1685e874a3708341cd889bbc10fba8584e7db3d"
+    },
+    {
+      "case": "B08-P02",
+      "path": "notifications/B08-P02.json",
+      "original_sha256": "608e914eb732bacefdb7e4c29aa7b8d237af6ce1990888213c2007e2074217bf"
+    }
+  ],
+  "checks": [
+    {
+      "arm_id": "B05-P01-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 16,
+      "admission_files_verified": 14,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 36,
+      "admission_files_verified": 35,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B04-P01-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 32,
+      "admission_files_verified": 32,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B04-P01-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 32,
+      "admission_files_verified": 32,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B04-P02-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 29,
+      "admission_files_verified": 29,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 29,
+      "admission_files_verified": 29,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B05-P02-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 16,
+      "admission_files_verified": 14,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B05-P02-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 73,
+      "admission_files_verified": 36,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B08-P01-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 29,
+      "admission_files_verified": 28,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B08-P01-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 33,
+      "admission_files_verified": 28,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B08-P02-control",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 34,
+      "admission_files_verified": 28,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    },
+    {
+      "arm_id": "B08-P02-treatment",
+      "authored_manifest_sha256_verified": true,
+      "authored_files_verified": 35,
+      "admission_files_verified": 28,
+      "overlapping_admitted_and_frozen_bytes_equal": true,
+      "native_response_identity_matches_packet": true
+    }
+  ],
+  "result": "PASS",
+  "native_calls_during_publication": 0,
+  "scientific_tests_during_publication": 0
+}

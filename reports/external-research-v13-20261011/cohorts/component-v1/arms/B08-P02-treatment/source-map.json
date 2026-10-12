@@ -1,0 +1,287 @@
+{
+  "case": "B08-P02",
+  "arm": "treatment",
+  "purpose": "Map final claims and sections to public primary sources and actual bounded witness evidence.",
+  "target": {
+    "python": "CPython 3.13.9 per brief",
+    "unicode_database": "15.1.0 per pinned CPython documentation",
+    "cpython_source_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "runtime_actually_observed": "CPython 3.14.4, Unicode 16.0.0",
+    "target_runtime_executed": false
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; docs identify UCD 15.1.0",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "exact_locators": [
+        {
+          "lines_1based": [
+            18,
+            21
+          ],
+          "scope": "UCD version used by the pinned module"
+        },
+        {
+          "lines_1based": [
+            157,
+            183
+          ],
+          "scope": "normalize forms; NFKC compatibility decomposition followed by canonical composition; examples of canonical and compatibility equivalence"
+        },
+        {
+          "lines_1based": [
+            200,
+            203
+          ],
+          "scope": "unicodedata.unidata_version contract"
+        }
+      ],
+      "limitations": "Documentation, not execution of the target binary; does not specify product search semantics."
+    },
+    {
+      "id": "S2",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "exact_locators": [
+        {
+          "lines_1based": [
+            1699,
+            1714
+          ],
+          "scope": "str.casefold intended for caseless matching; more aggressive than lower; sharp-s example; points to Unicode Default Case Folding"
+        }
+      ],
+      "limitations": "Does not establish locale tailoring, compatibility normalization, byte bounds, or source-offset mapping."
+    },
+    {
+      "id": "S3",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "exact_locators": [
+        {
+          "lines_1based": [
+            914,
+            921
+          ],
+          "scope": "upstream casefold test examples including sharp-s and ligature expansion"
+        }
+      ],
+      "limitations": "Test source was inspected, not run; examples are not exhaustive."
+    },
+    {
+      "id": "S4",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "exact_locators": [
+        {
+          "lines_1based": [
+            390,
+            400
+          ],
+          "scope": "normalization data load can skip when data is unavailable"
+        },
+        {
+          "lines_1based": [
+            402,
+            459
+          ],
+          "scope": "NFC/NFD/NFKC/NFKD checks driven by test data and code-point iteration"
+        },
+        {
+          "lines_1based": [
+            461,
+            468
+          ],
+          "scope": "normalization edge-case tests"
+        }
+      ],
+      "limitations": "Test source only; no conformance suite executed here."
+    },
+    {
+      "id": "S5",
+      "public_primary_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "version_or_pin": "CPython source commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "exact_locators": [
+        {
+          "lines_1based": [
+            9715,
+            9729
+          ],
+          "scope": "casefold loops through source code points and appends mapped output code points"
+        },
+        {
+          "lines_1based": [
+            9763,
+            9801
+          ],
+          "scope": "case operation allocates output sized for up to three mapped code points per input code point"
+        },
+        {
+          "lines_1based": [
+            10682,
+            10688
+          ],
+          "scope": "CPython str.casefold dispatch"
+        }
+      ],
+      "limitations": "Casefold implementation only; does not describe normalization mapping or UTF-8 output size."
+    },
+    {
+      "id": "S6",
+      "public_primary_url": "https://unicode.org/cldr/charts/44/supplemental/character_fallback_substitutions.html",
+      "version_or_pin": "Unicode CLDR chart 44; U+FDFA row viewed at line 2749; no file hash available",
+      "sha256": null,
+      "exact_locators": [
+        {
+          "line_1based": 2749,
+          "scope": "U+FDFA NFKC substitution sequence: 18 code points including spaces"
+        }
+      ],
+      "limitations": "Public CLDR compatibility fallback chart, not CPython implementation execution; the witness measures actual Python 3.14.4/UCD16.0 behavior."
+    },
+    {
+      "id": "S7",
+      "public_primary_url": "https://cldr.unicode.org/downloads/cldr-44",
+      "version_or_pin": "CLDR 44 release note",
+      "sha256": null,
+      "exact_locators": [
+        {
+          "lines_1based": [
+            9,
+            13
+          ],
+          "scope": "CLDR 44 release overview and Unicode 15.1 additions"
+        },
+        {
+          "lines_1based": [
+            183,
+            184
+          ],
+          "scope": "release note records unicodeVersion correction in 44.1"
+        }
+      ],
+      "limitations": "Release context only; not used as the normalization algorithm or as the CPython version oracle."
+    }
+  ],
+  "final_section_claims": [
+    {
+      "section": "Decision; Representations and search modes",
+      "claims": [
+        "Original text remains authoritative and unmodified",
+        "Exact product-defined one-pass NFKC-then-casefold compatibility key",
+        "literal and compatibility-caseless substring modes",
+        "versioned algorithm and explicit semantic limits"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "witness_paths": [
+        "witnesses/size-and-offset-witness.stdout.json"
+      ],
+      "governing_scope": "CPython 3.13.9 target per brief; pinned CPython docs at commit; UCD 15.1.0.",
+      "unresolved_uncertainty": "Exact CPython 3.13.9 executable behavior was not run; locale-specific, confusable, and formal NFKC_Casefold behavior are outside the proposal."
+    },
+    {
+      "section": "The 4096-byte stored-key rule",
+      "claims": [
+        "Measure post-transform strict UTF-8 payload bytes",
+        "Original-size guard does not imply transformed-key cap",
+        "Oversized key must not be persisted or truncated; original remains"
+      ],
+      "primary_sources": [
+        "S1",
+        "S6",
+        "S7"
+      ],
+      "witness_paths": [
+        "witnesses/size-and-offset-witness.py",
+        "witnesses/size-and-offset-witness.stdout.json",
+        "witnesses/execution-record.md"
+      ],
+      "governing_scope": "K(s)=NFKC(s).casefold(); valid Unicode input; stored-key payload units are UTF-8 bytes; cap is 4096.",
+      "unresolved_uncertainty": "Witness runtime is Python 3.14.4/UCD16.0; target Python3.13.9/UCD15.1 exact execution remains required. CLDR chart mapping is an independent primary-data source."
+    },
+    {
+      "section": "Highlighting and offsets",
+      "claims": [
+        "Key offsets are not source offsets",
+        "Do not use nearest-character guess",
+        "Compatibility substring highlights disabled until provenance mapping and renderer tests"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "witness_paths": [
+        "witnesses/size-and-offset-witness.stdout.json"
+      ],
+      "governing_scope": "Python string/code-point spans in transformed keys versus original source; grapheme and renderer units differ.",
+      "unresolved_uncertainty": "No UI renderer or grapheme-safe highlight implementation was tested."
+    },
+    {
+      "section": "Alternatives and boundaries",
+      "claims": [
+        "Literal, NFC-plus-casefold, NFKC-plus-casefold, and locale-aware alternatives have distinct tradeoffs",
+        "NFKC/casefold do not promise visual-confusable detection or identity security"
+      ],
+      "primary_sources": [
+        "S1",
+        "S2"
+      ],
+      "witness_paths": [],
+      "governing_scope": "Search product contract; non-security search keys.",
+      "unresolved_uncertainty": "No locale-aware search engine or confusable data was inspected; such behavior is future scope."
+    },
+    {
+      "section": "Validation status and release gates",
+      "claims": [
+        "Mapped upstream source/tests inspected, not executed",
+        "Need target runtime and upstream normalization/casefold execution before release",
+        "Witness is bounded, not proof"
+      ],
+      "primary_sources": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6"
+      ],
+      "witness_paths": [
+        "witnesses/size-and-offset-witness.py",
+        "witnesses/size-and-offset-witness.stdout.json",
+        "witnesses/size-and-offset-witness.stderr.txt",
+        "witnesses/target-python-3.13-check.stderr.txt",
+        "witnesses/execution-record.md"
+      ],
+      "governing_scope": "Actual witness runtime CPython 3.14.4/UCD16.0; target CPython 3.13.9/UCD15.1 per brief and docs.",
+      "unresolved_uncertainty": "No target runtime, conformance suite, note storage/index migration, or UI/highlight test executed."
+    }
+  ],
+  "execution_evidence": {
+    "witness_code": "witnesses/size-and-offset-witness.py",
+    "witness_stdout": "witnesses/size-and-offset-witness.stdout.json",
+    "witness_stderr": "witnesses/size-and-offset-witness.stderr.txt",
+    "execution_record": "witnesses/execution-record.md",
+    "observed_python": "3.14.4",
+    "observed_unicode_database": "16.0.0",
+    "target_python_check": "python3.13 command returned exit 127 (command not found)"
+  },
+  "execution_metadata": {
+    "requested_route": "Luna Max Standard",
+    "actual_provider_model_service_tier": "unknown; native Goal create and completion receipts expose no such fields",
+    "receipts": [
+      "native-goal-create.json",
+      "native-goal-terminal.json"
+    ]
+  }
+}

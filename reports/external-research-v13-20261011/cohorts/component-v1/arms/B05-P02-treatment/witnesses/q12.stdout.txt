@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S2", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py", "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df", "range_1based": [232, 343], "full_lines": 513}
+232: 
+233: 
+234: class Sniffer:
+235:     '''
+236:     "Sniffs" the format of a CSV file (i.e. delimiter, quotechar)
+237:     Returns a Dialect object.
+238:     '''
+239:     def __init__(self):
+240:         # in case there is more than one possible delimiter
+241:         self.preferred = [',', '\t', ';', ' ', ':']
+242: 
+243: 
+244:     def sniff(self, sample, delimiters=None):
+245:         """
+246:         Returns a dialect (or None) corresponding to the sample
+247:         """
+248: 
+249:         quotechar, doublequote, delimiter, skipinitialspace = \
+250:                    self._guess_quote_and_delimiter(sample, delimiters)
+251:         if not delimiter:
+252:             delimiter, skipinitialspace = self._guess_delimiter(sample,
+253:                                                                 delimiters)
+254: 
+255:         if not delimiter:
+256:             raise Error("Could not determine delimiter")
+257: 
+258:         class dialect(Dialect):
+259:             _name = "sniffed"
+260:             lineterminator = '\r\n'
+261:             quoting = QUOTE_MINIMAL
+262:             # escapechar = ''
+263: 
+264:         dialect.doublequote = doublequote
+265:         dialect.delimiter = delimiter
+266:         # _csv.reader won't accept a quotechar of ''
+267:         dialect.quotechar = quotechar or '"'
+268:         dialect.skipinitialspace = skipinitialspace
+269: 
+270:         return dialect
+271: 
+272: 
+273:     def _guess_quote_and_delimiter(self, data, delimiters):
+274:         """
+275:         Looks for text enclosed between two identical quotes
+276:         (the probable quotechar) which are preceded and followed
+277:         by the same character (the probable delimiter).
+278:         For example:
+279:                          ,'some text',
+280:         The quote with the most wins, same with the delimiter.
+281:         If there is no quotechar the delimiter can't be determined
+282:         this way.
+283:         """
+284: 
+285:         matches = []
+286:         for restr in (r'(?P<delim>[^\w\n"\'])(?P<space> ?)(?P<quote>["\']).*?(?P=quote)(?P=delim)', # ,".*?",
+287:                       r'(?:^|\n)(?P<quote>["\']).*?(?P=quote)(?P<delim>[^\w\n"\'])(?P<space> ?)',   #  ".*?",
+288:                       r'(?P<delim>[^\w\n"\'])(?P<space> ?)(?P<quote>["\']).*?(?P=quote)(?:$|\n)',   # ,".*?"
+289:                       r'(?:^|\n)(?P<quote>["\']).*?(?P=quote)(?:$|\n)'):                            #  ".*?" (no delim, no space)
+290:             regexp = re.compile(restr, re.DOTALL | re.MULTILINE)
+291:             matches = regexp.findall(data)
+292:             if matches:
+293:                 break
+294: 
+295:         if not matches:
+296:             # (quotechar, doublequote, delimiter, skipinitialspace)
+297:             return ('', False, None, 0)
+298:         quotes = {}
+299:         delims = {}
+300:         spaces = 0
+301:         groupindex = regexp.groupindex
+302:         for m in matches:
+303:             n = groupindex['quote'] - 1
+304:             key = m[n]
+305:             if key:
+306:                 quotes[key] = quotes.get(key, 0) + 1
+307:             try:
+308:                 n = groupindex['delim'] - 1
+309:                 key = m[n]
+310:             except KeyError:
+311:                 continue
+312:             if key and (delimiters is None or key in delimiters):
+313:                 delims[key] = delims.get(key, 0) + 1
+314:             try:
+315:                 n = groupindex['space'] - 1
+316:             except KeyError:
+317:                 continue
+318:             if m[n]:
+319:                 spaces += 1
+320: 
+321:         quotechar = max(quotes, key=quotes.get)
+322: 
+323:         if delims:
+324:             delim = max(delims, key=delims.get)
+325:             skipinitialspace = delims[delim] == spaces
+326:             if delim == '\n': # most likely a file with a single column
+327:                 delim = ''
+328:         else:
+329:             # there is *no* delimiter, it's a single column of quoted data
+330:             delim = ''
+331:             skipinitialspace = 0
+332: 
+333:         # if we see an extra quote between delimiters, we've got a
+334:         # double quoted format
+335:         dq_regexp = re.compile(
+336:                                r"((%(delim)s)|^)\W*%(quote)s[^%(delim)s\n]*%(quote)s[^%(delim)s\n]*%(quote)s\W*((%(delim)s)|$)" % \
+337:                                {'delim':re.escape(delim), 'quote':quotechar}, re.MULTILINE)
+338: 
+339: 
+340: 
+341:         if dq_regexp.search(data):
+342:             doublequote = True
+343:         else:

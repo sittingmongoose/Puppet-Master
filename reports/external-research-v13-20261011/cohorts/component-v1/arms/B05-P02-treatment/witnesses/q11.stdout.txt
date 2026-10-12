@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S2", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py", "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df", "range_1based": [133, 244], "full_lines": 513}
+133: 
+134: class unix_dialect(Dialect):
+135:     """Describe the usual properties of Unix-generated CSV files."""
+136:     delimiter = ','
+137:     quotechar = '"'
+138:     doublequote = True
+139:     skipinitialspace = False
+140:     lineterminator = '\n'
+141:     quoting = QUOTE_ALL
+142: register_dialect("unix", unix_dialect)
+143: 
+144: 
+145: class DictReader:
+146:     def __init__(self, f, fieldnames=None, restkey=None, restval=None,
+147:                  dialect="excel", *args, **kwds):
+148:         if fieldnames is not None and iter(fieldnames) is fieldnames:
+149:             fieldnames = list(fieldnames)
+150:         self._fieldnames = fieldnames   # list of keys for the dict
+151:         self.restkey = restkey          # key to catch long rows
+152:         self.restval = restval          # default value for short rows
+153:         self.reader = reader(f, dialect, *args, **kwds)
+154:         self.dialect = dialect
+155:         self.line_num = 0
+156: 
+157:     def __iter__(self):
+158:         return self
+159: 
+160:     @property
+161:     def fieldnames(self):
+162:         if self._fieldnames is None:
+163:             try:
+164:                 self._fieldnames = next(self.reader)
+165:             except StopIteration:
+166:                 pass
+167:         self.line_num = self.reader.line_num
+168:         return self._fieldnames
+169: 
+170:     @fieldnames.setter
+171:     def fieldnames(self, value):
+172:         self._fieldnames = value
+173: 
+174:     def __next__(self):
+175:         if self.line_num == 0:
+176:             # Used only for its side effect.
+177:             self.fieldnames
+178:         row = next(self.reader)
+179:         self.line_num = self.reader.line_num
+180: 
+181:         # unlike the basic reader, we prefer not to return blanks,
+182:         # because we will typically wind up with a dict full of None
+183:         # values
+184:         while row == []:
+185:             row = next(self.reader)
+186:         d = dict(zip(self.fieldnames, row))
+187:         lf = len(self.fieldnames)
+188:         lr = len(row)
+189:         if lf < lr:
+190:             d[self.restkey] = row[lf:]
+191:         elif lf > lr:
+192:             for key in self.fieldnames[lr:]:
+193:                 d[key] = self.restval
+194:         return d
+195: 
+196:     __class_getitem__ = classmethod(types.GenericAlias)
+197: 
+198: 
+199: class DictWriter:
+200:     def __init__(self, f, fieldnames, restval="", extrasaction="raise",
+201:                  dialect="excel", *args, **kwds):
+202:         if fieldnames is not None and iter(fieldnames) is fieldnames:
+203:             fieldnames = list(fieldnames)
+204:         self.fieldnames = fieldnames    # list of keys for the dict
+205:         self.restval = restval          # for writing short dicts
+206:         extrasaction = extrasaction.lower()
+207:         if extrasaction not in ("raise", "ignore"):
+208:             raise ValueError("extrasaction (%s) must be 'raise' or 'ignore'"
+209:                              % extrasaction)
+210:         self.extrasaction = extrasaction
+211:         self.writer = writer(f, dialect, *args, **kwds)
+212: 
+213:     def writeheader(self):
+214:         header = dict(zip(self.fieldnames, self.fieldnames))
+215:         return self.writerow(header)
+216: 
+217:     def _dict_to_list(self, rowdict):
+218:         if self.extrasaction == "raise":
+219:             wrong_fields = rowdict.keys() - self.fieldnames
+220:             if wrong_fields:
+221:                 raise ValueError("dict contains fields not in fieldnames: "
+222:                                  + ", ".join([repr(x) for x in wrong_fields]))
+223:         return (rowdict.get(key, self.restval) for key in self.fieldnames)
+224: 
+225:     def writerow(self, rowdict):
+226:         return self.writer.writerow(self._dict_to_list(rowdict))
+227: 
+228:     def writerows(self, rowdicts):
+229:         return self.writer.writerows(map(self._dict_to_list, rowdicts))
+230: 
+231:     __class_getitem__ = classmethod(types.GenericAlias)
+232: 
+233: 
+234: class Sniffer:
+235:     '''
+236:     "Sniffs" the format of a CSV file (i.e. delimiter, quotechar)
+237:     Returns a Dialect object.
+238:     '''
+239:     def __init__(self):
+240:         # in case there is more than one possible delimiter
+241:         self.preferred = [',', '\t', ';', ' ', ':']
+242: 
+243: 
+244:     def sniff(self, sample, delimiters=None):

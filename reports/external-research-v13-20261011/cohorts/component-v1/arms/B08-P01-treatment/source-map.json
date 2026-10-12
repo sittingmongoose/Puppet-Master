@@ -1,0 +1,385 @@
+{
+  "case": "B08-P01",
+  "arm": "treatment",
+  "version_scope": "CPython 3.13.9",
+  "primary_sources": {
+    "S1": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "exact_locators": {
+        "queue maxsize and cap": "Queue class, lines 26-47",
+        "thread safety": "Queues overview and Queue class, lines 197-216",
+        "qsize and join semantics": "Queue methods, lines 74-102",
+        "put and graceful shutdown": "Queue put/shutdown, lines 85-120",
+        "immediate shutdown caveat": "Queue.shutdown, lines 122-134",
+        "task_done semantics": "Queue.task_done, lines 136-150"
+      },
+      "governing_scope": "Public asyncio.Queue API docs for this pinned CPython release; queue entries and acknowledgments, not application conversion outcomes.",
+      "unresolved_uncertainty": "No uncertainty for cited API text at this pin; app admission ledger and output behavior are not specified."
+    },
+    "S2": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "exact_locators": {
+        "put accounting and bounds": "Queue.put through put_nowait, lines 125-169",
+        "get behavior": "Queue.get through get_nowait, lines 172-217",
+        "qsize and maxsize": "Queue.qsize through full, lines 101-123",
+        "task_done and join": "Queue.task_done and Queue.join, lines 219-248",
+        "immediate shutdown accounting": "Queue.shutdown, lines 250-278"
+      },
+      "governing_scope": "Exact asyncio queue implementation at the v3.13.9 commit; supplements API docs but does not provide application outcome tracking.",
+      "unresolved_uncertainty": "No uncertainty about cited source lines; execution in this task used CPython 3.14.4, not this implementation."
+    },
+    "S3": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "exact_locators": {
+        "task_done underflow and ordinary join": "Join tests, lines 449-521",
+        "graceful shutdown": "Shutdown tests, lines 536-624",
+        "immediate shutdown and retrieved unfinished item": "Shutdown tests, lines 626-700"
+      },
+      "governing_scope": "Upstream regression tests for CPython queue semantics. Read but not executed here; these do not validate the converter."
+    },
+    "S4": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst#task-cancellation",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": {
+        "cancellation delivery and cleanup": "Task Cancellation section: CancelledError is raised at a cancellation opportunity; try/finally cleanup is recommended; cancellation normally propagates after cleanup."
+      },
+      "governing_scope": "Asyncio task cancellation behavior for coroutine tasks.",
+      "unresolved_uncertainty": "Commit-pinned path, but no local SHA-256 collected for this additional primary lookup; does not cover external process termination."
+    },
+    "S5": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-dev.rst#running-blocking-code",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": {
+        "blocking execution": "Running Blocking Code section: blocking CPU work delays concurrent tasks; executors can move work off the event-loop thread."
+      },
+      "governing_scope": "Guidance for avoiding event-loop blockage, not a benchmark or converter-specific executor selection.",
+      "unresolved_uncertainty": "Commit-pinned path, but no local SHA-256 collected for this additional primary lookup."
+    },
+    "S6": {
+      "public_primary_url": "https://github.com/python/cpython/releases/tag/v3.13.9",
+      "version": "CPython v3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": {
+        "release identity": "Official v3.13.9 release page; verified tag shows short commit 8183fa5 matching the full source-index commit."
+      },
+      "governing_scope": "Release/tag identity only.",
+      "unresolved_uncertainty": "None material to mapping the source-index pin to CPython 3.13.9."
+    },
+    "S7": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": {
+        "os.replace behavior": "os.replace, lines 2884-2899: may fail across filesystems; if successful the rename is atomic (POSIX requirement); existing file destination is silently replaced when permitted."
+      },
+      "governing_scope": "Python os.replace documentation. It does not by itself enforce this product's no-overwrite policy or establish behavior on every target filesystem.",
+      "unresolved_uncertainty": "Commit-pinned path, but no local SHA-256 collected; supported desktop filesystem behavior still requires testing."
+    },
+    "S8": {
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/tempfile.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "sha256": null,
+      "exact_locators": {
+        "NamedTemporaryFile": "NamedTemporaryFile behavior and deletion options, lines 257-289",
+        "secure temp creation": "mkstemp secure creation, lines 325-331"
+      },
+      "governing_scope": "Python temporary-file API guidance. It does not define converter output validation or recovery after abrupt process termination.",
+      "unresolved_uncertainty": "Commit-pinned path, but no local SHA-256 collected; Windows and supported destination behavior need application tests."
+    }
+  },
+  "final_claim_map": [
+    {
+      "final_section": "Recommendation",
+      "claim_scope": "Queue maxsize limits waiting entries; four workers add up to four retrieved jobs; queues are not thread-safe.",
+      "evidence": [
+        "S1",
+        "S2",
+        "W1"
+      ]
+    },
+    {
+      "final_section": "Job states, acceptance, and progress",
+      "claim_scope": "Queue size is waiting entries; acceptance occurs on successful put; queue size and join do not express business success.",
+      "evidence": [
+        "S1",
+        "S2",
+        "W1"
+      ]
+    },
+    {
+      "final_section": "Worker and output contract",
+      "claim_scope": "One task_done per retrieved job; failures/cancellations remain non-success; temp creation and replacement API limits.",
+      "evidence": [
+        "S2",
+        "S3",
+        "S4",
+        "S7",
+        "S8"
+      ]
+    },
+    {
+      "final_section": "Stop lifecycle — graceful",
+      "claim_scope": "Graceful shutdown rejects new/blocked putters while already queued work remains drainable; join reflects queue acknowledgments.",
+      "evidence": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "final_section": "Stop lifecycle — force-stop correction",
+      "claim_scope": "Immediate shutdown drains waiting work and adjusts unfinished count; join may return without conversions succeeding; an active retrieved item remains separately unfinished until acknowledgment.",
+      "evidence": [
+        "S1",
+        "S2",
+        "S3",
+        "W1"
+      ]
+    },
+    {
+      "final_section": "Stop lifecycle — cancellation limits",
+      "claim_scope": "Task cancellation is cooperative and blocking CPU work can delay the event loop; child-process termination is outside this queue layer.",
+      "evidence": [
+        "S4",
+        "S5"
+      ]
+    },
+    {
+      "final_section": "Capacity and throughput estimate",
+      "claim_scope": "24 accepted nonterminal queue-plus-worker jobs under stated assumptions; 12-job 6-second and 120-job 2/s idealized schedule.",
+      "evidence": [
+        "S1",
+        "S2",
+        "W1"
+      ]
+    },
+    {
+      "final_section": "Alternatives",
+      "claim_scope": "shutdown() exists in 3.13; sentinel fallback is for older targets; blocking work requires separate execution choices.",
+      "evidence": [
+        "S1",
+        "S5",
+        "S6"
+      ]
+    },
+    {
+      "final_section": "Validation status and next checks",
+      "claim_scope": "Executed witness scope, runtime, results, and limits; upstream tests inspected but not run; application tests and measurements remain future validation.",
+      "evidence": [
+        "S3",
+        "W1"
+      ]
+    },
+    {
+      "final_section": "History and scope limits",
+      "claim_scope": "Draft history preserved; no deployment, crash-recovery, or discovery-effectiveness claim.",
+      "evidence": [
+        "W1"
+      ]
+    }
+  ],
+  "criticism_disposition_evidence": {
+    "C01": [
+      "S1",
+      "S2",
+      "W1"
+    ],
+    "C02": [
+      "S1",
+      "S2"
+    ],
+    "C03": [
+      "S1"
+    ],
+    "C04": [
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "C05": [
+      "S1",
+      "S3"
+    ],
+    "C06": [
+      "S1",
+      "S2",
+      "S3",
+      "W1"
+    ],
+    "C07": [
+      "S2",
+      "S4"
+    ],
+    "C08": [
+      "S7",
+      "S8"
+    ],
+    "C09": [
+      "W1"
+    ],
+    "C10": [
+      "W1"
+    ],
+    "C11": [
+      "S1",
+      "S6"
+    ],
+    "C12": [
+      "S5"
+    ],
+    "C13": [
+      "S1",
+      "S2",
+      "S3",
+      "W1"
+    ],
+    "C14": [
+      "S3",
+      "W1"
+    ],
+    "C15": [
+      "S1"
+    ],
+    "C16": [
+      "S4"
+    ]
+  },
+  "executed_witness": {
+    "id": "W1",
+    "code_path": "witnesses/queue_and_capacity_witness.py",
+    "code_sha256": "0928e692fe7be260eff7d22bf2d070510ccadb97d39cce433c114da3809eeeab",
+    "command": "python3 -B ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P01-treatment/witnesses/queue_and_capacity_witness.py",
+    "runtime": "CPython 3.14.4 (from saved stdout)",
+    "stdout_path": "witnesses/queue_and_capacity_witness.stdout.txt",
+    "stdout_sha256": "eea96066d95e2c9322e4f7ce356db5d29ba18506de8ec72c40894a45f9f47cc1",
+    "stderr_path": "witnesses/queue_and_capacity_witness.stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution_record_path": "witnesses/execution-record.json",
+    "execution_record_sha256": "f445919cb197c58530b7e3140c3d1544c514518fe7ec2d2515ca4d331224e25a",
+    "result_summary": {
+      "bounded_admission": "20 waiting plus 4 retrieved; 25th put blocked and was rejected by graceful shutdown",
+      "immediate_shutdown": "waiting-only case joined without processing; active cancelled plus waiting abandoned case joined after acknowledgment; zero successes in both",
+      "deterministic_schedule": "12 jobs / 4 workers / 2.0 seconds yielded 6.0 seconds; 120 jobs yielded 2.0 jobs/second"
+    },
+    "interpretation_and_limits": [
+      "Executed on installed CPython 3.14.4, not CPython 3.13.9.",
+      "Queue behavior is corroborating evidence; exact target-version claims are separately grounded in pinned 3.13.9 sources.",
+      "The schedule is an idealized model, not a converter benchmark.",
+      "No output filesystem operation, GUI, subprocess adapter, or full application ledger was exercised."
+    ]
+  },
+  "input_provenance": {
+    "input_map_sha256": "eaee4f6d4af50fea0b833bd91dd7122e89ba5c5df51673eb9f587e38850daec5",
+    "permitted_inputs": [
+      {
+        "path": "inputs/B08-P01/brief.md",
+        "sha256": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74"
+      },
+      {
+        "path": "inputs/B08-P01/plan.md",
+        "sha256": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35"
+      },
+      {
+        "path": "inputs/B08-P01/draft.md",
+        "sha256": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019"
+      },
+      {
+        "path": "inputs/B08-P01/source-index.json",
+        "sha256": "94d988a59467f2583a56c89df29c7077e077c3d7c7e9c8a3ad9d5a2e7ff7f227"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+        "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+        "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+        "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+        "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+        "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+        "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+        "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+        "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+        "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+        "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+        "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+        "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076"
+      },
+      {
+        "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+        "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792"
+      }
+    ]
+  },
+  "route_observation": {
+    "requested": "Luna Max Standard",
+    "native_create_receipt_path": "native-goal-create.json",
+    "native_create_receipt_fields": [
+      "threadId",
+      "objective",
+      "status",
+      "tokensUsed",
+      "timeUsedSeconds",
+      "createdAt",
+      "updatedAt",
+      "remainingTokens",
+      "completionBudgetReport"
+    ],
+    "provider_model_and_service_tier_in_receipt": "unknown; response has no routing fields",
+    "environment_runtime_metadata": "gpt-6-luna with max reasoning effort",
+    "service_tier_observed": "unknown"
+  },
+  "remaining_uncertainties": [
+    "Real converter service-time and throughput distribution have not been measured.",
+    "The queue witness was not executed on CPython 3.13.9, though primary API, implementation, and regression-test sources are pinned to that exact release.",
+    "Supported operating systems and filesystem publication semantics remain to be validated.",
+    "Cancellation/termination behavior for external child processes belongs to the separate converter adapter.",
+    "Crash recovery and persistence beyond the application session are unspecified."
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "version": "component-admit-v1",
+  "scope": "COMPONENT",
+  "case": "B04-P01",
+  "arm": "control",
+  "run_id": "B04-P01-control",
+  "prepared_at_utc": "2026-10-12T00:34:23.136412Z",
+  "t0_utc": "2026-10-12T00:34:23.084488Z",
+  "whole_deadline_utc": "2026-10-12T00:59:23.084488Z",
+  "stage_deadline_utc": "2026-10-12T00:59:23.084488Z",
+  "whole_budget_s": 1500,
+  "minimum_seconds": 0,
+  "available_seconds_at_prepare": 1499.948076,
+  "native_goal_objective": "ER13 COMPONENT B04-P01-control: complete only B04-P01 control under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal.",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "observed_route": "UNKNOWN",
+  "selection_sha256": "e5322a9bc16027fd817b444592d141be9f5a9be10793fc12af17d673e429706a",
+  "fixture_ready": {
+    "case": "B04-P01",
+    "ready_utc": "2026-10-12T00:23:16.029879+00:00",
+    "manifest_sha256": "049668ec02a21bd22965a7ce3012e4905ad1f1f682e7c84854232e6a5c09c4f2",
+    "pair_raw_base_sha256": "21cfc810e8f5c6cccecfbb5dbf435c83d1d65baec9ab8a194ff465feb06ac495",
+    "max_minutes": 25,
+    "min_minutes": 0,
+    "component_not_full_discovery": true
+  },
+  "fixture_manifest_sha256": "049668ec02a21bd22965a7ce3012e4905ad1f1f682e7c84854232e6a5c09c4f2",
+  "common_raw_sha256": {
+    "brief.md": "8c8b7a9ee9f5d4c409f6f33cb33db26a5fcd2cce6e8f68864d3d952d5cff71c5",
+    "plan.md": "19d508bdaa4d1fec47c8986e939fefe1c1481afa151f59435b31773b7ff3958f",
+    "draft.md": "24c04fc3bdbf8276622b00860513ad64aef90fbd9a62f5c534e29dc06f2d70a4",
+    "source-index.json": "b2b35225fa3a0e7b74d352a9005fd0fad924a142acd5d6dccb2d29fdcd1177e6"
+  },
+  "frozen_inputs": {
+    "case": "B04-P01",
+    "arm": "control",
+    "inputs": [
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/brief.md",
+        "sha256": "8c8b7a9ee9f5d4c409f6f33cb33db26a5fcd2cce6e8f68864d3d952d5cff71c5"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/plan.md",
+        "sha256": "19d508bdaa4d1fec47c8986e939fefe1c1481afa151f59435b31773b7ff3958f"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/draft.md",
+        "sha256": "24c04fc3bdbf8276622b00860513ad64aef90fbd9a62f5c534e29dc06f2d70a4"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-index.json",
+        "sha256": "b2b35225fa3a0e7b74d352a9005fd0fad924a142acd5d6dccb2d29fdcd1177e6"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/critique.md",
+        "sha256": "fe1b646d3b5609e8976625c69ed5e7a869f0287c632fe2441398e58366227a8e"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/os.rst",
+        "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/cpython/Doc/library/shutil.rst",
+        "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/shutil.py",
+        "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/cpython/Lib/test/test_shutil.py",
+        "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S1-N1.txt",
+        "sha256": "77594c0700d6bc222e371b1ffe52530078b6cec1414efd74e5a3d26b3eb8c340"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S1-N2.txt",
+        "sha256": "bf38b682b8ec75b623dd9e621e7facf9dcda3a646517eabc6551289537eb4133"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S1-N3.txt",
+        "sha256": "ba057ccaec4dbf119d346a76e4fdd9faf61c1af115a5fb65d6a89ba45a175515"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S1-N4.txt",
+        "sha256": "535e8fb625902ad80037bc9dce949e91537ef34c32b6428cf8eff8773af4adca"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S2-N1.txt",
+        "sha256": "17f4a1f0715ac1c3237069fd6378a646c4a5f1e629c2e6ec9c9b822d2358257e"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S2-N2.txt",
+        "sha256": "c3c467adea0cc46120cbf2a4fe604ae8d465fc48c5f09e3631c6689ce5ea07fb"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S2-N3.txt",
+        "sha256": "552341dc4bc9aeaaaa9da1106e0e21beb0d778abcf24ff3ab5b96e2b5f3192fe"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S3-N1.txt",
+        "sha256": "599f1e8e30e97a2f8134fbcded6b6a07b226affb0465ff43d1406d037678bb84"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S3-N2.txt",
+        "sha256": "d50408ff51d1bdf0428f770b3abf27c990c4c466a332de8d1333f0b9a1235b89"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S3-N3.txt",
+        "sha256": "4ccd510a3c81917eec3be38dcb5dda63eb75fecb3a9a2ea9da8854098193e955"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S4-N1.txt",
+        "sha256": "86009607e7abf077b2bbe17b7ac9dcfbafb779984c1e245f61e15e18d7ea8a5c"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/inputs/B04-P01/source-cache/neighborhoods/S4-N2.txt",
+        "sha256": "06afbc47b8c1a46f8c442739ba1de2fa8a9310df072d453be6a2f2126ea9d8f9"
+      }
+    ],
+    "independent_lookup_allowed": true,
+    "cache_access": true,
+    "semantic_conclusions_shared": true,
+    "excluded": [
+      "rubric.json",
+      "findings.json",
+      "metadata.json",
+      "preparer scripts/source pool",
+      "other arms/evaluators"
+    ],
+    "reader": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P01-control/helpers/component-fixtures-v1/source_reader.py",
+      "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "usage": "python3 -B <reader> --case B04-P01 --arm control --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+    }
+  },
+  "method_delta": "Read the conventional full critique and its primary evidence; resolve it into the complete final.",
+  "tools": [
+    "functions.exec",
+    "tools.exec_command",
+    "tools.create_goal",
+    "tools.update_goal",
+    "tools.get_goal",
+    "existing primary-source web/search tools when available"
+  ],
+  "output_selection": [
+    "final.md",
+    "criticism-dispositions.md",
+    "source-map.json",
+    "witnesses/ actual code/results when used",
+    "native-goal-create.json",
+    "native-goal-terminal.json"
+  ],
+  "request_sha256": "034a5e8c3d2faad07c6130a55ff1937dc78fb8fe33f9c54230b6a384ee3850e5",
+  "assignment_sha256": "14a0d62a2e3714a483029d1d9b45bde3fd4f5d7309d2f4384a08b4bece157d8d",
+  "native_pins": {
+    "assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+    "activation-snippet-template.js": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5"
+  },
+  "discovery_effectiveness_claim": false,
+  "native_provenance_freshness": "UNKNOWN beyond exact binding checker",
+  "preparation_accounting": "arm-specific preparation/queue charged from root T0; common fixture cold acquisition/preparation separately charged by root, warm reuse disclosed"
+}

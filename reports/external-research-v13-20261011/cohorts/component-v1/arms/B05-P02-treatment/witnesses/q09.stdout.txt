@@ -1,0 +1,102 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [525, 625], "full_lines": 644}
+525: mapping fieldnames to strings or numbers (by passing them through :func:`str`
+526: first) for :class:`DictWriter` objects.  Note that complex numbers are written
+527: out surrounded by parens. This may cause some problems for other programs which
+528: read CSV files (assuming they support complex numbers at all).
+529: 
+530: 
+531: .. method:: csvwriter.writerow(row, /)
+532: 
+533:    Write the *row* parameter to the writer's file object, formatted according
+534:    to the current :class:`Dialect`. Return the return value of the call to the
+535:    *write* method of the underlying file object.
+536: 
+537:    .. versionchanged:: 3.5
+538:       Added support of arbitrary iterables.
+539: 
+540: .. method:: csvwriter.writerows(rows, /)
+541: 
+542:    Write all elements in *rows* (an iterable of *row* objects as described
+543:    above) to the writer's file object, formatted according to the current
+544:    dialect.
+545: 
+546: Writer objects have the following public attribute:
+547: 
+548: 
+549: .. attribute:: csvwriter.dialect
+550: 
+551:    A read-only description of the dialect in use by the writer.
+552: 
+553: 
+554: DictWriter objects have the following public method:
+555: 
+556: 
+557: .. method:: DictWriter.writeheader()
+558: 
+559:    Write a row with the field names (as specified in the constructor) to
+560:    the writer's file object, formatted according to the current dialect. Return
+561:    the return value of the :meth:`csvwriter.writerow` call used internally.
+562: 
+563:    .. versionadded:: 3.2
+564:    .. versionchanged:: 3.8
+565:       :meth:`writeheader` now also returns the value returned by
+566:       the :meth:`csvwriter.writerow` method it uses internally.
+567: 
+568: 
+569: .. _csv-examples:
+570: 
+571: Examples
+572: --------
+573: 
+574: The simplest example of reading a CSV file::
+575: 
+576:    import csv
+577:    with open('some.csv', newline='') as f:
+578:        reader = csv.reader(f)
+579:        for row in reader:
+580:            print(row)
+581: 
+582: Reading a file with an alternate format::
+583: 
+584:    import csv
+585:    with open('passwd', newline='') as f:
+586:        reader = csv.reader(f, delimiter=':', quoting=csv.QUOTE_NONE)
+587:        for row in reader:
+588:            print(row)
+589: 
+590: The corresponding simplest possible writing example is::
+591: 
+592:    import csv
+593:    with open('some.csv', 'w', newline='') as f:
+594:        writer = csv.writer(f)
+595:        writer.writerows(someiterable)
+596: 
+597: Since :func:`open` is used to open a CSV file for reading, the file
+598: will by default be decoded into unicode using the system default
+599: encoding (see :func:`locale.getencoding`).  To decode a file
+600: using a different encoding, use the ``encoding`` argument of open::
+601: 
+602:    import csv
+603:    with open('some.csv', newline='', encoding='utf-8') as f:
+604:        reader = csv.reader(f)
+605:        for row in reader:
+606:            print(row)
+607: 
+608: The same applies to writing in something other than the system default
+609: encoding: specify the encoding argument when opening the output file.
+610: 
+611: Registering a new dialect::
+612: 
+613:    import csv
+614:    csv.register_dialect('unixpwd', delimiter=':', quoting=csv.QUOTE_NONE)
+615:    with open('passwd', newline='') as f:
+616:        reader = csv.reader(f, 'unixpwd')
+617: 
+618: A slightly more advanced use of the reader --- catching and reporting errors::
+619: 
+620:    import csv, sys
+621:    filename = 'some.csv'
+622:    with open(filename, newline='') as f:
+623:        reader = csv.reader(f)
+624:        try:
+625:            for row in reader:

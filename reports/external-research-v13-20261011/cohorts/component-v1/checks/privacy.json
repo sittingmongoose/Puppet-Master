@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "files_checked": 470,
+  "findings": [],
+  "scope": "explicit final retained file list, normalized content and paths; public upstream contact/path examples verified against exact previous pinned primary bytes",
+  "limits": "bounded heuristic plus source attribution review; not exhaustive privacy proof; root checks actual Git commit identity separately",
+  "scan_method": "mechanics-v1 public_files.scan_text and transcript-envelope check over full final explicit list; CLI reserves public-manifest.json and cannot scan that filename"
+}

@@ -1,0 +1,44 @@
+{"case": "B05-P02", "source": "S3", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c", "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45", "range_1based": [650, 692], "full_lines": 1815}
+650:     int quoting = self->dialect->quoting;
+651:     PyObject *field;
+652: 
+653:     if (self->unquoted_field &&
+654:         self->field_len == 0 &&
+655:         (quoting == QUOTE_NOTNULL || quoting == QUOTE_STRINGS))
+656:     {
+657:         field = Py_NewRef(Py_None);
+658:     }
+659:     else {
+660:         field = PyUnicode_FromKindAndData(PyUnicode_4BYTE_KIND,
+661:                                         (void *) self->field, self->field_len);
+662:         if (field == NULL) {
+663:             return -1;
+664:         }
+665:         if (self->unquoted_field &&
+666:             self->field_len != 0 &&
+667:             (quoting == QUOTE_NONNUMERIC || quoting == QUOTE_STRINGS))
+668:         {
+669:             PyObject *tmp = PyNumber_Float(field);
+670:             Py_DECREF(field);
+671:             if (tmp == NULL) {
+672:                 return -1;
+673:             }
+674:             field = tmp;
+675:         }
+676:         self->field_len = 0;
+677:     }
+678:     if (PyList_Append(self->fields, field) < 0) {
+679:         Py_DECREF(field);
+680:         return -1;
+681:     }
+682:     Py_DECREF(field);
+683:     return 0;
+684: }
+685: 
+686: static int
+687: parse_grow_buff(ReaderObj *self)
+688: {
+689:     assert((size_t)self->field_size <= PY_SSIZE_T_MAX / sizeof(Py_UCS4));
+690: 
+691:     Py_ssize_t field_size_new = self->field_size ? 2 * self->field_size : 4096;
+692:     Py_UCS4 *field_new = self->field;

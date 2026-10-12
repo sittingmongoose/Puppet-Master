@@ -1,0 +1,20 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [626, 644], "full_lines": 644}
+626:                print(row)
+627:        except csv.Error as e:
+628:            sys.exit(f'file {filename}, line {reader.line_num}: {e}')
+629: 
+630: And while the module doesn't directly support parsing strings, it can easily be
+631: done::
+632: 
+633:    import csv
+634:    for row in csv.reader(['one,two,three']):
+635:        print(row)
+636: 
+637: 
+638: .. rubric:: Footnotes
+639: 
+640: .. [1] If ``newline=''`` is not specified, newlines embedded inside quoted fields
+641:    will not be interpreted correctly, and on platforms that use ``\r\n`` line endings
+642:    on write an extra ``\r`` will be added.  It should always be safe to specify
+643:    ``newline=''``, since the csv module does its own
+644:    (:term:`universal <universal newlines>`) newline handling.

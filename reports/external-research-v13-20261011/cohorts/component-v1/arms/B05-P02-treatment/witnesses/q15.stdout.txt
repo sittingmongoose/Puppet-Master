@@ -1,0 +1,113 @@
+{"case": "B05-P02", "source": "S3", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c", "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45", "range_1based": [692, 803], "full_lines": 1815}
+692:     Py_UCS4 *field_new = self->field;
+693:     PyMem_Resize(field_new, Py_UCS4, field_size_new);
+694:     if (field_new == NULL) {
+695:         PyErr_NoMemory();
+696:         return 0;
+697:     }
+698:     self->field = field_new;
+699:     self->field_size = field_size_new;
+700:     return 1;
+701: }
+702: 
+703: static int
+704: parse_add_char(ReaderObj *self, _csvstate *module_state, Py_UCS4 c)
+705: {
+706:     Py_ssize_t field_limit = FT_ATOMIC_LOAD_SSIZE_RELAXED(module_state->field_limit);
+707:     if (self->field_len >= field_limit) {
+708:         PyErr_Format(module_state->error_obj,
+709:                      "field larger than field limit (%zd)",
+710:                      field_limit);
+711:         return -1;
+712:     }
+713:     if (self->field_len == self->field_size && !parse_grow_buff(self))
+714:         return -1;
+715:     self->field[self->field_len++] = c;
+716:     return 0;
+717: }
+718: 
+719: static int
+720: parse_process_char(ReaderObj *self, _csvstate *module_state, Py_UCS4 c)
+721: {
+722:     DialectObj *dialect = self->dialect;
+723: 
+724:     switch (self->state) {
+725:     case START_RECORD:
+726:         /* start of record */
+727:         if (c == EOL)
+728:             /* empty line - return [] */
+729:             break;
+730:         else if (c == '\n' || c == '\r') {
+731:             self->state = EAT_CRNL;
+732:             break;
+733:         }
+734:         /* normal character - handle as START_FIELD */
+735:         self->state = START_FIELD;
+736:         /* fallthru */
+737:     case START_FIELD:
+738:         /* expecting field */
+739:         self->unquoted_field = true;
+740:         if (c == '\n' || c == '\r' || c == EOL) {
+741:             /* save empty field - return [fields] */
+742:             if (parse_save_field(self) < 0)
+743:                 return -1;
+744:             self->state = (c == EOL ? START_RECORD : EAT_CRNL);
+745:         }
+746:         else if (c == dialect->quotechar &&
+747:                  dialect->quoting != QUOTE_NONE) {
+748:             /* start quoted field */
+749:             self->unquoted_field = false;
+750:             self->state = IN_QUOTED_FIELD;
+751:         }
+752:         else if (c == dialect->escapechar) {
+753:             /* possible escaped character */
+754:             self->state = ESCAPED_CHAR;
+755:         }
+756:         else if (c == ' ' && dialect->skipinitialspace)
+757:             /* ignore spaces at start of field */
+758:             ;
+759:         else if (c == dialect->delimiter) {
+760:             /* save empty field */
+761:             if (parse_save_field(self) < 0)
+762:                 return -1;
+763:         }
+764:         else {
+765:             /* begin new unquoted field */
+766:             if (parse_add_char(self, module_state, c) < 0)
+767:                 return -1;
+768:             self->state = IN_FIELD;
+769:         }
+770:         break;
+771: 
+772:     case ESCAPED_CHAR:
+773:         if (c == '\n' || c=='\r') {
+774:             if (parse_add_char(self, module_state, c) < 0)
+775:                 return -1;
+776:             self->state = AFTER_ESCAPED_CRNL;
+777:             break;
+778:         }
+779:         if (c == EOL)
+780:             c = '\n';
+781:         if (parse_add_char(self, module_state, c) < 0)
+782:             return -1;
+783:         self->state = IN_FIELD;
+784:         break;
+785: 
+786:     case AFTER_ESCAPED_CRNL:
+787:         if (c == EOL)
+788:             break;
+789:         /*fallthru*/
+790: 
+791:     case IN_FIELD:
+792:         /* in unquoted field */
+793:         if (c == '\n' || c == '\r' || c == EOL) {
+794:             /* end of line - return [fields] */
+795:             if (parse_save_field(self) < 0)
+796:                 return -1;
+797:             self->state = (c == EOL ? START_RECORD : EAT_CRNL);
+798:         }
+799:         else if (c == dialect->escapechar) {
+800:             /* possible escaped character */
+801:             self->state = ESCAPED_CHAR;
+802:         }
+803:         else if (c == dialect->delimiter) {

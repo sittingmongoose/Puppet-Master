@@ -1,0 +1,112 @@
+   Argument syntax:
+
+      delta-seconds (see Section 1.2.2)
+
+   The max-age response directive indicates that the response is to be
+   considered stale after its age is greater than the specified number
+   of seconds.
+
+   This directive uses the token form of the argument syntax: e.g.,
+   'max-age=5' not 'max-age="5"'.  A sender MUST NOT generate the
+   quoted-string form.
+
+5.2.2.2.  must-revalidate
+
+   The must-revalidate response directive indicates that once the
+   response has become stale, a cache MUST NOT reuse that response to
+   satisfy another request until it has been successfully validated by
+   the origin, as defined by Section 4.3.
+
+   The must-revalidate directive is necessary to support reliable
+   operation for certain protocol features.  In all circumstances, a
+   cache MUST NOT ignore the must-revalidate directive; in particular,
+   if a cache is disconnected, the cache MUST generate an error response
+   rather than reuse the stale response.  The generated status code
+   SHOULD be 504 (Gateway Timeout) unless another error status code is
+   more applicable.
+
+   The must-revalidate directive ought to be used by servers if and only
+   if failure to validate a request could cause incorrect operation,
+   such as a silently unexecuted financial transaction.
+
+   The must-revalidate directive also permits a shared cache to reuse a
+   response to a request containing an Authorization header field
+   (Section 11.6.2 of [HTTP]), subject to the above requirement on
+   revalidation (Section 3.5).
+
+5.2.2.3.  must-understand
+
+   The must-understand response directive limits caching of the response
+   to a cache that understands and conforms to the requirements for that
+   response's status code.
+
+   A response that contains the must-understand directive SHOULD also
+   contain the no-store directive.  When a cache that implements the
+   must-understand directive receives a response that includes it, the
+   cache SHOULD ignore the no-store directive if it understands and
+   implements the status code's caching requirements.
+
+5.2.2.4.  no-cache
+
+   Argument syntax:
+
+      #field-name
+
+   The no-cache response directive, in its unqualified form (without an
+   argument), indicates that the response MUST NOT be used to satisfy
+   any other request without forwarding it for validation and receiving
+   a successful response; see Section 4.3.
+
+   This allows an origin server to prevent a cache from using the
+   response to satisfy a request without contacting it, even by caches
+   that have been configured to send stale responses.
+
+   The qualified form of the no-cache response directive, with an
+   argument that lists one or more field names, indicates that a cache
+   MAY use the response to satisfy a subsequent request, subject to any
+   other restrictions on caching, if the listed header fields are
+   excluded from the subsequent response or the subsequent response has
+   been successfully revalidated with the origin server (updating or
+   removing those fields).  This allows an origin server to prevent the
+   reuse of certain header fields in a response, while still allowing
+   caching of the rest of the response.
+
+   The field names given are not limited to the set of header fields
+   defined by this specification.  Field names are case-insensitive.
+
+   This directive uses the quoted-string form of the argument syntax.  A
+   sender SHOULD NOT generate the token form (even if quoting appears
+   not to be needed for single-entry lists).
+
+      |  *Note:* The qualified form of the directive is often handled by
+      |  caches as if an unqualified no-cache directive was received;
+      |  that is, the special handling for the qualified form is not
+      |  widely implemented.
+
+5.2.2.5.  no-store
+
+   The no-store response directive indicates that a cache MUST NOT store
+   any part of either the immediate request or the response and MUST NOT
+   use the response to satisfy any other request.
+
+   This directive applies to both private and shared caches.  "MUST NOT
+   store" in this context means that the cache MUST NOT intentionally
+   store the information in non-volatile storage and MUST make a best-
+   effort attempt to remove the information from volatile storage as
+   promptly as possible after forwarding it.
+
+   This directive is not a reliable or sufficient mechanism for ensuring
+   privacy.  In particular, malicious or compromised caches might not
+   recognize or obey this directive, and communications networks might
+   be vulnerable to eavesdropping.
+
+   Note that the must-understand cache directive overrides no-store in
+   certain circumstances; see Section 5.2.2.3.
+
+5.2.2.6.  no-transform
+
+   The no-transform response directive indicates that an intermediary
+   (regardless of whether it implements a cache) MUST NOT transform the
+   content, as defined in Section 7.7 of [HTTP].
+
+5.2.2.7.  private

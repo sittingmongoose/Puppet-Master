@@ -1,0 +1,157 @@
+{
+  "version": "component-admit-v1",
+  "scope": "COMPONENT",
+  "case": "B08-P02",
+  "arm": "treatment",
+  "run_id": "B08-P02-treatment",
+  "prepared_at_utc": "2026-10-12T00:35:58.944827Z",
+  "t0_utc": "2026-10-12T00:35:58.903486Z",
+  "whole_deadline_utc": "2026-10-12T01:00:58.903486Z",
+  "stage_deadline_utc": "2026-10-12T01:00:58.903486Z",
+  "whole_budget_s": 1500,
+  "minimum_seconds": 0,
+  "available_seconds_at_prepare": 1499.958659,
+  "native_goal_objective": "ER13 COMPONENT B08-P02-treatment: complete only B08-P02 treatment under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal.",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "observed_route": "UNKNOWN",
+  "selection_sha256": "d6beb8cc1492a6123b8ae613d5e2c81f0aa3da4337b155a3abe413a562096bfd",
+  "fixture_ready": {
+    "case": "B08-P02",
+    "ready_utc": "2026-10-12T00:21:05.649216+00:00",
+    "manifest_sha256": "b1fa9385935c9b9e93e9424156fbc1ff3b892914e6dc13a2f421832606caaff6",
+    "pair_raw_base_sha256": "85f7387511003a21dd43407b25369d459a95bc434de979f48e2836465ac537b6",
+    "max_minutes": 25,
+    "min_minutes": 0,
+    "component_not_full_discovery": true
+  },
+  "fixture_manifest_sha256": "b1fa9385935c9b9e93e9424156fbc1ff3b892914e6dc13a2f421832606caaff6",
+  "common_raw_sha256": {
+    "brief.md": "2a5eb9018aeb5b9ba218a84f0a6272bf108a55a2d79cc7439b68e2fdc7c14fab",
+    "plan.md": "a09a6fcbabd492a8aa956c137a964b6fbb964c191d7428763451c90633e7fa5d",
+    "draft.md": "cd045b2e16db354ebce34f93ad39eecaf3cb01af31176427f39c82e1af243677",
+    "source-index.json": "6cc75acf7fc48dd16edc8b2038e6d6085e9ee12f32d4dd932436d84f630aa367"
+  },
+  "frozen_inputs": {
+    "case": "B08-P02",
+    "arm": "treatment",
+    "inputs": [
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/brief.md",
+        "sha256": "2a5eb9018aeb5b9ba218a84f0a6272bf108a55a2d79cc7439b68e2fdc7c14fab"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/plan.md",
+        "sha256": "a09a6fcbabd492a8aa956c137a964b6fbb964c191d7428763451c90633e7fa5d"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/draft.md",
+        "sha256": "cd045b2e16db354ebce34f93ad39eecaf3cb01af31176427f39c82e1af243677"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-index.json",
+        "sha256": "6cc75acf7fc48dd16edc8b2038e6d6085e9ee12f32d4dd932436d84f630aa367"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/cpython/Doc/library/stdtypes.rst",
+        "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/cpython/Doc/library/unicodedata.rst",
+        "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/cpython/Lib/test/test_str.py",
+        "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/cpython/Lib/test/test_unicodedata.py",
+        "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/cpython/Objects/unicodeobject.c",
+        "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S1-N1.txt",
+        "sha256": "13e218be07cc028662f49b2901b353a82532f6bcdaacdb9c6c91fddd0a358393"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S1-N2.txt",
+        "sha256": "14ff4c347daf6c16158d13d79de93d9e552cd34e8480510aab052075ba475b63"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S2-N1.txt",
+        "sha256": "d524c76d3d6e370e734c20f4dcbb9b7999ccae7209763d9cf26b364cd7d3e152"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S3-N1.txt",
+        "sha256": "24ae3283478149822b06bb40042daafd2a190b19133cd5b63b5f38bde1fb6b5b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S4-N1.txt",
+        "sha256": "2be75884952cb34e871661d1401b81df2a509c3799d48f7dc9d43d848b2346d6"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S4-N2.txt",
+        "sha256": "f37589a51970bfc7f00b3c57fa07df1e1cd9e157235700e3d69bae3bfd725898"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S5-N1.txt",
+        "sha256": "a5eff26639754a14ea663e195dc3c8207c72007037cbb5c8162c69216b268d30"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/inputs/B08-P02/source-cache/neighborhoods/S5-N2.txt",
+        "sha256": "0c5bb8567aef6d8127822eb12d43f447fb5866c9a8a400760eaf91946d2ae0ec"
+      }
+    ],
+    "independent_lookup_allowed": true,
+    "cache_access": true,
+    "semantic_conclusions_shared": false,
+    "excluded": [
+      "rubric.json",
+      "findings.json",
+      "metadata.json",
+      "preparer scripts/source pool",
+      "other arms/evaluators"
+    ],
+    "reader": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B08-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+      "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "usage": "python3 -B <reader> --case B08-P02 --arm treatment --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+    }
+  },
+  "method_delta": "Independently critique and finalize. For consequential derivations or universal limits, bind domain, subject, units and version, then use an independently derived result, governing implementation/oracle or discriminating counterexample. Repeating the draft formula is not an independent oracle. Keep supported claims and conditional derivations; excessive rejection is detectable. Use existing bounded execution capabilities.",
+  "tools": [
+    "functions.exec",
+    "tools.exec_command",
+    "tools.create_goal",
+    "tools.update_goal",
+    "tools.get_goal",
+    "existing primary-source web/search tools when available"
+  ],
+  "output_selection": [
+    "final.md",
+    "criticism-dispositions.md",
+    "source-map.json",
+    "witnesses/ actual code/results when used",
+    "native-goal-create.json",
+    "native-goal-terminal.json",
+    "critique.md"
+  ],
+  "request_sha256": "d2504b4f07f401f46d92e6a63674f3749862596dbc229a6e2d5097fd331697f7",
+  "assignment_sha256": "65d3d189c48efc4e2ce7d90424903da4e1b606511531b7338ad245b14f2b7009",
+  "native_pins": {
+    "assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+    "activation-snippet-template.js": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5"
+  },
+  "discovery_effectiveness_claim": false,
+  "native_provenance_freshness": "UNKNOWN beyond exact binding checker",
+  "preparation_accounting": "arm-specific preparation/queue charged from root T0; common fixture cold acquisition/preparation separately charged by root, warm reuse disclosed"
+}

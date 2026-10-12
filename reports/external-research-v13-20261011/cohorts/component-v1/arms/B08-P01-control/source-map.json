@@ -1,0 +1,300 @@
+{
+  "case": "B08-P01",
+  "arm": "control",
+  "status": "complete proposal; no local queue witness or converter benchmark executed",
+  "target_runtime": "CPython 3.13.9",
+  "requested_route": "Luna Max Standard",
+  "observed_execution_metadata": {
+    "runtime_reported_by_T3": "Codex harness, gpt-6-luna, max reasoning",
+    "native_goal_response_fields": [
+      "threadId",
+      "objective",
+      "status",
+      "tokensUsed",
+      "timeUsedSeconds",
+      "createdAt",
+      "updatedAt",
+      "remainingTokens",
+      "completionBudgetReport"
+    ],
+    "returned_provider_or_tier_options": "unknown; absent from native Goal response"
+  },
+  "primary_sources": [
+    {
+      "id": "S1",
+      "title": "CPython asyncio queue documentation",
+      "public_primary_url": "https://github.com/python/cpython/blob/v3.13.9/Doc/library/asyncio-queue.rst",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/asyncio-queue.rst",
+      "public_version_or_pin": "CPython tag v3.13.9",
+      "admitted_cache": {
+        "path": "inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+        "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+        "source_index_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+      },
+      "exact_locators": [
+        {
+          "locator": "lines 12-14",
+          "supports": "asyncio queues are not thread-safe and are for async/await code"
+        },
+        {
+          "locator": "lines 24-40",
+          "supports": "FIFO, maxsize backpressure, known qsize, not-thread-safe condition"
+        },
+        {
+          "locator": "lines 56-63",
+          "supports": "get semantics and QueueShutDown"
+        },
+        {
+          "locator": "lines 70-95",
+          "supports": "join unfinished-task contract and qsize definition"
+        },
+        {
+          "locator": "lines 97-124",
+          "supports": "shutdown admission closure, graceful drain, immediate drain, join warning, versionadded 3.13"
+        },
+        {
+          "locator": "lines 126-138",
+          "supports": "one task_done per get and underflow ValueError"
+        }
+      ],
+      "governing_scope": "CPython 3.13.9 asyncio.Queue behavior; the source-index cache is separately pinned by the listed commit and digest",
+      "uncertainty": "No equality claim is made between the cached commit and release-tag content; the release-tag source was independently consulted."
+    },
+    {
+      "id": "S2",
+      "title": "CPython asyncio queue implementation",
+      "public_primary_url": "https://github.com/python/cpython/blob/v3.13.9/Lib/asyncio/queues.py",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/asyncio/queues.py",
+      "public_version_or_pin": "CPython tag v3.13.9",
+      "admitted_cache": {
+        "path": "inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+        "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+        "source_index_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+      },
+      "exact_locators": [
+        {
+          "locator": "lines 93-115",
+          "supports": "qsize is current underlying queue length and maxsize/full behavior"
+        },
+        {
+          "locator": "lines 116-160",
+          "supports": "blocked put handling, QueueShutDown, successful put unfinished-task increment"
+        },
+        {
+          "locator": "lines 189-202",
+          "supports": "get removes one queue entry"
+        },
+        {
+          "locator": "lines 204-230",
+          "supports": "task_done counter decrement and join event"
+        },
+        {
+          "locator": "lines 231-258",
+          "supports": "immediate shutdown drains queue, subtracts unfinished count, wakes getters and putters"
+        }
+      ],
+      "governing_scope": "CPython 3.13.9 asyncio.Queue implementation",
+      "uncertainty": "Queue internals support the accounting analysis, but application job-state correctness depends on the proposed component ledger and worker protocol."
+    },
+    {
+      "id": "S3",
+      "title": "CPython asyncio queue regression tests",
+      "public_primary_url": "https://github.com/python/cpython/blob/v3.13.9/Lib/test/test_asyncio/test_queues.py",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/test/test_asyncio/test_queues.py",
+      "public_version_or_pin": "CPython tag v3.13.9",
+      "admitted_cache": {
+        "path": "inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+        "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+        "source_index_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+      },
+      "exact_locators": [
+        {
+          "locator": "lines 531-582",
+          "supports": "graceful shutdown keeps queued item, rejects blocked putter, and join completes after task_done"
+        },
+        {
+          "locator": "lines 583-616",
+          "supports": "immediate shutdown drains waiting item, lets join finish, and prevents extra task_done"
+        },
+        {
+          "locator": "lines 617-655",
+          "supports": "retrieved in-flight item remains unfinished after immediate drain until its task_done"
+        }
+      ],
+      "governing_scope": "Upstream CPython queue regression-test expectations; these tests were inspected, not run in this work",
+      "uncertainty": "The tests cover queue mechanics, not converter outcome logic, UI reporting, filesystem cleanup, or throughput."
+    },
+    {
+      "id": "S4",
+      "title": "CPython coroutines and tasks documentation",
+      "public_primary_url": "https://github.com/python/cpython/blob/v3.13.9/Doc/library/asyncio-task.rst",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/asyncio-task.rst",
+      "public_version_or_pin": "CPython tag v3.13.9",
+      "admitted_cache": null,
+      "exact_locators": [
+        {
+          "locator": "lines 276-294",
+          "supports": "cancellation is delivered at a later opportunity, cleanup with try/finally, propagate CancelledError after cleanup"
+        }
+      ],
+      "governing_scope": "asyncio Task cancellation semantics for CPython 3.13.9",
+      "uncertainty": "Task cancellation does not define child-process termination or guarantee that arbitrary application work finishes within a deadline."
+    },
+    {
+      "id": "S5",
+      "title": "CPython developing with asyncio documentation",
+      "public_primary_url": "https://github.com/python/cpython/blob/v3.13.9/Doc/library/asyncio-dev.rst",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/asyncio-dev.rst",
+      "public_version_or_pin": "CPython tag v3.13.9",
+      "admitted_cache": null,
+      "exact_locators": [
+        {
+          "locator": "lines 59-89",
+          "supports": "event-loop thread execution, non-thread-safe asyncio objects, cross-thread handoff"
+        },
+        {
+          "locator": "lines 109-120",
+          "supports": "blocking CPU work delays concurrent tasks and executor alternatives"
+        }
+      ],
+      "governing_scope": "asyncio event-loop and blocking-work guidance for CPython 3.13.9",
+      "uncertainty": "The suitable execution mechanism for the actual converter remains workload-dependent and outside this queue component."
+    }
+  ],
+  "section_mappings": [
+    {
+      "final_section": "Recommendation; State, progress, and acknowledgment",
+      "claims": [
+        "FIFO and maxsize bound",
+        "task_done is queue acknowledgment",
+        "qsize counts waiting entries",
+        "thread-safety boundary"
+      ],
+      "sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "interpretation": "Source-backed queue facts plus proposed application accounting invariants."
+    },
+    {
+      "final_section": "Graceful stop",
+      "claims": [
+        "admission close",
+        "non-immediate shutdown drain",
+        "blocked putter rejection",
+        "workers observe QueueShutDown after drain"
+      ],
+      "sources": [
+        "S1",
+        "S3"
+      ],
+      "interpretation": "The admission gate and accepted-job ledger are component design choices layered on documented queue semantics."
+    },
+    {
+      "final_section": "Force-stop",
+      "claims": [
+        "immediate drain",
+        "join does not mean conversion success",
+        "active retrieved item remains outstanding until task_done",
+        "cancellation cleanup is cooperative"
+      ],
+      "sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "interpretation": "The queue source directly contradicts the draft's success inference; application outcomes remain per-ID."
+    },
+    {
+      "final_section": "Output ownership and cleanup",
+      "claims": [
+        "publish only validated output",
+        "clean unpublished temporary output",
+        "keep successful output after stop"
+      ],
+      "sources": [],
+      "interpretation": "Design proposal derived from the user brief; filesystem atomicity and conflict behavior are explicitly unresolved and require validation."
+    },
+    {
+      "final_section": "Throughput and capacity estimates",
+      "claims": [
+        "20 waiting plus up to four running",
+        "12 jobs take 6 seconds in the specified model",
+        "ideal saturated capacity is 2 jobs per second"
+      ],
+      "sources": [
+        "S1"
+      ],
+      "interpretation": "Capacity and throughput arithmetic is conditional on the brief's stated values and explicit assumptions; it is not a measurement."
+    },
+    {
+      "final_section": "Alternatives",
+      "claims": [
+        "shutdown was added in 3.13",
+        "sentinel protocol for older versions",
+        "CPU-bound work requires separate assessment"
+      ],
+      "sources": [
+        "S1",
+        "S5"
+      ],
+      "interpretation": "Version support and event-loop limitations are source-backed; sentinel sequencing is an application-level design inference."
+    },
+    {
+      "final_section": "Evidence and validation plan",
+      "claims": [
+        "upstream source reviewed",
+        "no local 3.13.9 witness or converter benchmark run",
+        "future tests are plans, not results"
+      ],
+      "sources": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "interpretation": "The local interpreter reported 3.14.4 and no python3.13 executable was found on PATH; upstream tests were inspected, not executed."
+    },
+    {
+      "final_section": "Draft history retained",
+      "claims": [
+        "sound structure and conditional calculation retained",
+        "immediate-shutdown success claim rejected"
+      ],
+      "sources": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "interpretation": "Disposition record is expanded in criticism-dispositions.md."
+    }
+  ],
+  "user_input_provenance": [
+    {
+      "path": "inputs/B08-P01/brief.md",
+      "sha256": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74",
+      "scope": "component requirements, CPython 3.13.9 target, queue/worker values, outcome distinctions, capacity, alternatives, validation"
+    },
+    {
+      "path": "inputs/B08-P01/plan.md",
+      "sha256": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35",
+      "scope": "review obligations including shutdown, unfinished-task accounting, source tests, conditional derivations, and validation evidence"
+    },
+    {
+      "path": "inputs/B08-P01/draft.md",
+      "sha256": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019",
+      "scope": "original investigator draft and history reviewed by critique and dispositions"
+    }
+  ],
+  "unresolved_uncertainty": [
+    "Service-time and document-size distributions are unknown; no converter benchmark ran.",
+    "Supported filesystems and output publish atomicity/overwrite behavior are unknown.",
+    "Durable-in-session may or may not require persistence across process crash.",
+    "Force-stop completion latency depends on cooperative task cancellation and nonblocking work.",
+    "No local execution on CPython 3.13.9 occurred."
+  ]
+}

@@ -1,0 +1,65 @@
+{"case": "B05-P02", "source": "S1", "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst", "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737", "range_1based": [387, 450], "full_lines": 644}
+387: Dialects and Formatting Parameters
+388: ----------------------------------
+389: 
+390: To make it easier to specify the format of input and output records, specific
+391: formatting parameters are grouped together into dialects.  A dialect is a
+392: subclass of the :class:`Dialect` class containing various attributes
+393: describing the format of the CSV file.  When creating :class:`reader` or
+394: :class:`writer` objects, the programmer can specify a string or a subclass of
+395: the :class:`Dialect` class as the dialect parameter.  In addition to, or instead
+396: of, the *dialect* parameter, the programmer can also specify individual
+397: formatting parameters, which have the same names as the attributes defined below
+398: for the :class:`Dialect` class.
+399: 
+400: Dialects support the following attributes:
+401: 
+402: 
+403: .. attribute:: Dialect.delimiter
+404: 
+405:    A one-character string used to separate fields.  It defaults to ``','``.
+406: 
+407: 
+408: .. attribute:: Dialect.doublequote
+409: 
+410:    Controls how instances of *quotechar* appearing inside a field should
+411:    themselves be quoted.  When :const:`True`, the character is doubled. When
+412:    :const:`False`, the *escapechar* is used as a prefix to the *quotechar*.  It
+413:    defaults to :const:`True`.
+414: 
+415:    On output, if *doublequote* is :const:`False` and no *escapechar* is set,
+416:    :exc:`Error` is raised if a *quotechar* is found in a field.
+417: 
+418: 
+419: .. attribute:: Dialect.escapechar
+420: 
+421:    A one-character string used by the writer to escape characters that
+422:    require escaping:
+423: 
+424:       * the *delimiter*, the *quotechar*, ``'\r'``, ``'\n'`` and any of the
+425:         characters in *lineterminator* are escaped if *quoting* is set to
+426:         :const:`QUOTE_NONE`;
+427:       * the *quotechar* is escaped if *doublequote* is :const:`False`;
+428:       * the *escapechar* itself.
+429: 
+430:    On reading, the *escapechar* removes any special meaning from
+431:    the following character. It defaults to :const:`None`, which disables escaping.
+432: 
+433:    .. versionchanged:: 3.11
+434:       An empty *escapechar* is not allowed.
+435: 
+436: .. attribute:: Dialect.lineterminator
+437: 
+438:    The string used to terminate lines produced by the :class:`writer`. It defaults
+439:    to ``'\r\n'``.
+440: 
+441:    .. note::
+442: 
+443:       The :class:`reader` is hard-coded to recognise either ``'\r'`` or ``'\n'`` as
+444:       end-of-line, and ignores *lineterminator*. This behavior may change in the
+445:       future.
+446: 
+447: 
+448: .. attribute:: Dialect.quotechar
+449: 
+450:    A one-character string used to quote fields containing special characters,

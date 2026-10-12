@@ -1,0 +1,112 @@
+      The :func:`.stat` function.
+
+
+.. function:: fstatvfs(fd, /)
+
+   Return information about the filesystem containing the file associated with
+   file descriptor *fd*, like :func:`statvfs`.  As of Python 3.3, this is
+   equivalent to ``os.statvfs(fd)``.
+
+   .. availability:: Unix.
+
+
+.. function:: fsync(fd)
+
+   Force write of file with filedescriptor *fd* to disk.  On Unix, this calls the
+   native :c:func:`!fsync` function; on Windows, the MS :c:func:`!_commit` function.
+
+   If you're starting with a buffered Python :term:`file object` *f*, first do
+   ``f.flush()``, and then do ``os.fsync(f.fileno())``, to ensure that all internal
+   buffers associated with *f* are written to disk.
+
+   .. availability:: Unix, Windows.
+
+
+.. function:: ftruncate(fd, length, /)
+
+   Truncate the file corresponding to file descriptor *fd*, so that it is at
+   most *length* bytes in size.  As of Python 3.3, this is equivalent to
+   ``os.truncate(fd, length)``.
+
+   .. audit-event:: os.truncate fd,length os.ftruncate
+
+   .. availability:: Unix, Windows.
+
+   .. versionchanged:: 3.5
+      Added support for Windows
+
+
+.. function:: get_blocking(fd, /)
+
+   Get the blocking mode of the file descriptor: ``False`` if the
+   :data:`O_NONBLOCK` flag is set, ``True`` if the flag is cleared.
+
+   See also :func:`set_blocking` and :meth:`socket.socket.setblocking`.
+
+   .. availability:: Unix, Windows.
+
+      The function is limited on WASI, see :ref:`wasm-availability` for more
+      information.
+
+      On Windows, this function is limited to pipes.
+
+   .. versionadded:: 3.5
+
+   .. versionchanged:: 3.12
+      Added support for pipes on Windows.
+
+
+.. function:: grantpt(fd, /)
+
+   Grant access to the slave pseudo-terminal device associated with the
+   master pseudo-terminal device to which the file descriptor *fd* refers.
+   The file descriptor *fd* is not closed upon failure.
+
+   Calls the C standard library function :c:func:`grantpt`.
+
+   .. availability:: Unix, not WASI.
+
+   .. versionadded:: 3.13
+
+
+.. function:: isatty(fd, /)
+
+   Return ``True`` if the file descriptor *fd* is open and connected to a
+   tty(-like) device, else ``False``.
+
+
+.. function:: lockf(fd, cmd, len, /)
+
+   Apply, test or remove a POSIX lock on an open file descriptor.
+   *fd* is an open file descriptor.
+   *cmd* specifies the command to use - one of :data:`F_LOCK`, :data:`F_TLOCK`,
+   :data:`F_ULOCK` or :data:`F_TEST`.
+   *len* specifies the section of the file to lock.
+
+   .. audit-event:: os.lockf fd,cmd,len os.lockf
+
+   .. availability:: Unix.
+
+   .. versionadded:: 3.3
+
+
+.. data:: F_LOCK
+          F_TLOCK
+          F_ULOCK
+          F_TEST
+
+   Flags that specify what action :func:`lockf` will take.
+
+   .. availability:: Unix.
+
+   .. versionadded:: 3.3
+
+
+.. function:: login_tty(fd, /)
+
+   Prepare the tty of which fd is a file descriptor for a new login session.
+   Make the calling process a session leader; make the tty the controlling tty,
+   the stdin, the stdout, and the stderr of the calling process; close fd.
+
+   .. availability:: Unix, not WASI.
+

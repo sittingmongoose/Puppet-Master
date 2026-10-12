@@ -1,0 +1,203 @@
+{
+  "case": "B05-P01",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: create_subprocess_exec",
+          "matching_lines_1based": [
+            64
+          ],
+          "range_1based": [
+            52,
+            163
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: wait()",
+          "matching_lines_1based": [
+            193
+          ],
+          "range_1based": [
+            181,
+            292
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: communicate",
+          "matching_lines_1based": [
+            208
+          ],
+          "range_1based": [
+            196,
+            307
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "method:: terminate",
+          "matching_lines_1based": [
+            252
+          ],
+          "range_1based": [
+            240,
+            351
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "ProactorEventLoop",
+          "matching_lines_1based": [
+            112,
+            320
+          ],
+          "range_1based": [
+            100,
+            211
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def _read_stream(",
+          "matching_lines_1based": [
+            171
+          ],
+          "range_1based": [
+            159,
+            229
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "async def communicate(",
+          "matching_lines_1based": [
+            188
+          ],
+          "range_1based": [
+            176,
+            229
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "def terminate(",
+          "matching_lines_1based": [
+            142
+          ],
+          "range_1based": [
+            130,
+            229
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "async def wait(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            229
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_communicate(",
+          "matching_lines_1based": [
+            143
+          ],
+          "range_1based": [
+            131,
+            242
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_cancel_process_wait(",
+          "matching_lines_1based": [
+            504
+          ],
+          "range_1based": [
+            492,
+            603
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_communicate_ignore_broken_pipe(",
+          "matching_lines_1based": [
+            326
+          ],
+          "range_1based": [
+            314,
+            425
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "function:: wait_for",
+          "matching_lines_1based": [
+            823
+          ],
+          "range_1based": [
+            811,
+            922
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "async def wait_for(",
+          "matching_lines_1based": [
+            459
+          ],
+          "range_1based": [
+            447,
+            558
+          ]
+        }
+      ]
+    }
+  ],
+  "access": "Public URLs/locators available to both. Cache bodies and navigation treatment-only.",
+  "semantic_conclusions_shared": false
+}

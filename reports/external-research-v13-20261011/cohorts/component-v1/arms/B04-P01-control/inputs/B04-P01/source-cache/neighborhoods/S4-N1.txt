@@ -1,0 +1,112 @@
+
+   .. note::
+
+      This function can fail with the new directory structure made if you lack
+      permissions needed to remove the leaf directory or file.
+
+   .. audit-event:: os.rename src,dst,src_dir_fd,dst_dir_fd os.renames
+
+   .. versionchanged:: 3.6
+      Accepts a :term:`path-like object` for *old* and *new*.
+
+
+.. function:: replace(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
+
+   Rename the file or directory *src* to *dst*.  If *dst* is a non-empty directory,
+   :exc:`OSError` will be raised.  If *dst* exists and is a file, it will
+   be replaced silently if the user has permission.  The operation may fail
+   if *src* and *dst* are on different filesystems.  If successful,
+   the renaming will be an atomic operation (this is a POSIX requirement).
+
+   This function can support specifying *src_dir_fd* and/or *dst_dir_fd* to
+   supply :ref:`paths relative to directory descriptors <dir_fd>`.
+
+   .. audit-event:: os.rename src,dst,src_dir_fd,dst_dir_fd os.replace
+
+   .. versionadded:: 3.3
+
+   .. versionchanged:: 3.6
+      Accepts a :term:`path-like object` for *src* and *dst*.
+
+
+.. function:: rmdir(path, *, dir_fd=None)
+
+   Remove (delete) the directory *path*.  If the directory does not exist or is
+   not empty, a :exc:`FileNotFoundError` or an :exc:`OSError` is raised
+   respectively.  In order to remove whole directory trees,
+   :func:`shutil.rmtree` can be used.
+
+   This function can support :ref:`paths relative to directory descriptors
+   <dir_fd>`.
+
+   .. audit-event:: os.rmdir path,dir_fd os.rmdir
+
+   .. versionchanged:: 3.3
+      Added the *dir_fd* parameter.
+
+   .. versionchanged:: 3.6
+      Accepts a :term:`path-like object`.
+
+
+.. function:: scandir(path='.')
+
+   Return an iterator of :class:`os.DirEntry` objects corresponding to the
+   entries in the directory given by *path*. The entries are yielded in
+   arbitrary order, and the special entries ``'.'`` and ``'..'`` are not
+   included.  If a file is removed from or added to the directory after
+   creating the iterator, whether an entry for that file be included is
+   unspecified.
+
+   Using :func:`scandir` instead of :func:`listdir` can significantly
+   increase the performance of code that also needs file type or file
+   attribute information, because :class:`os.DirEntry` objects expose this
+   information if the operating system provides it when scanning a directory.
+   All :class:`os.DirEntry` methods may perform a system call, but
+   :func:`~os.DirEntry.is_dir` and :func:`~os.DirEntry.is_file` usually only
+   require a system call for symbolic links; :func:`os.DirEntry.stat`
+   always requires a system call on Unix but only requires one for
+   symbolic links on Windows.
+
+   *path* may be a :term:`path-like object`.  If *path* is of type ``bytes``
+   (directly or indirectly through the :class:`PathLike` interface),
+   the type of the :attr:`~os.DirEntry.name` and :attr:`~os.DirEntry.path`
+   attributes of each :class:`os.DirEntry` will be ``bytes``; in all other
+   circumstances, they will be of type ``str``.
+
+   This function can also support :ref:`specifying a file descriptor
+   <path_fd>`; the file descriptor must refer to a directory.
+
+   .. audit-event:: os.scandir path os.scandir
+
+   The :func:`scandir` iterator supports the :term:`context manager` protocol
+   and has the following method:
+
+   .. method:: scandir.close()
+
+      Close the iterator and free acquired resources.
+
+      This is called automatically when the iterator is exhausted or garbage
+      collected, or when an error happens during iterating.  However it
+      is advisable to call it explicitly or use the :keyword:`with`
+      statement.
+
+      .. versionadded:: 3.6
+
+   The following example shows a simple use of :func:`scandir` to display all
+   the files (excluding directories) in the given *path* that don't start with
+   ``'.'``. The ``entry.is_file()`` call will generally not make an additional
+   system call::
+
+      with os.scandir(path) as it:
+          for entry in it:
+              if not entry.name.startswith('.') and entry.is_file():
+                  print(entry.name)
+
+   .. note::
+
+      On Unix-based systems, :func:`scandir` uses the system's
+      `opendir() <https://pubs.opengroup.org/onlinepubs/009695399/functions/opendir.html>`_
+      and
+      `readdir() <https://pubs.opengroup.org/onlinepubs/009695399/functions/readdir_r.html>`_
+      functions. On Windows, it uses the Win32
+      `FindFirstFileW <https://msdn.microsoft.com/en-us/library/windows/desktop/aa364418(v=vs.85).aspx>`_

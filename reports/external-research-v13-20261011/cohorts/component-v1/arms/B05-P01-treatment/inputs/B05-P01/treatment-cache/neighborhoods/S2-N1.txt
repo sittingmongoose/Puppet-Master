@@ -1,0 +1,71 @@
+            # communicate() ignores BrokenPipeError and ConnectionResetError.
+            # write() and drain() can raise these exceptions.
+            if debug:
+                logger.debug('%r communicate: stdin got %r', self, exc)
+
+        if debug:
+            logger.debug('%r communicate: close stdin', self)
+        self.stdin.close()
+
+    async def _noop(self):
+        return None
+
+    async def _read_stream(self, fd):
+        transport = self._transport.get_pipe_transport(fd)
+        if fd == 2:
+            stream = self.stderr
+        else:
+            assert fd == 1
+            stream = self.stdout
+        if self._loop.get_debug():
+            name = 'stdout' if fd == 1 else 'stderr'
+            logger.debug('%r communicate: read %s', self, name)
+        output = await stream.read()
+        if self._loop.get_debug():
+            name = 'stdout' if fd == 1 else 'stderr'
+            logger.debug('%r communicate: close %s', self, name)
+        transport.close()
+        return output
+
+    async def communicate(self, input=None):
+        if self.stdin is not None:
+            stdin = self._feed_stdin(input)
+        else:
+            stdin = self._noop()
+        if self.stdout is not None:
+            stdout = self._read_stream(1)
+        else:
+            stdout = self._noop()
+        if self.stderr is not None:
+            stderr = self._read_stream(2)
+        else:
+            stderr = self._noop()
+        stdin, stdout, stderr = await tasks.gather(stdin, stdout, stderr)
+        await self.wait()
+        return (stdout, stderr)
+
+
+async def create_subprocess_shell(cmd, stdin=None, stdout=None, stderr=None,
+                                  limit=streams._DEFAULT_LIMIT, **kwds):
+    loop = events.get_running_loop()
+    protocol_factory = lambda: SubprocessStreamProtocol(limit=limit,
+                                                        loop=loop)
+    transport, protocol = await loop.subprocess_shell(
+        protocol_factory,
+        cmd, stdin=stdin, stdout=stdout,
+        stderr=stderr, **kwds)
+    return Process(transport, protocol, loop)
+
+
+async def create_subprocess_exec(program, *args, stdin=None, stdout=None,
+                                 stderr=None, limit=streams._DEFAULT_LIMIT,
+                                 **kwds):
+    loop = events.get_running_loop()
+    protocol_factory = lambda: SubprocessStreamProtocol(limit=limit,
+                                                        loop=loop)
+    transport, protocol = await loop.subprocess_exec(
+        protocol_factory,
+        program, *args,
+        stdin=stdin, stdout=stdout,
+        stderr=stderr, **kwds)
+    return Process(transport, protocol, loop)

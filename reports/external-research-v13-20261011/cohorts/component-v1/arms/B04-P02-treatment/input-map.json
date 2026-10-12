@@ -1,0 +1,93 @@
+{
+  "case": "B04-P02",
+  "arm": "treatment",
+  "inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/brief.md",
+      "sha256": "d8135ab50d3324af49bd8e485703c92788dad9aa884c095d151dda409832cc52"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/plan.md",
+      "sha256": "86d77adf02fa908c955d82dd94f4051504661578f0f5d3409970190495ab1c81"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/draft.md",
+      "sha256": "2698497bcd912cb52fcc1d385c7f3d70bdcd9e3b99b09ce2584154ee218c8ae6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-index.json",
+      "sha256": "3e737f8e0f21aab5573dd5f1de7c39a8ffb6fd13cb6ee3d81309450adde003bf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/critique-compact.md",
+      "sha256": "34f72e32261865afa9512f03f8a1c0bf3704b51ee140f272080e3a42823bd9a6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "67a36d1dc6d5bec67ddfb705a53f2c1993cfbadc7f9d18a0ef85a92404dafbe5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "7554c1336db7c93582fc81ae3748560ce51f1fe53c501042e6e4d4a69a9750ec"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "afa73af08ecb2dfef9e0aa1ae61cf2e23d6b7697ac596239ad434751ba3937de"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N4.txt",
+      "sha256": "1af5c9e7c814212d120c2c669ea002f8fbfe88832e00d505b1f58ac685666961"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N5.txt",
+      "sha256": "80737f8ff1a55761691083d327fec953bee6aa1eab945b4ab4f2b40bc887f833"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N6.txt",
+      "sha256": "80bcfb49907a97dbbfc600f4b3b4a82554194381186f54f7bb8911a78791e013"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N7.txt",
+      "sha256": "55bdf8b662d54ba31cc725764405e0744ec2916d6ec45653949d82131e1702bf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S1-N8.txt",
+      "sha256": "da294c4495ca9b91ce98283e13cbb935d6d648d4618bbd566ab861e47793466c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "8cd4c830065674b063da815b9b04127655fc1dc9c2a399df6dec8caa3adb39fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "6aeb381d3801a1907c25d0adadfbe4513a411ffde77c21e4c114c6344dadaa49"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "59852ba12d056880e9e4689f5c3d7aa81f6aceaf7c295574d9f0aa238fa7469b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    }
+  ],
+  "independent_lookup_allowed": true,
+  "cache_access": true,
+  "semantic_conclusions_shared": true,
+  "excluded": [
+    "rubric.json",
+    "findings.json",
+    "metadata.json",
+    "preparer scripts/source pool",
+    "other arms/evaluators"
+  ],
+  "reader": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B04-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+    "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+    "usage": "python3 -B <reader> --case B04-P02 --arm treatment --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+  }
+}

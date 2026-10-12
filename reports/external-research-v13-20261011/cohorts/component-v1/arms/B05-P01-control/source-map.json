@@ -1,0 +1,367 @@
+{
+  "case": "B05-P01",
+  "arm": "control",
+  "generated_at_utc": "2026-10-12",
+  "review_scope": "Independent critic plus finalizer; no treatment cache, preparer source pool, sibling arm, evaluator, nested delegate, implementation test, or product witness used.",
+  "native_goal": {
+    "id": "01a12d88-37c3-7b33-a790-fbb4685e8eef",
+    "receipt_file": "native-goal-create.json",
+    "requested_route": "Luna Max Standard",
+    "returned_model_or_tier": "unknown; the native create receipt contains no provider/model/service-tier fields",
+    "runtime_context_observed": "gpt-6-luna with max reasoning effort per T3 runtime context; not echoed by native Goal receipt",
+    "service_tier": "unknown"
+  },
+  "copied_inputs": [
+    {
+      "path": "input-map.json",
+      "sha256": "ff23229d7bf5a253b3bce179aff6109871b113eaa1172db47cb7c8d2d799b915",
+      "verified": true
+    },
+    {
+      "path": "inputs/B05-P01/brief.md",
+      "sha256": "e2a39533df9487ecf9921581abd9c076adaa2026795123538c37dfec20cd9d9f",
+      "verified": true
+    },
+    {
+      "path": "inputs/B05-P01/plan.md",
+      "sha256": "de16e22b83b168248720670a6466e5af39d15b5bfa5b9125c91ef7d68b59a394",
+      "verified": true
+    },
+    {
+      "path": "inputs/B05-P01/draft.md",
+      "sha256": "4dd448da655d824aec355147cfe71d501a4152552c3126e6548d98d03d106f55",
+      "verified": true
+    },
+    {
+      "path": "inputs/B05-P01/source-index.json",
+      "sha256": "e13aeaa162af8d84836217ac1def412d73872fbe8c72a3ebd85507e29f5218bb",
+      "verified": true
+    }
+  ],
+  "version_pin": {
+    "project": "CPython",
+    "version": "3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "version_evidence_url": "https://github.com/python/cpython/commit/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "file": "Doc/library/asyncio-subprocess.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "locators": [
+        {
+          "id": "S1-L1",
+          "lines": "64-69",
+          "needle": "function:: create_subprocess_exec",
+          "supports": "limit is the StreamReader wrapper buffer limit; process creation API."
+        },
+        {
+          "id": "S1-L2",
+          "lines": "92-105",
+          "needle": "create_subprocess_shell and Windows support note",
+          "supports": "shell quoting risk; subprocess availability requires ProactorEventLoop on Windows."
+        },
+        {
+          "id": "S1-L3",
+          "lines": "179-217",
+          "needle": "method:: wait(); method:: communicate",
+          "supports": "wait with PIPE can deadlock; communicate reads streams, returns bytes, buffers output in memory, and is unsuitable for large/unlimited output."
+        },
+        {
+          "id": "S1-L4",
+          "lines": "222-249",
+          "needle": "send_signal, terminate, kill",
+          "supports": "POSIX and Windows direct-child signal behavior, including Windows kill alias."
+        },
+        {
+          "id": "S1-L5",
+          "lines": "289-311",
+          "needle": "Subprocess and Threads",
+          "supports": "Windows Proactor support, Selector limitation, alternate-loop caveat."
+        },
+        {
+          "id": "S1-L6",
+          "lines": "152-174 and 251-271",
+          "needle": "Process API, streams, and documented methods",
+          "supports": "Scope of documented high-level Process methods; no public per-pipe close operation is documented."
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "file": "Lib/asyncio/subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "locators": [
+        {
+          "id": "S2-L1",
+          "lines": "157-188",
+          "needle": "_read_stream and communicate",
+          "supports": "communicate obtains each stream, gathers reads concurrently, awaits process completion, and returns accumulated stdout/stderr."
+        },
+        {
+          "id": "S2-L2",
+          "lines": "201-212",
+          "needle": "create_subprocess_exec",
+          "supports": "high-level wrapper construction and forwarding to loop.subprocess_exec."
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "file": "Lib/test/test_asyncio/test_subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "locators": [
+        {
+          "id": "S3-L1",
+          "lines": "131-178",
+          "needle": "test_communicate",
+          "supports": "upstream communicate behavior tests; not an application witness."
+        },
+        {
+          "id": "S3-L2",
+          "lines": "300-353",
+          "needle": "test_communicate_ignore_broken_pipe and test_pause_reading",
+          "supports": "broken-pipe handling and StreamReader pause/resume regression tests."
+        },
+        {
+          "id": "S3-L3",
+          "lines": "504-524",
+          "needle": "test_cancel_process_wait",
+          "supports": "test cancels Process.wait then explicitly kills and awaits child."
+        },
+        {
+          "id": "S3-L4",
+          "lines": "559-603",
+          "needle": "test_close_kill_running",
+          "supports": "transport close behavior in upstream tests; not a product-tree guarantee."
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "file": "Doc/library/asyncio-task.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "locators": [
+        {
+          "id": "S4-L1",
+          "lines": "761-780",
+          "needle": "function:: wait_for",
+          "supports": "timeout cancels awaited task; shield prevents propagation to inner future."
+        },
+        {
+          "id": "S4-L2",
+          "lines": "816-856",
+          "needle": "function:: wait",
+          "supports": "wait timeout returns pending tasks and does not cancel them."
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "file": "Lib/asyncio/tasks.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "locators": [
+        {
+          "id": "S5-L1",
+          "lines": "459-500",
+          "needle": "async def wait_for",
+          "supports": "implementation of timeout/cancellation behavior."
+        },
+        {
+          "id": "S5-L2",
+          "lines": "553-567",
+          "needle": "async def _cancel_and_wait",
+          "supports": "implementation waits for task cancellation."
+        }
+      ]
+    },
+    {
+      "id": "S6",
+      "file": "Doc/library/subprocess.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst",
+      "sha256": "abd7bdcee7fac48ef71bf51a26fb47793d2de39a6d2591e21bd2be5ef4517472",
+      "locators": [
+        {
+          "id": "S6-L1",
+          "lines": "429-439",
+          "needle": "Windows argument sequence conversion",
+          "supports": "CreateProcess receives a command-line string; list args converted according to documented rules."
+        },
+        {
+          "id": "S6-L2",
+          "lines": "767-792",
+          "needle": "Windows batch files and Popen terminate/kill",
+          "supports": "Windows batch files may be launched by a system shell."
+        },
+        {
+          "id": "S6-L3",
+          "lines": "869-881",
+          "needle": "Popen.terminate and Popen.kill",
+          "supports": "Windows terminate invokes TerminateProcess; kill is an alias."
+        },
+        {
+          "id": "S6-L4",
+          "lines": "34-82",
+          "needle": "run/env arguments",
+          "supports": "Explicit environment mapping behavior."
+        },
+        {
+          "id": "S6-L5",
+          "lines": "55-61",
+          "needle": "run timeout and process creation caveat",
+          "supports": "Process creation itself cannot be interrupted on many platform APIs."
+        }
+      ]
+    },
+    {
+      "id": "S7",
+      "file": "Doc/library/asyncio-platforms.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-platforms.rst",
+      "sha256": "10208e8733adc4f0c1933e770b1fa3405225468fdb2b02cedd6b89403b0a1236",
+      "locators": [
+        {
+          "id": "S7-L1",
+          "lines": "49-77",
+          "needle": "Proactor and Selector Windows event loop constraints",
+          "supports": "Selector lacks subprocess support; default Proactor supports subprocesses."
+        }
+      ]
+    },
+    {
+      "id": "S8",
+      "file": "Lib/asyncio/streams.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/streams.py",
+      "sha256": "d1753bc21667afe914390623be181ebb31776845d7c7f2f50805cae972f0189b",
+      "locators": [
+        {
+          "id": "S8-L1",
+          "lines": "384-475",
+          "needle": "StreamReader limit, feed_data, pause/resume",
+          "supports": "limit controls reader buffering and transport pause behavior; it is not a cap on all captured process output."
+        },
+        {
+          "id": "S8-L2",
+          "lines": "631-676",
+          "needle": "StreamReader.read",
+          "supports": "read(n) returns bounded available chunks; read(-1) aggregates until EOF."
+        }
+      ]
+    }
+  ],
+  "claim_map": [
+    {
+      "final_section": "Supported contract; Launch, draining, and storage",
+      "claims": [
+        "exec with argv avoids command-shell construction but needs Windows caveats",
+        "communicate is not suitable for arbitrary output",
+        "the limit parameter is not a total-output cap",
+        "stdout and stderr must be drained concurrently",
+        "1 MiB is an aggregate per-job retained-tail limit",
+        "bounded queues and quotas require application-level enforcement"
+      ],
+      "sources": [
+        "S1-L1",
+        "S1-L2",
+        "S1-L3",
+        "S2-L1",
+        "S8-L1",
+        "S8-L2",
+        "S6-L1",
+        "S6-L2"
+      ],
+      "version_or_pin": "CPython 3.13.9, commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "governing_scope": "Built-in CPython asyncio/subprocess behavior for this pinned release; design choices and product guarantees remain unverified.",
+      "unresolved_uncertainty": "Exact queue sizes, quota values, IO throughput, and total RSS require implementation measurement; this review did not run them."
+    },
+    {
+      "final_section": "Timeout, cancellation, and terminal result",
+      "claims": [
+        "wait_for cancels the awaited task but does not signal an OS process",
+        "asyncio.wait with timeout leaves pending tasks alive",
+        "an explicit supervisor must terminate and reap the direct child",
+        "platform termination differs",
+        "a result requires exit/output validation and visible log status"
+      ],
+      "sources": [
+        "S1-L3",
+        "S1-L4",
+        "S3-L3",
+        "S4-L1",
+        "S4-L2",
+        "S5-L1",
+        "S5-L2",
+        "S1-L6",
+        "S6-L5"
+      ],
+      "version_or_pin": "CPython 3.13.9, commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "governing_scope": "Built-in CPython asyncio/subprocess behavior for this pinned release; design choices and product guarantees remain unverified.",
+      "unresolved_uncertainty": "No product process was run; descendant lifetime and EOF behavior depend on tools."
+    },
+    {
+      "final_section": "Windows and input handling",
+      "claims": [
+        "Windows requires Proactor for asyncio subprocesses",
+        "Windows argv sequences become command-line strings",
+        "batch files may be system-shell launched",
+        "Windows terminate and kill are not graceful/escalated equivalents"
+      ],
+      "sources": [
+        "S1-L2",
+        "S1-L4",
+        "S1-L5",
+        "S6-L1",
+        "S6-L2",
+        "S6-L3",
+        "S7-L1"
+      ],
+      "version_or_pin": "CPython 3.13.9, commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "governing_scope": "Built-in CPython asyncio/subprocess behavior for this pinned release; design choices and product guarantees remain unverified.",
+      "unresolved_uncertainty": "A specific validator's parser, environment needs, GUI behavior, and batch-file behavior require platform tests."
+    },
+    {
+      "final_section": "Alternatives",
+      "claims": [
+        "communicate is suitable only for known small output",
+        "separate stdout/stderr pipes plus pumps support live, bounded capture",
+        "file redirection trades live display for low Python buffering",
+        "merging streams loses identity"
+      ],
+      "sources": [
+        "S1-L3",
+        "S2-L1"
+      ],
+      "version_or_pin": "CPython 3.13.9, commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "governing_scope": "Built-in CPython asyncio/subprocess behavior for this pinned release; design choices and product guarantees remain unverified.",
+      "unresolved_uncertainty": "Disk-quota enforcement for direct file redirection is an implementation/product choice not supplied by asyncio."
+    },
+    {
+      "final_section": "Proposed validation plan",
+      "claims": [
+        "upstream tests cover asyncio semantics only",
+        "the listed component tests remain proposed and were not run"
+      ],
+      "sources": [
+        "S3-L1",
+        "S3-L2",
+        "S3-L3",
+        "S3-L4"
+      ],
+      "version_or_pin": "CPython 3.13.9, commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "governing_scope": "Built-in CPython asyncio/subprocess behavior for this pinned release; design choices and product guarantees remain unverified.",
+      "unresolved_uncertainty": "No claim of successful component test, Windows run, throughput, or leak test."
+    }
+  ],
+  "execution_record": {
+    "product_code_or_test_run": false,
+    "executable_witness_used": false,
+    "implementation_tests_run": false,
+    "source_hash_and_locator_inspection": true,
+    "interpretation": "The only executions were frozen-input integrity checks and retrieval/hash/locator inspection of public CPython source files. They did not execute or verify the proposed component."
+  }
+}
