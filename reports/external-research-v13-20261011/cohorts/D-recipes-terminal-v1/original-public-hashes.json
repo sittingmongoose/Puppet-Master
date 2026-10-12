@@ -1,0 +1,223 @@
+{
+  "schema": "er13.original_public_hash_mapping.v1",
+  "files": [
+    {
+      "path": "helpers/prospective-terminal-capture-v1/MANIFEST.json",
+      "kind": "original_terminal_helper_manifest",
+      "bytes": 2512,
+      "sha256": "2f73b026d805a74f7a49a91f69d867c93c3a80b380f0505c3ac89c27dadea3ec",
+      "source_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+      "normalized": true
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/README.md",
+      "kind": "terminal_helper_source",
+      "bytes": 8404,
+      "sha256": "50b66a93763a6c7285a7d6668906aa56185162786b51503ab05f51703d59132f",
+      "source_sha256": "60c6ba6dd555205cf2a38c126c6f3233cc2bcdf2a8db4d1151aabf33c59387c1",
+      "normalized": true
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/captureSpec-shim.js",
+      "kind": "terminal_helper_source",
+      "bytes": 658,
+      "sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+      "source_sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+      "normalized": false
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/install.py",
+      "kind": "terminal_helper_source",
+      "bytes": 8597,
+      "sha256": "e5b2582e82cca23d04ca8be5f4ad26b89ac59bb4f2b012bc7d66ce161b19e411",
+      "source_sha256": "d15df33b07830dd4697bc2eb9d3ced96b6c49b3461b03d788e84bb20f4ecc7ab",
+      "normalized": true
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/runtime-check.py",
+      "kind": "terminal_helper_source",
+      "bytes": 8966,
+      "sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+      "source_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+      "normalized": false
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/terminal-template.js",
+      "kind": "terminal_helper_source",
+      "bytes": 3086,
+      "sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+      "source_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+      "normalized": false
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/tests.py",
+      "kind": "terminal_helper_source",
+      "bytes": 13639,
+      "sha256": "a2abe58ffa247b4494ae0086ced3572604603600d324082476ea6d23b4646aa0",
+      "source_sha256": "9895a914f5e93c7b85c2b4fe7cc138aa878fab095f2369f8c231dadb36a82ca9",
+      "normalized": true
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/READY.json",
+      "kind": "terminal_helper_original_wrapper",
+      "bytes": 1318,
+      "sha256": "ed0778bd1d36571d2505e495ca1cc24dd83349092d95c16296dae6f341a6d36b",
+      "source_sha256": "ee8492a6fe74d92e4560300ec8aa0aa7cb95b0b1036749231fec607aba4d34f8",
+      "normalized": true
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/SHA256SUMS",
+      "kind": "terminal_helper_original_wrapper",
+      "bytes": 641,
+      "sha256": "b639b789cc2f1df0626d6e2172685fef0be9dccdfacd342d8dd592d0aaf850cc",
+      "source_sha256": "0211f74ae21c3a9a6c3d1abf955585e1431078a06ad58ced2897bc577b23f9b5",
+      "normalized": true
+    },
+    {
+      "path": "state/d-selection-lock-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 13635,
+      "sha256": "fb6cf5e80778ce0b4415f6ffdf31f3631c175f669b889b53a6aa3a02f944df12",
+      "source_sha256": "440170c9bc813a76de2622837863c6531cf320f8767e8fab7eb34ed5e4cef9b6",
+      "normalized": true
+    },
+    {
+      "path": "state/dispatch-release-D-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 24779,
+      "sha256": "ca649b00b41506556081ea68dddbdbc8fd4b6de10bef0c607bb76e0024540ecc",
+      "source_sha256": "9ff53c54a7876c7c0a320ee5d61b28d6f786c280fe5e504f7d938ac0d7c69c8a",
+      "normalized": true
+    },
+    {
+      "path": "state/d-selection-intent-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 3130,
+      "sha256": "efd6f9ff9063e8b5012d4de21711d485cbd2886cb56b39079598cce05e1779e6",
+      "source_sha256": "efd6f9ff9063e8b5012d4de21711d485cbd2886cb56b39079598cce05e1779e6",
+      "normalized": false
+    },
+    {
+      "path": "state/cd-selection-rule-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 2165,
+      "sha256": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5",
+      "source_sha256": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5",
+      "normalized": false
+    },
+    {
+      "path": "state/eval-coordinator-v2/C-original-cohort-closure-v2.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 4392,
+      "sha256": "3073686657b0871dc0ed4ff0ea8f7261f2bec0b1209ab48ae9270d023907c37c",
+      "source_sha256": "44e02a3ce1f41258835339543770704a987473c99f3fe8887bffe162d4262ec0",
+      "normalized": true
+    },
+    {
+      "path": "state/dispatcher-v1/c-closure-record.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 35408,
+      "sha256": "05234ae1409aacf53451c2cb1581b865fd158f00a055bb61b150105eff01fe2d",
+      "source_sha256": "0c7b4882ebc3b21d7c63d7defc59d7048c55cb32d224f901283a424e1f534532",
+      "normalized": true
+    },
+    {
+      "path": "state/d-private-input-preparation-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 7549,
+      "sha256": "e98625b71de3b89db086d87b9860e315dba1f1fa3bd2fa399415f7fc0877e8d8",
+      "source_sha256": "496975f314385f7fba8f10f622de6e49ca6cfcad94ba5200f1ac8ac2921c7ddc",
+      "normalized": true
+    },
+    {
+      "path": "state/d-rubric-mechanical-authorization-v1.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 1907,
+      "sha256": "63f5c323a3abc11a304920bdfe8af656305353bfdd83eb8f0962577bb4949ab0",
+      "source_sha256": "760e907ca7028ce6a2e21a6225e409a2c151ba6bfdd9d7d1f45e1167ed73e675",
+      "normalized": true
+    },
+    {
+      "path": "state/terminal-capture-v1/CHECKS.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 12606,
+      "sha256": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+      "source_sha256": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+      "normalized": false
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-capture-dispatch-integration.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 1361,
+      "sha256": "72f9b4aa322b35fef039591637bc4ead40e3a7bd999d07d9b9ef494fd33e3416",
+      "source_sha256": "0d1ea85099f3a25cd34996d874b0869992321507f6ef1e6dd531c91da448a982",
+      "normalized": true
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-capture-pin-verification.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 1149,
+      "sha256": "7122550edc09607296778d1351938a5431d34b4ae0171db21c24c2b07f59b55b",
+      "source_sha256": "fd4421ae7b2ed90ad60c4060734add8f256fd44d652955685ed4b08b6e8d2c36",
+      "normalized": true
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-gate-mechanics-checks.json",
+      "kind": "exact_root_locked_metadata_or_original_MOCK_report",
+      "bytes": 519,
+      "sha256": "868ad20d07ccfc6932c6a4c90703a0e08ff28cbefc89afb6b80dd54c1d21258d",
+      "source_sha256": "868ad20d07ccfc6932c6a4c90703a0e08ff28cbefc89afb6b80dd54c1d21258d",
+      "normalized": false
+    },
+    {
+      "path": "mechanics/dispatch-v1/freeze-prospective-stage-aux.py",
+      "kind": "finite_generic_dispatcher_code",
+      "bytes": 1918,
+      "sha256": "bfcfabdbd110c1437bf64f5a52480e3650ed5afd25472f6e1484d959dea269a0",
+      "source_sha256": "7093af1f5bce85c58ad948c60460e97ba4169f8c760207a4e177e60ed3b3f2da",
+      "normalized": true
+    },
+    {
+      "path": "mechanics/dispatch-v1/record-terminal.py",
+      "kind": "finite_generic_dispatcher_code",
+      "bytes": 6371,
+      "sha256": "ef98b867b6829713f4ec87faf3c2e05c2cdf70d05177c09c7865924f9a17c4bf",
+      "source_sha256": "78fe57748352a76a59f61e53da4d9953c627b34ab5d98fe2cbdaf3b967848b71",
+      "normalized": true
+    },
+    {
+      "path": "mechanics/dispatch-v1/terminal_capture_gate.py",
+      "kind": "finite_generic_dispatcher_code",
+      "bytes": 1392,
+      "sha256": "d3c4c3d3ab58cf0cf7fb0417ee68200773079278f060e2e1aba471422c473d50",
+      "source_sha256": "d3c4c3d3ab58cf0cf7fb0417ee68200773079278f060e2e1aba471422c473d50",
+      "normalized": false
+    },
+    {
+      "path": "mechanics/dispatch-v1/full-pair-packet.py",
+      "kind": "finite_generic_dispatcher_code",
+      "bytes": 7035,
+      "sha256": "db1c50484d88ebe8b920eb0815b3c67e31d7cb0fb215360b52efbe21b6d2fca3",
+      "source_sha256": "9af68bf401d4b8fc08d0bad7cdd19ad792d7f4439bf8e6a92597818d07a75d7a",
+      "normalized": true
+    },
+    {
+      "path": "mechanics/dispatch-v1/native-prospective-launch-code-mode.js",
+      "kind": "finite_generic_dispatcher_code",
+      "bytes": 1060,
+      "sha256": "884a03b998060b7f5c1b8601b7249bcef8178dc231c8db84a028dafdc86c9264",
+      "source_sha256": "884a03b998060b7f5c1b8601b7249bcef8178dc231c8db84a028dafdc86c9264",
+      "normalized": false
+    },
+    {
+      "path": "restore_source_layout.py",
+      "kind": "existing_public_mapper",
+      "bytes": 2006,
+      "sha256": "6afae2f1f4ddb6fc375b0b5b0acc8dc180cdeef1be5611889f7b7758a0de1cfb",
+      "source_sha256": "6afae2f1f4ddb6fc375b0b5b0acc8dc180cdeef1be5611889f7b7758a0de1cfb",
+      "normalized": false
+    }
+  ],
+  "mechanical_rebinding_record": "dependency-closure-reference.json",
+  "original_C_failures_sourcegrades_Dlock_release_scientific_cards_unchanged": true
+}

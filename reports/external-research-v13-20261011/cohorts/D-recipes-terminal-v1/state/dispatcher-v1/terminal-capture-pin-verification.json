@@ -1,0 +1,27 @@
+{
+  "captured_at": "2026-10-12T04:01:15.757101+00:00",
+  "helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+  "pins_verified": {
+    "MANIFEST.json": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+    "SHA256SUMS": "0211f74ae21c3a9a6c3d1abf955585e1431078a06ad58ced2897bc577b23f9b5",
+    "install.py": "d15df33b07830dd4697bc2eb9d3ced96b6c49b3461b03d788e84bb20f4ecc7ab",
+    "terminal-template.js": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+    "runtime-check.py": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+    "captureSpec-shim.js": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75"
+  },
+  "checksum_entries_verified": [
+    "MANIFEST.json",
+    "README.md",
+    "READY.json",
+    "captureSpec-shim.js",
+    "install.py",
+    "runtime-check.py",
+    "terminal-template.js",
+    "tests.py"
+  ],
+  "checks_path": "ER13_RUNTIME/state/terminal-capture-v1/CHECKS.json",
+  "checks_sha256": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+  "offline_mock_only": true,
+  "actual_candidate_native_calls": 0,
+  "D_authorized": false
+}

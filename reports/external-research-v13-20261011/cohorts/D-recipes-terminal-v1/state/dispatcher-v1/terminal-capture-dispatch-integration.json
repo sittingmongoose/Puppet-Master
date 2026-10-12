@@ -1,0 +1,20 @@
+{
+  "helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+  "manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+  "pin_verification": "ER13_RUNTIME/state/dispatcher-v1/terminal-capture-pin-verification.json",
+  "focused_root_mock_checks": 118,
+  "dispatcher_gate_checks": "ER13_RUNTIME/state/dispatcher-v1/terminal-gate-mechanics-checks.json",
+  "owned_mechanics_sha256": {
+    "freeze-prospective-stage-aux.py": "7093af1f5bce85c58ad948c60460e97ba4169f8c760207a4e177e60ed3b3f2da",
+    "record-terminal.py": "78fe57748352a76a59f61e53da4d9953c627b34ab5d98fe2cbdaf3b967848b71",
+    "terminal_capture_gate.py": "d3c4c3d3ab58cf0cf7fb0417ee68200773079278f060e2e1aba471422c473d50",
+    "full-pair-packet.py": "9af68bf401d4b8fc08d0bad7cdd19ad792d7f4439bf8e6a92597818d07a75d7a",
+    "native-prospective-launch-code-mode.js": "884a03b998060b7f5c1b8601b7249bcef8178dc231c8db84a028dafdc86c9264"
+  },
+  "D_aux_required_count": 9,
+  "failure_file_selected_when_present": true,
+  "required_qualification": "checked true + direct_update_goal_return + exact saved terminal SHA + no failure file; birth/task0pending/full frozen handoff/deadlines still required",
+  "physical_provenance": "UNKNOWN beyond checker",
+  "native_launch_in_memory_shim": "prospective-terminal-capture-v1 for future D only",
+  "D_release_required": true
+}

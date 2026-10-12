@@ -1,0 +1,30 @@
+{
+  "exact_root_pins": {
+    "state/d-selection-lock-v1.json": "440170c9bc813a76de2622837863c6531cf320f8767e8fab7eb34ed5e4cef9b6",
+    "state/dispatch-release-D-v1.json": "9ff53c54a7876c7c0a320ee5d61b28d6f786c280fe5e504f7d938ac0d7c69c8a",
+    "state/d-selection-intent-v1.json": "efd6f9ff9063e8b5012d4de21711d485cbd2886cb56b39079598cce05e1779e6",
+    "state/cd-selection-rule-v1.json": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5",
+    "state/eval-coordinator-v2/C-original-cohort-closure-v2.json": "44e02a3ce1f41258835339543770704a987473c99f3fe8887bffe162d4262ec0",
+    "state/dispatcher-v1/c-closure-record.json": "0c7b4882ebc3b21d7c63d7defc59d7048c55cb32d224f901283a424e1f534532",
+    "state/d-private-input-preparation-v1.json": "496975f314385f7fba8f10f622de6e49ca6cfcad94ba5200f1ac8ac2921c7ddc",
+    "state/d-rubric-mechanical-authorization-v1.json": "760e907ca7028ce6a2e21a6225e409a2c151ba6bfdd9d7d1f45e1167ed73e675",
+    "state/terminal-capture-v1/CHECKS.json": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+    "state/dispatcher-v1/terminal-capture-dispatch-integration.json": "0d1ea85099f3a25cd34996d874b0869992321507f6ef1e6dd531c91da448a982",
+    "state/dispatcher-v1/terminal-capture-pin-verification.json": null,
+    "state/dispatcher-v1/terminal-gate-mechanics-checks.json": null
+  },
+  "new_helper_source_members_verified": 6,
+  "new_helper_total_files": 9,
+  "generic_dispatcher_code_pins": {
+    "freeze-prospective-stage-aux.py": "7093af1f5bce85c58ad948c60460e97ba4169f8c760207a4e177e60ed3b3f2da",
+    "record-terminal.py": "78fe57748352a76a59f61e53da4d9953c627b34ab5d98fe2cbdaf3b967848b71",
+    "terminal_capture_gate.py": "d3c4c3d3ab58cf0cf7fb0417ee68200773079278f060e2e1aba471422c473d50",
+    "full-pair-packet.py": "9af68bf401d4b8fc08d0bad7cdd19ad792d7f4439bf8e6a92597818d07a75d7a",
+    "native-prospective-launch-code-mode.js": "884a03b998060b7f5c1b8601b7249bcef8178dc231c8db84a028dafdc86c9264"
+  },
+  "original_focused_MOCK_checks": 118,
+  "original_dispatcher_MOCK_gate_checks": 11,
+  "all_selected_hashes_match": true,
+  "test_reruns_118_154_265": 0,
+  "native_calls_candidate_Goals_evaluators": 0
+}

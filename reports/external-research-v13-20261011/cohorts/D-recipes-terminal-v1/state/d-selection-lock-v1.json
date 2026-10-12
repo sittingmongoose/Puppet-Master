@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "track": "D",
+  "locked_by": "codex-er13-root",
+  "locked_utc": "2026-10-12T04:14:35.560178+00:00",
+  "heldout_manifest_sha256": "a96ff537e4fd6e015b6588c0a43603091e39abf31b2dccfcec3004150d678131",
+  "heldout_helper_hash_manifest_sha256": "90859ab6a24663db9520d55a749b4b75d4df98a270f9c4bb1f0b2130375e4d70",
+  "complete_recipes_locked": true,
+  "replication_use": "diagnostic",
+  "decision_rule": "Retain both complete tested exploratory workflows for diagnostic replication because each produced one finite source pass and one failure, on distinct domains. Neither is a qualified optimizer or recommended promotion. No directly comparable full-quality pair or failure-inclusive resource advantage is established; the observed source-yield differences warrant measuring repeatability, not a confirmatory label. Four assigned pairs each follow the frozen finite allocation, with at least two domains each. No source-specific repair or retuning between repetitions.",
+  "assignment_rule": "D-P01..04 -> D-S1-v1 unchanged C-S1-v2 science; D-P05..08 -> D-S2-v1 unchanged C-S2-v2 science. Four fresh matched pairs each, multiple domains each; common activation/completion mechanics, Luna Max Standard, exact inputs and unchanged maximum time contracts in both arms.",
+  "case_assignments": {
+    "D-P01": "D-S1-v1",
+    "D-P02": "D-S1-v1",
+    "D-P03": "D-S1-v1",
+    "D-P04": "D-S1-v1",
+    "D-P05": "D-S2-v1",
+    "D-P06": "D-S2-v1",
+    "D-P07": "D-S2-v1",
+    "D-P08": "D-S2-v1"
+  },
+  "recipes": {
+    "D-S1-v1": {
+      "whole_recipe": {
+        "materializer": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+        "materializer_manifest_sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+        "materialize_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+        "capture_helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+        "capture_manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+        "native_guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+        "route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "whole_maximum_seconds": 3600,
+        "time_contract": "maximum60 elapsed incl armsetup/queue/tools/Goal/handoffs/writing; no minimum, earlycompletion allowed",
+        "investigator_input_boundary": "BRIEF_ONLY; exactplan released once after discovery.md exists and is frozen through inheritedone-shotreveal.py gate",
+        "output_selection": "inheritedcomplete discovery/draft/revealedplan/source maps, allcritique/dispositions, completefullfinal; actualwitness code/results whenused",
+        "native": "freshoneGoalperdeclaredcontext before input through exacthashloadedcapture, sameGoalterminal directreceipt, no nested candidatedelegation/premiumassist/accountswitch",
+        "matched_R0": {
+          "method": "R0",
+          "contexts": 3,
+          "stage_maxima_seconds": [
+            1800,
+            720,
+            1080
+          ],
+          "scientific_delta": null
+        },
+        "method": "B02",
+        "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S1-v2",
+        "card_sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+        "generic_critic_delta_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+        "critic_delta_stage": "critic",
+        "stage_maxima_seconds": [
+          1800,
+          1800
+        ],
+        "candidate_contexts": 2,
+        "other_supplemental_deltas": "EMPTY, fullordinaryduties retained",
+        "activation_capture_parent": "ER13_RUNTIME/helpers/prospective-capture-v1",
+        "activation_capture_parent_manifest_sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+        "prospective_completion_mechanics": {
+          "helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+          "manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+          "install_sha256": "d15df33b07830dd4697bc2eb9d3ced96b6c49b3461b03d788e84bb20f4ecc7ab",
+          "terminal_template_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+          "runtime_check_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+          "captureSpec_shim_sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+          "integration_record": "ER13_RUNTIME/state/dispatcher-v1/terminal-capture-dispatch-integration.json",
+          "integration_sha256": "0d1ea85099f3a25cd34996d874b0869992321507f6ef1e6dd531c91da448a982",
+          "bootstrap": "replace __HELPER_DIR_JSON__ in new shim; inject IN MEMORY before unique existing Paste into T3 functions code mode marker; supersedes activation-only shim; old bootstrap files unchanged",
+          "native_completion": "candidate invokes frozen three-statement loader ONCE in same original native context after all science outputs; entire actual direct update_goal return emitted and O_EXCL saved before validation",
+          "native_guard": "exact pinned original guard compiled read-only in memory with sole expected-status literal/message complete; raw receipt untouched",
+          "aux_required": [
+            "native-capture.js",
+            "prospective-capture-v1.json",
+            "native-goal-attempt.json",
+            "prospective-terminal-capture-v1.json",
+            "native-terminal-capture.js",
+            "native-terminal-check.py",
+            "native-completion-attempt.json",
+            "native-completion-output-snapshot.json",
+            "native-terminal-capture-checked.json"
+          ],
+          "freeze_failure_when_present": true,
+          "qualification_gate": {
+            "required": true,
+            "terminal_capture_checked": true,
+            "response_source": "direct_update_goal_return",
+            "terminal_sha256": "must equal actual frozen native-goal-terminal.json bytes",
+            "no_failure_file": true,
+            "failure_file": "native-terminal-capture-failed.json",
+            "existing_checks": "same original birth/objective; actual T3 task terminal with zero pending; immutable complete or failure-qualified handoff; original deadlines",
+            "missing_unknown_failed": "never waived by getter completion or source PASS",
+            "physical_native_task_provenance": "UNKNOWN beyond actual returned custody and checker; no independent session proof"
+          },
+          "verification": "118 focused source/API MOCK checks plus 11 dispatcher synthetic gate checks; actual native/candidate/model probes zero; future actual semantics not established by mocks"
+        }
+      },
+      "scientific_label": "DIAGNOSTIC_REPLICATION; not a qualified optimizer or confirmation",
+      "scientific_version": "C-S1-v2"
+    },
+    "D-S2-v1": {
+      "whole_recipe": {
+        "materializer": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+        "materializer_manifest_sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+        "materialize_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+        "capture_helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+        "capture_manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+        "native_guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+        "route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "whole_maximum_seconds": 3600,
+        "time_contract": "maximum60 elapsed incl armsetup/queue/tools/Goal/handoffs/writing; no minimum, earlycompletion allowed",
+        "investigator_input_boundary": "BRIEF_ONLY; exactplan released once after discovery.md exists and is frozen through inheritedone-shotreveal.py gate",
+        "output_selection": "inheritedcomplete discovery/draft/revealedplan/source maps, allcritique/dispositions, completefullfinal; actualwitness code/results whenused",
+        "native": "freshoneGoalperdeclaredcontext before input through exacthashloadedcapture, sameGoalterminal directreceipt, no nested candidatedelegation/premiumassist/accountswitch",
+        "matched_R0": {
+          "method": "R0",
+          "contexts": 3,
+          "stage_maxima_seconds": [
+            1800,
+            720,
+            1080
+          ],
+          "scientific_delta": null
+        },
+        "method": "B06",
+        "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S2-v2",
+        "card_sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+        "generic_critic_delta_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+        "critic_delta_stage": "critic-truth",
+        "stage_maxima_seconds": [
+          1800,
+          360,
+          360,
+          1080
+        ],
+        "candidate_contexts": 4,
+        "other_supplemental_deltas": "EMPTY, fullordinaryduties retained",
+        "activation_capture_parent": "ER13_RUNTIME/helpers/prospective-capture-v1",
+        "activation_capture_parent_manifest_sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+        "prospective_completion_mechanics": {
+          "helper": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+          "manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+          "install_sha256": "d15df33b07830dd4697bc2eb9d3ced96b6c49b3461b03d788e84bb20f4ecc7ab",
+          "terminal_template_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+          "runtime_check_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+          "captureSpec_shim_sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+          "integration_record": "ER13_RUNTIME/state/dispatcher-v1/terminal-capture-dispatch-integration.json",
+          "integration_sha256": "0d1ea85099f3a25cd34996d874b0869992321507f6ef1e6dd531c91da448a982",
+          "bootstrap": "replace __HELPER_DIR_JSON__ in new shim; inject IN MEMORY before unique existing Paste into T3 functions code mode marker; supersedes activation-only shim; old bootstrap files unchanged",
+          "native_completion": "candidate invokes frozen three-statement loader ONCE in same original native context after all science outputs; entire actual direct update_goal return emitted and O_EXCL saved before validation",
+          "native_guard": "exact pinned original guard compiled read-only in memory with sole expected-status literal/message complete; raw receipt untouched",
+          "aux_required": [
+            "native-capture.js",
+            "prospective-capture-v1.json",
+            "native-goal-attempt.json",
+            "prospective-terminal-capture-v1.json",
+            "native-terminal-capture.js",
+            "native-terminal-check.py",
+            "native-completion-attempt.json",
+            "native-completion-output-snapshot.json",
+            "native-terminal-capture-checked.json"
+          ],
+          "freeze_failure_when_present": true,
+          "qualification_gate": {
+            "required": true,
+            "terminal_capture_checked": true,
+            "response_source": "direct_update_goal_return",
+            "terminal_sha256": "must equal actual frozen native-goal-terminal.json bytes",
+            "no_failure_file": true,
+            "failure_file": "native-terminal-capture-failed.json",
+            "existing_checks": "same original birth/objective; actual T3 task terminal with zero pending; immutable complete or failure-qualified handoff; original deadlines",
+            "missing_unknown_failed": "never waived by getter completion or source PASS",
+            "physical_native_task_provenance": "UNKNOWN beyond actual returned custody and checker; no independent session proof"
+          },
+          "verification": "118 focused source/API MOCK checks plus 11 dispatcher synthetic gate checks; actual native/candidate/model probes zero; future actual semantics not established by mocks"
+        }
+      },
+      "scientific_label": "DIAGNOSTIC_REPLICATION; not a qualified optimizer or confirmation",
+      "scientific_version": "C-S2-v2"
+    }
+  },
+  "case_bodies_root_model_unread_before_lock": true,
+  "active_intent_sha256": "efd6f9ff9063e8b5012d4de21711d485cbd2886cb56b39079598cce05e1779e6",
+  "preregistered_selection_rule_sha256": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5",
+  "C_original_closure_sha256": "44e02a3ce1f41258835339543770704a987473c99f3fe8887bffe162d4262ec0",
+  "evaluation_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "common_private_preparation": "After selection, machine-only private input preparation from frozen ciphertext for the existing reference materializer; rootmodel/candidates do not receive plan before inheriteddiscoverygate; rubric/key not candidateinput. This is preparation, not a false before-discovery comparison-point receipt.",
+  "historical_records_unchanged": true,
+  "scientific_source_specific_repairs": false
+}

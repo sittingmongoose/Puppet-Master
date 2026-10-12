@@ -1,0 +1,21 @@
+{
+  "scope": "D-only dispatcher custody gate",
+  "checks": [
+    "matching direct return",
+    "missing checked",
+    "getter cannot substitute",
+    "hash mismatch",
+    "false checked",
+    "truthy integer is not checked true",
+    "original failure veto",
+    "frozen failure veto",
+    "invalid metadata preserved failure",
+    "wrong metadata shape failure",
+    "missing terminal failure"
+  ],
+  "passed": 11,
+  "failed": 0,
+  "actual_native_calls": 0,
+  "real_case_science_reads": 0,
+  "scratch_removed": true
+}

@@ -1,0 +1,485 @@
+{
+  "schema": "er13.terminal_capture_focused_mock.v1",
+  "checks": [
+    {
+      "name": "accepted C source seal exact",
+      "passed": true
+    },
+    {
+      "name": "accepted activation seal exact",
+      "passed": true
+    },
+    {
+      "name": "portable actual new Python compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "R0 investigator O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "R0 critic original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "R0 critic unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "R0 critic parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "R0 critic actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 critic portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "R0 critic O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "R0 original config/T0/budgets/cards untouched",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B02 critic original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B02 critic unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B02 critic parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B02 critic actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B02 critic portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B02 critic O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B02 original config/T0/budgets/cards untouched",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser original clock/objective/scope/card/route and only terminal suffix",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser unstarted idempotent API",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser parent guard unchanged",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser actual generated Python compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser portable raw entire direct completion/no repeat/no new Goal",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser O_EXCL attempt before update and output snapshot",
+      "passed": true
+    },
+    {
+      "name": "B06 original config/T0/budgets/cards untouched",
+      "passed": true
+    },
+    {
+      "name": "unknown stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "unknown explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "unknown attempt persists/no invented getter receipt",
+      "passed": true
+    },
+    {
+      "name": "unknown started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "savefail stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "savefail explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "savefail attempt persists/no invented getter receipt",
+      "passed": true
+    },
+    {
+      "name": "savefail started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "wrongbirth stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "wrongbirth explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "wrongbirth actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "wrongbirth started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "wrongstatus stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "wrongstatus explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "wrongstatus actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "wrongstatus started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "partial stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "partial explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "partial actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "partial started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "unsupported stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "unsupported explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "unsupported actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "unsupported started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "nullreturn stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "nullreturn explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "nullreturn actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "nullreturn started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "preflightbirth stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "preflightbirth explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "preflightbirth started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "preflightcomplete stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "preflightcomplete explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "preflightcomplete started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "preflightobjective stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "preflightobjective explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "preflightobjective started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "outputsdrift stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "outputsdrift explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "outputsdrift actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "outputsdrift started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "latesave stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "latesave explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "latesave actual full return saved unchanged even guard/output/clock failure",
+      "passed": true
+    },
+    {
+      "name": "latesave started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "missingoutput stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "missingoutput explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "missingoutput started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "expired stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "expired explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "expired started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "existing stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "existing explicit failed capture retained",
+      "passed": true
+    },
+    {
+      "name": "existing terminal bytes never overwritten",
+      "passed": true
+    },
+    {
+      "name": "existing started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "wronghash stop exact native counters/no fallback or repeat",
+      "passed": true
+    },
+    {
+      "name": "wronghash started installer refusal",
+      "passed": true
+    },
+    {
+      "name": "source parents still exact",
+      "passed": true
+    }
+  ],
+  "passed": 118,
+  "failed": 0,
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "real_case_science_rubric_reads": 0,
+  "portable_finite_copy": true,
+  "old_suites_rerun": false,
+  "scratch_removed": true
+}

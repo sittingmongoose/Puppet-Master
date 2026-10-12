@@ -1,0 +1,138 @@
+{
+  "scope": "Finite publication source/hash/import/compile only; no installer/runtime checker/gate executed on any D stage/receipt; no science/review/selection",
+  "checks": [
+    {
+      "name": "Public newhelper member hash README.md",
+      "passed": true
+    },
+    {
+      "name": "Public newhelper member hash captureSpec-shim.js",
+      "passed": true
+    },
+    {
+      "name": "Public newhelper member hash install.py",
+      "passed": true
+    },
+    {
+      "name": "Public newhelper member hash runtime-check.py",
+      "passed": true
+    },
+    {
+      "name": "Public newhelper member hash terminal-template.js",
+      "passed": true
+    },
+    {
+      "name": "Public newhelper member hash tests.py",
+      "passed": true
+    },
+    {
+      "name": "Complete new nine-file helper SHA256SUMS",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation helpers/prospective-terminal-capture-v1/install.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation helpers/prospective-terminal-capture-v1/runtime-check.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation helpers/prospective-terminal-capture-v1/tests.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation mechanics/dispatch-v1/freeze-prospective-stage-aux.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation mechanics/dispatch-v1/full-pair-packet.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation mechanics/dispatch-v1/record-terminal.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation mechanics/dispatch-v1/terminal_capture_gate.py",
+      "passed": true
+    },
+    {
+      "name": "Python source compilation restore_source_layout.py",
+      "passed": true
+    },
+    {
+      "name": "JS source syntax compilation only helpers/prospective-terminal-capture-v1/captureSpec-shim.js",
+      "passed": true
+    },
+    {
+      "name": "JS source syntax compilation only helpers/prospective-terminal-capture-v1/terminal-template.js",
+      "passed": true
+    },
+    {
+      "name": "JS source syntax compilation only mechanics/dispatch-v1/native-prospective-launch-code-mode.js",
+      "passed": true
+    },
+    {
+      "name": "Safe source-only import public_terminal_install",
+      "passed": true
+    },
+    {
+      "name": "Safe source-only import public_terminal_runtime_check",
+      "passed": true
+    },
+    {
+      "name": "Safe source-only import public_terminal_dispatch_gate",
+      "passed": true
+    },
+    {
+      "name": "Public READY actual MANIFEST pin",
+      "passed": true
+    },
+    {
+      "name": "Public READY actual code pin install.py",
+      "passed": true
+    },
+    {
+      "name": "Public READY actual code pin terminal-template.js",
+      "passed": true
+    },
+    {
+      "name": "Public READY actual code pin runtime-check.py",
+      "passed": true
+    },
+    {
+      "name": "Public READY actual code pin captureSpec-shim.js",
+      "passed": true
+    },
+    {
+      "name": "Rebound actual activation dependency literal",
+      "passed": true
+    },
+    {
+      "name": "Common original guard SHA unchanged",
+      "passed": true
+    },
+    {
+      "name": "Every exact selected source original remains unchanged",
+      "passed": true
+    },
+    {
+      "name": "All earlier published files byte unchanged",
+      "passed": true
+    }
+  ],
+  "passed": 30,
+  "failed": 0,
+  "actual_native_calls": 0,
+  "actual_candidate_or_evaluator_launches": 0,
+  "test_suites118_154_265_rerun": false,
+  "dispatcher11gatechecks_rerun": false,
+  "old_helper_or_science_copies": 0,
+  "Dcase_subject_answer_rubric_key_task_native_receipt_contents_read": false,
+  "earlier_published_file_count": 4760,
+  "earlier_totalbytes": 50701306,
+  "worker_agents_started": 0,
+  "minimum_available_before_worker_GiB": 4,
+  "publication_support_cost": "Separate support, provider billing unknown"
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "er13.D_terminal_public_dependency_closure.v1",
+  "parent_prospective_publication_commit": "0693412f6d7855c194d3fb5753a95f88b5e77759",
+  "parent_prospective_cohort": "cohorts/prospective-recipes-v1",
+  "common_parent_commit": "47b2ed72a712291a2853d3f4068d1251495ebda5",
+  "common_parent_manifest_sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+  "common_parent_closure": "Published full-v1, referred through prospective recipe closure, not duplicated",
+  "exact_new_helper_files": 9,
+  "actual_public_terminal_manifest_sha256": "2f73b026d805a74f7a49a91f69d867c93c3a80b380f0505c3ac89c27dadea3ec",
+  "raw_original_terminal_manifest_sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a",
+  "dependencies_public": [
+    {
+      "root": "ER13_RUNTIME/helpers/prospective-capture-v1",
+      "manifest_sha256": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+      "checksum_sha256": "b3d04a20d7f18375658c96a00602e5df8f91410a11a515471b12085ff2c5845a",
+      "exact_checksum_entries": 7
+    },
+    {
+      "root": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+      "manifest_sha256": "126125fbb0999c029b40eef46e56e0c5f9c0193c1a3658e6df7a148f8c6c5435",
+      "checksum_sha256": "97d32396622fc74a849de0a475436a8f7ac98d636d5a8c642fca648e11b832a9",
+      "exact_checksum_entries": 69
+    },
+    {
+      "root": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1",
+      "manifest_sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+      "checksum_sha256": "801448f7f0d0bcd276bcb4a1c715eaf1a1efbb5a33fcd14252918110ef567ae0",
+      "exact_checksum_entries": 59
+    }
+  ],
+  "dependency_literal_rebindings": [
+    {
+      "path": "helpers/prospective-terminal-capture-v1/install.py",
+      "original_pin": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+      "public_dependency_pin": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+      "literal_occurrences": 1,
+      "kind": "Expected dependency seal literal rebinding only"
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/tests.py",
+      "original_pin": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+      "public_dependency_pin": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+      "literal_occurrences": 2,
+      "kind": "Expected dependency seal literal rebinding only"
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/tests.py",
+      "original_pin": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+      "public_dependency_pin": "126125fbb0999c029b40eef46e56e0c5f9c0193c1a3658e6df7a148f8c6c5435",
+      "literal_occurrences": 2,
+      "kind": "Expected dependency seal literal rebinding only"
+    }
+  ],
+  "helper_algorithm_guard_card_science_changes": false,
+  "existing_9_D_auxiliaries_required": true,
+  "parent_helper_or_science_copies": 0
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "er13.prospective_terminal_capture_ready.v1",
+  "helper_root": "ER13_RUNTIME/helpers/prospective-terminal-capture-v1",
+  "manifest_sha256": "2f73b026d805a74f7a49a91f69d867c93c3a80b380f0505c3ac89c27dadea3ec",
+  "install_sha256": "e5b2582e82cca23d04ca8be5f4ad26b89ac59bb4f2b012bc7d66ce161b19e411",
+  "template_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+  "checker_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+  "shim_sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+  "checks_sha256": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+  "checks_passed": 118,
+  "activation_dependency_manifest_sha256": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+  "materializer_dependency_manifest_sha256": "126125fbb0999c029b40eef46e56e0c5f9c0193c1a3658e6df7a148f8c6c5435",
+  "guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "source_api_only": true,
+  "prospective_only": true,
+  "root_release_required": true,
+  "unknown_capture_must_not_be_waived": true,
+  "publication_scope": "Privacy-normalized portable metadata/dependency pins only; original118 checks historical, not rerun"
+}

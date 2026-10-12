@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-12T03:39:41.689669+00:00",
+  "owner": "codex-er13-root",
+  "track": "D",
+  "status": "SCIENTIFIC_SELECTION_ONLY; complete mechanics lock pending new terminal capture seal; D remains encrypted/unstarted",
+  "replication_use": "diagnostic",
+  "basis": {
+    "C_original_cohort_sha256": "44e02a3ce1f41258835339543770704a987473c99f3fe8887bffe162d4262ec0",
+    "original_source_pairs": {
+      "C-R1-P01": "PASS/FAIL; control direct-terminal capture method failure separate",
+      "C-R1-P02": "FAIL/PASS",
+      "C-R2-P01": "FAIL/FAIL",
+      "C-R2-P02": "FAIL/PASS"
+    },
+    "C_source_PASS": 3,
+    "C_source_FAIL": 5,
+    "full_six_axes_assessed": true,
+    "each_integrated_treatment_PASS_count": 1,
+    "each_integrated_treatment_assigned": 2,
+    "equal_quality_saving_established": false,
+    "native_linkage_activity_billing": "UNKNOWN"
+  },
+  "scientific_choices": {
+    "slot1": "C-S1-v2:B02+B10 critic/finalizer; unchanged scientific version, four fresh D pairs",
+    "slot2": "C-S2-v2:B06+B10 critic-truth; unchanged scientific version, four fresh D pairs"
+  },
+  "decision_rule": "Retain both complete tested exploratory workflows for diagnostic replication because each produced one finite source pass and one failure, on distinct domains. Neither is a qualified optimizer or recommended promotion. No directly comparable full-quality pair or failure-inclusive resource advantage is established; the observed source-yield differences warrant measuring repeatability, not a confirmatory label. Four assigned pairs each follow the frozen finite allocation, with at least two domains each. No source-specific repair or retuning between repetitions.",
+  "C_original_inputs_and_grades_unchanged": true,
+  "new_mechanical_common_change": "prospective loaded direct-completion saver, symmetric before D inputs/clock; version and exact pins not yet locked",
+  "no_D_case_body_or_rubric_read": true,
+  "verified_original_receipt_index": [
+    {
+      "block_id": "C-R1-P02",
+      "verification_sha256": "84841e63ddd0c6ccbb913a81f6338b6c9a96bc9d8ad482e53078c40b91e81174",
+      "original_manifest_sha256": "205736c2ab1f627af1ab49ac5abfb04a82ed923f6a0fd1b414f5050871896c69"
+    },
+    {
+      "block_id": "C-R2-P01",
+      "verification_sha256": "dad9ada33035a77c6ca11a385b5fba8e71d3a8d4abb9228a37e462e3af3afffc",
+      "original_manifest_sha256": "40a25145795d587afb99ff8b9c269ff48d21afdbaad279be543637682a8239b6"
+    },
+    {
+      "block_id": "C-R2-P02",
+      "verification_sha256": "ec6baf569afe8400cf3532018290558e3ce26dd69b0009dfbe88f01e69ef5743",
+      "original_manifest_sha256": "f143e6f240bd907ac5f96ce0e32ad628f25c22325b4b0e9e528b394e42de7892"
+    },
+    {
+      "block_id": "C-R1-P01",
+      "verification_sha256": "a84b9cc92d620aad4d7c8916deee9cf7ce441d0ac61b4b87b113918aeddc459a",
+      "original_manifest_sha256": "8919b4a0a521177560c31f6b0f6540f513915171f6d613193c6ec618a4279753"
+    }
+  ],
+  "historical_method_failure": "C-R1-P01 control getter substitution after direct save failure remains separate methodFAIL; no reconstruction or source grade change."
+}

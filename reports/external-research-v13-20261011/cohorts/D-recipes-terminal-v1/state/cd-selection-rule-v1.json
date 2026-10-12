@@ -1,0 +1,30 @@
+{
+  "version": "ER13-C-D-prospective-selection-rule-v1",
+  "frozen_utc": "2026-10-12T01:30:22.274676+00:00",
+  "heldout_bodies_read": false,
+  "candidate_route": "Luna Max Standard/default",
+  "scientific_scope": "All six source axes and full discovery preserved; 60 minute maximum inclusive pipeline, no minimum",
+  "rule": "Apply evaluation-contract-v1 lexicographic selection on immutable original A/B assessments and observed paired, failure-inclusive outcomes. Prefer complete source-correct two-screen recipes; compare delivery proxies and context observations separately and record missing billing. A component signal is integration hypothesis only. Select up to two practical 2-4-context exact successors, no inferred multiplicative gains. If none credible, use prospectively labeled diagnostic successors of least-dominated complete recipes, no confirmatory label. Do not select on one fastest passing anecdote.",
+  "selection_timing": "C recipe/version/allowlist pinned before any C case body reveal; D entire recipe+selection rule pinned before relevant D bodies; no feedback tuning between D repetitions. C may start while unrelated A/B finish once selection evidence sufficient; unassessed methods remain unknown.",
+  "C_allocation": {
+    "C-P01": "recipe1 vs R0",
+    "C-P02": "recipe1 vs R0",
+    "C-P03": "recipe2 vs R0",
+    "C-P04": "recipe2 vs R0"
+  },
+  "D_allocation": {
+    "D-P01_to_P04": "recipe1 vs R0, four independent fresh cases",
+    "D-P05_to_P08": "recipe2 vs R0, four independent fresh cases"
+  },
+  "fallback_allocation": "If only one justified recipe, root explicitly freeze named allocation before case reveal; never untouched halfqueue because no early winner.",
+  "prior_originals_unchanged": true,
+  "quality_rule_manifest_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "heldout_input_manifest_sha256": "90859ab6a24663db9520d55a749b4b75d4df98a270f9c4bb1f0b2130375e4d70",
+  "forbidden": [
+    "change earliergrades/clocks",
+    "candidate feedback from evaluations",
+    "premium caseanswer assistance",
+    "quietly switch provider/tier",
+    "choose/rewrite case to treatment strengths"
+  ]
+}

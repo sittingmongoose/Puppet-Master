@@ -1,0 +1,195 @@
+{
+  "schema": "er13.public_filelist.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c255ff72b324fe8038fd524b9dd41ade7ac6bd99308a7acc29d94f25af1080ea",
+      "bytes": 3115
+    },
+    {
+      "path": "RUNNABLE_RECIPE.md",
+      "sha256": "8f8c5c2b4bc8d3efe8971e424be0d2c6c14bc4fcc442dd11c9ff7874cd2ca6e6",
+      "bytes": 2714
+    },
+    {
+      "path": "checks/original-integrity.json",
+      "sha256": "3a8491ba3ca2cb746a1bdbe949fea7932a2ddbefb963efc38fb9988b2b764220",
+      "bytes": 2169
+    },
+    {
+      "path": "checks/portable-source-checks.json",
+      "sha256": "7fc735be5324f6786ece1cf2ea5a9a57021c169bce24e098b16915e720795643",
+      "bytes": 3953
+    },
+    {
+      "path": "checks/privacy.json",
+      "sha256": "86d101a498370ff4a20fe8caa2145f13781a153b4345c82a028133922a866ff1",
+      "bytes": 290
+    },
+    {
+      "path": "dependency-closure-reference.json",
+      "sha256": "d279e1756eb0e9fd410ebf1bbb4277976a83b7dcd9934967beca7ff72bf35c7f",
+      "bytes": 2959
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/MANIFEST.json",
+      "sha256": "2f73b026d805a74f7a49a91f69d867c93c3a80b380f0505c3ac89c27dadea3ec",
+      "bytes": 2512
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/README.md",
+      "sha256": "50b66a93763a6c7285a7d6668906aa56185162786b51503ab05f51703d59132f",
+      "bytes": 8404
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/READY.json",
+      "sha256": "ed0778bd1d36571d2505e495ca1cc24dd83349092d95c16296dae6f341a6d36b",
+      "bytes": 1318
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/SHA256SUMS",
+      "sha256": "b639b789cc2f1df0626d6e2172685fef0be9dccdfacd342d8dd592d0aaf850cc",
+      "bytes": 641
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/captureSpec-shim.js",
+      "sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75",
+      "bytes": 658
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/install.py",
+      "sha256": "e5b2582e82cca23d04ca8be5f4ad26b89ac59bb4f2b012bc7d66ce161b19e411",
+      "bytes": 8597
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/runtime-check.py",
+      "sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+      "bytes": 8966
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/terminal-template.js",
+      "sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+      "bytes": 3086
+    },
+    {
+      "path": "helpers/prospective-terminal-capture-v1/tests.py",
+      "sha256": "a2abe58ffa247b4494ae0086ced3572604603600d324082476ea6d23b4646aa0",
+      "bytes": 13639
+    },
+    {
+      "path": "mechanics/dispatch-v1/freeze-prospective-stage-aux.py",
+      "sha256": "bfcfabdbd110c1437bf64f5a52480e3650ed5afd25472f6e1484d959dea269a0",
+      "bytes": 1918
+    },
+    {
+      "path": "mechanics/dispatch-v1/full-pair-packet.py",
+      "sha256": "db1c50484d88ebe8b920eb0815b3c67e31d7cb0fb215360b52efbe21b6d2fca3",
+      "bytes": 7035
+    },
+    {
+      "path": "mechanics/dispatch-v1/native-prospective-launch-code-mode.js",
+      "sha256": "884a03b998060b7f5c1b8601b7249bcef8178dc231c8db84a028dafdc86c9264",
+      "bytes": 1060
+    },
+    {
+      "path": "mechanics/dispatch-v1/record-terminal.py",
+      "sha256": "ef98b867b6829713f4ec87faf3c2e05c2cdf70d05177c09c7865924f9a17c4bf",
+      "bytes": 6371
+    },
+    {
+      "path": "mechanics/dispatch-v1/terminal_capture_gate.py",
+      "sha256": "d3c4c3d3ab58cf0cf7fb0417ee68200773079278f060e2e1aba471422c473d50",
+      "bytes": 1392
+    },
+    {
+      "path": "original-public-hashes.json",
+      "sha256": "5e27aaa9b7db1477caeb0f39a9d435036c833d1dbbd9b5b4ba52b4d6164edaf3",
+      "bytes": 9794
+    },
+    {
+      "path": "path-resolution.json",
+      "sha256": "fb2ac23ec374e53fa95b5e6d5dbaeab38aabce6a29497ec2cbf811eae7b46616",
+      "bytes": 3189
+    },
+    {
+      "path": "public-manifest.json",
+      "sha256": "405205fac9bb1a1fbd92ecd9857050f51d23dbb82af9b51ae83304c10117f218",
+      "bytes": 12180
+    },
+    {
+      "path": "publication-mechanics-scope.json",
+      "sha256": "79774ecb29a9e6a5d167647f7a2cdb7678f0e1bf508c4d6def65ae64b482af2e",
+      "bytes": 1334
+    },
+    {
+      "path": "restore_source_layout.py",
+      "sha256": "6afae2f1f4ddb6fc375b0b5b0acc8dc180cdeef1be5611889f7b7758a0de1cfb",
+      "bytes": 2006
+    },
+    {
+      "path": "source-index.json",
+      "sha256": "374616cc682691f47288be8e4f3b241dec3f1a21c84335cbd36b6f5e20ec49c6",
+      "bytes": 212
+    },
+    {
+      "path": "state/cd-selection-rule-v1.json",
+      "sha256": "1fc40656399c35c51332d134eb29554b66d19fd234e550b78573f95720bbd1b5",
+      "bytes": 2165
+    },
+    {
+      "path": "state/d-private-input-preparation-v1.json",
+      "sha256": "e98625b71de3b89db086d87b9860e315dba1f1fa3bd2fa399415f7fc0877e8d8",
+      "bytes": 7549
+    },
+    {
+      "path": "state/d-rubric-mechanical-authorization-v1.json",
+      "sha256": "63f5c323a3abc11a304920bdfe8af656305353bfdd83eb8f0962577bb4949ab0",
+      "bytes": 1907
+    },
+    {
+      "path": "state/d-selection-intent-v1.json",
+      "sha256": "efd6f9ff9063e8b5012d4de21711d485cbd2886cb56b39079598cce05e1779e6",
+      "bytes": 3130
+    },
+    {
+      "path": "state/d-selection-lock-v1.json",
+      "sha256": "fb6cf5e80778ce0b4415f6ffdf31f3631c175f669b889b53a6aa3a02f944df12",
+      "bytes": 13635
+    },
+    {
+      "path": "state/dispatch-release-D-v1.json",
+      "sha256": "ca649b00b41506556081ea68dddbdbc8fd4b6de10bef0c607bb76e0024540ecc",
+      "bytes": 24779
+    },
+    {
+      "path": "state/dispatcher-v1/c-closure-record.json",
+      "sha256": "05234ae1409aacf53451c2cb1581b865fd158f00a055bb61b150105eff01fe2d",
+      "bytes": 35408
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-capture-dispatch-integration.json",
+      "sha256": "72f9b4aa322b35fef039591637bc4ead40e3a7bd999d07d9b9ef494fd33e3416",
+      "bytes": 1361
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-capture-pin-verification.json",
+      "sha256": "7122550edc09607296778d1351938a5431d34b4ae0171db21c24c2b07f59b55b",
+      "bytes": 1149
+    },
+    {
+      "path": "state/dispatcher-v1/terminal-gate-mechanics-checks.json",
+      "sha256": "868ad20d07ccfc6932c6a4c90703a0e08ff28cbefc89afb6b80dd54c1d21258d",
+      "bytes": 519
+    },
+    {
+      "path": "state/eval-coordinator-v2/C-original-cohort-closure-v2.json",
+      "sha256": "3073686657b0871dc0ed4ff0ea8f7261f2bec0b1209ab48ae9270d023907c37c",
+      "bytes": 4392
+    },
+    {
+      "path": "state/terminal-capture-v1/CHECKS.json",
+      "sha256": "518f0403238aa91bc1f8c626db6f35fd4cb34520a23f2c040b8733065469ec37",
+      "bytes": 12606
+    }
+  ]
+}
