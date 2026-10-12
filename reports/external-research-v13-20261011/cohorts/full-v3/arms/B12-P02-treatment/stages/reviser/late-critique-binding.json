@@ -1,0 +1,31 @@
+{
+  "version": "er13.b12-late-critique.v1",
+  "run_id": "B12-P02-treatment",
+  "release_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/late-critique/release.json",
+  "release_sha256": "59dc1161910eb670e2c0550ace900d2002a33852c646e77e38259c825c7b0838",
+  "critic_taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B12-P02-treatment-critic-v1",
+  "critic_handoff_sha256": "a2a0fdf81f64ce48147d417c447b1e53d965d96037495f8d8dc9571d26fc1b03",
+  "stage_deadline_utc": "2026-10-12T01:41:49.379Z",
+  "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+  "provisional_final_sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b",
+  "package": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "d8d1cd72545a2c34d624d75698108915c6878d2c4f6189de81d3c6ecfcc3e58c",
+      "bytes": 12507
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "745985fb2f293b9740d30aa663602c358931d98d14b22b00fe7994c55f03958b",
+      "bytes": 19267
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "sha256": "f343f1f8c4f3801e1fe2523823e4a8a3b06e761d71ce88be9162936a365c2f66",
+      "bytes": 4511
+    }
+  ],
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "bound_at_utc": "2026-10-12T01:33:08.907498+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "er13.method_version_lineage.v1",
+  "original_method": "B12-v1",
+  "original_status": "WITHDRAWN_UNADMITTED_ER10_M05_OVERLAP",
+  "original_proposal_preserved_byte_exact": true,
+  "accidental_overlap_v1_manifest_sha256": "c1fbb96792ea82de09193bf18370d1f5fe4877f9a0e2d963fd4444598fe61b43",
+  "accidental_overlap_v1_status": "SUPERSEDED_UNADMITTED; NOT_SCIENCE_ADMISSIBLE",
+  "accidental_overlap_v1_snapshot": "ER13_RUNTIME/methods/B12-v1/version-lineage/overlap-unadmitted-v1-freeze",
+  "active_method": "B12-v2",
+  "active_path": "ER13_RUNTIME/methods/B12-v1/successors/B12-v2",
+  "user_write_scope": "All writes remain inside methods/B12-v1; root owns any sibling B12-v2 promotion.",
+  "candidate_attempts_started_by_researcher": 0,
+  "at_utc": "2026-10-12T00:51:04.985914+00:00"
+}

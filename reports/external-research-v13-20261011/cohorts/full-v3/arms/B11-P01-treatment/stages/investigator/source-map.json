@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "run_id": "B11-P01-treatment",
+  "stage": "investigator",
+  "brief_only_research": true,
+  "plan_released_at_freeze": false,
+  "accessed_utc_note": "Access times below identify the observed browser retrieval batch; S06 was accessed in the earlier Linux-man-pages batch. Exact release/commit is recorded where obtained; living docs are identified as such.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Accessing files from the macOS App Sandbox",
+      "url": "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox",
+      "version_commit": "Living Apple Foundation/macOS documentation; accessed 2026-10-12.",
+      "locator": "Persist file access with security-scoped URL bookmarks; Access files related to documents with document-relative bookmarks.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Inspected Apple search-indexed documentation and the linked page. Direct page requires JavaScript, so the indexed documentation text was used.",
+      "governing_conditions_defaults_exceptions": "Security-scoped bookmarks preserve user-granted access across app exits; sandbox entitlements are required. Resolution reports stale bookmark state, which should be replaced with newly created bookmark data. Resolve, start access, use, then stop access. Document-relative bookmark data can be stored in the project document and resolved by a process with access to that project.",
+      "applicability": "Strong macOS sandbox access adapter and project-relative permission mechanism; platform-specific and not a cross-platform identity or file-search service."
+    },
+    {
+      "source_id": "S02",
+      "title": "URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:",
+      "url": "https://developer.apple.com/documentation/foundation/nsurl/urlbyresolvingbookmarkdata:options:relativetourl:bookmarkdataisstale:error:",
+      "version_commit": "Living Apple Foundation API documentation; accessed 2026-10-12.",
+      "locator": "Parameters relativeURL, isStale; Discussion; Return Value.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Inspected Apple search-indexed API documentation.",
+      "governing_conditions_defaults_exceptions": "For security-scoped app bookmark resolution pass nil relative URL; for document-scoped bookmarks use the absolute path of the owning document. isStale == true calls for new bookmark data. Resolution fails if the original item cannot be located or its volume cannot be mounted; last-known path may be read from bookmark data. Security scope additionally requires entitlements and start/stop access calls.",
+      "applicability": "Explains stale and offline/removable-volume states; bookmark failure should lead to visible recovery, not deletion of the record."
+    },
+    {
+      "source_id": "S03",
+      "title": "URLResourceKey.fileResourceIdentifierKey",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey",
+      "version_commit": "Living Apple Foundation API documentation; accessed 2026-10-12.",
+      "locator": "Discussion for fileResourceIdentifierKey.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Inspected Apple search-indexed API documentation.",
+      "governing_conditions_defaults_exceptions": "Identifier supports equality checks for same path or same inode on same file system; value is not persistent across system restarts.",
+      "applicability": "Use as a live comparison hint only; do not serialize as durable cross-restart project identity."
+    },
+    {
+      "source_id": "S04",
+      "title": "FILE_ID_INFO structure (winbase.h)",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info",
+      "version_commit": "Microsoft Learn, last updated 2024-02-22.",
+      "locator": "Members and Requirements; VolumeSerialNumber, FileId.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the Microsoft Learn API page.",
+      "governing_conditions_defaults_exceptions": "Returned by GetFileInformationByHandleEx with FileIdInfo. Compare volume serial plus 128-bit file ID for two open handles; docs scope uniqueness to a single computer.",
+      "applicability": "Useful Windows live identity hint; not a portable locator and not evidence that an old stored identifier will resolve across computers or volume replacement."
+    },
+    {
+      "source_id": "S05",
+      "title": "Distributed Link Tracking and Object Identifiers",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/distributed-link-tracking-and-object-identifiers",
+      "version_commit": "Microsoft Learn, last updated 2021-12-30.",
+      "locator": "Object Identifiers; Link Tracking Features; Link Tracking Functionality; Link Tracking Limitations (lines 31-104).",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the Microsoft Learn implementation overview.",
+      "governing_conditions_defaults_exceptions": "NTFS object IDs are optional; rename/backup/restore preserve them but copies do not. Shell/OLE tracking also uses path/name/creation-date/size heuristics and can be slow or fail. System client/server services mediate tracking; cross-volume behavior has domain and timing conditions. Only NTFS 3.0+ is supported; FAT loses tracking; removable-media links are not maintained; newly connected NTFS volume may not be recognized until reboot.",
+      "applicability": "Useful alternative for Windows users, but too narrow and system-dependent to be required or trusted as the cross-platform core."
+    },
+    {
+      "source_id": "S06",
+      "title": "inode(7) — Linux manual page",
+      "url": "https://www.man7.org/linux/man-pages/man7/inode.7.html",
+      "version_commit": "Linux man-pages living documentation; accessed 2026-10-12.",
+      "locator": "st_dev and st_ino descriptions, lines 24-43.",
+      "accessed_utc": "2026-10-12T01:02:24Z",
+      "observed_operation": "Opened the Linux man-pages page and inspected the device/inode fields.",
+      "governing_conditions_defaults_exceptions": "st_ino is unique only within one filesystem; pair it with st_dev to identify the filesystem context. The same inode number may exist on another filesystem.",
+      "applicability": "Linux live equality hint while the relevant filesystem is mounted; do not treat as project-portable or universal permanent identity."
+    },
+    {
+      "source_id": "S07",
+      "title": "XDG Desktop Portal Documents interface",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Documents.html",
+      "version_commit": "Living XDG Desktop Portal docs, interface version 5.",
+      "locator": "Overview; Add, AddFull, GrantPermissions, Delete, and host path methods.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the interface documentation.",
+      "governing_conditions_defaults_exceptions": "Portal exposes /run/user/$UID/doc/$DOC_ID/filename to a sandbox; Add has explicit session-only versus persistent flag; IDs and read/write permissions are managed by the portal. Deleting a portal entry removes access entry, not the underlying file. Version 5 adds host-path lookup.",
+      "applicability": "Linux sandbox permission persistence adapter; portal document ID names an access entry, not a portable file identity or a general relocation mechanism."
+    },
+    {
+      "source_id": "S08",
+      "title": "XDG Desktop Portal FileChooser interface",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.FileChooser.html",
+      "version_commit": "Living XDG Desktop Portal docs, interface version 4.",
+      "locator": "OpenFile, result uris, and selected-file persistence notes.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the interface documentation.",
+      "governing_conditions_defaults_exceptions": "Portal presents a user file chooser and returns file:// URIs. Selected files may be added to Documents portal and remain accessible across sessions; chooser/filter are advisory and backend may ignore suggested current folder.",
+      "applicability": "Useful picker/access boundary for sandboxed Linux builds; URI is locator syntax, not identity proof."
+    },
+    {
+      "source_id": "S09",
+      "title": "RFC 8089: The file URI Scheme",
+      "url": "https://www.rfc-editor.org/rfc/rfc8089.html",
+      "version_commit": "RFC 8089, February 2017.",
+      "locator": "Section 2.1 and Appendix E.2-E.3 (local paths, DOS paths, UNC).",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the IETF RFC.",
+      "governing_conditions_defaults_exceptions": "Defines URI forms for local POSIX-like paths, DOS/Windows drive paths, and UNC/network paths; file URIs do not make those roots interchangeable.",
+      "applicability": "Interchange/display encoding only; use an explicit path anchor and platform-aware parsing rather than file URI as file identity."
+    },
+    {
+      "source_id": "S10",
+      "title": "Adding Files to your Zotero Library",
+      "url": "https://www.zotero.org/support/attaching_files",
+      "version_commit": "Current Zotero documentation as accessed 2026-10-12; live docs branch/version not pinned.",
+      "locator": "Stored Files; Linked Files; Adding linked files; Accessing Files.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened official Zotero product documentation.",
+      "governing_conditions_defaults_exceptions": "Stored files are copied and managed; linked files keep their external original, are not synced or deleted when the Zotero reference is deleted, and may use a linked-attachment base directory to form relative paths. Docs recommend stored files for seamless workflows and describe limitations for groups/mobile.",
+      "applicability": "Product pattern for explicit link-vs-copy semantics, per-computer base mapping, and scope limits."
+    },
+    {
+      "source_id": "S11",
+      "title": "Zotero attachment implementation, attachments.js",
+      "url": "https://github.com/zotero/zotero/blob/6.0.20/chrome/content/zotero/xpcom/attachments.js",
+      "version_commit": "Zotero release tag 6.0.20; commit SHA not captured.",
+      "locator": "linkFromFile around lines 2462-2518; linkFromFileWithRelativePath around lines 2537-2623.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Inspected source text in the browser; did not download or execute code.",
+      "governing_conditions_defaults_exceptions": "linkFromFile creates a linked-file record for an existing file and processes it without invoking stored-file copy. Relative form requires a nonempty relative path, prefixes attachments:, stores the reference, and only processes/indexes when the configured base resolves and the file exists.",
+      "applicability": "Concrete record/locator separation and dual absolute/relative path implementation pattern; not a claim of identity recovery."
+    },
+    {
+      "source_id": "S12",
+      "title": "Zotero 6.0 Version History",
+      "url": "https://www.zotero.org/support/6.0_changelog",
+      "version_commit": "Zotero releases 6.0.16 (2022-10-31) and 6.0.20 (2023-01-13).",
+      "locator": "6.0.16 auto-location of missing linked attachments; 6.0.20 cross-platform relink fix (macOS/Linux to Windows).",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the official version history and inspected both release sections.",
+      "governing_conditions_defaults_exceptions": "6.0.16 searches under configured Linked Attachment Base Directory using part of old path and offers relink for one or same-base-path group. 6.0.20 fixed automatic relinking when moving from macOS/Linux to Windows, explicitly a follow-up to 6.0.16.",
+      "applicability": "Real shipped precedent for bounded base-directory search, user choice, batch relink, and path portability regression."
+    },
+    {
+      "source_id": "S13",
+      "title": "Zotero issue #2084: Automatically relocate linked files within current base directory",
+      "url": "https://github.com/zotero/zotero/issues/2084",
+      "version_commit": "Issue opened 2021-06-11; issue tracker state observed 2026-10-12.",
+      "locator": "Issue description: base-directory proposal and candidate search by basename then successive parent paths.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened the maintainer issue record; read proposal text and current closed status.",
+      "governing_conditions_defaults_exceptions": "The issue describes user pain from absolute paths on another computer; proposed bounded search only inside configured base directory, with option to relink one file or a group. Issue text is proposal, not itself proof of shipped behavior.",
+      "applicability": "History informing bounded candidate search and explicit confirmation; pair with S12 for release evidence."
+    },
+    {
+      "source_id": "S14",
+      "title": "SQLite Transaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_commit": "Living SQLite documentation; accessed 2026-10-12.",
+      "locator": "Read transactions versus write transactions.",
+      "accessed_utc": "2026-10-12T01:04:38Z",
+      "observed_operation": "Opened official SQLite transaction documentation.",
+      "governing_conditions_defaults_exceptions": "SQLite allows multiple simultaneous readers but only one simultaneous write transaction; write transactions allow reads and writes.",
+      "applicability": "Conditional example if project persistence uses SQLite. Two windows still need clear transaction/conflict handling; database transactions alone do not define user-facing merge behavior."
+    },
+    {
+      "source_id": "S15",
+      "title": "File System Events Programming Guide: Using the File System Events API",
+      "url": "https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/FSEvents_ProgGuide/UsingtheFSEventsFramework/UsingtheFSEventsFramework.html",
+      "version_commit": "Apple archived File System Events Programming Guide; original release/version not shown in page.",
+      "locator": "Handling Events and Building a Directory Hierarchy Snapshot (lines 101-168).",
+      "accessed_utc": "2026-10-12T01:11:35Z",
+      "observed_operation": "Opened official Apple archive documentation.",
+      "governing_conditions_defaults_exceptions": "Events can coalesce hierarchically; dropped kernel/user events require a full rescan; root move/rename can invalidate watched path; accurate cache building requires starting monitoring before scanning and rescanning modified subdirectories.",
+      "applicability": "Event stream can refresh a bounded cache while open, but cannot directly authorize a permanent locator rewrite without a validating identity and user policy."
+    },
+    {
+      "source_id": "S16",
+      "title": "ReadDirectoryChangesW function (winbase.h)",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-readdirectorychangesw",
+      "version_commit": "Microsoft Learn, last updated 2022-09-15.",
+      "locator": "Parameters bWatchSubtree; Remarks on buffer overflow and ERROR_NOTIFY_ENUM_DIR (lines 61-62, 114-130).",
+      "accessed_utc": "2026-10-12T01:11:35Z",
+      "observed_operation": "Opened the Microsoft Learn API page.",
+      "governing_conditions_defaults_exceptions": "Subtree watch is a caller option. If the notification buffer overflows, its entire contents are discarded; zero bytes or ERROR_NOTIFY_ENUM_DIR requires enumerating the directory/subtree to recompute changes. Some network redirectors/file systems may not support the operation.",
+      "applicability": "Windows watcher can be a best-effort refresh signal for chosen roots; it is not a durable, lossless locator database."
+    },
+    {
+      "source_id": "S17",
+      "title": "inotify(7) — Linux manual page",
+      "url": "https://www.man7.org/linux/man-pages/man7/inotify.7.html",
+      "version_commit": "Living Linux man-pages; page version not specified.",
+      "locator": "DESCRIPTION, rename event examples, Limitations and caveats, Dealing with rename() events.",
+      "accessed_utc": "2026-10-12T01:11:53Z",
+      "observed_operation": "Searched and inspected full indexed manual text; direct page fetch timed out.",
+      "governing_conditions_defaults_exceptions": "Directory watches are not recursive; move-from/move-to pairing is racy and may lack a destination event when outside the watched set; queue overflow drops events; remote network filesystem changes are not reported; watched unmount removes watches.",
+      "applicability": "Linux watcher is a best-effort hint for currently monitored directories and cannot justify unvalidated persistent path rewriting."
+    },
+    {
+      "source_id": "S18",
+      "title": "URLResourceKey.volumeIdentifierKey",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/volumeidentifierkey",
+      "version_commit": "Living Apple Foundation API documentation; accessed 2026-10-12.",
+      "locator": "Discussion for volumeIdentifierKey.",
+      "accessed_utc": "2026-10-12T01:15:15Z",
+      "observed_operation": "Inspected Apple search-indexed API documentation.",
+      "governing_conditions_defaults_exceptions": "Identifier compares whether resources are on the same volume; value is not persistent across system restarts.",
+      "applicability": "Live same-volume comparison only; distinguish it from the persistent volume UUID property."
+    },
+    {
+      "source_id": "S19",
+      "title": "URLResourceKey.documentIdentifierKey",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/documentidentifierkey",
+      "version_commit": "Living Apple Foundation API documentation; accessed 2026-10-12.",
+      "locator": "Discussion for documentIdentifierKey.",
+      "accessed_utc": "2026-10-12T01:17:41Z",
+      "observed_operation": "Inspected Apple search-indexed API documentation.",
+      "governing_conditions_defaults_exceptions": "Kernel-assigned file/directory ID identifies an item regardless of where it is moved on a volume; persists across restarts; not transferred on copy; unique only within one volume; unsupported on some volumes.",
+      "applicability": "A stronger optional macOS candidate-comparison hint after a file is found; not a locator by itself, not cross-volume, and implementation availability needs platform-version verification."
+    },
+    {
+      "source_id": "S20",
+      "title": "URLResourceKey.volumeUUIDStringKey",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/volumeuuidstringkey",
+      "version_commit": "Living Apple Foundation API documentation; accessed 2026-10-12.",
+      "locator": "Definition and See Also for volumeUUIDStringKey.",
+      "accessed_utc": "2026-10-12T01:17:41Z",
+      "observed_operation": "Inspected Apple search-indexed API documentation.",
+      "governing_conditions_defaults_exceptions": "Returns a volume's persistent UUID string when available; may return nil when no persistent UUID is available.",
+      "applicability": "Can corroborate the volume scope for a macOS document identifier when provided; not a guaranteed cross-platform volume identity."
+    }
+  ]
+}

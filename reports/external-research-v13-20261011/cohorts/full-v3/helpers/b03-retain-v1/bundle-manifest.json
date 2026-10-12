@@ -1,0 +1,65 @@
+{
+  "schema": "er13.b03.finite-helper-bundle.v1",
+  "version": "b03-retain-v1",
+  "frozen_at_utc": "2026-10-12T00:44:24.392956+00:00",
+  "parent_manifest_sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+  "files": [
+    {
+      "relative_path": "CHECKS.json",
+      "sha256": "aee4624ebf8a251c523bcc8dcd9e45e7d650ccbc0945aae5b62fbf30891eab82",
+      "bytes": 2437
+    },
+    {
+      "relative_path": "README.md",
+      "sha256": "2ab2160d4ede16683eea95db2af430580b5368fcf6f2a8451d1ddbd7a5c3fe78",
+      "bytes": 14349
+    },
+    {
+      "relative_path": "READY.json",
+      "sha256": "f1b59b2d78ae28a807bd844a939dd25859a9af3c16e1a071129b3606bffdf488",
+      "bytes": 1382
+    },
+    {
+      "relative_path": "author-complete.js",
+      "sha256": "7059de883f6d218a31c590a7a7440529f004bb4d75097a95e66acfc2f62d149d",
+      "bytes": 1845
+    },
+    {
+      "relative_path": "author-ready.js",
+      "sha256": "6c8ae3e8b4de6afb8d82e683443249a3f22655fbd1b6d0b4c5662d22d688c2e5",
+      "bytes": 1570
+    },
+    {
+      "relative_path": "author-resume.js",
+      "sha256": "5fb3ec99ec2d75e18c281c80d025344117958cb630c7f83b76705e7b4bf42b5f",
+      "bytes": 1104
+    },
+    {
+      "relative_path": "b03.py",
+      "sha256": "58b3212fa334e3ba8bfc66b9653f69a9d0316fa9486ec1d8997d199dcae470a7",
+      "bytes": 33853
+    },
+    {
+      "relative_path": "critic-complete.js",
+      "sha256": "bd25970615ae76b1a1b4d5239390b9bebe472b0c2cc1d12a5e15eaac8882516c",
+      "bytes": 1709
+    },
+    {
+      "relative_path": "method.json",
+      "sha256": "c6514e569a5fb07622be45267f53bc078d74d78cd9547bfe290d40c178883898",
+      "bytes": 811
+    },
+    {
+      "relative_path": "reference-dependency.json",
+      "sha256": "4a9dae8c08d4cf9ae95e4c6a13e5f95123ed7f371c41e50d951bcd23522bad19",
+      "bytes": 10918
+    },
+    {
+      "relative_path": "test_b03.py",
+      "sha256": "7c59f9a0f4909901d9691152c157afd712c5d495f08b436469d34860b0a25cf0",
+      "bytes": 14178
+    }
+  ],
+  "scope": "Only helpers/b03-retain-v1; mechanical prospective readiness",
+  "native_candidate_calls": 0
+}

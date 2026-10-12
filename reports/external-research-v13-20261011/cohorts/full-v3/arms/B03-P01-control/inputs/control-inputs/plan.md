@@ -1,0 +1,11 @@
+# Draft plan: Incremental search for a research notebook
+
+The draft maintains a derived index next to the notebook store. Each note carries an internal identifier, title and content revision; updates are queued after the authoritative save. Queries combine free text with a tag filter, and results link through the identifier rather than a path. A saved query stores its query text and filter expression, not a list of current results. No hosted service is planned.
+
+The initial design replaces an indexed document whenever a new revision arrives. A background worker batches requests and reports pending work in the search panel. It assumes that queue order matches save order, even if a slow older update is retried after a newer save. Deleted notes are removed through the same queue; startup reconciles identifiers to detect missed deletions. The plan leaves how to prove revision freshness and how tag changes reach the index unresolved.
+
+Search starts with language-neutral token splitting and case folding, then evaluates whether stemming or another tokenizer improves useful results. A rebuild writes a second index and swaps it in when complete, though simultaneous edits during rebuilding need a concrete handoff rule. Failed records should remain visible in an index-status view. Proposed validation covers rename, repeated edits, delayed retry, deletion, multilingual queries and rebuild interruption. No engine has been selected or performance measured. The proposal should distinguish query semantics, indexing reliability and optional semantic features rather than bundling them into one choice.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

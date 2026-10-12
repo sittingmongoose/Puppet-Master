@@ -1,0 +1,239 @@
+{
+  "record_type": "source-identity-map/v1",
+  "brief_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/inputs/brief.md",
+  "brief_sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+  "retrieval_note": "UTC timestamps are the observed research batch time; the web tool does not expose a separate timestamp for each returned page. Official versioned/dated sources are identified by their published identifier. Rolling docs are labeled as such.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SQLite Online Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_or_commit": "Rolling official documentation; no release version identified",
+      "locator": "Overview; sqlite3_backup_init/step/finish; Online Backup API details",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Online Backup API creates a database copy; repeated step calls copy bounded page batches.",
+      "governing_condition_default_exception": "The destination represents the source database as of copy commencement when the backup completes. Each step briefly read-locks the source, allowing other connections to continue; copying the raw database file is not equivalent and can block writers or risk corruption under interruption. The guarantee covers the SQLite database, not associated filesystem blobs.",
+      "applicability": "Use if the tracker database is SQLite; identify storage backend before selecting this mechanism."
+    },
+    {
+      "id": "S02",
+      "title": "SQLite Isolation",
+      "url": "https://www.sqlite.org/isolation.html",
+      "version_or_commit": "Rolling official documentation; no release version identified",
+      "locator": "Isolation between database connections; read transactions; read_uncommitted exception",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Describes visibility and isolation for concurrent SQLite connections.",
+      "governing_condition_default_exception": "A read transaction sees a stable snapshot; commits from other connections remain invisible until a later transaction. Dirty reads are possible only with shared cache plus PRAGMA read_uncommitted; the default is off. Rollback-journal writes can block readers.",
+      "applicability": "Defines record snapshot expectations for a SQLite-backed export; not attachments outside the DB."
+    },
+    {
+      "id": "S03",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Rolling official documentation; no release version identified",
+      "locator": "Concurrency; checkpointing; WAL limitations",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Explains WAL readers/writers and snapshot behavior.",
+      "governing_condition_default_exception": "Readers can continue against a stable snapshot while a writer appends to WAL; a reader’s snapshot predates later commits. WAL relies on shared memory and is not suitable when participating processes are on different machines.",
+      "applicability": "SQLite implementation detail only; export may run concurrently with writes but must hold a well-defined read view."
+    },
+    {
+      "id": "S04",
+      "title": "rusqlite Backup API documentation",
+      "url": "https://docs.rs/rusqlite/0.40.2/rusqlite/backup/struct.Backup.html",
+      "version_or_commit": "rusqlite 0.40.2",
+      "locator": "Backup::step; run_to_completion; progress; feature flags",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Rust wrapper exposes incremental SQLite backup steps and completion helper.",
+      "governing_condition_default_exception": "The backup feature is optional. Step/page counts and sleeps permit chunked work; a single all-pages call can hold the source lock longer. API-specific behavior remains tied to selected rusqlite and SQLite versions.",
+      "applicability": "Implementation candidate if the rebuilt tracker uses Rust + rusqlite + SQLite; not an architecture assumption."
+    },
+    {
+      "id": "S05",
+      "title": "rusqlite backup implementation",
+      "url": "https://github.com/rusqlite/rusqlite/blob/e88f112bef7899234a497baed5cc3c3d553deeb8/src/backup.rs",
+      "version_or_commit": "Commit e88f112bef7899234a497baed5cc3c3d553deeb8; rusqlite 0.40.2 release",
+      "locator": "Backup::step and run_to_completion implementation and examples",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Implementation passes page-count arguments to sqlite3_backup_step and retries while busy/locked, sleeping between configured steps in its helper.",
+      "governing_condition_default_exception": "Chunking adds time and still requires handling busy/locked completion; negative page count can copy all pages in one step. Source connection remains usable, but this says nothing about attachment-store consistency.",
+      "applicability": "Version-pinned implementation evidence, not a guarantee for another rusqlite version or backend."
+    },
+    {
+      "id": "S06",
+      "title": "PKWARE .ZIP File Format Specification",
+      "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "version_or_commit": "Version 6.3.10, FINAL, revised 2022-11-01",
+      "locator": "§4.1.3, §4.1.11, §4.3.5–4.3.9, §4.3.12–4.3.16, §4.5.3",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Specifies ZIP member records, streaming data descriptors, central directory/end records, ZIP64 metadata, and optional application manifests.",
+      "governing_condition_default_exception": "A ZIP archive’s central directory/end records follow member data; streaming descriptors permit unknown sizes on non-seekable output. ZIP64 supports large entry sizes/counts/offsets. Readers must handle descriptors with or without a signature. ZIP defines container mechanics, not application schema or universal reader interoperability.",
+      "applicability": "Supports streaming archive design and scale planning; target extractor matrix must be validated."
+    },
+    {
+      "id": "S07",
+      "title": "zip-rs/zip2 writer source",
+      "url": "https://github.com/zip-rs/zip2/blob/v8.6.0/src/write.rs",
+      "version_or_commit": "zip crate tag v8.6.0 (stable); source version pinned by tag",
+      "locator": "ZipWriter::new_stream; finish; abort; stream writer implementation",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Rust ZIP writer offers a streaming constructor requiring Write rather than Seek; finish emits closing archive structures.",
+      "governing_condition_default_exception": "A non-seekable writer cannot revise already emitted bytes; abort/overwrite operations can fail. Finalization must finish the archive and validate it before publishing a complete name. This library support is not itself evidence of target-platform reader compatibility.",
+      "applicability": "Candidate Rust writer only; pin and regression-test the exact crate version."
+    },
+    {
+      "id": "S08",
+      "title": "zip-rs issue #715: ZIP64 output regression",
+      "url": "https://github.com/zip-rs/zip2/issues/715",
+      "version_or_commit": "Issue opened 2026-03-09; reports regression in zip 8.2.0",
+      "locator": "Issue description and reproduction for Deflated + large_file(true)",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Reporter demonstrates malformed ZIP64 output in a small archive using the large-file streaming path.",
+      "governing_condition_default_exception": "Bug is configuration/path specific and later addressed; do not generalize to all ZIP writers or all 8.2.0 archives.",
+      "applicability": "Evidence that scale/ZIP64 branches need regression tests even when test data are small."
+    },
+    {
+      "id": "S09",
+      "title": "zip-rs PR #717: ZIP64 fix",
+      "url": "https://github.com/zip-rs/zip2/pull/717",
+      "version_or_commit": "Merged 2026-03-16; fix for issue #715",
+      "locator": "Changed writer code and regression tests",
+      "access_utc": "2026-10-12T01:09:08Z",
+      "observed_operation": "Fixes malformed ZIP64 file output and adds/updates regression coverage.",
+      "governing_condition_default_exception": "A fix on one branch does not prove every later release or downstream build contains it; correlate with a release and pin exact dependency.",
+      "applicability": "Change-history evidence for validating the exact chosen ZIP crate release."
+    },
+    {
+      "id": "S10",
+      "title": "zip-rs v8.3.0 release",
+      "url": "https://github.com/zip-rs/zip2/releases/tag/v8.3.0",
+      "version_or_commit": "zip crate release v8.3.0",
+      "locator": "Release notes/changelog entry for malformed ZIP64 file output",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Release notes record ZIP64 output correction following issue #715.",
+      "governing_condition_default_exception": "Release notes corroborate inclusion in v8.3.0; later versions still need lockfile/version audit and tests.",
+      "applicability": "Version lineage; current candidate researched separately is v8.6.0."
+    },
+    {
+      "id": "S11",
+      "title": "BagIt File Packaging Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "version_or_commit": "RFC 8493 (Informational), 2018-10",
+      "locator": "§1, §2.1.3, §2.2.1, §3",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines payload/tag directory structure and manifest/tag-manifest checksums; defines completeness and validity checks.",
+      "governing_condition_default_exception": "It describes packaging and fixity, not the domain record schema. Hash manifests detect accidental changes but are not designed to authenticate against an active attacker. BagIt packages may require filesystem extraction and conforming paths.",
+      "applicability": "Use as a preservation/verification pattern or alternative directory package; does not by itself solve human-readable/importable tracker semantics."
+    },
+    {
+      "id": "S12",
+      "title": "Frictionless Data Package specification",
+      "url": "https://specs.frictionlessdata.io/data-package/",
+      "version_or_commit": "Data Package v1; specification page says created 2007 and updated 2017-05-02",
+      "locator": "Descriptor, resources, path/url/inline resource references, schema section",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Describes a JSON package descriptor with a resources array and optional tabular schemas.",
+      "governing_condition_default_exception": "A resource can be a local path, URL, or inline data; offline portability requires bundled local resources/schemas and no network-dependent references. The format describes datasets and does not prescribe tracker-specific relations or importer fidelity.",
+      "applicability": "A useful descriptor/resource model, not necessarily the archive container or complete task/comment schema."
+    },
+    {
+      "id": "S13",
+      "title": "The JSON Data Interchange Format",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+      "version_or_commit": "RFC 8259, STD 90, 2017-12",
+      "locator": "§4 objects; §6 numbers; §8.1 UTF-8",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines JSON interoperability requirements and recommendations.",
+      "governing_condition_default_exception": "Names within an object SHOULD be unique because duplicate-name receiver behavior varies. Inter-system JSON must be UTF-8. Numeric precision/interoperability is limited for large integers, so opaque identifiers should be strings.",
+      "applicability": "Machine-readable record encoding and stable ID representation."
+    },
+    {
+      "id": "S14",
+      "title": "Date and Time on the Internet: Timestamps",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "version_or_commit": "RFC 3339, 2002-07; updated by RFC 9557",
+      "locator": "§4.1, §4.2, §5.6",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines an Internet profile for timestamps representing instants with an offset.",
+      "governing_condition_default_exception": "Offset-bearing timestamps identify instants; RFC 3339 is not a typed date-only or floating-local-time representation. Lexical precision/fractional digits and source semantics still need a contract.",
+      "applicability": "Represent instants; do not coerce date-only values into UTC midnight."
+    },
+    {
+      "id": "S15",
+      "title": "Date and Time on the Internet: Timestamps with Additional Information (IXDTF)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "version_or_commit": "RFC 9557, 2024-04; updates RFC 3339",
+      "locator": "§2–§4 time-zone annotation; limitations/security considerations",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Adds optional time-zone annotations to RFC 3339 timestamps.",
+      "governing_condition_default_exception": "A numeric offset and a time-zone identifier convey different facts. Zone rules may change; IXDTF does not define a general floating-local-time or date-only type, nor guarantee future local wall time semantics by itself.",
+      "applicability": "Preserve zone identity where source meaning requires it; retain raw source values and model date-only/local/instant distinctions explicitly."
+    },
+    {
+      "id": "S16",
+      "title": "Universally Unique IDentifiers (UUIDs)",
+      "url": "https://www.rfc-editor.org/rfc/rfc9562.html",
+      "version_or_commit": "RFC 9562, 2024-05",
+      "locator": "§4 UUID format; §6.5 name-based UUIDs and mutable names",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines UUID layouts and generation methods.",
+      "governing_condition_default_exception": "A UUID is a 128-bit identifier format, not a mandate to replace source identifiers. Name-based UUID inputs should not be mutable natural names if identity must remain stable.",
+      "applicability": "Preserve existing source IDs and namespace/type; generated IDs only by explicit import contract."
+    },
+    {
+      "id": "S17",
+      "title": "JSON Schema Core",
+      "url": "https://json-schema.org/draft/2020-12/json-schema-core",
+      "version_or_commit": "JSON Schema Draft 2020-12",
+      "locator": "§8 vocabularies and dialect; references; schema identification",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines schema dialect/vocabulary and reference processing.",
+      "governing_condition_default_exception": "A schema must identify its dialect; remote references create availability and integrity dependencies unless bundled or prohibited. Schema documents validate shape only to the extent their vocabularies/validator implement those semantics.",
+      "applicability": "Pin and bundle a local schema dialect; define unknown-field policy separately."
+    },
+    {
+      "id": "S18",
+      "title": "JSON Schema Validation",
+      "url": "https://json-schema.org/draft/2020-12/json-schema-validation",
+      "version_or_commit": "JSON Schema Draft 2020-12",
+      "locator": "§7 format annotation/assertion vocabularies",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Defines `format` behavior and validation vocabularies.",
+      "governing_condition_default_exception": "Format annotation is the default vocabulary; format assertion is optional. A validator may accept `format: date-time` without asserting it unless the assertion vocabulary/implementation is selected. Add explicit semantic checks for dates and cross-record constraints.",
+      "applicability": "Prevent a false claim that JSON Schema alone validates temporal or referential semantics."
+    },
+    {
+      "id": "S19",
+      "title": "JSON Schema Draft 2020-12 release notes",
+      "url": "https://json-schema.org/draft/2020-12/release-notes",
+      "version_or_commit": "Draft 2020-12 release notes",
+      "locator": "Vocabulary and format changes",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Summarizes 2020-12 schema changes including format vocabulary separation.",
+      "governing_condition_default_exception": "Release-note summary does not replace Core/Validation normative text.",
+      "applicability": "Cross-check for pinned schema dialect and format assertion choice."
+    },
+    {
+      "id": "S20",
+      "title": "GitLab project file export documentation",
+      "url": "https://docs.gitlab.com/user/project/settings/import_export/",
+      "version_or_commit": "Rolling GitLab documentation; page references version-specific 19.2 import/export YAML; accessed during GitLab 19.5 doc state",
+      "locator": "Overview; compatibility; item included/excluded lists; project/import_export.yml reference; user mapping; generated-file lifecycle",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Documents a real offline migration package with NDJSON and per-version include/exclude behavior.",
+      "governing_condition_default_exception": "Docs explicitly warn exports are not reliable backups and some items are omitted. Version controls included items and importer compatibility; user/permission mappings depend on admin role, matching users/emails and destination policy.",
+      "applicability": "Product precedent for omission ledgers and scope/version disclosures; not a universal archive design or guarantee."
+    },
+    {
+      "id": "S21",
+      "title": "GHSA-94vh-gphv-8pm8 / CVE-2025-29787",
+      "url": "https://github.com/advisories/GHSA-94vh-gphv-8pm8",
+      "version_or_commit": "Published 2025-03; Rust zip crate affected >=1.3.0,<2.3.0; patched in 2.3.0 per advisory",
+      "locator": "Affected versions; patched versions; path traversal impact",
+      "access_utc": "2026-10-12T01:08:13Z",
+      "observed_operation": "Advisory describes crafted ZIP extraction paths/symlinks escaping the intended destination.",
+      "governing_condition_default_exception": "Applies to extraction/import code in affected crate versions; it is not a claim that ZIP writing is vulnerable or that all future versions are risk-free. Validate paths and link handling at the importer boundary.",
+      "applicability": "Future importers must treat packages as untrusted; avoid blindly extracting or trusting archive member paths."
+    }
+  ]
+}

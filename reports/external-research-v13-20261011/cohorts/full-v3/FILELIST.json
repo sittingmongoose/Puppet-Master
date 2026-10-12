@@ -1,0 +1,3580 @@
+{
+  "schema": "er13.public_filelist.v1",
+  "files": [
+    {
+      "path": "NEW_MATERIALIZATION.md",
+      "sha256": "c78571710d1284f70a0f21904b1b11f11c5a9ba0b2f6478c95369efb31f3302f",
+      "bytes": 2656
+    },
+    {
+      "path": "README.md",
+      "sha256": "fc0b95ebadba46f7eec8b3fe0da702c34d267f26edaed4940ec49982dc7d0d7e",
+      "bytes": 3708
+    },
+    {
+      "path": "arms/B03-P01-control/inputs/authored-manifest.json",
+      "sha256": "9ce3e1aaef205fe28fbdee27086c13e539bd3af1fc5f03d453eea115cf24bdbe",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B03-P01-control/inputs/configs/B03-P01-control.json",
+      "sha256": "0af679cb634fde432bc156c5a8b73544d7d3318241461a8546b954ae1588976e",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B03-P01-control/inputs/control-inputs/brief.md",
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae",
+      "bytes": 2313
+    },
+    {
+      "path": "arms/B03-P01-control/inputs/control-inputs/plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "arms/B03-P01-control/inputs/run/B03-P01-control/control/run.json",
+      "sha256": "e1a12fc20c78667d0b7725bf241ddb7a66d907378e28a8f99a3fe261775ff795",
+      "bytes": 598
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/assignment.md",
+      "sha256": "6579f646658e099e476c5e66598b1e95faead72de6833c2d74af9638ac206ad9",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/critique.md",
+      "sha256": "4930a547570dcb477b52574e3bbe9923574b2358a7645315b7b1ecb69fa02844",
+      "bytes": 14851
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/dispatch.json",
+      "sha256": "5a25f0335b00e59931ad88962fc0aee36efd3cbc00e190047f1ffc498eb38b20",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/eval-ready-status.json",
+      "sha256": "79206fcfdcfead680eaaa5166a55f7e547c08162562fe4d7cc8e59cfdcc4f33c",
+      "bytes": 9003
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/freeze.json",
+      "sha256": "84cec23b1f41435946c642f9e740f182c818a128d98e71a77360eb247a9e4086",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/input-map.json",
+      "sha256": "cbe9cd2113205a8c932cada05cbc91d3debf5f16ae426043e1b1917d8b0eb3c2",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/manifest.json",
+      "sha256": "722b6a6303a6b751cd9ea08111be38cd39f000f312273b7bd265b8aa36ca64f6",
+      "bytes": 2198
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/native-goal-active.json",
+      "sha256": "08e0c661f80ed5fb9e7e139d677d21bc58bb15bc630ffd7e36875adcd4a4f5aa",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/native-goal-create.json",
+      "sha256": "08e0c661f80ed5fb9e7e139d677d21bc58bb15bc630ffd7e36875adcd4a4f5aa",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/native-goal-terminal.json",
+      "sha256": "f0bbf7b076b6a868fb28d09ce7d6e0e782e7800c3491ee32af2a27716fb7ba06",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/request.json",
+      "sha256": "8c8b8e338e1dcafc631c5aafad6d37caa4845bf48922eb2a72e50ca57b78a4ca",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/source-map.json",
+      "sha256": "07a22fc58cec3dd878ff3d7a50ba0b4c1972029be3fa750e783a4e71b7a107fe",
+      "bytes": 11555
+    },
+    {
+      "path": "arms/B03-P01-control/stages/critic/status.json",
+      "sha256": "47cd439c796e1267b31c300631d12ae7065b6e61c69c3faa5804553a35031687",
+      "bytes": 4493
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/assignment.md",
+      "sha256": "f6a88093c06a781cc5e1f3b584c9b4b26c40835fbe28bb8a723e9593727f8fb6",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/discovery.md",
+      "sha256": "84d177bf8aad0f5945df85d290825c5be3b0106fb3c4e0b6372433e03f5c558f",
+      "bytes": 14449
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/dispatch.json",
+      "sha256": "31e07bde3b3fdb1f1fc56e663eea0a26e1daaeb0b82ee95af448ab003d54f28b",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/draft.md",
+      "sha256": "34e2df129239568c9a220cb8d99b99f9338d2aab1f2035323675f95349cd3b7e",
+      "bytes": 20376
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/eval-ready-status.json",
+      "sha256": "c1d91b0447b305e7658cfb9534e46661c6a6848a0c775d6b42c46e05ac7ba86b",
+      "bytes": 8597
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/freeze.json",
+      "sha256": "a3f9798102293c943a7cba0224a1a03d8f7b57769775b2053b0c881688d7a6bc",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/input-map.json",
+      "sha256": "2aef6f48a81feea9cbbb68eb4c1755fd8df95c8a2c0e09135572ec0123b50c32",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/manifest.json",
+      "sha256": "91a9178d6508fd503c7e5b788e7a1ece4477f90b4925395c4a28ac8e059d80dd",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/native-goal-active.json",
+      "sha256": "322e95a924ea2f45d687a12ae3cf03f018a7d7783eeb859f8d8ed419c2be71fa",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/native-goal-create.json",
+      "sha256": "322e95a924ea2f45d687a12ae3cf03f018a7d7783eeb859f8d8ed419c2be71fa",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "d7bfb763c5b72d72b2780c52e4fb5fb2e3cc3f4a935917707353acdd22269e1e",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "6d61207bd0f7f5c7c5ef258b57ef1918d654bf2c5b85c6cd45b9d81705a36957",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/request.json",
+      "sha256": "1b9b42e48d0d314f9393c1ff88b509dec4868dadf52671208c6b40c027d4644e",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/source-map.json",
+      "sha256": "c41a5b24c2fc0d80ec7614ed7a46e112628a8ec42f7da05db1104b72ec4247d6",
+      "bytes": 12575
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/sources/index.md",
+      "sha256": "c1f18924f9ee7af406e4d36effa8387f24d8ed8f7d9827561fa404556982a706",
+      "bytes": 8264
+    },
+    {
+      "path": "arms/B03-P01-control/stages/investigator/status.json",
+      "sha256": "fac3641cb36f1b66a730b6496cda44ad27d0e3856cf91bf0c91e2ebf7266cbbe",
+      "bytes": 4289
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/assignment.md",
+      "sha256": "881cba842d4ccd04259b2506a0863bb46b4ab07d47770c54996d2a6aa7a5bf9c",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/dispatch.json",
+      "sha256": "7a52c5fb4435f2e39acaedb554c3f52a327047ee6b3745a7c2070c9a0b49cc48",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/eval-ready-status.json",
+      "sha256": "625319611bed472281134685e0a8a34c20d09e22cbad3b5cfbefe0a6d550f90e",
+      "bytes": 8599
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/final.md",
+      "sha256": "5b5006cbf9f3b4b85f23e14ba85c45e415a1c55fda3042eb2b1163b7e9529445",
+      "bytes": 21492
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/freeze.json",
+      "sha256": "7581bf45488aa111fd7b8c8b44386e8ef00492228e4c178796ca903c35f26ed1",
+      "bytes": 4873
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/input-map.json",
+      "sha256": "37f780447726fb902afa6df9dc794b149aa45da5aae5b3b9d8da67d0e34a4822",
+      "bytes": 1963
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/manifest.json",
+      "sha256": "c79ff38d56df41be67d0f868c696fed352c3eba9ce1da1eebf2ee36d0e2aa3ce",
+      "bytes": 2196
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/native-goal-active.json",
+      "sha256": "682b19fc950e4749d15a6ba5eb8ecb1ca2d893d903d684796faa905193cf8a0f",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/native-goal-create.json",
+      "sha256": "682b19fc950e4749d15a6ba5eb8ecb1ca2d893d903d684796faa905193cf8a0f",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "a4ec93e3c54165b14a3d53d06eb3da8f1826bcf62636bd200621601f6877b44c",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/request.json",
+      "sha256": "27e6486b3f6271a13c0c89ebdbfed5382764e2873cf7e9553e6f8ce778282275",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/source-map.json",
+      "sha256": "b1d93b92cbba5f00cffea55eb86f8591fceb3ac3f5b9a210944aa20bd9dd08de",
+      "bytes": 9974
+    },
+    {
+      "path": "arms/B03-P01-control/stages/reviser/status.json",
+      "sha256": "e387f6662653f86b8944d55cdbe6818a4eeb94c179bd9b3906b6a83b3fda91fb",
+      "bytes": 4288
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/authored-manifest.json",
+      "sha256": "fbddd6faa162b6882cf13410200962086cc5fe13ef1cd7ad0774948eade668bb",
+      "bytes": 1200
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/configs/B03-P01-treatment.json",
+      "sha256": "4b5efe99cbd88fd22acfba5ff4a05c222c047e2ddfda9c1de537386995625c28",
+      "bytes": 1881
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/control-inputs/brief.md",
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae",
+      "bytes": 2313
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/control-inputs/plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/run/B03-P01-treatment/control/run.json",
+      "sha256": "68e635984a56c651c35b5983810022a5981ca73e61492901560038ff4c5db613",
+      "bytes": 600
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/run/B03-P01-treatment/stages/critic/native-critic-complete-active.json",
+      "sha256": "86fc2bb1f6416e05e40e51322479424b2024bca8d2b220165e587b8f7bf5cbec",
+      "bytes": 473
+    },
+    {
+      "path": "arms/B03-P01-treatment/inputs/run/B03-P01-treatment/stages/investigator/native-wait-active.json",
+      "sha256": "26eddbf43ec2af7b9f9a9480ec133f3bde75e7e04372d7349320b739a50f16e4",
+      "bytes": 618
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/assignment.md",
+      "sha256": "85e180f972b8183b2390bf35b124fee310fa701020d13ebea95d90044e0b18c2",
+      "bytes": 5048
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/critique.md",
+      "sha256": "662ec38b5c80937f7456ba263cde2756dc4cd091feeaef23c7febb210339b1ee",
+      "bytes": 10495
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/dispatch.json",
+      "sha256": "f5fc66457d02c4269329084388ac9771e03df5e4fcd8cc6fc7d3c220b887beb4",
+      "bytes": 4899
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "df489ff6b72b3056c5365bdcfc49c6d987bea261ddc3f5ec1080ccc8b08d1de9",
+      "bytes": 8291
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/freeze.json",
+      "sha256": "0ca32765f329043c5f7c67b40f0690832b3702aed12dc2f74f2564c93e9efb66",
+      "bytes": 3610
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/input-map.json",
+      "sha256": "fe102b63a7eb3173b51108f2648007edafd78baf31ac323d7b660cb2ca38dcdf",
+      "bytes": 2168
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/manifest.json",
+      "sha256": "74668f55f0bc09bc74f615d090da4f4bdd44ae85c3dd7c49c8fe809a8632728d",
+      "bytes": 2220
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/native-goal-create.json",
+      "sha256": "f24d9d27ae10d5f93a7b5b5d448a9672fb2c22f18b49dc51a2b747dba83dfc86",
+      "bytes": 466
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "a32d3b0bee033e687dea2b693e8bbb479513bbcea061d40c1ce170fc1d53ac3c",
+      "bytes": 795
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/request.json",
+      "sha256": "675da4cca5865a158c98bea9962037c6f0cc28fa38486e55fcac9ceed5050960",
+      "bytes": 1554
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/source-map.json",
+      "sha256": "6dcb2b9db490267cd71f2cf64ed0a296e76366277a001d7f32583ddd4c2d315a",
+      "bytes": 10740
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/sources/index.md",
+      "sha256": "902b93f55f87c1a548c31275858e2a4ebf95220d2bcd36f413b15ed6c2be70cd",
+      "bytes": 2747
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/critic/status.json",
+      "sha256": "0a56e28be248632c914add480f4a2d5d0ea89ef276af7c5579379432b1a39a82",
+      "bytes": 4136
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/configs/B03-P01-treatment.json",
+      "sha256": "4b5efe99cbd88fd22acfba5ff4a05c222c047e2ddfda9c1de537386995625c28",
+      "bytes": 1881
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/control-inputs/brief.md",
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae",
+      "bytes": 2313
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/control-inputs/plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "2558c24ce4983afa84414a41b8b7399890e2d60c7025727cbefbf6ff1a6e41a9",
+      "bytes": 7369
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/manifest.json",
+      "sha256": "2d254ea2e69811460727b28ed37cc43a7317795aeae38a9c82c3b0e81b434bee",
+      "bytes": 7132
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/author-ready.json",
+      "sha256": "13782f7c19928bb77deed78e5ddbd19b447984e433f1381b63ae171c9d69db29",
+      "bytes": 2443
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/author-resumed.json",
+      "sha256": "0b5529c912b0f0bbd59f33fa201aee232dead7aaa39dc525469d8fc8cf324af7",
+      "bytes": 1025
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/author-terminal-observed.json",
+      "sha256": "3f7f2150ee90f911247c01da3e8a29c2e9f93a24e490c39cf6a6fdfc73478057",
+      "bytes": 918
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-admission.json",
+      "sha256": "86fbae91ea3a3cb447b9140acdc26c1d1009ecec055a1c7e5f62ed07fc40e8bc",
+      "bytes": 3579
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-custody.json",
+      "sha256": "7cb7d8f759ba79f53b8822dce60e1b5ad841d4cb64dc8b8f50ad9f195f0b4417",
+      "bytes": 14196
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-delivery/critique.md",
+      "sha256": "662ec38b5c80937f7456ba263cde2756dc4cd091feeaef23c7febb210339b1ee",
+      "bytes": 10495
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-delivery/native-goal-create.json",
+      "sha256": "f24d9d27ae10d5f93a7b5b5d448a9672fb2c22f18b49dc51a2b747dba83dfc86",
+      "bytes": 466
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-delivery/native-goal-terminal.json",
+      "sha256": "a32d3b0bee033e687dea2b693e8bbb479513bbcea061d40c1ce170fc1d53ac3c",
+      "bytes": 795
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-delivery/source-map.json",
+      "sha256": "6dcb2b9db490267cd71f2cf64ed0a296e76366277a001d7f32583ddd4c2d315a",
+      "bytes": 10740
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-delivery/sources/index.md",
+      "sha256": "902b93f55f87c1a548c31275858e2a4ebf95220d2bcd36f413b15ed6c2be70cd",
+      "bytes": 2747
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/critic-release.json",
+      "sha256": "e74136dfb46787799eb7e1cc539e1a2befa84ccc60c2fd3fd69bdf87197ce911",
+      "bytes": 904
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/final-ready.json",
+      "sha256": "03b15b2f3417a0eb3e6fd161d55b59a49a53ad9247ae55edae83c94aee36407b",
+      "bytes": 1215
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/retained-ready.json",
+      "sha256": "071ab10b60c5bd476b06d7c9e6ae2b5e5f8b615c20ef0d542735f0a7c61e0daa",
+      "bytes": 5187
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/wait-ended.json",
+      "sha256": "930c261a256f62bfdf3a760f28fd69e181df2ec16b4e20264adaf6292cdfe72c",
+      "bytes": 1319
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/control/waiting.json",
+      "sha256": "a1f81217f6913262178adc49b71f5690597764cac2cfadb948e6a7e121175833",
+      "bytes": 329
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "f1d79d193283c07be0294f73e0f48bb830b37e10d6c15eec6871f0e9328ea160",
+      "bytes": 7397
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2",
+      "bytes": 19055
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/dispatch.json",
+      "sha256": "0bb6f2167af2cdee3569eaf88713a776d0f9f0c4297a872dc91da30865fc9f9c",
+      "bytes": 4993
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/draft.md",
+      "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48",
+      "bytes": 18945
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/final/final.md",
+      "sha256": "9340fad59fcaba255c7107f9a1f49292e1e64dbebc07b5028bafa9113fb68421",
+      "bytes": 23369
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/final/source-map.json",
+      "sha256": "007f3c61f12f7e7b8d097f669cfd6a712331f74b4e55f5cd9bb6e962fb8b7d69",
+      "bytes": 21722
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/final/sources/index.md",
+      "sha256": "479050718c5eeb536b6ce69c4731b4cca5bda6345a2f3e61e0eec95ec78449a0",
+      "bytes": 5548
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/freeze.json",
+      "sha256": "44d062502ce4199344b75f624c3c6034d0a505249c35303a5034564cd3eec640",
+      "bytes": 2872
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "96b8e4dff647f8690bbd7117fb9d1a7e5030cf2324e45da9e25f215545065182",
+      "bytes": 1761
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/native-complete-active.json",
+      "sha256": "acc85964b3a3919ecfc27b89d9efbfd0dd74faeacafcea007a700b981ba8c89b",
+      "bytes": 619
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "e839e4c1c9a843300a3bdde43b53a783942de8d7c920d0b0ac6b2ae8de587d36",
+      "bytes": 611
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "eb579bb78c76f1d54036d1b0487b18085f2339c6d241a6607bf81bf92da1e011",
+      "bytes": 941
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/native-resume-active.json",
+      "sha256": "a64b220b489faa38b9c09997f00f4f55f01f90d9399666775b083e3be9f90bae",
+      "bytes": 619
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "2e65053497d5b385b54daed337d684302fb53ccb590c176b9141df9695a7b815",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/request.json",
+      "sha256": "940972082d3475716f8fe57c8e125c3cf947c6c65528156460f0f55ba5cfd350",
+      "bytes": 1576
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e",
+      "bytes": 19049
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa",
+      "bytes": 4619
+    },
+    {
+      "path": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/status.json",
+      "sha256": "ef8a271c95f6132d8c54e3481455a32ac46e65a6a65f7f937cf80297bf7bd454",
+      "bytes": 3676
+    },
+    {
+      "path": "arms/B03-P02-control/inputs/authored-manifest.json",
+      "sha256": "9413e86697f6df6100444d83d58d6ace1dc82163aeac9da4da69e68699001d39",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B03-P02-control/inputs/configs/B03-P02-control.json",
+      "sha256": "e8d4c1670dc1d118715f3ea30f6080a0ba83cc076e48850e313194605cd6b905",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B03-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+      "bytes": 2274
+    },
+    {
+      "path": "arms/B03-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+      "bytes": 2354
+    },
+    {
+      "path": "arms/B03-P02-control/inputs/run/B03-P02-control/control/run.json",
+      "sha256": "335a87732e2f5ab0887da22c89fa0fbd2e60048baaee63ab6be85223880a1d0f",
+      "bytes": 598
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/assignment.md",
+      "sha256": "867cc8bb7f801b2d0cc04de6a2bcb497fe0a015d3919167c1e3069e74f66b666",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/critique.md",
+      "sha256": "a5219eecf9ead5f4ae7d8cff92f901ef70a9ee99c28120feb5c6ea881cf72b9b",
+      "bytes": 14863
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/dispatch.json",
+      "sha256": "d94b20076a7d3494cbd450f2eb338578bccde5dc92e0efbac9c2354d3bc833cb",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "7bef83c7fcd9bcb104f40a91ec65acfa7c56900e20e2f465a54ebf1a30c67d55",
+      "bytes": 8671
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/freeze.json",
+      "sha256": "f0fec65833ce9fab6873f870103c0780a9d78de8ce56921661a2b021f503e14b",
+      "bytes": 3921
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/input-map.json",
+      "sha256": "b73bd5902c6b35669617dfdbc7fcb4a02a44d40d759785e6b635c9582d775492",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/manifest.json",
+      "sha256": "8f1ea292b159a3af473163a95a0efabb477d5e945f1b45ada2dc1f855407db39",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "c81e21c0ae0ca5044abd16fecd244f510d1dc6642e5e8042244823f3d47bdbaf",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "c81e21c0ae0ca5044abd16fecd244f510d1dc6642e5e8042244823f3d47bdbaf",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "1c12d73dabfa843d6e3dd1560a227cae9201ecf3b8e1a37ecdc012cbf051cab5",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/request.json",
+      "sha256": "4bd735f5d60052bbf13084a293b70030c4c2e10a15568a801b5fd72386d0bd1e",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/source-map.json",
+      "sha256": "d6ec64ee31af66b5f15309f1f46841450069378327b22db3111dd288172fad0f",
+      "bytes": 26647
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/sources/index.md",
+      "sha256": "f1d1410bf68637a0680a25170115446bd2a5e7b44ec6d83d86d8abc04060ef61",
+      "bytes": 24240
+    },
+    {
+      "path": "arms/B03-P02-control/stages/critic/status.json",
+      "sha256": "6fd14b352d37ccda6f80f660adb72a763ce8bac02f2d822bca675a313f4e803d",
+      "bytes": 4327
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/assignment.md",
+      "sha256": "89a9e97c1b2c425273d65678a2a514e7e48ae5dd422bd5606a76b1608f16c4a8",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/discovery.md",
+      "sha256": "a3d1355a3b7392e26e511b55d43ddbdba1b1430ffffe1122df09efbb2639bedf",
+      "bytes": 11292
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/dispatch.json",
+      "sha256": "1c1cd7c97d0734630bdb33260ec7719a1e78e4297bdd5f1e0562744fc10bb4cd",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/draft.md",
+      "sha256": "87ac4bdae0d88308e909e60a4b68879e1d73cacf181bbfc5365a201b97620cae",
+      "bytes": 16987
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "118ea20b8acd04f5207f901fc61871d72e12fc9075765db9070ee7291584ce55",
+      "bytes": 12323
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/freeze.json",
+      "sha256": "a09c980c15dceee4f5df72be513694801fc1ad8f218e7d29adc72f64432435bc",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/input-map.json",
+      "sha256": "d0f1a3ecd60d65886c609ad6a4561e9709a72de87b4206b7069f8e88248c6982",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/manifest.json",
+      "sha256": "cbce5a29123656245964837391664f87af784188fbaf3a341bdf766aa9334381",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "5ab9c609182b6660f17db6a1deada488c1c4e4dd3ebc685d3e0d02729a073db9",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "5ab9c609182b6660f17db6a1deada488c1c4e4dd3ebc685d3e0d02729a073db9",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "0571c11b9c5b4c2860d52f26e3b51b5a81df575830e4130ed474b5019926342a",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "42b4f170230e2d31d0ec92f2265c0a15d287f132d9337c35cb041fe7e93fdc6e",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/request.json",
+      "sha256": "07c4b6703eb8671255a22ba83978af74b2c6781e6d1bf50dc728cffcda5a983d",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+      "bytes": 2354
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/source-map.json",
+      "sha256": "85a9905541bd6241aa8b809fdff32694919d6addd7a0d1a626eaecb3450fc602",
+      "bytes": 19093
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/sources/index.md",
+      "sha256": "cbf2dac142ef1241ce2dd4e3332ddcaf69db5d1e02988b1f9f32b75dff4b34cf",
+      "bytes": 17212
+    },
+    {
+      "path": "arms/B03-P02-control/stages/investigator/status.json",
+      "sha256": "b4aee35aa4ba01ade3bba9c1cb5a972f780138297eb9d27a36928bd8a43e1943",
+      "bytes": 6151
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/assignment.md",
+      "sha256": "a341e152e1a4adec950791d54d6cf7ac915ad74d6d21ca745d107a4363ad12fe",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/dispatch.json",
+      "sha256": "6e8859b40c056615db369a8dc085ebeffa48b4aa55b7792090ad5db27a65c7e5",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "063d693fce9c83671941e8588a580996b84e1f4aea782a841fb3d357a3e4206e",
+      "bytes": 8441
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/final.md",
+      "sha256": "3f11770b4beca644187c6e74b1b5d093b450270126197161afc91f7ba2601d4f",
+      "bytes": 30104
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/freeze.json",
+      "sha256": "6e9fffd7e1c4696e1942255b35deab4c374d535c7d31a17825dc9836b956d04c",
+      "bytes": 5248
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/input-map.json",
+      "sha256": "91b8a364f2f3d90ffae0ec1e52de014bf08d6db953ee7b8e1bdd7a46fc331f85",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/manifest.json",
+      "sha256": "49149f4696fa0b3080767cb86e3c4ab4c5a13014a3c7ace97051fe4738e77455",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "bbc471dfa4663545a794959c9a80ab61dfe900805a476d6169ed3e54971a872c",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "bbc471dfa4663545a794959c9a80ab61dfe900805a476d6169ed3e54971a872c",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "92660f35d537a47adcc49bbd51095f499127d342c708e0575ab3bc84ecce03c8",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/request.json",
+      "sha256": "c9b9bc0ed97b0d61a1855673b284968029a6a926a53b4c1375322b73cf2e280e",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/source-map.json",
+      "sha256": "949a6c2a22154b8ddbb1bb372796f4d303b7ae8ed7f38b82e3c6974cd0f88032",
+      "bytes": 36301
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/sources/index.md",
+      "sha256": "c58e86b0e868a6bdc85abe74c65ddef8daeee8bf1ba0eab500dbf4561825adba",
+      "bytes": 28390
+    },
+    {
+      "path": "arms/B03-P02-control/stages/reviser/status.json",
+      "sha256": "4ba208fe4d64ea5415f1c6a655f9eb7b3e3a470d47fb5319d28d1edce9b397e4",
+      "bytes": 4212
+    },
+    {
+      "path": "arms/B03-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "1a60e6851ba2abf5ead825ec31a43821753118bc8152d0613e5a94550b32392e",
+      "bytes": 797
+    },
+    {
+      "path": "arms/B03-P02-treatment/inputs/configs/B03-P02-treatment.json",
+      "sha256": "5f4bf4263fa12d3eebd29bed711f29f3d98e4feff3645b1459c6e8569fb3428c",
+      "bytes": 1881
+    },
+    {
+      "path": "arms/B03-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+      "bytes": 2274
+    },
+    {
+      "path": "arms/B03-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+      "bytes": 2354
+    },
+    {
+      "path": "arms/B03-P02-treatment/inputs/run/B03-P02-treatment/control/run.json",
+      "sha256": "789cb756b79c8ff85a9f37b3b9c196f5d08a4b0db530423181fb2638baa47845",
+      "bytes": 600
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/assignment.md",
+      "sha256": "2cb26bb0b9cd75a3ec218a8da56f1e212f7ce39663d66626e3356b259d0947f9",
+      "bytes": 5048
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/critique.md",
+      "sha256": "034ada851648272a6541eec7010a058607fe590b590de2ff82f16ab19af43015",
+      "bytes": 7950
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "de8ead79c8af2d97472b7956c51f866018ab3f7f9fb36f9536dfc189c33a95b4",
+      "bytes": 4899
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "a5f2e8e9fd282e7edfe469f78afbfe5a95a4af4b2d9286592c4c727792b0ae7b",
+      "bytes": 6461
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/freeze.json",
+      "sha256": "161f75ad7c3fae8c5a16b0b5296072841d040c37fdf8c61b06a574a452536296",
+      "bytes": 3610
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/input-map.json",
+      "sha256": "89f406bc8e7944dbff52d768132c8324e439426bbe08319de6457f50a2f1b71a",
+      "bytes": 2168
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/manifest.json",
+      "sha256": "c9208a03360a43023c1a06e4c64ef5980d95c72c305bbb8e3fe1f9b787005bef",
+      "bytes": 2219
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "6c52fb2fdbbd72350be31f7562cef8977bbd6efc4d9bdad54faeed2a5d2bdb06",
+      "bytes": 466
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "a7b67c37a98109d08fa7534c080afe358610c81241c83cf242f213824db4bda9",
+      "bytes": 795
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/request.json",
+      "sha256": "93bbbae289cc887501786f27018aa2bc1b62cd490e42ceec0275647af70b5199",
+      "bytes": 1554
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/source-map.json",
+      "sha256": "0a851eb0079b5bf20db6b7930e051956aba1e130fde3c6a4962b648e12c383a1",
+      "bytes": 26134
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/sources/index.md",
+      "sha256": "5562fe1db108abc762413086c5924ea3561550a79b3dccd666f3282e70abd0cf",
+      "bytes": 5166
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/critic/status.json",
+      "sha256": "f01c0903ef12c8851d29d3768fbd4559953c7a74ad68317dd69230c73ca89f1d",
+      "bytes": 3226
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/configs/B03-P02-treatment.json",
+      "sha256": "5f4bf4263fa12d3eebd29bed711f29f3d98e4feff3645b1459c6e8569fb3428c",
+      "bytes": 1881
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/control-inputs/brief.md",
+      "sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+      "bytes": 2274
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/control-inputs/plan.md",
+      "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+      "bytes": 2354
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "9636bdd29d172fb3cdab3f49ce68c1cc1d21faa7bb92da24278c7b9711d70233",
+      "bytes": 8549
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "8f3cdee294e8d3ffd371c5d7f7347d36ba316f6a6f073547c2a426800d15a339",
+      "bytes": 7131
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/author-ready.json",
+      "sha256": "64b2fa08afee6ae3af66bb014abedafe9ed557548c6424601445c829c1dff6d8",
+      "bytes": 2443
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/author-resumed.json",
+      "sha256": "a68f3ccce5c6b7bf09b375db92bc7b1b96dd15e981f17adaa55097934ce46c5c",
+      "bytes": 1026
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/author-terminal-observed.json",
+      "sha256": "48dc22bef440bf05c20fd405c21d761cf373293ef05b4ce7cdc1e96577260902",
+      "bytes": 919
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-admission.json",
+      "sha256": "981c711da3c36384338588532a08a55428e4176cbcd73dabb13cb6823313b5b3",
+      "bytes": 3579
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-custody.json",
+      "sha256": "cc0e7a4d086f450aa2c87cf11d41a310555549998e267fe639200df33e11d70d",
+      "bytes": 11455
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-delivery/critique.md",
+      "sha256": "034ada851648272a6541eec7010a058607fe590b590de2ff82f16ab19af43015",
+      "bytes": 7950
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-delivery/native-goal-create.json",
+      "sha256": "6c52fb2fdbbd72350be31f7562cef8977bbd6efc4d9bdad54faeed2a5d2bdb06",
+      "bytes": 466
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-delivery/native-goal-terminal.json",
+      "sha256": "a7b67c37a98109d08fa7534c080afe358610c81241c83cf242f213824db4bda9",
+      "bytes": 795
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-delivery/source-map.json",
+      "sha256": "0a851eb0079b5bf20db6b7930e051956aba1e130fde3c6a4962b648e12c383a1",
+      "bytes": 26134
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-delivery/sources/index.md",
+      "sha256": "5562fe1db108abc762413086c5924ea3561550a79b3dccd666f3282e70abd0cf",
+      "bytes": 5166
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/critic-release.json",
+      "sha256": "929e350f9365f5f75d9870bb98ccb50f0b82872a0aee5d0d692060de822328a0",
+      "bytes": 904
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/final-ready.json",
+      "sha256": "5702aa28219323cf1ce4c54e5268d86b142f00619cb2903474b0f6d040e5d82d",
+      "bytes": 1215
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/retained-ready.json",
+      "sha256": "750ef7b98b45513ccd78e9e15714bef98f63c09919b9edb2114adcd7d6b77f9f",
+      "bytes": 5187
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/wait-ended.json",
+      "sha256": "89b4900ff2df5394aa389934f5ba0de1cbd1aaa1f81af578a00c39c3a2bf665f",
+      "bytes": 1320
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/control/waiting.json",
+      "sha256": "70b66470a0d369385a93747c37610061480c8a3a4c409fc279a389bd0b6ef374",
+      "bytes": 329
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "6026bed9eb49ab6cd139e5c65cc64054f52323cb76025f8390e9ec4ca2e26a5e",
+      "bytes": 7397
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "0bde87575295e43e786c76f5c2c6f86d437d1de751b9ac3eb41cd4d9bce32ec2",
+      "bytes": 11190
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "790f8c239e4e849cf9afa3b2f7ddc3b8805d42d98ff5bf1f7ce663788cbf7682",
+      "bytes": 4993
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/draft.md",
+      "sha256": "1949787c257eb11a5178ccc9b8dac1435b37f86fa6d4861495819997d9108f29",
+      "bytes": 28933
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/final.md",
+      "sha256": "516bd37e366548b427e3473b6186b2e3015195cfe92e0f293ea98ca79536d33a",
+      "bytes": 37463
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/source-map.json",
+      "sha256": "bb7cfbecb2352d333c7ba692dada8e5f85f79933472761132512d40df7af3d6a",
+      "bytes": 30842
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/sources/index.md",
+      "sha256": "a6ec8137e598fdaf3710da879df291723c711aae39cfba4d33bbb35cdc881c61",
+      "bytes": 7359
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "822d5bef735430288092bb3c25058240c68b1419ef8846af52d61d86c9613038",
+      "bytes": 2872
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "c801cd69dc0ee939a43a8e95fbe5e5aa9577857d56c4603ec498c9eff84a50af",
+      "bytes": 1761
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/native-complete-active.json",
+      "sha256": "85751f35f15cd865f7c3e21a504cf0f018bd32903515b5bfdc82c3990ec20409",
+      "bytes": 619
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "cfb8d2963d88879237dfecec7593b2c86fc7891c89e9895ea6a0e36bf81c1a21",
+      "bytes": 611
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "ae3ba21c43d8d86de277dd0b3bf29039427ff250d1effcb38a8975bbf33a2c17",
+      "bytes": 941
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/native-resume-active.json",
+      "sha256": "81ae54dd06fc25f3584a78c1f50116ad73fa58aa6e056b92a869ea9741828ce0",
+      "bytes": 619
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "d43fee433a32dc595cbf06963e526b21675255f6ae7a7e1242be176b0c36ceb2",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/request.json",
+      "sha256": "fcde72b2dcf556bd64206176c82803bbb00ab934d888d2cfb521239fa8e7fcfd",
+      "bytes": 1576
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+      "bytes": 2354
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "e2fa71baa9bd1ecfc9516a60c6dc2a8fe8bdec04d70ad98c35968c1cc3e56e3d",
+      "bytes": 18519
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "a6b54050b061d7e2c467cde5a24e7abb7eddc9bbe458a790b64751a3b0888793",
+      "bytes": 6352
+    },
+    {
+      "path": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/status.json",
+      "sha256": "3e3a0b81886629718c17652b2f1291633f4c7dfa32dd52265cc61f313b4f5225",
+      "bytes": 4264
+    },
+    {
+      "path": "arms/B11-P01-control/inputs/authored-manifest.json",
+      "sha256": "b890519e2af965e91ce358ba23dd6c9c65fbcc9a8a71dda1313c9b27cd60f4f5",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B11-P01-control/inputs/configs/B11-P01-control.json",
+      "sha256": "0ad84267a20a98340d70daeb34f164017a40a122a6c9471f6e536f2a6ed2dd3f",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B11-P01-control/inputs/control-inputs/brief.md",
+      "sha256": "f5abfc028dab466137df21a8405f1db38baec8713b440f353e64f7e179b90373",
+      "bytes": 2226
+    },
+    {
+      "path": "arms/B11-P01-control/inputs/control-inputs/plan.md",
+      "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+      "bytes": 1683
+    },
+    {
+      "path": "arms/B11-P01-control/inputs/run/B11-P01-control/control/run.json",
+      "sha256": "fd39bca30c8c02a7667857310d7f6d8f6216f7550203102cae68955e773dd9ec",
+      "bytes": 598
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/assignment.md",
+      "sha256": "d3eb9d37ffa18310089cda1fa981d636abb7c7d259e6161f9a984e0e80462b32",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/critique.md",
+      "sha256": "668862b8339f2a46ebec60528c3e0cf6ff101d370b282e6a1fec44093aa8e0f4",
+      "bytes": 10583
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/dispatch.json",
+      "sha256": "30d43ed5ff5a138a5d244880a3ea736d4e6c9df1997e4066ec81f578b77dcb21",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/eval-ready-status.json",
+      "sha256": "5ee4ccaafa26b18747a59bc05b135d80e9d47c6201916bcc8676e1b1915f17ed",
+      "bytes": 9887
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/freeze.json",
+      "sha256": "e302070e667cb6723587e1aaca8ffcb9fe73f763bae8e6424d04f74033d03226",
+      "bytes": 3919
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/input-map.json",
+      "sha256": "4e850fc556620d5e7c06c213dc8fb55b9c5dcfa17a700be8fc69c9fdd2d7ff8f",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/manifest.json",
+      "sha256": "938cbfd5fb0db8d404df3f9d58553f40a8773c0585210b27c4b777738ada34f0",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/native-goal-active.json",
+      "sha256": "6528a291e1d5bcfae3d0920af50977a799e216d457e86d0bfac0b28355080561",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/native-goal-create.json",
+      "sha256": "6528a291e1d5bcfae3d0920af50977a799e216d457e86d0bfac0b28355080561",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/native-goal-terminal.json",
+      "sha256": "98e92f096c4b04f0611ae0a11c3b69918513d7be8fbc807d2a30f04cce3755ed",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/request.json",
+      "sha256": "6cf526e180552ea0ddc431f28363a9fb7716c4e5884aab61d78f75c870fa039c",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/source-map.json",
+      "sha256": "18559fcab6880c1030dd20bce67ce588dad58aa2a4bbac1fe09f04bf197b9c8c",
+      "bytes": 28489
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/sources/index.md",
+      "sha256": "82016ea92c5778cd96dc0d864b971bf426d82a609434135d694c3a29dd780e61",
+      "bytes": 879
+    },
+    {
+      "path": "arms/B11-P01-control/stages/critic/status.json",
+      "sha256": "3eb8db4309719841b8784f0686bf55db6727f6d09737ca2e3d9c12b919d2bac3",
+      "bytes": 4933
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/assignment.md",
+      "sha256": "f207a5d0f4e7eb0752fbeb768907e3379f9d4591fbfe301be78e3ebe3f62c1ef",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/discovery.md",
+      "sha256": "b5d476680217eb19318ab7d983bbabbd99c4d838e8db07b55cf7107b26e182c7",
+      "bytes": 8367
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/dispatch.json",
+      "sha256": "4b27194be3fe74cf153792971b74e22f885758b60e4c387369f7e6b1d1097e97",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/draft.md",
+      "sha256": "6afd43b2a01fd117a3db806a9d0509b6b94451305f0af7813ac5c55f0d334e08",
+      "bytes": 20101
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/eval-ready-status.json",
+      "sha256": "72c6a955add63819dadd272baf121cba4dfe5ababc189d9b8265afd47f9149c4",
+      "bytes": 10509
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/freeze.json",
+      "sha256": "cfda451f7757123fc99b6da4ad8b5fc0fa62c099aa1080c0004b563c55feb8f5",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/input-map.json",
+      "sha256": "7945396a4fec3aea4d1dda3d6d0a3c23c14f64637ec8df584adcb51fb97ad5f0",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/manifest.json",
+      "sha256": "d77e56dea6ea719ea8a71fc9d902533c5dbc8743f7311018f0d01441845a503a",
+      "bytes": 2868
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/native-goal-active.json",
+      "sha256": "6763fed6e076d1d58917f1e100221698103ecdca1e3540ca25464c70f95d068d",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/native-goal-create.json",
+      "sha256": "6763fed6e076d1d58917f1e100221698103ecdca1e3540ca25464c70f95d068d",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "dbbe7dba8b8591c24634ce755b9815a959d8f2783bd57b27ba70c9da462cd24a",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "d974b84cad86f2a9ab48d089cc0f78f43b22524eb47de6a32ee79ef0d1906362",
+      "bytes": 432
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/request.json",
+      "sha256": "73a9c998fe01eb9fdddf6fcfac88695c5db10fa0d846f221fa2821718efd9a60",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+      "bytes": 1683
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/source-map.json",
+      "sha256": "268385b09b938077b0dea0d83894017758d9919d9b49c024ca9be695fa8c0883",
+      "bytes": 18715
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/sources/index.md",
+      "sha256": "dc71eeb652ed00fb90c3e29a500925257336c6ece7aac162fbb0577edf7e3991",
+      "bytes": 4339
+    },
+    {
+      "path": "arms/B11-P01-control/stages/investigator/status.json",
+      "sha256": "f95f995420f95c9f283a3ea6275900d0fff117600ed316d265a6f405fd409452",
+      "bytes": 5245
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/assignment.md",
+      "sha256": "8b56224f0fa0163981cd4d441228a4b04a6485dd35ce4eedf17c56cd87791a76",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/dispatch.json",
+      "sha256": "6d7b9353c5feb0ad622985e706a7792cb0d0fc195704da4ebc09cf9835e8b133",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/eval-ready-status.json",
+      "sha256": "2d8e9ba829a9d4e302cb83ed9220a602362ed46dcae7686db0b2856634c41afe",
+      "bytes": 7981
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/final.md",
+      "sha256": "476cd762e51556bae4d5dd92ade23240f4d161fa857f267653ee0f36b253527e",
+      "bytes": 24740
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/freeze.json",
+      "sha256": "4304e8a46fac866d638664456bdd99e53ce6dd9908674397179adf0bc5f0fffc",
+      "bytes": 5244
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/input-map.json",
+      "sha256": "b38456b31320c37746b6645e776b50755171aceaa405e1cf3697489457205018",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/manifest.json",
+      "sha256": "e6ce91ed6b279e586e020b6f0a0c881a1b29253633dc59070ac2aca1e91b3bf9",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/native-goal-active.json",
+      "sha256": "b6492711ea69a90c3138c197bf5540e9b5c42abb96fb9946f907cac0b7af11f3",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/native-goal-create.json",
+      "sha256": "b6492711ea69a90c3138c197bf5540e9b5c42abb96fb9946f907cac0b7af11f3",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "5f282650829e70fd7b6b4e634f475a7066666ddd5df79db329d26d425a20b0de",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/request.json",
+      "sha256": "1b2ce9d43934e3d9438ca10ae62d89a6bcf0b1b54213ffefdcc3862969ba91f8",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/source-map.json",
+      "sha256": "8e237850b1f6b416709a1695a71c83a7b9e3300b61fc3c9a1f4e4db51984eb57",
+      "bytes": 36211
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/sources/index.md",
+      "sha256": "d622dd4d3615aa0d51b1c85a1419ff833c8d93248834e306c729816b5e0d4598",
+      "bytes": 26551
+    },
+    {
+      "path": "arms/B11-P01-control/stages/reviser/status.json",
+      "sha256": "925a1ffc060599c46ffe08b42bde53d98ae2b778889dbcb095ddb5cee8559dee",
+      "bytes": 3982
+    },
+    {
+      "path": "arms/B11-P01-treatment/inputs/authored-manifest.json",
+      "sha256": "cff5a6567924e4787dd71e25e532669f3bad25aea8b506d7c817185a1761ddfa",
+      "bytes": 798
+    },
+    {
+      "path": "arms/B11-P01-treatment/inputs/configs/B11-P01-treatment.json",
+      "sha256": "906667af5b27f4cd0600941c935f649c598a185e650a341a1cc6efb33828e019",
+      "bytes": 4066
+    },
+    {
+      "path": "arms/B11-P01-treatment/inputs/control-inputs/brief.md",
+      "sha256": "f5abfc028dab466137df21a8405f1db38baec8713b440f353e64f7e179b90373",
+      "bytes": 2226
+    },
+    {
+      "path": "arms/B11-P01-treatment/inputs/control-inputs/plan.md",
+      "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+      "bytes": 1683
+    },
+    {
+      "path": "arms/B11-P01-treatment/inputs/run/B11-P01-treatment/control/run.json",
+      "sha256": "72e342a8ccde588d72a9dc3e7c6dc559929ba1cf2578f7df7cac49b13cead0c7",
+      "bytes": 2584
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/assignment.md",
+      "sha256": "f5a8618933aea994aea952d48226e097dc85e29f67d16ff7e13d9f735d047a8f",
+      "bytes": 9663
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/critique.md",
+      "sha256": "3cc71f79fcb31bb0cf1786d2a790697c751ab8c88807be6cca98d706383b06cd",
+      "bytes": 12526
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/dispatch.json",
+      "sha256": "00cd6b46f08b0f33b99a962e53a06a61621bc6c9fbbaaf4a0316b8fe5e81cbad",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "5a53c2e341579bb5d9e4b3d81f451524748795ae59375a81532d1b877844ef07",
+      "bytes": 8339
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/freeze.json",
+      "sha256": "d21af575ead30e087c8b98e4a5a4bb890ec4b6c8679e6a31a8df165449978709",
+      "bytes": 4814
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/input-map.json",
+      "sha256": "e48c023b5469c8a783b8440425067ee28217c170e95199eda8b842a4210e651a",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/manifest.json",
+      "sha256": "d4cd2fd25c025871f0a9c5e1003e320e25881d34ffde264a52ec1b265e19e66d",
+      "bytes": 2386
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/native-goal-active.json",
+      "sha256": "9d9a6c8a6e042358f34e85e2c6fe5467e663a5130ace2d24c7767cf6906a7d98",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/native-goal-create.json",
+      "sha256": "9d9a6c8a6e042358f34e85e2c6fe5467e663a5130ace2d24c7767cf6906a7d98",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "8598314ec3fc9084c443bad67dc7a378d438c0f0ed2eb2149a3b2cc3f70dcb30",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/request.json",
+      "sha256": "ae30e88c9187870c69ddab46459278840095bb1d760975c5447620fa451fc4f5",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/source-map.json",
+      "sha256": "a5b722f902baa54e9283ac87da106d60f48d39ae61a63fa01fd8e7d249bc08a9",
+      "bytes": 11233
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/sources/index.md",
+      "sha256": "0d52bc291b348d9c7fd1ce3a6c1a235e92c7e6fed82fa4e8a8212fe023e75038",
+      "bytes": 2942
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/critic/status.json",
+      "sha256": "2fdb8e483d44744677931b057ed591567cbcb3cd7f61a0f4efd1dca6c384e0cd",
+      "bytes": 4161
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "94812e088fd49d4f4c52ce16586d6702b8d1166ca1f5be839aa9753bd486e417",
+      "bytes": 11722
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "8ffec565b010559851db9641306940a79e425c011fc9a08f871baad6b9d8e60a",
+      "bytes": 8935
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/dispatch.json",
+      "sha256": "422efcb7b4516d7148506e821b35f32a52c7685babac670b6353cd724e710cc0",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/draft.md",
+      "sha256": "fee0ed3d055f18ea52c689fbcfecc36425ee110f6ebdf97e1008fab2de17894f",
+      "bytes": 22027
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "1ffcee9a4e0ba818b8183ac21fdf35b19194352d94e73e923b0e4dc69af3e534",
+      "bytes": 9895
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/freeze.json",
+      "sha256": "c154ee47e507b7d30e046efb44b7c747cdf31f421f90a63c2c4116ba97f96f0d",
+      "bytes": 4232
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "fdce6d356ff18cac25262aa750647693271001737909b32b0546d00b97a2c03c",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/manifest.json",
+      "sha256": "506053f1e64bf9e4fe619e1d45d5044721c92aa5744d86b8ef61819edaf7b40a",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "75128720c6f03b00eae45343063c1ebcf3b1499cde686a2c6108e99dcf5a7bd6",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "75128720c6f03b00eae45343063c1ebcf3b1499cde686a2c6108e99dcf5a7bd6",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "d59147494efc8012eae57da60d18fafc2265588d277da9965ee8c48ea1ac1e28",
+      "bytes": 823
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "6ee7a350909b3e130632e9eceaf7576474419c600e35699bf069cc68bfa7f738",
+      "bytes": 436
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/request.json",
+      "sha256": "e8bfb6225977eafe87502b2e61f394eb4d87c94b95a619331ea775094c760ec3",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+      "bytes": 1683
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "93a5ab3486508c16276e38e7038bbe4a5bc96196c545ec81cc18a69b7e87c6ef",
+      "bytes": 19514
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "508af053a72576379ccc8546abe9fa1d79272df935d1609a8f91332c4eee2f4f",
+      "bytes": 3895
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/investigator/status.json",
+      "sha256": "a49b4420a26ae26a59c8cdea4bcec4338d560bf5c21bacfbc439f7f99ac0ca18",
+      "bytes": 4941
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/assignment.md",
+      "sha256": "407081fa8a93aa93151ec8feefacd914edf05376c50c68ed0bb0ed7cef3344d2",
+      "bytes": 9667
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/dispatch.json",
+      "sha256": "b21c8428ecb76afe01005e6a82bea313ae7a10b5bd934dd0989f68436f91f02a",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "783ded1d6fc40ac8db77ebaf85f9e97d9d33ea75447a8bde5e470de737526eda",
+      "bytes": 7697
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/final.md",
+      "sha256": "d4603c99950433372f27bb891867f91bd7122bbf00522ed809ab81191b0ad914",
+      "bytes": 23785
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/freeze.json",
+      "sha256": "3c03f1802d2445c3a35eda3ea40283c5403006cb9c8d266df54122f59b651419",
+      "bytes": 6183
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/input-map.json",
+      "sha256": "b94e963618a3acf9c3b9afd6cc325ef5a97f0bf54c69320c9fde19b48f865d31",
+      "bytes": 2139
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/manifest.json",
+      "sha256": "782b25b3d91476f864719359fed1e7ac9451c90c86df2f62383d16f9c98ad4fa",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "98422f665c82e024105cf853d712345b7da3150e794a3df1135c6d5ce6b603f1",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "98422f665c82e024105cf853d712345b7da3150e794a3df1135c6d5ce6b603f1",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "c554503ee11ce30da0db89e3b0075df41a65ee5ab9d2dd1d6abf7ca72675f14a",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/request.json",
+      "sha256": "264f28ae38741be91c65dee7b65bdee459e6d742ed9556b6ce06eeda099a4b9f",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/source-map.json",
+      "sha256": "b9eaaab2c19715b5fb5a916003a81663c73bf233750d797caa449c55f924cede",
+      "bytes": 34593
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/sources/index.md",
+      "sha256": "b415638f22d1c852d490b75a23a632242e6e80dcd57c4db950a92bba5ad09470",
+      "bytes": 3835
+    },
+    {
+      "path": "arms/B11-P01-treatment/stages/reviser/status.json",
+      "sha256": "b31bd58fb03dd7ded1e4b99848ebf85160baa1d0a8b6ae72abf507c7fe5e7f4c",
+      "bytes": 3840
+    },
+    {
+      "path": "arms/B11-P02-control/inputs/authored-manifest.json",
+      "sha256": "abcb728335cbfb40e3ca15271b7458040d4f2d5d025ec7ca169c97cd875f8ea6",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B11-P02-control/inputs/configs/B11-P02-control.json",
+      "sha256": "af50c2fec266b0fc5bb122f40528d1abc6f46208e98c6ee2b1ceb7b388a6e737",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B11-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "bytes": 2284
+    },
+    {
+      "path": "arms/B11-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "bytes": 1770
+    },
+    {
+      "path": "arms/B11-P02-control/inputs/run/B11-P02-control/control/run.json",
+      "sha256": "78600c9dbd263170d25d4f41260b08af0653ad392b384255e8fc43aef6298195",
+      "bytes": 598
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/assignment.md",
+      "sha256": "eb98983edf4dbf87a22ae95f4a84a963ad7eb72e1c94c85c7f19c115260e92d8",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/critique.md",
+      "sha256": "63824089011e828eecb4e4ee21e2ebd15a3d9dfda3b1022f5d8a2164b4be8fd1",
+      "bytes": 10985
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/dispatch.json",
+      "sha256": "6f26bbce5492554fdeef39d79f85e61fd51910d63a6ac01afc66490ca49b6088",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "73d785beae87c0d6b0556475d9b88ba35018a5fe2051372fe037e82ce8dffe5c",
+      "bytes": 9295
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/freeze.json",
+      "sha256": "668b03124c612c574fe8e013d50d3fd1e8203d0350675faae599be4298f1e326",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/input-map.json",
+      "sha256": "09ab5f493c83c9b06c5956c1d1f2edfbdf3b2aae8ff3311d8e9ed35a106b89a6",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/manifest.json",
+      "sha256": "22e228af6622c73eed9bb3e050229d6d53ef012f1d759dccc8a45d762a5b1934",
+      "bytes": 2218
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "dc5251b99e1e55fa8545ee33b07412fb5771f282b4c7dfc56066b78c80e38b63",
+      "bytes": 479
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "3921dafe3685aca4bc2378b71d270fb9782f31bccd94094f644af24390afd4f5",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/request.json",
+      "sha256": "044f83aa1e2d6128626d7744ce19646905211668ee3c17d84a29535ed58a07b5",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/source-map.json",
+      "sha256": "1700e8e6538bac5dbeceb057b9ff8e40a4ea41760818ed9c4decb3e307182aba",
+      "bytes": 26694
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/sources/index.md",
+      "sha256": "f040f1a56fcd1c0b6e1f2710178078382409935e49117532f8ee48453b997162",
+      "bytes": 2783
+    },
+    {
+      "path": "arms/B11-P02-control/stages/critic/status.json",
+      "sha256": "d4f858534e561c7ded8e7c964696f5961e2cc2ad5d84b9ecc9ca4b331d5a3e91",
+      "bytes": 4637
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/assignment.md",
+      "sha256": "e878e945487a49e11e28cff9c7791c60c540837ed9aa5b946a1be4b7c144d3df",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/discovery.md",
+      "sha256": "fef9c87c00a0d9c4ab9ca63fe8454d08fd6153606d9cf30c042711018bfd0e52",
+      "bytes": 10784
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/dispatch.json",
+      "sha256": "3b00fcc21effe87d80853f4c3be6350b5d623abef199f72e0730a67b5fabddde",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/draft.md",
+      "sha256": "9d5e18ef664d8288e4449e108e7711bb4f01818031997c4b5abf3c39f8b954b6",
+      "bytes": 22452
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "d7f50e9ba64194ae9239a1d2d2ca3fd27ed7ce51d84cd0747e887d03b57acd7f",
+      "bytes": 11229
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/freeze.json",
+      "sha256": "4f97a0ff24adf7f052d8b05e8ccdccfb39cb830ad0532b6e18c0867bc82719de",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/input-map.json",
+      "sha256": "c1428a9a952123af411cc4fcb2f38e723e8543601962eef9ead9738b9e1fdc73",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/manifest.json",
+      "sha256": "6d27c8189e06d2a7fe836fa3f83dd2bc55370fbb45dfca1fe2f31c0f77099ff2",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "6d98f3364d95b05f4f700fa90a0c4014794bf6c0a0b06824b2a9a8c6dadd0647",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "6d98f3364d95b05f4f700fa90a0c4014794bf6c0a0b06824b2a9a8c6dadd0647",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "629d6f269cb13d48caefae11fe8f118115213fe67650189181848ebd7e75b2d2",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "d0f20595c5f661f3c19bfb6a8f6f0691375a931b459829c29ef75a05fde413e4",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/request.json",
+      "sha256": "e6208056fbc2858ec908fa98feff9dd583bbb66d38017c2d254ac94ff2233bc6",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "bytes": 1770
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/source-map.json",
+      "sha256": "30a105e41a2b2018dfb229ef242d1bd20738c25325a9c88d89535aa520a647f3",
+      "bytes": 14003
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/sources/index.md",
+      "sha256": "c615ae8f64ac9be440951acab7ad17d3fddeb2beeb7ab732aa51be34953acf03",
+      "bytes": 2581
+    },
+    {
+      "path": "arms/B11-P02-control/stages/investigator/status.json",
+      "sha256": "f9c600a766bdc5e54f609ed5a235efdf52aa1f6dcb64ff353c74aadcdc13571a",
+      "bytes": 5603
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/assignment.md",
+      "sha256": "6b28b962c37bc4d37891024f08ffc5a1130c8691e14d2f5710402f8d4a51c262",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/dispatch.json",
+      "sha256": "60e71bcc3eb4cde26c5bb69238c7fbe3ce3e1a7a755485c1fb94e81b4943aee5",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "9099e48417fcaeffaa6cbc16af2033046b228a81b609435326248c02b31dcb5c",
+      "bytes": 8765
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/final.md",
+      "sha256": "b9785b3b3af592d87758734f2916326ef554f898fe205c7f1ca185db3a5e12bf",
+      "bytes": 26313
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/freeze.json",
+      "sha256": "0ddfa3f57dfdc880d5e136b32d4c6c933e3e08ad0e139c937ddbc4385a13d3ef",
+      "bytes": 5246
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/input-map.json",
+      "sha256": "5898e9b39a601050426f8a35920ae3605312f9b905439ef7f86123859fbea4ed",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/manifest.json",
+      "sha256": "a809a317b932b46fd7cec0c46d3fb6d81ab8c6514919410d0d1e1a71ecf6fe8c",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "dba6cb8f79697cbbd6c1425134362fca5edddc4fea886c1841de1aebdb58b502",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "dba6cb8f79697cbbd6c1425134362fca5edddc4fea886c1841de1aebdb58b502",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "484efde9ab5347798d2bdd8aedb303fc29936b93b139181bf75b6b5f753b3eda",
+      "bytes": 731
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/request.json",
+      "sha256": "0951bfbfab5facc2b9c2f19a07328142b2bfe6f87ff9fa1982a89a4664771377",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/source-map.json",
+      "sha256": "2a72c19174cc7e5f8c3dbfa0611e2afcda3ad309d7c078440b9e0cf3cb44034a",
+      "bytes": 30843
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/sources/index.md",
+      "sha256": "add8473cf42e06a2952c5239511b02d862f8de09c180b9825bf0c3e993f9059f",
+      "bytes": 3092
+    },
+    {
+      "path": "arms/B11-P02-control/stages/reviser/status.json",
+      "sha256": "dc61c1f5de7747d01042c3602e26334d874ad5aab086c72b18b6bda3d632e4cc",
+      "bytes": 4374
+    },
+    {
+      "path": "arms/B11-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "758a9c9cc88d92f44a3ea80f9f3cdfc10fe927788362fda44df1b9bf889385ff",
+      "bytes": 798
+    },
+    {
+      "path": "arms/B11-P02-treatment/inputs/configs/B11-P02-treatment.json",
+      "sha256": "db7d3e1dd9178faefd83592422edd6a7dc9e6cda674d28b53258aad1b9eefcd5",
+      "bytes": 4066
+    },
+    {
+      "path": "arms/B11-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "bytes": 2284
+    },
+    {
+      "path": "arms/B11-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "bytes": 1770
+    },
+    {
+      "path": "arms/B11-P02-treatment/inputs/run/B11-P02-treatment/control/run.json",
+      "sha256": "b7d242660c7ecda5d8392bea1c594d304b8e846a3fec8fb561e9c8d526ea1808",
+      "bytes": 2584
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/assignment.md",
+      "sha256": "fa7d0c12d45be1b6a9a9d999bce26325d28762e8baae6c959f49ce997fa82c8e",
+      "bytes": 9663
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/critique.md",
+      "sha256": "b870f072430a48eac5858334daa224ff3bd8c9be8c9d2b1f88af712365995dbb",
+      "bytes": 13152
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "9176752504752bc997b34cd37749a9292412c524df07fa782e1c2af37926c4a5",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "44f5b81c7d13d46c070aa73c54e30d0dec4153b90693e1bd879a506704b5698a",
+      "bytes": 9575
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/freeze.json",
+      "sha256": "9a467877262197cf9249dbe68d1811b6c8eecc1f275f0770a93bb34927521601",
+      "bytes": 4816
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/input-map.json",
+      "sha256": "d9f22779f52fee95cd93afd4bd5ac2c44b8d7a8acaae656c3ccbee98ffd5185f",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/manifest.json",
+      "sha256": "534c2b7319fa257eb7dc7bf7e85071b3c7162ebdf561208a9d75b3c2df3eccde",
+      "bytes": 2386
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/native-goal-active.json",
+      "sha256": "d925b74a5b73411129613ef90e3ce5b98f1fc99d90a7bf0e858fe5c90c6c8786",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "d925b74a5b73411129613ef90e3ce5b98f1fc99d90a7bf0e858fe5c90c6c8786",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "1066c0d403331639ff308781e194fca5e658fc7b3e18839725e6612b2dd158e5",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/request.json",
+      "sha256": "30e719c480d694761a454a56801ff9d4fe5536d12b83ab202a09d33974f58b42",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/source-map.json",
+      "sha256": "29aca2e53f11c9374d8601154ec7c50fed97fb60aab0dcff0d306a81f8fb99c9",
+      "bytes": 13250
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/sources/index.md",
+      "sha256": "d8ac77d5c1beb202ae809dce7bdf7832ae86994169133988b38be8b6eca0745f",
+      "bytes": 2684
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/critic/status.json",
+      "sha256": "32e12194bac60bc59428fd953dff5e03b353904b5db894c85bb0aa9492b2c182",
+      "bytes": 4779
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "ffc60c7a4ebc6affdb80438944a51a6fc32f7697e1800c91f4a490cc45cbc55f",
+      "bytes": 11722
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "0ef61e7f021740c3d1b440a9503388a2f8226f4c6f8f51b10a2bf4166bd29e7e",
+      "bytes": 10360
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "123e6ac342e5f9f05c8c57a52e1e224d2a469a7d475d983f9969ec924305bce1",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/draft.md",
+      "sha256": "18a83b9b128424d4edf29c3724b2eaae320ff7c1ce8b91a41bf1310d13fa7ca7",
+      "bytes": 14724
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "168eca8254b35b85975908be5bf01d066ee488e209d870063950c4c3b8983b80",
+      "bytes": 9337
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "6995832d368adc380a783fd57d8f84d4f5dba466f52bd0f2a75827879de24fc9",
+      "bytes": 4232
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "91703b7dfe11ffe1d47914ce8fe0ffe552dc1c4aa4e12e29893c6d097d818f0c",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "2b613e4c3ded6f76e4c46f8c32731f5f1dabcfa1c93f536cbd2ee46a8e12a4e9",
+      "bytes": 2872
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "4d32ea680541dd61a4721127d2f6ab1f2dc88d341738f69d3cc06c02f2986fd2",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "4d32ea680541dd61a4721127d2f6ab1f2dc88d341738f69d3cc06c02f2986fd2",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "c4eb4ed5d10788de3079cd22109e5f439b27d2825285598deb5e41974e8f8139",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "95a44fa41af3ae347110abd096ed97573f36de31109a0b2c66dc91bb103da591",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/request.json",
+      "sha256": "0b02b929330834a3f2601e5d8d57c883dd931c3d7b7ba807269166ff35e21f2c",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "bytes": 1770
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "70ac37c5d4eebe643ece5710f8665a7fabc3ae2f6bda8272520af60fcb35464c",
+      "bytes": 20188
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "28b48df3aa54f425fafc4bf3146cf346cf7b688d6abc2230dcb6dab7ce6d44c5",
+      "bytes": 16623
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/investigator/status.json",
+      "sha256": "53e2c0af82091a09ee4f68618b13eabb6be7090918279f6571a278b8b9de71cc",
+      "bytes": 4659
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "6808af2d2cbe334d9e24b0b006cdb22a7990829e8411212cff309086b800df56",
+      "bytes": 9667
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/dispatch.json",
+      "sha256": "b9f571c9d5e215d487676d1a72e27e12c962c9430ea683333e1fe069750146ce",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "bcc29a00642aff8d006c88bbeb83f26eb47578a670ef02e64995e33f7a79d127",
+      "bytes": 8905
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/final.md",
+      "sha256": "4092018d9fd34edcc559b6f274ba3075007896be8068cd636c8737fd054fb4e0",
+      "bytes": 27680
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/freeze.json",
+      "sha256": "105a460bdfa8f90f1cea66d0d0fb02f4a2d4587886fc56c509c178705052e7cc",
+      "bytes": 6185
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "123f31cb2ba03c4fb99889975c29c4ebf89c4ebee5c2bdf4c080cb270e87efc6",
+      "bytes": 2139
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/manifest.json",
+      "sha256": "02844cae167f63a7f2fae8782e706fe99d1142e16a9a9f7d018bf67cb986d109",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "6ffc20f55aa3fc80fdbc07238a20a94aa4df0dbbed80df767378878578305553",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "6ffc20f55aa3fc80fdbc07238a20a94aa4df0dbbed80df767378878578305553",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "96c3b2e16476811036f6965b327298b0f259f6d97cdad231bd8b66faef5356b7",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/request.json",
+      "sha256": "6913cffc0c08654c2066b7cd5fdc21d6a354adadbc06470012cdc268a8f190eb",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/source-map.json",
+      "sha256": "08c688fcddee2f5cb981fe06d44329b8e9624138e35a227d2747a435bf0d8f95",
+      "bytes": 44479
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/sources/index.md",
+      "sha256": "3798dd763cfa26dd774ea96eb681e0e168be1177c0acf273dcc2be835d96311f",
+      "bytes": 3595
+    },
+    {
+      "path": "arms/B11-P02-treatment/stages/reviser/status.json",
+      "sha256": "3a2ae366845a1ec6161dbfba35bb7e14813a8e948488c514beb307b44118c514",
+      "bytes": 4444
+    },
+    {
+      "path": "arms/B12-P01-control/inputs/authored-manifest.json",
+      "sha256": "a21503c4ee7d41b65222c8b63d2e5549c5168336e3fe7fa6a969eeb9cc3daa26",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B12-P01-control/inputs/configs/B12-P01-control.json",
+      "sha256": "b683ae2b0275ff0d85cc8f7e540798d2332995d60a8efa9af12e313ceb3cc761",
+      "bytes": 1342
+    },
+    {
+      "path": "arms/B12-P01-control/inputs/control-inputs/brief.md",
+      "sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946",
+      "bytes": 2262
+    },
+    {
+      "path": "arms/B12-P01-control/inputs/control-inputs/plan.md",
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+      "bytes": 1722
+    },
+    {
+      "path": "arms/B12-P01-control/inputs/run/B12-P01-control/control/run.json",
+      "sha256": "024eb941f96eafa5d5b453f0b0990ed03a0ebfbd4ea76215fb9533bfebb09677",
+      "bytes": 639
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/assignment.md",
+      "sha256": "d63e7f95bf469d12fc10c3bc1d27b965b5f205e7d6a0775ab4d7b648d956f746",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/critique.md",
+      "sha256": "1452c0e10197b4b98729b6314e13d48d5e8bb1a087af29be357d35edbb685404",
+      "bytes": 11857
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/dispatch.json",
+      "sha256": "ccd4c2f67ca5a2bc86a9cdee7f19c83d2143634ad5bf8bdbf3c2a45b6894d660",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/eval-ready-status.json",
+      "sha256": "8b40b161df231184c0f598616fec54dc4f103034dc6cc3e9b84f718dd6f2fc1e",
+      "bytes": 8207
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/freeze.json",
+      "sha256": "dfc75fc3ea2464da15c7e98b3481df40b06eac55e28edd59fb51ea5cd50201d0",
+      "bytes": 3922
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/input-map.json",
+      "sha256": "d896531e082d061b1a90b78ae096db63733c7e7643628413e8098e2e3efde6cc",
+      "bytes": 1623
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/manifest.json",
+      "sha256": "0f604fa2c5e658461e1a3cf676f39f912dd80e7233ef0932bc4ba0ea2bd2bc01",
+      "bytes": 2386
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/native-goal-active.json",
+      "sha256": "d287ff5b0cf231354f13fea863badf9c587013c60ce32120187676eddb7e2bdc",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/native-goal-create.json",
+      "sha256": "d287ff5b0cf231354f13fea863badf9c587013c60ce32120187676eddb7e2bdc",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/native-goal-terminal.json",
+      "sha256": "8cd8c0af0581961da286fca8635b91f9cf639c36c0b013632ecd5ac864ad1b68",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/request.json",
+      "sha256": "b332cbc4f8b6b824f56ed89c5e5bdeed3a59448bb76c198f05d59da4037a6695",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/source-map.json",
+      "sha256": "2a5d773f822cc47d46197deae02e897df664a88728fe2c1eeb12f0a0ddd6de46",
+      "bytes": 27338
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/sources/README.md",
+      "sha256": "923fbacfb5d9980eade0b69e29e6fcfdb8aed5ef15c5b5aa2e6abb26cf49f427",
+      "bytes": 4733
+    },
+    {
+      "path": "arms/B12-P01-control/stages/critic/status.json",
+      "sha256": "5d69b72a4b702966f536226ee5fa104d48dc58a76dde9e7cdd90bf97c15791d2",
+      "bytes": 4095
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/assignment.md",
+      "sha256": "058042feed8215699b3c8112d8c8ed59f2a3a7fca82261ee76c8059f4281b84c",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/discovery.md",
+      "sha256": "e61d807d2cf719ff0c4481f2a443201f07462c4c9942fd6ecce782dcf3d84bc4",
+      "bytes": 15676
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/dispatch.json",
+      "sha256": "f96fb296938683082c8416a72691892cb1e60a7df6c9dfcd66a591fe0de1203d",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/draft.md",
+      "sha256": "aa2224a6a1fc0478059d05201c8d123b9a0cc62934ed8b18a9538e59a609d4f8",
+      "bytes": 19719
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/eval-ready-status.json",
+      "sha256": "e87d13eb543c40459a828a69f620d003902a9d25b87b50cae408b95c78bf9bec",
+      "bytes": 9757
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/freeze.json",
+      "sha256": "b9f50264320e74fbe9cbcdba855c7b67846213fd6e675c1d4c328a97540eca40",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/input-map.json",
+      "sha256": "9dfe230cd9d96bb33394a3f6f05310475d7a03bf4106a8c7544358246440e2bf",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/manifest.json",
+      "sha256": "b9181ed3645456f7222d472ed362cfcea59f16c86701dd29c1a8b18ce1018bef",
+      "bytes": 2871
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/native-goal-active.json",
+      "sha256": "e8a00117d60d4820688cf7f0daac1c44edafd41922877bfcbdef46496b9a0788",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/native-goal-create.json",
+      "sha256": "e8a00117d60d4820688cf7f0daac1c44edafd41922877bfcbdef46496b9a0788",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "acdb27c5f537de3f326c4ed10596cfe14153a84f45da5bcef96f61a4457e7855",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "7ba9705328ec0da70620001ca0df049875d35a476f77890e92c0659765ce7038",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/request.json",
+      "sha256": "3368a0f4c6cfb12e0c0a8779e4103d9442e0f8ce34fb742aa9dfc0b08ec05fcf",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+      "bytes": 1722
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/source-map.json",
+      "sha256": "d43eecbda49cdefbb9a11cb188852e294c98a9ae969678bea9a527edebd3e34d",
+      "bytes": 20205
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/sources/README.md",
+      "sha256": "786c751748ca09ff8e15f9027580408dd8c5e0c5bd2de9a4bfe308d2f050bfbe",
+      "bytes": 3917
+    },
+    {
+      "path": "arms/B12-P01-control/stages/investigator/status.json",
+      "sha256": "93c71243f66925c270d9e67da652d3500fa71ba18584879e165185ffdbd954a0",
+      "bytes": 4865
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/assignment.md",
+      "sha256": "662443d164961ba86ae7ca1bef83f343fb5cd5ea5b9b952b409df4f830755c23",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/dispatch.json",
+      "sha256": "42c1ef57c1d314417a4717263f0815b744af4470e4f77537df1333dcc55c69a8",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/eval-ready-status.json",
+      "sha256": "0ce0fd709d9ffc7553fbd12b8c1623680ff6ed032ab0a9c5bcaef36a47d586f1",
+      "bytes": 8425
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/final.md",
+      "sha256": "01b80f47a39609677c8acc823e1080e0e849e70d23fe33bc592ce6d34036b305",
+      "bytes": 21593
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/freeze.json",
+      "sha256": "70f8fd3b99636d6cc3cd221463219d39ffd269bb53601fd98b322b6f5394c15f",
+      "bytes": 5250
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/input-map.json",
+      "sha256": "5599f964326206831f41c4ac9100fa011af60026cc87b9dea5c28599d0c5d0af",
+      "bytes": 2083
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/manifest.json",
+      "sha256": "bc2fd30c0696f3cc101442e54838d0b9198f1d951d299661652ac0c80a39f53d",
+      "bytes": 2386
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/native-goal-active.json",
+      "sha256": "ccab5383677a9e4d664b5a2a601f490ef6e6a35dd3f993a3f46e2c6c7eb42ec5",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/native-goal-create.json",
+      "sha256": "ccab5383677a9e4d664b5a2a601f490ef6e6a35dd3f993a3f46e2c6c7eb42ec5",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "23fa7f55b68095fd6d75ba9d8c002ea510b1dd5669171aec239a06e8800a604e",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/request.json",
+      "sha256": "1e93ca99d0857482be077966d59dc62f7d780561e8f622956d6930e14ac11ffd",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/source-map.json",
+      "sha256": "1a126fff858674a8a401b401d0868c9e25a957f8dbfb86a49e115d3131903542",
+      "bytes": 36668
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/sources/README.md",
+      "sha256": "5ff1faa5c10152f9bd494ebd7ff4e1d7531b3111bcc0743475dfe01d87a0a1c7",
+      "bytes": 24516
+    },
+    {
+      "path": "arms/B12-P01-control/stages/reviser/status.json",
+      "sha256": "c33841fa65e0543eede0b40ff9bf4bcd30b67399ad54a3ab595883fcd8377c36",
+      "bytes": 4204
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/authored-manifest.json",
+      "sha256": "a9f0bd8f6f9c477df988d7d9a2d4c0984c9e18d171ff426cd00ba09ea93f42e2",
+      "bytes": 989
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/configs/B12-P01-treatment.json",
+      "sha256": "058500001be94ed147f9af2dcd11037382a64b0ee46c8357fb8f3252797a8a6f",
+      "bytes": 5380
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/control-inputs/brief.md",
+      "sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946",
+      "bytes": 2262
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/control-inputs/plan.md",
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+      "bytes": 1722
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/run/B12-P01-treatment/control/late-critique/release.json",
+      "sha256": "f8fbcca4ffd01d22efc176a5caac7ca953ce17ddd7f0264f443f0265dfca251c",
+      "bytes": 1509
+    },
+    {
+      "path": "arms/B12-P01-treatment/inputs/run/B12-P01-treatment/control/run.json",
+      "sha256": "f4fa560a062849b2df2e1afb4cf8c9a092b165407e62bb12e8e49e5a0f0772c6",
+      "bytes": 3832
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/assignment.md",
+      "sha256": "d3c77c717688eb9ff62a34303e53f867451fa1c1b633497e9d001d63b1e5880d",
+      "bytes": 10808
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/critique.md",
+      "sha256": "d0429eeaa238b265411b6d3a906f88c0c80c5e7934f127cb8a518a0995d99d36",
+      "bytes": 14072
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/dispatch.json",
+      "sha256": "e8eb5bc08a8c777aee8b349908edb659b1b07523e2a7158a9a56b000d6615c05",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "2ad15f19b6d662fb1b6a5b036cb3fd0de2132370d7f01c8d1fa671136557d08a",
+      "bytes": 7939
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/freeze.json",
+      "sha256": "446f08f9316d5b1c5da7a0690b51abc20fd02ff6ef6fcaf59423f17548bf39fe",
+      "bytes": 5544
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/input-map.json",
+      "sha256": "685a4e6318de39118a626642649de8899566d0dc63a5f968c07b770a939395a9",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/manifest.json",
+      "sha256": "bebd342943bf3ad049961b74d0e963ccdfba81dd668224dde9b5c60c7950d754",
+      "bytes": 2387
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/native-goal-active.json",
+      "sha256": "49bd631b932e5a670e93fae939d16018a3f1eff5d2a95367b79e8f6349474cf9",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/native-goal-create.json",
+      "sha256": "49bd631b932e5a670e93fae939d16018a3f1eff5d2a95367b79e8f6349474cf9",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "efa007875cd6e9f5c7f8d12fa620c8e6631ec1991d84aa11c3d8583bf33184e0",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/request.json",
+      "sha256": "a59bd24014077df16bb5285324cb53359ccf35b97338fac8889d45889fa17263",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/source-map.json",
+      "sha256": "b8772b9f917a9d3265bb86e5da1d6df999d0de1dcb375426991080a5f7ba4ef1",
+      "bytes": 14575
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/sources/index.md",
+      "sha256": "2e2776997990dd3714b557a349a98cc6ac218ccc1fbd9f145c85b69f8c2491c6",
+      "bytes": 2862
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/critic/status.json",
+      "sha256": "c657dde5912f42d202364191d57501e510131b2aae03495a598918c9a9bd3efa",
+      "bytes": 3961
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "a62eb29d52b9eeeb40d637498f3620b9eb3e06300ba0ff25c598d4d8f9d8b892",
+      "bytes": 10646
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "f302bc070dd9b97f0e56c62c5d464ab5b9e9f82ec584f4286693d6cef9e83958",
+      "bytes": 10893
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/dispatch.json",
+      "sha256": "f894dccf74a15658444681712894ddf0a9b47b4d7d4d33168e20b0e17b1f7cc1",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/draft.md",
+      "sha256": "88bfe7e08440c4c496ef43ab81d127dc33ec1285d09d825f6d637e1d777c9356",
+      "bytes": 27869
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "50bf429e4ba68808056c0377cd3f173945f0fe057f230200e13ba8477bb52442",
+      "bytes": 10697
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/freeze.json",
+      "sha256": "5b9dd4f73805c202d7bf4a6de137bf4412b9b13cc315aa00f19329cc3f4500f0",
+      "bytes": 2734
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "f143cbd73e2c612be317403df4ccb26c635edc962194b491e14a8281dbcb5532",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/manifest.json",
+      "sha256": "69e1091897bd4836ddb78a4f89d5daa32594b83c227508b75f19eb8ae27cf33c",
+      "bytes": 2871
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "5d1233650092d4b772a2ea4b29037554046220eb70883c40a1951a3c44a05783",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "5d1233650092d4b772a2ea4b29037554046220eb70883c40a1951a3c44a05783",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "72b46d10aaeb9d77ed2adadb0739c52780ef974adf547c272d72accc54cbdd20",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "4ab2db9c445d3c0a421a8afbd8299771ac8c19960bb9f0f0b90e56fd4df08352",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/request.json",
+      "sha256": "1b2f15699409ce63660fa1e9262505cc0302dd2d1e0d6a7c61228c10e6522bc8",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+      "bytes": 1722
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "f23619606efd08ba22a0ef383ec6901ec06390259efd463e0c81f872e2556410",
+      "bytes": 18615
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "11aa357331b41ab133ba605c2c00005fc3dfbd07b36d3d479b9b41b9d594be79",
+      "bytes": 4324
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/investigator/status.json",
+      "sha256": "9a9a6a6cc33af49130b18a38fc052533f80c176a897c3c73ab766061b38ce86b",
+      "bytes": 5339
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/assignment.md",
+      "sha256": "d5ef11daf3c0109d54edd4bd2744ec520ebd9877983dc29ee58313d23ef67fff",
+      "bytes": 12978
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/dispatch.json",
+      "sha256": "c1ca19260a8fa593cc63215214a2ae6adac14e0b16866a9dc44df8feb1faaf33",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "73dcb67e5e8f1d52d307b04008fd4bbf0e9983d7b835d31377a89579a2a3793c",
+      "bytes": 11993
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/final.md",
+      "sha256": "ca5113e06c59bb89c769bad7b2477abc54adf889f43906845772962ad18f6e14",
+      "bytes": 35278
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/freeze.json",
+      "sha256": "47a7d7f00701f40cc9796306cd3449f7fca03f09573525552c8fa311fcf4ab0d",
+      "bytes": 6816
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/input-map.json",
+      "sha256": "dc7afe9ea0b4d935f3f278b68ccb88a1cabbddc77f814c3b5331da78c6ab3aed",
+      "bytes": 2109
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/late-critique-binding.json",
+      "sha256": "32851d62ae5be99d6f70c31e23ae46889869bbca130b139fba07f48546ee61ef",
+      "bytes": 1712
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/manifest.json",
+      "sha256": "8831cb5f33005fe436ab0c5724993ba6fcba6f7ad5452575b4291deca9d310c1",
+      "bytes": 2721
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "f8e1e4057ccb2fa18e704ca83abba0945f9038e93f79582196854bca320c4eac",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "f8e1e4057ccb2fa18e704ca83abba0945f9038e93f79582196854bca320c4eac",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "732fe7c3fa3050cc82f06593be6e7c3faeb6374eb1c998d168c0b7d7e858fb73",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/provisional-final.md",
+      "sha256": "1470268a4e92e9d357c76835c73ab35a4a8e427f6b7044957a139d8adf995714",
+      "bytes": 28004
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/request.json",
+      "sha256": "15c94f7cf2aafcae33ef664943d7c784fa2536aeebc406617584980b5dcd34e7",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/source-map.json",
+      "sha256": "fb0a6ccdd981de4159ccbe2d0dff8fe137f94c8f6f4e0d9c56937dd9b52dd171",
+      "bytes": 54904
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/sources/index.md",
+      "sha256": "bcf68d5c35534233d140c94b06a82c57a1c66b95683f767becd44b313e1ad40a",
+      "bytes": 5371
+    },
+    {
+      "path": "arms/B12-P01-treatment/stages/reviser/status.json",
+      "sha256": "22e8599a367a16c341e1061831428ea5494953ae4e542581c5a44f158f851a17",
+      "bytes": 5988
+    },
+    {
+      "path": "arms/B12-P02-control/inputs/authored-manifest.json",
+      "sha256": "cf95749b23ed4794d9aa64fa76e6322f0c3cc6b3144fea4d382a27ca0f4f8b3c",
+      "bytes": 793
+    },
+    {
+      "path": "arms/B12-P02-control/inputs/configs/B12-P02-control.json",
+      "sha256": "59a907920dd8b243e87b96c006989b7c5ea6b685a51a94baf3f49ecc3e2be718",
+      "bytes": 1342
+    },
+    {
+      "path": "arms/B12-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "897cb2808586812aaf13bfa606d92d0261f0f9de24942233c924378eda69d5d5",
+      "bytes": 2194
+    },
+    {
+      "path": "arms/B12-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+      "bytes": 1624
+    },
+    {
+      "path": "arms/B12-P02-control/inputs/run/B12-P02-control/control/run.json",
+      "sha256": "ad1074cb2a63e8a9e06abcd5bf5d6a778f9f936550b01b84cf2a0bb24e4b9f14",
+      "bytes": 639
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/assignment.md",
+      "sha256": "21a2529f03a6e41594adcb91ed6fa874fe99e2b0c2c48ae7ba684a3590fd7c96",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/critique.md",
+      "sha256": "2616a6bc7395a1752abc1647a7397bded5b8a0c716628041b76c6c718a3f2152",
+      "bytes": 11038
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/dispatch.json",
+      "sha256": "283536a8e566b988f3cfe20c88b473d71eed82ad4ca1e16c16ba5ac58f6b3409",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "43ad7b66edcb2d1adde5642596845f2ca2db371cd70bd59d38a541511e2ca17d",
+      "bytes": 7647
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/freeze.json",
+      "sha256": "855de6bc46f0ab33e56771518714c55e3b0a75de696815de5674aed10420cc96",
+      "bytes": 3922
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/input-map.json",
+      "sha256": "10cf33497e04ba7383cbed355be1b41e07e71e0e8ae560ebe962d801f36ebd38",
+      "bytes": 1623
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/manifest.json",
+      "sha256": "4c4e5a015a82ca025874e632abb6e216b89187b4ff6a631b45b752fbcf750202",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "9c2bea00fe4afabbb47a447e4e781ee6efe9598625e4e4eb693a001b9ce131b1",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "9c2bea00fe4afabbb47a447e4e781ee6efe9598625e4e4eb693a001b9ce131b1",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "6fa136c7e0c31f9569b90092d30ed6d100c0e563758ec41108b650d09934ba4f",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/request.json",
+      "sha256": "bd9313e90c20166763a3d1350f6c3bac6d67f9ef9add768e88dec5f089c6e0ef",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/source-map.json",
+      "sha256": "9c764015a74c3d8bd9821fea447bd08fc80c282c6f42d8f1afe3a3d4b598ac32",
+      "bytes": 6477
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/sources/README.md",
+      "sha256": "911e759424d01f4b6a2ca876e8e86f35edcdb306ee72680e1abebcd25456106d",
+      "bytes": 1829
+    },
+    {
+      "path": "arms/B12-P02-control/stages/critic/status.json",
+      "sha256": "f1e387bd92b47f9579231b48f440a670e88c5cbc198185748dcda624d8b7117c",
+      "bytes": 3815
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/assignment.md",
+      "sha256": "da8601a121446305b6de8e63d3092e41feed60d705636de59a707234a30cab9a",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/discovery.md",
+      "sha256": "0d65aeb649133a05d4a5016c0d58b3cc0bcf36239e05a0050bb30b1e893fb04c",
+      "bytes": 15235
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/dispatch.json",
+      "sha256": "e19d1d8325e2a604f5cf8135851aa5880607af78503cb37ead48d2d01d12e646",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/draft.md",
+      "sha256": "ebd3277cdf638555c97ba0a2f5e02f80e443c52faa8ccd0ca0688a4c08a4688f",
+      "bytes": 21453
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "8b605df303ef9f7d063d9d2eefc6194ab5bf8fa5a19257fdbb0346b02b7005ce",
+      "bytes": 12627
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/freeze.json",
+      "sha256": "983ab3d8fc29a1e914a9a7bced079a0d11c546994616bce28280e89e5efce753",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/input-map.json",
+      "sha256": "6aee91d3874422e430d734dafa7d1351e191fbef132c04c6dec2648f986bd98a",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/manifest.json",
+      "sha256": "4e5b7f25894573baeb32b44652fba776fb7b3195bf5d5d9da8bc56862ba9cbc0",
+      "bytes": 2871
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "30140637f7e80a4095dc65f12fad2aafeaecda196f83f2f49ac68334e4129c93",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "30140637f7e80a4095dc65f12fad2aafeaecda196f83f2f49ac68334e4129c93",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "d0ef1c37b11125dc68c82cf0531ced66056468327b8126b73b3620dbda28430e",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "1c5c5edc311fa2624072f15396a280c3babd83474feca11c20b334f5aed55ecb",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/request.json",
+      "sha256": "ff28b94fef46726e90e3da761b9f78bfdd6ba15d583fd42a4b7ae8e57a2c3ab0",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+      "bytes": 1624
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/source-map.json",
+      "sha256": "59271f3f8147040d9b724d61f45c65242d86d017c6801f83d49cf6391ca13cac",
+      "bytes": 17919
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/sources/README.md",
+      "sha256": "2af575588ff5247f0cbe51dfa01f6d9fafefa194181a77fd8a9e6365e2103766",
+      "bytes": 5274
+    },
+    {
+      "path": "arms/B12-P02-control/stages/investigator/status.json",
+      "sha256": "720bab1f44f36cbb5526de6d9aaf0922a27caa5f545a5f0a035d283315bc0de5",
+      "bytes": 6301
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/assignment.md",
+      "sha256": "dc7be73c0dc75d0dece4b58eb82f2ab98f61f972231937a456416a58fa241458",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/dispatch.json",
+      "sha256": "02e56d2ae2c7ab67b9698263c3aeff4508bc644d9be979e8ed7d2c7037e79aa6",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "503a05dae55cb8d214575b8ec6c693a910e8cfc2ca211f5309f2053ba3248147",
+      "bytes": 8637
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/final.md",
+      "sha256": "6f1ddeea893085b2624d0bd2ab8281b3f0ddcd74e261a1cc979596693ea429c5",
+      "bytes": 30091
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/freeze.json",
+      "sha256": "7b21f3f4eec0311671a8c6751fc5ea187bc35de96add452f656761851986d356",
+      "bytes": 5249
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/input-map.json",
+      "sha256": "3b59690ab177540150a451c8b28aa2e05fa94ebfd053e4cc9d01beab7fd58980",
+      "bytes": 2083
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/manifest.json",
+      "sha256": "34739bd283087503378b3728cc2d9bf8d3809f13fc98d17bc739839eb93ec487",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "24f9b6a293dab535af2e11ecbd6d4a3c660a92c48fac736442029e590ad28cef",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "24f9b6a293dab535af2e11ecbd6d4a3c660a92c48fac736442029e590ad28cef",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "01639e208c3979107895ec818719e02ef2ec97a78d7aaf46abfb1d5fcd0b25b3",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/request.json",
+      "sha256": "865a13d2d2acee4788733c2f6dd4d0c6900d3bd72b95d459e81715daf2a17bdc",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/source-map.json",
+      "sha256": "7ae5dcf2fbe4ac50fe0615eaa2cc87512841afa9d4dac29a3e3471f36ee9b262",
+      "bytes": 26336
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/sources/README.md",
+      "sha256": "c2a44236066ac02ffa693eb34ca8f73877583954174fb3e0a437f1957b7162b6",
+      "bytes": 5860
+    },
+    {
+      "path": "arms/B12-P02-control/stages/reviser/status.json",
+      "sha256": "6c7337ba5fc306f7a74b3deb4f82861be5d3e7a2ebf9dc7f66aec6066f297297",
+      "bytes": 4310
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "9bff0a3cdf75d724ddcb8894beac5ae98f7626cb15e3d899530f268c33ddf779",
+      "bytes": 1189
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/configs/B12-P02-treatment.json",
+      "sha256": "9bf5f413879c4fe6a1e82087e5906326ea4732364d5df830e6c6a1783a524609",
+      "bytes": 5380
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "897cb2808586812aaf13bfa606d92d0261f0f9de24942233c924378eda69d5d5",
+      "bytes": 2194
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+      "bytes": 1624
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/run/B12-P02-treatment/control/late-critique/release.json",
+      "sha256": "2b988131bc6586bcc776df20819d9b0d9b0bdc397b7e1d791ba9d43de3bd29b9",
+      "bytes": 1509
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/run/B12-P02-treatment/control/run.json",
+      "sha256": "43806382d6d1fa4d719d42baabf6ab86d54bfefe168c71019f387f772ae1e298",
+      "bytes": 3832
+    },
+    {
+      "path": "arms/B12-P02-treatment/inputs/run/B12-P02-treatment/stages/reviser/provisional-source-map.json",
+      "sha256": "40f9b40c47e36c848a94b9d25200216504da045a500696c0d2e2b4aa7a670506",
+      "bytes": 21341
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/assignment.md",
+      "sha256": "33fd14e1b857a6873ee67034a77155166f03b5acf38e140ff8aeddf9fd77f9a8",
+      "bytes": 10808
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/critique.md",
+      "sha256": "d8d1cd72545a2c34d624d75698108915c6878d2c4f6189de81d3c6ecfcc3e58c",
+      "bytes": 12507
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "f0df7adbf98e3c6edaea560f84acaef371b35027e4c52ef299b0e60e04d4944c",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "0d6ad8b4cb23d8f85cf66afca75711049318e334c2073af6f9ef294480ec57a3",
+      "bytes": 9035
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/freeze.json",
+      "sha256": "d20cc24aa72ee5d29210cadaa68362c8ceb3cfaf47741400eb48f0bab6181596",
+      "bytes": 5543
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/input-map.json",
+      "sha256": "6cf5f6174e033273fe57b880258722429936f38b2fa1090ac515844dfb137574",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/manifest.json",
+      "sha256": "a2a0fdf81f64ce48147d417c447b1e53d965d96037495f8d8dc9571d26fc1b03",
+      "bytes": 2387
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/native-goal-active.json",
+      "sha256": "6b8557c035cdf1f08d0d880e5e3f984d0a769d23e677a81ba3514e3ef815a5d2",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "6b8557c035cdf1f08d0d880e5e3f984d0a769d23e677a81ba3514e3ef815a5d2",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "252fe2b2603473a838de212fbfdc0e8288ddc0ca49f2ae1a6c7f57cbf2962213",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/request.json",
+      "sha256": "11a1de542fc5a40ea89dbd96a0dbf15ba0358a99c7672d7ad3bb5bbe1230f42d",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/source-map.json",
+      "sha256": "745985fb2f293b9740d30aa663602c358931d98d14b22b00fe7994c55f03958b",
+      "bytes": 19267
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/sources/index.md",
+      "sha256": "f343f1f8c4f3801e1fe2523823e4a8a3b06e761d71ce88be9162936a365c2f66",
+      "bytes": 4511
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/critic/status.json",
+      "sha256": "3d1bdb55a73ab64c76773f4f45848cb17af121eefb4ba4682cadf703f35c012b",
+      "bytes": 4509
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "34783396b3bf526c46d19fc0b2560b74be60254b2587498bbbfcc947071006af",
+      "bytes": 10646
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "fdd54c796eac4490185af28ca3c007eddfd86561824f3f526f524f72e25a136f",
+      "bytes": 8330
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "daf8a36e802d79d5764f15825aaccf9733ef5e156be898ff7a0033166a04379b",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/draft.md",
+      "sha256": "888e4b497927d97191220351bda2cc15565918092daba4fa9b67e80061e31c9e",
+      "bytes": 26461
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "fd5260c5a629dc1c00291d7b4eb7f4e6bf85150f6d5c1067e789f974d7fa4dcf",
+      "bytes": 9943
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "66f68c8131954c0a9d5d16afddf13567000bd9b6cc3ec2e68c005f2718962e0e",
+      "bytes": 2734
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "fd83113d5ca039e62d93b14f6fff577484bd38c15e63628580e0b3f13b24e5cb",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "db58d503404ccc29dd028e6d0759dbc7b96677b5834382906b72f7aba4a19ec5",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "60fbaa39e3124aadd42e4a1cf63b88c5e5ca8dfbe3753dff54275975e85bd10f",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "60fbaa39e3124aadd42e4a1cf63b88c5e5ca8dfbe3753dff54275975e85bd10f",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "133307f95d4065f3c60f98e9bb5902018f6125c46e3241bb150821f31d468fae",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "c578d294b28043ebfc248a3010de6a41f12c28e7ea4ed29b51f7c9aa761065d2",
+      "bytes": 436
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/request.json",
+      "sha256": "314ff94a192182cc39b0cd224ac57ea95ff3bd5b5bf51ef008700be3f5153bbd",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+      "bytes": 1624
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "656ea81a885467c6be05eaa215600fa1cbb49449946393ff14112c6ad95cc88e",
+      "bytes": 16966
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "aa88e2b3b0396ae517d4f684ab1c958cdc19c95e7bf8eb8f28cacd7c8b953e62",
+      "bytes": 4327
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/investigator/status.json",
+      "sha256": "cefcf9a55f8878121ddaf56c92ca1922f1e9b900c239a6b82f689537da79c3f7",
+      "bytes": 4961
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "79f6fbdf2c1d7f65382afaf2bb346a3573dae8d9b31cd0be645845088f56ceec",
+      "bytes": 12978
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/dispatch.json",
+      "sha256": "82f6990013a5dcae91af8163f445318f4140c519bc6c506f04a716cd552c0cf6",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "4146a2d11c2d5c8eeb483965c4bd956aec4019c57e262621643a55d374f0f342",
+      "bytes": 9675
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/final.md",
+      "sha256": "b0c23f10675fc666a9d41529945a339c0239606fb16cb4d38ad24b6955598a78",
+      "bytes": 24761
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/freeze.json",
+      "sha256": "efbc21b3712b6afc50a3580f4ffc7c5f86add96116f1e862f900454c2b4c64cf",
+      "bytes": 6815
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "41d41b27150f574cd1d1c7ab6eaca6cd1dc87088b2ac91b9061e955d17dbb4bd",
+      "bytes": 2109
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/late-critique-binding.json",
+      "sha256": "164881fbddcba251309dcd7c68c9622233707ac0cadf24aca11bc823667719b4",
+      "bytes": 1712
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/manifest.json",
+      "sha256": "4e66bc4af390f3999da0e9a88293fd1ea464cdc47e30547fef3cdae29dc594e1",
+      "bytes": 2721
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "30bf1b648b497a1570bccbde1c3d66c69af9afb20ede48051b6b4bf13cde2ee1",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "30bf1b648b497a1570bccbde1c3d66c69af9afb20ede48051b6b4bf13cde2ee1",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "6142e3447827145a6ed8dfaae61c922cac255344628ade6dee8dfed653fdfaa4",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/provisional-final.md",
+      "sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b",
+      "bytes": 20375
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/request.json",
+      "sha256": "9da9f836ec9b5476ff0033ef22261cc2d966304f44d9de2355938662ddcc6d88",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/source-map.json",
+      "sha256": "6ac8cceffdaf251a6b932d272ddfd6707b8ccd3bb06a8160f796bd168dd93cc5",
+      "bytes": 25858
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/sources/index.md",
+      "sha256": "f05c4b5a110cce1ec6cca6af22a4d9f7f9fbd20dcb561714ae750fb528b381bf",
+      "bytes": 3799
+    },
+    {
+      "path": "arms/B12-P02-treatment/stages/reviser/status.json",
+      "sha256": "1d20489b245c609172c157c62a0b2461c032e22a1dc3cc83575c1881b6df3790",
+      "bytes": 4828
+    },
+    {
+      "path": "checks/lineage-inputs/luna-core-v1-bundle-manifest.json",
+      "sha256": "9f1c955a99290eb55a2a8e9c6b9f05f01779945f7863bef90d114bd210443f2e",
+      "bytes": 8352
+    },
+    {
+      "path": "checks/new-helper-portability.json",
+      "sha256": "2a5076ef62febb8662bb6c5b7a287e41dbad553c0347467ecedc7d22bef19d82",
+      "bytes": 10239
+    },
+    {
+      "path": "checks/privacy.json",
+      "sha256": "97c665e91530d696f2eaf18e0daef7548ea6ddaf722f957a49fb3749cd3b1c42",
+      "bytes": 464
+    },
+    {
+      "path": "checks/scoped-frozen-births.json",
+      "sha256": "df9b236e9e2e997c0a4eb63a17c149aac420feef06f6cf4643f4c55822bab48c",
+      "bytes": 896
+    },
+    {
+      "path": "checks/source-integrity.json",
+      "sha256": "d759e4ac51743b4bdbd2bfd743ee0808c437d040bdc599237cf2f4b055031bb9",
+      "bytes": 8696
+    },
+    {
+      "path": "completed-outputs.json",
+      "sha256": "1ee524ea795a1860d284aef7f338e536accf83496a1282dfdf5f585cd6a52197",
+      "bytes": 7745
+    },
+    {
+      "path": "helper-closure-reference.json",
+      "sha256": "1fcdc5999d01da65a484bb8d90ae7a36a61f4309d5dcf01543bc149bf9dbb3a9",
+      "bytes": 736
+    },
+    {
+      "path": "helpers/b03-retain-v1/CHECKS.json",
+      "sha256": "aee4624ebf8a251c523bcc8dcd9e45e7d650ccbc0945aae5b62fbf30891eab82",
+      "bytes": 2437
+    },
+    {
+      "path": "helpers/b03-retain-v1/README.md",
+      "sha256": "2ab2160d4ede16683eea95db2af430580b5368fcf6f2a8451d1ddbd7a5c3fe78",
+      "bytes": 14349
+    },
+    {
+      "path": "helpers/b03-retain-v1/READY.json",
+      "sha256": "f1b59b2d78ae28a807bd844a939dd25859a9af3c16e1a071129b3606bffdf488",
+      "bytes": 1382
+    },
+    {
+      "path": "helpers/b03-retain-v1/SHA256SUMS",
+      "sha256": "92ecc9748b415802676467ffaebb1a2222ec68a5504f9dd606ad9ec886552e1c",
+      "bytes": 974
+    },
+    {
+      "path": "helpers/b03-retain-v1/author-complete.js",
+      "sha256": "7059de883f6d218a31c590a7a7440529f004bb4d75097a95e66acfc2f62d149d",
+      "bytes": 1845
+    },
+    {
+      "path": "helpers/b03-retain-v1/author-ready.js",
+      "sha256": "6c8ae3e8b4de6afb8d82e683443249a3f22655fbd1b6d0b4c5662d22d688c2e5",
+      "bytes": 1570
+    },
+    {
+      "path": "helpers/b03-retain-v1/author-resume.js",
+      "sha256": "5fb3ec99ec2d75e18c281c80d025344117958cb630c7f83b76705e7b4bf42b5f",
+      "bytes": 1104
+    },
+    {
+      "path": "helpers/b03-retain-v1/b03.py",
+      "sha256": "58b3212fa334e3ba8bfc66b9653f69a9d0316fa9486ec1d8997d199dcae470a7",
+      "bytes": 33853
+    },
+    {
+      "path": "helpers/b03-retain-v1/bundle-manifest.json",
+      "sha256": "d211789072779f5b3bea3949ad5fa5c0bc01cc9cd5128512fd5e4d28738adb21",
+      "bytes": 2092
+    },
+    {
+      "path": "helpers/b03-retain-v1/critic-complete.js",
+      "sha256": "bd25970615ae76b1a1b4d5239390b9bebe472b0c2cc1d12a5e15eaac8882516c",
+      "bytes": 1709
+    },
+    {
+      "path": "helpers/b03-retain-v1/method.json",
+      "sha256": "c6514e569a5fb07622be45267f53bc078d74d78cd9547bfe290d40c178883898",
+      "bytes": 811
+    },
+    {
+      "path": "helpers/b03-retain-v1/reference-dependency.json",
+      "sha256": "4a9dae8c08d4cf9ae95e4c6a13e5f95123ed7f371c41e50d951bcd23522bad19",
+      "bytes": 10918
+    },
+    {
+      "path": "helpers/b03-retain-v1/test_b03.py",
+      "sha256": "7c59f9a0f4909901d9691152c157afd712c5d495f08b436469d34860b0a25cf0",
+      "bytes": 14178
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/CHANGELOG.md",
+      "sha256": "0502aae36dbd8202c7c35abf9a0310c28365f121a95130d49117ff6037f27c07",
+      "bytes": 2117
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/README.md",
+      "sha256": "e902bdbc47db04da2887ecbdc217c473caa1f0427a7296193779210c3271e684",
+      "bytes": 14340
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/READY.json",
+      "sha256": "d0d1ad8a6840eff07e166767f6c77da3e077187c568a9903ea1b1480249489ae",
+      "bytes": 2012
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/SHA256SUMS",
+      "sha256": "9ebefb5cdebd7547de2be76e313663046f2c50209543d733bb14c793bfef61b3",
+      "bytes": 6370
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/b-check-results.json",
+      "sha256": "d3b5ccf6c61b99e00b2738c9484101e71309d12ff77fecfd07b7b7268e33bbe4",
+      "bytes": 20582
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/bundle-manifest.json",
+      "sha256": "059c4db2c969deebb06fe0ef7a54e0dc91e6df979a8f0bc5f163e46c21a850e4",
+      "bytes": 11237
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/check-results.json",
+      "sha256": "ac8b80720ca03ae0492d2ce70cc9ea89fd07fdb127704350a11450b310489f4e",
+      "bytes": 29113
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/materialize.py",
+      "sha256": "6bc0952304a727b95537aa8698de9f59c641dea25bacf689cffdd6104701e6ee",
+      "bytes": 24477
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-check-results.json",
+      "sha256": "b479712b007798d3a2feb90ce0bcd625e8105c74d1a71d7c6df6552970b9ac7d",
+      "bytes": 8602
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-checks.py",
+      "sha256": "e40e21ed70e397264ebda02f88129afeaa57ace660fedd25047b558014755740",
+      "bytes": 9001
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/public-input-dependency-manifest.json",
+      "sha256": "541dcb7b324bd55261205d1a01cbc815de09d377beefbf45f9e56b05d02df435",
+      "bytes": 6648
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/source-lineage.json",
+      "sha256": "fa876a227c5d0860ec7a4b074b9271ed084d74e4c4751881fddf832ff0f8e910",
+      "bytes": 10352
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "sha256": "7620c81b06d9a4bc59c0c30f1aa2f05452665a3afd426e01ab0b94dc9781683f",
+      "bytes": 945
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "sha256": "e9cdc3109c5453faccd7a8fe0f31ac6009ce4680ae005d7c1067eee7a9eb405c",
+      "bytes": 4818
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/handoff.py",
+      "sha256": "2621d150b5cd6c6c8df0a9995ca75c01fb5d20bab93ce5c91f8db417c4a57eb4",
+      "bytes": 4758
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/late-critique.py",
+      "sha256": "b159d85660ec3aa555a089e30effe9c82f6d6a6f7b2274510226cbeb72035f29",
+      "bytes": 7586
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "0744e1cb7c62d16408c7456ec493b5bd8c2c4d7ff595103471aab16c9d41d52c",
+      "bytes": 33214
+    },
+    {
+      "path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "sha256": "805a5040b79df97cadbd58a3d9f5bcf0e4f758bf5d128a43e50a65f75d0bd66c",
+      "bytes": 242
+    },
+    {
+      "path": "method-evidence-policy.json",
+      "sha256": "77ba9a7ea3feae805f7fd5bcef9d8324ef13e7fbcdf06e7ac69bf665815bed3e",
+      "bytes": 859
+    },
+    {
+      "path": "methods/B11-v1/PUBLIC_EXPORT.json",
+      "sha256": "83931e44a2e0b7683d3bbbd84f5349361dcc62c012ede2093a8722f7dbf190a1",
+      "bytes": 2943
+    },
+    {
+      "path": "methods/B11-v1/README.md",
+      "sha256": "3ce546c155be545568087b8061db0ec31fe3a814cfe48b74c22654352cad769c",
+      "bytes": 3259
+    },
+    {
+      "path": "methods/B11-v1/VALIDATION.json",
+      "sha256": "d697f649b666abcecdfea9d5949beb133b2b4962cd533e5339bed16d54511e41",
+      "bytes": 1161
+    },
+    {
+      "path": "methods/B11-v1/critic_prompt_delta.txt",
+      "sha256": "a4e5d1f8f0480e61bada427ce35c48a3024dd5249f0e50aada1a0ac6baaa14b6",
+      "bytes": 109
+    },
+    {
+      "path": "methods/B11-v1/evidence.md",
+      "sha256": "53f876b99e315ba60c8ea23619117a5035e8d34314289b2aa9a4d331a52adb79",
+      "bytes": 2951
+    },
+    {
+      "path": "methods/B11-v1/investigator_prompt_delta.txt",
+      "sha256": "c45b0572027a36a9f8a57f4cda7184dad1a039986757afe5b9d8497090d26638",
+      "bytes": 1680
+    },
+    {
+      "path": "methods/B11-v1/method.json",
+      "sha256": "c0b09a9a0513873530d10d03573d1675e98058973fbc435d2404a542a3fb2b03",
+      "bytes": 7255
+    },
+    {
+      "path": "methods/B11-v1/novelty.json",
+      "sha256": "bafa981dfd303df098b9e49a1c065e41f2148c2e15bdd86e96089b1f8a06c17c",
+      "bytes": 6297
+    },
+    {
+      "path": "methods/B11-v1/older-method-maps/ER10-retrieval.json",
+      "sha256": "16128ea19c18005c0630f3c6f23f6d4dc702ae932291317e6c06e980757e4738",
+      "bytes": 749
+    },
+    {
+      "path": "methods/B11-v1/older-method-maps/ER10-technique-cards.md",
+      "sha256": "f97cb887d6519c9c5e451cddfcf336b312af28b24dea80c87ca610b4df011ac4",
+      "bytes": 11468
+    },
+    {
+      "path": "methods/B11-v1/preparation.json",
+      "sha256": "e1361bb67b0e6b1a32f440d72c497d0f5c77ef337a79fb60b35eaa9aae8a0c07",
+      "bytes": 2743
+    },
+    {
+      "path": "methods/B11-v1/primary-evidence/storm-LICENSE",
+      "sha256": "88241386c28ff04821832762714c9ff0d22c4de6b0633d11554e69a968a718e0",
+      "bytes": 1091
+    },
+    {
+      "path": "methods/B11-v1/primary-evidence/storm-co_storm_agents.py",
+      "sha256": "bc8d1e50370912c6cc7359142fb6e3a439d963aed5f4dcb0054165458c9fe6b9",
+      "bytes": 15817
+    },
+    {
+      "path": "methods/B11-v1/primary-evidence/storm-grounded_question_generation.py",
+      "sha256": "f5613bc6c3dd16202337f4a52615e4008369399d5102babf352d0b6cb529ecd0",
+      "bytes": 5491
+    },
+    {
+      "path": "methods/B11-v1/research-selection.md",
+      "sha256": "0e2f8ba36b2871b47fdf850569a83815ac288abb4e8c0c002132c610ebc02521",
+      "bytes": 1457
+    },
+    {
+      "path": "methods/B11-v1/reviser_prompt_delta.txt",
+      "sha256": "aeeebc69d35bce61fd0a0a3e43f0ef76dfeca7b8eaf3d13efb3c0e97a6611f98",
+      "bytes": 126
+    },
+    {
+      "path": "methods/B11-v1/source-evidence.json",
+      "sha256": "40fe0b8c59ee187efd48754d44ac553b308a7358ce6274bbbb2b5b9ba566e4e9",
+      "bytes": 3947
+    },
+    {
+      "path": "methods/B12-v1/VERSION_LINEAGE.json",
+      "sha256": "1b2b3e610a2d50d0b1a3663a4ea2102d055b3395dab0e03256766524ca256ca2",
+      "bytes": 796
+    },
+    {
+      "path": "methods/B12-v1/rejected-proposal/REJECTION.json",
+      "sha256": "31af03c4691f084ac63f6b396f1c5dedafde62589cc72c73f294d2edb0a94716",
+      "bytes": 974
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/PUBLIC_EXPORT.json",
+      "sha256": "ca5c0fc0cebd9f95e8a0c37673bea310bb4aea632a1bc20a0eef781746b814f6",
+      "bytes": 2061
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/README.md",
+      "sha256": "4fd646b3acf957cee2b7f06d8dd6770ecf144caea9ea4dba7bca223ddd3f365a",
+      "bytes": 3948
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/VALIDATION.json",
+      "sha256": "f509767d239a1aee4de3c841a02d025c37205ceb430036b14fa4c0b91e3969e3",
+      "bytes": 1247
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/critic_prompt_delta.txt",
+      "sha256": "ccd24b163947ca55508d2031864d8435ba48c45ee2f466d5f76193c9a6e34106",
+      "bytes": 835
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/evidence.md",
+      "sha256": "7e0bb09fd8dadadf0df7704c7f74c830e2a16405d62e2859a0a041db547e1a8a",
+      "bytes": 2379
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/investigator_prompt_delta.txt",
+      "sha256": "755610683ba44036c4951b5c81ad218b6dcc83fddd1b27f8237266c7474e6619",
+      "bytes": 185
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/method.json",
+      "sha256": "8d2cffe480abc88d31c7b98934f50945bbb046270e2a01e8f97503db7b91ed96",
+      "bytes": 10767
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/novelty.json",
+      "sha256": "32da1daab7c63111d314d9e0f1e5e8439a14e8be5592a8a8c861ba3b058fd31a",
+      "bytes": 6436
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/preparation.json",
+      "sha256": "244db8d7669063324891a66d1af90cdeb511d70a630488c5d86c4b865ccaa8b2",
+      "bytes": 3692
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/research-selection.md",
+      "sha256": "a16d11dd43dd465a9f734b193ba9dcbb4b0080c9aa5997fa629510bf564d5938",
+      "bytes": 1596
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/reviser_prompt_delta.txt",
+      "sha256": "0f2da606f4be440a3bb0f59be3d4344d5751d9f663a10b14678a74798f8fc953",
+      "bytes": 2098
+    },
+    {
+      "path": "methods/B12-v1/successors/B12-v2/source-evidence.json",
+      "sha256": "7c7cdc09c7023059df4caeff17a43665d51e067d3172e4572fb94a5ecf948575",
+      "bytes": 3902
+    },
+    {
+      "path": "new-helper-closure-index.json",
+      "sha256": "a8f1e679e983364aefa8e4ad897b0f8b73cde2f99ed1d204663c45a449479493",
+      "bytes": 27626
+    },
+    {
+      "path": "notifications/B03-P01.json",
+      "sha256": "03e8cbb7587140df2b9955787571966f9c305985b1cf8d52607ce93d482b8b03",
+      "bytes": 12377
+    },
+    {
+      "path": "notifications/B03-P02.json",
+      "sha256": "8b3dbf41251ee2dd095e56f681628da2135c4e0a31cdda64eed92cdab1cb42ec",
+      "bytes": 12377
+    },
+    {
+      "path": "notifications/B11-P01.json",
+      "sha256": "e04f9f5975187b85e258d296107eeb0c52dbea7b5dbb72f0fe40cc4063fdc182",
+      "bytes": 14321
+    },
+    {
+      "path": "notifications/B11-P02.json",
+      "sha256": "387f62d4e755ebf72730e672fe92c60e710f1b97285aa45516355e68b3f87793",
+      "bytes": 14368
+    },
+    {
+      "path": "notifications/B12-P01.json",
+      "sha256": "918a57daefd74f5924553d93d07e6f1bccba8f24787db68cd0710af16e721ce9",
+      "bytes": 14321
+    },
+    {
+      "path": "notifications/B12-P02.json",
+      "sha256": "c64c78c109b753900f34ef5b9b7dec19885fa469e0d3a2f6de1c29d8ad3e94b3",
+      "bytes": 14321
+    },
+    {
+      "path": "original-evidence-gaps.json",
+      "sha256": "c41bdefb8418967f1e97faf8eea9f3c54cf4a88734d3ed79ff281cfa574e2270",
+      "bytes": 792
+    },
+    {
+      "path": "original-public-hashes.json",
+      "sha256": "67f1c984f1417be1181d3c0ea17c57487c84cbaf411b5c48437ebd1426ec6f4a",
+      "bytes": 237172
+    },
+    {
+      "path": "path-resolution.json",
+      "sha256": "07d30fdf2ad088028f1342c70170cae359ee7be17e18257453dc6dea6d6cf38f",
+      "bytes": 133353
+    },
+    {
+      "path": "provenance/first-setup-blocker.json",
+      "sha256": "711647e09d84368b9cc1440b728b940d4a8fa80a69fce2203429243bd943177e",
+      "bytes": 558
+    },
+    {
+      "path": "public-manifest.json",
+      "sha256": "c9a2438c9db49e401c5d9b4dc8c5d7eef23cdc0da0e28b276848c0e6cd381069",
+      "bytes": 241504
+    },
+    {
+      "path": "publication-policy.json",
+      "sha256": "c92f223ed06e415e6384defb6b1d5a133074036b7409399189bc532d17ea5f36",
+      "bytes": 537
+    },
+    {
+      "path": "restore_source_layout.py",
+      "sha256": "6afae2f1f4ddb6fc375b0b5b0acc8dc180cdeef1be5611889f7b7758a0de1cfb",
+      "bytes": 2006
+    },
+    {
+      "path": "rubrics/B03-P01.json",
+      "sha256": "acc632cf1dba1fd83b4ff750228ab30155d673162b94c399ce1e7e174a26bd9b",
+      "bytes": 4131
+    },
+    {
+      "path": "rubrics/B03-P02.json",
+      "sha256": "7d1d734b208ddea6d4a3b815e86f431f587fc5d84d8604c879b50a362bf92794",
+      "bytes": 4279
+    },
+    {
+      "path": "rubrics/B11-P01.json",
+      "sha256": "2b28b3a270e9ef5715e0f78688a220b1c95703e87f929bb9369046f1b6a3b092",
+      "bytes": 3674
+    },
+    {
+      "path": "rubrics/B11-P02.json",
+      "sha256": "a9b1446459766469462fc16f6c50cf28ba61da113e118f6d4ae0cf888b962d09",
+      "bytes": 3680
+    },
+    {
+      "path": "rubrics/B12-P01.json",
+      "sha256": "2d8ecaf69ed6b3b2821a706b130c8c540d043ceac3ed78fc6933e29c61cb33d1",
+      "bytes": 3720
+    },
+    {
+      "path": "rubrics/B12-P02.json",
+      "sha256": "d12bbcd17a3099fde6f526605da33036e22dfda92a934a294f0e63275d029c34",
+      "bytes": 3715
+    },
+    {
+      "path": "source-capsules.json",
+      "sha256": "31f4fe45ef7364964a7119430fcf701e61346a03b76eb57c31dba32adf87baaf",
+      "bytes": 948076
+    },
+    {
+      "path": "source-index.json",
+      "sha256": "4a9be75c1f832f538832907799d7f9d1f3107d0faffc1a72718fa2320d77e53e",
+      "bytes": 276
+    },
+    {
+      "path": "stage-evidence-inventory.json",
+      "sha256": "9d3f0708744d1b2e8c6d7a1efce71e7ef898838ea7d2dcc790656493ce77ac65",
+      "bytes": 31768
+    }
+  ]
+}

@@ -1,0 +1,511 @@
+{
+  "schema": "er13.public_delta_helper_closure.v1",
+  "base_publication_commit": "47b2ed72a712291a2853d3f4068d1251495ebda5",
+  "members": [
+    {
+      "logical_path": "helpers/b03-retain-v1/CHECKS.json",
+      "retained_reference": "helpers/b03-retain-v1/CHECKS.json",
+      "source_sha256": "aee4624ebf8a251c523bcc8dcd9e45e7d650ccbc0945aae5b62fbf30891eab82",
+      "bytes": 2437,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/README.md",
+      "retained_reference": "helpers/b03-retain-v1/README.md",
+      "source_sha256": "2ab2160d4ede16683eea95db2af430580b5368fcf6f2a8451d1ddbd7a5c3fe78",
+      "bytes": 14349,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/READY.json",
+      "retained_reference": "helpers/b03-retain-v1/READY.json",
+      "source_sha256": "f1b59b2d78ae28a807bd844a939dd25859a9af3c16e1a071129b3606bffdf488",
+      "bytes": 1382,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/author-complete.js",
+      "retained_reference": "helpers/b03-retain-v1/author-complete.js",
+      "source_sha256": "7059de883f6d218a31c590a7a7440529f004bb4d75097a95e66acfc2f62d149d",
+      "bytes": 1845,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/author-ready.js",
+      "retained_reference": "helpers/b03-retain-v1/author-ready.js",
+      "source_sha256": "6c8ae3e8b4de6afb8d82e683443249a3f22655fbd1b6d0b4c5662d22d688c2e5",
+      "bytes": 1570,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/author-resume.js",
+      "retained_reference": "helpers/b03-retain-v1/author-resume.js",
+      "source_sha256": "5fb3ec99ec2d75e18c281c80d025344117958cb630c7f83b76705e7b4bf42b5f",
+      "bytes": 1104,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/b03.py",
+      "retained_reference": "helpers/b03-retain-v1/b03.py",
+      "source_sha256": "58b3212fa334e3ba8bfc66b9653f69a9d0316fa9486ec1d8997d199dcae470a7",
+      "bytes": 33853,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/critic-complete.js",
+      "retained_reference": "helpers/b03-retain-v1/critic-complete.js",
+      "source_sha256": "bd25970615ae76b1a1b4d5239390b9bebe472b0c2cc1d12a5e15eaac8882516c",
+      "bytes": 1709,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/method.json",
+      "retained_reference": "helpers/b03-retain-v1/method.json",
+      "source_sha256": "c6514e569a5fb07622be45267f53bc078d74d78cd9547bfe290d40c178883898",
+      "bytes": 811,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/reference-dependency.json",
+      "retained_reference": "helpers/b03-retain-v1/reference-dependency.json",
+      "source_sha256": "4a9dae8c08d4cf9ae95e4c6a13e5f95123ed7f371c41e50d951bcd23522bad19",
+      "bytes": 10918,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/b03-retain-v1/test_b03.py",
+      "retained_reference": "helpers/b03-retain-v1/test_b03.py",
+      "source_sha256": "7c59f9a0f4909901d9691152c157afd712c5d495f08b436469d34860b0a25cf0",
+      "bytes": 14178,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/CHANGELOG.md",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/CHANGELOG.md",
+      "source_sha256": "0502aae36dbd8202c7c35abf9a0310c28365f121a95130d49117ff6037f27c07",
+      "bytes": 2117,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/README.md",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/README.md",
+      "source_sha256": "e902bdbc47db04da2887ecbdc217c473caa1f0427a7296193779210c3271e684",
+      "bytes": 14340,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/READY.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/READY.json",
+      "source_sha256": "d0d1ad8a6840eff07e166767f6c77da3e077187c568a9903ea1b1480249489ae",
+      "bytes": 2012,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/ROUTES.md",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/ROUTES.md",
+      "source_sha256": "fc9d2538595b07a213477e3c70c658032f449586bd76fe8c575eaefc86ce2c7a",
+      "bytes": 3041,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/b-check-results.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/b-check-results.json",
+      "source_sha256": "d3b5ccf6c61b99e00b2738c9484101e71309d12ff77fecfd07b7b7268e33bbe4",
+      "bytes": 20582,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/b-checks.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/b-checks.py",
+      "source_sha256": "98140c56418e292c407b4537865fcc89471ed31dca51c956305d106b307454ef",
+      "bytes": 8551,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/check-results.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/check-results.json",
+      "source_sha256": "ac8b80720ca03ae0492d2ce70cc9ea89fd07fdb127704350a11450b310489f4e",
+      "bytes": 29113,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/checks.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/checks.py",
+      "source_sha256": "d032b74a855e08f7863d9b6437ca9cd71798cf8ea43637ef8d67d5a1c9fa8a21",
+      "bytes": 15045,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/delta-checks.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/delta-checks.py",
+      "source_sha256": "bd3d2d3327b6937e620d0f4a5ce93cb1c573c2f0d842ce64a4ed8578a74f1b94",
+      "bytes": 14315,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/er13-checks.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/er13-checks.py",
+      "source_sha256": "e59e27d10d413e32749ef1972964f20f94a4de35e8b5b9a703d1cfedc77d5a03",
+      "bytes": 14987,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/extra-checks.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/extra-checks.py",
+      "source_sha256": "cdb2b6ea7a174898e19a9508001c351714017b33454e9b97818179f7297ffea6",
+      "bytes": 8208,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/materialize.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/materialize.py",
+      "source_sha256": "6bc0952304a727b95537aa8698de9f59c641dea25bacf689cffdd6104701e6ee",
+      "bytes": 24477,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-check-results.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-check-results.json",
+      "source_sha256": "b479712b007798d3a2feb90ce0bcd625e8105c74d1a71d7c6df6552970b9ac7d",
+      "bytes": 8602,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-checks.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/overlap-checks.py",
+      "source_sha256": "e40e21ed70e397264ebda02f88129afeaa57ace660fedd25047b558014755740",
+      "bytes": 9001,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/preservation-check.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/preservation-check.json",
+      "source_sha256": "e451352b47c01d61167e586006f2f51b5765a7311527fb2fed9afbc64afcc9aa",
+      "bytes": 1247,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v2-README.md",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-README.md",
+      "source_sha256": "4028de4641f7d53f5fc8671224b5f813b22d2790b0a536f4e268b5004b6d10bd",
+      "bytes": 10400,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v2-bundle-manifest.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-bundle-manifest.json",
+      "source_sha256": "4368e32d3dd2fde6c31231531fff4b1ce089e6c79c25f7142e42a98b2662b0fa",
+      "bytes": 4444,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v2-check-results.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-check-results.json",
+      "source_sha256": "a49bba8ab9f38e056c030058cf6c9f4228c99665433a176899e488194bd97e09",
+      "bytes": 22580,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v3-README.md",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-README.md",
+      "source_sha256": "78c87b7be4c63cf654ae20a49edc1dd9337980dce5166dd253cd39761baa6973",
+      "bytes": 11024,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v3-READY.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-READY.json",
+      "source_sha256": "8e5ac7195d1e18e07395b0c17bbe6378d55e2a54055295ac56b8b07d8dce4e72",
+      "bytes": 1134,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v3-bundle-manifest.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-bundle-manifest.json",
+      "source_sha256": "1049fcdd18a49d1f6b773ce6d997b75617f3346dad7fa143104463fd4854774b",
+      "bytes": 6897,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v3-check-results.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-check-results.json",
+      "source_sha256": "ba76f9c639c871cc902b9af7472ef92dc085045fe37693a0988ab240f6987d2e",
+      "bytes": 21318,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/prior-v3-source-lineage.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-source-lineage.json",
+      "source_sha256": "8a3e70326ce6b1b79987a1ba2028aaade7906bcd1f83460e46db634f3cf4260b",
+      "bytes": 14448,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/public-input-dependency-manifest.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/public-input-dependency-manifest.json",
+      "source_sha256": "541dcb7b324bd55261205d1a01cbc815de09d377beefbf45f9e56b05d02df435",
+      "bytes": 6648,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/repin.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/repin.py",
+      "source_sha256": "7945f33d51f97d80a6fed36d14b0183d5e26349eb3e8ac9d0667eb5f04ac7047",
+      "bytes": 2998,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/routes.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/routes.py",
+      "source_sha256": "a796ef30cce00ff6e2a9727a7c917eb70be363c7ef62e54b2dc4f81486dbf5bb",
+      "bytes": 2475,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/source-lineage.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/source-lineage.json",
+      "source_sha256": "fa876a227c5d0860ec7a4b074b9271ed084d74e4c4751881fddf832ff0f8e910",
+      "bytes": 10352,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "source_sha256": "7620c81b06d9a4bc59c0c30f1aa2f05452665a3afd426e01ab0b94dc9781683f",
+      "bytes": 945,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "source_sha256": "e9cdc3109c5453faccd7a8fe0f31ac6009ce4680ae005d7c1067eee7a9eb405c",
+      "bytes": 4818,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/bootstrap.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/bootstrap.js",
+      "source_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/handoff.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/handoff.py",
+      "source_sha256": "2621d150b5cd6c6c8df0a9995ca75c01fb5d20bab93ce5c91f8db417c4a57eb4",
+      "bytes": 4758,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/late-critique.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/late-critique.py",
+      "source_sha256": "b159d85660ec3aa555a089e30effe9c82f6d6a6f7b2274510226cbeb72035f29",
+      "bytes": 7586,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/prepare.py",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/prepare.py",
+      "source_sha256": "0744e1cb7c62d16408c7456ec493b5bd8c2c4d7ff595103471aab16c9d41d52c",
+      "bytes": 33214,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/helpers/er12-screen-v1/reveal.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/reveal.py",
+      "source_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "source_sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "bytes": 5187,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "source_sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "bytes": 1229,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "source_sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "source_sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "bytes": 284,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "source_sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c",
+      "bytes": 10501,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "source_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "source_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "retained_reference": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "source_sha256": "805a5040b79df97cadbd58a3d9f5bcf0e4f758bf5d128a43e50a65f75d0bd66c",
+      "bytes": 242,
+      "common_published_v1": false
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/invocation-clarification-v1/transform.py",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/invocation-clarification-v1/transform.py",
+      "source_sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "source_sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "bytes": 394,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "source_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "source_sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "source_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/A8/critic_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/A8/critic_prompt_delta.txt",
+      "source_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/A8/reviser_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/A8/reviser_prompt_delta.txt",
+      "source_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B07/critic_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/critic_prompt_delta.txt",
+      "source_sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "bytes": 419,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B07/investigator_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B07/method.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/method.json",
+      "source_sha256": "4c997da053e4af70406f9974cd49f8749658c90bd60be2750a60cf8b5a0826c5",
+      "bytes": 494,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B07/reviser_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B09/critic_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/critic_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B09/investigator_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/investigator_prompt_delta.txt",
+      "source_sha256": "11603cb5faf1166c3c035d2ddef8b90df312d9e5661ccf459d5ad17cd3e4be88",
+      "bytes": 416,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B09/method.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/method.json",
+      "source_sha256": "a858f1ffe405528222f1417a864c4df4bc6a1e0572edaee10af2a7239fb77b65",
+      "bytes": 494,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B09/reviser_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/reviser_prompt_delta.txt",
+      "source_sha256": "4797b38d36f6441e83513aed15f13bac3835534bda6185dfc9ef2e93ff6614f8",
+      "bytes": 437,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B10/critic_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/critic_prompt_delta.txt",
+      "source_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B10/investigator_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B10/method.json",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/method.json",
+      "source_sha256": "c14924fa786abed1326c640d8031d7c449a3acc3d44a37b7e997019bf1c6550c",
+      "bytes": 494,
+      "common_published_v1": true
+    },
+    {
+      "logical_path": "helpers/materialize-er13-v1/sealed/full-v2-overlap/sources/methods/B10/reviser_prompt_delta.txt",
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "common_published_v1": true
+    }
+  ],
+  "relocation": "Restore common references from exact publishedv1 into a NEW caller-owned combined install; add v3 delta members; use existing repin for relocated overlap only; B03 exact parent manifest unchanged."
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T01:43:03.571974+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/B11-P01-control.json",
+      "bytes": 1398,
+      "sha256": "48286195843f6eb4035a546a45baf51e34807fd2597f924867dab3766b3f958d"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2226,
+      "sha256": "f5abfc028dab466137df21a8405f1db38baec8713b440f353e64f7e179b90373"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 1683,
+      "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353"
+    },
+    {
+      "path": "run/B11-P01-control/control/run.json",
+      "bytes": 581,
+      "sha256": "206b0a11ae358dc26437c117d71f8d47a1c913a23ed5032ef1bd8a66502125cf"
+    }
+  ]
+}

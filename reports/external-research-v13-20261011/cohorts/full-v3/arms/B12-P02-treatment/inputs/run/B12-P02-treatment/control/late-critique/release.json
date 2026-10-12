@@ -1,0 +1,28 @@
+{
+  "version": "er13.b12-late-critique.v1",
+  "run_id": "B12-P02-treatment",
+  "config_sha256": "8a3c6133d13cc37a9f915c02ddd45e9f16c2af63b7288ec1156eb9fe2167a35d",
+  "investigator_handoff_sha256": "db58d503404ccc29dd028e6d0759dbc7b96677b5834382906b72f7aba4a19ec5",
+  "critic_taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B12-P02-treatment-critic-v1",
+  "critic_handoff_sha256": "a2a0fdf81f64ce48147d417c447b1e53d965d96037495f8d8dc9571d26fc1b03",
+  "stage_deadline_utc": "2026-10-12T01:41:49.379Z",
+  "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+  "package": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "d8d1cd72545a2c34d624d75698108915c6878d2c4f6189de81d3c6ecfcc3e58c",
+      "bytes": 12507
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "745985fb2f293b9740d30aa663602c358931d98d14b22b00fe7994c55f03958b",
+      "bytes": 19267
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "sha256": "f343f1f8c4f3801e1fe2523823e4a8a3b06e761d71ce88be9162936a365c2f66",
+      "bytes": 4511
+    }
+  ],
+  "published_at_utc": "2026-10-12T01:33:08.181330+00:00"
+}

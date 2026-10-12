@@ -1,0 +1,31 @@
+{
+  "B03_original_author": [
+    {
+      "arm_id": "B03-P01-treatment",
+      "frozen_identity_fields_match": true,
+      "same_birth_objects": [
+        "native-goal-create.json",
+        "native-resume-active.json",
+        "native-complete-active.json",
+        "native-goal-terminal.json"
+      ],
+      "new_goal_inferred": false,
+      "stronger_session_provenance": "UNKNOWN"
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "frozen_identity_fields_match": true,
+      "same_birth_objects": [
+        "native-goal-create.json",
+        "native-resume-active.json",
+        "native-complete-active.json",
+        "native-goal-terminal.json"
+      ],
+      "new_goal_inferred": false,
+      "stronger_session_provenance": "UNKNOWN"
+    }
+  ],
+  "B11_P02_control_critic_missing_create_preserved": true,
+  "scientific_qualification": false,
+  "stronger_session_provenance": "UNKNOWN"
+}

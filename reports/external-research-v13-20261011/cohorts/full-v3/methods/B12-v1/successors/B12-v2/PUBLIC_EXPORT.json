@@ -1,0 +1,57 @@
+{
+  "schema": "er13.method_public_export.v1",
+  "method": "B12-v2",
+  "allowlist": [
+    {
+      "path": "README.md",
+      "sha256": "4fd646b3acf957cee2b7f06d8dd6770ecf144caea9ea4dba7bca223ddd3f365a"
+    },
+    {
+      "path": "method.json",
+      "sha256": "602e154d321e796cc7aec6698bd20fc2032cd851c084f84702ac7af2ea45d27a"
+    },
+    {
+      "path": "investigator_prompt_delta.txt",
+      "sha256": "755610683ba44036c4951b5c81ad218b6dcc83fddd1b27f8237266c7474e6619"
+    },
+    {
+      "path": "critic_prompt_delta.txt",
+      "sha256": "ccd24b163947ca55508d2031864d8435ba48c45ee2f466d5f76193c9a6e34106"
+    },
+    {
+      "path": "reviser_prompt_delta.txt",
+      "sha256": "0f2da606f4be440a3bb0f59be3d4344d5751d9f663a10b14678a74798f8fc953"
+    },
+    {
+      "path": "source-evidence.json",
+      "sha256": "94cdf08ca817567a794084674f3ee279dbda98e089dce480da86e3b5de2c9905"
+    },
+    {
+      "path": "evidence.md",
+      "sha256": "8f81b7ce4963912c29cb7d17700462932d7dec6aaec8fbf3ad2fcdea20c7e5df"
+    },
+    {
+      "path": "novelty.json",
+      "sha256": "4154a9746cf1ab274b5921f3a01be6692a91d7d78a8064cd08a808cc41cf7df0"
+    },
+    {
+      "path": "research-selection.md",
+      "sha256": "a16d11dd43dd465a9f734b193ba9dcbb4b0080c9aa5997fa629510bf564d5938"
+    },
+    {
+      "path": "preparation.json",
+      "sha256": "244db8d7669063324891a66d1af90cdeb511d70a630488c5d86c4b865ccaa8b2"
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "f509767d239a1aee4de3c841a02d025c37205ceb430036b14fa4c0b91e3969e3"
+    }
+  ],
+  "lineage_companions": [
+    "ER13_RUNTIME/methods/B12-v1/VERSION_LINEAGE.json",
+    "ER13_RUNTIME/methods/B12-v1/rejected-proposal/REJECTION.json"
+  ],
+  "exclude": "Every rawPDF/HTML; restored withdrawn originalv1 and superseded overlap-v1 role deltas/cards are not activev2 methodology.",
+  "copyright": "Public zero-quote authored capsules/locators/hashes only. No raw third-party paper body.",
+  "receipts": "SHA256SUMS.json and READY.json may be included; public path normalization preserves original hashes/lineage."
+}

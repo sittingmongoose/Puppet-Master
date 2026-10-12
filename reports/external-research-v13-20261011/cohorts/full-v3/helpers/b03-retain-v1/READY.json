@@ -1,0 +1,38 @@
+{
+  "schema": "er13.b03.retention-readiness.v1",
+  "version": "b03-retain-v1",
+  "mechanical_ready": true,
+  "ready_method": "B03 treatment only",
+  "candidate_route": "Luna Max/Standard; root live authorization separate",
+  "investigator_native_goal_creates": 1,
+  "completion_at_draft_freeze": false,
+  "same_actual_context_and_goal_finalization": true,
+  "critic_independently_fresh": true,
+  "critical_paths": [
+    "control/author-ready.json",
+    "control/waiting.json",
+    "control/retained-ready.json",
+    "control/critic-custody.json",
+    "control/critic-release.json"
+  ],
+  "known_native_identity": "provider threadId + createdAt + exact objective + full create/active/terminal capture hashes; T3 IDs distinct",
+  "provider_session_mapping_independently_proved": false,
+  "stage_caps_seconds": [
+    1800,
+    720,
+    1080
+  ],
+  "common_cap_seconds": 3600,
+  "waiting_occupancy_separate_from_activity": true,
+  "tests_passed": 17,
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "actual_native_candidate_calls": 0,
+  "reserve_starts": 0,
+  "dispatches": 0,
+  "Git_changes": 0,
+  "other_arms_or_inputs_mutated": false,
+  "dispatch_owner": "codex-er13-dispatch",
+  "root_admission_freeze_required": true,
+  "completion": "Root prospective freeze/admit unstarted B03 pairs; do not substitute fresh finalizer or complete investigator at draft."
+}

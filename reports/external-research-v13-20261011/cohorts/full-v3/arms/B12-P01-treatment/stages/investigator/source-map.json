@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B12-P01-treatment",
+  "stage": "investigator",
+  "research_basis": "brief.md only; plan unreleased at time of this freeze",
+  "source_index": "sources/index.md",
+  "captured_review_batch_utc": "2026-10-12T01:08:18Z",
+  "source_ids_are_stable": true,
+  "sources": [
+    {
+      "id": "SRC-WEBVTT-2026-CRD",
+      "title": "WebVTT: The Web Video Text Tracks Format",
+      "exact_url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+      "version_commit": "W3C Candidate Recommendation Draft, 2026-05-20; explicitly work in progress",
+      "locator": "§2.2; §3.1–3.4; §4.4–4.5; §5–8; §11",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened W3C published-version page and inspected status, cue examples, cue ordering/timing, normalization, cue settings and render behavior.",
+      "governing_condition_default_exception": "One data kind per WebVTT file. Cue start offsets are nondecreasing and each cue end is after its start; examples permit overlapping cues. Processing must not normalize Unicode. Rendering/styling support is user-agent limited; regions default to three lines and can clip overflow.",
+      "applicability": "Per-track timed-text interchange, overlap semantics, rich cue text retention, and export loss reporting. Because this is a CR Draft, treat its status as draft and verify target interoperability before shipping."
+    },
+    {
+      "id": "SRC-TTML2-REC-2018",
+      "title": "Timed Text Markup Language 2 (TTML2)",
+      "exact_url": "https://www.w3.org/TR/2018/REC-ttml2-20181108/",
+      "version_commit": "W3C Recommendation, 2018-11-08, first edition",
+      "locator": "Abstract and status; §5 profiles; time expressions and timing parameters; §6 styling vocabulary",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened the pinned Recommendation and reviewed the abstract/status; inspected the latest-linked document for profiles and timing semantics.",
+      "governing_condition_default_exception": "TTML is timed text intended for interchange among authoring systems. Profile declarations constrain vocabulary/processor behavior. Time expression meaning depends on governing time base, with media as default when unspecified in the inspected specification.",
+      "applicability": "Richer timed-text alternative; profile-specific implementation and round-trip tests are required. Do not claim every TTML profile or extension is supported."
+    },
+    {
+      "id": "SRC-TTML2-CR-2020",
+      "title": "TTML2 Second Edition Candidate Recommendation Snapshot",
+      "exact_url": "https://www.w3.org/TR/2020/CR-ttml2-20200128/",
+      "version_commit": "W3C Candidate Recommendation snapshot, 2020-01-28; status text says work in progress",
+      "locator": "Abstract; §5 profiles; time-expression syntax and frame/tick/time-base conditions",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Searched and opened the dated W3C snapshot; compared its status and timing model with the pinned first-edition Recommendation.",
+      "governing_condition_default_exception": "Timed text supports different clock/frame/offset expressions; frame interpretation depends on frame-rate parameters and time base. Draft status is not equivalent to an endorsed final Recommendation.",
+      "applicability": "Discovery of timing/profile complexity and candidate adapter coverage; not sufficient alone to promise stable 2e support."
+    },
+    {
+      "id": "SRC-EPUB33-REC-2026",
+      "title": "EPUB 3.3",
+      "exact_url": "https://www.w3.org/TR/2026/REC-epub-33-20260113/",
+      "version_commit": "W3C Recommendation, 2026-01-13",
+      "locator": "§7.2 Media Overlays; OCF §4.2–4.3 path and ZIP physical container",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened pinned W3C Recommendation and reviewed status, package/container examples and media-overlay description.",
+      "governing_condition_default_exception": "Single-file ZIP container includes package documents and resources. Media Overlay synchronizes pre-recorded audio with structured text. OCF defines a virtual common root and path restrictions; EPUB also has remote-resource concepts that do not require this product to fetch them.",
+      "applicability": "Mature package/manifest and synchronized-text comparator; EPUB remains publication/book oriented and should not be mistaken for the product's native lesson schema."
+    },
+    {
+      "id": "SRC-MATROSKA-ELEMENTS",
+      "title": "Matroska Element Specification",
+      "exact_url": "https://www.matroska.org/technical/elements.html",
+      "version_commit": "Living official technical specification; page exposes Matroska element versions v1–v4 but no dated release snapshot",
+      "locator": "Track/TrackEntry, TrackType, TrackUID, FlagDefault, FlagForced, FlagOriginal, Attachments",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened the official element table and reviewed the track and attachment definitions.",
+      "governing_condition_default_exception": "TrackEntry may repeat; track identity, media type, default/forced and related flags are explicit. FlagDefault is eligibility for automatic selection, not a user-visible guarantee; FlagForced applies to subtitle tracks.",
+      "applicability": "Useful single-clip media-container export/import alternative and track metadata source. Container selection behavior still depends on player policy."
+    },
+    {
+      "id": "SRC-MATROSKA-NOTES",
+      "title": "Matroska Specification Notes",
+      "exact_url": "https://www.matroska.org/technical/notes.html",
+      "version_commit": "Living official specification notes; no dated release snapshot shown",
+      "locator": "Track Flags and Default Track Selection",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened official explanatory notes and searched default/forced semantics.",
+      "governing_condition_default_exception": "Default flag is a hint that may be overridden by player preferences; forced subtitles can be selected for matching languages even when subtitles would otherwise be disabled.",
+      "applicability": "Warns against assuming default flags fully express product selection intent; preserve original flags and explain player-dependent behavior."
+    },
+    {
+      "id": "SRC-ELAN-EAF3",
+      "title": "EAF Annotation Format 3.0 and ELAN",
+      "exact_url": "https://www.mpi.nl/tools/elan/EAF_Annotation_Format_3.0_and_ELAN.pdf",
+      "version_commit": "Official EAF format reference, version 3.0; search result identifies a publication about nine years before access; exact day not displayed",
+      "locator": "UML model; HEADER/MEDIA_DESCRIPTOR; TIME_ORDER/TIME_SLOT; TIER and annotation types",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Searched the official MPI/ELAN source and read available extracted PDF content; the final direct PDF reopen timed out.",
+      "governing_condition_default_exception": "EAF has tier hierarchy and alignable/reference annotations; one shared TIME_ORDER stores time slots across tiers. TIME_VALUE is optional for anchors and ELAN assumes milliseconds. MEDIA_DESCRIPTOR links one or more primary media sources by URI.",
+      "applicability": "Language annotation alternative with meaningful tier/dependency semantics. It is not a self-contained media package; treat linked resources as local unresolved references unless user selects them."
+    },
+    {
+      "id": "SRC-ELAN-MANUAL-MEDIA",
+      "title": "ELAN Media Files and Annotation Files",
+      "exact_url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Media_Files_and_Annotation_Files.html",
+      "version_commit": "Current official ELAN manual page; no version identifier displayed",
+      "locator": "Media files and annotation files section",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened current official manual and inspected the saved-media/annotation-file statement.",
+      "governing_condition_default_exception": "Tier setup, alignment and annotations are saved in the EAF/imported annotation file, not in the linked media file.",
+      "applicability": "Supports separation of annotation model from original media asset and motivates preserving both."
+    },
+    {
+      "id": "SRC-ELAN-MANUAL-TIERS",
+      "title": "ELAN Tier model",
+      "exact_url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Tier.html",
+      "version_commit": "Current official ELAN manual page; no version identifier displayed",
+      "locator": "Tier types and constraints",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened current official manual search result/page.",
+      "governing_condition_default_exception": "Tiers may be independent/time-alignable, subdivided, symbolic, or associated with a parent tier; constraints change what a flat subtitle-track model can preserve.",
+      "applicability": "Useful candidate internal-model precedent; importing to simpler tracks requires a feature/loss report or original retention."
+    },
+    {
+      "id": "SRC-PRAAT-TEXTGRID",
+      "title": "Praat TextGrid",
+      "exact_url": "https://praat.org/manual/TextGrid.html",
+      "version_commit": "Current official Praat manual page; no version identifier displayed",
+      "locator": "Description and tier types",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Searched and opened the official Praat manual.",
+      "governing_condition_default_exception": "TextGrid contains multiple tiers; interval tiers are sequences of labeled intervals and point tiers are labeled points.",
+      "applicability": "Useful focused alternative for word/phonetic alignment, not package/media interchange."
+    },
+    {
+      "id": "SRC-PRAAT-TEXTGRID-FORMAT",
+      "title": "Praat TextGrid file formats",
+      "exact_url": "https://praat.org/manual/TextGrid_file_formats.html",
+      "version_commit": "Current official Praat manual page; no version identifier displayed",
+      "locator": "TextGrid file formats and text encoding sections",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Searched and read the official format manual excerpt.",
+      "governing_condition_default_exception": "Text format permits comments ignored by Praat, has weak/strong invariants, and legacy files use various encodings.",
+      "applicability": "An importer should validate known invariants, report encoding choice and retain original source rather than assume all readers behave like Praat."
+    },
+    {
+      "id": "SRC-PY-ZIPFILE-3.14.8",
+      "title": "Python zipfile — Work with ZIP archives",
+      "exact_url": "https://docs.python.org/3.14/library/zipfile.html",
+      "version_commit": "CPython/Python documentation 3.14.8; versioned stable documentation",
+      "locator": "ZipFile.infolist/open § duplicate names; extract/extractall warnings; Path sanitization note; testzip; compression support",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened versioned official docs and inspected archive enumeration, duplicate access, path and CRC methods.",
+      "governing_condition_default_exception": "Duplicate ZIP member names are supported and callers can use ZipInfo to address them. extract/extractall attempt path sanitation but warn to inspect untrusted archives; zipfile.Path does not sanitize. testzip reads all members for CRC/header checks. ZIP64 and multiple compression methods have version compatibility conditions.",
+      "applicability": "Implementation evidence for preflight, duplicate-entry disambiguation and limits. The docs do not supply a product-specific safe quota or make any archive universally safe."
+    },
+    {
+      "id": "SRC-RFC8259",
+      "title": "The JavaScript Object Notation (JSON) Data Interchange Format",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+      "version_commit": "RFC 8259, December 2017",
+      "locator": "§4 Objects; §8.1 Character encoding",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened RFC Editor text and inspected JSON object interoperability requirements.",
+      "governing_condition_default_exception": "Object member names SHOULD be unique; receiver behavior for duplicates can diverge.",
+      "applicability": "If a manifest is JSON, reject duplicate keys during parsing rather than silently selecting one interpretation."
+    },
+    {
+      "id": "SRC-RFC3629",
+      "title": "UTF-8, a transformation format of ISO 10646",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc3629.html",
+      "version_commit": "RFC 3629, November 2003",
+      "locator": "§3 UTF-8 definition; §4 decoding invalid sequences",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened RFC Editor text and inspected valid-sequence and invalid-sequence rules.",
+      "governing_condition_default_exception": "UTF-8 has constrained valid octet sequences; invalid sequences must not be silently treated as valid encoding.",
+      "applicability": "Decode with explicit supported-encoding policy, preserve original bytes and report offsets/choice; don't substitute silently."
+    },
+    {
+      "id": "SRC-RFC5646",
+      "title": "Tags for Identifying Languages",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc5646.html",
+      "version_commit": "RFC 5646 / BCP 47, September 2009",
+      "locator": "§2 language tag syntax; §2.1 case-insensitivity; §3.1 construction and registry",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened RFC Editor text and inspected language-tag syntax and construction guidance.",
+      "governing_condition_default_exception": "Language tags identify languages using subtags and are case-insensitive; registry-backed preferred forms may evolve.",
+      "applicability": "Store a normalized validated tag separately from source/display labels and preserve original tag bytes/value for round-trip."
+    },
+    {
+      "id": "SRC-FFMPEG-WEBVTT-N9.0.2",
+      "title": "FFmpeg WebVTT demuxer source",
+      "exact_url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/libavformat/webvttdec.c",
+      "version_commit": "FFmpeg release tag n9.0.2",
+      "locator": "webvtt_read_header around cue parsing and packet fields; demuxer registration",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened tagged upstream implementation source; inspected WebVTT header/STYLE/REGION/NOTE branch, timestamp parser, cue side data and stream timebase.",
+      "governing_condition_default_exception": "Implementation uses a 1/1000 stream timebase; STYLE, REGION and NOTE chunks are skipped in the demux loop; cue identifier/settings are stored as side data. Failed timestamp parsing breaks the read loop. This is FFmpeg n9.0.2 behavior, not a universal WebVTT rule.",
+      "applicability": "Adapter behavior should be tested against chosen code/version and mapped to explicit diagnostics/loss accounting."
+    },
+    {
+      "id": "SRC-FFMPEG-SRT-N9.0.2",
+      "title": "FFmpeg SubRip muxer source",
+      "exact_url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0.2/libavformat/srtenc.c",
+      "version_commit": "FFmpeg release tag n9.0.2",
+      "locator": "ff_srt_muxer output-format declaration and packet writer",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened tagged upstream source and inspected muxer capability flags.",
+      "governing_condition_default_exception": "Muxer declares a maximum of one stream of each type; its implementation writes timestamped event text to one SubRip output.",
+      "applicability": "If multiple tracks are exported as SRT, create explicit per-track sidecars or choose another package/container; do not imply one SRT file contains a multi-track lesson."
+    },
+    {
+      "id": "SRC-FFMPEG-CLI-DOCS",
+      "title": "FFmpeg command-line documentation",
+      "exact_url": "https://ffmpeg.org/ffmpeg.html",
+      "version_commit": "Current online documentation at review time; no versioned URL visible and page warns behavior may change with development",
+      "locator": "§4 Stream selection; §5.11 metadata mapping; disposition options",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened official online docs and inspected stream-selection, metadata and disposition defaults.",
+      "governing_condition_default_exception": "Without -map, FFmpeg chooses one acceptable stream per type, subtitles generally first matching; manual map includes only mapped streams. Global metadata defaults to first input; disposition copying/default selection has conditions.",
+      "applicability": "If an adapter uses FFmpeg, map every user-selected stream explicitly and compare before/after metadata; do not rely on defaults."
+    },
+    {
+      "id": "SRC-FFMPEG-WEBVTT-HISTORY",
+      "title": "FFmpeg-devel WebVTT parser discussion",
+      "exact_url": "https://ffmpeg.org/pipermail/ffmpeg-devel/2025-June/344877.html",
+      "version_commit": "Mailing-list message dated 2025-06-10; patch/discussion history",
+      "locator": "Message body on header probing, parse tolerance and STYLE/REGION placement",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened primary FFmpeg developer mailing-list archive.",
+      "governing_condition_default_exception": "Discussion records disagreement over strict standards parsing versus accepting malformed/extra content; the message is opinion/review, not proof the patch merged.",
+      "applicability": "Treat parser strictness as an explicit compatibility decision; preserve source and show malformed/unsupported diagnostics."
+    },
+    {
+      "id": "SRC-FFMPEG-SRT-HISTORY",
+      "title": "FFmpeg muxer one-stream-per-type history",
+      "exact_url": "https://ffmpeg.org/pipermail/ffmpeg-cvslog/2024-March/141538.html",
+      "version_commit": "FFmpeg cvslog commit discussion, March 2024",
+      "locator": "Change record for MAX_ONE_OF_EACH and SRT single-subtitle restriction",
+      "access_utc": "2026-10-12T01:08:18Z",
+      "observed_operation": "Opened primary FFmpeg commit log archive.",
+      "governing_condition_default_exception": "Change introduced a generic maximum-one-stream-of-each-type muxer flag; commit identifies SRT as supporting one subtitle stream.",
+      "applicability": "Concrete implementation history for the SRT multi-track limitation; do not extrapolate to every SRT tool or format."
+    }
+  ]
+}

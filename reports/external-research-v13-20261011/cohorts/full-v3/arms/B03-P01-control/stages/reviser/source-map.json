@@ -1,0 +1,91 @@
+{
+  "run_id": "B03-P01-control",
+  "stage": "reviser",
+  "reviewed_at_utc": "2026-10-12T01:40:00Z",
+  "source_scope": "Direct reviser recheck of primary documentation, version-pinned library documentation/example code, and a SQLite maintainer/forum record. Source IDs are preserved from predecessor maps only where title and URL are unchanged.",
+  "research_limitations": [
+    "No target notebook application repository, schema, callers, or tests were supplied in the allowed input map; no target-app code review is claimed.",
+    "No application code, downloaded code, private notebook, benchmark, or test suite was run.",
+    "Candidate applicability depends on the actual store, shipped runtime/build, platforms, data profile, and product query semantics."
+  ],
+  "sources": [
+    {
+      "source_id": "S-SQLITE-FTS5",
+      "title": "SQLite FTS5 Extension",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_commit": "Living official SQLite documentation accessed 2026-10-12; contentless-delete tables documented since SQLite 3.43.0; shipped application runtime remains unknown.",
+      "locator": "Sections 2.1, 3, 4.3.1–4.3.4, 4.4.1–4.4.4, 6.12–6.13; FTS build availability, query grammar, Unicode61/trigram, contentless and contentless-delete operations, external-content synchronization, rebuild and secure-delete.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened the official FTS5 documentation at the tokenizer, table-mode, rebuild and secure-delete sections; checked the 3.43.0 contentless-delete condition, ordinary contentless UPDATE/DELETE restrictions, all-columns UPDATE rule, rebuild limitation, tokenizer defaults and deleted-term retention.",
+      "governing_condition_default_exception": "unicode61 is the default and based on Unicode 6.1; letter/number/private-use runs are tokens, punctuation/space separate, and Latin diacritics are removed by default. Ordinary contentless tables do not support ordinary UPDATE/DELETE; their special delete command uses original indexed values and rowid. Since SQLite 3.43.0, contentless-delete tables support DELETE and INSERT OR REPLACE, and UPDATE only when all user-defined columns are supplied; they do not support the special delete command. External-content data is in the same database and synchronization is caller responsibility. Rebuild deletes/recreates the whole index and is unavailable for contentless tables. FTS5 postings may retain deleted terms until merge unless secure-delete is enabled.",
+      "applicability": "Primary source for conditional FTS5 design, tokenizer language limits, contentless CRUD and rebuild decisions, and at-rest posting caveat. Verify the actual runtime/build and tokenizer/index mode before implementation."
+    },
+    {
+      "source_id": "S-SQLITE-WAL",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Living official SQLite documentation; WAL available since SQLite 3.7.0.",
+      "locator": "Sections 1, 2, 2.1–2.3; concurrency, checkpointing, filesystem and attached-database conditions.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened official WAL documentation and checked reader/writer concurrency, one-writer limit, same-host/network-filesystem condition, checkpoint behavior and multi-database atomicity note.",
+      "governing_condition_default_exception": "WAL allows readers and a writer concurrently, but there is still only one writer at a time. Processes must use the database on one host; WAL does not work over a network filesystem. Transactions changing multiple attached database files are atomic per file but not across the set under WAL; long readers can hold back checkpoint progress.",
+      "applicability": "Relevant only if the target notebook or index uses SQLite/WAL; supports measuring same-database edit contention and keeping the canonical outbox durable across a separate index commit."
+    },
+    {
+      "source_id": "S-SQLITE-ATTACH-ATOMICITY",
+      "title": "SQLite ATTACH DATABASE",
+      "url": "https://www.sqlite.org/lang_attach.html",
+      "version_or_commit": "Living official SQLite documentation, last updated 2025-02-06 per page.",
+      "locator": "Transactions involving multiple attached databases, section 2, paragraph on commit atomicity.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Opened the official ATTACH documentation and checked the atomicity exception for WAL or an in-memory main database.",
+      "governing_condition_default_exception": "Cross-database transactions are atomic as a set when main is not :memory: and journal_mode is not WAL. Under WAL or an in-memory main database, each file remains individually atomic, but a host crash during multi-file commit may leave files inconsistent.",
+      "applicability": "Supports the conservative outbox rule if a sidecar is a separate SQLite database; does not establish that the target app uses ATTACH or WAL."
+    },
+    {
+      "source_id": "S-SQLITE-NESTED-TRIGGER-ISSUE",
+      "title": "SQLite forum/maintainer record: external-content FTS5 with nested AFTER UPDATE writes",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_commit": "Report dated 2026-08-04/05; report names SQLite 3.45.1, 3.45.3 and 3.53.2 reproductions; status Resolved; no release fix identified in the record.",
+      "locator": "Corrected reproducer and workaround, posts/sections describing a standard external-content FTS sync trigger plus a second same-table AFTER UPDATE trigger that performs a nested UPDATE.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened the corrected maintainer/forum record; checked the minimal trigger combination, named tested versions, report scope, and suggested workaround.",
+      "governing_condition_default_exception": "The report is conditional on an external-content FTS5 sync trigger plus another AFTER UPDATE trigger on the same content table that performs a nested UPDATE; the report describes content/data-dependent reproduction. The workaround is to avoid the nested same-table trigger write or fold its mutation into the original update. It is not evidence that all external-content FTS5 trigger designs fail.",
+      "applicability": "If evaluating external-content FTS5, inspect and test the actual complete trigger graph and shipped SQLite runtime; treat this as a conditional issue report, not a general product defect."
+    },
+    {
+      "source_id": "S-TANTIVY-INDEXWRITER-0262",
+      "title": "Tantivy 0.26.2 IndexWriter API",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_commit": "tantivy crate 0.26.2.",
+      "locator": "IndexWriter add_document, delete_term, commit and run documentation.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened version-pinned API docs at commit/delete visibility and blocking conditions.",
+      "governing_condition_default_exception": "commit blocks and publishes/persists pending documents; deletes become visible on commit; add_document and run may block when the indexing pipeline is full. The API's indexed opstamp can align client queues with commits.",
+      "applicability": "Supports a bounded background writer and post-commit acknowledgement proposal; actual target workload, OS support and UI latency remain to be tested."
+    },
+    {
+      "source_id": "S-TANTIVY-TOKENIZERS-0262",
+      "title": "Tantivy 0.26.2 tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_commit": "tantivy crate 0.26.2.",
+      "locator": "Default, en_stem, custom tokenizer and SimpleTokenizer sections.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened version-pinned tokenizer docs and checked default split/lowercase/long-token behavior, English stemmer behavior, and custom tokenizer registration.",
+      "governing_condition_default_exception": "The default tokenizer splits on whitespace/punctuation, lowercases and drops tokens longer than 40 characters. en_stem adds English stemming and is slower. Custom tokenizer/filter registration is supported; these facts do not establish language quality for the target scripts.",
+      "applicability": "Supports qualified tokenizer comparison and the requirement to fixture indexing and query parsing for each declared script."
+    },
+    {
+      "source_id": "S-TANTIVY-UPDATE-EXAMPLE-0262",
+      "title": "Tantivy 0.26.2 deleting/updating documents example",
+      "url": "https://github.com/quickwit-oss/tantivy/blob/0.26.2/examples/deleting_updating_documents.rs",
+      "version_or_commit": "Repository tag 0.26.2, as named by the version-pinned URL.",
+      "locator": "Lines 561–600 for ID field and primary-ID limitation; 656–708 for delete plus reinsert, commit and reader reload.",
+      "access_utc": "2026-10-12T01:39:59Z",
+      "observed_operation": "Reopened the version-pinned library example source and checked its stable indexed ID, lack of enforced primary-key uniqueness, delete-plus-reinsert update, commit, and reader reload.",
+      "governing_condition_default_exception": "The example states Tantivy has no primary-ID notion and does not enforce uniqueness. It demonstrates an app-indexed ID and update by delete_term plus reinsert, visible to clients after commit and reader reload.",
+      "applicability": "Supports treating uniqueness and canonical source synchronization as app responsibilities and storing only fields permitted by the notebook's source-of-truth rule; this is library sample code, not target application code."
+    }
+  ],
+  "source_id_policy": "An identifier is retained only for the same title and exact URL as in the predecessor source maps; no source ID is rebound to a different page."
+}

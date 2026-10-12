@@ -1,0 +1,37 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T01:43:40.729396+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/B12-P02-treatment.json",
+      "bytes": 5591,
+      "sha256": "8a3c6133d13cc37a9f915c02ddd45e9f16c2af63b7288ec1156eb9fe2167a35d"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2194,
+      "sha256": "897cb2808586812aaf13bfa606d92d0261f0f9de24942233c924378eda69d5d5"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 1624,
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008"
+    },
+    {
+      "path": "run/B12-P02-treatment/stages/reviser/provisional-source-map.json",
+      "bytes": 21341,
+      "sha256": "40f9b40c47e36c848a94b9d25200216504da045a500696c0d2e2b4aa7a670506"
+    },
+    {
+      "path": "run/B12-P02-treatment/control/run.json",
+      "bytes": 3815,
+      "sha256": "6ac5e17910510febcafb1415fd0f523b7e69efb8b6e45eccf5e16b2d2b5f4b88"
+    },
+    {
+      "path": "run/B12-P02-treatment/control/late-critique/release.json",
+      "bytes": 1623,
+      "sha256": "59dc1161910eb670e2c0550ace900d2002a33852c646e77e38259c825c7b0838"
+    }
+  ]
+}

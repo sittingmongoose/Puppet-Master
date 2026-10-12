@@ -1,0 +1,84 @@
+{
+  "schema": "er13.method_card.v1",
+  "method_id": "B11",
+  "version": "B11-v1",
+  "title": "Questions from unused evidence",
+  "scope": "FULL",
+  "state": "PROSPECTIVE_PRE_ADMISSION_NO_CANDIDATE_EXECUTION",
+  "comparison": "Within each fresh case, R0-ER13 control versus only these role deltas; same actual provider/model/effort/tier, tools, inputs and deadlines. Do not prevent ordinary control efficiencies.",
+  "causal_hypothesis": "A brief-only investigator anchored on an initial question can overlook useful information already returned by its own retrieval. A small relevance-and-novelty pivot from that unused primary evidence will expose additional decision-useful unfamiliar mechanisms/alternatives/history without materially weakening source quality or total completion.",
+  "actual_role_delta": {
+    "investigator": "Within ordinary discovery, one bounded selection-and-follow-up pass on unused retrieved primary evidence; at most two pivots and five elapsed minutes.",
+    "critic": "No substantive change.",
+    "reviser": "No substantive change."
+  },
+  "primary_motivation": "Co-STORM \u00a73.5 and current pinned Moderator / GroundedQuestionGeneration implementation. Single-investigator manual selection is a new small adaptation, not execution or replication of Co-STORM.",
+  "expected_failure_modes": [
+    "Seed retrieval is itself narrow, leaving no useful unused information.",
+    "Novel-looking information is irrelevant or becomes niche trivia/source-bias drift.",
+    "A snippet or question is misrepresented as verified support.",
+    "Extra pivot work delays complete drafting or loses a useful discovery before the final."
+  ],
+  "frozen_measures": {
+    "primary": [
+      "Paired complete-final six-axis source/obligation assessment with no material omission, unsupported claim, false rejection or preservation loss.",
+      "Decision-useful supported mechanisms/alternatives/history found during brief-only discovery and retained in the complete final; evaluator also records missing material families.",
+      "Failure-inclusive user-visible completion proxy and observed candidate resource use, with preparation and evaluation separate."
+    ],
+    "process": [
+      "Eligible unused evidence items inspected, actual pivot count, query/locator lineage, pivot elapsed time where observable; missing observations stay unknown.",
+      "Supported useful versus rejected/unresolved pivots, new semantic families relative to the initial account, final retention/loss.",
+      "Actual investigator/critic/reviser durations, waiting, total contexts and source operations; no guaranteed saving inferred."
+    ],
+    "measurement_limits": [
+      "Two matched cases are a developmental screen, not a population guarantee or qualified efficiency winner.",
+      "No faster-fail saving, invented zero cost, universal external-world recall or code-test execution inference.",
+      "Product work, method/case preparation, evaluation and support costs are separate; cold preparation and warm reuse denominators remain explicit."
+    ],
+    "operational_definitions": {
+      "useful_supported_discovery": "An independently supported mechanism/alternative/history item that addresses an original obligation and changes a plausible choice, trade-off or validation decision; repeated brief wording, new URLs and trivia do not suffice.",
+      "unfamiliarity_limit": "B11 can observe absence from the investigator initial account and source-derived pivot lineage, not private prior model knowledge. Candidate/evaluator observed opportunity union is finite, not universal recall.",
+      "duplicate_verification": "Another acquisition or derivation for the same bounded premise with the same applicability within one arm; merely revisiting a URL for a different governing question is not duplication.",
+      "valid_reuse": "Independent original check exists; governing context/applicability inspected by reviser; material premise/dependencies remain valid for final use. An evaluator can still find it wrong; a hash never establishes source truth."
+    },
+    "analysis_rule": "Report every original logical arm, quality axes/defects and delivery/method/time eligibility separately. Compare paired raw latency/resources only within identical actual case/provider/model/effort/tier contracts; do not call FAIL/FAIL or faster FAIL equal-quality savings. Primary ordering: no material scope weakening, complete assessed source quality/delivery, then failure-inclusive latency/resource trade-offs. Two heterogeneous case blocks cannot establish provider ranking, reliability or a general efficiency effect; report differences and unknowns, do not multiply method savings."
+  },
+  "full_obligations_retained": [
+    "Brief-only unfamiliar mechanism/component/alternative/history discovery with independent source lookup authorized.",
+    "One exact-plan release after substantive discovery/source-map freeze; material plan dispositions required.",
+    "Complete independent criticism of all original obligations and consequential source/applicability claims.",
+    "Fresh reviser resolves supported criticism, rejects unsupported criticism with evidence, preserves supported meaning and produces complete final.",
+    "All six ER13 axes and proposed-versus-executed validation; no deployment/physical intervention requirement."
+  ],
+  "time_contract": "Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.",
+  "maximum_seconds": 3600,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "deadline_clipping": "Every stage clipped to the common arm T0+3600 deadline, not transferred absolute A1 deadlines.",
+  "topology": "investigator -> independent critic -> fresh reviser",
+  "candidate_contexts": 3,
+  "native_goals": "Required native-Goal identity/capture remains root-owned and common; no changes to lifecycle mechanics.",
+  "boundary": "At most five minutes of investigator 30; no transfer, quota, extra role, semantic conclusions from another arm, or restriction on full ordinary discovery.",
+  "bound_cases": [
+    "B11-P01",
+    "B11-P02"
+  ],
+  "candidate_visible_files": [
+    "investigator_prompt_delta.txt",
+    "critic_prompt_delta.txt",
+    "reviser_prompt_delta.txt"
+  ],
+  "candidate_excluded": [
+    "method card/research evidence",
+    "other arms/history/evaluation",
+    "case hidden plan before reveal",
+    "rubric"
+  ],
+  "novelty_review": "Complete compact ER10 M01-M16 menu, ER11 unique execution map plus M09-M12 operational descriptions, and ER12 A1-A8 method map. Exact source hashes/contrasts in novelty.json; no historical case/evaluator re-audit.",
+  "prepared_at_utc": "2026-10-12T00:24:33.785594+00:00",
+  "method_validation_status": "PASS_STATIC_CONTRACT_SOURCE_CAPTURE_COMPACT_NOVELTY_REVIEW; INTERVENTION_UNEXECUTED",
+  "execution_topology": "sequential-v1"
+}

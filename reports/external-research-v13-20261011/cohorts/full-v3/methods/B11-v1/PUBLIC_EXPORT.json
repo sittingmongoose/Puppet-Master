@@ -1,0 +1,73 @@
+{
+  "schema": "er13.method_public_export.v1",
+  "method": "B11-v1",
+  "allowlist": [
+    {
+      "path": "README.md",
+      "sha256": "3ce546c155be545568087b8061db0ec31fe3a814cfe48b74c22654352cad769c"
+    },
+    {
+      "path": "method.json",
+      "sha256": "c0b09a9a0513873530d10d03573d1675e98058973fbc435d2404a542a3fb2b03"
+    },
+    {
+      "path": "investigator_prompt_delta.txt",
+      "sha256": "c45b0572027a36a9f8a57f4cda7184dad1a039986757afe5b9d8497090d26638"
+    },
+    {
+      "path": "critic_prompt_delta.txt",
+      "sha256": "a4e5d1f8f0480e61bada427ce35c48a3024dd5249f0e50aada1a0ac6baaa14b6"
+    },
+    {
+      "path": "reviser_prompt_delta.txt",
+      "sha256": "aeeebc69d35bce61fd0a0a3e43f0ef76dfeca7b8eaf3d13efb3c0e97a6611f98"
+    },
+    {
+      "path": "source-evidence.json",
+      "sha256": "e38009d305c37f33354375ed871324a6aacd082453115a21f225ba56cde756e1"
+    },
+    {
+      "path": "evidence.md",
+      "sha256": "ef4fc1097aafa2d6395761f745effb38d7af8e8a90fe00786507299f94f13f63"
+    },
+    {
+      "path": "novelty.json",
+      "sha256": "11e740837ad2e22d83a96f2a2cb655940962a4c0a80c6b5371cc8d9aacdbf813"
+    },
+    {
+      "path": "research-selection.md",
+      "sha256": "0e2f8ba36b2871b47fdf850569a83815ac288abb4e8c0c002132c610ebc02521"
+    },
+    {
+      "path": "preparation.json",
+      "sha256": "e1361bb67b0e6b1a32f440d72c497d0f5c77ef337a79fb60b35eaa9aae8a0c07"
+    },
+    {
+      "path": "VALIDATION.json",
+      "sha256": "d697f649b666abcecdfea9d5949beb133b2b4962cd533e5339bed16d54511e41"
+    },
+    {
+      "path": "primary-evidence/storm-LICENSE",
+      "sha256": "88241386c28ff04821832762714c9ff0d22c4de6b0633d11554e69a968a718e0"
+    },
+    {
+      "path": "primary-evidence/storm-co_storm_agents.py",
+      "sha256": "bc8d1e50370912c6cc7359142fb6e3a439d963aed5f4dcb0054165458c9fe6b9"
+    },
+    {
+      "path": "primary-evidence/storm-grounded_question_generation.py",
+      "sha256": "f5613bc6c3dd16202337f4a52615e4008369399d5102babf352d0b6cb529ecd0"
+    },
+    {
+      "path": "older-method-maps/ER10-technique-cards.md",
+      "sha256": "f97cb887d6519c9c5e451cddfcf336b312af28b24dea80c87ca610b4df011ac4"
+    },
+    {
+      "path": "older-method-maps/ER10-retrieval.json",
+      "sha256": "5eda9cda22b8e6c42955c3ebd535637c3c79042120a3202d7660b96b0a67055b"
+    }
+  ],
+  "raw_body_default_exclusions": "Every PDF/HTML capture; B12 rejected-proposal old candidate deltas/cards and old Bazel body captures. Publish authored source capsules/locators/hashes; no original private account or machine state.",
+  "license_notes": "B11 MIT code retains full original LICENSE and unchanged notices. Source capsules are authored zero-quote prose. Paper/unknown-license HTML bodies remain local even where a paper is licensed.",
+  "receipt_export": "SHA256SUMS.json and READY.json may also be exported as root provenance receipts; local paths may need root publication normalization with original hashes retained."
+}

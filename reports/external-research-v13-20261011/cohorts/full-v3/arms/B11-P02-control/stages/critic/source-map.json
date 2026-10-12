@@ -1,0 +1,347 @@
+{
+  "run_id": "B11-P02-control",
+  "stage": "critic",
+  "recorded_utc": "2026-10-12T01:32:45Z",
+  "method": "Independent critic opened official documentation and upstream implementation history from the investigator's carried index; inspected full brief and investigator package; verified frozen discovery/revealed-plan SHA-256 values. No code witness or app test was run.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Loro List and Movable List",
+      "url": "https://loro.dev/docs/tutorial/list",
+      "version_or_commit": "Living official docs, no version pinned; JS/WASM examples; accessed 2026-10-12.",
+      "locator": "Heading List and Movable List, lines 71-76 and 113-166.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Shows List insert/delete, MovableList set/move, two replicas making concurrent moves and importing updates; both converge to one deterministic position, with the higher PeerID's move winning in the example.",
+      "governing_condition_default_exception": "List is for insert/delete; simulating move with delete+insert can yield duplicate logical elements under concurrent edits. MovableList has native move/set but costs more; docs estimate about 80% slower encode/decode and 50% more memory for insert/delete-only workloads.",
+      "applicability": "Direct fit for ordered cue reordering; convergence does not present both move intents for human choice."
+    },
+    {
+      "source_id": "S02",
+      "title": "Loro Cursor and Stable Positions",
+      "url": "https://loro.dev/docs/tutorial/cursor",
+      "version_or_commit": "Living official docs, no version pinned; accessed 2026-10-12.",
+      "locator": "Heading Cursor, lines 70-80 and examples 81-110.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Separately storable cursor identifies a position in Text/List/MovableList; after insert/delete, it resolves to an updated position. Docs demonstrate cursors for comment ranges.",
+      "governing_condition_default_exception": "Integer indexes are unstable. When a referenced element is deleted, Loro recalculates the position by replaying relevant history and updates cursor metadata to refer to present elements; longer replay can cost more. JS offsets use UTF-16.",
+      "applicability": "Useful for optional text-range comments; cue-level comments should use an explicit cue_id rather than sequence indexes."
+    },
+    {
+      "source_id": "S03",
+      "title": "Loro Sync",
+      "url": "https://loro.dev/docs/tutorial/sync",
+      "version_or_commit": "Living official docs, no version pinned; accessed 2026-10-12.",
+      "locator": "Real-time Collaboration and Sync Strategies, lines 77-120; Import Status/Pending Operations, lines 184-200.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Exports updates from a peer version vector and imports them; same state is reached for the same updates independent of order/duplicates. Import status exposes pending causal dependencies. Regular child containers independently created under one Map key can hide a value; docs recommend ensure_mergeable_* for shared logical keys.",
+      "governing_condition_default_exception": "Convergence assumes peers eventually receive the same update set. Non-empty pending ranges mean required dependencies are missing. Conflicting regular child containers under one map key do not both appear as values.",
+      "applicability": "Supports offline update exchange, durable outbox/relay design, schema initialization, and explicit missing-range recovery."
+    },
+    {
+      "source_id": "S04",
+      "title": "Loro Rust LoroDoc API and source",
+      "url": "https://docs.rs/loro/1.16.2/loro/struct.LoroDoc.html",
+      "version_or_commit": "Rust crate loro 1.16.2, exact version page; docs.rs latest resolved to 1.16.2 during research.",
+      "locator": "LoroDoc import/export, import_batch, try_get_movable_list, checkout/frontiers methods; matching implementation index at https://docs.rs/loro/1.16.2/src/loro/lib.rs.html#3339.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Rust API imports/exports snapshots and incremental updates; import_batch accepts arbitrary order; ImportStatus reports pending dependencies; checkout reads a selected frontier; Rust wrapper exposes get_movable_list and recoverable try_get_movable_list.",
+      "governing_condition_default_exception": "Library does not implement a network protocol or local storage; caller owns those. Pending import is incomplete until dependencies arrive. Checkout detaches state; reattach/checkout_to_latest before ordinary editing.",
+      "applicability": "Native Rust fit for Rust/Slint; evidence does not prove UI integration, Windows packaging, or team-scale performance."
+    },
+    {
+      "source_id": "S05",
+      "title": "Loro PeerID Management",
+      "url": "https://loro.dev/docs/concepts/peerid_management",
+      "version_or_commit": "Living official docs, no version pinned; Rust API warning corroborated by S04; accessed 2026-10-12.",
+      "locator": "Quick Reference and Automatic/Manual assignment, lines 75-103; Rust API set_peer_id pitfall in S04.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Default creates a random PeerID per LoroDoc instance/session, including when loading the same document again; operation identity is (PeerID, counter).",
+      "governing_condition_default_exception": "Never reuse PeerID across concurrent writers; duplicate IDs can yield conflicting operation IDs and document corruption. Manual fixed IDs require strict single-writer ownership.",
+      "applicability": "Requires process/session identity policy and duplicate-writer/recovery tests; relay does not remove this invariant."
+    },
+    {
+      "source_id": "S06",
+      "title": "Loro upstream package release history",
+      "url": "https://github.com/loro-dev/loro/releases",
+      "version_or_commit": "Latest observed JS/WASM package release loro-crdt@1.16.4, released 2026-09-30, verified commit 45708d0; distinguish this from Rust crate loro 1.16.2 in S04.",
+      "locator": "Release block loro-crdt@1.16.4, lines 241-295; adjacent 1.16.2 block/commit lines 515-548.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "1.16.4 makes applyDiff/revertTo all-or-nothing on errors, rejects invalid unknown-container operations without trapping, repairs revived movable-list children, and makes failed imports leave state unchanged; 1.16.2 reports compatibility for old JS tree snapshots after moves.",
+      "governing_condition_default_exception": "Release notes concern JS/WASM package distribution and do not automatically prove identical version/fix status in separately versioned Rust crate. Old format and duplicate PeerID scenarios require explicit migration/replay tests.",
+      "applicability": "Real history for failure atomicity, format compatibility, and recovery; pin and verify the Rust dependency independently."
+    },
+    {
+      "source_id": "S07",
+      "title": "Loro import lock-order issue and fix PR",
+      "url": "https://github.com/loro-dev/loro/issues/957",
+      "version_or_commit": "Issue opened 2026-04-23; reproducer used loro-crdt@1.11.1, @loro-extended/repo@6.0.0-beta.0 and adapter-webrtc@6.0.0-beta.0; linked PR #958 merged 2026-04-25 as commit 0977ad1. Report mentions main commit 7dfda879.",
+      "locator": "Issue #957 summary/repro, lines 138-177 and 208-239; PR #958 merged-status and summary, lines 130-173 and 251-264.",
+      "access_utc": "2026-10-12T01:13:17Z",
+      "observed_operation": "A user report observed lock-order panics on imports under a connected Node/WebRTC adapter. Merged PR #958 changed len_ops() to read a cached op count instead of re-locking OpLog, kept the count synchronized through imports/rollback, and added regression coverage.",
+      "governing_condition_default_exception": "Specific WASM/Node/third-party WebRTC adapter and high multi-document/two-tab load, not a Rust-native defect claim or proof of a present bug.",
+      "applicability": "Justifies testing chosen adapter with concurrent import, reconnect, load, and failure paths rather than validating only core merges."
+    },
+    {
+      "source_id": "S08",
+      "title": "Automerge conflict behavior",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version_or_commit": "Living official docs; JS-oriented example, no version pinned; accessed 2026-10-12.",
+      "locator": "Conflict semantics, lines 58-112.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Concurrent assignments to one property yield a deterministic displayed winner and retained alternatives accessible through getConflicts; a later assignment clears the conflict.",
+      "governing_condition_default_exception": "Winner ordering uses operation IDs rather than wall-clock time. Alternatives stay inspectable only until code assigns the property again.",
+      "applicability": "Credible local-first/Rust alternative; UI must inspect/persist conflicts before overwriting and cannot treat LWW as approval."
+    },
+    {
+      "source_id": "S09",
+      "title": "Automerge Lists",
+      "url": "https://automerge.org/docs/reference/documents/lists/",
+      "version_or_commit": "Living official docs; JS examples; no version pinned; accessed 2026-10-12.",
+      "locator": "Fine-grained update guidance, lines 97-134.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Docs recommend updating list IDs and entity-map entries directly rather than replacing an entire nested object, because whole-object replacement conflicts at the containing property.",
+      "governing_condition_default_exception": "Fine-grained edits help disjoint concurrent operations merge; they do not define a first-class move or stage-staff decision workflow.",
+      "applicability": "Relevant to cue ID list plus entity map if Automerge is chosen."
+    },
+    {
+      "source_id": "S10",
+      "title": "Automerge Rust sync protocol",
+      "url": "https://automerge.org/automerge/automerge/sync/index.html",
+      "version_or_commit": "Official Rust API docs, generated version not exposed in captured page; accessed 2026-10-12.",
+      "locator": "Module description, lines 17-25.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Each synchronizing peer keeps per-peer sync state and exchanges generated/received messages in a loop.",
+      "governing_condition_default_exception": "Protocol assumes a reliable in-order stream between peers.",
+      "applicability": "Transport/relay must satisfy or wrap that stream contract."
+    },
+    {
+      "source_id": "S11",
+      "title": "Yjs Offline Support",
+      "url": "https://docs.yjs.dev/getting-started/allowing-offline-editing",
+      "version_or_commit": "Living official docs; y-indexeddb package path, no version pinned; accessed 2026-10-12.",
+      "locator": "Offline Support, lines 1-44.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "y-indexeddb writes changes to local IndexedDB and loads them on the next visit; only latest updates are sent to the network provider; multiple providers can be combined.",
+      "governing_condition_default_exception": "Examples target browser IndexedDB; native applications need an environment-appropriate database provider from the ecosystem. Browser page assets need separate offline availability.",
+      "applicability": "Good web/JS alternative; adds provider/binding work for a Rust desktop UI."
+    },
+    {
+      "source_id": "S12",
+      "title": "Yjs Relative Positions",
+      "url": "https://docs.yjs.dev/api/relative-positions",
+      "version_or_commit": "Living official docs, no version pinned; accessed 2026-10-12.",
+      "locator": "Y.RelativePosition, lines 1-20.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "A relative position attaches to an element, remains stable under remote insertion, can be encoded, and translates to a current index; resolution returns null if target type is deleted or unavailable.",
+      "governing_condition_default_exception": "Applies to text/sequences in the same Yjs document; it does not establish cue-level identity.",
+      "applicability": "Strong alternate for text-span comments; stable cue IDs remain preferable for whole-cue anchors."
+    },
+    {
+      "source_id": "S13",
+      "title": "ShareDB Introduction",
+      "url": "https://share.github.io/sharedb/",
+      "version_or_commit": "Living official docs, no version pinned; accessed 2026-10-12.",
+      "locator": "Introduction/features, lines 35-53.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "ShareDB is a Node.js server/client for JSON collaboration; it delegates OT transformation to types and advertises offline change sync upon reconnection and historic versions.",
+      "governing_condition_default_exception": "Server coordinates/commits; OT semantics depend on registered type plugin.",
+      "applicability": "Server-authoritative alternative with additional service and app policy needs."
+    },
+    {
+      "source_id": "S14",
+      "title": "ShareDB Reconnecting Client Example",
+      "url": "https://share.github.io/sharedb/getting-started",
+      "version_or_commit": "Living official docs, no version pinned; accessed 2026-10-12.",
+      "locator": "Client/WebSocket example, lines 83-119.",
+      "access_utc": "2026-10-12T01:06:05Z",
+      "observed_operation": "Reconnects with reconnecting-websocket but sets maxEnqueuedMessages=0 because ShareDB says buffering while the socket is closed has undefined behavior.",
+      "governing_condition_default_exception": "Example disables WebSocket buffering and shows server-backed subscribe/submitOp; it is not a durable local outbox implementation.",
+      "applicability": "Requires separate durable client outbox/replay and server persistence for disconnected rehearsal work."
+    }
+  ],
+  "predecessor_stage": "investigator",
+  "predecessor_recorded_utc": "2026-10-12T01:15:46Z",
+  "predecessor_method": "Web-browsed primary project documentation, versioned Rust API/source documentation, and upstream release/issue history. Sources are paraphrased in the index; no downloaded page or executable code is stored or run.",
+  "predecessor_source_map": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/stages/investigator/source-map.json",
+  "critic_review": {
+    "reviewed_at_utc": "2026-10-12T01:32:45Z",
+    "method": "Independent critic opened official documentation and upstream implementation history from the investigator's carried index; inspected full brief and investigator package; verified frozen discovery/revealed-plan SHA-256 values. No code witness or app test was run.",
+    "sources_checked": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14"
+    ],
+    "independently_confirmed": [
+      {
+        "source_id": "S01",
+        "url": "https://loro.dev/docs/tutorial/list",
+        "version_or_commit": "Living official documentation; JS/WASM examples, no package version pinned.",
+        "locator": "List and MovableList, lines 71-76, 143-166.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "List move simulation can duplicate a logical element under concurrency; MovableList has native move; example converges to one deterministic placement based on peer ID.",
+        "governing_condition_default_exception": "MovableList has extra encode/decode and memory overhead; deterministic convergence is not human intent resolution.",
+        "applicability": "Supports stable-ID order prototype, with app-owned conflict intent."
+      },
+      {
+        "source_id": "S02",
+        "url": "https://loro.dev/docs/tutorial/cursor",
+        "version_or_commit": "Living official docs; JS example, no package version pinned.",
+        "locator": "Cursor and Updating Cursors, lines 70-80.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Cursors can be stored independently and track sequence/text positions; deleted element positions may require relevant-history replay; JS offsets are UTF-16.",
+        "governing_condition_default_exception": "History replay cost and UTF-16 apply to documented behavior; cue-level identity remains a separate app model.",
+        "applicability": "Supports optional range comments, not list-index identity."
+      },
+      {
+        "source_id": "S03",
+        "url": "https://loro.dev/docs/tutorial/sync",
+        "version_or_commit": "Living official docs; JS/WASM examples, no package version pinned.",
+        "locator": "Sync, lines 109-110; pending import, lines 198-219.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Same update set converges despite order/duplicates; regular child containers created under same Map key may hide one value; pending ranges indicate missing causal operations.",
+        "governing_condition_default_exception": "Convergence assumes eventual delivery of same update set; nonempty pending means incomplete integration.",
+        "applicability": "Supports update exchange and missing-range recovery; not transport or conflict UI."
+      },
+      {
+        "source_id": "S04",
+        "url": "https://docs.rs/loro/latest/loro/struct.LoroDoc.html (page identifies loro 1.16.2); investigator's exact version URL: https://docs.rs/loro/1.16.2/loro/struct.LoroDoc.html",
+        "version_or_commit": "Rust crate loro 1.16.2; exact-version direct open failed in web tool, /latest resolved to 1.16.2.",
+        "locator": "Description lines 148-150; checkout/frontiers 319-354; import_batch 366-382; movable-list API 390-403; commit semantics 486-496.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Rust API exposes containers, history/frontiers and batch import; docs say library leaves storage/sync to caller. Loro commit is event/history grouping, not ACID: no rollback or isolation.",
+        "governing_condition_default_exception": "Checkout detaches state; attach/check out latest before ordinary editing. Durable persistence must be supplied by the application.",
+        "applicability": "Supports Rust feasibility, pending import/revision handling, and the critic's explicit local-durability clarification."
+      },
+      {
+        "source_id": "S05",
+        "url": "https://loro.dev/docs/concepts/peerid_management",
+        "version_or_commit": "Living official docs; no package version pinned.",
+        "locator": "PeerID quick reference/assignment and pitfalls, lines 75-104 and 118-123.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Peer IDs identify editing sessions; random ID defaults per LoroDoc instance; reusing an ID is safe only when the matching local history is restored before remote updates and only one writer emits for that ID.",
+        "governing_condition_default_exception": "Parallel processes/tabs sharing a reused ID risk operation identity collisions.",
+        "applicability": "Supports a per-concurrent-writer identity rule and explicit recovery tests."
+      },
+      {
+        "source_id": "S06",
+        "url": "https://github.com/loro-dev/loro/releases",
+        "version_or_commit": "loro-crdt@1.16.4 JS/WASM package, commit 45708d0, release page dated 2026-09-30.",
+        "locator": "Release entry around lines 241-282.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Release history includes package-specific fixes including all-or-nothing diff/revert behavior; release identity is loro-crdt rather than Rust crate loro.",
+        "governing_condition_default_exception": "JS/WASM release does not prove the same fix status for Rust crate 1.16.2.",
+        "applicability": "Supports keeping package versions and failure claims separate."
+      },
+      {
+        "source_id": "S07",
+        "url": "https://github.com/loro-dev/loro/issues/957",
+        "version_or_commit": "Issue #957 on loro-crdt 1.11.1 and Node/WebRTC adapter context; fix PR #958 merged as 0977ad1 on 2026-04-25.",
+        "locator": "Issue lines 164-177; PR summary lines 165-174 and merged block lines 130-153, 253.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Issue describes import lock-order panics in a connected Node/WebRTC workload; PR changes len_ops to read cached operation count, updates rollback/import paths, and adds regression coverage.",
+        "governing_condition_default_exception": "This reported configuration is not evidence of a current Rust-native defect.",
+        "applicability": "Justifies testing the chosen adapter/import/reconnect path; not candidate rejection."
+      },
+      {
+        "source_id": "S08",
+        "url": "https://automerge.org/docs/reference/documents/conflicts/",
+        "version_or_commit": "Living official docs; JS example, no version pinned.",
+        "locator": "Conflict behavior, lines 60-112.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Concurrent same-property writes expose deterministic winner and alternatives through getConflicts; a later assignment clears that conflict; winner order is operation-ID-based, not wall clock.",
+        "governing_condition_default_exception": "Application must inspect/persist alternatives before assignment.",
+        "applicability": "Supports alternative comparison and rejection of LWW as approval."
+      },
+      {
+        "source_id": "S09",
+        "url": "https://automerge.org/docs/reference/documents/lists/",
+        "version_or_commit": "Living official docs; JS examples, no version pinned.",
+        "locator": "Fine-grained update guidance, lines 97-134.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Docs recommend updating entity maps and ID lists in place rather than replacing whole objects.",
+        "governing_condition_default_exception": "Fine-grained changes aid disjoint updates but do not define a move/adjudication workflow.",
+        "applicability": "Supports a credible alternative data model."
+      },
+      {
+        "source_id": "S10",
+        "url": "https://automerge.org/automerge/automerge/sync/index.html",
+        "version_or_commit": "Official Rust API docs; generator version not shown.",
+        "locator": "Module description, lines 16-25.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Rust sync protocol keeps per-peer state and exchanges messages in a loop over a reliable in-order stream.",
+        "governing_condition_default_exception": "Relay/transport must meet or wrap this stream contract.",
+        "applicability": "Supports identified Automerge transport cost."
+      },
+      {
+        "source_id": "S11",
+        "url": "https://docs.yjs.dev/getting-started/allowing-offline-editing",
+        "version_or_commit": "Living official docs; y-indexeddb package, no version pinned.",
+        "locator": "Offline Support, lines 1-44.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "y-indexeddb stores updates in browser IndexedDB; docs also point to providers for native environments.",
+        "governing_condition_default_exception": "IndexedDB example is browser-oriented; app-native provider still must be selected.",
+        "applicability": "Supports Yjs as web/JS option with native integration work."
+      },
+      {
+        "source_id": "S12",
+        "url": "https://docs.yjs.dev/api/relative-positions",
+        "version_or_commit": "Living official docs; no version pinned.",
+        "locator": "Relative positions, lines 1-20.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Relative positions survive remote insertions and can be encoded; conversion returns null if the type/target is deleted or unavailable.",
+        "governing_condition_default_exception": "Positions are within the same Yjs document and do not alone establish cue identity.",
+        "applicability": "Supports text-range alternative and deletion-state caveat."
+      },
+      {
+        "source_id": "S13",
+        "url": "https://share.github.io/sharedb/",
+        "version_or_commit": "Living official docs; no version pinned.",
+        "locator": "Introduction/features, lines 35-52.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "ShareDB is Node.js server plus JavaScript client; OT is delegated to type plugins; docs advertise offline reconnection sync and history.",
+        "governing_condition_default_exception": "Server coordinates/commits; type plugin determines OT semantics.",
+        "applicability": "Supports server-authoritative alternative, with additional service policy."
+      },
+      {
+        "source_id": "S14",
+        "url": "https://share.github.io/sharedb/getting-started",
+        "version_or_commit": "Living official docs; no version pinned.",
+        "locator": "Reconnecting WebSocket example, lines 85-95.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Example sets maxEnqueuedMessages=0 because buffering while socket is closed has undefined behavior.",
+        "governing_condition_default_exception": "Example does not supply durable local outbox/replay.",
+        "applicability": "Supports identified ShareDB reconnect limitation."
+      }
+    ],
+    "supplementary_sources": [
+      {
+        "source_id": "S07-PR958",
+        "title": "fix: avoid len_ops lock-order reentry",
+        "url": "https://github.com/loro-dev/loro/pull/958",
+        "version_or_commit": "Merged commit 0977ad1, 2026-04-25.",
+        "locator": "Summary lines 165-174; merged block lines 130-153 and 253.",
+        "access_utc": "2026-10-12T01:32:45Z",
+        "observed_operation": "Cached operation count avoids re-locking OpLog during import/event processing; import rollback and snapshot paths maintain the count; regression coverage is described.",
+        "governing_condition_default_exception": "Addresses the linked adapter/import issue; does not establish a Rust native regression or whole-application guarantee.",
+        "applicability": "Implementation-history evidence only."
+      }
+    ],
+    "preserved_but_not_independently_rechecked_source_ids": [],
+    "hash_checks": {
+      "command": "sha256sum revealed-plan.md discovery.md",
+      "result": "Both hashes matched plan-reveal.json."
+    }
+  },
+  "critic_source_index": "sources/index.md"
+}

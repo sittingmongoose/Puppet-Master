@@ -1,0 +1,32 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T01:39:51.534481+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/B12-P01-treatment.json",
+      "bytes": 5591,
+      "sha256": "dad87c1f09fc96019d44c1d6bc187b7c0e68063f4ae64abfa2b7d850b6fe9bc8"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2262,
+      "sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 1722,
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247"
+    },
+    {
+      "path": "run/B12-P01-treatment/control/run.json",
+      "bytes": 3815,
+      "sha256": "86058af791b26199612370507e421030be26af1d9494696bd4859fbc59696a7b"
+    },
+    {
+      "path": "run/B12-P01-treatment/control/late-critique/release.json",
+      "bytes": 1623,
+      "sha256": "232bbad01337198a56bb29f6bf1387567073322c1e2b8c9b98d00f40bfe3b2bb"
+    }
+  ]
+}

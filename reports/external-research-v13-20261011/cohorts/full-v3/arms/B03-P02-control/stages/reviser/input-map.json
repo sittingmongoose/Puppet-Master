@@ -1,0 +1,32 @@
+{
+  "run_id": "B03-P02-control",
+  "stage": "reviser",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/inputs/brief.md",
+  "predecessors": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/plan-reveal.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/critic/critique.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/critic/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/sources/index.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/critic/sources/index.md"
+  ],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/sources",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/critic/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/reviser",
+  "stage_deadline_utc": "2026-10-12T01:48:12.266Z",
+  "whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/investigator/revealed-plan.md"
+}

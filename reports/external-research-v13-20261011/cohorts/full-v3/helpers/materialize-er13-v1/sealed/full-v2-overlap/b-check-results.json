@@ -1,0 +1,895 @@
+{
+  "passed": true,
+  "checks": 221,
+  "details": [
+    {
+      "name": "public pin CHANGELOG.md",
+      "passed": true
+    },
+    {
+      "name": "public pin README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin READY.json",
+      "passed": true
+    },
+    {
+      "name": "public pin ROUTES.md",
+      "passed": true
+    },
+    {
+      "name": "public pin b-check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin b-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin delta-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin er13-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin extra-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin materialize.py",
+      "passed": true
+    },
+    {
+      "name": "public pin overlap-check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin overlap-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin preservation-check.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-bundle-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v3-README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v3-READY.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v3-bundle-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v3-check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v3-source-lineage.json",
+      "passed": true
+    },
+    {
+      "name": "public pin public-input-dependency-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "public pin repin.py",
+      "passed": true
+    },
+    {
+      "name": "public pin routes.py",
+      "passed": true
+    },
+    {
+      "name": "public pin source-lineage.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/bootstrap.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/handoff.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/late-critique.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/prepare.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/reveal.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/invocation-clarification-v1/transform.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/A8/critic_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/A8/reviser_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B07/critic_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B07/investigator_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B07/method.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B07/reviser_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B09/critic_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B09/investigator_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B09/method.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B09/reviser_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B10/critic_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B10/investigator_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B10/method.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/B10/reviser_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "B02 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B02 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B02 no separate reviser",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B02 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B02 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B02 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B02 same critic finalizes with complete review",
+      "passed": true
+    },
+    {
+      "name": "B02 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B02 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B02 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B06 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B06 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B06 summed critics do not exceed control 720",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B06 role has declared responsibility",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B06 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B06 role has declared responsibility",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B06 role has declared responsibility",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B06 role has declared responsibility",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B07 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B07 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B07 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B07 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B07 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B07 critic exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B07 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B07 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B07 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B07 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B07 changed supplied delta refused",
+      "passed": true
+    },
+    {
+      "name": "B09 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B09 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B09 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B09 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B09 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B09 critic exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B09 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B09 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B09 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B09 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B09 changed supplied delta refused",
+      "passed": true
+    },
+    {
+      "name": "B10 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B10 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B10 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B10 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B10 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B10 critic exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B10 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B10 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B10 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B10 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B10 changed supplied delta refused",
+      "passed": true
+    },
+    {
+      "name": "B11 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B11 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B11 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B11 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B11 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B11 critic exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B11 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B11 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B11 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B11 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B11 changed supplied delta refused",
+      "passed": true
+    },
+    {
+      "name": "B12 exact stage budgets",
+      "passed": true
+    },
+    {
+      "name": "B12 final output selected before science",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B12 investigator capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B12 critic maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B12 critic cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B12 critic exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B12 critic existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B12 critic immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B12 critic capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser maximum contract and Standard",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser cap clipped to whole",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser exact frozen delta and hash",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser existing exact capture works",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser immutable retry bytes",
+      "passed": true
+    },
+    {
+      "name": "B12 reviser capture retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "B12 changed supplied delta refused",
+      "passed": true
+    },
+    {
+      "name": "terminal snapshot is mechanical only",
+      "passed": true
+    },
+    {
+      "name": "terminal snapshot retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "terminal source inventory addition refused",
+      "passed": true
+    },
+    {
+      "name": "terminal selected output mutation refused",
+      "passed": true
+    },
+    {
+      "name": "luna exact route planning readiness",
+      "passed": true
+    },
+    {
+      "name": "luna unsupported max option refused",
+      "passed": true
+    },
+    {
+      "name": "muse exact route planning readiness",
+      "passed": true
+    },
+    {
+      "name": "muse unsupported max option refused",
+      "passed": true
+    },
+    {
+      "name": "zcode exact route planning readiness",
+      "passed": true
+    },
+    {
+      "name": "zcode unsupported max option refused",
+      "passed": true
+    },
+    {
+      "name": "B03 retained Goal lifecycle honestly refused",
+      "passed": true
+    },
+    {
+      "name": "muse direct lifecycle refusal before copy",
+      "passed": true
+    },
+    {
+      "name": "zcode direct lifecycle refusal before copy",
+      "passed": true
+    },
+    {
+      "name": "future T0 refused before copy",
+      "passed": true
+    }
+  ],
+  "mode": "SYNTHETIC_OFFLINE_B_DELTAS_ONLY",
+  "native_candidate_calls": 0,
+  "dispatches": 0,
+  "reserve_starts": 0,
+  "scratch_removed": true
+}

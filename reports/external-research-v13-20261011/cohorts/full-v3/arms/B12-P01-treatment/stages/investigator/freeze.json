@@ -1,0 +1,56 @@
+{
+  "prepared_at_utc": "2026-10-12T01:01:23.087Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T01:31:23.087Z",
+  "whole_deadline_utc": "2026-10-12T02:01:22.173Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/inputs/brief.md",
+      "sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946",
+      "bytes": 2262
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "0910558a9f6ad8f7294b6e0fd27826216aac69d8900896431bf8c1931c3fbb1b",
+      "bytes": 11064
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "2bbed4f7da86b2d951b46a1c573bf1462d3e659973a1ab83471940ae7afb257d",
+      "bytes": 873
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "755610683ba44036c4951b5c81ad218b6dcc83fddd1b27f8237266c7474e6619",
+      "bytes": 185
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "ccd24b163947ca55508d2031864d8435ba48c45ee2f466d5f76193c9a6e34106",
+      "bytes": 835
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "0f2da606f4be440a3bb0f59be3d4344d5751d9f663a10b14678a74798f8fc953",
+      "bytes": 2098
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run B12-P01-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": "No B12 change to the investigator. Complete R0 brief-only discovery, the one-shot exact-plan reveal after substantive discovery/source-map freeze, and the complete source-backed draft.\n",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0,
+  "request_sha256": "c166c3bef0288db536b6cf9edf73e81bc9144622a543ebbfaa95ccce830e528b"
+}

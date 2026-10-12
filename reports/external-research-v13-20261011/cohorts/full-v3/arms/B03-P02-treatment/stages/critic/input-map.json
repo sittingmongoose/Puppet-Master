@@ -1,0 +1,34 @@
+{
+  "run_id": "B03-P02-treatment",
+  "stage": "critic",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/inputs/brief.md",
+  "predecessors": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/plan-reveal.json"
+  ],
+  "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/revealed-plan.md",
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic",
+  "stage_deadline_utc": "2026-10-12T01:30:47.254475+00:00",
+  "whole_deadline_utc": "2026-10-12T01:58:18.392000+00:00",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "fixed_critic_release": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/control/critic-release.json",
+  "allowed_mechanics": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/helpers/b03-retain-v1/b03.py",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/configs/B03-P02-treatment.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/native-activate.js",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/critic-complete.js"
+  ]
+}

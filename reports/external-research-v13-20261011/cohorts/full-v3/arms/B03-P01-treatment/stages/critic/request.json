@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-12T01:18:45.769217+00:00",
+  "clientRequestId": "er13-b03-B03-P01-treatment-critic-v1",
+  "args": {
+    "clientRequestId": "er13-b03-B03-P01-treatment-critic-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER13 B03 B03-P01-treatment critic",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute exactly ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/assignment.md and input-map.json. Native activation: read/execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/native-activate.js as functions.exec code. ONE native Goal only. No delegation, no parent/history/other-candidate input. Original author KEEP SAME Goal ACTIVE after draft freeze and block on the prescribed waiter; critic fresh/context separate. Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time."
+  }
+}

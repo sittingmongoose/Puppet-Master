@@ -1,0 +1,11 @@
+# Draft plan: Portable project archive export
+
+The draft captures a project revision marker, writes task and comment objects into a versioned structured file, then adds attachments and a static readable index. Internal identifiers remain stable, while inaccessible external links are represented by a redacted reference and omission reason. All human-readable assets are local so the archive can be opened without a network connection. Source data remain untouched.
+
+Export initially walks tasks in identifier order and streams attachment bytes into one package. It assumes that reading each task once after taking a revision marker yields a consistent snapshot even if comments change during the walk. Attachment names are sanitized and disambiguated; hashes and original names go into a manifest. Missing bytes yield an omission entry rather than a fabricated file. The proposal has not established how to obtain source snapshots or detect changes when the source store cannot hold a long transaction.
+
+A completion marker is written last, and canceled output is labeled partial. Available temporary space is checked before starting, but the estimation method and streaming container choice remain open. Date values retain their supplied timezone information; custom fields carry type labels plus original values. Round-trip claims would be limited to explicitly mapped fields. Proposed validation covers ongoing edits, inaccessible links, name collisions, interrupted writes, low disk and versioned import fixtures. No export has been executed. A future importer must treat package paths and schema versions as untrusted input.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

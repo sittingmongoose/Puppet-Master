@@ -1,0 +1,253 @@
+{
+  "packet_pins": {
+    "B03-P02": "cd47d13c19d434ff1f40b6a51aabc383e38347c7a85a66a4f05e249ecbb793f4",
+    "B03-P01": "2b250282601e9f9ccbb228fe2d7edbc6f50741e30f8493020886fbece6382386",
+    "B11-P01": "6eac2abf0393bad21fed175d86e818b7083e3cc9e89641b65c185a462876d641",
+    "B11-P02": "c7ba71bc64ccc979007857534b2bcd013158ba3ed935d584824ec0f341270ffe",
+    "B12-P01": "423ea2edfe6590b34091ddfff111c3810b21e4575765e6521022c3e9126ad30b",
+    "B12-P02": "f5e4550ac3e677c92d000f392ecb3cabccdc33b5326c8699fb8056c58af70359"
+  },
+  "exact_selected_paths_verified": true,
+  "stages": [
+    {
+      "arm_id": "B03-P02-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "cbce5a29123656245964837391664f87af784188fbaf3a341bdf766aa9334381",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P02-control",
+      "stage": "critic",
+      "manifest_private_sha256": "8f1ea292b159a3af473163a95a0efabb477d5e945f1b45ada2dc1f855407db39",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P02-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "49149f4696fa0b3080767cb86e3c4ab4c5a13014a3c7ace97051fe4738e77455",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "c9208a03360a43023c1a06e4c64ef5980d95c72c305bbb8e3fe1f9b787005bef",
+      "files_verified": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "8f3cdee294e8d3ffd371c5d7f7347d36ba316f6a6f073547c2a426800d15a339",
+      "files_verified": 37,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "91a9178d6508fd503c7e5b788e7a1ece4477f90b4925395c4a28ac8e059d80dd",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "stage": "critic",
+      "manifest_private_sha256": "722b6a6303a6b751cd9ea08111be38cd39f000f312273b7bd265b8aa36ca64f6",
+      "files_verified": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "c79ff38d56df41be67d0f868c696fed352c3eba9ce1da1eebf2ee36d0e2aa3ce",
+      "files_verified": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "74668f55f0bc09bc74f615d090da4f4bdd44ae85c3dd7c49c8fe809a8632728d",
+      "files_verified": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "2d254ea2e69811460727b28ed37cc43a7317795aeae38a9c82c3b0e81b434bee",
+      "files_verified": 37,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "d77e56dea6ea719ea8a71fc9d902533c5dbc8743f7311018f0d01441845a503a",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-control",
+      "stage": "critic",
+      "manifest_private_sha256": "938cbfd5fb0db8d404df3f9d58553f40a8773c0585210b27c4b777738ada34f0",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "e6ce91ed6b279e586e020b6f0a0c881a1b29253633dc59070ac2aca1e91b3bf9",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "506053f1e64bf9e4fe619e1d45d5044721c92aa5744d86b8ef61819edaf7b40a",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "d4cd2fd25c025871f0a9c5e1003e320e25881d34ffde264a52ec1b265e19e66d",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P01-treatment",
+      "stage": "reviser",
+      "manifest_private_sha256": "782b25b3d91476f864719359fed1e7ac9451c90c86df2f62383d16f9c98ad4fa",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "6d27c8189e06d2a7fe836fa3f83dd2bc55370fbb45dfca1fe2f31c0f77099ff2",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "stage": "critic",
+      "manifest_private_sha256": "22e228af6622c73eed9bb3e050229d6d53ef012f1d759dccc8a45d762a5b1934",
+      "files_verified": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "a809a317b932b46fd7cec0c46d3fb6d81ab8c6514919410d0d1e1a71ecf6fe8c",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "2b613e4c3ded6f76e4c46f8c32731f5f1dabcfa1c93f536cbd2ee46a8e12a4e9",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "534c2b7319fa257eb7dc7bf7e85071b3c7162ebdf561208a9d75b3c2df3eccde",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "stage": "reviser",
+      "manifest_private_sha256": "02844cae167f63a7f2fae8782e706fe99d1142e16a9a9f7d018bf67cb986d109",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "b9181ed3645456f7222d472ed362cfcea59f16c86701dd29c1a8b18ce1018bef",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-control",
+      "stage": "critic",
+      "manifest_private_sha256": "0f604fa2c5e658461e1a3cf676f39f912dd80e7233ef0932bc4ba0ea2bd2bc01",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "bc2fd30c0696f3cc101442e54838d0b9198f1d951d299661652ac0c80a39f53d",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "69e1091897bd4836ddb78a4f89d5daa32594b83c227508b75f19eb8ae27cf33c",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "bebd342943bf3ad049961b74d0e963ccdfba81dd668224dde9b5c60c7950d754",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P01-treatment",
+      "stage": "reviser",
+      "manifest_private_sha256": "8831cb5f33005fe436ab0c5724993ba6fcba6f7ad5452575b4291deca9d310c1",
+      "files_verified": 14,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-control",
+      "stage": "investigator",
+      "manifest_private_sha256": "4e5b7f25894573baeb32b44652fba776fb7b3195bf5d5d9da8bc56862ba9cbc0",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-control",
+      "stage": "critic",
+      "manifest_private_sha256": "4c4e5a015a82ca025874e632abb6e216b89187b4ff6a631b45b752fbcf750202",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-control",
+      "stage": "reviser",
+      "manifest_private_sha256": "34739bd283087503378b3728cc2d9bf8d3809f13fc98d17bc739839eb93ec487",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "stage": "investigator",
+      "manifest_private_sha256": "db58d503404ccc29dd028e6d0759dbc7b96677b5834382906b72f7aba4a19ec5",
+      "files_verified": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "stage": "critic",
+      "manifest_private_sha256": "a2a0fdf81f64ce48147d417c447b1e53d965d96037495f8d8dc9571d26fc1b03",
+      "files_verified": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "stage": "reviser",
+      "manifest_private_sha256": "4e66bc4af390f3999da0e9a88293fd1ea464cdc47e30547fef3cdae29dc594e1",
+      "files_verified": 14,
+      "all_hashes_match": true
+    }
+  ],
+  "helper_files_verified": 0,
+  "scientific_qualification_from_hash": false
+}

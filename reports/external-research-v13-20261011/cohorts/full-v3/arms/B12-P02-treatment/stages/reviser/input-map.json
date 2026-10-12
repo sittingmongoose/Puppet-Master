@@ -1,0 +1,35 @@
+{
+  "run_id": "B12-P02-treatment",
+  "stage": "reviser",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/inputs/brief.md",
+  "predecessors": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/plan-reveal.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/sources/index.md"
+  ],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser",
+  "stage_deadline_utc": "2026-10-12T01:41:49.379Z",
+  "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/revealed-plan.md",
+  "late_critique": {
+    "release_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/late-critique/release.json",
+    "binding_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser/late-critique-binding.json",
+    "critic_stage": "critic",
+    "prewriting_deadline_utc": "2026-10-12T01:29:49.379Z",
+    "immutable_initial_inputs": true
+  }
+}

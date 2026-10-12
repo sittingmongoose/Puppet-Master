@@ -1,0 +1,41 @@
+{
+  "schema": "er13.method_primary_evidence.v1",
+  "method": "B11-v1",
+  "current_repository_revision": "fb951af7744dab086e34962e9bc6fe878e145f83",
+  "retrieved_source_status": "CURRENT_REMOTE_HEAD_RETRIEVED; LAST_COMMIT_2025-09-30; not a claim of a 2026 paper",
+  "source_authors": "Yucheng Jiang, Yijia Shao, Dekun Ma, Sina Semnani, Monica Lam; EMNLP 2024; DOI 10.18653/v1/2024.emnlp-main.554",
+  "sources": [
+    {
+      "capture_path": "ER13_RUNTIME/methods/B11-v1/primary-evidence/co-storm-paper.pdf",
+      "sha256": "4017172954b1b5cb04745cc35b34eafdc9e739c4e456acfd60b9175e0f150d3d",
+      "bytes": 3377372,
+      "url": "https://aclanthology.org/2024.emnlp-main.554.pdf",
+      "exact_locator": "PDF page 5 (printed p.9921), \u00a73.5, topic-relevance/query-dissimilarity reranking and uncited-source question generation; \u00a75.4 for contextual ablations.",
+      "authored_capsule": "The moderator draws questions from uncited retrieval material, favoring relevance to the topic and distance from the preceding query. The complete paper studies a multi-agent learning system. B11 transfers only the evidence-seeded question pivot; its manual two-pivot software-planning effect has not been tested.",
+      "license_or_policy": "ACL 2024 materials: CC-BY-4.0 per https://aclanthology.org/faq/copyright/; attribute authors/title/DOI; third-party exceptions retained.",
+      "provenance": "captured primary text; statically read, not executed"
+    },
+    {
+      "capture_path": "ER13_RUNTIME/methods/B11-v1/primary-evidence/storm-co_storm_agents.py",
+      "sha256": "bc8d1e50370912c6cc7359142fb6e3a439d963aed5f4dcb0054165458c9fe6b9",
+      "bytes": 15817,
+      "url": "https://github.com/stanford-oval/storm/blob/fb951af7744dab086e34962e9bc6fe878e145f83/knowledge_storm/collaborative_storm/modules/co_storm_agents.py",
+      "exact_locator": "Moderator, lines 159-313; _get_conv_turn_unused_information lines 190-246, _get_sorted_unused_snippets lines 248-283.",
+      "authored_capsule": "The pinned code excludes already cited information, gates candidate snippets by claim similarity, scores novelty against queries and cited snippets, merges recent-turn lists, and passes them to question generation. Its ranking differs from the simpler paper formula. B11 uses an explicit qualitative eligibility test, not those embeddings, thresholds or exact numerical ranking.",
+      "license_or_policy": "MIT; original notice retained in storm-LICENSE.",
+      "provenance": "captured primary text; statically read, not executed"
+    },
+    {
+      "capture_path": "ER13_RUNTIME/methods/B11-v1/primary-evidence/storm-grounded_question_generation.py",
+      "sha256": "f5613bc6c3dd16202337f4a52615e4008369399d5102babf352d0b6cb529ecd0",
+      "bytes": 5491,
+      "url": "https://github.com/stanford-oval/storm/blob/fb951af7744dab086e34962e9bc6fe878e145f83/knowledge_storm/collaborative_storm/modules/grounded_question_generation.py",
+      "exact_locator": "GroundedQuestionGeneration lines 55-72; GroundedQuestionGenerationModule.forward lines 81-113.",
+      "authored_capsule": "Question generation consumes unused information plus topic and existing knowledge context, asks for a grounded new question, and keeps evidence association. B11 implements that information flow inside its existing investigator; no moderator context, DSPy integration or style-polishing call is added.",
+      "license_or_policy": "MIT; original notice retained in storm-LICENSE.",
+      "provenance": "captured primary text; statically read, not executed"
+    }
+  ],
+  "publication": "Publish authored zero-quote capsules and locators/hashes by default; keep raw captures local. Licensed code/paper redistribution would require preserving applicable attribution/notices. No copyrighted raw source body is candidate input.",
+  "inference_limit": "Source mechanism exists and was inspected; ER13 intervention efficacy/compliance/quality is wholly unexecuted."
+}

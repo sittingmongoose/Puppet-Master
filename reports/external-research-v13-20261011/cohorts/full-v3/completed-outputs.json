@@ -1,0 +1,223 @@
+{
+  "schema": "er13.full_public_delivery_cut.v3",
+  "allocated_logical_arms": 12,
+  "delivered_finals": 12,
+  "grades": "PENDING_AT_CUT",
+  "root_selection": "EXACT_SIX_PACKET_ALLOWLIST_12_ARMS",
+  "arms": [
+    {
+      "arm_id": "B03-P02-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B03-P02-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T00:58:16.365Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B03-P02-treatment/stages/investigator/run/B03-P02-treatment/stages/investigator/final/final.md",
+      "declared_stages": [
+        "critic",
+        "investigator"
+      ],
+      "t0_utc": "2026-10-12T00:58:18.392Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T01:58:18.392Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B03-P01-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T00:58:14.272Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T01:58:14.272Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B03-P01-treatment/stages/investigator/run/B03-P01-treatment/stages/investigator/final/final.md",
+      "declared_stages": [
+        "critic",
+        "investigator"
+      ],
+      "t0_utc": "2026-10-12T00:58:13.299Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T01:58:13.299Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B11-P01-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B11-P01-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:20.218Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:20.218Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B11-P01-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B11-P01-treatment/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:12.462Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:12.462Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B11-P02-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:15.800Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:15.800Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B11-P02-treatment/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:24.265Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:24.265Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B12-P01-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B12-P01-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:13.940Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:13.940Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B12-P01-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B12-P01-treatment/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:22.173Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:22.173Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B12-P02-control",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B12-P02-control/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:26.223Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:26.223Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "allocated": true,
+      "delivered_final": true,
+      "final": "arms/B12-P02-treatment/stages/reviser/final.md",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "t0_utc": "2026-10-12T01:01:18.012Z",
+      "timing_caveat": null,
+      "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+      "independent_original_grade": "PENDING_AT_CUT",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+      "failure_records": []
+    }
+  ]
+}

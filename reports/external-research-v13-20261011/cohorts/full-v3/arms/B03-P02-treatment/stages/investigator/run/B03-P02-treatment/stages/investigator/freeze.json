@@ -1,0 +1,60 @@
+{
+  "prepared_at_utc": "2026-10-12T00:58:18.588Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T01:28:18.588Z",
+  "whole_deadline_utc": "2026-10-12T01:58:18.392Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/inputs/brief.md",
+      "sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+      "bytes": 2274
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "db86476619cbe468becec7f1db455c2ac58c9e15a5b5ba4dc78de04d84b172af",
+      "bytes": 7777
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "ed20df0ffadce53b0df80e7078d0568bc5126834d8513cfe21bc882177dc3d20",
+      "bytes": 2162
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/native-activate.js",
+      "sha256": "5f28ff63808b3a6616aab633c1a2935d11570f5f12f6d99a141483b27251ab25",
+      "bytes": 2692
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/author-ready.js",
+      "sha256": "1c52231ea2d0e77ae80c394985172fedc1b8d31fae723a6b20436c280275ac71",
+      "bytes": 1927
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/author-resume.js",
+      "sha256": "89df7ce9f7b045289c8b44095ba110fda61f273b4845b560d40837095da0fca9",
+      "bytes": 1461
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/author-complete.js",
+      "sha256": "f3ae8cdcefb36c619e3667e6cf63747465424a10da5bdc7e2ab4d1799da0acd6",
+      "bytes": 2202
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 B03 retained investigator and original-author finalization, run B03-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/investigator/assignment.md; keep this SAME Goal active after draft freeze, wait for root-frozen fresh criticism, save complete final before completing SAME Goal by 2026-10-12T01:58:18.392000+00:00.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0
+}

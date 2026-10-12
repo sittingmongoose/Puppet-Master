@@ -1,0 +1,44 @@
+{
+  "schema": "er13.method_preparation.v1",
+  "method": "B11-v1",
+  "state": "PREPARATION_EXECUTED_CANDIDATE_METHOD_UNEXECUTED",
+  "preparation_owner": "codex-er13-methods",
+  "first_task_request_time": "ROOT_T3_TASK_RECEIPT_AUTHORITATIVE; NOT_RECONSTRUCTED_HERE",
+  "standalone_preparation_cost": "UNKNOWN_EXACT; root should charge original developer context and primary acquisition, case authorship, compatibility/novelty checks and freeze verification once, split allocation not invented.",
+  "shared_preparation": "One research-development task prepared both methods and four cases; do not double-count full context time for each.",
+  "candidate_runtime_overhead": "All pivot/annotation/change-impact work inside existing arm stage/global allowance; count it with ordinary product work.",
+  "cold_source_boundary": "No case-specific prepared sources provided to candidates; their own primary acquisition remains cold product work. Methodological source captures are development/evidence overhead, not a discovery substitute.",
+  "warm_source_boundary": "B12 permits same-arm independent-critic verification reuse only, no other-arm/evaluator semantic reuse. Record actual reuse denominators.",
+  "executed": [
+    "Read actual AGENTS.md, handoff \u00a7\u00a77/9 and common R0/time context.",
+    "Browse primary papers/docs/code; download pinned chosen governing sources and notices.",
+    "Read governing code and selected existing tests statically.",
+    "Author role deltas and four neutral fresh brief/hidden-plan/rubric fixtures.",
+    "Coordinate sibling case collision before admission."
+  ],
+  "not_executed": [
+    "No candidate admission, native Goal or scientific arm.",
+    "No Co-STORM/Bazel installation or execution; existing upstream tests not run.",
+    "No future software build/deployment or physical intervention.",
+    "No provider account switch, nested delegation, Git or canon mutation."
+  ],
+  "preparation_errors": [
+    {
+      "activity": "Initial primary-source lookup",
+      "result": "Bazel commits/main HTTP 422; corrected to current master."
+    },
+    {
+      "activity": "Source-document download",
+      "result": "Pinned Bazel site/en/reference/skyframe.md HTTP 404; corrected to accessible official current skyframe page, captured exact HTML."
+    },
+    {
+      "activity": "Optional local text extraction",
+      "result": "pdftotext unavailable and bs4 unavailable; no installs. Paper exact PDF/page locators used; HTML extracted with stdlib HTMLParser."
+    },
+    {
+      "activity": "ACL copyright locator",
+      "result": "/info/copyright HTTP 404; followed actual page link to /faq/copyright and captured primary policy."
+    }
+  ],
+  "recorded_at_utc": "2026-10-12T00:26:45.083653+00:00"
+}

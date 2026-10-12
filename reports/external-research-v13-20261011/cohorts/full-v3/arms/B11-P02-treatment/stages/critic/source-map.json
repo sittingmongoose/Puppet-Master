@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B11-P02-treatment",
+  "stage": "critic",
+  "created_utc": "2026-10-12T01:29:32Z",
+  "source_identity_policy": "C-series IDs are critic-stage records for sources independently opened during this review. They do not reuse or silently rebind the investigator's S-series IDs. Exact per-page fetch timestamps are unavailable from the browser tool; accessed_utc records the nearest directly observed UTC clock capture.",
+  "source_id_crosswalk": {
+    "C01": [
+      "S01"
+    ],
+    "C02": [
+      "S02"
+    ],
+    "C03": [
+      "S01",
+      "S02"
+    ],
+    "C04": [
+      "S08"
+    ],
+    "C05": [
+      "S10"
+    ],
+    "C06": [
+      "S09"
+    ],
+    "C07": [
+      "S06"
+    ],
+    "C08": [
+      "S05"
+    ],
+    "C09": [
+      "S07"
+    ],
+    "C10": [
+      "S11"
+    ],
+    "C11": [
+      "S16"
+    ]
+  },
+  "records": [
+    {
+      "id": "C01",
+      "title": "Automerge Rust 0.12.0 Automerge API and author/actor behavior",
+      "exact_url": "https://docs.rs/automerge/0.12.0/automerge/struct.Automerge.html",
+      "released_version_or_commit": "Rust crate automerge 0.12.0; versioned docs.rs API page.",
+      "locator": "Authors and Actors; with_author/set_author/get_author_for_actor; apply_changes; save; get_heads.",
+      "accessed_utc": "2026-10-12T01:26:47Z",
+      "review_method": "Opened the versioned API page; read the author/actor, apply_changes, save, and heads descriptions.",
+      "observed_operation": "Changes can carry an Author ID; changes have no author when none is set. apply_changes ignores already-applied changes. save serializes the whole document; get_heads exposes the current change heads.",
+      "governing_condition_default_exception": "Author metadata is optional and is not authenticated crew identity by itself. Duplicate-change idempotence applies to identical document changes; it does not state that stateful sync messages can be replayed or regenerated safely.",
+      "applicability": "Supports multi-value conflict presentation and point-in-time reads only if the application sets and maps trusted author IDs. Local durable storage and relay behavior remain app responsibilities."
+    },
+    {
+      "id": "C02",
+      "title": "Automerge Rust 0.12.0 ReadDoc source",
+      "exact_url": "https://docs.rs/automerge/0.12.0/src/automerge/read.rs.html",
+      "released_version_or_commit": "Rust crate automerge 0.12.0; versioned source rendered by docs.rs.",
+      "locator": "ReadDoc get_all/get_all_at and get_cursor/get_cursor_moving source documentation.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the exact source link from the versioned ReadDoc API.",
+      "observed_operation": "get_all returns conflicting values with the operation ID that created each value; *_at APIs read at supplied ChangeHash heads. Cursors address list/text sequence positions and define behavior when referenced items are removed.",
+      "governing_condition_default_exception": "Operation IDs are not displayed human names; an application must retrieve/map author information. A cursor is not a cue entity ID.",
+      "applicability": "Supports candidate enumeration and publication reads at fixed heads; it does not supply the conflict UI or comment identity policy."
+    },
+    {
+      "id": "C03",
+      "title": "Automerge Rust 0.12.0 Transaction and Transactable API",
+      "exact_url": "https://docs.rs/automerge/0.12.0/automerge/transaction/struct.Transaction.html",
+      "released_version_or_commit": "Rust crate automerge 0.12.0; versioned docs.rs API page.",
+      "locator": "Transactable implementation method list: insert, delete, splice, splice_text; linked manual transaction source.",
+      "accessed_utc": "2026-10-12T01:26:47Z",
+      "review_method": "Opened the versioned Transaction API and its linked manual_transaction.rs source.",
+      "observed_operation": "The inspected Rust transaction surface exposes list insertion, deletion, and splice operations. It does not document a high-level cue move operation in the inspected list API.",
+      "governing_condition_default_exception": "This is a library API observation, not proof that an app-level move-intent algorithm is impossible. List mutations still require a defined application-level semantic policy.",
+      "applicability": "The proposed move-intent layer is necessary to give cue reorder human meaning; its conflict and materialization behavior needs specification and tests."
+    },
+    {
+      "id": "C04",
+      "title": "Automerge official list guide",
+      "exact_url": "https://automerge.org/docs/reference/documents/lists/",
+      "released_version_or_commit": "Unversioned official Automerge documentation, accessed 2026-10-12; examples are JavaScript.",
+      "locator": "Entity-map plus ID-list example and fine-grained-update guidance, around page lines 101–134.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the official list guide and read the example and explanatory caveat.",
+      "observed_operation": "Fine-grained edits to an entity map and ID list avoid replacing an entire nested document object and merge better under concurrent updates.",
+      "governing_condition_default_exception": "JavaScript example and general modeling guidance; not a guarantee that an arbitrary cue order structure satisfies move semantics.",
+      "applicability": "Supports separating stable cue records from order IDs while leaving the exact move policy to the application."
+    },
+    {
+      "id": "C05",
+      "title": "Automerge official merge rules",
+      "exact_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "released_version_or_commit": "Unversioned official Automerge documentation, accessed 2026-10-12.",
+      "locator": "Map merge rules and list merge rules, especially list element IDs, predecessor references, and reverse-insertion caveat.",
+      "accessed_utc": "2026-10-12T01:29:32Z",
+      "review_method": "Opened page directly and inspected the list merge rules.",
+      "observed_operation": "List operations refer to element IDs; insertions refer to predecessor elements; concurrent insertions are deterministically ordered. The docs describe cases where insertion order is not preserved, especially reverse insertion.",
+      "governing_condition_default_exception": "The page describes low-level merge behavior and does not define an atomic user-intent move operation.",
+      "applicability": "Supports caution against equating convergent list order with rehearsal crew intent."
+    },
+    {
+      "id": "C06",
+      "title": "Extending JSON CRDTs with Move Operations",
+      "exact_url": "https://arxiv.org/abs/2311.14007v2",
+      "released_version_or_commit": "Da and Kleppmann, arXiv v2 revised 2024-03-19; PaPoC 2024 paper.",
+      "locator": "Version record and abstract, lines 8–18.",
+      "accessed_utc": "2026-10-12T01:29:32Z",
+      "review_method": "Opened the primary arXiv version record and abstract.",
+      "observed_operation": "The paper identifies duplicates/cycles as possible in naïve concurrent move merges and says Automerge integration was planned.",
+      "governing_condition_default_exception": "Research result, not evidence that a released Automerge version exposes this move algorithm.",
+      "applicability": "Supports treating the paper as motivation for explicit move conflict handling, not as a selected shipped feature."
+    },
+    {
+      "id": "C07",
+      "title": "Automerge official conflict guide",
+      "exact_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "released_version_or_commit": "Unversioned official Automerge documentation, accessed 2026-10-12; JavaScript API example.",
+      "locator": "Concurrent map assignments and conflict/getConflicts explanation, especially lines 109–112.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the official conflict guide and read the concurrent assignment explanation.",
+      "observed_operation": "Concurrent map writes retain multiple values while exposing a deterministic visible winner ordered by operation ID rather than wall clock; a later assignment can resolve the visible conflict set.",
+      "governing_condition_default_exception": "Guide uses JavaScript API names; the Rust-facing method is verified separately by C02. A deterministic winner is not a human decision.",
+      "applicability": "Supports rejecting timestamp arbitration and using an explicit review UI."
+    },
+    {
+      "id": "C08",
+      "title": "Automerge Rust sync lost-message issue #1284",
+      "exact_url": "https://github.com/automerge/automerge/issues/1284",
+      "released_version_or_commit": "Issue opened 2026-02-13; no target crate version named; maintainer response dated 2026-02-13.",
+      "locator": "Reporter reproduction and maintainer response at issue lines 243–284; response says reliable in-order stream and reset state if a message may be dropped.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the primary repository issue and inspected the report and maintainer response.",
+      "observed_operation": "A generated but dropped message followed by offline edits can cause a nonterminating sync loop in the reproducer; preserving the exact unsent message avoids that reproduction. Maintainer says possible message loss requires resetting sync state.",
+      "governing_condition_default_exception": "Open report, no target version named; not proof that all releases fail or that either relay-recovery proposal has been tested.",
+      "applicability": "Directly relevant reconnect hazard; precise durable frame/state/ack behavior must be validated against the selected Rust version and adapter."
+    },
+    {
+      "id": "C09",
+      "title": "Automerge official collaborative text guide",
+      "exact_url": "https://automerge.org/docs/reference/documents/text/",
+      "released_version_or_commit": "Unversioned official Automerge documentation, accessed 2026-10-12; examples are JavaScript.",
+      "locator": "updateText frequency guidance near the end of the page.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the official text guide and inspected the updateText frequency caveat.",
+      "observed_operation": "The JavaScript updateText helper produces worse merges when full-value diffs are infrequent; guidance is to update frequently, ideally per keystroke.",
+      "governing_condition_default_exception": "JavaScript API guidance, not proof about the native Rust/Slint adapter or semantic overlap detection.",
+      "applicability": "Supports requiring fine-grained Rust text operations and testing offline concurrent timing-note edits."
+    },
+    {
+      "id": "C10",
+      "title": "Yrs release history",
+      "exact_url": "https://github.com/y-crdt/y-crdt/releases",
+      "released_version_or_commit": "Release page showed v0.28.0 at commit 23b7f56, released 2026-09-17; v0.27.3 at ac476a4.",
+      "locator": "v0.28.0 and v0.27.3 release entries.",
+      "accessed_utc": "2026-10-12T01:24:45Z",
+      "review_method": "Opened the primary GitHub release list and inspected both release entries.",
+      "observed_operation": "The release record confirms v0.28.0 and its commit; v0.27.3 lists fixes for insertion at index 0 and StickyIndex right association.",
+      "governing_condition_default_exception": "A release record confirms release identity and stated change notes, not absence of unrelated bugs or behavior in every target workload.",
+      "applicability": "Confirms the candidate version named in the investigator draft. I did not independently revalidate the investigator's Yrs 0.28.0 API claims in this review."
+    },
+    {
+      "id": "C11",
+      "title": "Automerge Repo storage/network documentation",
+      "exact_url": "https://automerge.org/docs/reference/repositories/",
+      "released_version_or_commit": "Unversioned official documentation, accessed 2026-10-12; examples use JavaScript @automerge/automerge-repo.",
+      "locator": "Repository plumbing and StorageAdapter/NetworkAdapter example.",
+      "accessed_utc": "2026-10-12T01:29:32Z",
+      "review_method": "Opened the official repository documentation and read the introduction and adapter example.",
+      "observed_operation": "The docs describe local storage adapters combined with zero or more network adapters and explicitly call this additional application plumbing.",
+      "governing_condition_default_exception": "The documented Repo API is JavaScript; it is not an off-the-shelf Slint/Rust adapter or a production relay recommendation.",
+      "applicability": "Supports the draft's statement that Rust persistence and relay glue remain application work."
+    }
+  ],
+  "review_limitations": [
+    "Direct opens for the docs.rs Yrs 0.28.0 API pages returned an internal error. The reviewer relied only on the carried investigator source-map for those specific Yrs API statements and independently confirmed the release record.",
+    "The assignment's input map excludes the investigator's native Goal receipt and any direct execution logs; those process claims remain unverified in this critic review."
+  ]
+}

@@ -1,0 +1,7 @@
+# Prospective B11 selection
+
+Chosen: a bounded question pivot from unused retrieved primary evidence, following the [Co-STORM moderator](https://aclanthology.org/2024.emnlp-main.554/) and pinned working source. The test changes the origin of a new search question: a relevant externally retrieved item outside the initial answer/question, rather than another model-generated coverage checklist. No inference that Co-STORM's multi-agent learning results transfer to this single-investigator software-planning adaptation.
+
+Other small mechanisms considered were [STORM related-topic perspective mining](https://aclanthology.org/2024.naacl-long.347/), [FLARE forward-looking retrieval](https://github.com/jzbjyb/FLARE), and [Xapian relevance-feedback expansion](https://xapian.org/docs/overview.html). Perspective mining is close to ER11's declared STORM lineage and needs exact-map contrast. FLARE would require a token-confidence trigger or an unvalidated substitute, which this bounded prompt change does not implement. Xapian's weighted expansion operates on an indexed relevance set; building such an index would add unnecessary integration here. These sources were browsed, not installed or experimentally compared.
+
+The chosen operation requires two short source-grounded branches at most, a five-minute upper bound within existing investigation, and ordinary full discovery afterward. Method evidence contains no case solution or discovery substitute.

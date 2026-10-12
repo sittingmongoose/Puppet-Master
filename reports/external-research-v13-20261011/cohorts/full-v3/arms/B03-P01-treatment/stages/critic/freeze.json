@@ -1,0 +1,71 @@
+{
+  "prepared_at_utc": "2026-10-12T01:18:45.769217+00:00",
+  "stage": "critic",
+  "stage_budget_s": 720,
+  "stage_deadline_utc": "2026-10-12T01:30:45.769217+00:00",
+  "whole_deadline_utc": "2026-10-12T01:58:13.299000+00:00",
+  "native_goal_objective": "ER13 B03 independent critic, run B03-P01-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/assignment.md and save complete full-scope criticism before completing this Goal.",
+  "retained_ready_sha256": "6b7532e2ac6c8fba8762e51e738197a9c9addf6153bf61dcfb73a864ad2dd0a9",
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/inputs/brief.md",
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae",
+      "bytes": 2313
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/assignment.md",
+      "sha256": "e1d7ebbc384f90d15a481cffe11c40b392d5c220be00f3bff27fcccc910559a3",
+      "bytes": 5200
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/input-map.json",
+      "sha256": "82de888343ae8b8193e15245ed7e72c94280fa4627f7a3843d852b12a7bc2017",
+      "bytes": 2683
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/native-activate.js",
+      "sha256": "e438014e8979f261c9c044821766b1492486b18d21bcffa46e7bfdf6fb57be01",
+      "bytes": 2680
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/critic/critic-complete.js",
+      "sha256": "65d9bc22ee902e94983cc33c15001dea85d55a4b8a338d217756344bd5b3ed96",
+      "bytes": 2060
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/retained-ready.json",
+      "sha256": "6b7532e2ac6c8fba8762e51e738197a9c9addf6153bf61dcfb73a864ad2dd0a9",
+      "bytes": 5174
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2",
+      "bytes": 19055
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/draft.md",
+      "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48",
+      "bytes": 18945
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e",
+      "bytes": 19049
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+      "bytes": 2334
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "cae5f9fecc127a85a908531cf5b2e872623a880022333c902041461c2c259fd0",
+      "bytes": 475
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa",
+      "bytes": 4619
+    }
+  ]
+}

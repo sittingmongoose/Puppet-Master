@@ -1,0 +1,77 @@
+{
+  "schema": "er13.b03.synthetic-checks.v1",
+  "final_result": "PASS",
+  "passed": 17,
+  "failed": 0,
+  "test_names": [
+    "test_exact_one_create_no_completion_at_draft_and_same_goal_finalize",
+    "test_second_activation_refused_before_native_call",
+    "test_science_requires_actual_one_shot_plan_reveal",
+    "test_wait_occupancy_separate_from_activity_and_failure_honest",
+    "test_source_addition_or_mutation_prevents_critic_admission",
+    "test_terminal_author_cannot_admit_critic",
+    "test_ready_requires_live_bound_waiter",
+    "test_critic_failure_or_children_no_release",
+    "test_whole_expiry_preserves_partial_no_clockreset",
+    "test_actual_blocking_wait_expires_without_goal_state_write",
+    "test_private_config_method_or_plan_mutation_refused",
+    "test_finite_prep_refuses_other_route_method_or_budget",
+    "test_tool_status_envelope_keeps_full_observation",
+    "test_changed_goal_birth_prevents_resume",
+    "test_frozen_custody_mutation_refused_after_release",
+    "test_fixed_delivery_path_and_finalization_cap_cannot_change",
+    "test_finalization_expiry_and_clipping_without_completing_goal"
+  ],
+  "final_observed_duration_seconds": 11.252,
+  "domains": {
+    "native_tools": "MOCK",
+    "T3_tasks": "MOCK",
+    "scientific_inputs": "SYNTHETIC",
+    "blocking_waiter": "REAL Linux CLI process",
+    "scratch": "TemporaryDirectory self-cleaned"
+  },
+  "native_candidate_calls": 0,
+  "history": [
+    {
+      "sequence": 1,
+      "tests": 12,
+      "errors": 12,
+      "note": "Packaging guard incorrectly rejected valid empty pinned delta files; prospective fix allowed empty mechanical files only."
+    },
+    {
+      "sequence": 2,
+      "tests": 12,
+      "passed": 12
+    },
+    {
+      "sequence": 3,
+      "tests": 14,
+      "passed": 13,
+      "failed": 1,
+      "note": "Expiry test compared wait occupancy to allowance before validation. Corrected oracle measures wait start/end and absolute expiry; runtime already preserved honest timing."
+    },
+    {
+      "sequence": 4,
+      "tests": 14,
+      "passed": 14
+    },
+    {
+      "sequence": 5,
+      "tests": 15,
+      "passed": 15,
+      "note": "Distinct T3/provider ID fixtures plus full raw status envelopes."
+    },
+    {
+      "sequence": 6,
+      "tests": 16,
+      "passed": 16
+    },
+    {
+      "sequence": 7,
+      "tests": 17,
+      "passed": 17
+    }
+  ],
+  "native_lifecycle_qualified": false,
+  "science_qualified": false
+}

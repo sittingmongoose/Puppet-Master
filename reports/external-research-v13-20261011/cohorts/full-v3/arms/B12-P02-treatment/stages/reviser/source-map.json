@@ -1,0 +1,347 @@
+{
+  "run_id": "B12-P02-treatment",
+  "stage": "reviser",
+  "research_basis": "independent provisional review of frozen investigator package before late-critique binding",
+  "access_batch_note": "UTC values are clock observations immediately following batches in which pages were opened; browser does not expose each HTTP request timestamp.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Slint invoke_from_event_loop",
+      "kind": "primary API documentation",
+      "exact_url": "https://docs.rs/slint/1.18.1/slint/fn.invoke_from_event_loop.html",
+      "version_or_commit": "Slint crate 1.18.1",
+      "locator": "Function description; lines 17-28",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened pinned docs.rs API page; reviewed signature and thread/event-loop description.",
+      "governing_condition_default_exception": "Thread-safe call from any thread; queued closure executes on thread that started event loop; captures must satisfy Send + 'static; non-Send work instead uses spawn_local.",
+      "applicability": "UI integration only; keeps worker result application on Slint event-loop thread; does not schedule or cancel parsing.",
+      "local_note": "sources/index.md#s01"
+    },
+    {
+      "id": "S02",
+      "title": "Tokio spawn_blocking",
+      "kind": "primary API documentation",
+      "exact_url": "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html",
+      "version_or_commit": "Tokio 1.53.2",
+      "locator": "Description, abort, shutdown, and CPU-bound guidance; lines 31-48",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened pinned docs.rs API page; reviewed bounded-worker, CPU, abort, and shutdown statements.",
+      "governing_condition_default_exception": "Pool upper limit is Builder-configured and very large by default; CPU tasks should use semaphore/other bound; started blocking tasks cannot be aborted; shutdown_timeout stops waiting but does not cancel; intended for bounded operations.",
+      "applicability": "Relevant if project uses Tokio; shows why async abort is insufficient for untrusted blocking decoders and why concurrency must be explicit.",
+      "local_note": "sources/index.md#s02"
+    },
+    {
+      "id": "S03",
+      "title": "Tokio bounded mpsc channel",
+      "kind": "primary API documentation",
+      "exact_url": "https://docs.rs/tokio/1.53.2/tokio/sync/mpsc/fn.channel.html",
+      "version_or_commit": "Tokio 1.53.2",
+      "locator": "Function description",
+      "accessed_utc": "2026-10-12T01:02:10Z",
+      "observed_operation": "Opened docs.rs latest page and observed its crate header as Tokio 1.53.2; bounded channel docs reviewed.",
+      "governing_condition_default_exception": "buffer capacity must be at least one; buffer-full sends wait; FIFO preserves send order; one receiver. This provides backpressure but no priority lanes.",
+      "applicability": "Useful bounded message transport option; do not block the UI on a full channel; dispatcher must own lane policy.",
+      "local_note": "sources/index.md#s03"
+    },
+    {
+      "id": "S04",
+      "title": "Rust sync_channel",
+      "kind": "primary standard-library documentation",
+      "exact_url": "https://doc.rust-lang.org/std/sync/mpsc/fn.sync_channel.html",
+      "version_or_commit": "Rust std 1.99.0 documentation; API stable since 1.0.0",
+      "locator": "Function description",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened current standard-library documentation and reviewed bounded buffer semantics.",
+      "governing_condition_default_exception": "Fixed-size FIFO buffer; sends block when full; zero bound is rendezvous. Nonblocking try_send is available through sender API but not part of the cited page.",
+      "applicability": "Runtime-independent transport alternative; scheduler should reject/defer admission rather than block UI when capacity is full.",
+      "local_note": "sources/index.md#s04"
+    },
+    {
+      "id": "S05",
+      "title": "Rust std::process::Child",
+      "kind": "primary standard-library documentation",
+      "exact_url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+      "version_or_commit": "Rust std 1.99.0 documentation; Child/kill/wait stable since 1.0.0",
+      "locator": "Description, Warning, kill, wait; lines 73-81, 133-170",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened current std documentation; inspected Child lifetime, kill, wait, and try_wait sections.",
+      "governing_condition_default_exception": "Dropping Child does not kill or wait; caller must reap. kill forces the direct child to exit (SIGKILL on Unix). Nightly-only process-group kill API is not a stable fallback.",
+      "applicability": "Use explicit child supervisor with kill and reap; separate platform-specific process-tree handling is needed.",
+      "local_note": "sources/index.md#s05"
+    },
+    {
+      "id": "S06",
+      "title": "Windows Job Objects",
+      "kind": "primary platform documentation",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_or_commit": "Current Win32 documentation; version conditions stated in page",
+      "locator": "Managing processes, limits, close behavior, process-tree caveats; lines 31-87, 90-93",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened Microsoft Learn platform page; reviewed process membership, limits, breakaway, and kill-on-close behavior.",
+      "governing_condition_default_exception": "Job groups can be terminated and resource limits applied; ordinary CreateProcess children join by default; breakaway can remove descendants; nested jobs added Windows 8/Server 2012, older systems differ; security limits set per process on Vista+.",
+      "applicability": "Windows process-tree cleanup/resource management option for child handlers; not itself a complete sandbox/security boundary.",
+      "local_note": "sources/index.md#s06"
+    },
+    {
+      "id": "S07",
+      "title": "Freedesktop Thumbnail Managing Standard",
+      "kind": "primary interoperability specification",
+      "exact_url": "https://specifications.freedesktop.org/thumbnail/latest-single/",
+      "version_or_commit": "Version 0.9.0 (December 2020), as stated in history",
+      "locator": "Thumbnail saving and modification detection; §6-7, lines 174-185, 212-241, 261-278",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened current single-page specification; verified version history, cache-key and metadata rules, atomic-save recipe, and stale checks.",
+      "governing_condition_default_exception": "Global thumbnail must carry canonical URI and MTime; size should be checked if present; mtime is seconds resolution; temporary file then rename is specified for complete-or-absent publication; mtime alone can collide and be insufficient.",
+      "applicability": "Local cache precedent only; borrow atomic publication and metadata checks, but use app-specific content/profile/handler version identity and stronger revision semantics.",
+      "local_note": "sources/index.md#s07"
+    },
+    {
+      "id": "S08",
+      "title": "GNOME GnomeDesktopThumbnailFactory",
+      "kind": "primary API and implementation documentation",
+      "exact_url": "https://gnome.pages.gitlab.gnome.org/gnome-desktop/html/gnome-desktop3/gnome-desktop3-GnomeDesktopThumbnailFactory.html",
+      "version_or_commit": "gnome-desktop3 manual; exact manual release not stated; factory since 2.2",
+      "locator": "Description and lookup API; lines 29-60, 68-93",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened official GNOME API manual; reviewed helper selection, fallback, size limits, URI/mtime cache, failed cache, and main-thread/blocking annotations.",
+      "governing_condition_default_exception": "MIME registrations select external helpers; helper writes output before exit and signals failure via nonzero exit; fallback gdk-pixbuf may run; normal/large dimensions cap at 128/256; failed results may be negatively cached; factory creation is main-thread/nonblocking while lookup is threadsafe but blocking I/O.",
+      "applicability": "Implemented desktop analogy and source of alternatives; do not inherit its coarse cache key or use main-thread lookup for latency-sensitive UI.",
+      "local_note": "sources/index.md#s08"
+    },
+    {
+      "id": "S09",
+      "title": "PDF.js RenderTask cancellation API",
+      "kind": "primary API documentation",
+      "exact_url": "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib-RenderTask.html",
+      "version_or_commit": "Draft documentation; release/version not pinned by this URL",
+      "locator": "cancel(extraDelay), promise; lines 67-96",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened current draft JSDoc; inspected cancellation and promise semantics.",
+      "governing_condition_default_exception": "cancel rejects task promise; if rendering is underway it may wait until graphics pauses with a timeout; API contract does not promise immediate preemption.",
+      "applicability": "Useful example of cooperative cancellation and asynchronous completion; do not treat cancel request as completion or reuse same output/canvas until terminal.",
+      "local_note": "sources/index.md#s09"
+    },
+    {
+      "id": "S10",
+      "title": "PDF.js DocumentInitParameters defaults",
+      "kind": "primary API documentation",
+      "exact_url": "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib.html",
+      "version_or_commit": "Draft documentation; release/version not pinned by this URL",
+      "locator": "DocumentInitParameters, maxImageSize, stopAtErrors, canvasMaxAreaInBytes, progress; lines 63-146, 254-265",
+      "accessed_utc": "2026-10-12T01:04:42Z",
+      "observed_operation": "Opened current draft API and located documented size/error/progress defaults.",
+      "governing_condition_default_exception": "maxImageSize defaults -1/no limit; stopAtErrors defaults false; canvasMaxAreaInBytes -1 invokes a guess; loading percent is NaN if total is undefined. Defaults depend on browser versus Node for worker/font capabilities.",
+      "applicability": "Evidence that parser defaults are not job-level resource or reliability limits; configure bounds and support indeterminate progress.",
+      "local_note": "sources/index.md#s10"
+    },
+    {
+      "id": "S11",
+      "title": "PDF.js cancellation history: loadingTask.destroy issue",
+      "kind": "primary project issue history",
+      "exact_url": "https://github.com/mozilla/pdf.js/issues/11595",
+      "version_or_commit": "Reported Feb 2020 against PDF.js 2.3.200 and 2.2.228",
+      "locator": "Issue body/activity; lines 160-180, 185-241, 243-251, 369-388",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened issue and examined reporter repro, maintainer promise-handling explanation, later user reports, and referenced commits.",
+      "governing_condition_default_exception": "Cancellation via destroy before load resolves caused reported Worker was destroyed/terminated errors; maintainer explained rejection handling and closed completed, while subsequent users reported distinct worker errors; commit references appeared in Dec 2025.",
+      "applicability": "Cancellation needs explicit terminal/error semantics and regression tests; mixed reports distinguish rejected promise from worker error, so do not collapse every complaint into a confirmed library defect.",
+      "local_note": "sources/index.md#s11"
+    },
+    {
+      "id": "S12",
+      "title": "PDF.js cancellation fix commit in community fork",
+      "kind": "primary implementation commit",
+      "exact_url": "https://github.com/andriivitiv/pdf.js/commit/af995bb76f38a938612fa728fcdfb2e0bf184223",
+      "version_or_commit": "Commit af995bb76f38a938612fa728fcdfb2e0bf184223; fork commit parent 6c746260a98766b8ece27018d2c48436cfcafa24",
+      "locator": "Commit message and src/core/worker.js diff; lines 127-179",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened immutable commit page linked from issue #11595; reviewed one-file diff.",
+      "governing_condition_default_exception": "Fix checks terminated state and returns from a second onFailure instead of throwing another uncatchable error; commit is in an individual fork, not evidence of upstream merge.",
+      "applicability": "Concrete example of making cancellation/failure terminal handling idempotent; preserve upstream-status caveat.",
+      "local_note": "sources/index.md#s12"
+    },
+    {
+      "id": "S13",
+      "title": "PDF.js render teardown issue",
+      "kind": "primary project issue history",
+      "exact_url": "https://github.com/mozilla/pdf.js/issues/21867",
+      "version_or_commit": "Reported Sep 1 2026; reproduced by reporter on 6.3.289 and 5.7.284",
+      "locator": "Issue reproduction and suggested fix; lines 130-225, 234-295; status line 140",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened issue and examined sample, observed promise outcome, proposed finally handling, and status.",
+      "governing_condition_default_exception": "Reporter says throwing canvas teardown can recur during cancel before callback settles render promise; marked closed as not planned. This is issue evidence, not independently reproduced or accepted as a defect.",
+      "applicability": "Require every job to settle even when cleanup throws; teardown must not prevent terminal event/reap; regression scenario belongs in validation.",
+      "local_note": "sources/index.md#s13"
+    },
+    {
+      "id": "S14",
+      "title": "PDF.js worker_threads issue and maintainer response",
+      "kind": "primary project issue history",
+      "exact_url": "https://github.com/mozilla/pdf.js/issues/21934",
+      "version_or_commit": "Reported Sep 11 2026; Windows Node 24, Node worker_threads; versions 5.x tested and 6.0.227/6.3.289",
+      "locator": "Summary, environment, unchecked scope, maintainer response; lines 130-166, 241-288",
+      "accessed_utc": "2026-10-12T01:04:42Z",
+      "observed_operation": "Opened issue and inspected sample/version matrix, limitations, and maintainer closure/release response.",
+      "governing_condition_default_exception": "Reporter claims worker_threads importing 5.x crashes Windows host in one test host; no fault observed in tested 6.x; reporter did not test other Windows machines/Linux Node 24; maintainer says Node worker_threads unsupported, only standard Web Workers supported, and issue was already fixed in latest release.",
+      "applicability": "A thread shares crash domain with host; isolated process is stronger. Treat exact PDF.js/Node result as scoped report, not universal parser claim.",
+      "local_note": "sources/index.md#s14"
+    },
+    {
+      "id": "S15",
+      "title": "SQLite atomic commit",
+      "kind": "primary database documentation",
+      "exact_url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current SQLite documentation; rollback-journal article, atomicity also supported via separate WAL mechanism",
+      "locator": "Introduction and single-file commit assumptions",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened SQLite official article; reviewed atomic transaction meaning and hardware/filesystem assumptions.",
+      "governing_condition_default_exception": "A single transaction appears all-or-none after OS crash or power loss under stated VFS/storage assumptions; article is specifically rollback mode unless paired with WAL documentation.",
+      "applicability": "If binary preview payload and validity metadata are stored in one DB transaction, avoids split cache commit; cache still evictable and durability settings affect power-loss guarantees.",
+      "local_note": "sources/index.md#s15"
+    },
+    {
+      "id": "S16",
+      "title": "SQLite write-ahead logging",
+      "kind": "primary database documentation",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Current SQLite documentation; WAL available since SQLite 3.7.0 (2010-07-21)",
+      "locator": "Overview, concurrency, checkpointing; §2-3",
+      "accessed_utc": "2026-10-12T01:04:32Z",
+      "observed_operation": "Opened official WAL documentation; reviewed commit point, concurrency, checkpoint and same-host constraint.",
+      "governing_condition_default_exception": "Readers and writer can proceed concurrently, but only one writer exists; shared-memory index requires same machine so WAL does not work over a network filesystem; checkpoints and -wal/-shm state matter.",
+      "applicability": "Trade-off if cache DB is used; place local and serialize cache writes or choose rollback mode/file cache; do not put WAL DB on network share.",
+      "local_note": "sources/index.md#s16"
+    },
+    {
+      "id": "S17",
+      "title": "Rayon ThreadPool API",
+      "kind": "primary crate API documentation",
+      "exact_url": "https://docs.rs/rayon/latest/rayon/struct.ThreadPool.html",
+      "version_or_commit": "Rayon 1.12.0 as shown in docs.rs header",
+      "locator": "ThreadPool description and current_thread_has_pending_tasks work-stealing description; lines 66-77, 198-202",
+      "accessed_utc": "2026-10-12T01:27:04Z",
+      "observed_operation": "Opened official docs.rs ThreadPool API; reviewed pool construction, execution, work-stealing description and documented APIs.",
+      "governing_condition_default_exception": "Pool thread count is configured through ThreadPoolBuilder; documented scheduler describes per-thread deques and stealing when a worker runs out. The page does not make a claim that every possible app-level prioritization is impossible.",
+      "applicability": "Supports Rayon as a CPU-pool alternative. The proposal statement that it does not define this app’s visible/import policy is an inference from the documented API surface, not a direct API guarantee.",
+      "local_note": "sources/index.md#s17",
+      "critic_reviewed": true
+    }
+  ],
+  "reviser_rechecks": [
+    {
+      "id": "S02",
+      "exact_url": "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html",
+      "version_or_commit": "Tokio 1.53.2",
+      "locator": "Description, lines 31-48",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened official pinned docs.rs page; confirmed large default blocking-thread ceiling, semaphore guidance, started-closure abort and shutdown behavior.",
+      "governing_condition_default_exception": "Started blocking work cannot be canceled by abort or shutdown timeout; task may not yet have started, and dedicated threads are recommended for long-lived workers.",
+      "applicability": "Supports explicit resource admission and process boundary for non-cooperative parsers."
+    },
+    {
+      "id": "S05",
+      "exact_url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+      "version_or_commit": "Rust std 1.99.0 (b940084d7; 2026-09-28)",
+      "locator": "Description, Warning, kill, wait; lines 73-81, 133-170",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened official standard-library page; confirmed Child drop does not kill or wait, kill forces direct child exit, and wait reaps.",
+      "governing_condition_default_exception": "Child.kill does not establish process-tree containment; process-group extension cited by the page is nightly-only.",
+      "applicability": "Requires explicit supervisor/reaping and a separate supported process-tree adapter."
+    },
+    {
+      "id": "S07",
+      "exact_url": "https://specifications.freedesktop.org/thumbnail/latest-single/",
+      "version_or_commit": "Current official single-page standard; source map retains v0.9.0 history entry and inspected clauses",
+      "locator": "§§6–7 thumbnail saving and modification detection",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened current official standard; checked its version/history and relevant cache-save/modification sections.",
+      "governing_condition_default_exception": "The standard is a desktop thumbnail interoperability contract; URI/mtime metadata and rename recipe do not establish content integrity for this app's richer preview identity.",
+      "applicability": "Use atomic publication and metadata-check precedent, not the cache key as app correctness proof."
+    },
+    {
+      "id": "S09",
+      "exact_url": "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib-RenderTask.html",
+      "version_or_commit": "PDF.js draft API; no release pinned by URL",
+      "locator": "RenderTask.cancel and promise documentation",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened official draft JSDoc page.",
+      "governing_condition_default_exception": "Draft API only; cancellation completion is asynchronous and not immediate preemption.",
+      "applicability": "Requires treating cancel request separately from terminal settlement."
+    },
+    {
+      "id": "S10",
+      "exact_url": "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib.html",
+      "version_or_commit": "PDF.js draft API; no release pinned by URL",
+      "locator": "DocumentInitParameters and progress fields",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened official draft API page; claims remain version-conditional and must be checked against a pinned future handler release.",
+      "governing_condition_default_exception": "Draft defaults may change; no app-level cap should rely on these defaults.",
+      "applicability": "Supports explicit per-handler configuration and honest unknown-total progress, not a claim about a shipped release."
+    },
+    {
+      "id": "S16",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Current official SQLite WAL documentation",
+      "locator": "Overview, concurrency, checkpointing, sections 2–3",
+      "accessed_utc": "2026-10-12T01:24:47Z",
+      "observed_operation": "Reopened SQLite official WAL documentation.",
+      "governing_condition_default_exception": "WAL permits one writer at a time and depends on same-machine shared memory; it is not suitable on a network filesystem.",
+      "applicability": "If a SQLite cache is chosen, keep it local and serialize writes/checkpoints."
+    },
+    {
+      "id": "S07",
+      "exact_url": "https://specifications.freedesktop.org/thumbnail/latest-single/",
+      "version_or_commit": "Freedesktop Thumbnail Managing Standard 0.9.0 (December 2020)",
+      "locator": "§6.2 lines 232-246; §7 lines 261-283",
+      "accessed_utc": "2026-10-12T01:37:26Z",
+      "observed_operation": "Reopened official standard at concurrent creation and modification-check sections; confirmed same-filesystem temp rename and one-second mtime collision warning.",
+      "governing_condition_default_exception": "Thumbnail interoperability rules do not prove an immutable source snapshot.",
+      "applicability": "Atomic cache publication and metadata limitation."
+    },
+    {
+      "id": "S14",
+      "exact_url": "https://github.com/mozilla/pdf.js/issues/21934",
+      "version_or_commit": "Issue opened 2026-09-11; reporter Windows 11/Node 24.19 selected 5.x and 6.0.227/6.3.289; maintainer response same date",
+      "locator": "Reporter matrix/environment lines 157-166, 241-253; maintainer lines 281-288",
+      "accessed_utc": "2026-10-12T01:37:26Z",
+      "observed_operation": "Reopened the issue and inspected the one-host reporter matrix and maintainer comments.",
+      "governing_condition_default_exception": "No faults reported in specified 6.x runs on one host; maintainer says Node worker_threads unsupported and issue already fixed/latest; page does not independently verify fix across hosts or standard Web Workers.",
+      "applicability": "Scoped thread crash-domain history only."
+    },
+    {
+      "id": "S17",
+      "exact_url": "https://docs.rs/rayon/1.12.0/rayon/struct.ThreadPool.html",
+      "version_or_commit": "Rayon 1.12.0",
+      "locator": "ThreadPool description and work-stealing docs; lines 66-77, 198-202",
+      "accessed_utc": "2026-10-12T01:37:26Z",
+      "observed_operation": "Independently reopened pinned docs.rs ThreadPool API; checked pool configuration/execution and work-stealing description.",
+      "governing_condition_default_exception": "Absence of the app's lane policy is an inference from API surface, not a guarantee app code cannot add policy.",
+      "applicability": "CPU-pool alternative and qualified scheduler inference."
+    }
+  ],
+  "critique_binding": {
+    "release_sha256": "59dc1161910eb670e2c0550ace900d2002a33852c646e77e38259c825c7b0838",
+    "provisional_final_sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b",
+    "critic_source_map_sha256": "745985fb2f293b9740d30aa663602c358931d98d14b22b00fe7994c55f03958b",
+    "critic_index_sha256": "f343f1f8c4f3801e1fe2523823e4a8a3b06e761d71ce88be9162936a365c2f66",
+    "critic_critique_sha256": "d8d1cd72545a2c34d624d75698108915c6878d2c4f6189de81d3c6ecfcc3e58c"
+  },
+  "critique_dispositions": [
+    {
+      "id": "C1",
+      "disposition": "accepted; exact-byte source lease/snapshot, strong digest, currentness proof, fail closed if unavailable"
+    },
+    {
+      "id": "C2",
+      "disposition": "accepted; per-handler trust/isolation policy; SecurityUnavailable/Unsupported when required isolation is unavailable"
+    },
+    {
+      "id": "C3",
+      "disposition": "accepted; S17 added and inference qualified"
+    },
+    {
+      "id": "C4",
+      "disposition": "accepted; reporter results separated from maintainer support/fix claims"
+    }
+  ]
+}

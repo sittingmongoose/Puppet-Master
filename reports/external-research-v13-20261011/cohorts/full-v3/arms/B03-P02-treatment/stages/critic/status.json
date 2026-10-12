@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-b03-B03-P02-treatment-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-b03-B03-P02-treatment-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-b03-B03-P02-treatment-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-b03-B03-P02-treatment-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-b03-B03-P02-treatment-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "The critic Goal completed, and its native terminal receipt was captured. The prescribed completion script and `critic-check` passed.\n\nArtifacts are saved in the critic stage: [critique.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/critique.md), [source-map.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/source-map.json), and [sources/index.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/sources/index.md). No delegation was used, and the investigator files were not modified.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-b03-B03-P02-treatment-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:2cc26ace-a35e-43e1-b4a8-ac5ff0d49490",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "The critic Goal completed, and its native terminal receipt was captured. The prescribed completion script and `critic-check` passed.\n\nArtifacts are saved in the critic stage: [critique.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/critique.md), [source-map.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/source-map.json), and [sources/index.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/stages/critic/sources/index.md). No delegation was used, and the investigator files were not modified.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-b03-B03-P02-treatment-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:2cc26ace-a35e-43e1-b4a8-ac5ff0d49490",
+  "waitTimedOut": false
+}

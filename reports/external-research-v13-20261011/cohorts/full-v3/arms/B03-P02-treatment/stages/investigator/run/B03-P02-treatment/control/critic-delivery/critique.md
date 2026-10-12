@@ -1,0 +1,39 @@
+# Independent critique — portable project archive export
+
+## Overall assessment
+
+The investigator materially improved the released plan on snapshot consistency, attachment bytes, finalization, incomplete output, offline readability, field semantics, and importer trust. The exact plan is dispositioned clause by clause in the draft; I find those dispositions generally faithful and cautious. ZIP64 remains a candidate rather than a selected winner, source-specific questions remain owner decisions, and validations are clearly labeled proposed rather than executed. The critique does not select a package or authorize a product decision.
+
+I found three material evidence/design gaps and one smaller contract ambiguity. The first may reflect an unavailable repository input rather than a missed search; it cannot be settled from the frozen critic inputs.
+
+## Findings
+
+| ID | Classification | Draft/discovery locator | Independent evidence and assessment |
+|---|---|---|---|
+| F1 | **Material incomplete** | `draft.md`, “Brief clause-by-clause disposition” row “Research-backed software proposal”; “Executed”; “Evidence map”. Also `discovery.md`, “Scope and evidence basis”. | The brief asks for relevant product repository code and callers/tests, in addition to primary docs and consequential issue/release history. The evidence list names SQLite/rusqlite and zip-rs documentation/source/history, but no tracker repository, product caller, or project test. This leaves whether the export can fit actual storage, identity, attachment, and permission paths unverified. The critic input map identifies no product repository path; I cannot establish from this package whether such code is absent, irrelevant, or simply not researched. Treat this as an evidence gap and resolve only when the repository/source scope is supplied. The cited package otherwise distinguishes its proposals from actual validation correctly. |
+| F2 | **Unsupported** | `draft.md`, use-case row “Existing desktop tracker”; its evidence cell says GitLab “explicitly not a reliable backup”; `draft.md`, exact-plan disposition for links and “Round-trip claims”. | The cited GitLab page supports the narrower point that not all items are exported, item coverage depends on GitLab version, project files use NDJSON, and imports support exports up to two minor versions behind. The page’s located “backup” text concerns a separate repository-performance reference; I found no explicit warning that the project export is “not a reliable backup.” The statement therefore over-attributes a product judgment to S20. Keep the caution as a proposed product boundary only if separately justified; do not attribute it to this source. S20 does support omission and compatibility disclosure as precedent. |
+| F3 | **Material incomplete** | `draft.md`, “Status and recommendation”; “Proposed export state machine and manifest” step 1; “Validation plan — proposals only” consistency bullet; S01/S05 source notes. | The SQLite candidate is correctly conditional and correctly scoped to DB pages. The primary SQLite backup documentation adds a consequential liveness condition: writes from other connections can restart backup work, and sufficiently frequent restarts may prevent completion. The draft tests concurrent edits but does not propose a bounded retry/time policy or an acceptance result for a backup that repeatedly restarts. Add a time/retry cap and ensure it ends as a visibly failed/incomplete export, while leaving the cross-store attachment boundary separate. This matters most if SQLite and concurrent writes are selected; it does not disqualify SQLite generally. |
+| F4 | **Minor locator/wording** | `draft.md`, “Proposed export state machine and manifest” steps 3–4; “Safe verification of a completed export” row. | The design says the manifest carries member hashes and the verifier checks exact member-list/manifest consistency, but does not state whether `manifest.json` is excluded from its own digest list or how its integrity is handled. Self-hashing a manifest is circular. State the convention (for example, list all payload members but exclude the manifest from its own digest set); this is a small contract clarification, not a reason to reject the verification design. |
+
+## Brief and released-plan coverage review
+
+| Obligation or plan disposition | Critic assessment |
+|---|---|
+| Human-readable, offline archive plus structured future-import representation | Covered with local README/manifest/schema/JSONL. ZIP is not treated as the schema. Reader/platform support is correctly left for validation. |
+| Tasks, comments, dates, fields, attachments and stable identity | Covered as typed entities/relations; field inventory, null/unknown values, ID disclosure, and date types are kept as explicit contract decisions. |
+| Inaccessible project links and omission explanations | Correctly bars access to target content and makes target ID/URL disclosure conditional. Omission ledger is a reasonable proposal, subject to the authorization boundary. |
+| Snapshot/revision marker and per-task walk | Correctly amends the plan: a marker or ordered walk alone is not a snapshot; DB rows and separate blobs need separate consistency guarantees. F3 adds a backup-liveness condition. |
+| Attachment names/bytes/space | Correctly favors exporter-generated member paths, exact bytes, relation metadata and hashes; correctly notes streaming still needs output space and that a missing expected blob should not be silently presented as a completed export. |
+| Completion marker, cancellation, source unchanged | Correctly says a ZIP must be finalized and validated before publishing a complete-looking name; `.partial` cleanup and same-filesystem no-clobber behavior remain platform-specific. |
+| Versioning, JSON/date semantics, omission and round-trip claims | Generally sound. It distinguishes format mechanics from domain/import semantics and scopes any future round-trip claim to an importer and mapped-field matrix. S20’s “not a reliable backup” attribution is the exception (F2). |
+| Alternatives and future importer | ZIP64, staged directory, directory/BagIt, Data Package descriptor and database snapshot are compared without declaring a winner. Path, link, size, version and relation checks are appropriately framed as importer work. |
+| Proposed versus executed checks | Clearly separated. The draft says no export/build/product validation ran and lists checks as proposals. This is faithful; no validation result is implied. |
+| Exact released plan clauses | The draft gives individual dispositions for the revision marker, stream, IDs, redacted links, local assets, no mutation, missing bytes, completion/cancellation, disk, dates, fields, round-trip, validations, and future importer. I found no omitted clause that reverses the brief. Open scope decisions remain open rather than being silently converted into requirements. |
+
+## Preservation and execution status
+
+This is critique only. I did not modify or repair the investigator draft, discovery, plan, or sources. The source IDs remain bound to the carried URLs in this critic’s `source-map.json`; `sources/index.md` provides the navigable evidence summary. I read the complete brief and frozen investigator files required by assignment. I directly opened all 21 carried source URLs and checked the governing sections for the findings above. No project repository source path was included in the critic input map, and I did not inspect unlisted paths.
+
+**Actually performed:** read the assigned brief, discovery, draft, source map, revealed plan and plan-reveal metadata; reopened and reviewed the cited sources; prepared this independent critique and source map.
+
+**Not performed:** no product build, export, filesystem-space simulation, automated test, offline-reader test, or importer validation. Those remain proposed, not executed.

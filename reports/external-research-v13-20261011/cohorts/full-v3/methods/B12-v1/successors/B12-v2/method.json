@@ -1,0 +1,110 @@
+{
+  "schema": "er13.method_card.v1",
+  "method_id": "B12",
+  "version": "B12-v2",
+  "title": "Bounded speculative final writing",
+  "scope": "FULL",
+  "state": "PROSPECTIVE_FROZEN_PRE_ADMISSION_NO_CANDIDATE_EXECUTION",
+  "execution_topology": "b12-overlap-v1",
+  "comparison": "Matched R0-ER13 investigator -> independent critic -> fresh reviser versus investigator -> (independent critic || fresh reviser provisional preparation) -> same fresh reviser full criticism integration/final. Same actual provider/model/effort/tier, tools, brief/plan and role/global elapsed allowances.",
+  "causal_hypothesis": "A fresh reviser can prepare source-backed full-proposal structure and prose while the independent critic checks the same frozen investigator draft. Bounded provisional work followed by one exact critique integration can shorten the serialized handoff/final-writing path, while the unchanged role/global elapsed ceilings and full critique gate expose extra work, anchoring and insufficient post-critique time.",
+  "actual_role_delta": {
+    "investigator": "No substantive change. Ordinary complete discovery, one-shot plan reveal and draft.",
+    "critic": "No substantive review change; root starts it concurrently with fresh reviser after frozen investigator terminal. Critic cannot see provisional reviser work.",
+    "reviser": "Start fresh at critic admission; at most360sec from original reviser preparation (including queue/setup) for one provisional complete proposal; wait for one root-sealed exact critique; use remaining original1080sec for ALL criticism resolution, source checking and complete final."
+  },
+  "primary_motivation": "Speculative Interaction Agents arXiv2605.13360v2 \u00a7\u00a73.1-3.2: work while information is pending, accept late changes, withhold final until required input. Cost-Aware Speculative Execution arXiv2606.07846v1 \u00a7\u00a73.1-3.3: early downstream work and staged generation behind a commit boundary. B12 is one bounded prompt/schedule adaptation, not either complete framework or empirical replication.",
+  "expected_failure_modes": [
+    "Anchoring on provisional prose causes false rejection or missed valid criticism.",
+    "Major criticism invalidates early work, increasing output/context use or exhausting final integration time.",
+    "Queues/late critique leave too little of the same18-minute reviser elapsed allowance; late/missing final remains failure.",
+    "Provisional output is wrongly selected as final, or incomplete criticism is mistaken for agreement.",
+    "Root receipt/input race or changed terminal critique invalidates the one-shot binding; preserve failed attempt rather than silently repair science."
+  ],
+  "frozen_measures": {
+    "primary": [
+      "Every original arm complete-final six-axis source/obligation assessment, source errors, required omissions, false rejection and preservation defects.",
+      "Failure-inclusive complete-final latency proxy and started-context/resource use within each matched case/route stratum.",
+      "Overlap actually realized, serial handoff/writing time avoided, and extra provisional/revision work or failures; resident waiting is charged separately from observable inference."
+    ],
+    "process": [
+      "Reviser original preparation/start/deadline; provisional creation/freezing and actual early-segment elapsed time; critic terminal/seal/release/arrival; final artifact/terminal times where observable.",
+      "Actual critic/reviser overlap union versus summed lifetimes; queue/setup/wait and provider active work separated when available.",
+      "Provisional-to-final changed/lost/restored supported meaning, every material criticism disposition, original-source coverage and final source conditions.",
+      "Missing/late/changed critique, premature sealing, deadline cap or incomplete final in full denominator; provisional text never counts as delivered final.",
+      "Available input/cached/output/reasoning/native Goal counters, preparation/support/publication/evaluation separately; no invented billing or zero costs."
+    ],
+    "operational_definitions": {
+      "valid_complete_final": "Independent full critique was frozen/released and all original obligations/consequential claims/corrections/rejections were assessed in a self-contained final, within declared semantics; source truth independently judged.",
+      "useful_overlap": "Actual concurrent product work that removes observed serial delay; parallel context residency alone is not a speed or resource saving.",
+      "provisional": "One candidate-owned pre-critique complete working proposal, immutable snapshot when critic input arrives; never substituted for final selection."
+    },
+    "analysis_rule": "Report every original logical arm and both paired differences independently. Quality/complete scope first, then failure-inclusive latency/resources. Faster FAIL/FAIL is not comparable-quality saving; unknown cost stays unknown. Two heterogeneous case blocks give developmental evidence, not provider ranking or reliability/efficiency proof."
+  },
+  "full_obligations_retained": [
+    "Full unfamiliar brief-only discovery and source/code/history lookup.",
+    "One exact-plan reveal after discovery/source-map freeze; material retain/change/reject dispositions.",
+    "Independent critic retains complete all-obligation and governing-primary-source applicability review.",
+    "Fresh reviser resolves every material criticism, rejects unsupported criticism with evidence, preserves supported meaning and delivers complete final.",
+    "All six ER13 axes and meaningful proposed-versus-executed validation; no deployed/physical behavior required."
+  ],
+  "time_contract": "Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.",
+  "maximum_seconds": 3600,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "role_ceiling_anchor": "Original root role preparation/admission boundary; includes arm-specific setup/queue/bootstrap/tools/wait and delivery. No phase/receipt resets.",
+  "deadline_clipping": "Each original role ceiling clipped to armT0+3600; early completion allowed, no wait credit.",
+  "provisional_maximum_seconds": 360,
+  "provisional_anchor": "original reviser preparation incl queue/setup; finish earlier when provisional ready, then immediately use one exact critic reader; no minimum",
+  "topology": "investigator -> (fresh independent critic || fresh reviser provisional preparation) -> same fresh reviser complete final after critique",
+  "candidate_contexts": 3,
+  "maximum_simultaneous_product_contexts": 2,
+  "native_goals": "Common exact native identity/capture unchanged; the fresh reviser remains in its single native Goal across the one late critique receipt. Root owns all dispatch and terminal sealing.",
+  "bound_cases": [
+    "B12-P01",
+    "B12-P02"
+  ],
+  "candidate_visible_files": [
+    "investigator_prompt_delta.txt",
+    "critic_prompt_delta.txt",
+    "reviser_prompt_delta.txt"
+  ],
+  "candidate_excluded": [
+    "method-development sources/old proposed method",
+    "case rubric and old cases/evaluation",
+    "exact plan before ordinary reveal",
+    "other arms and provisional text for critic"
+  ],
+  "method_boundary": "No extra agent/stage, resumed investigator, critic/finalizer fusion, source-answer pack, semantic dependency cache, per-token watcher, model training or imported speculative framework. One concurrent role admission and one frozen late-input release only.",
+  "root_execution_requirements": [
+    "Pinned materializer/support snapshot recognizes exact execution_topology=b12-overlap-v1, rather than applying deltas to sequential-v1.",
+    "Root launches critic/reviser only after investigator terminal/hash/reveal freeze, with exact initial and future reader bindings supplied.",
+    "Root independently freezes/seals selected terminal critique and publishes exactly once; reader verifies expected receipt/input hashes and original deadline.",
+    "No speculative provisional final is selected; failed/missing/late/changed input is preserved, not silently retried under same arm."
+  ],
+  "admission_gate": "Method/input/artifact freeze can complete here; scientific admission also requires root-owned b12-overlap-v1 support readiness and concrete route/config/source-closure freeze. No compatible support was executed by this researcher.",
+  "case_metadata_topology": "Neutral case.json states baseline R0 logical order; execution_topology in method/config declares actual treatment overlap. Brief/plan/rubric bodies remain identical across arms.",
+  "novelty_review": "Exact compact ER10 M01-M16, ER11 unique execution map plus new-method operational descriptions, ER12 A1-A8. Original dependency-reuse proposal rejected as ER10 M05; active B12 has a new temporal speculate/wait/integrate mechanism. Details in novelty.json.",
+  "prepared_at_utc": "2026-10-12T00:45:35.131702+00:00",
+  "method_validation_status": "PASS_V2_STATIC_CONTRACT_SOURCE_CAPTURE_COMPACT_NOVELTY_AND_SUPPORT_NAMING; SCIENCE_UNEXECUTED",
+  "storage_scope": "Researcher writes restricted by user to methods/B12-v1; actual B12-v2 successor stored here at successors/B12-v2. Root may promote/copy using its own Git/publication ownership.",
+  "previous_version": {
+    "method": "B12-v1",
+    "status": "WITHDRAWN_UNADMITTED_ER10_M05_OVERLAP",
+    "original_card_path": "ER13_RUNTIME/methods/B12-v1/method.json",
+    "rejection_path": "ER13_RUNTIME/methods/B12-v1/rejected-proposal/REJECTION.json",
+    "old_overlap_label": "Unadmitted overlap first labeled v1; its authored freeze/receipt retained in version-lineage/overlap-unadmitted-v1-freeze and superseded, never scored."
+  },
+  "compatible_support_snapshot": {
+    "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v2-overlap",
+    "ready_sha256": "d0d1ad8a6840eff07e166767f6c77da3e077187c568a9903ea1b1480249489ae",
+    "readme_sha256": "e902bdbc47db04da2887ecbdc217c473caa1f0427a7296193779210c3271e684",
+    "late_reader_sha256": "b159d85660ec3aa555a089e30effe9c82f6d6a6f7b2274510226cbeb72035f29",
+    "provisional_output_name": "provisional-final.md",
+    "binding_output_name": "late-critique-binding.json",
+    "inspection": "Read only exact finite topology/late-input/output naming contract. Upstream helper test reports not rerun; actual native/provider/science qualification remains root-owned."
+  }
+}

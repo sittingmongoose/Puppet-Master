@@ -1,0 +1,16 @@
+{
+  "method_id": "B03-v1",
+  "description": "Freeze investigator discovery/draft/source/exact plan, retain same actual context and active native Goal through independent fresh criticism, then original author completes final in that same Goal.",
+  "candidate_contexts": 2,
+  "stage_maxima_seconds": {"investigator_substantive": 1800, "fresh_critic": 720, "original_author_finalization": 1080},
+  "whole_maximum_seconds": 3600,
+  "early_complete": true,
+  "waiting_occupancy_counted_separately": true,
+  "waiting_inference_assumed": false,
+  "clock_reset_permitted": false,
+  "author_delegation_permitted": false,
+  "finalization_new_goal_permitted": false,
+  "premium_assistance": false,
+  "native_lifecycle_qualified": false,
+  "source": "ER13_T3_EXECUTE_HANDOFF.md section 6 B03 and section 4 time contract"
+}

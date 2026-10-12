@@ -1,0 +1,37 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T01:44:03.444911+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/B03-P01-treatment.json",
+      "bytes": 2054,
+      "sha256": "943049440dfb99345374d9e3e150321ab6c30732a0680d6a2fd848ea31fb824c"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2313,
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/critic/native-critic-complete-active.json",
+      "bytes": 511,
+      "sha256": "0be7fd926191225d5e18cc1372be6e8d446b3f3a181bc503a1caaeba83720ab1"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/native-wait-active.json",
+      "bytes": 656,
+      "sha256": "67114d704f363c33d388e6d0cba8370310d9801246c99020d1fa735e673374ce"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/run.json",
+      "bytes": 583,
+      "sha256": "48271be714df3670788d9f288890adb51eb7edc1c14fe55190ec5630b1fdbe4b"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "prepared_at_utc": "2026-10-12T01:23:49.379Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-12T01:41:49.379Z",
+  "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B12-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/inputs/brief.md",
+      "sha256": "897cb2808586812aaf13bfa606d92d0261f0f9de24942233c924378eda69d5d5",
+      "bytes": 2194
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "288aeef6ee6926de3cd6314d3f0cc1652a8516cbd0c406d57057612bde056e5f",
+      "bytes": 13358
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "9d02f444155bed67a31f08cc6a47a639f5e5a279c487567dbf1a0a7dcd6ccaf1",
+      "bytes": 2548
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "fdd54c796eac4490185af28ca3c007eddfd86561824f3f526f524f72e25a136f",
+      "bytes": 8330
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/draft.md",
+      "sha256": "888e4b497927d97191220351bda2cc15565918092daba4fa9b67e80061e31c9e",
+      "bytes": 26461
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "656ea81a885467c6be05eaa215600fa1cbb49449946393ff14112c6ad95cc88e",
+      "bytes": 16966
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+      "bytes": 1624
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "60e80cdef31e7ac02bb1244b1600c5a0160c2cc1d53e8ee6d1f5abc093efbd0e",
+      "bytes": 474
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "aa88e2b3b0396ae517d4f684ab1c958cdc19c95e7bf8eb8f28cacd7c8b953e62",
+      "bytes": 4327
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "755610683ba44036c4951b5c81ad218b6dcc83fddd1b27f8237266c7474e6619",
+      "bytes": 185
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "ccd24b163947ca55508d2031864d8435ba48c45ee2f466d5f76193c9a6e34106",
+      "bytes": 835
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "0f2da606f4be440a3bb0f59be3d4344d5751d9f663a10b14678a74798f8fc953",
+      "bytes": 2098
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 reviser stage, run B12-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": "B12-v2 reviser delta — one bounded provisional final, then full critique integration.\nRoot admits this fresh reviser alongside the independent critic after the investigator terminal inputs and revealed exact plan are frozen. Use the exact root-declared investigator files and late-critic reader/binding in this assignment. Your original 18-minute elapsed allowance starts at reviser preparation and includes queueing, setup, tools, waiting and delivery; the common arm deadline still clips it. No clock reset or extra finalizer is permitted.\nBefore criticism arrives, prepare one provisional complete proposal from the investigator material: organize the original obligations, source conditions, alternatives, plan dispositions and validation, checking needed primary context. Save provisional-final.md and source-map.json at the declared stage paths. Do not invent critic findings or treat provisional text as the selected final. Finish this early segment as soon as the provisional is ready and no later than six elapsed minutes from original preparation, including queue/setup. Immediately invoke the declared reader; if valid criticism is already available, integrate it without waiting. There is no minimum work duration or extra polling protocol.\nThen use only the exact single-use reader/binding in your assignment to await root's frozen terminal critique. All waiting consumes the original elapsed deadline. Inspect every material criticism, validate consequential changes and justified rejections against governing primary context, repair any provisional errors and preservation losses, and perform a complete obligation/source read-through. Resolve ALL original material scope and deliver a self-contained complete final plus source map/dispositions. The provisional is preparatory work, not a pass or delivery substitute.\nA missing, late or changed critic input cannot be replaced by assumed agreement or a deadline extension. Preserve the failure/unfinished status through the declared reader and normal terminal mechanism; never silently finalize without independent full criticism.\n",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/investigator/sources/index.md"
+      ]
+    }
+  ],
+  "request_sha256": "47d26284eb0c47ea135ca92d411de115620995ecb177acea1a164933075afa12"
+}

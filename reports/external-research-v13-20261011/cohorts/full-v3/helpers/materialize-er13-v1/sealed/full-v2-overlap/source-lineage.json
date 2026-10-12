@@ -1,0 +1,248 @@
+{
+  "parent_recipe": "materialize-v3",
+  "parent_manifest_sha256": "1049fcdd18a49d1f6b773ce6d997b75617f3346dad7fa143104463fd4854774b",
+  "exact_A8_sha256": {
+    "critic_prompt_delta.txt": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+    "reviser_prompt_delta.txt": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087"
+  },
+  "files": [
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "sha256": "7620c81b06d9a4bc59c0c30f1aa2f05452665a3afd426e01ab0b94dc9781683f",
+      "bytes": 945,
+      "parent_v3_sha256": "d60077e6451c1a15fc6dc56396b1ee2f361de7cfdc52b1bdce1294897d9c818e",
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "sha256": "e9cdc3109c5453faccd7a8fe0f31ac6009ce4680ae005d7c1067eee7a9eb405c",
+      "bytes": 4818,
+      "parent_v3_sha256": "0a58d80ff288253c9cbbce15ec03a25ab5f4dc0c4c6cdd42e7ef3faedb8f2deb",
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "parent_v3_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/handoff.py",
+      "sha256": "2621d150b5cd6c6c8df0a9995ca75c01fb5d20bab93ce5c91f8db417c4a57eb4",
+      "bytes": 4758,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/late-critique.py",
+      "sha256": "b159d85660ec3aa555a089e30effe9c82f6d6a6f7b2274510226cbeb72035f29",
+      "bytes": 7586,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "0744e1cb7c62d16408c7456ec493b5bd8c2c4d7ff595103471aab16c9d41d52c",
+      "bytes": 33214,
+      "parent_v3_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "parent_v3_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "bytes": 5187,
+      "parent_v3_sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "bytes": 1229,
+      "parent_v3_sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355,
+      "parent_v3_sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "bytes": 284,
+      "parent_v3_sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c",
+      "bytes": 10501,
+      "parent_v3_sha256": "1ba74a47636a5351bf3337d9733a8cdf470313377638b22ad83d2d1d168fce90",
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151,
+      "parent_v3_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570,
+      "parent_v3_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "sha256": "805a5040b79df97cadbd58a3d9f5bcf0e4f758bf5d128a43e50a65f75d0bd66c",
+      "bytes": 242,
+      "parent_v3_sha256": "f3f3bda6151468f2a4a1362a51dc21a5d5593ab50a8705986a043594f2bc00c6",
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821,
+      "parent_v3_sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "bytes": 394,
+      "parent_v3_sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "parent_v3_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376,
+      "parent_v3_sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "parent_v3_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398,
+      "parent_v3_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715,
+      "parent_v3_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "changed_from_v3": false
+    },
+    {
+      "relative_path": "sources/methods/B07/critic_prompt_delta.txt",
+      "sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "bytes": 419,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B07/investigator_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B07/method.json",
+      "sha256": "4c997da053e4af70406f9974cd49f8749658c90bd60be2750a60cf8b5a0826c5",
+      "bytes": 494,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B07/reviser_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B09/critic_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B09/investigator_prompt_delta.txt",
+      "sha256": "11603cb5faf1166c3c035d2ddef8b90df312d9e5661ccf459d5ad17cd3e4be88",
+      "bytes": 416,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B09/method.json",
+      "sha256": "a858f1ffe405528222f1417a864c4df4bc6a1e0572edaee10af2a7239fb77b65",
+      "bytes": 494,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B09/reviser_prompt_delta.txt",
+      "sha256": "4797b38d36f6441e83513aed15f13bac3835534bda6185dfc9ef2e93ff6614f8",
+      "bytes": 437,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B10/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B10/investigator_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B10/method.json",
+      "sha256": "c14924fa786abed1326c640d8031d7c449a3acc3d44a37b7e997019bf1c6550c",
+      "bytes": 494,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    },
+    {
+      "relative_path": "sources/methods/B10/reviser_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "parent_v3_sha256": null,
+      "changed_from_v3": true
+    }
+  ]
+}

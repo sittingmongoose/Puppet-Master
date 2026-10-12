@@ -1,0 +1,77 @@
+{
+  "run_id": "B12-P02-control",
+  "stage": "critic",
+  "independently_opened_utc_window": [
+    "2026-10-12T01:27:58Z",
+    "2026-10-12T01:27:58Z"
+  ],
+  "source_id_policy": "Existing SRC identifiers retain the exact URLs and targets listed in the investigator source-map. CRIT-SRC-01 is a critic-only addition; no inherited identifier was rebound.",
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "Tokio spawn_blocking",
+      "url": "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html",
+      "version_or_commit": "Tokio 1.53.2; crate feature rt",
+      "locator": "Function description and cancellation/runtime shutdown, lines 31–38",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "A large configurable blocking-thread ceiling is used; started spawn_blocking closures cannot be aborted, and shutdown can wait indefinitely unless shutdown_timeout stops waiting.",
+      "governing_condition_default_exception": "The API is intended for blocking work that eventually finishes; shutdown_timeout does not cancel a started closure.",
+      "applicability": "Tokio Rust code using spawn_blocking; supports avoiding it as the only containment boundary for untrusted or stuck parsing."
+    },
+    {
+      "id": "SRC-06",
+      "title": "Windows Job Objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_or_commit": "Current Microsoft Win32 documentation; page accessed 2026-10-12",
+      "locator": "Managing Processes in Jobs, Job Limits, Managing a Process Tree that Uses Job Objects",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "CreateProcess children join the job by default; breakaway flags can change that; a job can terminate associated processes and enforce limits; nested jobs begin with Windows 8 / Server 2012.",
+      "governing_condition_default_exception": "Other process-creation paths and breakaway settings can escape; pre-Windows 8 nesting behavior differs.",
+      "applicability": "Windows renderer supervision and resource controls; Job Objects do not provide filesystem or network sandboxing."
+    },
+    {
+      "id": "SRC-07",
+      "title": "Landlock: unprivileged access control",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "version_or_commit": "Linux kernel documentation dated August 2026; ABI and rights depend on running kernel",
+      "locator": "Defining/enforcing a policy and ABI compatibility, lines 62–106, 176–228; network rights lines 23–26; descriptor semantics lines 270–282",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "Unprivileged enforcement requires no_new_privs; applications query ABI and mask unsupported rights. TCP network rules begin at ABI 4 and UDP at ABI 10. Some rights are bound to opened file descriptors; preconnected datagram sockets are not constrained by later IPC scoping.",
+      "governing_condition_default_exception": "Only operations covered by handled rights are denied by default; old ABIs lack later network controls; already-open descriptors and sockets require deliberate handling.",
+      "applicability": "Optional Linux filesystem/network sandbox backend only when runtime ABI, rights, descriptor state, and policy are sufficient."
+    },
+    {
+      "id": "SRC-13",
+      "title": "Thumbnail Managing Standard",
+      "url": "https://specifications.freedesktop.org/thumbnail/latest-single/",
+      "version_or_commit": "Version 0.9.0 (2020), XDG desktop standard",
+      "locator": "Thumb::MTime / Thumb::Size metadata and Detect Modifications, lines 180–185 and 261–278",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "The standard stores mtime in seconds and recommends checking size; it warns that multiple files can share the one-second mtime and that mtime alone can leave an incorrect thumbnail.",
+      "governing_condition_default_exception": "This is a cache interoperability/freshness standard, not a generic thumbnail-service API; size is an additional check, not proof of identical content.",
+      "applicability": "Linux/XDG thumbnail cache precedent; does not substantiate the draft's generic Linux user thumbnail service alternative."
+    },
+    {
+      "id": "SRC-15",
+      "title": "Zotero attachmentPreview.js",
+      "url": "https://github.com/zotero/zotero/blob/6af5a484fd6688aab23150938d69df42dfca10e4/chrome/content/zotero/elements/attachmentPreview.js",
+      "version_or_commit": "Zotero v7.0.12; pinned commit 6af5a484fd6688aab23150938d69df42dfca10e4",
+      "locator": "_processTask and Promise.race, lines 2050–2117; _processRender and _tryAbortRender, lines 2131–2225",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "Latest-task bookkeeping is processed in order on the normal path; each render races against a 3-second delay, after which flags are reset regardless. A losing render promise is not cancelled by Promise.race. Item-ID equality is checked before and after awaited render work.",
+      "governing_condition_default_exception": "A UI component/renderer precedent in Zotero 7.0.12, not an OS process boundary. The 3-second timeout frees bookkeeping, not necessarily the underlying render.",
+      "applicability": "Supports latest-task coalescing and an item-ID acceptance check; does not support an unconditional claim that timed-out work is serialized or terminated."
+    },
+    {
+      "id": "CRIT-SRC-01",
+      "title": "XPC — Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/xpc?language=objc",
+      "version_or_commit": "Current Apple Developer Documentation as retrieved 2026-10-12; no release version or commit listed",
+      "locator": "Overview and XPC Service process-environment table",
+      "access_utc": "2026-10-12T01:27:58Z",
+      "observed_operation": "launchd starts bundled XPC services on demand, shuts them down when idle, and restarts them after crashes; the page describes request/reply connections and privilege isolation.",
+      "governing_condition_default_exception": "The overview does not specify a per-request hard-cancel or bounded forced-stop contract for a hung handler; connection lifecycle should not be assumed to equal worker termination.",
+      "applicability": "Primary source for macOS XPC service lifecycle; the proposal must separately establish its timeout, kill/restart, and shutdown behavior."
+    }
+  ]
+}

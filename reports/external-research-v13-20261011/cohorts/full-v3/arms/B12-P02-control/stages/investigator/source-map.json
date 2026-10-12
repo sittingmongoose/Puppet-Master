@@ -1,0 +1,238 @@
+{
+  "schema_version": "1",
+  "run_id": "B12-P02-control",
+  "stage": "investigator",
+  "brief_scope": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/inputs/brief.md",
+  "discovery_sha256": "0d65aeb649133a05d4a5016c0d58b3cc0bcf36239e05a0050bb30b1e893fb04c",
+  "plan_status_at_discovery": "not released and not read",
+  "sources_index": "sources/README.md",
+  "sources": [
+    {
+      "id": "SRC-01",
+      "title": "Tokio spawn_blocking",
+      "url": "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html",
+      "version_or_commit": "Tokio 1.53.2; crate feature rt",
+      "locator": "Function description, cancellation and runtime shutdown sections",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "A blocking closure uses a blocking pool with a high configured ceiling; started closures cannot be aborted, and shutdown may wait indefinitely.",
+      "governing_condition_default_exception": "Use only for bounded work that eventually finishes; unsuitable as the only containment mechanism for hostile/hung parsers.",
+      "applicability": "Tokio Rust apps using spawn_blocking; useful for bounded trusted blocking work, not forceful parser cancellation."
+    },
+    {
+      "id": "SRC-02",
+      "title": "Tokio CancellationToken",
+      "url": "https://docs.rs/tokio-util/latest/tokio_util/sync/struct.CancellationToken.html",
+      "version_or_commit": "tokio-util 0.7.20 stable release; latest docs at capture",
+      "locator": "child_token, cancel, cancelled, cancellation safety",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "cancel wakes waiting tasks and propagates to child tokens; cancellation itself is not atomic until return; the future is cancel-safe.",
+      "governing_condition_default_exception": "Cooperative async cancellation and job-scoped token hierarchy; does not terminate native/blocking code.",
+      "applicability": "Tokio async tasks and cooperative worker protocols; not an OS process kill."
+    },
+    {
+      "id": "SRC-03",
+      "title": "Tokio process Command",
+      "url": "https://docs.rs/tokio/latest/tokio/process/struct.Command.html",
+      "version_or_commit": "Tokio 1.53.2 stable release; latest docs at capture",
+      "locator": "kill_on_drop, process_group, spawn cancellation sections",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "kill_on_drop defaults false; process_group is Unix-only; process tree and reaping require platform-specific handling.",
+      "governing_condition_default_exception": "Async child supervision; dropping a handle is not a portable process-tree kill.",
+      "applicability": "Rust/Tokio app-owned child renderers; process-group API is Unix-only and does not itself apply a sandbox."
+    },
+    {
+      "id": "SRC-04",
+      "title": "Rust std::process::Child",
+      "url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+      "version_or_commit": "Rust standard-library APIs: kill stable since 1.0; try_wait since 1.18; live stable docs",
+      "locator": "Child warning; kill, wait, try_wait",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "Child drop does not kill or wait; Unix force kill is SIGKILL; reaping is the caller's responsibility.",
+      "governing_condition_default_exception": "Direct-child primitive only; wait/reap explicitly, and add a platform process-group backend.",
+      "applicability": "Rust direct-child lifecycle on supported OSes; explicit kill/wait/reap is required."
+    },
+    {
+      "id": "SRC-05",
+      "title": "Tokio Semaphore",
+      "url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+      "version_or_commit": "Tokio 1.53.2 stable release; latest docs at capture",
+      "locator": "Fairness and acquire_many sections",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "Permits are FIFO; acquire_many at the front can block a later smaller acquisition despite available permits.",
+      "governing_condition_default_exception": "Use as a running-work cap behind one priority dispatcher; avoid using FIFO permit arrival as class priority.",
+      "applicability": "Tokio execution-slot accounting; use behind an app-owned dispatcher, not as the priority queue."
+    },
+    {
+      "id": "SRC-06",
+      "title": "Windows Job Objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_or_commit": "Win32 docs updated 2025-07-14; Windows versions called out in article",
+      "locator": "Managing Processes in Jobs; Job Limits; tree management",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "A job groups processes, can set working-set/time/CPU limits and terminate all associated processes; child inheritance has breakaway exceptions; nested jobs begin with Windows 8 / Server 2012.",
+      "governing_condition_default_exception": "Windows child-process control/resource enforcement. Job Objects are not by themselves a filesystem/network sandbox.",
+      "applicability": "Windows-only process grouping, accounting, limits, and termination; no filesystem/network sandbox guarantee."
+    },
+    {
+      "id": "SRC-07",
+      "title": "Linux Landlock",
+      "url": "https://docs.kernel.org/userspace-api/landlock.html",
+      "version_or_commit": "Current Linux kernel documentation; supported ABI/rights vary by running kernel",
+      "locator": "Unprivileged enforcement, filesystem access rights, restrict_self",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "Unprivileged enforcement requires no_new_privs; rules limit handled operations; files opened before sandboxing are outside path restrictions.",
+      "governing_condition_default_exception": "Optional Linux per-process sandbox backend; probe runtime ABI and pass only required handles/paths.",
+      "applicability": "Linux kernels with required Landlock ABI/rights; runtime feature probing and no_new_privs are necessary for an unprivileged launch."
+    },
+    {
+      "id": "SRC-08",
+      "title": "Windows AppContainer",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer",
+      "version_or_commit": "Win32 docs; AppContainer introduced in Windows 8",
+      "locator": "Launch steps, capabilities, process/file/network isolation",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "Launcher creates a profile and chooses capabilities; no access outside granted resources by default; the API and OS version must be checked.",
+      "governing_condition_default_exception": "Windows sandbox possibility, separate from Job Object supervision; package/ACL/capability integration is an owner/platform decision.",
+      "applicability": "Windows AppContainer process sandbox where supported; launcher/profile/capability and ACL setup required."
+    },
+    {
+      "id": "SRC-09",
+      "title": "Apple App Sandbox inheritance and XPC",
+      "url": "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html",
+      "version_or_commit": "Archived Apple entitlement reference; code-signed App Sandbox targets",
+      "locator": "Enabling App Sandbox Inheritance",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "A child process does not provide XPC's privilege-separation security; inherited child receives only static entitlements; post-launch file access must be passed as data or bookmark; XPC is preferred.",
+      "governing_condition_default_exception": "macOS sandboxed packaging route, subject to signing/entitlement setup and file-access handoff.",
+      "applicability": "macOS sandboxed app packaging and helper design; archived guidance makes signing, entitlement, and selected-file handoff relevant."
+    },
+    {
+      "id": "SRC-10",
+      "title": "Apple Quick Look Thumbnailing",
+      "url": "https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator",
+      "version_or_commit": "Current Apple API docs; availability is OS/platform dependent",
+      "locator": "generateRepresentations, cancelRequest, request size/scale",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "Supports async best and progressive representations and cancellation; format set varies by OS and installed thumbnail extensions.",
+      "governing_condition_default_exception": "Native adapter/fallback for Apple platforms; not a cross-platform scheduler or hostile-parser contract.",
+      "applicability": "Apple-platform native thumbnail adapter for supported formats; use only as optional platform behavior with its own cancellation/results."
+    },
+    {
+      "id": "SRC-11",
+      "title": "Windows Shell Thumbnail Handlers",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/shell/thumbnail-providers",
+      "version_or_commit": "Windows Shell documentation describing Vista-era API model; verify on target supported Windows releases",
+      "locator": "Thumbnail Processes; Thumbnail Cache and Sizing",
+      "access_utc": "2026-10-12T01:13:11Z",
+      "observed_operation": "Handlers run out of process by default in documented model, but can opt out via registry; cache invalidation includes last-modified time; size buckets can change.",
+      "governing_condition_default_exception": "Potential OS fast path only; external handlers, registry and shell cache weaken deterministic app-level limits.",
+      "applicability": "Windows Shell integration only; depends on Shell registrations and registry isolation/cache settings."
+    },
+    {
+      "id": "SRC-12",
+      "title": "SQLite atomic commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current SQLite technical documentation; explicitly rollback-journal mode",
+      "locator": "Single File Commit; hot-journal recovery",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "A transaction appears all-or-nothing across crash/power failure in rollback-journal mode; journal names must remain for recovery.",
+      "governing_condition_default_exception": "Possible persistent cache metadata store. If WAL mode is chosen, validate its separate semantics; previews remain rebuildable.",
+      "applicability": "Optional local persistent cache metadata using SQLite rollback-journal mode; not evidence for WAL without additional review."
+    },
+    {
+      "id": "SRC-13",
+      "title": "freedesktop Thumbnail Managing Standard",
+      "url": "https://specifications.freedesktop.org/thumbnail/latest-single/",
+      "version_or_commit": "Version 0.9.0 (2020); XDG desktop standard",
+      "locator": "Thumbnail directory, Thumb::URI/MTime/Size, Detect Modifications and failure cache",
+      "access_utc": "2026-10-12T01:10:01Z",
+      "observed_operation": "Per-user XDG cache; URI and second-resolution mtime; size should be checked; spec warns files may share same one-second mtime; failed-cache keys should be app/version-specific.",
+      "governing_condition_default_exception": "Useful cache precedent, but mtime/URI alone is not a strong content revision for this app.",
+      "applicability": "Linux/XDG desktop thumbnail interoperability precedent; not a strong content-validity key for a reference manager."
+    },
+    {
+      "id": "SRC-14",
+      "title": "Zotero 7 changelog",
+      "url": "https://github.com/zotero/zotero-docs/blob/0218554ffa63c2fd005f3167ccd4a92d64306866/content/7.0_changelog.md",
+      "version_or_commit": "zotero-docs commit 0218554ffa63c2fd005f3167ccd4a92d64306866; includes 7.0.4 and 7.0.12 release history",
+      "locator": "Changes in 7.0.4 and 7.0.12 (7.0.12 dated 2025-02-19)",
+      "access_utc": "2026-10-12T01:10:03Z",
+      "observed_operation": "Version history records a disappearance fix in 7.0.4 and a wrong-item rapid-switching preview fix in 7.0.12.",
+      "governing_condition_default_exception": "Direct desktop attachment-preview regression history; evidence of race-sensitive visible results.",
+      "applicability": "Zotero 7 product release history for attachment-preview regression/fix chronology."
+    },
+    {
+      "id": "SRC-15",
+      "title": "Zotero attachmentPreview.js",
+      "url": "https://github.com/zotero/zotero/blob/6af5a484fd6688aab23150938d69df42dfca10e4/chrome/content/zotero/elements/attachmentPreview.js",
+      "version_or_commit": "Zotero v7.0.12 tag resolves to commit 6af5a484fd6688aab23150938d69df42dfca10e4",
+      "locator": "render, _processTask, _processRender, _tryAbortRender, lines 269-426",
+      "access_utc": "2026-10-12T01:10:03Z",
+      "observed_operation": "Retains one latest task, serializes preview/discard work and rejects a completed render if selected item id changed; timeout race unblocks task bookkeeping.",
+      "governing_condition_default_exception": "A close production precedent; item id equality alone omits edit revision/options and must not replace a stronger acceptance key.",
+      "applicability": "Zotero 7.0.12 attachment preview implementation; a concrete stale-item guard precedent, not a universal renderer contract."
+    },
+    {
+      "id": "SRC-16",
+      "title": "Zotero PDFWorker manager",
+      "url": "https://github.com/zotero/zotero/blob/6af5a484fd6688aab23150938d69df42dfca10e4/chrome/content/zotero/xpcom/pdfWorker/manager.js",
+      "version_or_commit": "Zotero v7.0.12 tag resolves to commit 6af5a484fd6688aab23150938d69df42dfca10e4",
+      "locator": "constructor, _processQueue, _enqueue, _init, lines 30-152",
+      "access_utc": "2026-10-12T01:10:03Z",
+      "observed_operation": "One Web Worker processes a FIFO queue; priority uses unshift; error handler logs worker error but this file shows no restart.",
+      "governing_condition_default_exception": "Illustrates a worker protocol and serialization tradeoff; no OS process isolation and strict priority can delay ordinary jobs.",
+      "applicability": "Zotero 7.0.12 PDF Web Worker queue implementation; shows serialized processing and front insertion, not process supervision."
+    },
+    {
+      "id": "SRC-17",
+      "title": "Zotero document-worker",
+      "url": "https://github.com/zotero/document-worker/tree/9d11471391fc3f609a0d1e7012b82b9be6ca9c12",
+      "version_or_commit": "Commit 9d11471391fc3f609a0d1e7012b82b9be6ca9c12 (2026-09-30)",
+      "locator": "README: supported work, test/build/runtime architecture",
+      "access_utc": "2026-10-12T01:10:03Z",
+      "observed_operation": "Shared modules run in Node for tests/tooling; production emits Web Worker for Zotero desktop and reuses code in iOS JavaScriptCore.",
+      "governing_condition_default_exception": "Current renderer/worker architecture precedent; JavaScript Web Worker is not an OS process security boundary.",
+      "applicability": "Zotero document processing worker architecture across Node, desktop Web Worker, and iOS JSContext; not an OS security sandbox."
+    },
+    {
+      "id": "SRC-18",
+      "title": "ZoteroThumbFile 1.1.5",
+      "url": "https://github.com/gchapron/ZoteroThumbFile/tree/v1.1.5",
+      "version_or_commit": "Release tag v1.1.5 resolves to commit 22a07714ae8227aa560921c4b4262eb47eb05bac; released 2026-09-25",
+      "locator": "README Rendering and limits / Compatibility; bootstrap.js and tests/plugin.test.cjs",
+      "access_utc": "2026-10-12T01:10:03Z",
+      "observed_operation": "Two render tasks, 48-image and approximately 24 MiB image-string cache per reader, viewport-near loading, old raster retained until replacement decode; maintainer reports 13 tests and Zotero 10.0.4 macOS test.",
+      "governing_condition_default_exception": "Recent independent PDF contact-sheet implementation only; uses Zotero internals, tests are self-reported and were not run here.",
+      "applicability": "Independent Zotero PDF contact-sheet extension on Zotero 9/10; local implementation/testing precedent with private API/version limits."
+    },
+    {
+      "id": "SRC-19",
+      "title": "Apple OperationQueue and Operation cancellation",
+      "url": "https://developer.apple.com/documentation/Foundation/OperationQueue",
+      "version_or_commit": "Current Apple Foundation docs; Apple platform APIs",
+      "locator": "Determine Execution Order; Respond to Operation Cancelation; QoS and maxConcurrentOperationCount",
+      "access_utc": "2026-10-12T01:10:00Z",
+      "observed_operation": "Priority/readiness choose work; queued operations cannot be directly removed; cancellation must be cooperatively checked; default custom-queue QoS is background.",
+      "governing_condition_default_exception": "Native queue alternative on Apple only; illustrates limits of framework cancellation and strict queue control.",
+      "applicability": "Apple Foundation operation scheduling/cancellation only; useful conceptual alternative, not cross-platform semantics."
+    },
+    {
+      "id": "SRC-20",
+      "title": "Zotero preview feature issue",
+      "url": "https://github.com/zotero/zotero/issues/238",
+      "version_or_commit": "Zotero issue #238; opened 2013-01-31, closed 2025-02-14",
+      "locator": "Issue comments and completion note",
+      "access_utc": "2026-10-12T01:13:11Z",
+      "observed_operation": "A preview-pane request remained open through years and was later reported added in Zotero 7.",
+      "governing_condition_default_exception": "Product history only; changelog/source are stronger evidence for actual later bug fixes.",
+      "applicability": "Zotero feature-request history for preview pane; use as product context, not proof of current implementation behavior."
+    }
+  ],
+  "released_plan": {
+    "path": "revealed-plan.md",
+    "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008",
+    "bytes": 1624,
+    "released_at_utc": "2026-10-12T01:13:21.104Z",
+    "single_use": true
+  }
+}

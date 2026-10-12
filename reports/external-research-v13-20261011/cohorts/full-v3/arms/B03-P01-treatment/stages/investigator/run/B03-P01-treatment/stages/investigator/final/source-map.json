@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "run_id": "B03-P01-treatment",
+  "stage": "investigator",
+  "scope": "brief-only independent discovery; exact plan not released or inferred at this point",
+  "source_index": "sources/index.md",
+  "access_batch_utc": {
+    "start": "2026-10-12T01:03:22Z",
+    "end": "2026-10-12T01:03:22Z"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SQLite FTS5 official manual",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_commit": "Living official manual; no manual revision/commit was exposed. Feature-specific release floor is recorded separately in S02.",
+      "locator": "Sections 2, 3, 4.3, 4.4, 5, 6.7, 6.12, 6.15, 6.16; especially query syntax, unicode61/trigram, external-content tables/pitfalls, delete/rebuild/integrity-check, secure-delete.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Opened and read the official manual sections for build conditions, query grammar, tokenizers, external/contentless tables, synchronization, rebuild, integrity checking, and deletion handling.",
+      "governing_condition_default_exception": "FTS5 may be compiled in or loaded as an extension. Default tokenizer is unicode61 (Unicode 6.1, Latin diacritic removal); default FTS storage copies content unless content= is specified. External-content tables read source columns from the named same-database object and require the app to keep postings synchronized. Contentless-delete starts in SQLite 3.43.0. FTS5 REBUILD requires an external content source and is unavailable for contentless tables. External-content integrity comparison requires rank=1. Trigram under-three-character terms miss and some patterns scan. Tokens >32768 bytes are silently truncated. secure-delete defaults off; FTS postings may retain deleted terms until merge unless both FTS/core settings are used.",
+      "applicability": "Directly governs SQLite candidate semantics, storage duplication, query grammar, tokenizer limits, and recovery design. Actual packaged SQLite feature set is unknown; do not assume FTS5 or 3.43.0+.",
+      "evidence_summary": "Official source for FTS5 behavior and exceptions. It shows both why SQLite can be suitable for an embedded notebook and why async updates, content retention, tokenization, and rebuild design must be explicit.",
+      "index": "sources/index.md#s01",
+      "final_author_recheck": {
+        "access_utc": "2026-10-12T01:32:01Z",
+        "operation": "Re-opened official FTS5 manual at contentless-delete, external-content, and REBUILD passages.",
+        "locator": "Sections 4.4.2–4.4.3 and 6.12.",
+        "result": "Final wording specifies a fresh generation from canonical notes for the contentless-delete option and keeps external-content REBUILD tied to its configured content table."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "SQLite 3.43.0 release notes",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "version_or_commit": "SQLite release 3.43.0, 2023-08-24; SQLITE_SOURCE_ID 0f80b798b3f4b81a7bb4233c58294edd0f1156f36b6ecf5ab8e83631d468778c.",
+      "locator": "Release item 1; hashes at bottom of release page.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Opened official release notes and verified the first release adding FTS5 contentless-delete indexes.",
+      "governing_condition_default_exception": "The feature is available starting in this release, not as an unqualified property of every SQLite library.",
+      "applicability": "Use as the lower version boundary only if choosing a contentless-delete FTS5 index. Check the library actually shipped by every supported build.",
+      "evidence_summary": "The 3.43.0 release added an FTS5 index mode that omits indexed text while allowing record deletion.",
+      "index": "sources/index.md#s02"
+    },
+    {
+      "id": "S03",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Living official SQLite manual; WAL support introduced in SQLite 3.7.0 (2010-07-21).",
+      "locator": "Sections 2.1–2.3, 3, and 9; checkpoint threshold, concurrency, and WAL limitations.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Opened the official WAL documentation and checked the concurrency and checkpoint passages.",
+      "governing_condition_default_exception": "WAL permits readers and a writer to proceed concurrently, but there is still only one writer at a time. WAL shared-memory coordination requires processes on the same host, not a network filesystem. Default automatic checkpoint threshold is about 1000 pages; checkpoint can be delayed by long readers and an occasional commit may perform checkpoint work.",
+      "applicability": "A SQLite-based async index can keep reads available but must bound writer transactions and account for contention/WAL growth. Rebuild/edit concurrency must be measured; WAL does not promise multiple concurrent index/note writers.",
+      "evidence_summary": "Official concurrency and checkpoint rules used to bound claims about editing during catch-up.",
+      "index": "sources/index.md#s03"
+    },
+    {
+      "id": "S04",
+      "title": "SQLite compile-time options",
+      "url": "https://www.sqlite.org/compile.html",
+      "version_or_commit": "Living official manual; specific build configuration is unknown.",
+      "locator": "Overview and SQLITE_ENABLE_FTS5 entry; PRAGMA compile_options diagnostics.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Opened official compile-option documentation and verified that FTS5 is gated by a compile-time option in source builds and can be diagnosed.",
+      "governing_condition_default_exception": "SQLITE_ENABLE_FTS5 includes FTS5 in builds using the amalgamation; source-tree configure behavior and amalgamation configure behavior differ. Runtime capability/build introspection is needed; do not assume.",
+      "applicability": "Before choosing FTS5, inspect the app's bundled SQLite and every target artifact; do not use system-build assumptions.",
+      "evidence_summary": "Build availability is a platform/packaging condition, not merely a Rust API choice.",
+      "index": "sources/index.md#s04"
+    },
+    {
+      "id": "S05",
+      "title": "SQLite Fossil check-in: external-content integrity comparison behavior",
+      "url": "https://sqlite.org/hctree/info/782163693f37aeb6",
+      "version_or_commit": "SQLite Fossil check-in 782163693f37aeb65209bebbaeb6659a36881b8c4b4bec778b366658488bf966, 2020-09-21.",
+      "locator": "Check-in summary and changed ext/fts5/fts5integrity.test.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the SQLite Fossil check-in summary and its named upstream test file change.",
+      "governing_condition_default_exception": "The change made integrity checks avoid comparing postings with external content unless specifically requested; current manual identifies rank=1 as the external-content comparison request.",
+      "applicability": "Supports distinguishing internal index integrity from source/postings consistency. The test history is not a test run for this proposal.",
+      "evidence_summary": "Release/test history corroborates the current rank=1 comparison condition.",
+      "index": "sources/index.md#s05"
+    },
+    {
+      "id": "S06",
+      "title": "SQLite forum: Unicode61 and Polish Ł/ł",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_commit": "Official SQLite forum thread from 2020-05 through 2021-02; reporter used SQLite 3.30.1; no fix release was identified in the thread.",
+      "locator": "Posts 1–5, especially maintainer Dan Kennedy's explanation and custom-tokenizer suggestion at post 3.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the report and maintainer response in the SQLite-hosted forum.",
+      "governing_condition_default_exception": "Reporter expected accent folding to map Główna/Ł to glow/L; maintainer explains UnicodeData does not give Ł a decomposition to L plus a diacritic and suggests a custom tokenizer.",
+      "applicability": "A concrete counterexample to promising cross-script or all-diacritic equivalence from unicode61 default behavior. Test expected equivalences explicitly.",
+      "evidence_summary": "A tokenizer's Unicode classification/case handling does not imply transliteration, stemming, or language-aware segmentation.",
+      "index": "sources/index.md#s06"
+    },
+    {
+      "id": "S07",
+      "title": "SQLite forum: nested UPDATE and FTS5 external-content synchronization",
+      "url": "https://sqlite.org/bugs/info/d3b14ada9b81056914d0e6f9a6d23b7a804008c82b3481fae225d8a514dbd180?t=c",
+      "version_or_commit": "SQLite bug-forum thread opened 2026-08-04; tested in reports on SQLite 3.45.1, 3.45.3, and 3.53.2; no fixing check-in is recorded on the page through its last response.",
+      "locator": "Posts 1–4, especially maintainer response on 2026-08-05 at post 4.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the reproduction, correction, and maintainer diagnosis on the official SQLite bug forum.",
+      "governing_condition_default_exception": "The posted minimal reproduction initially omitted an INSERT sync trigger; the author corrected it. The maintainer then confirmed the FTS sync trigger can read already-updated row values when another AFTER UPDATE trigger performs a nested write on the same content table. The maintainer suggested combining timestamp changes or trigger ordering and updating documentation.",
+      "applicability": "Narrow trigger-interaction caveat, not a claim that all FTS5 external-content triggers corrupt data. Avoid nested writes from a second AFTER UPDATE trigger or validate exact trigger order; an app-level outbox is another design.",
+      "evidence_summary": "An issue history demonstrates that documented trigger sync must be tested in the presence of other content-table triggers and conditions.",
+      "index": "sources/index.md#s07"
+    },
+    {
+      "id": "S08",
+      "title": "Tantivy 0.26.2 IndexWriter API",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_commit": "Crate 0.26.2; source VCS SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d (S14).",
+      "locator": "IndexWriter methods add_document, delete_term, commit, commit_opstamp, run, rollback.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read version-pinned API docs for update visibility, commit blocking, and operation queue behavior.",
+      "governing_condition_default_exception": "commit blocks and publishes/persists pending docs on success. delete_term is visible only after commit and affects docs added in earlier commits or earlier in the same commit. add_document can block if the indexing pipeline is full. Commit returns an opstamp usable to align with an application queue.",
+      "applicability": "Use a bounded background writer and progress checkpoint; never equate enqueuing with visible results. App-level source/index atomicity still needs an outbox.",
+      "evidence_summary": "Primary library API contract for batching and visibility.",
+      "index": "sources/index.md#s08"
+    },
+    {
+      "id": "S09",
+      "title": "Tantivy 0.26.2 IndexReader API",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "version_or_commit": "Crate 0.26.2; source VCS SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d (S14).",
+      "locator": "IndexReader overview, reload(), searcher(), ReloadPolicy::OnCommitWithDelay.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read version-pinned reader docs for publication/reload behavior and consistent query snapshot requirements.",
+      "governing_condition_default_exception": "Reader controls when new index versions load. Default OnCommitWithDelay reflects a commit rapidly but may take tens of milliseconds; a searcher should be acquired for each query and held for that query's consistent segment set.",
+      "applicability": "Search results have commit/reload staleness even after successful write; publish the last indexed sequence and query against one searcher snapshot.",
+      "evidence_summary": "Primary read-side consistency and reload contract.",
+      "index": "sources/index.md#s09"
+    },
+    {
+      "id": "S10",
+      "title": "Tantivy 0.26.2 tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_commit": "Crate 0.26.2; source VCS SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d (S14).",
+      "locator": "default and en_stem tokenizer docs; RemoveLongFilter, SimpleTokenizer, NgramTokenizer, Stemmer and Language entries.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read version-pinned tokenizer defaults and available custom tokenizer components.",
+      "governing_condition_default_exception": "default splits on punctuation/whitespace, removes tokens longer than 40 chars, and lowercases. en_stem additionally stems English, is slower, and is recommended by docs to improve recall. NgramTokenizer and filters can be composed; the stemmer enum is not a language-segmentation guarantee.",
+      "applicability": "Tokenizer choice and unusual token handling are product semantics; test every represented script and long-token behavior before promising coverage.",
+      "evidence_summary": "Primary behavior/defaults for the Tantivy lexical candidate.",
+      "index": "sources/index.md#s10"
+    },
+    {
+      "id": "S11",
+      "title": "Tantivy 0.26.2 delete/update example",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/examples/deleting_updating_documents.rs",
+      "version_or_commit": "Crate 0.26.2; source VCS SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d (S14).",
+      "locator": "examples/deleting_updating_documents.rs; exact-ID field guidance, delete+add, commit and reader reload.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the package's source example and its assertions; did not execute it.",
+      "governing_condition_default_exception": "Example says Tantivy has no direct update, models it as delete by ID then reinsert, recommends a key-value store for the authoritative full document, and warns it does not enforce one doc per ID. The example commits before reloading the searcher and asserts old/new text.",
+      "applicability": "Supports sidecar architecture with canonical note lookup and exact ID; its stored title in the example is illustrative, not a reason to store notebook text.",
+      "evidence_summary": "Pinned upstream source code caller/example with executable assertions; not an app integration test.",
+      "index": "sources/index.md#s11"
+    },
+    {
+      "id": "S12",
+      "title": "Tantivy 0.26.2 changelog",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/CHANGELOG.md",
+      "version_or_commit": "Crate 0.26.2; source VCS SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d (S14).",
+      "locator": "Tantivy 0.22, 0.24 and 0.26 headings; older 0.11–0.16 deletion/commit fix history.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read release notes for index compatibility, query/deletion fixes, and the extent of reindex requirements.",
+      "governing_condition_default_exception": "Version history documents some explicit compatible pairs (0.22 can read 0.21; 0.24 can read 0.22/0.21) and historical releases requiring reindex, plus a deletion bug fixed in 0.15.3 and deleted-document commit fixes. These notes do not prove every future/current version can read every older index.",
+      "applicability": "Store index format/schema version; on incompatibility, rebuild from canonical notes into a new generation. Add deletion/rename/crash regression tests on the version actually shipped.",
+      "evidence_summary": "Pinned release history informs upgrade/reindex policy without claiming a current unreported defect.",
+      "index": "sources/index.md#s12"
+    },
+    {
+      "id": "S13",
+      "title": "Tantivy issue #2932: many small segments after per-edit writers",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2932",
+      "version_or_commit": "Upstream issue opened 2026-05-15; no assigned maintainer or linked fix visible at access.",
+      "locator": "Issue body and July 10, 2026 comment.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read open issue report and activity; report describes a downstream app using SQLite plus Tantivy.",
+      "governing_condition_default_exception": "Reporter created a new IndexWriter for each altered record, issued delete+add, committed and dropped it. They report about 2,000 small segments and several seconds cold load, reduced to 15 after full reindex. This is a single downstream workload/report, not an upstream benchmark or universal outcome.",
+      "applicability": "A concrete candidate risk for per-edit writer/commit policy. Compare long-lived writer/batched commit against per-edit variant; observe segment count, cold-open cost, and merge behavior.",
+      "evidence_summary": "Open user-reported issue supports measuring commit/segment policy and informs alternatives; not evidence of a fixed segment threshold.",
+      "index": "sources/index.md#s13"
+    },
+    {
+      "id": "S14",
+      "title": "Tantivy 0.26.2 crate VCS metadata",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "version_or_commit": "Crate 0.26.2 embeds git SHA 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d.",
+      "locator": ".cargo_vcs_info.json git.sha1 field.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the exact package-embedded VCS SHA.",
+      "governing_condition_default_exception": "The hash identifies the source revision packaged as Tantivy 0.26.2; docs are pinned to that released crate.",
+      "applicability": "Disambiguates S08–S12 release-specific API, tokenizer, example, and changelog observations.",
+      "evidence_summary": "Exact source identity for version-pinned Tantivy references.",
+      "index": "sources/index.md#s14"
+    },
+    {
+      "id": "S15",
+      "title": "Tantivy issue #3100: watcher-thread leak report in a downstream app",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3100",
+      "version_or_commit": "Upstream issue opened 2026-09-13; report attributes behavior to Tantivy 0.22.1 in a downstream macOS app; open/unassigned at access.",
+      "locator": "Issue description and environment section.",
+      "access_utc": "2026-10-12T01:03:22Z",
+      "observed_operation": "Read the open downstream report and version/platform scope.",
+      "governing_condition_default_exception": "The report concerns a long-running codesearch service with per-index FileWatcher and idle-evict/reopen churn; it is not evidence of a 0.26.2 defect or of behavior in one persistent notebook index.",
+      "applicability": "Watch only if the implementation creates/destroys many Tantivy indexes or readers; prefer a bounded number of long-lived index handles and include lifecycle stress tests if applicable.",
+      "evidence_summary": "Bounded, version-qualified issue evidence. Its narrow scope prevents treating it as a general Tantivy limitation.",
+      "index": "sources/index.md#s15"
+    },
+    {
+      "id": "S16",
+      "title": "Tantivy 0.26.2 upstream delete/update example at pinned commit",
+      "url": "https://github.com/quickwit-oss/tantivy/blob/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/examples/deleting_updating_documents.rs",
+      "version_or_commit": "Exact commit 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d, corresponding to Tantivy crate 0.26.2 per investigator S14.",
+      "locator": "Comments and code around lines 559–675 and 683–706.",
+      "access_utc": "2026-10-12T01:26:48Z",
+      "observed_operation": "The independent critic opened the exact commit-pinned upstream source and read ID uniqueness, delete+add, commit and reader reload passages. The original author then re-opened that same exact URL during finalization.",
+      "governing_condition_default_exception": "The example explicitly says there is no primary-ID enforcement and demonstrates an indexed ID field, delete then reinsert, commit, reload, and assertions. It is a source example, not a notebook benchmark.",
+      "applicability": "Independently verifies S11's consequential update/identity claims while preserving S11's original URL; supports writer discipline and commit/reload semantics, not app integration behavior.",
+      "final_author_recheck": {
+        "access_utc": "2026-10-12T01:32:01Z",
+        "operation": "Opened exact commit-pinned source and inspected the uniqueness comment and update/commit/reload sequence.",
+        "result": "Confirmed no ID uniqueness enforcement; example uses delete-plus-add, commit, then reader reload."
+      }
+    }
+  ],
+  "finalization_review": {
+    "reviewed_at_utc": "2026-10-12T01:32:01Z",
+    "critic_dispositions": [
+      "retain unresolved: target application repository identity/callers/tests",
+      "retain owner decision: saved-query meaning after title rename",
+      "amend clarity only: P3.2 contentless-delete fresh-generation wording",
+      "accept: no material wrong or unsupported technical issue identified"
+    ],
+    "released_plan_clause_review": "Critic affirmed the per-clause dispositions; only P3.2 wording was clarified.",
+    "rechecked_source_ids": [
+      "S01",
+      "S16"
+    ],
+    "proposed_validation_remains_unexecuted": true
+  }
+}

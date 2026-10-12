@@ -1,0 +1,380 @@
+{
+  "scope": "New relocated helper closure only; MOCK/synthetic, not native/science qualification",
+  "existing_B03_tests": {
+    "command": "python3 -B test_b03.py",
+    "tests": 17,
+    "result": "OK",
+    "elapsed_seconds": 11.336,
+    "native_calls": 0,
+    "synthetic": true
+  },
+  "existing_overlap_checks": {
+    "passed": true,
+    "checks": 85,
+    "details": [
+      {
+        "name": "public member CHANGELOG.md",
+        "passed": true
+      },
+      {
+        "name": "public member README.md",
+        "passed": true
+      },
+      {
+        "name": "public member READY.json",
+        "passed": true
+      },
+      {
+        "name": "public member ROUTES.md",
+        "passed": true
+      },
+      {
+        "name": "public member b-check-results.json",
+        "passed": true
+      },
+      {
+        "name": "public member b-checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member check-results.json",
+        "passed": true
+      },
+      {
+        "name": "public member checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member delta-checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member er13-checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member extra-checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member materialize.py",
+        "passed": true
+      },
+      {
+        "name": "public member overlap-check-results.json",
+        "passed": true
+      },
+      {
+        "name": "public member overlap-checks.py",
+        "passed": true
+      },
+      {
+        "name": "public member preservation-check.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v2-README.md",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v2-bundle-manifest.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v2-check-results.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v3-README.md",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v3-READY.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v3-bundle-manifest.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v3-check-results.json",
+        "passed": true
+      },
+      {
+        "name": "public member prior-v3-source-lineage.json",
+        "passed": true
+      },
+      {
+        "name": "public member public-input-dependency-manifest.json",
+        "passed": true
+      },
+      {
+        "name": "public member repin.py",
+        "passed": true
+      },
+      {
+        "name": "public member routes.py",
+        "passed": true
+      },
+      {
+        "name": "public member source-lineage.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-screen-v1/bootstrap.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-screen-v1/handoff.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-screen-v1/late-critique.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-screen-v1/prepare.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/helpers/er12-screen-v1/reveal.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-activation-capture-v2-1/README.md",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/invocation-clarification-v1/helper-pins.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/invocation-clarification-v1/transform.py",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/native-root-code-mode/captureSpecJS.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/native-root-code-mode/exactSpecJS.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/mechanics/native-root-code-mode/standardSpecJS.js",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/A8/critic_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/A8/reviser_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B07/critic_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B07/investigator_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B07/method.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B07/reviser_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B09/critic_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B09/investigator_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B09/method.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B09/reviser_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B10/critic_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B10/investigator_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B10/method.json",
+        "passed": true
+      },
+      {
+        "name": "public member sources/methods/B10/reviser_prompt_delta.txt",
+        "passed": true
+      },
+      {
+        "name": "topology explicitly frozen",
+        "passed": true
+      },
+      {
+        "name": "critic only frozen investigator dependency",
+        "passed": true
+      },
+      {
+        "name": "reviser starts while critic has no terminal status",
+        "passed": true
+      },
+      {
+        "name": "initial reviser carries no live critic science",
+        "passed": true
+      },
+      {
+        "name": "three contexts, no extra budget",
+        "passed": true
+      },
+      {
+        "name": "prewriting cap360 and original total1080",
+        "passed": true
+      },
+      {
+        "name": "ordinary complete review required after single binding",
+        "passed": true
+      },
+      {
+        "name": "existing direct single-create capture retained",
+        "passed": true
+      },
+      {
+        "name": "missing critique waits without binding",
+        "passed": true
+      },
+      {
+        "name": "unsealed critic cannot publish",
+        "passed": true
+      },
+      {
+        "name": "late publication refused no extension",
+        "passed": true
+      },
+      {
+        "name": "one publication idempotent",
+        "passed": true
+      },
+      {
+        "name": "provisional required before binding",
+        "passed": true
+      },
+      {
+        "name": "terminal completed cannot seal without late binding",
+        "passed": true
+      },
+      {
+        "name": "wrong critic identity refused",
+        "passed": true
+      },
+      {
+        "name": "changed sealed source refused",
+        "passed": true
+      },
+      {
+        "name": "expired worker binding refused",
+        "passed": true
+      },
+      {
+        "name": "single binding and immutable retry",
+        "passed": true
+      },
+      {
+        "name": "initial goal/objective/request/deadlines unchanged",
+        "passed": true
+      },
+      {
+        "name": "complete critic output plus source index pinned",
+        "passed": true
+      },
+      {
+        "name": "terminal completed now seals same existing revision stage",
+        "passed": true
+      },
+      {
+        "name": "changed binding never replaced",
+        "passed": true
+      },
+      {
+        "name": "unsupported topology refused before copy",
+        "passed": true
+      },
+      {
+        "name": "older snapshots byte immutable",
+        "passed": true
+      }
+    ],
+    "mode": "SYNTHETIC_OFFLINE_B12_OVERLAP_ONLY",
+    "native_candidate_calls": 0,
+    "dispatches": 0,
+    "reserve_starts": 0,
+    "scratch_removed": true
+  },
+  "compose": {
+    "common_refs_restored_in_private_smoke_only": 45,
+    "exact_parent_manifest": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+    "overlap_reconstructed_files": 61,
+    "all_reconstructed_original_hashes_match": true,
+    "new_helper_originals_unchanged": true,
+    "native_calls": 0
+  },
+  "existing_repinner": {
+    "command": "python3 -B repin.py",
+    "repinned": true,
+    "source_files": 34,
+    "bundle_files": 61,
+    "dispatches": 0
+  },
+  "old265_checks_rerun": false,
+  "common_full_v1_helper_publication_duplicate_files": 0,
+  "original_public_helpers_changed": false
+}

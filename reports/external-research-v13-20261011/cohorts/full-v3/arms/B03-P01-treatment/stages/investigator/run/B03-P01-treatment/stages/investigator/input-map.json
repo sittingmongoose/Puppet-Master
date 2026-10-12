@@ -1,0 +1,30 @@
+{
+  "run_id": "B03-P01-treatment",
+  "stage": "investigator",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/inputs/brief.md",
+  "predecessors": [],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator",
+  "stage_deadline_utc": "2026-10-12T01:28:13.504Z",
+  "whole_deadline_utc": "2026-10-12T01:58:13.299Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "fixed_critic_release": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/critic-release.json",
+  "allowed_mechanics": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/helpers/b03-retain-v1/b03.py",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/configs/B03-P01-treatment.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/native-activate.js",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/author-ready.js",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/author-resume.js",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/stages/investigator/author-complete.js",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/helpers/er12-screen-v1/reveal.py"
+  ]
+}

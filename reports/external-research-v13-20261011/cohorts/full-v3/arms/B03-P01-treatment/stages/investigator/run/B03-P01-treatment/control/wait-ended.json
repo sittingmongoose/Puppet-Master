@@ -1,0 +1,22 @@
+{
+  "reason": "ready",
+  "wait_started_at_utc": "2026-10-12T01:13:10.210674+00:00",
+  "wait_ended_at_utc": "2026-10-12T01:29:24.389698+00:00",
+  "waiting_occupancy_seconds": 974.179024,
+  "actual_provider_activity_seconds": null,
+  "actual_provider_activity_explanation": "Not inferred from residency; native counters/usage separately captured",
+  "goal_state_written": false,
+  "result": {
+    "version": "b03.critic-release.v1",
+    "status": "ready",
+    "release_prepared_at_utc": "2026-10-12T01:29:23.401793+00:00",
+    "published_at_utc": "2026-10-12T01:29:23.415848+00:00",
+    "finalization_deadline_utc": "2026-10-12T01:47:23.401793+00:00",
+    "custody_sha256": "9f67f6d2b82fdf70a724289ae092f7a8d2eb2c086815992c936a4b3981dca518",
+    "ready_sha256": "e9ad1576f0e67e2dbebdcf75796c1df18b24b7aabb47f647cf70cb8499bf7586",
+    "fixed_critique_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/critic-delivery/critique.md",
+    "fixed_source_map": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/critic-delivery/source-map.json",
+    "fixed_source_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/critic-delivery/sources",
+    "replacement_goal_permitted": false
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "er13.obligation_rubric.v1",
+  "case_id": "B12-P01",
+  "evaluator_only": true,
+  "derivation": "Original brief and tentative exact plan; no golden products, sources or method-conditioned answers.",
+  "six_axes": [
+    {
+      "axis": "material_obligations",
+      "assessment": "All original brief/plan material behavior and negative constraints addressed."
+    },
+    {
+      "axis": "source_applicability",
+      "assessment": "Consequential source facts grounded in governing primary context with subject/version/platform/conditions intact."
+    },
+    {
+      "axis": "discovery",
+      "assessment": "Useful unfamiliar mechanisms, viable alternatives and relevant history; missing material families recorded."
+    },
+    {
+      "axis": "dispositions",
+      "assessment": "Valid supported corrections, criticism rejections and tentative-plan retain/change/reject decisions."
+    },
+    {
+      "axis": "preservation",
+      "assessment": "Supported draft/criticism meaning survives into the complete final, including conditions and alternatives."
+    },
+    {
+      "axis": "validation",
+      "assessment": "Meaningful feasible validation; executed work distinguished from future proposals and unknown user data."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "name": "Representation and interchange scope",
+      "assessment": "Compare practical interchange choices and specify supported internal/round-trip semantics without universal-format claims.",
+      "material": true
+    },
+    {
+      "id": "O2",
+      "name": "Track/timeline/text fidelity",
+      "assessment": "Cover language, clip association, timing, overlap and meaningful formatting with governing source conditions.",
+      "material": true
+    },
+    {
+      "id": "O3",
+      "name": "Loss policy and originals",
+      "assessment": "Make unsupported/lossy conversion and export inclusion visible, preserving originals as required.",
+      "material": true
+    },
+    {
+      "id": "O4",
+      "name": "Untrusted package boundaries",
+      "assessment": "Address unsafe paths, duplicates, missing/malformed files and expanded/resource behavior beyond superficial package validation.",
+      "material": true
+    },
+    {
+      "id": "O5",
+      "name": "Selective import, preview and cancellation",
+      "assessment": "Provide useful preview/diagnostics, selective commit and recoverable partial/canceled work while protecting existing lessons.",
+      "material": true
+    },
+    {
+      "id": "O6",
+      "name": "Integration limits",
+      "assessment": "No paid cloud conversion, playback rewrite or automatic network fetching; do not require future application deployment.",
+      "material": true
+    }
+  ],
+  "validation_expectation": "Propose tests for overlapping/precision-sensitive cues, language and clip ambiguity, supported round trips and reported loss, hostile paths/resource expansion, partial files and cancellation before/after commit. Label any executed parser/check scope explicitly.",
+  "evaluation_rules": [
+    "Use source-supported qualitative dispositions, not citation/answer-length counts.",
+    "Material unsupported claims, required omissions, false rejection or preservation loss preclude a full source pass.",
+    "A decisive stopped screen leaves every unassessed axis explicit.",
+    "Observed evaluator/candidate discovery union is finite, not universal external-world recall.",
+    "Unknown local user data may remain unknown; available mechanism research remains required."
+  ],
+  "maximum_elapsed_minutes": 60,
+  "minimum_elapsed_minutes": null,
+  "requires_deployment": false,
+  "requires_real_physical_intervention": false,
+  "state": "FROZEN_PRE_ADMISSION_NOT_EXECUTED"
+}

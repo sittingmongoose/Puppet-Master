@@ -1,0 +1,83 @@
+{
+  "schema": "er13.obligation_rubric.v1",
+  "case_id": "B12-P02",
+  "evaluator_only": true,
+  "derivation": "Original brief and tentative exact plan; no golden products, sources or method-conditioned answers.",
+  "six_axes": [
+    {
+      "axis": "material_obligations",
+      "assessment": "All original brief/plan material behavior and negative constraints addressed."
+    },
+    {
+      "axis": "source_applicability",
+      "assessment": "Consequential source facts grounded in governing primary context with subject/version/platform/conditions intact."
+    },
+    {
+      "axis": "discovery",
+      "assessment": "Useful unfamiliar mechanisms, viable alternatives and relevant history; missing material families recorded."
+    },
+    {
+      "axis": "dispositions",
+      "assessment": "Valid supported corrections, criticism rejections and tentative-plan retain/change/reject decisions."
+    },
+    {
+      "axis": "preservation",
+      "assessment": "Supported draft/criticism meaning survives into the complete final, including conditions and alternatives."
+    },
+    {
+      "axis": "validation",
+      "assessment": "Meaningful feasible validation; executed work distinguished from future proposals and unknown user data."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "name": "Request identity and fresh publication",
+      "assessment": "Prevent obsolete output from becoming the current preview; explain request/document/cache validity and publication boundaries.",
+      "material": true
+    },
+    {
+      "id": "O2",
+      "name": "Priority and resource economy",
+      "assessment": "Favor visible work while preventing starvation; identify practical worker/resource limits and alternatives.",
+      "material": true
+    },
+    {
+      "id": "O3",
+      "name": "Cancellation/shutdown semantics",
+      "assessment": "Describe cooperative and child-process cancellation, lifecycle/cleanup and responsive shutdown without unsupported guarantees.",
+      "material": true
+    },
+    {
+      "id": "O4",
+      "name": "Failure and untrusted handlers",
+      "assessment": "Handle crash, stall, retry and format-handler isolation/recovery with applicable platform conditions.",
+      "material": true
+    },
+    {
+      "id": "O5",
+      "name": "Persistence and progress",
+      "assessment": "Cover restart-safe queue/result handling and truthful known/unknown progress.",
+      "material": true
+    },
+    {
+      "id": "O6",
+      "name": "Scope and constraints",
+      "assessment": "Local, unprivileged, no GPU/upload requirement; no deployment/universal benchmark obligation, meaningful mechanism research still required.",
+      "material": true
+    }
+  ],
+  "validation_expectation": "Propose checks for rapid switch/edit, stale completion after cancellation, background starvation, hung or crashing children, shutdown/restart at publication boundaries and unknown page counts. Any small executed witness must name its scope and oracle; future behavior stays proposed.",
+  "evaluation_rules": [
+    "Use source-supported qualitative dispositions, not citation/answer-length counts.",
+    "Material unsupported claims, required omissions, false rejection or preservation loss preclude a full source pass.",
+    "A decisive stopped screen leaves every unassessed axis explicit.",
+    "Observed evaluator/candidate discovery union is finite, not universal external-world recall.",
+    "Unknown local user data may remain unknown; available mechanism research remains required."
+  ],
+  "maximum_elapsed_minutes": 60,
+  "minimum_elapsed_minutes": null,
+  "requires_deployment": false,
+  "requires_real_physical_intervention": false,
+  "state": "FROZEN_PRE_ADMISSION_NOT_EXECUTED"
+}

@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "run_id": "B12-P01-control",
+  "stage": "critic",
+  "source_index": "sources/README.md",
+  "source_identity_policy": "S01-S20 retain the investigator's exact IDs, URLs, release/commit identities and source meanings. The critic adds separate verification records; no ID is rebound. Unverified entries are not treated as independently established evidence.",
+  "inherited_source_map_sha256": "d43eecbda49cdefbb9a11cb188852e294c98a9ae969678bea9a527edebd3e34d",
+  "records": [
+    {
+      "id": "S01",
+      "title": "WebVTT: The Web Video Text Tracks Format",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "released_version_or_commit": "W3C Candidate Recommendation Draft dated 2026-05-20; exact snapshot linked by the page at https://www.w3.org/TR/2026/CRD-webvtt1-20260520/; explicitly a draft, not a Recommendation",
+      "locator": "Status lines 2-6 and 43-46; §§3.3-3.4; §§4.1-4.5, especially cue timing/order/overlap, cue text components, regions, and settings",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened current W3C page and inspected its status/version metadata and cue, timing, region, and formatting clauses.",
+      "governing_condition_default_exception": "Cue start times are nondecreasing, each cue end is after its start, and distinct cues may overlap. In-file formatting and layout are a defined subset; cue text includes b/i/u, ruby, voice, language, and text spans. Cue box settings are enumerated. The page warns its current version is a draft that may change.",
+      "applicability": "Multilingual sidecar exchange, overlapping timed cues, relative media timing, format coverage limits, and warning against treating the latest draft as a stable final standard.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "W3C snapshot status, ordered starts, positive cue duration, and overlapping distinct cues; draft-vs-final status confirmed.",
+        "locator_checked": "§4.1 and status lines 43–46"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "WHATWG HTML Standard: media and track elements",
+      "url": "https://html.spec.whatwg.org/multipage/media.html",
+      "released_version_or_commit": "Living Standard; no pinned edition or commit exposed by the page",
+      "locator": "Track element section; examples around track kind, srclang, label, and default; constraints at lines 643-699 in the accessed version",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the current standard and inspected the text-track language example and default-track constraints.",
+      "governing_condition_default_exception": "The example separates subtitle language (srclang) from label language. A media element may not mark more than one subtitles/captions track as default; labels and presentation defaults do not encode the whole source track semantics.",
+      "applicability": "Track language and kind fields; browser-style track presentation mapping; do not infer content language from display label or assume multiple defaults survive browser export.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Current HTML track example and constraints on default subtitles/captions, descriptions, and chapters; label language distinguished from srclang.",
+        "locator_checked": "Track element, lines 639–699"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Timed Text Markup Language 2 (TTML2)",
+      "url": "https://www.w3.org/TR/ttml2/",
+      "released_version_or_commit": "W3C Recommendation, 2018-11-08; stable reference; page points readers to errata",
+      "locator": "§5 profiling; §8 content and timing vocabulary; §10 styling; §12 timing/timeContainer; §14 metadata and xml:lang",
+      "accessed_utc": "2026-10-12T01:05:39Z",
+      "observed_operation": "Opened the Recommendation and inspected its status, profile model, timeContainer values, xml:lang examples, and style/region definitions.",
+      "governing_condition_default_exception": "TTML supports explicit content/processor profiles; validation and effective behavior depend on the profile. Timed children can be locally parallel or sequential. Language can be inherited or specified per element. Region and style features exceed WebVTT's in-file cue markup, but processors may not implement every profile or property.",
+      "applicability": "Rich interchange option and exact timing/style source; adapters must name a profile and report unsupported features rather than claim all TTML2 documents round-trip.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned Recommendation profile model and par/seq timeContainer confirmed; every styling assertion not independently traversed.",
+        "locator_checked": "§§5.2 and 12.2.4"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "RFC 9559: Matroska Media Container Format Specification",
+      "url": "https://www.rfc-editor.org/rfc/rfc9559.html",
+      "released_version_or_commit": "RFC 9559, Standards Track, published 2024-10",
+      "locator": "§5.1.4 TrackEntry; §11 timestamps; §§18-19 track flags and selection; §21 attachments; §22 cues; §27 media types",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the IETF Standards Track text and inspected its schema/table of contents and track/attachment sections.",
+      "governing_condition_default_exception": "Matroska models a single audiovisual Segment with typed tracks, timing and track metadata; it also supports attachments. Track flags are selection hints, and actual selection is player-dependent. Text codec and timestamp rules remain codec-specific.",
+      "applicability": "Practical single-media-file alternative with multiple tracks and attached resources; not itself a complete authoring-package model or guarantee of identical rendering.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "RFC page opened and track/attachment sections located; all codec-specific claims were not independently checked.",
+        "locator_checked": "RFC 9559 §§5.1.4, 6.7, 11, 18–22"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Matroska Specification Notes",
+      "url": "https://www.matroska.org/technical/notes.html",
+      "released_version_or_commit": "Live project-maintained notes; no pinned revision exposed",
+      "locator": "TimestampScale and Segment/Track tick notes; Track Flags; Subtitle Selection; font attachment notes",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened and inspected the current notes for timing defaults, default/forced/accessibility flags, and selection caveats.",
+      "governing_condition_default_exception": "With default TimestampScale 1,000,000, one Segment tick is one millisecond; player selection may override Default flags for user preferences. Forced and accessibility flags indicate policy hints, not guarantees.",
+      "applicability": "Do not collapse default/forced/accessibility track metadata into a single boolean or treat a container flag as a deterministic UI selection.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "TimestampScale default and one-millisecond Segment Tick note confirmed; player selection caveat not separately checked.",
+        "locator_checked": "TimestampScale notes, lines 463–525"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "FFmpeg General Documentation: subtitle format support matrix",
+      "url": "https://ffmpeg.org/general.html",
+      "released_version_or_commit": "Live documentation; page does not expose a pinned commit or release. The official release index showed FFmpeg 8.1.1 as the latest stable patch during this research window.",
+      "locator": "Supported file formats, §2.5 Subtitle Formats and the X/E legend",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the current support matrix and inspected demux/mux/encode/decode columns and the external-library legend.",
+      "governing_condition_default_exception": "The table distinguishes reading/writing operations and uses E for support through an external library. It describes project capability, not the feature set of every packaged binary or an exact fidelity promise.",
+      "applicability": "Candidate local adapter/media tooling for SRT, SSA/ASS, WebVTT and TTML; deployment must pin and probe the actual binary/build and test each selected mapping.",
+      "critic_review": {
+        "verification_status": "carried_only",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Live FFmpeg documentation opened, but subtitle matrix rows and current release index claim were not independently checked.",
+        "locator_checked": "§2.5 retained as source locator"
+      }
+    },
+    {
+      "id": "S07",
+      "title": "FFmpeg SRT muxer implementation",
+      "url": "https://github.com/FFmpeg/FFmpeg/blob/n8.1.1/libavformat/srtenc.c",
+      "released_version_or_commit": "FFmpeg tag n8.1.1",
+      "locator": "srt_write_header and srt_write_packet; comments on encoding, line endings, and BOM",
+      "accessed_utc": "2026-10-12T01:07:59Z",
+      "observed_operation": "Opened the source at the named release tag and inspected the SRT writer code.",
+      "governing_condition_default_exception": "The writer sets a 1/1000 timestamp time base, accepts only text/SubRip subtitle codecs, and warns then skips a packet when PTS is absent or duration is negative. The code comments identify encoding, newline, and BOM options as TODOs.",
+      "applicability": "Concrete implementation evidence that a widely used conversion library can quantize timestamps and omit invalid packets; use preflight diagnostics and post-write comparisons.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned SRT muxer code confirms 1/1000 time base, missing-PTS/negative-duration warning-and-skip, and millisecond precision.",
+        "locator_checked": "srt_write_header / srt_write_packet"
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Aegisub SRT export implementation",
+      "url": "https://github.com/TypesettingTools/Aegisub/blob/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/subtitle_format_srt.cpp",
+      "released_version_or_commit": "Aegisub v3.5.0 commit 43af875ea01e80052cc6c44f24fc8c5258261c6d",
+      "locator": "SRTSubtitleFormat::CanSave and ConvertTags",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the exact release commit source and inspected SRT export preflight/conversion logic.",
+      "governing_condition_default_exception": "This application refuses SRT save when attachments, non-default styles, or unsupported override tags are present; conversion handles a narrow b/i/s/u subset and closes emitted tags to avoid leakage into later cues.",
+      "applicability": "Real example of a format-specific loss guard and cue-local text conversion. These are Aegisub rules, not a universal SRT standard.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned Aegisub exporter confirms attachment/style/override rejection and narrow b/i/s/u support.",
+        "locator_checked": "CanSave / ConvertTags"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Aegisub 3.5.0 release notes",
+      "url": "https://github.com/TypesettingTools/Aegisub/releases/tag/v3.5.0",
+      "released_version_or_commit": "v3.5.0, released 2026-10-05; verified commit 43af875 (full source commit shown in S08)",
+      "locator": "Release security note at lines 151-168",
+      "accessed_utc": "2026-10-12T01:07:59Z",
+      "observed_operation": "Opened the release page and read the release tag/commit and security note.",
+      "governing_condition_default_exception": "Release fixes CVE-2026-92705: a crafted subtitle could run arbitrary code through referenced Automation scripts; the release also reports hardening for other crafted files.",
+      "applicability": "Import subtitle text passively. Never execute embedded/referenced automation, scripts, macros, or active package content during preview/import.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned release page confirms crafted subtitle could execute referenced Automation scripts before the fix.",
+        "locator_checked": "v3.5.0 security note"
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Aegisub issue 614: invisible Unicode at SRT file start",
+      "url": "https://github.com/TypesettingTools/Aegisub/issues/614",
+      "released_version_or_commit": "Issue opened 2026-06-20; live issue page; not a normative format specification",
+      "locator": "Issue description, especially the reporter's test observations and BOM exception",
+      "accessed_utc": "2026-10-12T01:07:59Z",
+      "observed_operation": "Opened the project issue and read the reporter's described failure and stated exception.",
+      "governing_condition_default_exception": "A reporter says certain invisible prefix characters such as suspected U+200E/U+202A caused a parser error; the reporter explicitly says U+FEFF BOM did not reproduce in the current release. This is one issue report, not an independently reproduced universal behavior.",
+      "applicability": "Include invisible Unicode and BOM handling in malformed-text fixtures; preserve original bytes and surface parser diagnostics.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Issue confirms reporter suspicion about invisible leading characters and loss of original test files; BOM comparison was not rechecked.",
+        "locator_checked": "Issue description"
+      }
+    },
+    {
+      "id": "S11",
+      "title": "The .h5p Specification",
+      "url": "https://h5p.org/documentation/developers/h5p-specification",
+      "released_version_or_commit": "H5P developer guide; unversioned web documentation",
+      "locator": "Numbered package components 1-5",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the official H5P package description and read its component model.",
+      "governing_condition_default_exception": "An .h5p is a ZIP with a defined tree, h5p.json package definition, optional content/content.json, and required libraries whose semantics define content. The content structure is optional, and libraries may be dependencies.",
+      "applicability": "Existing authoring-tool exchange adapter candidate, but content semantics are library/version-specific and cannot define a universal neutral package by themselves.",
+      "critic_review": {
+        "verification_status": "not_verified_access_error",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Direct open returned an internal error; package semantics remain supported only by carried record.",
+        "locator_checked": "Numbered package components 1–5"
+      }
+    },
+    {
+      "id": "S12",
+      "title": "H5P subtitles, captions, and descriptions",
+      "url": "https://help.h5p.com/hc/en-us/articles/25322748576669-Subtitles-Captions-and-Descriptions",
+      "released_version_or_commit": "Current H5P.com help page; unversioned",
+      "locator": "VTT track upload instructions and the external-video-platform limitation",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened current help documentation and inspected format, track kind/language controls, and stated exception.",
+      "governing_condition_default_exception": "For directly uploaded video, the documented caption/subtitle/description text-track upload is VTT; the page says this does not apply to external video platforms. Smart Import is a separate optional service and is not required for basic VTT upload.",
+      "applicability": "Evidence for a useful VTT adapter and a product-specific limitation; not proof that every H5P runtime or external platform has the same behavior.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "H5P.com help confirms VTT for directly uploaded video and exception for external video platforms.",
+        "locator_checked": "Upload instructions, lines 25–28"
+      }
+    },
+    {
+      "id": "S13",
+      "title": "OpenTimelineIO documentation at release v0.18.1",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/v0.18.1/docs/index.rst",
+      "released_version_or_commit": "v0.18.1, Beta 18.1; release commit short hash 4423671 shown by the official release page",
+      "locator": "Overview lines 194-198",
+      "accessed_utc": "2026-10-12T01:06:54Z",
+      "observed_operation": "Opened the version-tagged documentation at v0.18.1 and inspected its overview.",
+      "governing_condition_default_exception": "OTIO is an editorial-cut API/interchange with clips, timing, tracks, transitions, markers and metadata, but media is externally referenced rather than embedded.",
+      "applicability": "Useful unfamiliar timeline model or optional editorial adapter; it does not fulfill package asset bundling or subtitle cue/style interchange on its own.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned OTIO overview confirms clips/timing/tracks/transitions/metadata and external rather than embedded media.",
+        "locator_checked": "Overview"
+      }
+    },
+    {
+      "id": "S14",
+      "title": "OpenTimelineIO timeline structure at release v0.18.1",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/v0.18.1/docs/tutorials/otio-timeline-structure.md",
+      "released_version_or_commit": "v0.18.1",
+      "locator": "Timeline Structure, Rendering, and Multiple Tracks sections",
+      "accessed_utc": "2026-10-12T01:07:59Z",
+      "observed_operation": "Opened the tagged implementation documentation and inspected track, clip, gap, and transition behavior.",
+      "governing_condition_default_exception": "Clips within one track may overlap through transitions; transition extents have adjacency constraints, while effects' behavior is application-specific.",
+      "applicability": "Reference for rational editorial timeline structures and overlapping media clips; subtitle cue overlap remains a separate concern.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned tutorial transition behavior inspected; full adjacency/effects claims not independently checked.",
+        "locator_checked": "Transition section"
+      }
+    },
+    {
+      "id": "S15",
+      "title": "1EdTech Common Cartridge v1.3 Profile: Implementation",
+      "url": "https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
+      "released_version_or_commit": "Common Cartridge v1.3 profile",
+      "locator": "Profile overview; content packaging, resources, metadata, and conformance sections",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the official 1EdTech v1.3 implementation guide after finding it through the consortium's specification index.",
+      "governing_condition_default_exception": "This is a learning-platform course/content package profile that combines course context and resource types; it requires an importer/exporter to honor its profile and resource semantics.",
+      "applicability": "Potential LMS/course-exchange adapter if institutions require it; more course structure than this standalone clip package needs.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Official v1.3 guide confirms Common Cartridge LMS/course packaging focus and profile-specific resources.",
+        "locator_checked": "§§1.1–1.2, 4"
+      }
+    },
+    {
+      "id": "S16",
+      "title": "RFC 8493: The BagIt File Packaging Format",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "released_version_or_commit": "RFC 8493 BagIt 1.0, 2018-10",
+      "locator": "§§2.1-2.4 and 3 for bag/manifests/validity; §§4.2 and 5.2-5.4 for fetch and security considerations",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the RFC and inspected manifest, checksum, remote-fetch, and security sections.",
+      "governing_condition_default_exception": "A complete/valid bag checks payload presence and checksums; 1.0 tools must support SHA-256 and SHA-512 and should default to SHA-512. fetch.txt can describe remote payload, and RFC security text warns about URL control and file-size risks.",
+      "applicability": "Optional integrity wrapper or inspiration for payload manifests only. Do not fetch URLs automatically; this task expressly excludes automatic network fetching and BagIt has no timed-text semantics.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "RFC security treatment of fetch.txt URLs and file sizes checked; checksum-completeness requirements not independently checked.",
+        "locator_checked": "§§5.2–5.4"
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Python 3.13 zipfile documentation",
+      "url": "https://docs.python.org/3.13/library/zipfile.html",
+      "released_version_or_commit": "Python 3.13.16 documentation build",
+      "locator": "ZipFile.open duplicate-name note; zipfile.Path safety note; Decompression pitfalls",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the versioned standard-library documentation and inspected duplicate-name, path validation, decompression limit, and overwrite behavior notes.",
+      "governing_condition_default_exception": "A ZipInfo object disambiguates duplicate names. zipfile.Path does not sanitize archive names, unlike extract/extractall; resource exhaustion and overwrite-on-repeat extraction are documented pitfalls.",
+      "applicability": "Concrete parser/extractor boundary evidence; inventory raw entries and impose app limits even when using a library helper.",
+      "critic_review": {
+        "verification_status": "partially_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Python 3.13.16 docs confirm zipfile.Path does not sanitize archive names and caller validation is required; duplicate-name handling not independently checked.",
+        "locator_checked": "Path objects note and Decompression pitfalls"
+      }
+    },
+    {
+      "id": "S18",
+      "title": "zip-rs CVE-2025-29787 security advisory",
+      "url": "https://github.com/advisories/GHSA-94vh-gphv-8pm8",
+      "released_version_or_commit": "zip Rust crate versions >=1.3.0 and <2.3.0 affected; 2.3.0 patched; advisory published 2025-03",
+      "locator": "Affected/patched versions; vulnerability summary and remediation references",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the GitHub-reviewed security advisory and read affected versions, attack mechanism, and fix references.",
+      "governing_condition_default_exception": "A symlink entry could redirect a later extracted path outside the destination despite prior path sanitization; the issue applied to high-level extraction APIs. Fix identified as 2.3.0.",
+      "applicability": "Never equate a sanitized-name check with safe extraction; avoid untrusted symlink extraction and defend against path redirection across entries.",
+      "critic_review": {
+        "verification_status": "independently_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Reviewed advisory confirms symlink-mediated extraction escape, affected range >=1.3.0 and <2.3.0, patched 2.3.0.",
+        "locator_checked": "Affected/patched versions and Details"
+      }
+    },
+    {
+      "id": "S19",
+      "title": "zip-rs v2.3.0 patch release",
+      "url": "https://github.com/zip-rs/zip2/releases/tag/v2.3.0",
+      "released_version_or_commit": "zip v2.3.0; advisory identifies remediation commit short hash a2e062f",
+      "locator": "Release tag v2.3.0 and advisory-linked remediation commit",
+      "accessed_utc": "2026-10-12T01:05:19Z",
+      "observed_operation": "Opened the exact tagged release and the advisory-linked patch commit.",
+      "governing_condition_default_exception": "This is the version boundary the reviewed advisory calls patched; it does not remove the need for application-level entry/size policies.",
+      "applicability": "Relevant release/fix history if a future Rust ZIP dependency is selected; no dependency is selected or installed in this research stage.",
+      "critic_review": {
+        "verification_status": "not_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Tagged release page opened, but advisory-linked remediation commit was not independently resolved.",
+        "locator_checked": "v2.3.0 release"
+      }
+    },
+    {
+      "id": "S20",
+      "title": "Aegisub ASS format test sample",
+      "url": "https://github.com/TypesettingTools/Aegisub/blob/43af875ea01e80052cc6c44f24fc8c5258261c6d/docs/specs/ass-format-tests.ass",
+      "released_version_or_commit": "Aegisub v3.5.0 commit 43af875ea01e80052cc6c44f24fc8c5258261c6d",
+      "locator": "Script Info, V4+ Styles, Events, and override-tag test cases",
+      "accessed_utc": "2026-10-12T01:06:54Z",
+      "observed_operation": "Opened the release-pinned project test sample as an implementation artifact, not as a normative ASS specification.",
+      "governing_condition_default_exception": "The sample exercises style declarations, resolution-dependent formatting, positioning, attachments/metadata, and inline override content; its coverage reflects this project's test fixture, not every ASS dialect.",
+      "applicability": "Evidence that a real authoring workflow carries presentation data beyond simple inline emphasis; require explicit dialect/profile support.",
+      "critic_review": {
+        "verification_status": "not_verified",
+        "accessed_utc": "2026-10-12T01:25:53Z",
+        "observed_operation": "Pinned fixture page opened, but no substantive fixture-content claim was independently confirmed.",
+        "locator_checked": "Test sample"
+      }
+    }
+  ]
+}

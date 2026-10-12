@@ -1,0 +1,23 @@
+{
+  "run_id": "B11-P01-treatment",
+  "initialized_at_utc": "2026-10-12T01:01:12.462Z",
+  "whole_deadline_utc": "2026-10-12T02:01:12.462Z",
+  "brief_sha256": "f5abfc028dab466137df21a8405f1db38baec8713b440f353e64f7e179b90373",
+  "brief_bytes": 2226,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_deltas": {
+    "investigator": "B11-v1 investigator delta — one bounded pivot from unused retrieved evidence.\nDuring brief-only discovery, after an initial ordinary research pass and before freezing discovery, briefly record which mechanisms/explanations your current account already uses. Inspect primary-source information returned by that research but not used in the account. Choose at most two distinct items that bear on the brief yet introduce a relevant mechanism, alternative or implementation lesson outside the question already being answered. State each item's exact source locator, why it matters to an original obligation, and how it differs from the current explanation. Turn each into one source-grounded research question and pursue governing documentation, code or genuine issue/fix/regression/release history. A search-result snippet is a lead, not governing support.\nRecord seed query -> unused evidence/locator -> pivot question -> follow-up governing source -> useful/rejected/unresolved disposition in a small table within discovery.md. Do not manufacture an unfamiliar branch, select trivia to fill a quota, or present a familiar idea as source-discovered. Zero eligible pivots is allowed with a supported reason. This special pivot uses at most five elapsed minutes of the existing investigator allowance; stop it sooner to preserve complete ordinary discovery and drafting. The bound limits this extra operation, not ordinary research.\nContinue all R0 research and planning obligations, freeze substantive discovery and source-map before the ordinary one-shot exact-plan reveal, then complete the draft. No extra agent, model call protocol, source pack or early plan access is added.\n",
+    "critic": "No B11 change to the critic. Perform complete R0 independent source, applicability and obligation criticism.\n",
+    "reviser": "No B11 change to the fresh reviser. Resolve the full critique and exact plan with evidence and deliver the complete R0 final.\n"
+  }
+}

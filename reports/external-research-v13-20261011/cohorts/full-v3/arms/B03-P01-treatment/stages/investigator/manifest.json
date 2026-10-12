@@ -1,0 +1,192 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T01:33:37.083702+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/discovery.md",
+      "bytes": 19055,
+      "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/draft.md",
+      "bytes": 18945,
+      "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/source-map.json",
+      "bytes": 19049,
+      "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/plan-reveal.json",
+      "bytes": 475,
+      "sha256": "cae5f9fecc127a85a908531cf5b2e872623a880022333c902041461c2c259fd0"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/sources/index.md",
+      "bytes": 4619,
+      "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/final/final.md",
+      "bytes": 23369,
+      "sha256": "9340fad59fcaba255c7107f9a1f49292e1e64dbebc07b5028bafa9113fb68421"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/final/source-map.json",
+      "bytes": 21722,
+      "sha256": "007f3c61f12f7e7b8d097f669cfd6a712331f74b4e55f5cd9bb6e962fb8b7d69"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/final/sources/index.md",
+      "bytes": 5548,
+      "sha256": "479050718c5eeb536b6ce69c4731b4cca5bda6345a2f3e61e0eec95ec78449a0"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/native-goal-create.json",
+      "bytes": 649,
+      "sha256": "30810aa52eec54f71ef8e9600f50f82cbc061caa27bba0fdf19704a99ebcb46c"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "bytes": 979,
+      "sha256": "75d7ee5df9a9833a786fbc639162c6cb8012ead9cc119846a91418ee860755ac"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/native-resume-active.json",
+      "bytes": 657,
+      "sha256": "176cc55c240458fa3ffff45513fdef9e2725292ec99b2b87fe5e5679ad08a29d"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/native-complete-active.json",
+      "bytes": 657,
+      "sha256": "79e10b9de4c2b628a87a2370673f49b6a5dcb7e2fc0299596ba167740620854a"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/freeze.json",
+      "bytes": 3159,
+      "sha256": "85cddc447410c6958772599c3a944c3321f1a37629f8cf9e8e9599962c632340"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/request.json",
+      "bytes": 1635,
+      "sha256": "8fcea2b081a8008c5d8f9dc3a8e7ef14688fc78a0266365f1cdf2e6d85aca15f"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/dispatch.json",
+      "bytes": 5001,
+      "sha256": "f41bafa1584569dcfc1a8cf48f2d143827e90b5305351d71ce3d5c570a4f226a"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/status.json",
+      "bytes": 3887,
+      "sha256": "810142e1718552937aaaf6e3531b7ce45f9b372e8c8db25cc39fad27a65c5e6b"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/assignment.md",
+      "bytes": 7777,
+      "sha256": "3d1bbec64b527fa529986007230cece2c27e1f7eca4a978736e646049ca3d6fc"
+    },
+    {
+      "path": "run/B03-P01-treatment/stages/investigator/input-map.json",
+      "bytes": 2162,
+      "sha256": "849782144b701692c690d744ce8dc2104dd1bbc6feb0364c85b75df3a036c16e"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/author-ready.json",
+      "bytes": 2481,
+      "sha256": "e9ad1576f0e67e2dbebdcf75796c1df18b24b7aabb47f647cf70cb8499bf7586"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/retained-ready.json",
+      "bytes": 5174,
+      "sha256": "6b7532e2ac6c8fba8762e51e738197a9c9addf6153bf61dcfb73a864ad2dd0a9"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/waiting.json",
+      "bytes": 329,
+      "sha256": "a1f81217f6913262178adc49b71f5690597764cac2cfadb948e6a7e121175833"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/wait-ended.json",
+      "bytes": 1433,
+      "sha256": "f32ef255ee71b038029fb7729585001112e52e2e3c53ebd75728a0bc9fdd69f1"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-admission.json",
+      "bytes": 3528,
+      "sha256": "6b8b0fdd3fd680bfe20b00656bb068ba9dc6e84c096235d567251837434af9cb"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-custody.json",
+      "bytes": 15095,
+      "sha256": "9f67f6d2b82fdf70a724289ae092f7a8d2eb2c086815992c936a4b3981dca518"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-release.json",
+      "bytes": 1018,
+      "sha256": "62b026de69be59f7cf4b4fc459fc127523316fff8092d93a46d38bcbf7bfcbb7"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/author-resumed.json",
+      "bytes": 1101,
+      "sha256": "5ef8c71556d3e8446eb81cc288eedf2ed3bad56628d4befe861005d4289c9b40"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/final-ready.json",
+      "bytes": 1253,
+      "sha256": "4cc5bf4d13711b4d3a69492365368aab287199bd08f4e12760bbe15bba13c4aa"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/author-terminal-observed.json",
+      "bytes": 956,
+      "sha256": "5c47009669978a99eed0a6fd875b57f233d7a5c1bc9e45af1f803a0d5f05a560"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-delivery/critique.md",
+      "bytes": 10495,
+      "sha256": "662ec38b5c80937f7456ba263cde2756dc4cd091feeaef23c7febb210339b1ee"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-delivery/native-goal-create.json",
+      "bytes": 504,
+      "sha256": "9c44e25eb2d1a289bd3df9b7b0ee630b7747b24fb07c3f3a2daf151d9105d2ce"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-delivery/native-goal-terminal.json",
+      "bytes": 833,
+      "sha256": "8b8696be67c8e45245cc3620591934da26226e2b12c2ce6c72a92201afe57220"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-delivery/source-map.json",
+      "bytes": 10740,
+      "sha256": "6dcb2b9db490267cd71f2cf64ed0a296e76366277a001d7f32583ddd4c2d315a"
+    },
+    {
+      "path": "run/B03-P01-treatment/control/critic-delivery/sources/index.md",
+      "bytes": 2747,
+      "sha256": "902b93f55f87c1a548c31275858e2a4ebf95220d2bcd36f413b15ed6c2be70cd"
+    },
+    {
+      "path": "configs/B03-P01-treatment.json",
+      "bytes": 2054,
+      "sha256": "943049440dfb99345374d9e3e150321ab6c30732a0680d6a2fd848ea31fb824c"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2313,
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    }
+  ]
+}

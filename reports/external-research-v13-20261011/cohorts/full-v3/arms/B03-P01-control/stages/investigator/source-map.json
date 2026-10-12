@@ -1,0 +1,157 @@
+{
+  "run_id": "B03-P01-control",
+  "stage": "investigator",
+  "discovery_cut": "Initial 12-source discovery set was created before exact-plan release; the map now also records a clearly identified follow-on source discovered after release.",
+  "accessed_utc": "2026-10-12T01:18:14Z",
+  "sources": [
+    {
+      "source_id": "S-SQLITE-FTS5",
+      "title": "SQLite FTS5 Extension",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_commit": "Living official documentation accessed 2026-10-12T01:09Z; FTS5 included in amalgamation since SQLite 3.9.0; runtime version unspecified",
+      "locator": "Sections 2.1, 3, 4.3.1–4.3.4, 4.4, 6.7, 6.12; especially Unicode61 tokenizer, external content pitfalls, rebuild command",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read query grammar, tokenizer defaults, external/contentless table semantics, trigger examples, consistency pitfalls and rebuild command.",
+      "governing_condition_default_exception": "unicode61 is the default; Unicode 6.1 categories with Latin diacritic removal by default; external-content data must be synchronized by caller; triggers do not backfill existing rows; rebuild deletes then reconstructs; contentless has no rebuild command; trigram full-text needs at least three Unicode characters.",
+      "applicability": "Candidate local lexical index; verify runtime FTS5 build and expected token behavior. Same-database external content avoids an index text copy but may couple index writes to note writes."
+    },
+    {
+      "source_id": "S-SQLITE-WAL",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "WAL available since SQLite 3.7.0; living official documentation",
+      "locator": "Sections 1, 2, 2.1 and 2.3",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read concurrency and checkpoint conditions.",
+      "governing_condition_default_exception": "Readers and a writer may operate concurrently in WAL mode, but only one writer at a time; long readers can prevent checkpoint progress; WAL requires all processes on one host and does not work on a network filesystem.",
+      "applicability": "Local SQLite notebook/index design; test same-database index writes and rebuild reads for edit contention and WAL growth."
+    },
+    {
+      "source_id": "S-SQLITE-CHANGES",
+      "title": "SQLite Release History",
+      "url": "https://www.sqlite.org/changes.html",
+      "version_or_commit": "Official changes through 3.51.2 observed; relevant 3.46.1 source ID c9c2ab54ba1f5f46360f1b4f35d849cd3f080e6fc2b6c60e91b16c63f69a1e33",
+      "locator": "3.46.1 entry (2024-08-13); 3.50.0 FTS5 tokenizer v2 / locale=1 and contentless_unindexed entry",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read release history for tokenizer robustness fix and later FTS5 API/features.",
+      "governing_condition_default_exception": "3.46.1 notes improved parsing robustness for FTS5 tokenize= arguments; later locale-aware API permits custom locale-aware tokenizers but is not an automatic language segmenter.",
+      "applicability": "Pin the SQLite runtime shipped by the app; use as release-history context for tokenizer configuration and feature gates."
+    },
+    {
+      "source_id": "S-SQLITE-TRIGRAM-ISSUE",
+      "title": "SQLite forum: Crash in FTS5 Module",
+      "url": "https://sqlite.org/forum/forumpost/171bcc2bcd?t=c",
+      "version_or_commit": "Reported on trunk check-in as of 2024-07-31; fixed in SQLite 3.46.1 per forum response",
+      "locator": "Posts 1, 3 and 4; report dated 2024-08-06 and fix confirmation 2024-08-14",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read reproducer for malformed trigram option with omitted value and maintainer/fix release confirmation.",
+      "governing_condition_default_exception": "Malformed case_sensitive/remove_diacritics option can crash affected old trunk builds; newer parsing should return tokenizer-constructor error.",
+      "applicability": "Do not generate malformed tokenizer configuration; verify the shipped version if trigram or tokenizer options are used."
+    },
+    {
+      "source_id": "S-SQLITE-DIACRITIC-ISSUE",
+      "title": "SQLite forum: FTS5 Unicode61 Polish ł/Ł",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_commit": "Historical report using SQLite 3.30.1; maintainer response 2021-01-11",
+      "locator": "Posts 1–3; maintainer explains UnicodeData mapping and suggests a custom tokenizer",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read concrete language-specific diacritic behavior report.",
+      "governing_condition_default_exception": "remove_diacritics cannot fold characters lacking Unicode decomposition to the base character in the expected way; a custom mapping/tokenizer is a separate choice.",
+      "applicability": "A test fixture and limitation for claims about Latin diacritic folding; recheck on the selected runtime."
+    },
+    {
+      "source_id": "S-TANTIVY-RELEASE-0262",
+      "title": "Tantivy release 0.26.2",
+      "url": "https://github.com/quickwit-oss/tantivy/releases/tag/0.26.2",
+      "version_or_commit": "0.26.2; short commit 72d1ef9; tagged 2026-09-08",
+      "locator": "Release page heading and tag/commit metadata",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Identified the released version used for pinned crate docs and versioned code.",
+      "governing_condition_default_exception": "Feature behavior below is scoped to 0.26.2 unless otherwise stated.",
+      "applicability": "Evaluation candidate for Rust desktop app; not a final engine selection."
+    },
+    {
+      "source_id": "S-TANTIVY-INDEXWRITER-0262",
+      "title": "Tantivy 0.26.2 IndexWriter API",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_commit": "tantivy crate 0.26.2",
+      "locator": "IndexWriter description, add_document, commit, run documentation",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read writer queue, commit publication/durability and blocking notes.",
+      "governing_condition_default_exception": "Adds/deletes are visible after commit; commit blocks and persists pending docs; add_document may block when indexing pipeline is full.",
+      "applicability": "Use a single bounded writer, bounded batches and post-commit outbox acknowledgement; validate update lag against UI budget."
+    },
+    {
+      "source_id": "S-TANTIVY-TOKENIZERS-0262",
+      "title": "Tantivy 0.26.2 tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_commit": "tantivy crate 0.26.2",
+      "locator": "Tokenizer module sections default, en_stem and custom tokenizers",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read default tokenizer, English stemmer conditions and tokenizer extension API.",
+      "governing_condition_default_exception": "Default splits on punctuation/whitespace, drops tokens longer than 40 characters, lowercases; en_stem is slower and English-specific; custom tokenizers can be registered.",
+      "applicability": "Do not promise all-script word behavior from default; test version-pinned indexing and query tokenization."
+    },
+    {
+      "source_id": "S-TANTIVY-UPDATE-EXAMPLE-0262",
+      "title": "Tantivy 0.26.2 deleting/updating documents example",
+      "url": "https://github.com/quickwit-oss/tantivy/blob/0.26.2/examples/deleting_updating_documents.rs",
+      "version_or_commit": "Repository tag 0.26.2; commit tag page reports 72d1ef9",
+      "locator": "Lines 561–600 stable raw ID example; 656–708 delete+reinsert, commit and reader.reload",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Inspected version-pinned repository example source code and its comments.",
+      "governing_condition_default_exception": "Tantivy has no enforced primary ID/uniqueness; update is delete by indexed ID plus reinsert; committed batch is reader-visible after commit/reload; example suggests a key-value store for source documents.",
+      "applicability": "Use stable canonical note ID and no stored title/body fields; duplicate prevention and source-store synchronization remain app responsibilities."
+    },
+    {
+      "source_id": "S-TANTIVY-CJK-ISSUE-718",
+      "title": "Tantivy issue 718: CJK query/parser report",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/718",
+      "version_or_commit": "Opened 2019-11-29; historical issue currently closed; not pinned to 0.26.2",
+      "locator": "Issue description lines 156–167, current status in issue header",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read report of query parser tokenizing before custom field tokenizer, with manual tokenization workaround.",
+      "governing_condition_default_exception": "Historical report only; closure does not establish whether every current tokenizer/query combination works.",
+      "applicability": "Version-pinned CJK or other target-script query fixture; do not represent as a confirmed current defect."
+    },
+    {
+      "source_id": "S-TANTIVY-CRASH-ISSUE-3079",
+      "title": "Tantivy issue 3079: orphaned segment files after writer crash",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "version_or_commit": "Opened 2026-09-07; open at access; report does not identify a released fix",
+      "locator": "Issue description, especially meta.json/opstamp after SIGKILL before commit",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read maintainer-tracked crash/recovery report.",
+      "governing_condition_default_exception": "Uncommitted segment files are not shown as searchable segments in the reported scenario; report is issue evidence, not a general behavioral specification.",
+      "applicability": "Replay canonical outbox events not acknowledged after commit; verify crash recovery using exact selected release."
+    },
+    {
+      "source_id": "S-TANTIVY-WINDOWS-ISSUE-2847",
+      "title": "Tantivy issue 2847: ManagedDirectory Windows commit race",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "version_or_commit": "Opened 2026-03-04; open at access; reproducer reports Tantivy 0.25.0 on Windows 10/11 NTFS",
+      "locator": "Issue summary and Version sections",
+      "access_utc": "2026-10-12T01:14:45Z",
+      "observed_operation": "Read issue report of race between user commit and background merge on managed file metadata.",
+      "governing_condition_default_exception": "Reported for 0.25.0 and Windows; not proof that 0.26.2 is affected.",
+      "applicability": "If target includes Windows and Tantivy, test repeated commits and exact directory mode on selected version."
+    },
+    {
+      "source_id": "S-SQLITE-NESTED-TRIGGER-ISSUE",
+      "title": "SQLite forum: external-content FTS5 with nested AFTER UPDATE trigger writes",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_commit": "Forum report dated 2026-08-04/05; reports reproductions on SQLite 3.45.1, 3.45.3 and 3.53.2; no formal release fix identified in this record",
+      "locator": "Posts 1-4, especially corrected reproducer (post 3), maintainer explanation/workaround (posts 4); issue status Resolved",
+      "access_utc": "2026-10-12T01:18:14Z",
+      "observed_operation": "Read SQLite Fossil bug/forum report, corrected trigger reproducer and maintainer response.",
+      "governing_condition_default_exception": "The reported issue requires external-content FTS5 sync after-update behavior combined with another AFTER UPDATE trigger that performs a nested write to the same content table; trigger ordering can cause FTS sync to observe unintended old/new values. Maintainer recommends avoiding such a nested-write trigger or folding the change into the original update.",
+      "applicability": "If using FTS5 external-content triggers, inspect all triggers on the canonical table and avoid nested same-table writes; test the actual trigger graph and selected SQLite runtime. This is not evidence that all external-content trigger designs fail."
+    }
+  ],
+  "discovery_artifact": "discovery.md",
+  "navigable_evidence_index": "sources/index.md",
+  "pre_release_source_count": 12,
+  "post_release_source_ids": [
+    "S-SQLITE-NESTED-TRIGGER-ISSUE"
+  ]
+}

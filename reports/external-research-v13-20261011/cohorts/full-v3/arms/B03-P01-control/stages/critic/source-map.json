@@ -1,0 +1,130 @@
+{
+  "run_id": "B03-P01-control",
+  "stage": "critic",
+  "accessed_utc": "2026-10-12T01:32:39Z",
+  "review_basis": "Direct independent access to primary pages listed below; IDs reused only where title and URL match the investigator source-map exactly. S-SQLITE-ATTACH-ATOMICITY is new.",
+  "sources": [
+    {
+      "source_id": "S-SQLITE-FTS5",
+      "title": "SQLite FTS5 Extension",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_commit": "Living official documentation accessed 2026-10-12; feature condition noted: contentless-delete tables available since SQLite 3.43.0; shipped runtime remains unknown.",
+      "locator": "Sections 3, 4.3.1, 4.3.4, 4.4.1–4.4.3, 6.12 and 6.13; query grammar, unicode61, trigram, contentless update/delete restrictions, external-content synchronization, rebuild and secure-delete.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened official documentation; checked default tokenizer and options, ordinary/contentless-delete table operations, same-database external-content behavior, rebuild and deleted-term retention.",
+      "governing_condition_default_exception": "unicode61 is default and based on Unicode 6.1; external content must be synchronized by the caller. Ordinary contentless tables cannot use normal UPDATE/DELETE/REPLACE; the FTS5 delete command is available. Contentless-delete behavior is a newer option. Rebuild deletes and reconstructs the index and is unavailable for contentless tables. Trigram full-text matches require at least three Unicode characters. The contentless delete command requires the original indexed column values and rowid; contentless-delete tables support delete by rowid but have their own version/operation conditions.",
+      "applicability": "Supports the proposal’s SQLite tradeoffs and the critic’s C-01 caveat. The candidate runtime/build and table mode are unknown."
+    },
+    {
+      "source_id": "S-SQLITE-WAL",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Living official SQLite documentation accessed 2026-10-12.",
+      "locator": "Sections 1 and 2; reader/writer concurrency and WAL commit behavior.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened official WAL documentation and checked writer concurrency and checkpoint context.",
+      "governing_condition_default_exception": "Readers and a writer can run concurrently, but only one writer at a time; checkpointing has separate progress considerations.",
+      "applicability": "Relevant only if the target notebook uses SQLite/WAL; the target store is not identified."
+    },
+    {
+      "source_id": "S-SQLITE-ATTACH-ATOMICITY",
+      "title": "SQLite ATTACH DATABASE",
+      "url": "https://www.sqlite.org/lang_attach.html",
+      "version_or_commit": "Living official SQLite documentation accessed 2026-10-12.",
+      "locator": "Transactions involving multiple attached databases, paragraph at the end of the page.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened official documentation and checked the crash-atomicity condition for multi-database transactions.",
+      "governing_condition_default_exception": "Cross-database transactions are atomic if main is not :memory: and journal_mode is not WAL; under WAL or an in-memory main database each file is individually atomic but a host crash during commit can leave files inconsistent.",
+      "applicability": "Supports the draft’s conservative sidecar/outbox warning; does not establish the target app’s journal mode or transaction design."
+    },
+    {
+      "source_id": "S-SQLITE-NESTED-TRIGGER-ISSUE",
+      "title": "SQLite forum: external-content FTS5 with nested AFTER UPDATE trigger writes",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_commit": "Maintainer/forum record dated 2026-08-04/05; page reports reproductions including SQLite 3.53.2; no formal release fix identified in this record.",
+      "locator": "Corrected reproducer and workaround, posts/sections describing two AFTER UPDATE triggers and nested same-table UPDATE.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened record, checked the minimal trigger combination, expected/actual behavior and suggested workaround.",
+      "governing_condition_default_exception": "The reported corruption requires an external-content FTS5 sync trigger plus another same-table AFTER UPDATE trigger that issues a nested UPDATE; this is a specific trigger-graph report, not a general external-content failure.",
+      "applicability": "Supports inspecting the target trigger graph if FTS5 external-content mode is evaluated."
+    },
+    {
+      "source_id": "S-SQLITE-DIACRITIC-ISSUE",
+      "title": "SQLite forum: FTS5 Unicode61 Polish ł/Ł",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_commit": "Historical user/maintainer discussion; reporter used SQLite 3.30.1; maintainer response 2021-01-11.",
+      "locator": "Posts 1–3; UnicodeData mapping discussion and custom-tokenizer suggestion.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened forum record and checked the reporter example and maintainer explanation.",
+      "governing_condition_default_exception": "The issue illustrates that remove_diacritics does not map ł/Ł to plain l as expected in the report because its Unicode decomposition differs; it is historical behavior evidence, not a guarantee about every future runtime.",
+      "applicability": "Useful as a proposed language fixture; does not establish a supported-language decision."
+    },
+    {
+      "source_id": "S-SQLITE-TRIGRAM-ISSUE",
+      "title": "SQLite forum: Crash in FTS5 Module",
+      "url": "https://sqlite.org/forum/forumpost/171bcc2bcd?t=c",
+      "version_or_commit": "Forum report from 2024-08; fix confirmation names SQLite 3.46.1.",
+      "locator": "Posts 1, 3 and 4; malformed option reproducer, trunk error behavior and 3.46.1 release confirmation.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened maintainer/forum record and checked exact malformed configuration and stated fix release.",
+      "governing_condition_default_exception": "The report concerns missing option values for trigram case_sensitive/remove_diacritics on affected builds; the fix makes tokenizer construction return an error. Do not generalize this to valid configurations.",
+      "applicability": "Supports pinning/testing the runtime if optional trigram configuration is evaluated."
+    },
+    {
+      "source_id": "S-SQLITE-CHANGES",
+      "title": "SQLite Release History",
+      "url": "https://www.sqlite.org/changes.html",
+      "version_or_commit": "Official release history, accessed 2026-10-12; relevant change is SQLite 3.46.1.",
+      "locator": "3.46.1 tokenizer-argument parsing robustness entry, cross-referenced by the SQLite forum record.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened release-history page; the specific fix statement was directly checked in the linked forum confirmation as well.",
+      "governing_condition_default_exception": "Release note is about robust parsing of FTS5 tokenize= arguments; it is not evidence of the app’s shipped SQLite version.",
+      "applicability": "Version-gate candidate tokenizer features and configuration against the actual build."
+    },
+    {
+      "source_id": "S-TANTIVY-RELEASE-0262",
+      "title": "Tantivy release 0.26.2",
+      "url": "https://github.com/quickwit-oss/tantivy/releases/tag/0.26.2",
+      "version_or_commit": "Tantivy release tag 0.26.2 named by the exact release URL; full commit hash not independently captured.",
+      "locator": "Release heading/tag metadata.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened version-pinned official release page to confirm the candidate version named by the API and example URLs.",
+      "governing_condition_default_exception": "The pinned docs/example apply to Tantivy crate/repository tag 0.26.2, not a future or unpinned dependency.",
+      "applicability": "Version identity only; does not establish suitability for the unknown target app."
+    },
+    {
+      "source_id": "S-TANTIVY-INDEXWRITER-0262",
+      "title": "Tantivy 0.26.2 IndexWriter API",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_commit": "tantivy crate 0.26.2.",
+      "locator": "IndexWriter commit, delete_term and add_document API sections.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened version-pinned API docs and checked commit visibility/persistence, delete visibility, and add pipeline blocking conditions.",
+      "governing_condition_default_exception": "commit blocks and publishes/persists pending documents; deletes become visible on commit; add_document may block if the indexing pipeline is full.",
+      "applicability": "Supports bounded background writer and post-commit acknowledgement as a proposed design; target workload and operating systems still need evaluation."
+    },
+    {
+      "source_id": "S-TANTIVY-TOKENIZERS-0262",
+      "title": "Tantivy 0.26.2 tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_commit": "tantivy crate 0.26.2.",
+      "locator": "default tokenizer, en_stem, and custom-tokenizer sections.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened version-pinned tokenizer documentation and checked default split/filter behavior, English stemming and custom-tokenizer extension.",
+      "governing_condition_default_exception": "Default splits on punctuation/whitespace, removes tokens longer than 40 characters and lowercases; en_stem adds stemming, is slower than default, and is described as useful for recall; custom tokenizers are supported.",
+      "applicability": "Supports the proposal’s conditional tokenizer comparison, not a multilingual quality claim."
+    },
+    {
+      "source_id": "S-TANTIVY-UPDATE-EXAMPLE-0262",
+      "title": "Tantivy 0.26.2 deleting/updating documents example",
+      "url": "https://github.com/quickwit-oss/tantivy/blob/0.26.2/examples/deleting_updating_documents.rs",
+      "version_or_commit": "Repository tag 0.26.2 named by the exact versioned example URL; full commit hash not independently captured.",
+      "locator": "Example comments and schema around lines 561–600; update/delete and commit/reload example around lines 656–708.",
+      "access_utc": "2026-10-12T01:32:39Z",
+      "observed_operation": "Opened version-pinned example and checked its explicit primary-ID limitation and stable indexed ID example.",
+      "governing_condition_default_exception": "The example says Tantivy has no primary-ID notion; an indexed field can serve as an ID. App-side uniqueness, canonical-store synchronization and title/body storage policy remain responsibilities.",
+      "applicability": "Supports using an app-owned stable ID in a Tantivy candidate; it does not prove the actual product store has such IDs."
+    }
+  ],
+  "draft_source_id_policy": "Same identifiers from investigator source-map.json are reused only for the same source title/URL. This map records sources independently reopened by the critic; it does not silently substitute a different source under an existing ID."
+}
