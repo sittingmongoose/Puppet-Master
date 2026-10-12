@@ -1,0 +1,47 @@
+{
+  "run_id": "D-R1-P02-control",
+  "runtime_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control",
+  "brief_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/control-inputs/brief.md",
+  "plan_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/control-inputs/plan.md",
+  "whole_deadline_utc": "2026-10-12T05:17:47.866Z",
+  "whole_budget_s": 3600,
+  "t0_utc": "2026-10-12T04:17:47.866Z",
+  "output_selection": {
+    "investigator": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json"
+    ],
+    "critic": [
+      "source-map.json",
+      "critique.md"
+    ],
+    "reviser": [
+      "source-map.json",
+      "final.md"
+    ]
+  },
+  "final_stage": "reviser",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "R0",
+  "stage_prompt_deltas": {},
+  "method_delta_files": {},
+  "public_recipe_choice": "R0",
+  "activation_capture_version": "exact-capture-v21",
+  "dispatch_owner": "root"
+}

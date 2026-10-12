@@ -1,0 +1,20 @@
+{
+  "run_id": "D-R2-P01-treatment",
+  "stage": "investigator",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/inputs/brief.md",
+  "predecessors": [],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator",
+  "stage_deadline_utc": "2026-10-12T04:48:06.265Z",
+  "whole_deadline_utc": "2026-10-12T05:18:05.184Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  }
+}

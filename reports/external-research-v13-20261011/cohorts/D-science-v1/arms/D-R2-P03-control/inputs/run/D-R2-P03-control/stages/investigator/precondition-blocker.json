@@ -1,0 +1,16 @@
+{
+  "status": "blocked_before_scientific_input",
+  "observed_utc": "2026-10-12 04:19:07 UTC",
+  "activation_binding_checked": true,
+  "native_goal_active_receipt": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/run/D-R2-P03-control/stages/investigator/native-goal-active.json",
+  "missing_required_input": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/inputs/brief.md",
+  "observed_error": "FileNotFoundError: [Errno 2] No such file or directory",
+  "directory_check": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/inputs",
+    "exists": false,
+    "is_dir": false,
+    "is_symlink": false
+  },
+  "scope_effect": "No case/source research, inference, discovery, source map, or draft was produced. The exact released plan was not sought or read.",
+  "next_step": "Make the assigned brief available at the exact required path; resume this same active native Goal."
+}

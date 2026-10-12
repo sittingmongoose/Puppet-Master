@@ -1,0 +1,357 @@
+{
+  "run_id": "D-R1-P02-control",
+  "stage": "reviser",
+  "basis": "Complete brief, exact released plan, investigator discovery/draft/source map, and independent critic review/source map named in input-map.json; consequential disputed claims rechecked in primary sources.",
+  "access_utc_window": "2026-10-12T04:18:36Z/2026-10-12T04:21:13Z",
+  "source_policy": "Public primary standards, official library documentation/release history, and upstream issue/PR history. No raw page captures, binaries or downloaded code retained. Source IDs are stable within this stage and are not reused or rebound.",
+  "sources": [
+    {
+      "source_id": "SRC-EXIF-01",
+      "title": "CIPA Exif standard listing",
+      "url": "https://www.cipa.jp/e/std/std-sec.html",
+      "released_version_or_commit": "CIPA DC-008-Translation-2026, Exif Version 3.1; published 2026-01-30",
+      "locator": "Digital Cameras > CIPA DC-008-Translation-2026; publication date and predecessor shown in listing.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Read official CIPA standards listing to identify the released Exif edition; direct download route requires accepting a disclaimer and was not used.",
+      "governing_condition_default_exception": "The listed 2026 edition supersedes the 2024 edition. This listing establishes the current edition/date, not the detailed tag table.",
+      "applicability": "Use as governing format-version identity; obtain/check the full current standard when implementing tag-level behavior."
+    },
+    {
+      "source_id": "SRC-PNG-02",
+      "title": "PNG Specification, Second Edition",
+      "url": "https://www.w3.org/TR/2003/REC-PNG-20031110/",
+      "released_version_or_commit": "W3C Recommendation, PNG Specification Second Edition, 2003-11-10",
+      "locator": "Sections on color space/significant chunks (iCCP, sRGB, gAMA/cHRM), transparency/alpha representation, and decoder recommendations.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Consulted W3C spec excerpt for iCCP precedence and non-premultiplied alpha statements.",
+      "governing_condition_default_exception": "PNG alpha samples are unassociated; an iCCP profile identifies sample color space and has precedence over gAMA/cHRM when recognized by a color-managed decoder.",
+      "applicability": "Format constraints; they do not prescribe an application's resampling kernel or prove how a particular library handles alpha."
+    },
+    {
+      "source_id": "SRC-ICC-03",
+      "title": "ICC.1:2022 profile format specification",
+      "url": "https://www.color.org/specifications/ICC.1-2022-05.pdf",
+      "released_version_or_commit": "ICC.1:2022, profile version 4.4.0.0",
+      "locator": "ICC specifications page/PDF title and profile-format clauses; detailed clauses were not quoted in discovery.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Identified current ICC.1 specification and profile version on the ICC official specifications page.",
+      "governing_condition_default_exception": "Profiles characterize source/output color spaces; an application still chooses transforms, rendering intent and policies for absent/invalid profiles.",
+      "applicability": "Color-management vocabulary and profile identity; candidate APIs determine executable transform behavior."
+    },
+    {
+      "source_id": "SRC-SHARP-04",
+      "title": "Sharp release v0.35.5",
+      "url": "https://github.com/lovell/sharp/releases/tag/v0.35.5",
+      "released_version_or_commit": "Sharp v0.35.5; release commit shown as 51a990f; linked sharp-libvips dependency release v1.3.4.",
+      "locator": "v0.35.5 release notes and linked sharp-libvips release.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Read upstream release listing; checked latest tag and dependency/release notes.",
+      "governing_condition_default_exception": "Release includes fixes and updates; binary/codec availability remains platform/build-specific.",
+      "applicability": "Maintained Node binding alternative and version pin; does not establish suitability for a non-Node host."
+    },
+    {
+      "source_id": "SRC-SHARP-05",
+      "title": "Sharp input metadata API",
+      "url": "https://sharp.pixelplumbing.com/api-input/",
+      "released_version_or_commit": "Current Sharp documentation consulted with v0.35.5 release identified separately.",
+      "locator": "metadata() API; dimensions/orientation/pages/profile fields.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official API page and read metadata() description.",
+      "governing_condition_default_exception": "Metadata is read from the file header without decoding compressed pixels; width/height do not account for EXIF orientation.",
+      "applicability": "Useful intake preflight; header-only inspection is not proof dimensions are trustworthy or decode is safe."
+    },
+    {
+      "source_id": "SRC-SHARP-06",
+      "title": "Sharp constructor and limits",
+      "url": "https://sharp.pixelplumbing.com/api-constructor/",
+      "released_version_or_commit": "Current Sharp documentation consulted with v0.35.5 release identified separately.",
+      "locator": "Constructor options failOn and limitInputPixels.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Found and opened official constructor option descriptions.",
+      "governing_condition_default_exception": "failOn defaults to warning; invalid metadata always aborts. limitInputPixels defaults to 268402689 and assumes metadata dimensions can be trusted; false/zero removes the limit.",
+      "applicability": "Shows a configurable decoder guard and its trust boundary; set a product limit and worker ceilings."
+    },
+    {
+      "source_id": "SRC-SHARP-07",
+      "title": "Sharp image operations",
+      "url": "https://sharp.pixelplumbing.com/api-operation/",
+      "released_version_or_commit": "Current Sharp documentation consulted with v0.35.5 release identified separately.",
+      "locator": "rotate() and autoOrient() sections.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official operation documentation and read rotation ordering/orientation behavior.",
+      "governing_condition_default_exception": "autoOrient reads EXIF Orientation and removes the tag; orientation carried elsewhere such as XMP is not handled. Order matters for rotate/resize/extract; multipage limitations apply.",
+      "applicability": "Supports explicit single orientation stage and fixture needs; not a guarantee for every decoder/format."
+    },
+    {
+      "source_id": "SRC-SHARP-08",
+      "title": "Sharp output, profiles and metadata",
+      "url": "https://sharp.pixelplumbing.com/api-output/",
+      "released_version_or_commit": "Current Sharp documentation consulted with v0.35.5 release identified separately.",
+      "locator": "keepIccProfile(), withIccProfile(), keepMetadata(), withMetadata(); JPEG defaults.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official API page and read output profile/metadata policy descriptions.",
+      "governing_condition_default_exception": "Without keepMetadata, output converts to sRGB and strips metadata including ICC; keepMetadata retains EXIF, ICC, XMP and IPTC; withMetadata keeps most descriptive metadata and adds sRGB ICC if appropriate. JPEG defaults include quality 80 and 4:2:0 chroma subsampling.",
+      "applicability": "Concrete default/privacy/color behavior to override explicitly per output role."
+    },
+    {
+      "source_id": "SRC-PILLOW-09",
+      "title": "Pillow ImageOps 12.3.0",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageOps.html",
+      "released_version_or_commit": "Pillow 12.3.0 stable docs; release tag commit bb1d8e8.",
+      "locator": "ImageOps.exif_transpose() section.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official Pillow stable API docs; confirmed version and transpose behavior.",
+      "governing_condition_default_exception": "If EXIF Orientation is present and not 1, transpose accordingly and remove orientation data; in_place defaults false.",
+      "applicability": "Candidate API; verify TIFF decoder behavior and original-image immutability in pinned release."
+    },
+    {
+      "source_id": "SRC-PILLOW-10",
+      "title": "Pillow ImageCms 12.3.0",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageCms.html",
+      "released_version_or_commit": "Pillow 12.3.0 stable docs; release tag commit bb1d8e8.",
+      "locator": "profileToProfile() API and renderingIntent argument.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official API docs at transform function.",
+      "governing_condition_default_exception": "Applies ICC transform from inputProfile to outputProfile; rendering intent defaults to perceptual; invalid profiles or unsupported output modes raise PyCMSError.",
+      "applicability": "Supports explicit color conversion and profile-failure handling."
+    },
+    {
+      "source_id": "SRC-PILLOW-11",
+      "title": "Pillow Image limits",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/Image.html",
+      "released_version_or_commit": "Pillow 12.3.0 stable docs; release tag commit bb1d8e8.",
+      "locator": "Decompression-bomb warning/error discussion near Image.open().",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened official docs and inspected warning/error threshold behavior.",
+      "governing_condition_default_exception": "Above MAX_IMAGE_PIXELS emits DecompressionBombWarning; callers can promote to error; over twice the threshold raises DecompressionBombError. Threshold may be changed or disabled.",
+      "applicability": "Useful explicit guard behavior; component must set its own threshold."
+    },
+    {
+      "source_id": "SRC-PILLOW-12",
+      "title": "Pillow exif_transpose regression #5580 and fix #5584",
+      "url": "https://github.com/python-pillow/Pillow/issues/5580",
+      "released_version_or_commit": "Bug on Pillow 8.3.0; PR #5584 fix reported released in Pillow 8.3.1 (2021).",
+      "locator": "Issue reproduction, linked PR #5584 and maintainer comment reporting 8.3.1 fix.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Read upstream issue and release-resolution comments.",
+      "governing_condition_default_exception": "Change intended to avoid EXIF mutation exposed KeyError when deleting orientation from alternate EXIF data; fix merged/released.",
+      "applicability": "Test decode/storage variants and unchanged original, not only visible rotation."
+    },
+    {
+      "source_id": "SRC-PILLOW-13",
+      "title": "Pillow TIFF YCbCr orientation issue and fix",
+      "url": "https://github.com/python-pillow/Pillow/pull/8556",
+      "released_version_or_commit": "PR #8556 merged 2025-03-29; release version not asserted in inspected PR.",
+      "locator": "PR description/comments linked to #8554; libtiff applies orientation during TIFFRGBAImage decode.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened upstream PR and read merge date, linked issue, and TIFF/libtiff explanation.",
+      "governing_condition_default_exception": "For YCbCr TIFF, libtiff may apply orientation during decode; Pillow removes orientation metadata to prevent later double transpose.",
+      "applicability": "Decoder path and format matter; test pinned stack rather than assuming the application always owns orientation."
+    },
+    {
+      "source_id": "SRC-LIBVIPS-14",
+      "title": "libvips autorot and thumbnail issue #1523",
+      "url": "https://github.com/libvips/libvips/issues/1523",
+      "released_version_or_commit": "libvips 8.8.4 vs 8.9.0 behavior reported (2020).",
+      "locator": "Issue body describing API sequence, metadata behavior change, and thumbnail_image auto-rotation interaction.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened upstream issue; compared reported version-dependent output and no_rotate workaround.",
+      "governing_condition_default_exception": "Thumbnail helper may apply rotation itself; earlier explicit autorot can cause a version-dependent extra or missing rotation.",
+      "applicability": "Historical regression; record exact release and operation path."
+    },
+    {
+      "source_id": "SRC-LIBVIPS-15",
+      "title": "libvips linear ICC thumbnail issue #4343",
+      "url": "https://github.com/libvips/libvips/issues/4343",
+      "released_version_or_commit": "libvips 8.16.0 reported (2025-01-06).",
+      "locator": "Issue description: private Apple Wide Color Sharing Profile input, linear thumbnail, icc_transform workaround.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened upstream issue and read reproduction and unshared-fixture statement.",
+      "governing_condition_default_exception": "One unshared input failed in a linear/profile-transform path; reporter said other inputs worked. Generality and resolution are not established.",
+      "applicability": "Conditional risk evidence only; do not generalize or call it a confirmed current defect/fix."
+    },
+    {
+      "source_id": "SRC-IM-16",
+      "title": "ImageMagick command-line options",
+      "url": "https://imagemagick.org/command-line-options/",
+      "released_version_or_commit": "Current online docs inspected 2026-10-12; latest changelog observed as 7.1.2-33.",
+      "locator": "-auto-orient, -profile, -strip, -limit and resource-limit discussion.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened current command-option docs and located behavior for orientation, profiles, stripping and resources.",
+      "governing_condition_default_exception": "-auto-orient reads/resets EXIF Orientation and does nothing if EXIF was stripped; -profile is ordered and depends on included profiles; -strip removes profiles/comments and PNG color chunks; limits can spill memory/map work to disk and fail at configured hard disk limit; defaults are host-adjusted.",
+      "applicability": "Explicit controls, but operation order, defaults and delegates require deliberate version pinning/tests."
+    },
+    {
+      "source_id": "SRC-IM-17",
+      "title": "ImageMagick changelog",
+      "url": "https://imagemagick.org/changelog/",
+      "released_version_or_commit": "ImageMagick 7.1.2-33 dated 2026-10-10.",
+      "locator": "Latest changelog heading and merged fixes/security entries.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Opened upstream changelog and read latest release heading.",
+      "governing_condition_default_exception": "Release history identifies the current release at access; it does not establish orientation behavior for this case.",
+      "applicability": "Candidate version identity only; verify installed delegates and exact build."
+    },
+    {
+      "source_id": "SRC-IM-18",
+      "title": "ImageMagick TIFF orientation issue #7147",
+      "url": "https://github.com/ImageMagick/ImageMagick/issues/7147",
+      "released_version_or_commit": "Reporter used ImageMagick 7.1.1-29 on Windows (2024); attempted patch and revert discussed March 2024.",
+      "locator": "TIFF page reproduction using JPEG and LZW compression; patch/revert discussion.",
+      "access_utc": "2026-10-12T04:18:36Z–2026-10-12T04:21:13Z",
+      "observed_operation": "Read upstream issue report and history search result; checked reported compressed-page cases and patch/revert notes.",
+      "governing_condition_default_exception": "Orientation differed across TIFF compression/page cases; attempted fix reportedly regressed other tested inputs and maintainers reported reverting it.",
+      "applicability": "Do not treat issue closure or one fixture as proof; test both compression paths against current pinned version."
+    },
+    {
+      "source_id": "CRITIC-PNG-01",
+      "title": "W3C PNG Specification, Third Edition",
+      "url": "https://www.w3.org/TR/png/",
+      "released_version_or_commit": "W3C Recommendation, 2025-06-24",
+      "locator": "§6.2 alpha representation; §11.3.2 color-space chunks; §11.3.3 text; §11.3.4.5 eXIf; §13.4 privacy; edition heading.",
+      "access_utc": "2026-10-12T04:29:24Z",
+      "observed_operation": "Opened current W3C Recommendation; checked edition identity, alpha representation, eXIf, color/text chunks and privacy guidance.",
+      "governing_condition_default_exception": "PNG samples are unassociated-alpha. PNG can carry eXIf, text and color chunks; eXIf can conflict with other chunks and may describe historical source data. Third Edition is current.",
+      "applicability": "The investigator's alpha fact remains valid, but this current edition is needed for a current PNG metadata inventory. It does not prescribe the application's resampling filter."
+    },
+    {
+      "source_id": "CRITIC-PILLOW-01",
+      "title": "Pillow 12.3.0 release notes",
+      "url": "https://pillow.readthedocs.io/en/stable/releasenotes/12.3.0.html",
+      "released_version_or_commit": "Pillow 12.3.0, 2026-07-01",
+      "locator": "Release-note version index and 12.3.0 heading.",
+      "access_utc": "2026-10-12T04:29:24Z",
+      "observed_operation": "Opened official release notes and confirmed the documented version/date.",
+      "governing_condition_default_exception": "Release identity does not prove a particular installation or codec build.",
+      "applicability": "Confirms Pillow documentation version; native codec/build matrix remains a selection and validation item."
+    },
+    {
+      "source_id": "REV-W3C-PNG-01",
+      "title": "Portable Network Graphics (PNG) Specification, Third Edition",
+      "url": "https://www.w3.org/TR/png-3/",
+      "released_version_or_commit": "W3C Recommendation, Third Edition, 2025-06-24",
+      "locator": "§6.2 unassociated alpha; §11.3.2 color chunks; §11.3.3 text; §11.3.4.5 eXIf, historical metadata and conflicts; §13.4 privacy; edition heading.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Opened current W3C Recommendation; checked edition, alpha representation, eXIf semantics/conflicts, color/text chunk families, privacy language and decoder notes.",
+      "governing_condition_default_exception": "PNG color samples are unassociated with alpha. eXIf may describe the original image and conflict with other PNG chunks; the standard does not resolve conflicts or prescribe an application resize filter. It warns that data under alpha masks or altered dimensions can remain recoverable.",
+      "applicability": "Current primary basis for PNG alpha and metadata/privacy planning; not proof that a candidate library strips or preserves every chunk."
+    },
+    {
+      "source_id": "REV-W3C-CSS-COLOR-5-01",
+      "title": "CSS Color Module Level 5",
+      "url": "https://www.w3.org/TR/css-color-5/",
+      "released_version_or_commit": "W3C Working Draft, 2026-09-13",
+      "locator": "§3.5 Effect of Non-Unity Alpha on color-mix; document status at §§0–1.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Opened dated W3C Working Draft and read its premultiply/interpolate/unpremultiply example and status notice.",
+      "governing_condition_default_exception": "The draft says premultiplication and unpremultiplication must not be omitted for color interpolation with non-unity alpha. It concerns CSS color mixing, not a normative image-resizing algorithm, and remains work in progress.",
+      "applicability": "Supports the alpha-aware filtering recommendation by analogy to interpolation math; not evidence that a specific image library implements it."
+    },
+    {
+      "source_id": "REV-ITU-T86-01",
+      "title": "Recommendation ITU-T T.86 (V2): APPn Markers",
+      "url": "https://www.itu.int/epublications/publication/itu-t-t-86-v2-2024-02-information-technology-digital-compression-and-coding-of-continuous-tone-still-images-appn-markers",
+      "released_version_or_commit": "ITU-T T.86 (V2), approved 2024-02-13; common text with ISO/IEC 10918-4",
+      "locator": "§§1, 6 and Annex A/Table A.1; APPn reserved marker and identifier list.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Read official ITU e-publication and official PDF text; checked version, scope, APPn policy and Annex A.",
+      "governing_condition_default_exception": "APPn includes EXIF, XMP, ICC_PROFILE, thumbnails/previews, MPF, Photoshop IRB/IPTC, comments and application-specific records. The standard says T.81 recommends but does not require removal across application domains, discourages removal within its domain, and says unknown markers should be skipped/preserved when updating.",
+      "applicability": "Primary JPEG APPn inventory. A privacy policy must classify segments and preserve approved output ICC rather than blindly dropping all APPn; the registry is not exhaustive for private/nonstandard content."
+    },
+    {
+      "source_id": "REV-ITU-T81-01",
+      "title": "Recommendation ITU-T T.81: JPEG requirements and guidelines",
+      "url": "https://www.itu.int/rec/T-REC-T.81/en",
+      "released_version_or_commit": "ITU-T T.81 (09/92), in force; corrigendum 1 (01/04) also listed in force",
+      "locator": "Official ITU status listing, T.81 and corrigendum entries.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Opened official ITU status page and checked in-force edition; paid full text was not opened.",
+      "governing_condition_default_exception": "Establishes standard identity/status only, not detailed marker semantics; T.86 V2 supplies the APPn registry used here.",
+      "applicability": "Version identity only; not evidence of privacy completeness."
+    },
+    {
+      "source_id": "REV-IM-7147-01",
+      "title": "ImageMagick issue #7147: Orientation tag bug in TIFF image decoding",
+      "url": "https://github.com/ImageMagick/ImageMagick/issues/7147",
+      "released_version_or_commit": "Opened 2024-03-05 against ImageMagick 7.1.1-29; closed 2024-03-23",
+      "locator": "Issue description and comments 2024-03-05 through 2024-03-23; linked commit and author/maintainer comments.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Opened upstream issue; checked reported JPEG-compressed and LZW TIFF cases, auto-orient discussion, author follow-up and maintainer closure comment.",
+      "governing_condition_default_exception": "The reporter describes supplied-file behavior; later reports say a proposed patch broke previously working LZW cases and still mishandled JPEG cases; a maintainer says the patch was reverted as incorrect. These are reports, not independent reproduction or proof about current releases.",
+      "applicability": "Conditional regression history and fixture selection only; cause and current behavior remain open."
+    },
+    {
+      "source_id": "REV-IM-7147-COMMIT-01",
+      "title": "ImageMagick commit 9892ad7, respect TIFF orientation tag",
+      "url": "https://github.com/ImageMagick/ImageMagick/commit/9892ad7",
+      "released_version_or_commit": "Commit 9892ad7, linked to issue #7147; 2024-03-10",
+      "locator": "MagickCore/transform.c diff in AutoOrientImage orientation cases.",
+      "access_utc": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+      "observed_operation": "Opened linked repository commit and inspected its orientation mapping diff.",
+      "governing_condition_default_exception": "This is the proposed patch commit; issue reports later problems and a maintainer says it was reverted. The commit alone does not establish the cause of sample differences.",
+      "applicability": "Corroborates proposal chronology, not report correctness or present release behavior."
+    },
+    {
+      "source_id": "REV-POSIX-RENAME-01",
+      "title": "The Open Group Base Specifications Issue 8, POSIX.1-2024: rename()",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "released_version_or_commit": "POSIX.1-2024, Issue 8",
+      "locator": "DESCRIPTION and rationale for rename(); atomicity requirement.",
+      "access_utc": "2026-10-12T04:35:46Z",
+      "observed_operation": "Opened official Open Group function specification and checked rename atomicity statement.",
+      "governing_condition_default_exception": "Atomicity is the POSIX interface contract for conforming implementations; destination filesystem, cross-filesystem staging, durability and non-POSIX environments still need an explicit contract and verification.",
+      "applicability": "Supports qualifying per-item publication. Does not prove this component’s target filesystem behavior."
+    }
+  ],
+  "critic_reviewed_investigator_source_ids": [
+    "SRC-EXIF-01",
+    "SRC-PNG-02",
+    "SRC-ICC-03",
+    "SRC-SHARP-04",
+    "SRC-SHARP-05",
+    "SRC-SHARP-06",
+    "SRC-SHARP-07",
+    "SRC-SHARP-08",
+    "SRC-PILLOW-09",
+    "SRC-PILLOW-10",
+    "SRC-PILLOW-11",
+    "SRC-PILLOW-12",
+    "SRC-PILLOW-13",
+    "SRC-LIBVIPS-14",
+    "SRC-LIBVIPS-15",
+    "SRC-IM-16",
+    "SRC-IM-17",
+    "SRC-IM-18"
+  ],
+  "critic_independent_review_utc": "2026-10-12T04:29:24Z",
+  "critic_scope_note": "SRC-PNG-02 remains bound to the 2003 Second Edition and is not rebound. CRITIC-PNG-01 records the current Third Edition.",
+  "source_id_policy": "Investigator and critic source records are carried without rebinding or alteration. Reviser checks use distinct REV-* IDs. SRC-PNG-02 remains the 2003 Second Edition; CRITIC-PNG-01 and REV-W3C-PNG-01 identify the 2025 Third Edition.",
+  "predecessor_source_maps": {
+    "investigator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/investigator/source-map.json",
+    "critic": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/critic/source-map.json"
+  },
+  "reviser_access_utc_window": "2026-10-12T04:34:59Z–2026-10-12T04:35:46Z",
+  "review_dispositions": {
+    "F-01": {
+      "disposition": "accept with amendment",
+      "detail": "Specify premultiplied-alpha filtering and unpremultiplication when alpha is nonzero as component policy; candidate behavior remains unverified. CSS Color Level 5 is a Working Draft about color interpolation, not a normative resize rule."
+    },
+    "F-02": {
+      "disposition": "accept",
+      "detail": "Keep SRC-PNG-02 bound to the Second Edition; preserve CRITIC-PNG-01 and add separate REV-W3C-PNG-01 for Third Edition context."
+    },
+    "F-03": {
+      "disposition": "accept with scope condition",
+      "detail": "Add ITU-T T.86 V2 APPn inventory; require owner-selected formats and per-format encoded-output allowlist checks. Not exhaustive, and blanket APPn removal can discard ICC/color data."
+    },
+    "F-04": {
+      "disposition": "accept",
+      "detail": "Atomic publication depends on actual destination/staging semantics; use confirmed same-filesystem rename, otherwise a commit-marker/state protocol. No behavior tested."
+    },
+    "F-05": {
+      "disposition": "accept with amendment",
+      "detail": "Issue and linked patch commit corroborate chronology. Reporter describes regressions; maintainer says patch reverted as incorrect. No independent root cause or current-release behavior established."
+    }
+  },
+  "checks_executed": "Desk research and primary-source review only. No product image, filesystem publication, fixture, code, build, perceptual, malicious-input, benchmark or integration check was executed."
+}

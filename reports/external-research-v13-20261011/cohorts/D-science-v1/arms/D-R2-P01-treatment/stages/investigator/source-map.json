@@ -1,0 +1,211 @@
+{
+  "run_id": "D-R2-P01-treatment",
+  "stage": "investigator",
+  "scope_basis": "inputs/brief.md only; exact plan was not released at discovery time",
+  "accessed_utc_date": "2026-10-12",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "PostgreSQL 18 Documentation: Text Search Types",
+      "url": "https://www.postgresql.org/docs/18/datatype-textsearch.html",
+      "version_or_commit": "PostgreSQL 18 documentation",
+      "locator": "§8.11.1 tsvector, §8.11.2 tsquery; lexical full-text search",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official documentation via web open/search.",
+      "governing_condition_default_exception": "tsvector stores normalized lexemes; to_tsvector applies language normalization; positional data is available for proximity ranking; this is lexical matching, not semantic equivalence.",
+      "applicability": "A self-managed/local lexical baseline when a database is acceptable; no claim that this alone meets relevance, citation, version, or permission needs."
+    },
+    {
+      "id": "S02",
+      "title": "PostgreSQL 18 Documentation: GIN Indexes",
+      "url": "https://www.postgresql.org/docs/18/gin.html",
+      "version_or_commit": "PostgreSQL 18 documentation",
+      "locator": "§65.4, built-in operator classes, GIN Fast Update Technique",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official documentation via web open/search.",
+      "governing_condition_default_exception": "GIN supports tsvector @@ tsquery. Fast update may queue pending entries; searches scan those entries and can slow; cleanup can cause slower spikes. Turning fastupdate off favors response consistency at the expense of update speed.",
+      "applicability": "Evidence for indexing freshness/latency trade-offs, not an authorization guarantee or product choice."
+    },
+    {
+      "id": "S03",
+      "title": "Elastic Documentation: Hybrid Search",
+      "url": "https://www.elastic.co/docs/solutions/search/hybrid-search",
+      "version_or_commit": "Current Elastic documentation as served 2026-10-12; deployment version not pinned",
+      "locator": "Hybrid search overview and RRF recommendation",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read vendor product documentation via web search.",
+      "governing_condition_default_exception": "Runs full-text and vector search in one request; Elastic recommends RRF for balanced fusion; vendor recommendation is not independent evidence of relevance for this corpus.",
+      "applicability": "Illustrates a maintained hybrid approach. Validate exact features, license, deployment and permission integration against a selected release."
+    },
+    {
+      "id": "S04",
+      "title": "OpenSearch Documentation: Hybrid Search",
+      "url": "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/",
+      "version_or_commit": "Current /latest documentation; feature introduced in OpenSearch 2.11; exact deployment version not pinned",
+      "locator": "Introduction; configuration steps; Filtering data",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official docs via web search/open.",
+      "governing_condition_default_exception": "Hybrid requires a search pipeline for score processing; top-level pre-filter is before scoring; post_filter applies after scoring and may be intended for facets. Do not use post-filtering to enforce authorization.",
+      "applicability": "Alternative open-source engine pattern; verify pipeline presence, filter semantics, plugin/model deployment, release behavior, and tested query shape."
+    },
+    {
+      "id": "S05",
+      "title": "OpenSearch Documentation: Document-Level Security",
+      "url": "https://docs.opensearch.org/latest/security/access-control/document-level-security/",
+      "version_or_commit": "Current /latest documentation, accessed 2026-10-12; feature/version details vary by plugin release",
+      "locator": "user field mapping examples; parameter substitution; TLQ modes; DLS and multiple roles",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official security documentation via web open.",
+      "governing_condition_default_exception": "DLS filters read/search/get; does not restrict writes. Default TLQ mode is adaptive. Text analyzer may split identifiers such as User-1; use keyword or custom analyzer for exact IDs. Multiple role DLS queries combine with OR; dfm_empty_overrides_all changes override behavior.",
+      "applicability": "Illustrates engine-enforced result filtering and configuration hazards; not evidence of immediate source-ACL revocation or safe disclosure of every metadata channel."
+    },
+    {
+      "id": "S06",
+      "title": "OpenSearch neural-search issue #1490 and pull request #1873",
+      "url": "https://github.com/opensearch-project/neural-search/issues/1490 ; https://github.com/opensearch-project/neural-search/pull/1873",
+      "version_or_commit": "Issue opened 2025-07-31; PR merged 2026-06-18; fix commit shown as fc1be2e",
+      "locator": "Issue reproduction for multi-shard dfs_query_then_fetch; PR validation and error message",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read upstream issue and merged PR directly.",
+      "governing_condition_default_exception": "The bug skipped hybrid score normalization for multi-shard DFS search. The merged change adds request/query-phase validation and rejects dfs_query_then_fetch; it does not support the combination.",
+      "applicability": "Relevant failure/fix history; pin and validate the selected release, and surface unsupported configurations instead of assuming all query modes fuse correctly."
+    },
+    {
+      "id": "S07",
+      "title": "Typesense 28.0 API Keys",
+      "url": "https://typesense.org/docs/28.0/api/api-keys.html",
+      "version_or_commit": "Typesense documentation version 28.0",
+      "locator": "Generate Scoped Search Key, multi-tenant examples",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read versioned official product documentation via web search/open.",
+      "governing_condition_default_exception": "Scoped search keys embed filter_by/exclude_fields/limit_hits; docs advise generating per-user keys server-side and note parent-key deletion invalidates derived scoped keys. Key permissions still depend on correct indexed ACL metadata and key custody.",
+      "applicability": "Unfamiliar maintained alternative for restricted search parameters; does not provide edition identity, current source permission lookup, or revocation of copied output."
+    },
+    {
+      "id": "S08",
+      "title": "Azure AI Search query-time ACL and RBAC enforcement",
+      "url": "https://learn.microsoft.com/en-us/azure/search/search-query-access-control-rbac-enforcement",
+      "version_or_commit": "API example 2026-08-01-preview; article last updated 2026-09-17",
+      "locator": "Security filter construction, result filtering, failure/limitations, preview behavior change around lines 163-171",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Microsoft Learn page via web open.",
+      "governing_condition_default_exception": "When permission filtering is enabled, service appends permission filters; without a user token, protected ACL results are omitted; ACL evaluation failures return 5xx rather than a partial set. Earlier 2025 preview behavior could return all docs under service credentials, changed starting Nov 2025. Group sources and refresh behavior are ingestion-dependent.",
+      "applicability": "Shows fail-closed query-time enforcement and relevant release-history caution. Managed service use would require approved data residency/private-content boundary and API-version review."
+    },
+    {
+      "id": "S09",
+      "title": "Azure AI Search push ACL and RBAC API",
+      "url": "https://learn.microsoft.com/en-us/azure/search/search-index-access-control-lists-and-rbac-push-api",
+      "version_or_commit": "Push API ACL functionality is preview; page last updated 2026-09-17",
+      "locator": "Preview warning; limitations and ACL access resolution rules",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Microsoft Learn page via web open.",
+      "governing_condition_default_exception": "Preview is explicitly not recommended for production or covered by SLA. Indexed permission reflects last written ACL; source permission changes remain stale until document re-ingestion/update. Limits include 1,000 user/group values per ACL field and five unique RBAC scope values per index.",
+      "applicability": "Concrete synchronization trade-off, but the preview status and private-data boundary prevent treating it as an approved solution."
+    },
+    {
+      "id": "S10",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation published 2017-02-23",
+      "locator": "§4.1 Time State; §4.2.4 Text Quote Selector; §4.2.5 Text Position Selector",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read W3C Recommendation via web open.",
+      "governing_condition_default_exception": "Quote selectors require exact text; prefix/suffix are recommended; duplicate exact/prefix/suffix matches may designate all matches; normalized Unicode code points/logical order apply. Position selectors do not copy quote text but are brittle under edits; a State is recommended.",
+      "applicability": "Interoperable locator vocabulary; add application-specific edition IDs and authorization; quote text in a citation can itself disclose restricted content."
+    },
+    {
+      "id": "S11",
+      "title": "Microsoft Graph driveItemVersion resource and Get operation",
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/driveitemversion?view=graph-rest-1.0 ; https://learn.microsoft.com/en-us/graph/api/driveitemversion-get?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph v1.0",
+      "locator": "Version id, content stream/download version method, least-privilege permissions, downloadUrl notes",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read Microsoft Graph resource and GET API docs via web open.",
+      "governing_condition_default_exception": "A version has an ID and can be individually retrieved with authorized Graph access. The instance download URL needs no auth, is short-lived (up to 1 hour), cannot be cached, and file permission removal might not immediately invalidate it. OneDrive may not retain full prior-version metadata.",
+      "applicability": "Concrete edition-addressed retrieval example and strong warning against using its download URL as a durable, revocable citation."
+    },
+    {
+      "id": "S12",
+      "title": "Elastic document-level and field-level security",
+      "url": "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+      "version_or_commit": "Current Elastic docs as served 2026-10-12; deployment version/license not selected",
+      "locator": "Multiple roles with DLS/FLS; global-index statistics caveat; request cache limitations",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Elastic security documentation via web open.",
+      "governing_condition_default_exception": "DLS is OR across role queries; a role without DLS may widen access to all docs. Restricted docs can still affect global index statistics/aggregates and reveal terms/counts. Request cache is disabled only under documented conditions (e.g., templated stored-script DLS or mixed local/remote indices), not universally.",
+      "applicability": "Security review checklist for this vendor approach; design must also suppress titles/snippets and avoid metadata side channels."
+    },
+    {
+      "id": "S13",
+      "title": "Elastic Aliases",
+      "url": "https://www.elastic.co/docs/manage-data/data-store/aliases",
+      "version_or_commit": "Current Elastic docs as served 2026-10-12; release not pinned",
+      "locator": "Multiple alias actions; atomic index swap",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Elastic documentation via web open.",
+      "governing_condition_default_exception": "Multiple alias actions execute atomically; sample removes old and adds new, with no downtime and no moment pointing at both. It describes routing, not retention/ACL freshness/authorization of old indexes.",
+      "applicability": "Bulk rebuild pattern candidate, to be combined with source revision and permission-generation checks."
+    },
+    {
+      "id": "S14",
+      "title": "OpenSearch Optimizing Hybrid Search",
+      "url": "https://docs.opensearch.org/latest/search-plugins/search-relevance/optimize-hybrid-search/",
+      "version_or_commit": "Current /latest docs as served 2026-10-12",
+      "locator": "Requirements; evaluation experiments; querySet, judgmentList and searchConfiguration",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official OpenSearch docs via web open.",
+      "governing_condition_default_exception": "Quality depends on data/domain; experiments use queries, judged results, and a configuration. Workbench optimization supports two query clauses. No universal optimal fusion settings.",
+      "applicability": "Supports proposal for representative relevance evaluation; no such evaluation was executed here."
+    },
+    {
+      "id": "S15",
+      "title": "Git rev-parse documentation",
+      "url": "https://git-scm.com/docs/git-rev-parse",
+      "version_or_commit": "Current Git documentation as served 2026-10-12; local Git version not selected",
+      "locator": "SPECIFYING REVISIONS, rev:path",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Git documentation via web search.",
+      "governing_condition_default_exception": "rev:path addresses the blob/tree at a path within the selected commit. It is usable only if the source is in a retained Git repository; a line number or moving ref is not the immutable edition ID.",
+      "applicability": "Version-control locator alternative, not generalizable to platform-managed docs or authorization."
+    },
+    {
+      "id": "S16",
+      "title": "OpenSearch neural-search resolver HLD #1932",
+      "url": "https://github.com/opensearch-project/neural-search/issues/1932",
+      "version_or_commit": "Opened 2026-08-04; status Open when accessed 2026-10-12",
+      "locator": "Overview/current limits: top-level-only, requires normalization pipeline, feature support and sequential subquery latency",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read upstream design issue, observed Open status.",
+      "governing_condition_default_exception": "This is an open HLD/proposal, not shipped release documentation or a committed fix. It describes limitations of the classic hybrid path and a proposed resolver design.",
+      "applicability": "Relevant current project direction and unresolved caveat; not an available capability until a release ships and is verified."
+    },
+    {
+      "id": "S17",
+      "title": "Microsoft Graph List driveItem versions",
+      "url": "https://learn.microsoft.com/en-us/graph/api/driveitem-list-versions?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph v1.0; page last updated 2025-10-22",
+      "locator": "Intro, permissions, request, Remarks",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read the official Microsoft Graph page via web open.",
+      "governing_condition_default_exception": "OneDrive and SharePoint history retention is configurable; versions can be created per edit/save, manually, or never. Previous versions may be retained for finite periods by admin settings that can vary by user or location. OneDrive does not preserve complete metadata for previous versions.",
+      "applicability": "Shows an archive/version ID is not a guarantee of indefinite retention. Exact source platform policies must be checked by owners."
+    },
+    {
+      "id": "S18",
+      "title": "Microsoft SharePoint version history limits FAQ",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/faqs-for-versions",
+      "version_or_commit": "Microsoft Learn page last updated 2025-02-26",
+      "locator": "FAQ on expired/trimmed versions and legal holds or retention policies",
+      "access_utc": "2026-10-12",
+      "observed_operation": "Read official Microsoft Learn page via web open.",
+      "governing_condition_default_exception": "Expired/trimmed versions can be permanently deleted and unavailable for recycle-bin restoration; background purge can take days. Retention/legal hold controls whether deletion is deferred and later extended or executed. Version count trimming is gradual on file updates.",
+      "applicability": "Concrete SharePoint behavior demonstrating why historical citation retention and withdrawal must be explicit owner/policy decisions; not a universal archive guarantee."
+    }
+  ],
+  "observed_access_window_utc": {
+    "start": "2026-10-12T04:18:21Z",
+    "end": "2026-10-12T04:24:24Z",
+    "precision_note": "The web tool did not expose an individual request timestamp; this window bounds the recorded source reads."
+  }
+}

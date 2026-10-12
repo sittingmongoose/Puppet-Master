@@ -1,0 +1,60 @@
+{
+  "version": "prospective-terminal-capture-v1",
+  "stageDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser",
+  "backupDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/.terminal-backup-c4e646f6b9eb4cad85c659eaa68add6e",
+  "args": {
+    "clientRequestId": "er12ref-D-R1-P02-control-reviser-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference D-R1-P02-control reviser",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nComplete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER13 reviser stage, run D-R1-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Save the exact unmodified native activation response as native-goal-active.json and the exact completion response as native-goal-terminal.json in this assigned stage directory. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n\nROOT EXACT GOAL BINDING GUARD v1 — PRE-INPUT\nBefore ANY case/source reading or inference, activate ONE actual native Goal with this EXACT frozen objective: \"ER13 reviser stage, run D-R1-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nImmediately pass its EXACT unmodified COMPLETE fresh native create_goal response (or an immediately obtained native get_goal response) as ONE --json argument to:\npython3 ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'\nThe quoted response slot is runtime native data, never literal placeholder JSON. Use structured argv or correct shell quoting; preserve every response field. If activation is unavailable or the gate fails, STOP before any case/source reading or inference. Preserve the exact diagnostic and original failure; never create a second/replacement Goal or repair the objective. Save before completing the SAME Goal. Original route, deadlines, scope, science and lifecycle remain binding. Response provenance/freshness cannot be independently proved by this checker. This is common symmetric future mechanics, not technique or source assistance.\n\nPROSPECTIVE CAPTURE v1 — COMMON PRE-INPUT MECHANICS\nThis loader replaces the v21 inline body and implements the existing ONE fresh native Goal instruction. Execute it exactly once in your own functions.exec before any scientific input; never separately execute the earlier activation prose. Do not retype/rewrite the loaded body, frozen objective, or returned receipt. Stop on load/save/guard/unknown creation failure; preserve diagnostic and attempt; never make a second/replacement Goal or retry activation. The attempt file is metadata, never a native receipt. Original T0, stage/whole caps, topology, route and all scientific obligations remain binding.\n```javascript\nconst loaded = await tools.exec_command({cmd: \"python3 -B -c 'import hashlib,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); b=p.read_bytes(); assert hashlib.sha256(b).hexdigest()==sys.argv[2], '\\\\''program pin mismatch'\\\\''; sys.stdout.buffer.write(b)' 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/native-capture.js' '84e6a9f117c46cf94223014d90c75f9bb81b0c571495ebf01e7e3142d22ca2ad'\", max_output_tokens: 12000});\nif (loaded.exit_code !== 0 || loaded.session_id) throw Error(\"STOP: pinned capture load failed; no activation: \" + loaded.output);\nawait new (Object.getPrototypeOf(async function(){}).constructor)(\"tools\", \"text\", loaded.output)(tools, text);\n```\nProceed only after activation_binding_checked=true. Save required outputs before completing this same Goal, and save the complete direct terminal response as native-goal-terminal.json without reconstruction. No model-compliance or native-freshness guarantee is claimed.\n\nPROSPECTIVE TERMINAL CAPTURE v1 — AFTER REQUIRED OUTPUTS\nAfter saving all required outputs, execute this exact SHA-bound loader ONCE in this same native Goal context. It is the sole completion+save step and replaces ad-hoc completion/save commands. Do not call update_goal separately first; never retype a receipt, substitute get_goal, retry completion after failed/unknown capture, or create another Goal. Getter is identity/status preflight only. Original birth/objective/T0/deadlines/caps/duties and cards stay binding. Failure/unknown is a failed capture, never waived.\n```javascript\nconst loaded = await tools.exec_command({cmd: \"python3 -B -c 'import hashlib,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); b=p.read_bytes(); assert hashlib.sha256(b).hexdigest()==sys.argv[2], '\\\\''program pin mismatch'\\\\''; sys.stdout.buffer.write(b)' 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/native-terminal-capture.js' 'b0ef0f60f4de782d2e60dcf089549f4fe78510f53808febaf1552e5c0cb6ba44'\", max_output_tokens: 12000});\nif (loaded.exit_code !== 0 || loaded.session_id) throw Error(\"STOP: pinned capture load failed; no activation: \" + loaded.output);\nawait new (Object.getPrototypeOf(async function(){}).constructor)(\"tools\", \"text\", loaded.output)(tools, text);\n```\nRequire terminal_capture_checked=true for captured completion. The output snapshot is pre-completion mechanics only; dispatcher still requires original T3 terminal/zero-pending-child observation and immutable handoff.\n"
+  },
+  "dispatch_performed": false,
+  "root_only_integration": true,
+  "idempotent": false,
+  "template_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+  "checker_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+  "program_sha256": "b0ef0f60f4de782d2e60dcf089549f4fe78510f53808febaf1552e5c0cb6ba44",
+  "config_sha256": "f31a9e71f6a073a37524d6b6d0efe1a9a0595992b0cc1bb3d0fa0d23f1df03e3",
+  "binding": {
+    "stageDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser",
+    "config_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/configs/D-R1-P02-control.json",
+    "config_sha256": "f31a9e71f6a073a37524d6b6d0efe1a9a0595992b0cc1bb3d0fa0d23f1df03e3",
+    "frozen_identity": {
+      "native_goal_objective": "ER13 reviser stage, run D-R1-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "stage_deadline_utc": "2026-10-12T04:52:08.200Z",
+      "whole_deadline_utc": "2026-10-12T05:17:47.866Z",
+      "stage_budget_s": 1080
+    },
+    "required_outputs": [
+      "source-map.json",
+      "final.md"
+    ]
+  },
+  "binding_sha256": "cbc3761d60174feeebb2f5a9d1da12c85612da4992e9baa2a6bf5fd15b453a6c",
+  "preparer_sha256": "cb5d90075a1899c4f44d7757b56022be51fccaf9979990f3507a2bf179e2686f",
+  "original_sha256": {
+    "request.json": "c90a7d4f6a115781f2d023f2e122fbac5a0a9a1e1cefc4793e6e6cf653ffc429",
+    "freeze.json": "24a55a617aea320700da70656166c9d9d9d13cdd988287c1dfe9a681d096b247",
+    "input-map.json": "c7779eb49eefa3505441747ef6ddccfde9873e31d2ed781eaea997defe694896",
+    "assignment.md": "b1b698a8b186da002aee0246f98b83310359c1b0203b269b95dc28a6de685382"
+  },
+  "runtime_pins": {
+    "request.json": "68e1bd100d3eb3c533e777d9909c0d0ae31b10f21e44f9bea7166a7bb8bf7a1a",
+    "freeze.json": "9723b1016b2b4a385a0da942429b9d8cd4544429550d738c484aca356c849bf3",
+    "input-map.json": "c7779eb49eefa3505441747ef6ddccfde9873e31d2ed781eaea997defe694896",
+    "assignment.md": "57322e2c5aa060b68374c6c77dc1c882fb104eb72eb8349ce73a70e5fc2a0a0b",
+    "native-terminal-capture.js": "b0ef0f60f4de782d2e60dcf089549f4fe78510f53808febaf1552e5c0cb6ba44",
+    "native-terminal-check.py": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c"
+  }
+}

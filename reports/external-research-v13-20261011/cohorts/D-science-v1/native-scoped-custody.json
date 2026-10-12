@@ -1,0 +1,1345 @@
+[
+  {
+    "arm_id": "D-R2-P03-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/run/D-R2-P03-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json'",
+    "direct_completion_capture_check": {
+      "qualified": false,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P03-control-investigator-capture-aux/native-terminal-capture-checked.json'"
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json",
+      "native-goal-terminal.json"
+    ]
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "87a2447e215b3d94abce2f7f48578187380f5cb63dc14d085c154fa042fffe7e",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "critic-breadth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "80fa0558b7ad13b0ba1d276460fdd7912b4f32c818bcdfe2720965c41fdfb2c5",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "critic-truth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/control/terminal-handoffs/critic-truth/files/native-goal-terminal.json'",
+    "direct_completion_capture_check": {
+      "qualified": false,
+      "provenance_independently_proved": false,
+      "failure_file_present": true,
+      "capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P03-treatment-critic-truth-capture-aux/native-terminal-capture-checked.json'"
+    },
+    "returned_stage_lifecycle": {
+      "status": "interrupted",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": [
+      "native-goal-terminal.json"
+    ]
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "85ab354fa18e5bbecaa7df142feb1ea5eeb880baddb463a7a64e721e0a06038c",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "7e14a21fe0cb7c1274dd1e6739ec45e92ddac77aa92971abf089164a71fa7830",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "49725fe3bc2c875e2529ba09c1d4824e9bb81e492ae70d979b0fb84e432396e1",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P02-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "4114370a2aafd398f341f8dad9cebe76ea303edad5e532115896ccb0f6423cf1",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P02-treatment",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "4858bc255924bec8cf74f8010a1c50eb0526da538d32cb7837887f4f73c3112b",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "a17a9181793825e52e543a393058163a8e0391855bfbed9978c4672cea5b404b",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "2ea143654672c962087691e5862aba945a536973be608ac435e8b2a89d978bba",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "324270c0333c9dbeb7c58f43eafd283ec49d930bb12eecdf85c13d7eb794b7d6",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P03-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "20d6ae5919259581c5ac97160b65227173cd0a2dd9170d0e13970770b012953c",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P03-treatment",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "41d7fe8e8159043f75966ab109c10778384798e0968166ee50f2a03efc18ba4e",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "085ca4574a10aac18102c88daf00bdb0a110dc37444dbc56d74f0cc045c2b317",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "e9bd0724623221e26b25efa4f5bfdd2b079ed171155375caebe9b7faf20b8509",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "593b6a61e9c0f4345df5558355b69f89dc70a48653826fe9aeb9d9c297a5f1f5",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "354f616a35058e9f60c2365f8a2c2288aa78e1d04a299793992f6b2e2ee893c9",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "critic-truth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "d91794ca82328f9bebd86f098ac01a2ab3c97b154848a3de0aa8340b9f2c9c70",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "critic-breadth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-breadth/files/native-goal-terminal.json'",
+    "direct_completion_capture_check": {
+      "qualified": false,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-treatment-critic-breadth-capture-aux/native-terminal-capture-checked.json'"
+    },
+    "returned_stage_lifecycle": {
+      "status": "interrupted",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": [
+      "source-map.json",
+      "critique.md",
+      "native-goal-terminal.json"
+    ]
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "196ae478175a7f3612c430f6b541012a8d7ff8ad3baac7481e78648ba0f7503f",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "7dd630eae1938682af70a8ef3eb69e4da8f37fba8376e165c32fb3661f5d5a44",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "a993ffa29854cf055ec2ff3f993104a831a3039791c6d789c4f68350557f6ee3",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P04-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "f5bf4581eb0422e6aa12feef7efceb94e83233b7549f7530568f2e7b0f0c47a2",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P04-treatment",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "4aef31a799d6756d081070f038c0482bdd349f0c65d4657ccface8a1d728874a",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "166144dfabbc2c14f53249e46a008441bd3c9320cb8e5edcb974a7c711b8d925",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "e9926b5223e4cccb764c54dffa724fc21de6077a68dcea87b938a6b564f64d81",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "6e702c04b24cb720d6169b4a27d06990399d1f8fbdbf3f16ee900c8114022869",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "d4c1a5c7ee27247698bdd427768f7e113f1e77ed213e0e145af8bc107b9d5dd5",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "critic-breadth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "069d2b8407a62c681b53ba8a31296623e1fdae868c082f243e4ae0418c395d80",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "critic-truth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/native-goal-terminal.json'",
+    "direct_completion_capture_check": {
+      "qualified": false,
+      "provenance_independently_proved": false,
+      "failure_file_present": true,
+      "capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P01-treatment-critic-truth-capture-aux/native-terminal-capture-checked.json'"
+    },
+    "returned_stage_lifecycle": {
+      "status": "interrupted",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": [
+      "native-goal-terminal.json"
+    ]
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "d949c084f3acdbf208286613188a5848fc47d79283a29ac64b5548e40905fcb9",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "b4d09e192eb2dfecf5fa20b081d7e42e442986669ead4ca434df55d55c8f19e7",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "f42338c460c5ac77d5116673ed13500d88a2da6cc03d575c3079552de2c6697a",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P01-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "969302812c359e0d22b8fbb902b54d40b8ac29b857f1d726d27fea17c76e44f4",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R1-P01-treatment",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "e376562d4d486e883625fba0b5dff42d41c3ec871bb210fb9f63afcc247e68fe",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "d320318b4ee83ede067239ab41d5fc771d6f50327533668050018799fa8c9d44",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "critic",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "ecf84fe05995e0818aa9e65c78455759642426c000052c3eb21f3d72e0dabc25",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "reviser",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "aac0e5bf791c4eeed8adf4a92b1935ced0d5e13f1056d953ea4077a583443e84",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "investigator",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "f7a82c3984bec50b28b34ec27274badbc29bdf3bb836aaf7c2b68eb53ebe2f48",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "critic-truth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json",
+      "native-goal-terminal.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": null,
+    "direct_completion_capture_check": {
+      "qualified": true,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "terminal_capture_checked": true,
+      "response_source": "direct_update_goal_return",
+      "terminal_sha256": "9013f40c33638e2f7e6fa6e3e303a37183a57b33dc93f7a8457c49d0c6588a2d",
+      "terminal_sha256_matches": true
+    },
+    "returned_stage_lifecycle": {
+      "status": "completed",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": []
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "critic-breadth",
+    "frozen_objects_present": [
+      "native-goal-create.json",
+      "native-goal-active.json"
+    ],
+    "same_birth_in_frozen_objects": true,
+    "native_objects_unparseable_or_birth_missing": [],
+    "custody_limit": "Original assigned objective/thread/birth and terminal custody only; no independent provider-session linkage proof",
+    "creation_and_active_same_response": "Exact common capture duplicates one returned creation response, not two independent observations",
+    "attempt_marker_is_native_receipt": false,
+    "requested_options": "Retained original config/request/freeze route fields",
+    "observed_options": "UNKNOWN unless explicitly observable in scoped returned objects; requests cannot substitute observations",
+    "native_capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-breadth/files/native-goal-terminal.json'",
+    "direct_completion_capture_check": {
+      "qualified": false,
+      "provenance_independently_proved": false,
+      "failure_file_present": false,
+      "capture_error": "[Errno 2] No such file or directory: 'ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P02-treatment-critic-breadth-capture-aux/native-terminal-capture-checked.json'"
+    },
+    "returned_stage_lifecycle": {
+      "status": "interrupted",
+      "hasPendingChildRuns": false
+    },
+    "settlement_scope": "Only returned/scoped evidence in exact packet+selected files; no unlisted settlement/task reads or new status poll",
+    "missing_required_outputs": [
+      "source-map.json",
+      "critique.md",
+      "native-goal-terminal.json"
+    ]
+  }
+]

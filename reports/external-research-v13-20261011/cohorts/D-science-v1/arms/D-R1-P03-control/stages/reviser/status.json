@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P03-control-reviser-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P03-control-reviser-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R1-P03-control-reviser-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P03-control-reviser-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R1-P03-control-reviser-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the reviser stage under the same native Goal. Activation binding and terminal capture both passed; the Goal is complete. Elapsed time: **10 minutes 6 seconds**; reported Goal usage: **137,453 tokens**.\n\n- [Revised proposal](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/final.md>)\n- [Source map](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/source-map.json>)\n- [Source index](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/sources/README.md>)\n\nExact activation and completion responses are saved as `native-goal-active.json` and `native-goal-terminal.json` in the reviser stage. Archive, migration, fault-injection, and user-data validations were not run; they are marked as proposed.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R1-P03-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:e390d1ae-d2d7-484e-93f3-496f29a21794",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the reviser stage under the same native Goal. Activation binding and terminal capture both passed; the Goal is complete. Elapsed time: **10 minutes 6 seconds**; reported Goal usage: **137,453 tokens**.\n\n- [Revised proposal](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/final.md>)\n- [Source map](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/source-map.json>)\n- [Source index](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/sources/README.md>)\n\nExact activation and completion responses are saved as `native-goal-active.json` and `native-goal-terminal.json` in the reviser stage. Archive, migration, fault-injection, and user-data validations were not run; they are marked as proposed.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R1-P03-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:e390d1ae-d2d7-484e-93f3-496f29a21794",
+  "waitTimedOut": false
+}

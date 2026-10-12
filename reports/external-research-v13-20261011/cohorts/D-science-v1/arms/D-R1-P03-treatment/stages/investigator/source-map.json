@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "run_id": "D-R1-P03-treatment",
+  "stage": "investigator",
+  "brief_scope": "Portable local-workspace backup and preview-first restore for records, attachments, preferences, passphrase option, old/new schemas, interruption, removable media, merge, integrity and usability distinctions.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SQLite Online Backup API and sqlite3_backup C interface",
+      "exact_url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "released_version_or_commit": "Live official SQLite C interface documentation; unversioned. Consulted 2026-10-12.",
+      "locator": "Online Backup API; backup_init/step/finish; locking, retry, fatal error and destination-handle sections; lines 37-81 in the inspected page.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Opened official API documentation and inspected copy consistency, lock duration, SQLITE_BUSY/LOCKED handling, fatal IOERR/NOMEM/READONLY handling, finish/rollback, concurrent source writes, and destination connection constraints.",
+      "governing_condition_default_exception": "Consistent point-in-time destination on successful completion; source read locks occur per step and external writes can restart the operation. BUSY/LOCKED can be retried; IOERR/NOMEM/READONLY are fatal. Destination connection must not be used by any API between init and finish.",
+      "applicability": "Conditional if the chosen engine is SQLite. Provides a safe database snapshot primitive, not a snapshot of attachments or preferences outside that database."
+    },
+    {
+      "id": "S02",
+      "title": "SQLite Write-Ahead Logging documentation and WAL-reset bug notice",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live official SQLite documentation; unversioned. Bug notice names releases 3.7.0 through 3.51.2 and fixed releases 3.51.3+, 3.44.6, and 3.50.7.",
+      "locator": "Section 4 The WAL File; read-only conditions at lines 146-150; section 11 The WAL-Reset Bug at lines 191-196.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Opened and inspected SQLite's WAL persistence requirements and current official bug/fix notice.",
+      "governing_condition_default_exception": "A live WAL database state spans main DB and -wal; separating them may lose committed transactions or corrupt the copy. -shm is coordination state and may be recreated. WAL-reset bug has a narrow concurrent-connection write/checkpoint condition; fixed in named releases.",
+      "applicability": "Conditional on SQLite/WAL use. Raw main-file copy is unsuitable for a live WAL database. The WAL-reset bug is a bundled-engine/version and concurrent-use qualification, not a claim that backup itself triggers it."
+    },
+    {
+      "id": "S03",
+      "title": "SQLite PRAGMA reference and ALTER TABLE compatibility documentation",
+      "exact_url": "https://www.sqlite.org/pragma.html",
+      "released_version_or_commit": "Live official SQLite reference; unversioned. Individual sections identify version additions/defaults.",
+      "locator": "PRAGMA user_version (lines 933-941); foreign_key_check (366-372); integrity_check (492-513); foreign_keys (383 onward, including historical default); journal_mode section (515 onward). Companion: https://sqlite.org/lang_altertable.html, compatibility history for 3.25.0/3.26.0 and safe rebuild guidance.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Inspected exact descriptions and exclusions of SQLite's app-version, integrity, and foreign-key facilities, plus migration-sensitive ALTER TABLE behavior.",
+      "governing_condition_default_exception": "user_version is an app-owned integer that SQLite does not interpret. integrity_check does not find FK errors; foreign_key_check is separate. FK enforcement historically defaulted OFF as of 3.6.19, may be compile-time overridden, and may change in future. ALTER TABLE rename behavior changed in 3.25/3.26 and legacy mode changes behavior.",
+      "applicability": "Conditional if SQLite is selected; proves checks and metadata boundaries but not application-level validity or attachment integrity."
+    },
+    {
+      "id": "S04",
+      "title": "Python 3.15 zipfile library documentation",
+      "exact_url": "https://docs.python.org/3/library/zipfile.html",
+      "released_version_or_commit": "Python 3.15.0 documentation edition; page also displays some API changes by version.",
+      "locator": "ZipFile.testzip() lines 231-236; member naming/encoding lines 240-252; Path path-sanitization warning at lines 298 onward.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Opened official Python library docs and inspected archive CRC/header verification, path APIs, encoding notes, and member-name behavior.",
+      "governing_condition_default_exception": "testzip reads members and checks CRCs and headers, returning first bad filename or None. zipfile.Path does not sanitize untrusted names; the caller must validate. ZIP names are relative by convention; UTF-8 is written for non-ASCII, and a NUL in a filename is truncated by the module.",
+      "applicability": "Primary implementation documentation for ZIP verification/path handling behavior; design lesson applies to any extractor, but this is not a requirement to use Python."
+    },
+    {
+      "id": "S05",
+      "title": "GHSA-94vh-gphv-8pm8 — Rust zip archive extraction symlink escape",
+      "exact_url": "https://github.com/zip-rs/zip2/security/advisories/GHSA-94vh-gphv-8pm8",
+      "released_version_or_commit": "Published 2025-03-16; affected zip crate versions >=1.3.0; patched 2.3.0.",
+      "locator": "Summary and details lines 131-161: earlier symlink entry could redirect later extraction outside target despite enclosed-name sanitization wording.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Read the public security advisory and recorded affected range, path condition, impact, and fixed release.",
+      "governing_condition_default_exception": "Malicious archive can place a symlink to a parent before a later file; extraction did not validate final canonicalized path. Advisory says fixed in 2.3.0.",
+      "applicability": "Directly relevant if using the Rust zip crate or analogous sequential symlink extraction. Otherwise a public repair-history case supporting explicit path and symlink regression tests."
+    },
+    {
+      "id": "S06",
+      "title": "age file encryption format, version 1.0.0",
+      "exact_url": "https://c2sp.org/age@v1.0.0",
+      "released_version_or_commit": "age format specification v1.0.0 (C2SP versioned specification).",
+      "locator": "Payload chunking/authentication lines 90-95; native recipients lines 96-99; scrypt stanza and AEAD lines 157-181.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Read the pinned-format specification for passphrase key wrapping, authenticated streaming, final-chunk errors, recipient constraints, and work-factor requirements.",
+      "governing_condition_default_exception": "Passphrase is processed with scrypt and ChaCha20-Poly1305. Payload uses authenticated 64-KiB chunks; streaming decrypt must error without a valid final chunk. An scrypt stanza must be the only header stanza; implementation should cap work factor. The spec defines no account/service recovery mechanism.",
+      "applicability": "Candidate outer encryption envelope for a completed archive, if selected after implementation/runtime/interop review. It does not implement archive selection or app restore validation."
+    },
+    {
+      "id": "S07",
+      "title": "restic 0.19.1 backup and repository checking documentation",
+      "exact_url": "https://restic.readthedocs.io/en/stable/040_backup.html",
+      "released_version_or_commit": "restic documentation release 0.19.1; companion repository-check page https://restic.readthedocs.io/en/stable/045_working_with_repos.html.",
+      "locator": "Backup snapshots/dedup/check lines 65-116 and source read errors line 460; repository structural versus full data checks and --read-data lines 247-301.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Read official restic docs to compare snapshot/dedup model, read-error semantics, repository requirements, and differing levels of integrity check.",
+      "governing_condition_default_exception": "Repeated backup uses dedup against a parent but creates logical snapshots. Read errors may coexist with a created snapshot. Default check validates repository structure; --read-data verifies stored pack contents at higher I/O/time cost.",
+      "applicability": "Alternative local repository strategy for space-efficient history; not a self-contained single archive and not a substitute for domain-aware preview, app migrations, or coordinated workspace snapshot."
+    },
+    {
+      "id": "S08",
+      "title": "Rust std::fs::rename documentation",
+      "exact_url": "https://doc.rust-lang.org/std/fs/fn.rename.html",
+      "released_version_or_commit": "Stable Rust standard-library docs identify std 1.99.0 / source commit b940084d7 (2026-09-28) on the inspected module page; rename API is stable since 1.0.0.",
+      "locator": "Function overview and platform-specific behavior lines 21-44.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Inspected rename replacement, cross-mount failure, and Unix/Windows distinctions in the standard library contract.",
+      "governing_condition_default_exception": "Rename replaces existing target where supported but fails across mount points; replacement of existing directories differs across Unix and Windows/filesystem capability.",
+      "applicability": "Conditional if Rust std::fs is used, and generally relevant to same-volume staged publication. It does not establish power-loss durability or atomic replacement of a multi-file workspace."
+    },
+    {
+      "id": "S09",
+      "title": "NIST Secure Hash Standard FIPS 180-4, Update 1 final",
+      "exact_url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+      "released_version_or_commit": "FIPS 180-4 final updated specification, published 2015-08-04; NIST planning note says revision is planned after public comments (2023-03-07).",
+      "locator": "Abstract and document history; SHA-256 digest algorithm specified in FIPS 180-4.",
+      "access_utc": "2026-10-12T04:20:21Z",
+      "observed_operation": "Opened NIST publication metadata and the linked FIPS document to confirm SHA-256's standardized message-digest purpose.",
+      "governing_condition_default_exception": "FIPS 180-4 specifies hash digests used to detect message changes; a standalone digest does not authenticate who supplied data if the digest can be replaced with the data.",
+      "applicability": "Candidate manifest digest for detecting payload changes; pair with a trusted/authenticated manifest or AEAD where adversarial modification matters."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "run_id": "D-R2-P04-treatment",
+  "stage": "critic-truth",
+  "reviewer_source_ids": [
+    "CT01",
+    "CT02",
+    "CT03",
+    "CT04",
+    "CT05"
+  ],
+  "source_identity_note": "These CT IDs are stable within this critic's source map. They do not replace or rebind investigator IDs S01-S13.",
+  "sources": [
+    {
+      "id": "CT01",
+      "title": "Apache Tika 4.1.x Pages: rendering, OCR policy, emitted page images",
+      "url": "https://tika.apache.org/docs/4.1.x/configuration/pages.html",
+      "released_version_or_commit": "Versioned documentation line 4.1.x; investigator source S01 records Tika 4.1.0 release. This is a documentation line, not a pinned source commit.",
+      "locator": "Defaults block; `text` AUTO behavior; request/parser configuration overlay; OCR maxPages and auto thresholds; rendering defaults.",
+      "accessed_utc": "2026-10-12T04:36Z",
+      "observed_operation": "Opened the versioned official documentation and inspected defaults, AUTO recognizer conditions/fallbacks, and configuration overlays.",
+      "governing_condition_default_exception": "Default text mode is AUTO; default OCR thresholds are 10 total characters and 10 unmapped Unicode characters per page; maxPages=-1; default render DPI is 300 and maxImagePixels is 100000000. AUTO replaces extracted text only when a configured text recognizer actually writes text; no engine, exhausted page budget, timeout, or error retains the extracted text. A request-level pages block replaces the general config block while parser-specific overlays can persist.",
+      "applicability": "Confirms exact Tika 4.1.x behavior and defaults, but does not establish which pages an app actually OCR'd, app freshness, or OCR correctness. An adapter must preserve observed per-page provenance; default -1 is not a finite OCR page cap."
+    },
+    {
+      "id": "CT02",
+      "title": "Apache Tika 4.1.x Security",
+      "url": "https://tika.apache.org/docs/4.1.x/security.html",
+      "released_version_or_commit": "Versioned documentation line 4.1.x; no patch commit pinned by this page.",
+      "locator": "In-Process Parsing and Denial of Service; process isolation; heap/timeout; Tika Server and gRPC trust model.",
+      "accessed_utc": "2026-10-12T04:36Z",
+      "observed_operation": "Opened the official versioned security page and inspected direct parsing, output-limit scope, forked-JVM isolation, timeout/heap bounds, and service trust conditions.",
+      "governing_condition_default_exception": "Direct parser calls run on the caller thread and heap. Output limits bound output, not the work to produce it. Pipes/PipesForkParser and Tika services use forked JVMs where configured; heap ceilings and timeouts are required bounds. Server/gRPC do not authenticate callers and are not security boundaries.",
+      "applicability": "Supports isolating parsing from the UI and configuring actual time/resource bounds if Tika is selected. Merely using Tika or hosting it locally does not provide those properties."
+    },
+    {
+      "id": "CT03",
+      "title": "Apache Tika PR #3145 files: TIKA-4883 AUTO OCR fix and release-note diff",
+      "url": "https://github.com/apache/tika/pull/3145/files",
+      "additional_urls": [
+        "https://github.com/apache/tika/commit/bdc72de"
+      ],
+      "released_version_or_commit": "PR records fix for Tika 4.1.0; investigator source S11 identifies merge commit bdc72de. The opened release-note diff says Release 4.1.0.",
+      "locator": "CHANGES.txt diff for TIKA-4883; PDFParserTest appears in changed-file listing; TextRecognizer condition in release/configuration diff.",
+      "accessed_utc": "2026-10-12T04:37Z",
+      "observed_operation": "Opened the upstream PR file diff and searched its release-note and test-file sections for AUTO replacement/fallback conditions.",
+      "governing_condition_default_exception": "Poor extracted text is held for AUTO; OCR supersedes it only for a configured text recognizer that actually writes text. Extracted text is released unchanged when OCR cannot run due to absent engine, exhausted page cap, timeout, or error; AUTO without an engine behaves as no OCR.",
+      "applicability": "Corroborates the parser-specific fix and regression history. Upstream changed tests are not executed validation of this proposed notebook component."
+    },
+    {
+      "id": "CT04",
+      "title": "SQLite FTS5 Extension reference",
+      "url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live official SQLite reference, inspected 2026-10-12; no single SQLite release/build pinned.",
+      "locator": "Unicode61 tokenizer; external-content tables and pitfalls; trigger/backfill behavior; rebuild/integrity-check.",
+      "accessed_utc": "2026-10-12T04:36Z",
+      "observed_operation": "Opened the official reference and inspected tokenizer defaults and external-content synchronization requirements.",
+      "governing_condition_default_exception": "unicode61 is the default and is based on Unicode 6.1; default token characters are letter/number/private-use categories, contiguous runs are tokens, and Latin diacritics are removed by default. External-content index/content consistency is caller responsibility; divergence can make query results unintuitive, and triggers do not index rows that predate trigger creation.",
+      "applicability": "Supports conditional FTS5 baseline and integrity/rebuild tests. It does not guarantee the application's SQLite build includes FTS5 or provide language-aware segmentation/relevance for every writing system."
+    },
+    {
+      "id": "CT05",
+      "title": "Apache PDFBox 3.0 FAQ",
+      "url": "https://pdfbox.apache.org/3.0/faq.html",
+      "released_version_or_commit": "PDFBox documentation line 3.0; FAQ does not pin a patch release.",
+      "locator": "FAQ: extracted text appears in wrong sequence; image-only scanned PDFs; encrypted text permission.",
+      "accessed_utc": "2026-10-12T04:36Z",
+      "observed_operation": "Opened the official FAQ and inspected default text order, optional geometric sorting, and image-only/encrypted document conditions.",
+      "governing_condition_default_exception": "Default follows the PDF page content-stream sequence. Geometric left-to-right/top-to-bottom sorting is available with setSortByPosition(true), but PDF is a graphic format without semantic reading-order guarantee. A scanned image may have no selectable text; extraction can also be blocked by permissions/password.",
+      "applicability": "Supports the draft's reading-order, scanned-state, and unknown-locator caveats; locator fidelity must be tested for the selected adapter."
+    }
+  ]
+}

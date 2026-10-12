@@ -1,0 +1,162 @@
+{
+  "run_id": "D-R2-P04-treatment",
+  "stage": "investigator",
+  "access_window_utc": "2026-10-12T04:20:00Z/2026-10-12T04:32:00Z",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Apache Tika Download / release page",
+      "url": "https://tika.apache.org/download.html",
+      "released_version_or_commit": "4.1.0 current; 3.3.2 maintenance line also listed",
+      "locator": "Latest Release; Java 17+; package layout; 3.x maintenance line",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened official release page; checked current version and runtime/package requirements.",
+      "governing_condition_default_exception": "4.x is ZIP with thin launcher plus adjacent lib directory; launcher JAR alone is not runnable. Requires Java 17+. 3.x remains supported separately.",
+      "applicability": "Pin release/runtime if Tika is selected; local worker is feasible but adds Java deployment. Does not establish app compatibility or performance."
+    },
+    {
+      "id": "S02",
+      "title": "Apache Tika 4.1.x Supported Document Formats",
+      "url": "https://tika.apache.org/docs/4.1.x/formats.html",
+      "released_version_or_commit": "Documentation line 4.1.x; release baseline 4.1.0 per S01",
+      "locator": "PDF; Microsoft Office/OOXML; parser/library mappings",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened versioned official supported-formats page; checked parser/library mappings.",
+      "governing_condition_default_exception": "PDFParser uses PDFBox and can hand pages/images to OCR; Office/OOXMLParser uses Apache POI. Format support does not guarantee structure or locator fidelity.",
+      "applicability": "Supports broad single-adapter candidate for PDFs and slide exports; validate exact PPTX subset and locators."
+    },
+    {
+      "id": "S03",
+      "title": "Apache Tika 4.1.x Pages / OCR configuration",
+      "url": "https://tika.apache.org/docs/4.1.x/configuration/pages.html",
+      "released_version_or_commit": "Documentation line 4.1.x; behavior marked 4.1.0 in page",
+      "locator": "Defaults; text=AUTO; render limits; OCR maxPages/AUTO thresholds; crop/media box coordinate rule; experimental inference note",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened versioned parser configuration page; inspected defaults and exception paths.",
+      "governing_condition_default_exception": "AUTO replaces extracted text only if a text recognizer wrote text; otherwise keeps extracted text when no engine, page cap, timeout/error. Default DPI 300; maxImagePixels 100,000,000. Crop/media box depends on renderer. Inference is experimental in 4.1.0.",
+      "applicability": "Supports bounded OCR and source-state design; app still needs own evidence type, version, and coordinate transform. No OCR accuracy guarantee."
+    },
+    {
+      "id": "S04",
+      "title": "Tesseract 5.5.3 command-line manual",
+      "url": "https://github.com/tesseract-ocr/tesseract/blob/5.5.3/doc/tesseract.1.asc",
+      "released_version_or_commit": "Tag 5.5.3; release commit abbreviated db0ec62 per official release page",
+      "locator": "hOCR, PAGE, TSV output formats; word bounding rectangles and confidence",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened manpage pinned to 5.5.3 tag; cross-checked official release list identifying 5.5.3 as current stable.",
+      "governing_condition_default_exception": "TSV/PAGE/hOCR are opt-in. TSV records word rectangles/confidence; coordinates are tied to a specific rendered input. Confidence is not verified truth.",
+      "applicability": "Use for optional local OCR and region jumps only when geometry is retained and mapped to the same source version."
+    },
+    {
+      "id": "S05",
+      "title": "Apache PDFBox 3.0 FAQ",
+      "url": "https://pdfbox.apache.org/3.0/faq.html",
+      "released_version_or_commit": "PDFBox documentation line 3.0; no patch version pinned by FAQ",
+      "locator": "Text extraction order; no-text/scanned-image; custom encoding; extraction permission/password",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened official FAQ and inspected extraction-order and unreadable/encrypted cases.",
+      "governing_condition_default_exception": "Default follows PDF content-stream order, not guaranteed reading order; setSortByPosition(true) is an alternative. Scanned image PDFs have no selectable text; custom/unmapped encodings may yield gibberish; permission bit may require owner password.",
+      "applicability": "Test reading order and expose scanned, encoding, and password states; do not assume complete or faithful text."
+    },
+    {
+      "id": "S06",
+      "title": "SQLite FTS5 official documentation",
+      "url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live SQLite reference; no single release pinned; contentless-delete introduced in 3.43.0, not recommended here",
+      "locator": "Tokenizers; BM25/snippet; external-content synchronization/pitfalls; integrity-check",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened official reference; inspected tokenizer defaults, BM25, sync contract, update/delete, integrity-check.",
+      "governing_condition_default_exception": "unicode61 default is based on Unicode 6.1 and removes Latin diacritics. Porter is English-specific. Trigram supports substring; <3 Unicode character full-text queries have no matches. External-content tables are caller-synchronized; triggers do not backfill; rebuild and integrity-check are available.",
+      "applicability": "Local lexical baseline if shipped SQLite includes FTS5. Keep generation replacement in one same-database transaction and test invariants; no all-language relevance guarantee."
+    },
+    {
+      "id": "S07",
+      "title": "Tantivy 0.26.2 tokenizer and index writer docs",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "additional_urls": [
+        "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+        "https://docs.rs/tantivy/0.26.2/tantivy/"
+      ],
+      "released_version_or_commit": "Crate 0.26.2",
+      "locator": "Default/custom tokenizers; IndexWriter add/commit/rollback; search workflow",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened versioned Rust crate docs for tokenizer and commit/search workflow.",
+      "governing_condition_default_exception": "Default tokenization splits punctuation/whitespace and lowercases; en_stem adds English stemming; custom filters are possible. Changes become searchable on commit; separate metadata requires consistency handling.",
+      "applicability": "Rust-native lexical alternative if separate index and cross-store atomicity are acceptable; language evaluation remains required."
+    },
+    {
+      "id": "S08",
+      "title": "sqlite-vec README and v0.1.9 release",
+      "url": "https://github.com/asg017/sqlite-vec",
+      "additional_urls": [
+        "https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9",
+        "https://github.com/asg017/sqlite-vec/blob/v0.1.9/README.md"
+      ],
+      "released_version_or_commit": "v0.1.9 commit e9f598a; current README labels project pre-v1",
+      "locator": "README pre-v1 warning and vec0/KNN; v0.1.9 DELETE release note",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened project README and release history; checked current stable/alpha tags and DELETE fix.",
+      "governing_condition_default_exception": "Repository warns pre-v1/breaking changes. v0.1.9 fixes DELETE SQLITE_DONE with vec0 metadata text longer than 12 characters; v0.1.10 alpha also exists.",
+      "applicability": "Vector retrieval is optional and separately versioned. Deletion is directly relevant to stale vector cleanup; no compatibility or benchmark test was run."
+    },
+    {
+      "id": "S09",
+      "title": "sqlite-vec issue #274",
+      "url": "https://github.com/asg017/sqlite-vec/issues/274",
+      "released_version_or_commit": "Fixed by sqlite-vec v0.1.9 commit e9f598a (S08)",
+      "locator": "Issue report and linked v0.1.9 release",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened issue URL and compared its subject/fix reference with maintainer release record.",
+      "governing_condition_default_exception": "Reported DELETE on vec0 with long metadata text columns causing SQLITE_DONE in affected versions; v0.1.9 release says it fixes this case.",
+      "applicability": "Useful replacement/delete regression evidence for optional semantic index; not a claim that current release remains broken."
+    },
+    {
+      "id": "S10",
+      "title": "ASF Jira TIKA-4883",
+      "url": "https://issues.apache.org/jira/browse/TIKA-4883",
+      "released_version_or_commit": "Resolved/fixed for Apache Tika 4.1.0; PR #3145 merged 2026-09-09",
+      "locator": "Issue description/resolution: PDF AUTO OCR on sparse/unmapped text could append OCR after bad extracted text",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened ASF issue page; checked description, fix version, and linked PR.",
+      "governing_condition_default_exception": "AUTO OCR triggers under low text/unmapped glyph conditions; old behavior could emit original page text and append OCR output.",
+      "applicability": "Parser output can duplicate or preserve bad extraction; keep source labels and test success/fallback semantics."
+    },
+    {
+      "id": "S11",
+      "title": "Tika PR #3145 fix/release-note/test diff",
+      "url": "https://github.com/apache/tika/pull/3145/files",
+      "additional_urls": [
+        "https://github.com/apache/tika/pull/3145",
+        "https://github.com/apache/tika/commit/bdc72de"
+      ],
+      "released_version_or_commit": "Merged commit bdc72de; commits d5cc621 and bf4932a; included in Tika 4.1.0",
+      "locator": "Release note behavior; TextRecognizer capability; changed file list includes PDFParserTest and ContentEnrichersTest; merge/check state",
+      "accessed_utc": "2026-10-12T04:24:05Z",
+      "observed_operation": "Opened merged PR/diff; inspected release-note additions and test-file/test-case additions.",
+      "governing_condition_default_exception": "AUTO replaces only when configured TextRecognizer actually writes output; otherwise preserves extracted content when engine absent, page cap exhausted, timeout/error. Annotation-only enrichers do not replace text.",
+      "applicability": "Issue-to-fix-to-regression trail for replacement state. Upstream tests are not this application's executed validation."
+    },
+    {
+      "id": "S12",
+      "title": "Apache Tika 4.1 Java API / isolation guide",
+      "url": "https://tika.apache.org/docs/4.1.x/using-tika/java-api/index.html",
+      "released_version_or_commit": "Documentation line 4.1.x; example dependency 4.1.0",
+      "locator": "Consider a service first; PipesForkParser; warning about parsing untrusted files in-process",
+      "accessed_utc": "2026-10-12T04:32:00Z",
+      "observed_operation": "Opened the versioned 4.1.x Java API guide and inspected direct-parse isolation and configured Pipes guidance.",
+      "governing_condition_default_exception": "Direct embedded parser opts out of process isolation; PipesForkParser/service routes provide crash/timeout containment where configured.",
+      "applicability": "Supports local subprocess boundary and resource caps; does not imply remote enrichers are safe to enable."
+    },
+    {
+      "id": "S13",
+      "title": "Apache Tika 4.1.x Security model",
+      "url": "https://tika.apache.org/docs/4.1.x/security.html",
+      "released_version_or_commit": "Documentation line 4.1.x; versioned page identifies Tika 4.1.x",
+      "locator": "In-process parsing and denial of service; Pipes process bounds; Tika server/gRPC trust model",
+      "accessed_utc": "2026-10-12T04:32:00Z",
+      "observed_operation": "Opened official versioned security page and inspected parser isolation, output limits, timeout/heap bounds, and server trust assumptions.",
+      "governing_condition_default_exception": "Direct parsers run in caller thread/heap; output limits bound output, not work. Pipes/PipesForkParser parse in forked JVMs; configure heap ceiling and timeout. Tika server/gRPC are not caller-authentication boundaries.",
+      "applicability": "If Tika is selected, isolate parsing from UI process and configure time/resource bounds. Keep it local and do not expose a server to untrusted callers; remote OCR/VLM is still a separate data-flow decision."
+    }
+  ]
+}

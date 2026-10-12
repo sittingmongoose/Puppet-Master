@@ -1,0 +1,63 @@
+{
+  "version": "prospective-terminal-capture-v1",
+  "stageDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator",
+  "backupDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/.terminal-backup-dca79f24196e4621a42b3589783141ce",
+  "args": {
+    "clientRequestId": "er12ref-D-R2-P04-treatment-investigator-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference D-R2-P04-treatment investigator",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nComplete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER13 investigator stage, run D-R2-P04-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Save the exact unmodified native activation response as native-goal-active.json and the exact completion response as native-goal-terminal.json in this assigned stage directory. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n\nROOT EXACT GOAL BINDING GUARD v1 — PRE-INPUT\nBefore ANY case/source reading or inference, activate ONE actual native Goal with this EXACT frozen objective: \"ER13 investigator stage, run D-R2-P04-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nImmediately pass its EXACT unmodified COMPLETE fresh native create_goal response (or an immediately obtained native get_goal response) as ONE --json argument to:\npython3 ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'\nThe quoted response slot is runtime native data, never literal placeholder JSON. Use structured argv or correct shell quoting; preserve every response field. If activation is unavailable or the gate fails, STOP before any case/source reading or inference. Preserve the exact diagnostic and original failure; never create a second/replacement Goal or repair the objective. Save before completing the SAME Goal. Original route, deadlines, scope, science and lifecycle remain binding. Response provenance/freshness cannot be independently proved by this checker. This is common symmetric future mechanics, not technique or source assistance.\n\nPROSPECTIVE CAPTURE v1 — COMMON PRE-INPUT MECHANICS\nThis loader replaces the v21 inline body and implements the existing ONE fresh native Goal instruction. Execute it exactly once in your own functions.exec before any scientific input; never separately execute the earlier activation prose. Do not retype/rewrite the loaded body, frozen objective, or returned receipt. Stop on load/save/guard/unknown creation failure; preserve diagnostic and attempt; never make a second/replacement Goal or retry activation. The attempt file is metadata, never a native receipt. Original T0, stage/whole caps, topology, route and all scientific obligations remain binding.\n```javascript\nconst loaded = await tools.exec_command({cmd: \"python3 -B -c 'import hashlib,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); b=p.read_bytes(); assert hashlib.sha256(b).hexdigest()==sys.argv[2], '\\\\''program pin mismatch'\\\\''; sys.stdout.buffer.write(b)' 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/native-capture.js' '8fdf87ee26ec4d58456f4b155e2662d1f61206e8c7c7543ec80abcf390bbee8d'\", max_output_tokens: 12000});\nif (loaded.exit_code !== 0 || loaded.session_id) throw Error(\"STOP: pinned capture load failed; no activation: \" + loaded.output);\nawait new (Object.getPrototypeOf(async function(){}).constructor)(\"tools\", \"text\", loaded.output)(tools, text);\n```\nProceed only after activation_binding_checked=true. Save required outputs before completing this same Goal, and save the complete direct terminal response as native-goal-terminal.json without reconstruction. No model-compliance or native-freshness guarantee is claimed.\n\nPROSPECTIVE TERMINAL CAPTURE v1 — AFTER REQUIRED OUTPUTS\nAfter saving all required outputs, execute this exact SHA-bound loader ONCE in this same native Goal context. It is the sole completion+save step and replaces ad-hoc completion/save commands. Do not call update_goal separately first; never retype a receipt, substitute get_goal, retry completion after failed/unknown capture, or create another Goal. Getter is identity/status preflight only. Original birth/objective/T0/deadlines/caps/duties and cards stay binding. Failure/unknown is a failed capture, never waived.\n```javascript\nconst loaded = await tools.exec_command({cmd: \"python3 -B -c 'import hashlib,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); b=p.read_bytes(); assert hashlib.sha256(b).hexdigest()==sys.argv[2], '\\\\''program pin mismatch'\\\\''; sys.stdout.buffer.write(b)' 'ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/native-terminal-capture.js' 'a918e3bc537aac4d7821f729c750f46882a1a804da9dc5f5bc65f55ac99ad165'\", max_output_tokens: 12000});\nif (loaded.exit_code !== 0 || loaded.session_id) throw Error(\"STOP: pinned capture load failed; no activation: \" + loaded.output);\nawait new (Object.getPrototypeOf(async function(){}).constructor)(\"tools\", \"text\", loaded.output)(tools, text);\n```\nRequire terminal_capture_checked=true for captured completion. The output snapshot is pre-completion mechanics only; dispatcher still requires original T3 terminal/zero-pending-child observation and immutable handoff.\n"
+  },
+  "dispatch_performed": false,
+  "root_only_integration": true,
+  "idempotent": false,
+  "template_sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439",
+  "checker_sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c",
+  "program_sha256": "a918e3bc537aac4d7821f729c750f46882a1a804da9dc5f5bc65f55ac99ad165",
+  "config_sha256": "fba1a96bcda4895cd8679db306697d9e3279fd8bf099e65626f60d479b7cd1bb",
+  "binding": {
+    "stageDir": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator",
+    "config_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/configs/D-R2-P04-treatment.json",
+    "config_sha256": "fba1a96bcda4895cd8679db306697d9e3279fd8bf099e65626f60d479b7cd1bb",
+    "frozen_identity": {
+      "native_goal_objective": "ER13 investigator stage, run D-R2-P04-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "stage_deadline_utc": "2026-10-12T04:50:47.830Z",
+      "whole_deadline_utc": "2026-10-12T05:20:46.628Z",
+      "stage_budget_s": 1800
+    },
+    "required_outputs": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json"
+    ]
+  },
+  "binding_sha256": "765eca0a4f157f3a0e50d16cca32e9ad1d02fdcd42d3d91c194db0c35fda5b9c",
+  "preparer_sha256": "f450c8836986049c9000dfc5c40dbc2e645074f5f1e0bf97892add561ee088cb",
+  "original_sha256": {
+    "request.json": "2ee5424de1dcf6fd1081956d9f3a819172b0b0cd4f79cd6941da00ad34f69d5b",
+    "freeze.json": "2da0e1ed989ffda9a303c5900c98b1e3eb2a4950a23b788e9d2bcf14ddf800e7",
+    "input-map.json": "a65696c3f510d2a4c121741c500a8a03c51078519400793b9c84cc9551e41103",
+    "assignment.md": "9e55ca7c4457816e96dd408ace415d3ddcc382bfe15dc8c727c4c6fb4874f80b"
+  },
+  "runtime_pins": {
+    "request.json": "ec76b95c0e90b851a9d0e001ee498f5a5066fa16d4afee17eaddd439c17e4ca1",
+    "freeze.json": "0d010a679d32e9bda2bffa5eb4b62f77428223a75d7cd00bced7ab1951c94930",
+    "input-map.json": "a65696c3f510d2a4c121741c500a8a03c51078519400793b9c84cc9551e41103",
+    "assignment.md": "8c66c3d85cbbfa80e9937f9222e3eaabc47e5a7faa4af936fd3376a901e35168",
+    "native-terminal-capture.js": "a918e3bc537aac4d7821f729c750f46882a1a804da9dc5f5bc65f55ac99ad165",
+    "native-terminal-check.py": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c"
+  }
+}

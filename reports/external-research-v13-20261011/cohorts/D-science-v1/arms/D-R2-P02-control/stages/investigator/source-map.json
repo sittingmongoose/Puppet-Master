@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "stage": "investigator",
+  "run_id": "D-R2-P02-control",
+  "discovery_basis": "Released D-P06 brief only; the exact plan had not been released when discovery was saved.",
+  "source_index": "sources/README.md",
+  "timestamp_method_note": "UTC access is recorded as an exact bounded start/end window around observed reads because page retrieval timestamps are not exposed. Search-result-only evidence and failed opens are explicitly marked. Each source ID permanently identifies the listed exact URL and locator.",
+  "sources": [
+    {
+      "source_id": "B-00",
+      "title": "D-P06 software planning brief",
+      "url": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/inputs/brief.md",
+      "version_or_commit": "D-P06; no explicit release/version in file",
+      "locator": "Entire brief, including scope and prohibitions.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:27:22Z",
+        "end": "2026-10-12T04:27:29Z"
+      },
+      "observed_operation": "Read the assigned brief after native Goal activation; reread to record source identity.",
+      "governing_condition_default_exception": "Untrusted extension code and malformed embedded inputs are in scope; no unrestricted notebook access, ambient-privilege markup execution, pathname-only cleanup inference, or loss of derived-text provenance; no runtime/framework preselected.",
+      "applicability": "Canonical case input; discovery preceded plan release."
+    },
+    {
+      "source_id": "S-01",
+      "title": "Wasmtime Config API",
+      "url": "https://docs.rs/wasmtime/latest/wasmtime/struct.Config.html",
+      "version_or_commit": "docs.rs latest was Wasmtime 49.0.2 at access; release tag commit 3c8a3e79aa3188a1a12b3aebbaa097abccceac92; defaults can vary with Cargo features and target.",
+      "locator": "Config::consume_fuel, Config::epoch_interruption, wasm_threads/shared_memory and component-model-threading options; Defaults section.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened docs.rs Config API and inspected default/method documentation; queried immutable v49.0.2 tag SHA.",
+      "governing_condition_default_exception": "Fuel is false by default; enabled stores begin with zero fuel. Epoch mode needs a deadline before execution; trap is default, async yield requires async support. Large bulk operations can exceed a slice. Thread compilation and thread spawning are distinct; component async/threading support has incomplete areas.",
+      "applicability": "Evidence for one runtime option; does not select Wasmtime or make fuel a complete host-side budget."
+    },
+    {
+      "source_id": "S-02",
+      "title": "Wasmtime StoreLimitsBuilder API",
+      "url": "https://docs.rs/wasmtime/latest/wasmtime/struct.StoreLimitsBuilder.html",
+      "version_or_commit": "Wasmtime 49.0.2 shown by docs.rs at access; release tag commit 3c8a3e79aa3188a1a12b3aebbaa097abccceac92.",
+      "locator": "memory_size, table_elements, instances, tables, memories and trap_on_grow_failure methods.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened the docs.rs method page and inspected documented limits/defaults.",
+      "governing_condition_default_exception": "memory_size is per linear memory and defaults to unlimited; counts and table limits are separate, with some defaults at 10,000. It is not a total process or host-allocation quota.",
+      "applicability": "Useful for guest caps; supplement with aggregate process and host-call budgets."
+    },
+    {
+      "source_id": "S-03",
+      "title": "WIT Worlds",
+      "url": "https://component-model.bytecodealliance.org/design/worlds.html",
+      "version_or_commit": "Bytecode Alliance online design guide; rolling documentation, no released version/commit exposed.",
+      "locator": "WIT Worlds: component import/export contract and host fulfillment.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened and read the WIT Worlds guide.",
+      "governing_condition_default_exception": "Worlds describe the external interface surface, not internal behavior; the only component-to-host interactions are declared imports/exports, and a host must fulfill imports.",
+      "applicability": "Supports narrow typed extension interfaces; host implementations still validate calls and grant minimal authority."
+    },
+    {
+      "source_id": "S-04",
+      "title": "Wasmtime security-vulnerability policy",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/main/docs/security-what-is-considered-a-security-vulnerability.md",
+      "version_or_commit": "Wasmtime main branch, opened as rolling policy at access; no immutable commit captured.",
+      "locator": "Guest-return validation and denial-of-service sections, lines 191-204 and 250-264.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:34:56Z",
+        "end": "2026-10-12T04:34:57Z"
+      },
+      "observed_operation": "Opened upstream policy and inspected host-value and DoS guidance.",
+      "governing_condition_default_exception": "Embedders must validate guest values before unsafe host operations; executing guest DoS, uninterruptible loops, panic/abort, and user-controlled memory exhaustion are security issues under Wasmtime policy.",
+      "applicability": "Supports validation/watchdog recommendations for the Wasm candidate; not a guarantee for other runtimes."
+    },
+    {
+      "source_id": "S-05",
+      "title": "Wasmtime CLI 49.0.2 release notes",
+      "url": "https://docs.rs/crate/wasmtime-cli/latest/source/RELEASES.md",
+      "version_or_commit": "Wasmtime CLI 49.0.2, released 2026-10-02; immutable tag commit 3c8a3e79aa3188a1a12b3aebbaa097abccceac92.",
+      "locator": "49.0.2 Fixed section and 49.0.1 comparison.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened release notes and compared patch entries.",
+      "governing_condition_default_exception": "49.0.2 fixed Preview 0 poll fuel circumvention, no-stdio host allocation, fd_readdir padding disclosure, filesystem timestamp panic and async callback stack overflow; 49.0.1 fixed a WASI HTTP outgoing-body memory exhaustion issue.",
+      "applicability": "Versioned public history; listed issues are condition-specific and do not prove every version/configuration safe."
+    },
+    {
+      "source_id": "S-06",
+      "title": "Wasmtime GHSA-j366-h8gg-77pm",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version_or_commit": "wasmtime-wasi advisory published 2026-10-02; 49.0.0 through <49.0.2 affected, 49.0.2 patched; older branches listed on page.",
+      "locator": "Impact, affected/patched versions and workaround, lines 129-159.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened advisory and inspected exact interface/version conditions.",
+      "governing_condition_default_exception": "WASI Preview 0 poll_oneoff did O(n) host work without fuel. CLI was affected because Preview 0 is enabled by default; library embeddings only if Preview 0 linker APIs are explicitly enabled. WASIp1/2/3 are listed unaffected.",
+      "applicability": "Shows fuel may not account for host interface work; do not generalize beyond this version/API."
+    },
+    {
+      "source_id": "S-07",
+      "title": "Wasmtime GHSA-gqmc-89g8-p25r",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-gqmc-89g8-p25r",
+      "version_or_commit": "wasmtime-wasi advisory published 2026-10-02; patched in 36.0.17, 48.0.4 and 49.0.2.",
+      "locator": "Impact and absent-stdio SinkOutputStream condition, lines 129-151.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened advisory details.",
+      "governing_condition_default_exception": "Default sink output stream permitted unlimited host allocation when a WasiCtx did not configure stdout/stderr; configured streams had separate limits. The advisory says a prior fix was incomplete for this stream.",
+      "applicability": "Supports explicit bounded sinks and host allocation limits; current patched versions are not affected."
+    },
+    {
+      "source_id": "S-08",
+      "title": "Wasmtime GHSA-c9gc-w9vx-w86p",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-c9gc-w9vx-w86p",
+      "version_or_commit": "wasmtime-wasi-http advisory published 2026-09-24; 49.0.0 affected and 49.0.1 patched.",
+      "locator": "Impact, check-write allowance and retained outgoing-body resource, lines 129-158.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened advisory detail.",
+      "governing_condition_default_exception": "Applies only when WASI HTTP outgoing bodies are exposed; write accepted a buffer larger than check-write's default 1 MiB or customized allowance, retaining a host allocation for the store lifetime.",
+      "applicability": "Supports denying network/HTTP by default and enforcing per-host-call byte limits."
+    },
+    {
+      "source_id": "S-09",
+      "title": "Wasmtime GHSA-4ch3-9j33-3pmj",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-4ch3-9j33-3pmj",
+      "version_or_commit": "wasmtime-wasi advisory published 2026-06-24; affected branches through 46.0.0, patched versions listed by branch.",
+      "locator": "Hard-link/rename mechanism, exact two-preopen permission combination and remediation, lines 163-181.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened upstream advisory and read affected conditions/remediation.",
+      "governing_condition_default_exception": "Requires mutable directories, a read-only FilePerms::READ preopen, and another higher-permission FilePerms::WRITE preopen; hard-link/rename enabled modification through the read-only capability. The page excludes symlinks as a vector.",
+      "applicability": "Avoid overlapping read/write preopens; this is version/configuration-specific and patched in named branches."
+    },
+    {
+      "source_id": "S-10",
+      "title": "Wasmtime issue 13544: overlapping preopens",
+      "url": "https://github.com/bytecodealliance/wasmtime/issues/13544",
+      "version_or_commit": "Public Wasmtime issue #13544; issue record is stable, no release tag.",
+      "locator": "Summary, WASIp1/WASIp2 repros and explicit WASIp3 non-applicability, lines 160-184 and 296-329.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened issue and inspected its examples and scope; no runtime reproduction performed here.",
+      "governing_condition_default_exception": "Overlapping guest preopen paths can produce different absolute and descriptor-relative lookup under POSIX-like WASIp1/WASIp2 wrappers. The report says raw capability-oriented WASI is not itself a sandbox escape and does not claim the same issue for raw WASIp3.",
+      "applicability": "Review the entire capability topology; prefer one private job root and no overlapping preopens."
+    },
+    {
+      "source_id": "S-11",
+      "title": "WASI filesystem interface",
+      "url": "https://github.com/WebAssembly/WASI/blob/90105ffc2a4eed594909f9df2f473596500b49d2/proposals/filesystem/imports.md",
+      "version_or_commit": "Immutable WebAssembly/WASI commit 90105ffc2a4eed594909f9df2f473596500b49d2; interface wasi:filesystem/types@0.3.1.",
+      "locator": "Relative descriptor paths and host-dependent filesystem semantics, lines 263-278.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:27:37Z",
+        "end": "2026-10-12T04:27:48Z"
+      },
+      "observed_operation": "Resolved main to an immutable commit via GitHub API, opened that permalink and read the filesystem interface.",
+      "governing_condition_default_exception": "Paths are relative to directory descriptors; escape traversal/symlinks fail not-permitted. Path case, unlink with open handles, and durability/atomicity under concurrent writers vary by OS/filesystem; the spec recommends a database/key-value store for well-defined portable behavior.",
+      "applicability": "Capability scope does not make host filesystem semantics identical."
+    },
+    {
+      "source_id": "S-12",
+      "title": "WASI testsuite writing-tests guide",
+      "url": "https://github.com/WebAssembly/wasi-testsuite/blob/5ea11d8fe958beb60fb871d6852ae020e45c0433/doc/writing-tests.md",
+      "version_or_commit": "Immutable WebAssembly/wasi-testsuite commit 5ea11d8fe958beb60fb871d6852ae020e45c0433.",
+      "locator": "Version-specific paths, per-test root preopen and cleanup, lines 197-216.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:27:37Z",
+        "end": "2026-10-12T04:27:48Z"
+      },
+      "observed_operation": "Resolved repository main commit and opened the exact commit permalink.",
+      "governing_condition_default_exception": "Tests live under tests/c and tests/rust, including tests/rust/wasm32-wasip1 and tests/rust/wasm32-wasip3. Marked temporary files are removed only inside each test-specific preopened root.",
+      "applicability": "Useful fixture pattern; cleanup suffixes alone are not safe outside runner-owned roots. No testsuite was run."
+    },
+    {
+      "source_id": "S-13",
+      "title": "WebAssembly Threads proposal overview",
+      "url": "https://github.com/WebAssembly/threads/blob/main/proposals/threads/Overview.md",
+      "version_or_commit": "WebAssembly threads proposal main branch as accessed; exact commit not captured.",
+      "locator": "Proposal overview and responsibility for creating/joining threads.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened proposal overview and inspected its embedder responsibility statement.",
+      "governing_condition_default_exception": "Core threads adds shared memory/atomics; creation/joining is deferred to the embedder. Browser examples create explicit Worker objects.",
+      "applicability": "Nested work must be explicitly exposed and budgeted; shared memory is not permission to spawn."
+    },
+    {
+      "source_id": "S-14",
+      "title": "VS Code Extension Host documentation",
+      "url": "https://code.visualstudio.com/api/advanced-topics/extension-host",
+      "version_or_commit": "Current online VS Code docs; no release version stated. Search snippet was returned; subsequent direct open timed out.",
+      "locator": "Extension host configurations and stability/performance overview as returned in the search result.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:18:27Z",
+        "end": "2026-10-12T04:34:57Z"
+      },
+      "observed_operation": "Read the official search-result excerpt describing local Node, web worker and remote hosts; a direct page open later returned a fetch timeout.",
+      "governing_condition_default_exception": "The excerpt says host placement depends on runtime capability, extension preference, installation location and environment.",
+      "applicability": "Limited discovery evidence for product runtime alternatives; treat the snippet as incomplete and do not rely on it for fine detail."
+    },
+    {
+      "source_id": "S-15",
+      "title": "VS Code Web Extensions documentation",
+      "url": "https://code.visualstudio.com/api/extension-guides/web-extensions",
+      "version_or_commit": "Current online VS Code docs; no release version stated.",
+      "locator": "Declarative-only contributions, browser worker limitations and test setup, lines 97-106, 148-164 and 267-323.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened official docs and inspected declarative, worker and test sections.",
+      "governing_condition_default_exception": "Declarative-only contributions need no executable entry point; browser worker host lacks Node and child processes but can create web workers; workspace/storage use virtual filesystem and fetch is CORS-constrained.",
+      "applicability": "Evidence for a constrained web-extension approach and worker review; not a replacement for host authorization."
+    },
+    {
+      "source_id": "S-16",
+      "title": "VS Code issue 321901: extension host unresponsive",
+      "url": "https://github.com/microsoft/vscode/issues/321901",
+      "version_or_commit": "Issue #321901; reporter version 1.125.0, build commit 93cfdd4, Electron 42.2.0, Windows x64; milestone 1.125.1.",
+      "locator": "Reported impact, labels and milestone, lines 129-186 and 210-220.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:25Z",
+        "end": "2026-10-12T04:25:33Z"
+      },
+      "observed_operation": "Opened issue and inspected reproduction metadata, impact and resolution metadata.",
+      "governing_condition_default_exception": "Report says Windows 1.125.0 extension host blocked Search/Git for 10-20 seconds to minutes; closed and labeled regression/verified with milestone 1.125.1, but body has no fix commit.",
+      "applicability": "Failure-mode evidence only; do not infer the exact fix from milestone/status."
+    },
+    {
+      "source_id": "S-17",
+      "title": "Electron Process Sandboxing",
+      "url": "https://www.electronjs.org/docs/latest/tutorial/sandbox",
+      "version_or_commit": "Electron rolling latest docs; states renderer sandbox default since Electron 20; no latest release tag on page.",
+      "locator": "IPC authority, disable conditions and untrusted-content caveats, lines 36-46 and 71-163.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened official Electron sandbox guide.",
+      "governing_condition_default_exception": "Node integration disables sandbox; privileged tasks are delegated by IPC; context isolation is needed to avoid leaking preload APIs. Electron notes untrusted content is a difficult case and vendor upgrades are needed for security updates.",
+      "applicability": "Shows that sandbox and IPC broker must be reviewed together; no Electron choice implied."
+    },
+    {
+      "source_id": "S-18",
+      "title": "Electron Web Embeds",
+      "url": "https://www.electronjs.org/docs/latest/tutorial/web-embeds",
+      "version_or_commit": "Electron rolling latest docs; no exact release version exposed.",
+      "locator": "Iframe, WebView and WebContentsView alternatives and WebView warning, lines 48-56.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened official Electron web-embeds guide.",
+      "governing_condition_default_exception": "Iframe sandbox limits capabilities; Electron does not recommend WebView and gives no future API availability guarantee; WebContentsView is controlled by main process.",
+      "applicability": "Renderer alternative and maintenance caveat only."
+    },
+    {
+      "source_id": "S-19",
+      "title": "Electron utilityProcess API",
+      "url": "https://www.electronjs.org/docs/latest/api/utility-process",
+      "version_or_commit": "Electron rolling latest API docs; no immutable release version exposed.",
+      "locator": "utilityProcess.fork options, env/session/network defaults and lifecycle events.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened official API reference and inspected process identity, env, cwd and network options.",
+      "governing_condition_default_exception": "Utility process runs Node with MessagePorts; env defaults to process.env; no session uses system network context; a persistent session may be shared.",
+      "applicability": "A child process alone does not strip ambient environment/network authority."
+    },
+    {
+      "source_id": "S-20",
+      "title": "HTML Standard iframe srcdoc",
+      "url": "https://html.spec.whatwg.org/dev/iframe-embed-object.html",
+      "version_or_commit": "WHATWG HTML Edition for Web Developers; living standard snapshot, no semver release.",
+      "locator": "srcdoc construction and sandboxed user-generated content example, lines 85-117.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:02Z",
+        "end": "2026-10-12T04:25:10Z"
+      },
+      "observed_operation": "Opened WHATWG iframe section.",
+      "governing_condition_default_exception": "srcdoc is parsed as an HTML document; the standard demonstrates sandboxed srcdoc for user-generated content.",
+      "applicability": "Supports isolating active returned HTML; a host-owned typed renderer is narrower."
+    },
+    {
+      "source_id": "S-21",
+      "title": "HTML Standard sandboxing and origins",
+      "url": "https://html.spec.whatwg.org/multipage/browsers.html",
+      "version_or_commit": "WHATWG HTML Living Standard, last updated 2026-10-06.",
+      "locator": "Origins and sandboxed-origin browsing context flag; allow-same-origin semantics.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:21:09Z",
+        "end": "2026-10-12T04:24:31Z"
+      },
+      "observed_operation": "Opened the HTML Standard browsing-context section and inspected origin/sandbox rules.",
+      "governing_condition_default_exception": "If sandboxed-origin flag remains set the document has an opaque origin; allow-same-origin removes that flag. Unsandboxed about:srcdoc can inherit creator origin.",
+      "applicability": "Browser-origin boundary only; says nothing about native APIs exposed over IPC."
+    },
+    {
+      "source_id": "S-22",
+      "title": "Deno runtime permissions",
+      "url": "https://docs.deno.com/runtime/reference/permissions/",
+      "version_or_commit": "Current online Deno docs; no runtime release pinned.",
+      "locator": "Explicit permission flags, allow-all and storage caveats, lines 223-226 and 316-324.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened official Deno permissions guide.",
+      "governing_condition_default_exception": "Listed operations require explicit permissions; prompts are omitted in non-TTY/no-prompt modes; allow-all removes sandbox; some disk-backed APIs can consume space without direct read/write permission.",
+      "applicability": "Permission-model comparison and quota reminder; not a selected runtime."
+    },
+    {
+      "source_id": "S-23",
+      "title": "SQLite Transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "SQLite official online documentation, no library version pinned.",
+      "locator": "Transaction semantics, default DEFERRED, single writer, snapshots and SQLITE_BUSY, lines 33-57.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened official SQLite transaction reference.",
+      "governing_condition_default_exception": "Multiple readers may coexist, only one simultaneous writer; default is DEFERRED; write upgrades/commit may return SQLITE_BUSY, and readers retain snapshots until transaction end.",
+      "applicability": "Possible atomic cache/search publication mechanism with serialized writes; not a storage requirement."
+    },
+    {
+      "source_id": "S-24",
+      "title": "Rust std::process::Child",
+      "url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+      "version_or_commit": "Standard library kill API stable since Rust 1.0; docs track current stable Rust, exact compiler release not pinned.",
+      "locator": "Child::kill, wait and try_wait, lines 129-191.",
+      "access_utc_window": {
+        "start": "2026-10-12T04:25:53Z",
+        "end": "2026-10-12T04:26:02Z"
+      },
+      "observed_operation": "Opened Rust standard-library process API documentation.",
+      "governing_condition_default_exception": "kill forces the direct child to exit and maps to SIGKILL on Unix; wait/try_wait status and reaping are separate operations.",
+      "applicability": "Possible Rust process host control; does not stop arbitrary descendants or impose permission/resource policies."
+    }
+  ]
+}

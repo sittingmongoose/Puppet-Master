@@ -1,0 +1,11 @@
+# D-P02 — Provisional design for review
+
+The draft reads orientation and embedded profiles during inspection, decodes to one internal pixel format, resizes, applies orientation, and exports a review copy in a standard display color space. It would preserve alpha where the target format supports it and flatten against a configurable background otherwise. Research whether that operation order and representation preserve the visual behavior the brief needs, particularly with profile conversion and partially transparent edges.
+
+Derivative identity would include the original digest and a preset name. Updating a preset would invalidate old thumbnails. The draft assumes decoder upgrades do not require additional provenance because the original is unchanged. Examine reproducibility, parameter capture, and version-sensitive behavior before accepting that simplification.
+
+Export would remove a list of identifying metadata tags and retain dimensions and a color profile. Internal review would use a more permissive policy. Compare explicit allowlists, re-encoding, and other metadata-handling approaches using actual format mechanisms, including less obvious containers or auxiliary payloads. No claim of privacy completeness should rest on one successful sample.
+
+Workers would reject inputs beyond a pixel-count limit, write outputs to temporary paths, and publish each successful image independently. Cancellation would retain completed derivatives and delete incomplete ones. Recommend dispositions for these rules, including memory accounting, failure reporting, and whether users need batch-level completeness information. Propose checks for orientation variants, profile/alpha interactions, corrupt metadata, huge dimensions, export-policy differences, and cancellation. Report any executed fixture checks without implying production visual validation.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

@@ -1,0 +1,281 @@
+{
+  "run_id": "D-R2-P01-control",
+  "stage": "critic",
+  "source_id_namespace": "C",
+  "source_id_note": "C01–C17 are critic-side IDs. Investigator IDs S01–S19 remain unchanged; cross-references are explicit per source.",
+  "reviewed_artifacts": [
+    {
+      "path": "inputs/brief.md",
+      "role": "original brief"
+    },
+    {
+      "path": "stages/investigator/discovery.md",
+      "sha256": "b9c5c944e0eadfacf8d4255d1afb290fd97b15b975dd96b2bfe0cdc2b7d27bac"
+    },
+    {
+      "path": "stages/investigator/revealed-plan.md",
+      "bytes": 2186,
+      "sha256": "c036fb29c9b1ffb4c0179c9919eee7484ba71bf2fbe1c9be8167bb2e25db2d00"
+    },
+    {
+      "path": "stages/investigator/draft.md",
+      "role": "complete provisional response reviewed"
+    },
+    {
+      "path": "stages/investigator/source-map.json",
+      "role": "source identities reviewed"
+    },
+    {
+      "path": "stages/investigator/sources/index.md",
+      "role": "carried source index navigated"
+    }
+  ],
+  "access_batch_utc": "2026-10-12T04:34:37Z through 2026-10-12T04:40:55Z",
+  "sources": [
+    {
+      "id": "C01",
+      "title": "PostgreSQL 18: Controlling Text Search",
+      "url": "https://www.postgresql.org/docs/18/textsearch-controls.html",
+      "version_or_commit": "PostgreSQL 18 docs; supported version shown current",
+      "locator": "§12.3.1 parsing/config; §12.3.3 ranking",
+      "access_utc": "2026-10-12T04:34:37Z",
+      "observed_operation": "Opened exact versioned URL; read parsing and ranking sections.",
+      "governing_condition_default_exception": "Selected/default configuration controls tokenization; dictionaries may stem or discard stop words; caller sets field weights; ranking is application-specific.",
+      "applicability": "Supports lexical candidate and need to test exact terms/language; no auth or semantic guarantee.",
+      "corroborates_investigator_source_ids": [
+        "S01"
+      ]
+    },
+    {
+      "id": "C02",
+      "title": "PostgreSQL 18: GIN Indexes",
+      "url": "https://www.postgresql.org/docs/18/gin.html",
+      "version_or_commit": "PostgreSQL 18 docs",
+      "locator": "§65.4.1 and §65.4.5 gin_fuzzy_search_limit",
+      "access_utc": "2026-10-12T04:40:39Z",
+      "observed_operation": "Opened exact versioned URL; read GIN introduction and soft-limit section.",
+      "governing_condition_default_exception": "GIN indexes keys from composite items; limit defaults to zero; nonzero soft limit returns a random subset.",
+      "applicability": "Supports index mechanics and the draft completeness caveat if the non-default limit is enabled.",
+      "corroborates_investigator_source_ids": [
+        "S02"
+      ]
+    },
+    {
+      "id": "C03",
+      "title": "PostgreSQL 18: Row Security Policies",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "version_or_commit": "PostgreSQL 18 docs",
+      "locator": "§5.9, enablement, owner/superuser exceptions and policy combination",
+      "access_utc": "2026-10-12T04:34:37Z",
+      "observed_operation": "Opened exact versioned URL; read policy conditions and exceptions.",
+      "governing_condition_default_exception": "RLS must be enabled; enabled RLS without policies is default-deny; table owners normally bypass; superusers/BYPASSRLS always bypass; permissive policies OR, restrictive AND.",
+      "applicability": "Supports the draft's qualified PostgreSQL mechanism; not derived-cache protection.",
+      "corroborates_investigator_source_ids": [
+        "S03"
+      ]
+    },
+    {
+      "id": "C04",
+      "title": "pgvector README at v0.8.7",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+      "version_or_commit": "pgvector v0.8.7 tag; investigator map reports commit f37c13f",
+      "locator": "Filtering and iterative index scans, including HNSW example",
+      "access_utc": "2026-10-12T04:34:46Z",
+      "observed_operation": "Opened tag-pinned README; read filtering guidance and ef_search example.",
+      "governing_condition_default_exception": "Approximate filtering follows initial scan; at 10-percent selectivity and default ef_search 40 docs estimate four matches on average; iterative scans add work but have caps and ordering modes.",
+      "applicability": "Supports conditional recall/underfill claims; workload must be measured.",
+      "corroborates_investigator_source_ids": [
+        "S04"
+      ]
+    },
+    {
+      "id": "C05",
+      "title": "pgvector CHANGELOG at v0.8.7",
+      "url": "https://github.com/pgvector/pgvector/blob/v0.8.7/CHANGELOG.md",
+      "version_or_commit": "pgvector v0.8.7 tag; changelog dates it 2026-10-01",
+      "locator": "0.8.7 entry",
+      "access_utc": "2026-10-12T04:40:39Z",
+      "observed_operation": "Opened tag-pinned changelog; read 0.8.7 heading and changes.",
+      "governing_condition_default_exception": "0.8.7 reports an IVFFlat index-build buffer-overflow fix; this does not establish query recall.",
+      "applicability": "Supports bounded release-history statement only.",
+      "corroborates_investigator_source_ids": [
+        "S05"
+      ]
+    },
+    {
+      "id": "C06",
+      "title": "pgvector issue #719",
+      "url": "https://github.com/pgvector/pgvector/issues/719",
+      "version_or_commit": "Opened 2024-11-26; original report says 0.7.0; later follow-up says 0.8.0/PostgreSQL 17",
+      "locator": "Maintainer comments and reporter's 0.8.0 follow-up",
+      "access_utc": "2026-10-12T04:34:55Z",
+      "observed_operation": "Opened issue; searched version, advice and filtering discussion; read relevant results.",
+      "governing_condition_default_exception": "Report concerns filtered nearest-neighbor failure; maintainer suggested 0.8.0/iterative scans and B-tree for selective filters; reporter later said problem persisted on 0.8.0 and maintainer requested ANALYZE/EXPLAIN.",
+      "applicability": "Bounded issue history, not universal behavior or proof of fix.",
+      "corroborates_investigator_source_ids": [
+        "S06"
+      ]
+    },
+    {
+      "id": "C07",
+      "title": "pgvector issue #785",
+      "url": "https://github.com/pgvector/pgvector/issues/785",
+      "version_or_commit": "Reporter says pgvector 0.8.0/PostgreSQL 15; closed 2025-03-03",
+      "locator": "Report, maintainer reply and closure",
+      "access_utc": "2026-10-12T04:34:46Z",
+      "observed_operation": "Opened issue and read version, underfill/latency report, advice and closure.",
+      "governing_condition_default_exception": "Maintainer requested plan/cardinality and suggested indexes/settings; closure contains no documented code fix.",
+      "applicability": "Workload-specific report, not a general benchmark.",
+      "corroborates_investigator_source_ids": [
+        "S07"
+      ]
+    },
+    {
+      "id": "C08",
+      "title": "OpenSearch 3.8: Reciprocal rank fusion",
+      "url": "https://docs.opensearch.org/3.8/vector-search/ai-search/hybrid-search/rrf/",
+      "version_or_commit": "Docs version 3.8; page says no longer maintained",
+      "locator": "RRF introduction, combination table, score cautions",
+      "access_utc": "2026-10-12T04:35:33Z",
+      "observed_operation": "Opened exact versioned page; read RRF mechanics and caveats.",
+      "governing_condition_default_exception": "RRF uses result positions and discards margins; introduced 2.19; normalization from 2.10; docs warn against min_score and cross-query score comparison.",
+      "applicability": "Mechanism candidate only; recheck selected supported release.",
+      "corroborates_investigator_source_ids": [
+        "S08"
+      ]
+    },
+    {
+      "id": "C09",
+      "title": "OpenSearch 3.8: Document-level security",
+      "url": "https://docs.opensearch.org/3.8/security/access-control/document-level-security/",
+      "version_or_commit": "Docs version 3.8; page says no longer maintained",
+      "locator": "Page banner; DLS scope; special-character mapping; adaptive default; multiple roles",
+      "access_utc": "2026-10-12T04:35:33Z",
+      "observed_operation": "Opened exact versioned page; read read/write, mapping, evaluation and role sections.",
+      "governing_condition_default_exception": "DLS limits reads, not writes; special chars can split text identifiers; adaptive is default; DLS queries OR with documented mixed-role rule and dfm_empty_overrides_all setting.",
+      "applicability": "Supports critique of missing role detail; pin and verify chosen release.",
+      "corroborates_investigator_source_ids": [
+        "S09"
+      ]
+    },
+    {
+      "id": "C10",
+      "title": "OpenSearch 3.8: Filtering vector search results",
+      "url": "https://docs.opensearch.org/3.8/vector-search/filter-search-knn/index/",
+      "version_or_commit": "Docs version 3.8; page says no longer maintained",
+      "locator": "Filter modes, page banner, lines 6–17",
+      "access_utc": "2026-10-12T04:35:33Z",
+      "observed_operation": "Opened exact versioned page; read efficient filter, post-filter and scoring-script conditions.",
+      "governing_condition_default_exception": "Efficient filter depends on listed engine/method/version; post-filter may underfill k; exact prefiltered scoring can be costly and poorly scalable for large subsets.",
+      "applicability": "Supports filter trade-off conditionally.",
+      "corroborates_investigator_source_ids": [
+        "S10"
+      ]
+    },
+    {
+      "id": "C11",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation 2017-02-23",
+      "locator": "TextQuoteSelector §4.2.4; TextPositionSelector §4.2.5; State §4.3",
+      "access_utc": "2026-10-12T04:34:37Z",
+      "observed_operation": "Opened Recommendation; searched selectors, brittleness and state.",
+      "governing_condition_default_exception": "Quote selectors store normalized selected text/context and can duplicate restricted material; position selectors are brittle under representation changes; State identifies intended representation.",
+      "applicability": "Locator vocabulary only, not version retention or authorization.",
+      "corroborates_investigator_source_ids": [
+        "S13"
+      ]
+    },
+    {
+      "id": "C12",
+      "title": "Elasticsearch document/field security limitations",
+      "url": "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+      "version_or_commit": "Current Elastic docs as accessed 2026-10-12; exact release not stated",
+      "locator": "DLS aggregate note and request-cache conditions",
+      "access_utc": "2026-10-12T04:34:55Z",
+      "observed_operation": "Opened current page and searched aggregate and request-cache sections.",
+      "governing_condition_default_exception": "Elastic warns DLS may expose aggregate facts; request cache disabled for specified templated stored-script and mixed local/remote cases.",
+      "applicability": "Elastic-specific counterexample; do not generalize.",
+      "corroborates_investigator_source_ids": [
+        "S14"
+      ]
+    },
+    {
+      "id": "C13",
+      "title": "Elasticsearch node query cache settings",
+      "url": "https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/node-query-cache-settings",
+      "version_or_commit": "Current Elastic reference as accessed 2026-10-12; exact release not stated",
+      "locator": "Opening cache description and index cache setting",
+      "access_utc": "2026-10-12T04:40:55Z",
+      "observed_operation": "Opened current reference and searched shared-node, heap-limit and segment invalidation.",
+      "governing_condition_default_exception": "Filter-context results use one node cache shared by shards; default maximum 10,000 queries/up to 10% heap; eligible results are per segment and merges invalidate them.",
+      "applicability": "Elastic-specific cache example only.",
+      "corroborates_investigator_source_ids": [
+        "S15"
+      ]
+    },
+    {
+      "id": "C14",
+      "title": "Current OpenSearch: Document-level security",
+      "url": "https://docs.opensearch.org/latest/security/access-control/document-level-security/",
+      "version_or_commit": "Latest route served 2026-10-12; page exposes no pinned release/build",
+      "locator": "Special-character note, adaptive default, multiple-role section",
+      "access_utc": "2026-10-12T04:34:55Z",
+      "observed_operation": "Opened current route; searched analyzer, text-field, username, adaptive and roles.",
+      "governing_condition_default_exception": "Corroborates identifier tokenization, adaptive default, and OR/mixed-role behavior; exact deployable release unknown.",
+      "applicability": "Current doc cross-check only; test selected release/ACL mapping.",
+      "corroborates_investigator_source_ids": [
+        "S16"
+      ]
+    },
+    {
+      "id": "C15",
+      "title": "Current OpenSearch: Filtering vector search results",
+      "url": "https://docs.opensearch.org/latest/vector-search/filter-search-knn/index/",
+      "version_or_commit": "Latest route served 2026-10-12; no pinned release/build",
+      "locator": "Efficient k-NN, post-filter and scoring-script sections",
+      "access_utc": "2026-10-12T04:34:37Z",
+      "observed_operation": "Opened current route and searched post-filter behavior.",
+      "governing_condition_default_exception": "Distinguishes efficient in-query filtering, post-filter underfill, and exact-filter scaling cost; support is version-specific.",
+      "applicability": "Current mechanism corroboration only.",
+      "corroborates_investigator_source_ids": [
+        "S17"
+      ]
+    },
+    {
+      "id": "C16",
+      "title": "Current OpenSearch: Index aliases",
+      "url": "https://docs.opensearch.org/latest/im-plugin/index-alias/",
+      "version_or_commit": "Latest route served 2026-10-12; no pinned release/build",
+      "locator": "Alias characteristics and remove/add switch",
+      "access_utc": "2026-10-12T04:34:46Z",
+      "observed_operation": "Opened current route and searched atomicity.",
+      "governing_condition_default_exception": "Combined alias remove/add is atomic; multi-index writes require a write index; alias atomicity says nothing about ACL freshness.",
+      "applicability": "Supports index cutover only.",
+      "corroborates_investigator_source_ids": [
+        "S18"
+      ]
+    },
+    {
+      "id": "C17",
+      "title": "Current OpenSearch: Reciprocal rank fusion",
+      "url": "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/rrf/",
+      "version_or_commit": "Latest route served 2026-10-12; no pinned release/build",
+      "locator": "RRF version, score fusion and interpretation",
+      "access_utc": "2026-10-12T04:34:46Z",
+      "observed_operation": "Opened current route; searched feature version and min_score cautions.",
+      "governing_condition_default_exception": "Current page describes rank-only fusion and warns against min_score and cross-query score comparison; deployed support depends on release.",
+      "applicability": "Current mechanism, not corpus-specific ranking evidence.",
+      "corroborates_investigator_source_ids": [
+        "S19"
+      ]
+    }
+  ],
+  "research_checks": {
+    "primary_source_review": "Executed read-only; direct primary docs and project issue pages are recorded above.",
+    "plan_and_discovery_hashes": "Executed; both match plan-reveal.json.",
+    "synthetic_corpus_benchmark": "Not run; proposed only.",
+    "authorization_revocation_test": "Not run; proposed only.",
+    "real_corpus_relevance_or_policy_decision": "Not run; owner input required."
+  }
+}

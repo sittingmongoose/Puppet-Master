@@ -1,0 +1,68 @@
+{
+  "stage": "critic-truth",
+  "run_id": "D-R2-P03-treatment",
+  "reviewer_source_ids": [
+    "CT01",
+    "CT02",
+    "CT03",
+    "CT04",
+    "CT05"
+  ],
+  "sources": [
+    {
+      "id": "CT01",
+      "title": "Handling Update Conflicts \u2014 PowerSync",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+      "released_version_or_commit": "Rolling official documentation; no immutable docs commit or client SDK release is specified by this page.",
+      "locator": "Lines 127\u2013144: upload queue is ordered and sequentially drained to developer-configured backend; simplest backend uses per-field LWW/delete-wins; operations must be idempotent; a per-client incrementing operation ID is available for deduplication.",
+      "access_utc": "2026-10-12T04:27:43Z",
+      "observed_operation": "Opened and read the official PowerSync conflict-handling page.",
+      "governing_condition_default_exception": "PowerSync leaves backend conflict semantics to the app. The simple handler applies delete-wins and per-field last-write-wins; custom behavior and server validations are possible. Duplicate operation delivery is explicitly anticipated.",
+      "applicability": "Supports conditional analysis of the draft's LWW rejection, custom backend boundary, idempotency and command/transport identity distinction. Does not establish that all PowerSync SDKs group a multi-row business command atomically."
+    },
+    {
+      "id": "CT02",
+      "title": "Custom Conflict Resolution \u2014 PowerSync",
+      "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution",
+      "released_version_or_commit": "Rolling official documentation; page's React/Web and Node/Postgres examples are illustrative, not a pinned SDK release.",
+      "locator": "Lines 201\u2013219 (local SQLite, queued upload and backend flow); 228\u2013292 (CrudEntry, optional transactionId, complete-after-response example and duplicate handling); 308\u2013310 and 382\u2013391 (clock drift and sequence-number tradeoff); 569\u2013654 (business-rule validation example); 853\u2013855 (change-level pending/applied/failed states).",
+      "access_utc": "2026-10-12T04:27:43Z",
+      "observed_operation": "Opened the official page and inspected the upload, conflict/version, business-validation and status-tracking sections.",
+      "governing_condition_default_exception": "The sample calls transaction.complete() after the HTTP request returns; the documentation also warns that duplicate operations may occur. A CRUD transactionId is optional in its example. The page demonstrates patterns, not a universal SDK guarantee or roster domain behavior.",
+      "applicability": "Supports the implementation clarification that a durable rejected proposal and local queue terminalization must be coordinated and tested for the selected SDK. Supports distinguishing command identity from CRUD identity and preserving versioned alternatives to timestamps."
+    },
+    {
+      "id": "CT03",
+      "title": "PostgreSQL 18 Documentation \u2014 Constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "released_version_or_commit": "PostgreSQL 18 official documentation, version path pinned.",
+      "locator": "\u00a75.5 lines 92\u2013101 (CHECK null/cross-row and immutability caveats); \u00a75.5.6 lines 377\u2013387 (EXCLUDE semantics).",
+      "access_utc": "2026-10-12T04:27:43Z",
+      "observed_operation": "Opened and read the PostgreSQL 18 constraints documentation.",
+      "governing_condition_default_exception": "CHECK constraints cannot guarantee conditions over other rows/tables; UNIQUE, EXCLUDE, or FOREIGN KEY are suggested where applicable. EXCLUDE enforces only the declared operators over specified columns/expressions; schema/operator/index design matters.",
+      "applicability": "Confirms the draft's cross-row limitation and its caveat that interval exclusion is conditional and incomplete for qualification/dependency rules."
+    },
+    {
+      "id": "CT04",
+      "title": "PostgreSQL 18 Documentation \u2014 SET TRANSACTION",
+      "url": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+      "released_version_or_commit": "PostgreSQL 18 official documentation, version path pinned.",
+      "locator": "Lines 38\u201353: READ COMMITTED default; SERIALIZABLE visibility and serialization_failure rollback; isolation level must be set before first query/write.",
+      "access_utc": "2026-10-12T04:27:43Z",
+      "observed_operation": "Opened and read the PostgreSQL 18 transaction documentation.",
+      "governing_condition_default_exception": "SERIALIZABLE detects concurrent patterns that cannot correspond to serial execution by aborting one transaction; callers need retry behavior. It does not itself supply roster rules.",
+      "applicability": "Confirms the draft correctly treats serializable transactions as a candidate mechanism with application retry handling, not as a complete business validator."
+    },
+    {
+      "id": "CT05",
+      "title": "PostgreSQL 18 Documentation \u2014 Row Security Policies",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "released_version_or_commit": "PostgreSQL 18 official documentation, version path pinned.",
+      "locator": "\u00a75.9 lines 20\u201327: policies absent by default; after enablement no policy means default-deny; table owner normally bypasses; superuser/BYPASSRLS always bypass.",
+      "access_utc": "2026-10-12T04:28:34Z",
+      "observed_operation": "Opened and read PostgreSQL 18 row-security documentation.",
+      "governing_condition_default_exception": "RLS is not enabled by default. Policy default-deny applies only after enablement. FORCE ROW LEVEL SECURITY can subject table owners; superusers and BYPASSRLS always bypass.",
+      "applicability": "Confirms the investigator's statement and supports keeping database role testing separate from sync filtering and application authorization."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T04:33:50.319255+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/D-R2-P03-treatment.json",
+      "bytes": 2895,
+      "sha256": "4d69245f024dd0146c5826f91c2014e9fd1cbcc6b886913c79da50fbeb70b79e"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2409,
+      "sha256": "d7a7fcce7656aa8fd0638fe5dc7cde5a335961ce1f8d31bf049916c7be433cd8"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 2241,
+      "sha256": "ab4e366c681798f8e7de0480f19a8cce2bad747ed2be59608d3e0fee99174493"
+    },
+    {
+      "path": "run/D-R2-P03-treatment/control/run.json",
+      "bytes": 1090,
+      "sha256": "2be3eae1641d8a4eded5878f2654f2486c4dd246270031a4c859b3095c108703"
+    }
+  ]
+}

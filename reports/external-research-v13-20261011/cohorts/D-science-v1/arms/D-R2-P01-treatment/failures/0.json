@@ -1,0 +1,20 @@
+{
+  "arm_id": "D-R2-P01-treatment",
+  "stage": "critic-truth",
+  "actual_task_status": "interrupted",
+  "hasPendingChildRuns": false,
+  "missing_required_outputs": [
+    "native-goal-terminal.json"
+  ],
+  "missing_capture_auxiliary_files": [
+    "native-completion-attempt.json",
+    "native-completion-output-snapshot.json",
+    "native-terminal-capture-checked.json"
+  ],
+  "native_same_birth_exact_objective_complete": false,
+  "native_direct_completion_capture_qualified": false,
+  "native_parse_error": null,
+  "next_stage_eligible": false,
+  "science_grade": "UNASSESSED",
+  "original_failure_preserved": true
+}

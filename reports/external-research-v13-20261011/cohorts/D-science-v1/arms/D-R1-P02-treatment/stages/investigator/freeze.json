@@ -1,0 +1,46 @@
+{
+  "prepared_at_utc": "2026-10-12T04:17:50.874Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T04:47:50.874Z",
+  "whole_deadline_utc": "2026-10-12T05:17:49.959Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/inputs/brief.md",
+      "sha256": "7dd3726cf67725d79341a048f7301feb1ac4a1600e971786861c01d1aa5b8ef4",
+      "bytes": 2407
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "9bcdde1b8c8973fea9bfdfd426c344f621f7e02dfa7e62716341ce21124a57e7",
+      "bytes": 10810
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "f86b9a5139f264868357f21d455ad7c1fc03c8e098380468cf5ca3c1a9d36e11",
+      "bytes": 880
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run D-R1-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0,
+  "request_sha256": "8724d98f09259b13b4b7a4bb92e72757f841a73743ae7bff04ed9f8200a5898d"
+}

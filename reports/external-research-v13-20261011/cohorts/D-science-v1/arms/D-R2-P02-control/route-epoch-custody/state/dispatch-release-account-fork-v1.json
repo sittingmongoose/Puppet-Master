@@ -1,0 +1,32 @@
+{
+  "schema": "er13.root_unstarted_route_fork_release.v1",
+  "released_utc": "2026-10-12T04:56:56.209973+00:00",
+  "owner": "codex-er13-root",
+  "sole_dispatcher": "codex-er13-dispatch",
+  "arm_id": "D-R2-P02-control",
+  "stage": "reviser",
+  "new_stage_only": true,
+  "authority_amendment_sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+  "helper": "ER13_RUNTIME/helpers/unstarted-stage-route-fork-v1",
+  "helper_manifest_sha256": "d41d620fd80074205897e80652239ee70c1e2cb0335d5d709048cccff5fe369b",
+  "dispatcher_js_sha256": "fed6bd1e4a12d736326a68d26fe6c357fb2a20ec503e6809b36b0ef2c1371fd5",
+  "route_fork_py_sha256": "cf08f0f929da932cd212b948d9fa578462eae1b7378a9698f9f85da4b549f605",
+  "root_source_review": "Complete README, dispatcher.js and route_fork.py read; exact member/source pins verified; no native/science calls by root",
+  "original_source_API_checks": 26,
+  "root_reran_checks": false,
+  "use": "Sole dispatcher execute exact dispatcher.js body through supported functions; prepare configfork and capture binding, retain entire ACTUAL returned tasks before next action; do not oldbootstrap/nakedoverride",
+  "new_codex_route": {
+    "providerInstanceId": "codex_private_epoch_2",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "original_whole_deadline_utc": "2026-10-12T05:18:08.191Z",
+  "stage_maximum_seconds": 1080,
+  "T0_and_original_guards_science_used_inputs_unchanged": true,
+  "capture_auxiliary_selection": "Existing nine + failure file if present; config fork + route-epoch separate custody",
+  "physical_provenance": "UNKNOWN beyond captured supported observations",
+  "no_retry_replacement_reserve_or_regrade": true
+}

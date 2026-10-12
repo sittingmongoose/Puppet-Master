@@ -1,0 +1,11 @@
+# D-P07 — Provisional design for review
+
+The draft stores shifts, assignments, and swap requests as records with stable IDs. Clients would synchronize field changes and merge concurrent edits using per-field timestamps. A rule checker would run after merge and mark overlapping assignments for coordinator review. The investigator should examine whether this preserves intent for multi-record swaps, qualifications, and dependent duties, or whether transaction and decision boundaries need a different model.
+
+Approval would be a boolean on the roster plus the approving person's identifier. Publishing would copy the current records into a versioned snapshot and send downstream consumers its version number. Offline edits would remain local until reconnecting, at which point they would update the shared draft. The draft assumes approval can survive changes to unrelated fields; determine how approval scope and invalidation should be represented instead of accepting a blanket boolean.
+
+Swap requests would refer to shift IDs and the published version the worker viewed. If the current draft differs, the coordinator could still accept the request after seeing a warning. Compare this with explicit rebasing, staged proposals, or other intent-preserving approaches. The plan needs to explain how a cancelled or superseded request interacts with delayed clients and already sent notifications.
+
+Return evidence-backed dispositions for merge, rule-check timing, approval, publication, and consumer references. Propose checks for simultaneous swaps, offline conflicting assignment, crash during local persistence, approval after draft changes, and delayed notification delivery. Report actual synthetic checks separately from future application, permission, and center-specific rule tests.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

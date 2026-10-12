@@ -1,0 +1,313 @@
+{
+  "run_id": "D-R1-P01-treatment",
+  "stage": "critic",
+  "purpose": "Independent source verification for critique.md and final.md. Source IDs, URLs, original version fields, and identity bindings are carried unchanged from the investigator map; critic observations are appended per source.",
+  "review_method": "Directly reopened every source S01-S15 and checked the relevant governing context, defaults, exceptions, and release/version conditions. No webpage snapshot or implementation code was saved or executed.",
+  "review_access_window_utc": {
+    "start_utc": "2026-10-12T04:30:48Z",
+    "end_utc": "2026-10-12T04:33:59Z",
+    "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "WCAG 2.2 Understanding SC 4.1.3: Status Messages",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "released_version_or_commit": "WCAG 2.2; explanatory page updated 2026-05-11; rolling page",
+      "locator": "SC 4.1.3, Intent, status-message examples, Other uses of live regions or alerts, Sufficient Techniques, Failures",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "When content changes without focus/context change and conveys success/result, waiting, progress, or errors, programmatic status semantics allow assistive technologies to present it without focus. The page cautions about excessive chatter and notes that this criterion does not require authors to generate new statuses. role=status is a sufficient technique for status/progress in listed situations; alert use is scoped to important/error cases.",
+      "applicability": "Pending validation and save status, async errors, and avoiding focus theft. It does not prescribe announcing every keystroke or each internal state transition.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked the criterion and explanation. Confirms programmatic status without focus, intent to avoid unnecessary interruption, and that the criterion does not require authors to generate a status for every change. The page does not itself make the draft’s specific excessive-chatter warning; APG S05 does."
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "WCAG 2.2 Understanding SC 3.3.1: Error Identification",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html",
+      "released_version_or_commit": "WCAG 2.2; rolling explanatory page",
+      "locator": "SC 3.3.1; intent; user-agent native HTML form validation discussion; ARIA21 and ARIA19 techniques",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "If an input error is automatically detected, identify the item and describe the error in text. The explanation says native browser messages can be generic/transient/small when zoomed and may expose only the first of several errors; evaluate browser/AT support.",
+      "applicability": "Use textual field errors and a find-all mechanism; do not rely on color or a generic browser bubble alone.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked input-error scope and native-validation caveats. The page defines input errors around omitted user information or a user value outside format/allowed values, and says browsers generally focus the first native invalid field; it does not prescribe that as the component’s only submit-recovery policy."
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "WCAG 2.2 Understanding SC 3.3.3: Error Suggestion",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html",
+      "released_version_or_commit": "WCAG 2.2; rolling explanatory page",
+      "locator": "SC 3.3.3 and intent",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "When an error is automatically detected and a correction suggestion is known, provide it unless doing so would jeopardize security or the purpose of the content.",
+      "applicability": "Server validation errors should explain the unavailable choice and, when permitted, offer current allowed choices or an actionable next step.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked the correction-suggestion condition: provide a known correction unless it would jeopardize security or the content purpose."
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "WAI Forms Tutorial: User Notification",
+      "exact_url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+      "released_version_or_commit": "WAI Forms Tutorial; rolling guidance",
+      "locator": "In-line feedback, After submit, On focus change",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Recommends inline explanations and, on an unsuccessful form submission, focus on the first invalid input. It also shows an assertive live-region example for focus-change validation; this is an example, not a mandate for all asynchronous events.",
+      "applicability": "Supports an explicit submit/commit error-summary path and field-linked inline text. The assertive example is tempered by S01 and S05 for less urgent or frequent asynchronous results.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked the notification page. It recommends a top-of-form linked error list and field associations, shows a dynamic alert example, and gives blur validation as an option for suitable inputs. It does not prescribe first-invalid focus after submit."
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "WAI-ARIA APG Alert Pattern",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/patterns/alert/",
+      "released_version_or_commit": "ARIA APG rolling pattern",
+      "locator": "About This Pattern; WAI-ARIA Roles, States, and Properties",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Dynamic alerts announce important messages without interrupting; they must not affect keyboard focus, should not disappear too quickly, and frequent interruptions can harm usability.",
+      "applicability": "Do not move focus on individual async replies; avoid transient alerts and uncontrolled per-field announcement bursts.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked alert guidance: alerts must not affect keyboard focus, should not disappear too quickly, and frequent interruptions inhibit usability."
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "WCAG 2.2 Understanding SC 2.4.3: Focus Order",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html",
+      "released_version_or_commit": "WCAG 2.2; rolling explanatory page",
+      "locator": "SC 2.4.3, Intent, focus order examples",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "If sequential navigation affects meaning or operation, focus order must preserve meaning and operability. It need not be identical to visual layout.",
+      "applicability": "Keep stable tab order and meaningful summary links as errors/status are inserted, including under reflow.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked focus-order criterion: sequential focus order must preserve meaning and operability; it need not mirror visual order."
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "WCAG 2.2 Understanding SC 1.4.10: Reflow",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "released_version_or_commit": "WCAG 2.2; rolling explanatory page",
+      "locator": "SC 1.4.10; Adjusting content into a single column; Resize Text overlap; Focus Not Obscured overlap",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Typical reading content should reflow to a 320 CSS pixel viewport and vertical reading; the page notes 200% text enlargement under SC 1.4.4 and exceptions for content whose meaning/function needs two-dimensional layout.",
+      "applicability": "Error summary, labels, messages, and field groups must wrap in narrow and zoomed layouts; target form content is ordinary service text, not an identified exception.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked reflow conditions: ordinary vertical content at 320 CSS pixels, with exceptions for content requiring two-dimensional layout. 200% text enlargement is a useful separate proposed check, not the reflow threshold itself."
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "W3C Internationalization: Structural markup and right-to-left text in HTML",
+      "exact_url": "https://www.w3.org/International/questions/qa-html-dir",
+      "released_version_or_commit": "W3C Internationalization guidance; rolling page",
+      "locator": "Document direction; dir attribute; dynamically inserted and user-provided text",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Declare overall direction using dir; use dir=auto for forms and inserted/user text when direction is unknown.",
+      "applicability": "Use direction-aware structure and test bidirectional layout. This source says nothing about translation quality or compatibility with specific assistive technologies.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked direction guidance: set base direction in markup; dir=auto uses the first strong character and has corner cases. Logical CSS properties are recommended. This does not establish translation or AT compatibility."
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "RFC 9110: HTTP Semantics",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "released_version_or_commit": "RFC 9110, June 2022",
+      "locator": "§13.1.1 If-Match; §13.2.2 evaluation of preconditions; §15.5.13 412 Precondition Failed",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "If-Match is evaluated with strong entity-tag comparison and is commonly used on state-changing requests to prevent lost updates. A false condition means the method is not performed and may produce 412; a server may return success if it can determine the same change already succeeded.",
+      "applicability": "Use a canonical entity version/ETag on save. Treat 412 as conflict requiring refresh/review while preserving local dirty text. RFC does not specify the portal's product conflict UI or idempotency design.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked RFC 9110 §§13.1.1, 13.2.2, 15.5.13: If-Match uses strong comparison; false precondition means the method is not performed and may yield 412; success is permitted where the same state-changing request is known to have already succeeded."
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "React Aria Forms guide",
+      "exact_url": "https://react-aria.adobe.com/forms",
+      "released_version_or_commit": "Current rolling documentation; no exact software version or commit stated on page",
+      "locator": "Validation; Constraint validation; Server validation; Schema validation; Localization; Form libraries",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Guide documents native constraints, custom/realtime validation, server field errors supplied through validationErrors, which clear after the user modifies the field. It says client checks are not a replacement for backend validation. Native behavior can prevent submit; aria behavior marks semantics without blocking submission.",
+      "applicability": "Maintained reference for field semantics and validation API. It does not document stale-request identity, multi-reviewer concurrency, save interruption reconciliation, multilingual testing, or a target-toolkit choice.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked current React Aria Forms guide: client validation is not a substitute for backend checks; server errors map by field and clear on field modification; the guide also documents native, custom, realtime, and committed-value timing. It does not specify stale-request correlation or multi-reviewer concurrency and names no exact package release on the page."
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "React Spectrum issue #6830: React 19 Actions + RAC Form automatic reset",
+      "exact_url": "https://github.com/adobe/react-spectrum/issues/6830",
+      "released_version_or_commit": "Issue reports RAC 1.3.1; opened 2024-08-05; closed by linked PR #8444",
+      "locator": "Issue description, expected/current behavior, version, linked PR",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct issue open",
+      "governing_condition_default_exception": "Reporter observed React 19 action-driven automatic reset restoring original default values and clearing server validationErrors after response; report includes four browsers and a reproduction link.",
+      "applicability": "Concrete failure path for framework reset occurring after asynchronous server error/state update; scope is React 19 Actions plus RAC 1.3.1, not all form libraries.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked report: React 19 Actions plus RAC 1.3.1; reporter described automatic reset restoring an earlier default value and clearing action-returned validation errors. The report is bounded failure history, not an independent reproduction in this review."
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "React Spectrum PR #8444: Support automatic reset after React 19 form actions",
+      "exact_url": "https://github.com/adobe/react-spectrum/pull/8444",
+      "released_version_or_commit": "Merged 2025-07-07; commit effce79 (abbreviated ID shown on PR)",
+      "locator": "Merge header; maintainer notes on reset value and action validation errors; files changed",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct pull-request open",
+      "governing_condition_default_exception": "Fix synchronizes component internal state with the current defaultValue at reset and avoids clearing action-returned errors after framework automatic reset. Notes best-effort ignore of programmatic reset outside a user event because React provides no distinction.",
+      "applicability": "Fix history informs lifecycle regression tests and warns reset event classification is conditional; do not assume the fix resolves unrelated race or remote-conflict behavior.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked PR #8444: merged July 7, 2025, commit effce79; it updates state to the current defaultValue and preserves action errors after React automatic reset. Maintainer notes describe programmatic-reset handling as best effort."
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "React Spectrum issue #6983: Native validation doesn't dismiss errors as user corrects them",
+      "exact_url": "https://github.com/adobe/react-spectrum/issues/6983",
+      "released_version_or_commit": "Open at retrieval; opened 2024-08-30; reported version field says latest, not pinned",
+      "locator": "Current Behavior; Possible Solution; reproduction and browser fields; status",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct issue open",
+      "governing_condition_default_exception": "Reporter says native-mode error text does not update/clear until blur after correction, in Firefox/Chrome/Safari. This is a user report with unpinned release, not independently reproduced.",
+      "applicability": "Test correction/update timing explicitly; cite only as an open reported edge, not as proven behavior of a specific current release.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked issue #6983: still open, version field says “latest” rather than a pinned release; reporter describes an error clearing/updating only on blur. Maintainer discussion says blur behavior is intentional for native mode. Treat this as a reported, unpinned edge, not verified current behavior."
+      }
+    },
+    {
+      "source_id": "S14",
+      "title": "GOV.UK Design System Error summary",
+      "exact_url": "https://design-system.service.gov.uk/components/error-summary/",
+      "released_version_or_commit": "Current page history records GOV.UK Frontend v6.2.0 (June 2026); v4.4.0 history entry dated November 2022",
+      "locator": "How it works; linking from summary; where to put summary; recent changes; v4.4.0 entry",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Always show summary with validation errors; on that error state, focus the summary, link each error to its field, and use same wording in summary and inline message. v4.4.0 moved role=alert inward and removed aria-labelledby after a JAWS issue.",
+      "applicability": "Useful alternative for find-all and explicit-submit recovery. Do not apply automatic summary focus to each late asynchronous result; keep current focus during background changes.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked maintained error-summary guidance and history: focus the summary, link each error to its answer, and match inline wording; v4.4.0 history records a JAWS reading issue, and the page history records Frontend v6.2.0 in June 2026."
+      }
+    },
+    {
+      "source_id": "S15",
+      "title": "GOV.UK Design System Error message",
+      "exact_url": "https://design-system.service.gov.uk/components/error-message/",
+      "released_version_or_commit": "Current rolling documentation; paired design system page records Frontend v6.2.0 (June 2026)",
+      "locator": "When to use/not use; How it works; multilingual prefix example",
+      "access_utc": "2026-10-12T04:19:44Z (direct-open batch start)",
+      "observed_operation": "web search and direct page open",
+      "governing_condition_default_exception": "Put text next to the question, programmatically associate it, preserve passing and failing values. Do not use an input-error pattern for eligibility, permission, service-capacity, or other service-side problems; the page gives a Welsh hidden-prefix example.",
+      "applicability": "Preserves user's explanation and separates form errors from service errors. The sample prefix is not evidence of translation quality or screen-reader compatibility.",
+      "critic_recheck": {
+        "access_window_utc": {
+          "start_utc": "2026-10-12T04:30:48Z",
+          "end_utc": "2026-10-12T04:33:59Z",
+          "note": "Reviewer direct-open/find batch window; the browser did not expose a per-page retrieval timestamp."
+        },
+        "observed_operation": "Direct page open and targeted find/open of the cited locator; primary source independently checked in critic stage.",
+        "review_note": "Rechecked error-message scope: use next to a field for validation errors and preserve entered values; do not use this input-error component to communicate ineligibility, permission, capacity, or another service-side problem. No translation-quality or AT-compatibility claim is adopted."
+      }
+    }
+  ]
+}

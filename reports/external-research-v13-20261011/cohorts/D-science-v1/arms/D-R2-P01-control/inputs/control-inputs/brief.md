@@ -1,0 +1,11 @@
+# D-P05 — Software planning brief
+
+An internal guidance library needs a search-results and citation component for documents that change over time. Staff search for procedures, open a matching passage, and paste a reference into a work note. Documents can have several editions, section headings can move, and access permissions can differ between teams. Research how to provide useful retrieval and durable references while making the currency and visibility of a result clear.
+
+We want a planning recommendation grounded in primary evidence, maintained implementations, and relevant failure history. It should compare lexical retrieval, semantic or hybrid options where applicable, and alternative passage-identity strategies. No search engine, embedding service, or document platform is selected. Discover mechanisms rather than assuming a popular product covers authorization, versioning, and citation behavior together.
+
+A pasted reference should identify the passage the user actually saw, and opening it later should distinguish that edition from a newer policy. Search must not reveal restricted titles, snippets, or cached passages after permission changes. An updated document should eventually become searchable, with a defined state while an index is rebuilding or a prior edition remains available. Users also need a reasonable path when the cited passage has been removed.
+
+Do not invent policy authority from a search ranking, use live-document URLs alone as immutable citations, upload private documents to an external service, or promise that removing a search hit revokes copies already exported. Explain indexing and permission-invalidation trade-offs and needed owner boundaries. A small synthetic corpus can support executed research checks, but keep future authorization testing, real-corpus relevance measurement, and organizational policy decisions explicitly proposed.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

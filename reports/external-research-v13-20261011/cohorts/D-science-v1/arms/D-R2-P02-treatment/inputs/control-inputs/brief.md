@@ -1,0 +1,11 @@
+# D-P06 — Software planning brief
+
+A local notes application will support third-party rich-preview extensions. When a note contains an unfamiliar embedded file or custom block, an extension may produce a preview and searchable text. Research a preview-host component that keeps ordinary editing usable while handling untrusted extension code, malformed inputs, cache invalidation, and installation changes. We need an evidence-backed plan and alternatives, not a working plugin marketplace.
+
+An extension must not gain access to unrelated notebooks simply because it can render one attachment. Users should know when a preview is stale, failed, or produced by a different extension version. Extracted text needs provenance so search can distinguish a preview-derived representation from the original note content. The host should recover from a stuck renderer and clean up disposable work without deleting shared or still-needed artifacts.
+
+Discover relevant primary runtime, process, storage, and extension-interface documentation, repository paths and tests, and useful public regression history. Compare isolation and rendering approaches, including declarative output versus executable embedded content where relevant. Investigate permission scope, resource budgets, nested workers, and host-platform limitations rather than trusting an isolation label.
+
+Do not grant unrestricted notebook access, execute returned markup with ambient host privileges, infer safe cleanup only from a cache pathname, or silently treat extracted text as user-authored content. Avoid preselecting a runtime or extension framework. Include behavior for disabled or upgraded extensions and for opening a note when its renderer is unavailable. Any executed checks should use synthetic inputs or disposable public examples; proposed adversarial, integration, and cross-platform tests must remain clearly labeled.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

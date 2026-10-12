@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P03-control-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P03-control-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P03-control-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P03-control-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P03-control-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "The exact brief path is still absent on recheck. After three confirmations of this same blocker, I marked the thread Goal **blocked**.\n\nThe active receipt and blocker record are saved, but the required research outputs and `native-goal-terminal.json` are not: producing them without the brief would violate the assignment. Restore `inputs/brief.md` at its required path to resume.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P03-control-investigator-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:e96aec45-edf6-4a95-b9fc-a1461fa1dd06",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "The exact brief path is still absent on recheck. After three confirmations of this same blocker, I marked the thread Goal **blocked**.\n\nThe active receipt and blocker record are saved, but the required research outputs and `native-goal-terminal.json` are not: producing them without the brief would violate the assignment. Restore `inputs/brief.md` at its required path to resume.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P03-control-investigator-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:e96aec45-edf6-4a95-b9fc-a1461fa1dd06",
+  "waitTimedOut": false
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "er13.route_fork_source_pins.v1",
+  "source_files": [
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/helpers/er12-screen-v1/prepare.py",
+      "sha256": "cb5d90075a1899c4f44d7757b56022be51fccaf9979990f3507a2bf179e2686f"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "787b7da3f932274538395181e58ce8a69550658e8ac6287a4ea4d4f71c3cc5de"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/invocation-clarification-v1/helper-pins.json",
+      "sha256": "5342164fe4857e52d095d4dfa4a0583b18a8d060a6fdd6f6f40669d438a09653"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "sha256": "41a6b18fcbc24be99d25ca5313bbbf4ccfb0afe5247fa30054bbb1d20fe70b88"
+    },
+    {
+      "relative_path": "mechanics/dispatch-v1/admitted/D-R2-P02-control/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "sha256": "533059a340f9e6392511686cc01bf5b76b68c6b9ae52a209d4dcd3c128c17fa9"
+    },
+    {
+      "relative_path": "helpers/prospective-capture-v1/MANIFEST.json",
+      "sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24"
+    },
+    {
+      "relative_path": "helpers/prospective-capture-v1/README.md",
+      "sha256": "83009cfb2f12d465a6c3099963e384cdc1818dd609c0e2dee85d803fb5a61a25"
+    },
+    {
+      "relative_path": "helpers/prospective-capture-v1/activation-template.js",
+      "sha256": "e4c4b1e96308cee17a548a03ed507a3aedd2249c364d83c8b2c6c300bac6f412"
+    },
+    {
+      "relative_path": "helpers/prospective-capture-v1/captureSpec-shim.js",
+      "sha256": "5e22bd87a1f04cad97a936eb1ce99c2062321f6ff6c6f8f2f45ee02ceab31ac9"
+    },
+    {
+      "relative_path": "helpers/prospective-capture-v1/install.py",
+      "sha256": "d462daa854097de524f019c33a488bc96f9b087e3992ab77fd5b7bf20a45cc75"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/MANIFEST.json",
+      "sha256": "c019a4f7fc581b000d309de87a1625476b7a404e1ed4642e296a9f48ed7e092a"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/README.md",
+      "sha256": "60c6ba6dd555205cf2a38c126c6f3233cc2bcdf2a8db4d1151aabf33c59387c1"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/captureSpec-shim.js",
+      "sha256": "fc189a2985d97d67cc51c5ad8c609cfb8a3ec878115602e7766daa9b0303cb75"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/install.py",
+      "sha256": "d15df33b07830dd4697bc2eb9d3ced96b6c49b3461b03d788e84bb20f4ecc7ab"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/runtime-check.py",
+      "sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c"
+    },
+    {
+      "relative_path": "helpers/prospective-terminal-capture-v1/terminal-template.js",
+      "sha256": "69af256fec0d1a8a720da70a611d1edc65ad16fbb27178f752a525cc75bb7439"
+    },
+    {
+      "relative_path": "helpers/c-successor-materializer-v1/materialize.py",
+      "sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c"
+    },
+    {
+      "relative_path": "helpers/c-successor-materializer-v1/bundle-manifest.json",
+      "sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98"
+    }
+  ],
+  "actual_old_config_sha256": "20ef6adf158178e437121bba65822c46c3242e927a4f607c70e3d3ff824b417e",
+  "actual_run_init_sha256": "40f526f258bb9998db2e2b6fe44e8ece93e660d6016718d4b1ecb393032f844f"
+}

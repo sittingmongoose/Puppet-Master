@@ -1,0 +1,34 @@
+{
+  "run_id": "D-R2-P01-treatment",
+  "stage": "critic-breadth",
+  "source_id_policy": "S10 and S11 retain their investigator source-map identities and exact URLs; no source ID is rebound. The other S01-S18 records remain navigable through the investigator source-map and INDEX.md.",
+  "sources": [
+    {
+      "id": "S10",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation published 2017-02-23",
+      "locator": "§4.2.4 Text Quote Selector; §4.2.5 Text Position Selector; §4.3 States and §4.3.1 Time State",
+      "access_utc": "2026-10-12T04:27:25Z",
+      "observed_operation": "Opened the official W3C URL and directly opened the cited locator sections via web. The web tool did not expose individual request timestamps; this source was read in the 2026-10-12T04:26:13Z–04:27:25Z observed window.",
+      "governing_condition_default_exception": "TextQuoteSelector stores normalized selected text and may still match multiple passages; the specification warns that copying restricted text into an annotation may be dangerous. TextPositionSelector avoids copying quote text but is brittle under edits/transcluded content. State describes the intended source version or format and must be processed before selectors.",
+      "applicability": "Supports recipient-safe quote handling and binding a passage selector to the intended source representation. It does not provide application authorization, retention, or source authenticity."
+    },
+    {
+      "id": "S11",
+      "title": "Microsoft Graph driveItemVersion resource",
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/driveitemversion?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph v1.0; page last updated 2025-10-22",
+      "locator": "Instance attributes, @microsoft.graph.downloadUrl; lines 52–58 in the accessed rendering",
+      "access_utc": "2026-10-12T04:27:25Z",
+      "observed_operation": "Opened the official Microsoft Learn URL and directly opened the downloadUrl locator via web. The web tool did not expose individual request timestamps; this source was read in the 2026-10-12T04:26:13Z–04:27:25Z observed window.",
+      "governing_condition_default_exception": "A specific version has an ID and can be retrieved, but its download URL requires no authentication, is short-lived (up to one hour), cannot be cached, and may remain usable briefly after a file permission is removed.",
+      "applicability": "Supports the draft’s warning not to use a temporary download URL as a durable, revocable citation. It illustrates one provider’s behavior and is not a universal version or authorization guarantee."
+    }
+  ],
+  "observed_access_window_utc": {
+    "start": "2026-10-12T04:26:13Z",
+    "end": "2026-10-12T04:27:25Z",
+    "precision_note": "Clock calls bracketed the web reads; the web tool did not expose an individual request timestamp."
+  }
+}

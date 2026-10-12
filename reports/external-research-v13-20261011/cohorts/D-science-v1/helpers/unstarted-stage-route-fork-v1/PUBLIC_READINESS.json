@@ -1,0 +1,35 @@
+{
+  "scope": "Exact original seven-file helper+public readiness; portable syntax/member checks only",
+  "manifest_sha256": "fdc59b0b82e93ca1afe768124ff4e27c4d8ae81d290e057dd7bca3a8edba475d",
+  "raw_original_manifest_sha256": "d41d620fd80074205897e80652239ee70c1e2cb0335d5d709048cccff5fe369b",
+  "public_amendment_sha256": "b31b2548266d41afca38e4199c9c79a79bcab3227048454d087c891c34fd792d",
+  "original_MOCK_tests": 26,
+  "original_tests_rerun": false,
+  "publication_checks": [
+    "Python syntax route_fork.py",
+    "Python syntax tests.py",
+    "JS syntax dispatcher.js",
+    "Exact public memberhash PINS.json",
+    "Exact public memberhash README.md",
+    "Exact public memberhash dispatcher.js",
+    "Exact public memberhash route_fork.py",
+    "Exact public memberhash tests.py"
+  ],
+  "native_calls": 0,
+  "rebindings": [
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/route_fork.py",
+      "old_private_amendment_pin": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+      "public_amendment_pin": "b31b2548266d41afca38e4199c9c79a79bcab3227048454d087c891c34fd792d",
+      "occurrences": 1
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/dispatcher.js",
+      "old_private_amendment_pin": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+      "public_amendment_pin": "b31b2548266d41afca38e4199c9c79a79bcab3227048454d087c891c34fd792d",
+      "occurrences": 1
+    }
+  ],
+  "algorithm_science_guard_clocks_changed": false,
+  "runnable_limit": "Specialized original one unstarted stage; archived PINS retains original dependency bytes/locators. Public aliases/runtime placeholders require authorized private mapping and exact dependency closure; not a fresh authorization/replay of used stage."
+}

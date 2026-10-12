@@ -1,0 +1,90 @@
+{
+  "prepared_at_utc": "2026-10-12T04:29:50.044Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-12T04:59:50.044Z",
+  "whole_deadline_utc": "2026-10-12T05:17:05.252Z",
+  "stage_budget_s": 1800,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P01-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/inputs/brief.md",
+      "sha256": "51b4c5cfca3e449dc7a0a6919054962715da07804dfc8312bd0bf10b5bd3bad1",
+      "bytes": 2404
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/critic/assignment.md",
+      "sha256": "71f488122ad516bf4fc6ad42e9cbefa1da1de6846cb390cfb5533c81dd0c5747",
+      "bytes": 11335
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/critic/input-map.json",
+      "sha256": "58bdb84b52e15ecce998dc844f29b8b5853b188582a4a6f79a6a73cb3b64fe21",
+      "bytes": 2049
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "ffbd2cdbec3ff329d76b3c8b886b32a6fe6e9e46bed37b0acdb295537dc2ba81",
+      "bytes": 8870
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/draft.md",
+      "sha256": "49d0da43c663783e4002f19f6b37d25c064045714a587962e8c228a906b25b9d",
+      "bytes": 29535
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "b21800d65fddf26170bb7c3fb9505fa68253429bb83600489ff5d3de9a0731ca",
+      "bytes": 14742
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "c28298e96002946015ec68ccd6834f18b5fd1878c5811d98ebdd9626c7a71666",
+      "bytes": 2234
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "49b844ab5420fca6f0743748d5adb20472e5a815f33d1cb1c2568861a6406fa7",
+      "bytes": 476
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/sources/README.md",
+      "sha256": "831f0e18dcf54020cc8084d26aab0edaf12dec76c6dd57993173e745f8e46f5d",
+      "bytes": 4814
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 critic stage, run D-R1-P01-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": "Explicitly challenge consequential negative/default/limit claims and proposed criticism that removes a capability or forces an architectural choice using governing primary context and release/version exceptions, where these can change the decision. Retain full ordinary review elsewhere. Record uncertainty honestly; undetermined cannot replace feasible required research. Do not refresh every source merely to extend the audit trail, and do not weaken material review coverage.\n",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/investigator/sources/README.md"
+      ]
+    }
+  ],
+  "request_sha256": "ae2f710a3fd2d48de4f8fc85df4bedd9651fbfafe5ef7cf22ebf65a1e322f359"
+}

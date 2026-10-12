@@ -1,0 +1,170 @@
+{
+  "run_id": "D-R2-P02-treatment",
+  "stage": "critic-truth",
+  "input_basis": "Released investigator package and the required brief; primary documentation directly reviewed for consequential claims. No parent history or unlisted case inputs used.",
+  "source_ids_are_immutable": true,
+  "source_access_timestamp_method": "Batch UTC timestamps; individual browser fetch seconds were not exposed. Reused investigator records preserve their original fields and add separate review observations.",
+  "sources": [
+    {
+      "id": "VSC-WEBVIEW",
+      "title": "Webview API",
+      "url": "https://code.visualstudio.com/api/extension-guides/webview",
+      "version_or_commit": "Current unversioned VS Code API documentation; no release or commit is declared.",
+      "locator": "Security: Limit capabilities, Content security policy, Only load content over https, Sanitize all user input.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official page search excerpt and opened page inspected; security section lines 924-980 in captured result.",
+      "governing_condition_default_exception": "Scripts should be off when unnecessary; localResourceRoots may be empty; CSP is restrictive by example; input sanitization is required but not sufficient alone.",
+      "applicability": "Guides renderer hardening and shows why extension markup cannot be trusted or granted host bridge access.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "ELECTRON-UTILITY",
+      "title": "utilityProcess API | Electron",
+      "url": "https://www.electronjs.org/docs/latest/api/utility-process",
+      "version_or_commit": "Latest unversioned Electron docs retrieved 2026-10-12; no release number on page.",
+      "locator": "utilityProcess.fork options; child.kill; exit events; default env/session and macOS flags.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official API page opened; utility process capabilities and lifecycle inspected.",
+      "governing_condition_default_exception": "Child runs Node with message ports; env defaults to process.env, stdio to inherit; macOS unsigned-library flag defaults false; kill is graceful SIGTERM on POSIX.",
+      "applicability": "Useful worker/supervision reference. Strip ambient env, do not inherit unnecessary resources, and don't interpret the API as sandboxing by itself.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WASMTIME-FS-ADVISORY",
+      "title": "Filesystem sandbox escape when paths or symlinks contain trailing slashes",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-vqjp-4c8c-hfgg",
+      "version_or_commit": "Advisory GHSA-vqjp-4c8c-hfgg, published 2026-08-20; patch versions 24.0.13, 36.0.14, 46.0.3, 47.0.4; 48.0.0+ reported unaffected.",
+      "locator": "Affected/patched versions, impact, Linux openat2 condition, patch/workaround.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official GitHub security advisory opened; affected versions and impact read.",
+      "governing_condition_default_exception": "Trailing slash/symlink paths could escape WASI filesystem sandbox on affected releases; specific issue not present with Linux kernel >5.6 using openat2, while macOS/older Linux are affected.",
+      "applicability": "Requires patch/version monitoring and symlink/trailing-slash cross-platform regression tests; do not infer that capability APIs eliminate path bugs.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WASMTIME-RES-ADVISORY",
+      "title": "Guest-controlled resource exhaustion in WASI implementations",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-852m-cvvp-9p4w",
+      "version_or_commit": "Advisory published 2026-02-24; patch releases include 24.0.6, 36.0.6, 40.0.4, 41.0.4, 42.0.0.",
+      "locator": "Impact; WASIp1/WASIp2; host memory, handles, I/O buffers; default limit behavior by release.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official advisory opened; affected versions, host API pathways, patch caveat read.",
+      "governing_condition_default_exception": "Guest-controlled host allocations/buffering could exhaust memory or crash; older patched stable branches kept limits very large by default; 42.0.0+ defaults were tuned to avoid the reported issue.",
+      "applicability": "Bound host-call data, buffers, handles, output, and disk separately; runtime patch alone may not select safe embedder quotas.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WASMTIME-FUEL-ADVISORY",
+      "title": "WASI preview 0 poll_oneoff circumvents fuel consumption",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version_or_commit": "Advisory published 2026-10-02; referenced by Wasmtime v49.0.2 release.",
+      "locator": "Advisory title and v49.0.2 release fix list; advisory body was not fully parsed by browser.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official release and advisory index search results read; linked advisory body open returned no parsed lines.",
+      "governing_condition_default_exception": "WASI poll_oneoff could circumvent guest fuel consumption; Wasmtime v49.0.2 lists the fix.",
+      "applicability": "Fuel alone is not proof of bounded execution through every imported/host path; add an external wall-clock watchdog and regression coverage.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WASMTIME-RELEASE",
+      "title": "Wasmtime Releases: v49.0.2",
+      "url": "https://github.com/bytecodealliance/wasmtime/releases/tag/v49.0.2",
+      "version_or_commit": "v49.0.2 released 2026-10-02; verified commit prefix 3c8a3e7.",
+      "locator": "Release 49.0.2 and linked fixes, especially GHSA-j366-h8gg-77pm and GHSA-gqmc-89g8-p25r.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official release page opened and release fixes reviewed.",
+      "governing_condition_default_exception": "Release includes security fixes; later patch releases may supersede it. Do not assume current advisories remain exhausted.",
+      "applicability": "Use as a concrete pin/history example only; any implementation should select and continuously update a reviewed, supported release.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "SQLITE-FTS",
+      "title": "SQLite FTS5 Extension",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_commit": "Current SQLite documentation accessed 2026-10-12; contentless-delete feature noted as available since SQLite 3.43.0.",
+      "locator": "External Content and Contentless Tables; external content pitfalls; synchronization triggers and integrity-check.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official SQLite reference opened; source-table synchronization requirements read.",
+      "governing_condition_default_exception": "External-content FTS rows must be kept synchronized by the application; stale index/content mismatch yields unintuitive results. Triggers do not backfill existing rows.",
+      "applicability": "Use separate preview artifact/source-type rows and transactional index synchronization; test rebuild and provenance joins.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "APPLE-PROCESS",
+      "title": "Process | Foundation",
+      "url": "https://developer.apple.com/documentation/foundation/process?changes=_8",
+      "version_or_commit": "Current Apple Foundation documentation accessed 2026-10-12.",
+      "locator": "Sandbox note on child processes and XPC alternatives.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official search excerpt read; page open requires JavaScript.",
+      "governing_condition_default_exception": "A child launched by Process inside a sandboxed app inherits the parent's sandbox; different helper entitlements require XPC services.",
+      "applicability": "A plain spawned child is not a per-extension permission sandbox on macOS.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "APPLE-XPC",
+      "title": "XPC | Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/XPC?language=_11",
+      "version_or_commit": "Current Apple XPC documentation accessed 2026-10-12.",
+      "locator": "Overview and service type table; privilege isolation, process lifetime, on-demand launch/restart.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official Apple developer search excerpt read.",
+      "governing_condition_default_exception": "XPC services are separate processes; an XPC service per client is tied to the client lifetime. Different service types carry different user/root context.",
+      "applicability": "Potential macOS containment implementation; configure minimal service entitlements and narrow IPC rather than passing notebook access.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WIN-JOB",
+      "title": "Job Objects - Win32 apps",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_or_commit": "Microsoft Learn documentation retrieved 2026-10-12.",
+      "locator": "Managing processes in jobs, job limits, process-tree limitations and breakaway flags.",
+      "accessed_utc": "2026-10-12T04:24:12Z",
+      "observed_operation": "Official page opened; process inheritance, limits, and tree management sections read.",
+      "governing_condition_default_exception": "Children created with CreateProcess join by default, but breakaway flags/settings and some process creation paths bypass the job. Nested jobs require Windows 8+.",
+      "applicability": "Use for process-tree CPU/memory/time/termination only with breakaway disabled or explicitly handled and tested.",
+      "review_observation": {
+        "review_access_utc": "2026-10-12T04:38:13Z",
+        "observed_operation": "Official primary page opened/inspected in the critic review; the entry’s original investigator evidence fields are preserved verbatim."
+      }
+    },
+    {
+      "id": "WASMTIME-NOSTDIO",
+      "title": "Excessive allocated memory on the host when guests don't have stdio",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-gqmc-89g8-p25r",
+      "version_or_commit": "GHSA-gqmc-89g8-p25r, published 2026-10-02; patched in Wasmtime 36.0.17, 48.0.4, 49.0.2.",
+      "locator": "Affected versions and patches; Impact; workaround; WASI Preview 2 SinkOutputStream, write-zeroes and stdout/stderr configuration (captured page lines 139–158).",
+      "accessed_utc": "2026-10-12T04:40:47Z",
+      "observed_operation": "Official GitHub security advisory opened; full affected ranges, condition, patch list and bounded OutputStream workaround inspected.",
+      "governing_condition_default_exception": "The wasmtime-wasi WASI Preview 2 SinkOutputStream used by default when stdout/stderr are unconfigured failed to limit a write-zeroes allocation. Affected: <36.0.17, 37.0.0–48.0.3, 49.0.0–49.0.1. Patched: 36.0.17, 48.0.4, 49.0.2. Configured stdout/stderr streams typically have limits; custom OutputStream with bounded check_write is a workaround.",
+      "applicability": "Only applies to embeddings without configured stdout/stderr using the affected wasmtime-wasi paths; require bounded output streams and test this default explicitly if Wasmtime/WASIp2 is selected."
+    }
+  ]
+}

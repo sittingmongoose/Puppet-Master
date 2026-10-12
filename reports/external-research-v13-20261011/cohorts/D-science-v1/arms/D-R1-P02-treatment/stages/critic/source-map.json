@@ -1,0 +1,254 @@
+{
+  "schema": "er13.source-map.v1",
+  "stage": "critic",
+  "access_timestamp_note": "Primary documentation was reopened as a batch at the recorded UTC access time. The web tool does not expose per-page request timestamps. Search-result captures are timestamped at the tool-call time. For the changed libvips issue state, this source map uses a new ID and preserves the investigator's earlier LIBVIPS-ISSUE-5195 record without rebinding it.",
+  "sources": [
+    {
+      "id": "STD-PNG3",
+      "title": "Portable Network Graphics Specification, Third Edition",
+      "url": "https://www.w3.org/TR/png-3/",
+      "release_version_or_commit": "W3C Recommendation, 2025-06-24",
+      "locator": "Sections 4.3, 6.2, 11.3.2.1-11.3.2.6, 13.4-13.7",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Defines precedence for understood color chunks as cICP, iCCP, sRGB, then cHRM plus gAMA; states untagged RGB is uncalibrated device-dependent color; alpha is full-range opacity and is not gamma-corrected; lists text, time, Exif, and animation chunks.",
+      "governing_condition_default_exception": "Color precedence applies to supported signals understood by a decoder. The spec says standalone viewers may choose a likely default for unknown gamma and allow the user to adjust it.",
+      "applicability": "PNG color interpretation, output signal, alpha handling, privacy chunk allowlist, and proposed conflict fixtures."
+    },
+    {
+      "id": "FORMAT-WEBP-RIFF",
+      "title": "WebP Container Specification",
+      "url": "https://developers.google.com/speed/webp/docs/riff_container",
+      "release_version_or_commit": "Current Google for Developers specification; no numbered release shown",
+      "locator": "RIFF structure; color-profile chunk; metadata, unknown chunks, animation, and file termination",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "WebP can carry ICCP, EXIF, XMP, alpha, animation, and unknown chunks; ICCP must precede image data and sRGB should be assumed when ICCP is absent; readers may ignore extra metadata chunks.",
+      "governing_condition_default_exception": "Rules apply to the extended RIFF container and its feature flags; simple and extended WebP files have different feature envelopes.",
+      "applicability": "Format-specific fallback, animation policy, fresh output construction, and byte-level metadata audit."
+    },
+    {
+      "id": "STD-ICC-2022",
+      "title": "ICC.1 v4 Specification index",
+      "url": "https://www.color.org/icc-1_specification/",
+      "release_version_or_commit": "ICC.1:2022, profile version 4.4.0.0; published May 2022",
+      "locator": "ICC.1 v4 overview and version table, including CICP and metadata tags",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "The ICC page identifies v4.4 and lists CICP and metadata-related changes.",
+      "governing_condition_default_exception": "The index identifies the specification but does not select a product CMM, profile fallback, rendering intent, or supported transform.",
+      "applicability": "Pin the profile standard used; record source/target profiles, CMM, intent, and compatibility checks."
+    },
+    {
+      "id": "LIBVIPS-THUMBNAIL-817",
+      "title": "libvips vips_thumbnail API documentation",
+      "url": "https://www.libvips.org/API/8.17/ctor.Image.thumbnail.html",
+      "release_version_or_commit": "API documentation version 8.17; not the current 8.18.7 release",
+      "locator": "vips_thumbnail description and arguments: orientation, size, crop, linear, profiles, intent, fail_on",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "thumbnail combines loading and resize; it interprets orientation tags by default, can resize with crop/size controls, normally shrinks in sRGB, offers a linear option, supports input/output profiles and intent, defaults fail_on to permissive, and uses the first frame/page by default.",
+      "governing_condition_default_exception": "Behavior depends on loader and format. Linear mode can be slower because JPEG shrink-on-load cannot be used. API docs are for 8.17; exact version/API path needs regression coverage.",
+      "applicability": "Shows a backend can combine shrink-on-load and orientation behavior; supports comparing optimized and reference paths rather than enforcing full-resolution rotate-first."
+    },
+    {
+      "id": "LIBVIPS-CHECKLIST",
+      "title": "libvips programmer checklist",
+      "url": "https://www.libvips.org/API/current/developer-checklist.html",
+      "release_version_or_commit": "Rolling current documentation; page has no version number",
+      "locator": "Thumbnail versus resize, alpha premultiplication, progressive/interlaced images, sequential access",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Recommends thumbnail for format-specific shrink-on-load and lower memory; says thumbnail automatically premultiplies; gives an example where progressive JPEG requires full-image memory and defeats streaming.",
+      "governing_condition_default_exception": "Measurements are examples and depend on format, interlace state, loader and build.",
+      "applicability": "Compare optimization and resource behavior; isolate or separately limit progressive JPEG."
+    },
+    {
+      "id": "LIBVIPS-RELEASE-8187",
+      "title": "libvips release v8.18.7",
+      "url": "https://github.com/libvips/libvips/releases/tag/v8.18.7",
+      "release_version_or_commit": "v8.18.7, commit 24ad4d0; released 2026-09-26",
+      "locator": "Release entry; changes since 8.18.6",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "GitHub marks v8.18.7 as latest tagged release at review time; release predates the Oct 2 merge of PR #5235.",
+      "governing_condition_default_exception": "Release notes are not a complete behavioral proof, and downstream packages may differ.",
+      "applicability": "Version boundary for the historical fail_on report; verify the exact package/build selected by the owner."
+    },
+    {
+      "id": "LIBVIPS-ISSUE-1523",
+      "title": "libvips issue 1523: autorot and thumbnail_image interaction",
+      "url": "https://github.com/libvips/libvips/issues/1523",
+      "release_version_or_commit": "Reported 2020-01-12 against libvips 8.9.0; issue closed after fix 34fcd1f; maintainer says safe in 8.9.1",
+      "locator": "Issue description, maintainer comments on thumbnail rotation and close/fix history",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Reporter observed orientation differences between 8.8.4 and 8.9.0 when autorot and thumbnail_image were combined. Maintainer states thumbnail can autorotate at the end and reports the API combination fixed in 8.9.1.",
+      "governing_condition_default_exception": "Historical defect; current behavior is API/version-specific and the issue does not prove current backends share the same ordering.",
+      "applicability": "Supports one logical orientation owner and tests for transform combinations; contradicts a universal requirement to rotate the full image before shrink."
+    },
+    {
+      "id": "LIBVIPS-ISSUE-5195-RECHECK-20261012",
+      "title": "libvips issue 5195: fail_on ignored by thumbnail_buffer and thumbnail_source — status recheck",
+      "url": "https://github.com/libvips/libvips/issues/5195",
+      "release_version_or_commit": "Reported 2026-08-25 on libvips 8.18.5; closed as completed on 2026-10-02 by PR #5235; patch commit 6b5dcce",
+      "locator": "Issue reproduction/actual-result table, environment, and activity/status",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "The reported truncated JPEG was refused by file thumbnail with fail_on=error but accepted by thumbnail_buffer and thumbnail_source with the same argument; loader option_string=fail_on=error refused it. Issue now links a completed fix.",
+      "governing_condition_default_exception": "Reproduction was on 8.18.5 and issue history says behavior was in master before the fix; current tagged release/package inclusion is not established by the issue page alone.",
+      "applicability": "Keep an API/build-specific truncation regression. Do not describe the report as open or assume every post-issue build remains affected."
+    },
+    {
+      "id": "LIBVIPS-PR-5235",
+      "title": "libvips PR #5235: thumbnail passes missing fail_on argument to loaders",
+      "url": "https://github.com/libvips/libvips/pull/5235",
+      "release_version_or_commit": "Merged into libvips master on 2026-10-02; commit 6b5dcce",
+      "locator": "PR merge status and merge commit",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "PR is marked merged and resolves issue #5195 by forwarding fail_on to the buffer/source loaders.",
+      "governing_condition_default_exception": "PR merge into master is not evidence that a particular released binary or downstream package contains the fix.",
+      "applicability": "Corrects issue status and narrows regression advice to pinned release/API coverage."
+    },
+    {
+      "id": "PILLOW-IMAGEOPS-123",
+      "title": "Pillow ImageOps documentation",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageOps.html",
+      "release_version_or_commit": "Pillow 12.3.0 stable documentation",
+      "locator": "exif_transpose; contain, cover, fit, pad and resize methods",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "exif_transpose applies a non-identity EXIF Orientation and removes the orientation data; contain/cover/fit have different geometry behavior.",
+      "governing_condition_default_exception": "ImageOps behavior and defaults are API-specific; exif_transpose has an explicit in_place option.",
+      "applicability": "Candidate explicit transform route and reference for output geometry tests."
+    },
+    {
+      "id": "PILLOW-IMAGECMS-123",
+      "title": "Pillow ImageCms documentation",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageCms.html",
+      "release_version_or_commit": "Pillow 12.3.0 stable documentation; LittleCMS integration",
+      "locator": "profileToProfile/buildTransform methods, supported mode/intent, default intent",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "ImageCms applies ICC transforms; the default intent constant is perceptual; invalid profiles or incompatible modes/intents can raise PyCMSError.",
+      "governing_condition_default_exception": "Supported transform direction and intent depend on source/target profiles and modes; defaults are not product choices.",
+      "applicability": "Candidate CMM interface; pin version and record explicit profile/intent policy."
+    },
+    {
+      "id": "PILLOW-SECURITY-123",
+      "title": "Pillow security handbook",
+      "url": "https://pillow.readthedocs.io/en/stable/handbook/security.html",
+      "release_version_or_commit": "Pillow 12.3.0 stable documentation",
+      "locator": "D-1 decompression bomb; D-2 CPU exhaustion; mitigation recommendations",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Documents pixel threshold warning/error behavior, large-legal-image CPU cost, and mitigations including format allowlists, treating warnings as errors, practical dimension/CPU limits, and OS/container memory caps.",
+      "governing_condition_default_exception": "Threshold values are configurable and installed defaults can vary; inspect the selected build.",
+      "applicability": "Resource policy for untrusted contributor images."
+    },
+    {
+      "id": "PILLOW-ORIENTATION-HISTORY",
+      "title": "Pillow issue 8554 and PR 8556 orientation history",
+      "url": "https://github.com/python-pillow/Pillow/issues/8554",
+      "release_version_or_commit": "Issue reported 2024-11-15 using Pillow 11.0.0; PR #8556 closed as completed 2025-03-29; exact first released version not captured here",
+      "locator": "CR2/TIFF reproducer, maintainer explanation of removing orientation after auto-transpose, linked PR #8556",
+      "access_utc": "2026-10-12T04:36:32Z",
+      "observed_operation": "An orientation-tagged CR2/TIFF path exposed disagreement between pixels and the visible EXIF tag; maintainers describe clearing the tag to prevent a second transpose; the report was fixed.",
+      "governing_condition_default_exception": "Historical format/decoder path, not prevalence evidence or proof every TIFF/RAW path behaves the same.",
+      "applicability": "Include TIFF/CR2-like orientation fixtures and check both rendered pixels and serialized metadata."
+    },
+    {
+      "id": "IMAGEMAGICK-OPTIONS",
+      "title": "ImageMagick command-line options",
+      "url": "https://imagemagick.org/command-line-options/",
+      "release_version_or_commit": "Rolling official documentation; no release version shown",
+      "locator": "-limit, -profile, -filter and -resize sections",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Exposes width, height, area, memory, map, disk, file, thread, throttle and time limits; pixel cache may spill from memory/map to disk; profile is an ordered operator and resize filter settings affect output.",
+      "governing_condition_default_exception": "Installed limits adjust with available resources; memory pressure alone may move work to disk rather than reject it.",
+      "applicability": "Alternative resource and color-operation approach; set disk and dimension limits as well as memory."
+    },
+    {
+      "id": "IMAGEMAGICK-SECURITY",
+      "title": "ImageMagick security policy",
+      "url": "https://imagemagick.org/security-policy/",
+      "release_version_or_commit": "Rolling official documentation; no release version shown",
+      "locator": "Policy model, coder/path and resource controls",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "The security policy is configuration-specific; generally last matching policy wins, with canonical-path denials additionally enforced.",
+      "governing_condition_default_exception": "Policy ordering may override earlier rules; runtime options do not establish the actual installed policy.",
+      "applicability": "Pin and review configuration if ImageMagick is selected."
+    },
+    {
+      "id": "RUST-IMAGE-02510",
+      "title": "Rust image crate decoder limits",
+      "url": "https://docs.rs/image/0.25.10/image/struct.Limits.html",
+      "release_version_or_commit": "image crate 0.25.10",
+      "locator": "Limits description and max_image_width, max_image_height, max_alloc fields",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Width and height caps are strict; max_alloc is non-strict by default and some decoders may ignore it; default max_alloc is 512 MiB.",
+      "governing_condition_default_exception": "A decoder must fail if it cannot guarantee an explicitly strict limit; support is decoder-specific.",
+      "applicability": "Rust-native option requires a per-decoder limit audit and an external process memory boundary."
+    },
+    {
+      "id": "RUST-IMAGE-ORIENTATION-02510",
+      "title": "Rust image crate orientation API",
+      "url": "https://docs.rs/image/0.25.10/image/metadata/enum.Orientation.html",
+      "release_version_or_commit": "image crate 0.25.10",
+      "locator": "Orientation variants and remove_from_exif_chunk",
+      "access_utc": "2026-10-12T04:40:27Z",
+      "observed_operation": "Represents the eight EXIF-compatible transforms; removing the orientation from the EXIF chunk sets NoTransforms and avoids a second transform by a later viewer.",
+      "governing_condition_default_exception": "Invalid EXIF returns None and leaves the chunk unchanged.",
+      "applicability": "Candidate orientation handling; invalid and mirrored cases still need decoder-specific tests."
+    },
+    {
+      "id": "RUST-IMAGE-DECODER-02510",
+      "title": "Rust image crate ImageDecoder metadata interface",
+      "url": "https://docs.rs/image/0.25.10/image/trait.ImageDecoder.html",
+      "release_version_or_commit": "image crate 0.25.10",
+      "locator": "Provided methods exif_metadata, icc_profile, iptc_metadata, xmp_metadata, orientation, and set_limits",
+      "access_utc": "2026-10-12T04:40:27Z",
+      "observed_operation": "The decoder trait exposes optional metadata and orientation methods; their base implementations return absent/default values and concrete decoder implementations determine actual format coverage.",
+      "governing_condition_default_exception": "A uniform trait does not guarantee that every format decoder implements every metadata method.",
+      "applicability": "Audit metadata and orientation support by concrete decoder and accepted format."
+    },
+    {
+      "id": "FORMAT-AVIF-1_2_0",
+      "title": "AV1 Image File Format specification",
+      "url": "https://aomediacodec.github.io/av1-avif/v1.2.0.html",
+      "release_version_or_commit": "AVIF v1.2.0",
+      "locator": "Sections 2.2 image item properties, 4.1 auxiliary images, 4.2.2 tone-map derived image, item references",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "AVIF can use auxiliary alpha/depth items and derived tone-map/gain-map items; the gain-map image should be hidden; properties and item relations affect the interpreted image.",
+      "governing_condition_default_exception": "AVIF is an ISO-BMFF item graph, not one raster plus flat tags; item support and interpretation depend on the parser and applicable HEIF/MIAF properties.",
+      "applicability": "If admitted, define primary/auxiliary/derived item handling and audit the output graph."
+    },
+    {
+      "id": "STD-CIPA-EXIF31",
+      "title": "CIPA standards index: Exif 3.1",
+      "url": "https://www.cipa.jp/e/std/std-sec.html",
+      "release_version_or_commit": "CIPA DC-008-Translation-2026, Exif 3.1; published 2026-01-30",
+      "locator": "Digital cameras, DC-008-Translation-2026 entry and revision note",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "Official index identifies the current Exif version and links the standard.",
+      "governing_condition_default_exception": "The index establishes version authority but not behavior of any decoder or exporter.",
+      "applicability": "Pin Exif serialization/tag semantics for implementation and privacy audit."
+    },
+    {
+      "id": "STD-CIPA-MPF",
+      "title": "CIPA standards index: Multi-Picture Format",
+      "url": "https://www.cipa.jp/e/std/std-sec.html",
+      "release_version_or_commit": "Index announces CIPA DC-007-Translation-2026 on 2026-08-19; detail card reports publication 2025-01-24 and history through 2025",
+      "locator": "Standards page announcement and DC-007 detail card",
+      "access_utc": "2026-10-12T04:36:16Z",
+      "observed_operation": "The index links a 2026 translation but the detail card retains 2025 publication/history text; the full linked 2026 standard was not opened.",
+      "governing_condition_default_exception": "Index metadata alone cannot establish exact current clauses or decoder/writer behavior.",
+      "applicability": "Preserve uncertainty; pin and inspect the actual standard before MPF/MPO support."
+    },
+    {
+      "id": "EXIFTOOL-FAQ",
+      "title": "ExifTool FAQ: duplicates and metadata deletion",
+      "url": "https://exiftool.org/faq.html",
+      "release_version_or_commit": "FAQ last revised 2026-01-04; ExifTool 13.58 documentation observed",
+      "locator": "FAQ sections on duplicate tags/GPS, FAQ 32 metadata deletion, color-space information",
+      "access_utc": "2026-10-12T04:36:32Z",
+      "observed_operation": "The FAQ says duplicate tags can be suppressed unless requested, GPS may be stored outside EXIF, RAW may require metadata for display, and deleting metadata may remove color-space information; it gives a JPEG example preserving ICC/color tags.",
+      "governing_condition_default_exception": "Metadata and color-preservation operations differ by file type; JPEG is comparatively suited to separation, while RAW may need metadata.",
+      "applicability": "Support bounded privacy claims, duplicate/namespace auditing, and preservation of output color interpretation."
+    }
+  ],
+  "state_recheck": {
+    "prior_id": "LIBVIPS-ISSUE-5195",
+    "new_id": "LIBVIPS-ISSUE-5195-RECHECK-20261012",
+    "reason": "The investigator's source record described the issue as open at 2026-10-12T04:20:46Z. Independent review at 2026-10-12T04:36:16Z found it closed by PR #5235 merged into master on 2026-10-02. The original ID is not rebound."
+  }
+}

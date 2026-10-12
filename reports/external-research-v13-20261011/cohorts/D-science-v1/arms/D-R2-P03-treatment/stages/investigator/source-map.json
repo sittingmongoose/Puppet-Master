@@ -1,0 +1,222 @@
+{
+  "run_id": "D-R2-P03-treatment",
+  "stage": "investigator",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/inputs/brief.md",
+  "discovery_independent_of_plan": true,
+  "plan_read_before_release": false,
+  "access_batches_utc": [
+    "2026-10-12T04:23:38Z",
+    "2026-10-12T04:23:44Z"
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Handling Update Conflicts — PowerSync",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+      "released_version_or_commit": "Rolling official docs; no release pin at URL. Captured 2026-10-12.",
+      "locator": "Handling Update Conflicts; upload queue and operations; lines 127-151",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read official documentation in browser.",
+      "governing_condition_default_exception": "Backend is application-defined; client mutations are ordered, must be sequentially drained and may repeat. Simplest handler is per-field LWW with delete-wins; custom logic may validate/reject. CRDTs can be stored as data but are not built-in operation semantics.",
+      "applicability": "Primary candidate for offline queue and backend-owned policy; transport behavior is not roster validation, authorization, approval, or publication."
+    },
+    {
+      "id": "S02",
+      "title": "Custom Conflict Resolution — PowerSync",
+      "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution",
+      "released_version_or_commit": "Rolling official docs; no release pin at URL. Captured 2026-10-12.",
+      "locator": "Sequence-number versioning §2 lines 389-391; field-level LWW §3 lines 451-453; server-side conflict recording §5 lines 661-699; change-level status tracking §6 lines 853-875",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read official documentation examples and conditions.",
+      "governing_condition_default_exception": "Clock-based checks can give false conflicts under clock skew; docs recommend server-managed sequence numbers for critical data. Whole-row version compare rejects all when stale; field-level LWW only allows independent fields and requires per-field metadata. Conflict records can preserve both sides for user action.",
+      "applicability": "Patterns to adapt for field edits, stale constrained commands, and visible rejected changes. Snippets are illustrative and were not executed or treated as production-safe."
+    },
+    {
+      "id": "S03",
+      "title": "JavaScript Web Client SDK v2.4.2 release notes — PowerSync",
+      "url": "https://releases.powersync.com/announcements/powersync-js-web-client-sdk",
+      "released_version_or_commit": "@powersync/web 2.4.2 released 2026-10-01; current observed Web release. Release history identifies 2.4.1 fix for the 2.4.0 OPFS WAL regression and 0.2.1 transactionId fix.",
+      "locator": "2026-10-01 v2.4.2; v2.4.1; v2.4.0; v0.2.1 entries",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read official release announcement and changelog.",
+      "governing_condition_default_exception": "v2.4.2 fixes listener leaks; v2.4.1 fixed a regression in 2.4.0 where OPFS WALs were larger than intended; earlier 0.2.1 fixed missing transactionId in getNextCrudTransaction. These are version-scoped release notes.",
+      "applicability": "Useful maintenance/fix history and current Web version snapshot; does not establish suitability for an unspecified target platform."
+    },
+    {
+      "id": "S04",
+      "title": "PowerSync JavaScript SDK monorepo release commit",
+      "url": "https://github.com/powersync-ja/powersync-js/commit/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "released_version_or_commit": "Commit ba6737ee9cc940fc0dd1f7adbb554f8185084dc9; Version Packages PR #1123, 2026-10-01.",
+      "locator": "Commit title and file tree/README; package versions and demos; test section",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read primary repository commit metadata and README excerpt.",
+      "governing_condition_default_exception": "Monorepo contains React Native, Web, Node, React/Vue integrations and demos including multi-client and Yjs; README says some package tests use Playwright. It is a JS-family repository, not the unspecified application target.",
+      "applicability": "Shows maintained candidates and where platform/demo tests live; do not infer actual product platform or run its suite as part of this research."
+    },
+    {
+      "id": "S05",
+      "title": "DemoConnector.ts — PowerSync self-host demo",
+      "url": "https://github.com/powersync-ja/self-host-demo/blob/main/demos/nodejs/demo-app/src/library/powersync/DemoConnector.ts",
+      "released_version_or_commit": "Rolling main branch; immutable commit not exposed in this read; use as illustrative caller only.",
+      "locator": "uploadData(database), getNextCrudTransaction, POST /api/data, transaction.complete and catch/rethrow",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read official demo caller snippet and opened the source path.",
+      "governing_condition_default_exception": "One queued transaction is posted as a batch; complete is after successful HTTP response; exception is rethrown. This only demonstrates integration plumbing, not atomic backend rule handling.",
+      "applicability": "Relevant upload caller seam and test fixture inspiration; not a business-rule implementation or selected backend."
+    },
+    {
+      "id": "S06",
+      "title": "Issue #48: getNextCrudTransaction grouping writeTransaction operations — PowerSync JS",
+      "url": "https://github.com/powersync-ja/powersync-js/issues/48",
+      "released_version_or_commit": "Issue opened 2024-02-07; maintainer said fixed in @journeyapps/powersync-sdk-react-native 1.2.1 and @journeyapps/powersync-sdk-web 0.2.1 on 2024-02-12.",
+      "locator": "Issue reproduction lines 154-196; maintainer resolution lines 301-314",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read primary GitHub issue/repro and maintainer response.",
+      "governing_condition_default_exception": "Reporter observes two inserts in one writeTransaction being returned as two single-item uploads and an undefined transactionId; maintainer marks fixed in those specific versions. Issue has no linked branch/PR.",
+      "applicability": "A historical regression/caller test shape for atomic swap operations; not evidence of a current defect and not a formal regression-test file."
+    },
+    {
+      "id": "S07",
+      "title": "PowerSync Kotlin changelog",
+      "url": "https://github.com/powersync-ja/powersync-kotlin/blob/main/CHANGELOG.md",
+      "released_version_or_commit": "Rolling main changelog; includes beta31 fix for getNextCrudTransaction returning one item, beta29 connect/disconnect race fix, 1.5.1 offline upload delay fix.",
+      "locator": "Changelog entries for 1.5.1, 1.5.0, 1.0.0-BETA31 and BETA29",
+      "access_utc": "2026-10-12T04:23:38Z",
+      "observed_operation": "Read primary Kotlin SDK changelog.",
+      "governing_condition_default_exception": "Fixes are scoped to the versions named; changelog is platform-specific and main branch is rolling.",
+      "applicability": "Independent repair-history cue; target SDK/platform is still unknown."
+    },
+    {
+      "id": "S08",
+      "title": "Sync Streams Are Now Generally Available — PowerSync",
+      "url": "https://releases.powersync.com/announcements/sync-streams-are-now-generally-available",
+      "released_version_or_commit": "Official announcement; GA status; service v1.20.0+ and latest SDK versions with Rust sync client listed as requirements.",
+      "locator": "Requirements and getting-started sections",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read official release announcement.",
+      "governing_condition_default_exception": "Edition 3 config required; Sync Streams filters data per authenticated user using auth.user_id(); legacy Sync Rules continue working. Authentication/filtering controls downloaded rows, not backend write authorization.",
+      "applicability": "Potential read-scope control if PowerSync is chosen; qualify version, JWT claim mapping and backend policy."
+    },
+    {
+      "id": "S09",
+      "title": "PostgreSQL 18 constraints",
+      "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; current supported version shown at capture; 19 listed as development.",
+      "locator": "5.5 constraints, especially CHECK warning lines 92-101 and exclusion constraints lines 377-388; foreign keys lines 242-284",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary database documentation.",
+      "governing_condition_default_exception": "CHECK constraints cannot safely reference other rows/tables. Use supported UNIQUE/EXCLUDE/FK constraints for cross-row restrictions; exclusion constraints use specified operators and create an index. Exact range/operator/index setup must be validated for chosen schema/extensions.",
+      "applicability": "Conditional server-side enforcement for no-overlap and relationships if PostgreSQL is selected; not a complete qualification/dependency rule engine."
+    },
+    {
+      "id": "S10",
+      "title": "PostgreSQL 18 Row Security Policies",
+      "url": "https://www.postgresql.org/docs/current/ddl-rowsecurity.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; current supported version at access.",
+      "locator": "§5.9 lines 20-30 and examples; referential-integrity caveat lines 182-185",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary database documentation.",
+      "governing_condition_default_exception": "RLS is disabled by default; when enabled with no policy it defaults to deny; table owners normally bypass it and superuser/BYPASSRLS always bypass. Referential-integrity checks bypass RLS.",
+      "applicability": "Server read/write isolation aid only when enabled and role-tested; cannot by itself express the supervisor's approval workflow."
+    },
+    {
+      "id": "S11",
+      "title": "PostgreSQL 18 SET TRANSACTION",
+      "url": "https://www.postgresql.org/docs/current/sql-set-transaction.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; current supported version at access.",
+      "locator": "Isolation-level section lines 38-53; default note lines 81-86",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary database documentation.",
+      "governing_condition_default_exception": "Default isolation is READ COMMITTED. SERIALIZABLE detects nonserializable concurrent patterns by aborting a transaction with serialization_failure; callers must retry. Level must be selected before first query/write.",
+      "applicability": "Candidate for transactionally checking multi-row roster invariants; application must implement rollback/retry and conflict feedback."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite transaction control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "released_version_or_commit": "Official rolling docs; page updated 2026-02-18.",
+      "locator": "§2 and §2.1-2.3 lines 30-59",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary SQLite documentation.",
+      "governing_condition_default_exception": "Multiple readers but one simultaneous writer; default transaction mode is DEFERRED; upgrade to writer can fail SQLITE_BUSY; IMMEDIATE obtains writer reservation up front but can also be busy.",
+      "applicability": "Local atomic edit/persistence behavior and adapter test requirements; local transaction does not validate a disconnected global schedule."
+    },
+    {
+      "id": "S13",
+      "title": "SQLite Foreign Key Support",
+      "url": "https://www.sqlite.org/foreignkeys.html",
+      "released_version_or_commit": "SQLite docs; FK support introduced in 3.6.19; current compile/runtime behavior must be checked.",
+      "locator": "Overview and §2 lines 41-46, 149-167",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary SQLite documentation.",
+      "governing_condition_default_exception": "Foreign-key enforcement is disabled by default and must be enabled/checkable separately on every connection; cannot be toggled inside an active transaction.",
+      "applicability": "Local reference checks only if the chosen SQLite client/connection enables FK enforcement; does not enforce center-wide overlap across unsynced clients."
+    },
+    {
+      "id": "S14",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Official rolling SQLite documentation.",
+      "locator": "Advantages/disadvantages lines 66-81; checkpointing and concurrency lines 87-99",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary SQLite documentation.",
+      "governing_condition_default_exception": "WAL allows concurrent readers and a writer, but only one writer; requires same-host shared memory and does not work on a network filesystem; automatic checkpoint threshold defaults to 1000 pages.",
+      "applicability": "Local storage mode/recovery and portability requirements, conditional on target platform."
+    },
+    {
+      "id": "S15",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "released_version_or_commit": "Official rolling SQLite documentation.",
+      "locator": "flush/fsync and OS dependency lines 137-145; crash-testing lines 405-416; failure limitations lines 421-434",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary SQLite documentation.",
+      "governing_condition_default_exception": "SQLite flushes at critical points and has extensive simulated crash tests, but relies on correct OS/filesystem/device flush and locking; some broken flush implementations can still permit corruption.",
+      "applicability": "Supports a local recovery test plan with platform caveat; does not promise recovery of an unsynced device lost/corrupt database."
+    },
+    {
+      "id": "S16",
+      "title": "SQLite PRAGMA integrity_check",
+      "url": "https://www.sqlite.org/pragma.html#pragma_integrity_check",
+      "released_version_or_commit": "Official rolling SQLite documentation.",
+      "locator": "PRAGMA integrity_check lines 496-513; journal-mode default lines 515-526",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read primary SQLite documentation.",
+      "governing_condition_default_exception": "integrity_check checks structural consistency and unique/check/not-null constraints but not foreign-key errors; use foreign_key_check separately. quick_check is faster but omits unique/index consistency checks.",
+      "applicability": "Recovery diagnostics/proposed QA only; a check is not a backup strategy."
+    },
+    {
+      "id": "S17",
+      "title": "Automerge getConflicts API v3.5.0",
+      "url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+      "released_version_or_commit": "@automerge/automerge documentation v3.5.0.",
+      "locator": "getConflicts description lines 5-12 and same-key conflict example lines 25-45",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read versioned primary API documentation.",
+      "governing_condition_default_exception": "Concurrent puts to the same map key produce competing values; one is surfaced deterministically/arbitrarily, while getConflicts can inspect the alternatives.",
+      "applicability": "Candidate for collaborative note/document content; convergence is not schedule validity or approval."
+    },
+    {
+      "id": "S18",
+      "title": "CouchDB replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 documentation branch; release notes list 3.5.x patches; exact deployment patch not selected.",
+      "locator": "§2.3 replication, deterministic winner, conflict reads, revision tree, view behavior",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read official versioned documentation.",
+      "governing_condition_default_exception": "Concurrent document leaves replicate non-destructively, but deterministic winner is default view/read state; other leaves require conflicts=true/open_revs and application merge. Same-node stale _rev update returns 409. winning_revs_only replication discards conflicts.",
+      "applicability": "Alternative for offline document replication when application explicitly handles conflicts; relational multi-row roster rules need additional policy code."
+    },
+    {
+      "id": "S19",
+      "title": "CouchDB document design considerations",
+      "url": "https://docs.couchdb.org/en/stable/best-practices/documents.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 documentation branch.",
+      "locator": "§4.1.4 document decomposition and history recommendations",
+      "access_utc": "2026-10-12T04:23:44Z",
+      "observed_operation": "Read official versioned documentation.",
+      "governing_condition_default_exception": "Single-document aggregation may leave unsatisfactory whole-document conflicts; splitting fields into documents changes the unit of conflict and raises ordering/duplicate/history considerations. Revision history is not intended as application version history.",
+      "applicability": "Representation tradeoff for CouchDB alternative; published roster versions should still be explicit application data."
+    }
+  ]
+}

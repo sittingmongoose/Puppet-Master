@@ -1,0 +1,116 @@
+{
+  "qualification": "finite MOCK source/API only",
+  "checks": [
+    {
+      "name": "actual generic materializer on inert MOCK inputs",
+      "passed": true
+    },
+    {
+      "name": "wrong root amendment pin",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member request.json",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member native-goal-create.json",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member native-activation-attempt.json",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member native-completion-attempt.json",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member counter-reconstructed.json",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member final.md",
+      "passed": true
+    },
+    {
+      "name": "refuse used/early-input/reconstructed member input-map.json",
+      "passed": true
+    },
+    {
+      "name": "early carried source refuses",
+      "passed": true
+    },
+    {
+      "name": "strict route-only delta refuses t0_utc",
+      "passed": true
+    },
+    {
+      "name": "strict route-only delta refuses whole_deadline_utc",
+      "passed": true
+    },
+    {
+      "name": "strict route-only delta refuses brief_path",
+      "passed": true
+    },
+    {
+      "name": "strict route-only delta refuses stage_budgets_s",
+      "passed": true
+    },
+    {
+      "name": "strict route-only delta refuses method_id",
+      "passed": true
+    },
+    {
+      "name": "same actual prepare then original clarify/guard then activation/terminal APIs",
+      "passed": true
+    },
+    {
+      "name": "new stage exact requested private route",
+      "passed": true
+    },
+    {
+      "name": "strict persisted config route-only delta",
+      "passed": true
+    },
+    {
+      "name": "original init/config/all predecessor hashes unchanged",
+      "passed": true
+    },
+    {
+      "name": "original whole deadline and 18 minute cap",
+      "passed": true
+    },
+    {
+      "name": "request and config terminal binding pins",
+      "passed": true
+    },
+    {
+      "name": "runtime checker byte-identical",
+      "passed": true
+    },
+    {
+      "name": "native guard byte-identical",
+      "passed": true
+    },
+    {
+      "name": "no Goal/activation/terminal receipts or attempts generated",
+      "passed": true
+    },
+    {
+      "name": "used prospective stage and fork refuse re-preparation",
+      "passed": true
+    },
+    {
+      "name": "focused new Python compiles",
+      "passed": true
+    }
+  ],
+  "passed": 26,
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "actual_arm_preparations": 0,
+  "physical_provenance": "UNKNOWN",
+  "scratch_removed": true,
+  "dispatcher_js_syntax_compiles": true
+}

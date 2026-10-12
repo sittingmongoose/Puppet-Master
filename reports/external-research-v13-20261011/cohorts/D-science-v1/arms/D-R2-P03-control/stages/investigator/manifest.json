@@ -1,0 +1,52 @@
+{
+  "version": "er13.immutable-stage-handoff.v1",
+  "stage": "investigator",
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P03-control-investigator-v1",
+  "status": "completed",
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "files": [
+    {
+      "relative_path": "assignment.md",
+      "sha256": "8492cefdcd96c1429320feae562381d184e6746523440431ab8b859ac192e56f",
+      "bytes": 10594
+    },
+    {
+      "relative_path": "input-map.json",
+      "sha256": "e58ba0be92ffaa36adcf6ac3af2f6f94adb640f09047438a4d23eb3d7c1cd7f2",
+      "bytes": 866
+    },
+    {
+      "relative_path": "freeze.json",
+      "sha256": "6e8d18cfc2ddc4571317f6bacc21dd3b637432c15f11867ea446012cab41fa9e",
+      "bytes": 1945
+    },
+    {
+      "relative_path": "request.json",
+      "sha256": "775bb10caf30329f2c2e3d121e35e60b5a7d1db609cc6814c654aaf08df14a8d",
+      "bytes": 7531
+    },
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "d6252e5a72cae9a6b449af2beb31b015ef9a369ba23a16519d8535eac90da9ca",
+      "bytes": 10873
+    },
+    {
+      "relative_path": "status.json",
+      "sha256": "cdaef3e6dfa29d9c0d74ac8bb917d3f8a9b6d6ac531c41ad2a1a71403748a487",
+      "bytes": 2709
+    },
+    {
+      "relative_path": "native-goal-create.json",
+      "sha256": "9c404396e531065379a21ddc5203069382a51e00393404f35e386f2c851894fd",
+      "bytes": 528
+    },
+    {
+      "relative_path": "native-goal-active.json",
+      "sha256": "9c404396e531065379a21ddc5203069382a51e00393404f35e386f2c851894fd",
+      "bytes": 528
+    }
+  ],
+  "source_inventory": [],
+  "enrichment": "Separate records only; never edit this terminal manifest or frozen members"
+}

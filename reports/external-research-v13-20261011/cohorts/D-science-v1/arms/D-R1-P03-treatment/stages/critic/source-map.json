@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "run_id": "D-R1-P03-treatment",
+  "stage": "critic",
+  "brief_scope": "Portable local-workspace backup and preview-first restore for structured records, attachments, and preferences; interruption/removable storage; inventory and damage; empty restore and deliberate merge; identity/references; newer schemas and migrations; atomicity; passphrase option, metadata, diagnostics, no invented recovery; whole versus incremental; validation plan.",
+  "review_method": {
+    "inputs_reviewed": [
+      "assigned brief.md",
+      "investigator discovery.md",
+      "investigator draft.md",
+      "investigator source-map.json",
+      "investigator revealed-plan.md",
+      "investigator plan-reveal.json",
+      "investigator sources/index.md"
+    ],
+    "released_plan_hash_check": "SHA-256 of discovery.md and revealed-plan.md matched the values in plan-reveal.json.",
+    "primary_source_access_completed_utc": "2026-10-12T04:27:15Z",
+    "execution_status": "Documentation review and static plan-hash comparison only. No archive/storage/application/migration/crypto/fault-injection/user-data checks were run."
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SQLite Online Backup API and sqlite3_backup C interface",
+      "exact_url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "released_version_or_commit": "Live official SQLite C interface documentation; unversioned, consulted 2026-10-12.",
+      "locator": "Online Backup API overview and sqlite3_backup_step/finish, lines 34-79; alternatives at lines 81-85.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the official API documentation and checked snapshot behavior, read-lock duration, retryable BUSY/LOCKED, fatal IOERR/NOMEM/READONLY, rollback on incomplete completion, and destination-handle restrictions.",
+      "governing_condition_default_exception": "Source reads are locked per step, not continuously. External writes may cause the operation to restart; writes through the same source connection are reflected in the backup. BUSY/LOCKED can be retried; IOERR/NOMEM/READONLY are fatal. The destination connection must not be used between init and finish.",
+      "applicability": "Only if SQLite is selected. Gives a database-level copy, not a cross-resource snapshot of separate attachments or preferences."
+    },
+    {
+      "id": "S02",
+      "title": "SQLite Write-Ahead Logging documentation and WAL-reset bug notice",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live official SQLite documentation; unversioned. Notice states likely affected 3.7.0 through 3.51.2; fixed 3.51.3+ and backports 3.44.6/3.50.7.",
+      "locator": "WAL persistence and commit/checkpoint sections around lines 82-96; WAL-reset bug lines 191-197.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the official WAL page and checked committed-WAL persistence, sidecar separation, exact version range and concurrency trigger.",
+      "governing_condition_default_exception": "A WAL commit can be recorded in -wal without yet being copied into the main database; separating a live database from WAL state is unsafe. The announced corruption bug requires WAL mode, at least two connections to the same file in separate threads/processes, and concurrent write/checkpoint activity. It is described as a narrow race.",
+      "applicability": "Conditional on the product using SQLite WAL and on the bundled engine release/concurrency pattern. It is not evidence that backup alone triggers the bug."
+    },
+    {
+      "id": "S03",
+      "title": "SQLite PRAGMA reference",
+      "exact_url": "https://www.sqlite.org/pragma.html",
+      "released_version_or_commit": "Live official SQLite reference; unversioned, consulted 2026-10-12.",
+      "locator": "foreign_key_check lines 366 onward; foreign_keys lines 379-390; integrity_check lines 492-513; user_version lines 933-941.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened official reference and checked user_version semantics, integrity-check coverage, foreign-key-check separation, and foreign-key enforcement defaults/overrides.",
+      "governing_condition_default_exception": "user_version is an integer applications may use; SQLite itself does not interpret it. integrity_check does not find FK errors. foreign_keys historically defaulted OFF from 3.6.19, can be compile-time overridden, and may change in a future release; applications should set the required behavior.",
+      "applicability": "Only if SQLite is selected. Engine-level checks do not prove attachment existence or application-level validity."
+    },
+    {
+      "id": "S04",
+      "title": "Python 3.15 zipfile library documentation",
+      "exact_url": "https://docs.python.org/3/library/zipfile.html",
+      "released_version_or_commit": "Python 3.15.0 documentation edition observed 2026-10-12.",
+      "locator": "ZipFile.testzip() lines 231-235; Path objects and sanitization note lines 288-298; ZIP64 notes around lines 383-391.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened official Python documentation and checked CRC/header test scope and untrusted-name validation responsibility for zipfile.Path.",
+      "governing_condition_default_exception": "testzip reads members and checks CRCs and headers, returning the first bad filename or None. zipfile.Path itself does not sanitize archive names; callers must validate. These are Python API details.",
+      "applicability": "Implementation-specific evidence for Python ZIP tooling; the general need for exact inventory and safe extraction does not require Python."
+    },
+    {
+      "id": "S05",
+      "title": "GHSA-94vh-gphv-8pm8 — Rust zip archive extraction path canonicalization flaw",
+      "exact_url": "https://github.com/zip-rs/zip2/security/advisories/GHSA-94vh-gphv-8pm8",
+      "released_version_or_commit": "Published 2025-03-16; affected zip crate versions >=1.3.0; patched version 2.3.0.",
+      "locator": "Advisory summary and details, lines 131-157: earlier symlink followed by later extraction through it.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Read the public advisory and checked affected/patched versions and extraction sequence.",
+      "governing_condition_default_exception": "A malicious archive can place a symlink to a parent directory before a later file; the affected extraction routine failed to validate the final canonicalized path.",
+      "applicability": "Directly relevant if this crate and affected versions are used. Otherwise supports an explicit symlink-order regression case, not a claim about every extractor."
+    },
+    {
+      "id": "S06",
+      "title": "age file encryption format v1.0.0",
+      "exact_url": "https://c2sp.org/age@v1.0.0",
+      "released_version_or_commit": "Pinned age format specification v1.0.0. The page states this is an older edition and points to v1.1.0.",
+      "locator": "Header/version/MAC lines 15-54; payload chunking/final chunk lines 82-95; scrypt stanza rules lines 157-181.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the pinned specification and checked its header, AEAD payload, scrypt wrapping, final-chunk, and recipient-stanza conditions.",
+      "governing_condition_default_exception": "Passphrase wrapping uses scrypt and ChaCha20-Poly1305. Payload uses authenticated 64 KiB chunks and streaming decryption must fail without a valid final chunk. An scrypt stanza must be the sole header stanza.",
+      "applicability": "Candidate format only; no library/package is selected. Describes encryption/integrity behavior, not archive semantics, source validity, author identity, or service recovery."
+    },
+    {
+      "id": "S07",
+      "title": "restic 0.19.1 backup documentation",
+      "exact_url": "https://restic.readthedocs.io/en/stable/040_backup.html",
+      "released_version_or_commit": "Documentation identifies restic 0.19.1, consulted 2026-10-12.",
+      "locator": "Snapshot/deduplication model lines 65-118; incomplete source-read exit status and explanation lines 448-460.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened official restic documentation and checked deduplication, snapshot model, and incomplete source-read behavior.",
+      "governing_condition_default_exception": "If some source files cannot be read, restic can still create an incomplete snapshot and returns status 3; status 0 means snapshot with all source files, while fatal errors return 1 with no snapshot.",
+      "applicability": "Alternative repository model only. It does not provide this application's logical cross-store snapshot, domain-aware preview, or migrations."
+    },
+    {
+      "id": "S08",
+      "title": "Rust std::fs::rename documentation",
+      "exact_url": "https://doc.rust-lang.org/std/fs/fn.rename.html",
+      "released_version_or_commit": "Rolling stable Rust standard-library documentation; API stable since Rust 1.0.0.",
+      "locator": "Function semantics and platform-specific behavior lines 21-45.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened official Rust docs and checked replacement behavior, same-filesystem requirement, and Unix/Windows directory cases.",
+      "governing_condition_default_exception": "Cross-mount rename fails. Existing-target directory replacement differs by platform/filesystem. The docs do not establish power-loss durability.",
+      "applicability": "Conditional on using Rust std::fs and on target OS/filesystem; does not prove an atomic multi-file workspace transaction."
+    },
+    {
+      "id": "S09",
+      "title": "NIST FIPS 180-4 Update 1, Secure Hash Standard",
+      "exact_url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+      "released_version_or_commit": "Final FIPS 180-4 Update 1, published 2015-08-04; page notes a later planned revision.",
+      "locator": "Publication abstract and history; hash algorithms and message digest purpose.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened NIST publication page and checked its statement of digest purpose.",
+      "governing_condition_default_exception": "The standard specifies hash digests used to detect changes since digest generation. A digest alone does not bind an independently replaceable digest to an author or trusted source.",
+      "applicability": "Supports manifest digests for change detection when the manifest is trusted/authenticated; does not replace authenticated encryption or a separately designed signature/trust channel."
+    },
+    {
+      "id": "S10",
+      "title": "age file encryption format v1.1.0",
+      "exact_url": "https://c2sp.org/age@v1.1.0",
+      "released_version_or_commit": "age format specification v1.1.0, the latest edition identified by the v1.0.0 page at access time.",
+      "locator": "Encrypted file/header lines 14-54; payload authentication lines 81-93; scrypt stanza and sole-stanza rule lines 192-216; tagged recipient additions after line 217.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the current edition and independently checked the passphrase, payload, final-chunk, header, and recipient rules against v1.0.0.",
+      "governing_condition_default_exception": "Scrypt remains the passphrase mechanism and remains the only header stanza if used. The 64 KiB authenticated payload chunks and final-chunk requirement remain. v1.1 adds tagged recipient types, but they cannot be mixed with an scrypt stanza.",
+      "applicability": "Use for current-version qualification if age is considered; still no selected library, package, or recovery design. Encryption does not prove archive authorship or source validity."
+    },
+    {
+      "id": "S11",
+      "title": "SQLite ALTER TABLE",
+      "exact_url": "https://sqlite.org/lang_altertable.html",
+      "released_version_or_commit": "Live official SQLite documentation; unversioned, consulted 2026-10-12.",
+      "locator": "ALTER TABLE rename compatibility history for SQLite 3.25.0/3.26.0 and safe schema-change guidance.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the official companion page to check version-sensitive migration behavior cited by the investigator.",
+      "governing_condition_default_exception": "Rename behavior changed across engine releases; legacy_alter_table settings affect behavior. Migrations must be tested against supported engine versions and data schemas.",
+      "applicability": "Only if SQLite is selected; illustrative evidence that migration semantics depend on engine version/configuration."
+    },
+    {
+      "id": "S12",
+      "title": "restic 0.19.1 repository checking documentation",
+      "exact_url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+      "released_version_or_commit": "Documentation identifies restic 0.19.1, consulted 2026-10-12.",
+      "locator": "Repository structural check and --read-data sections, lines 252-301.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the official companion page and checked default repository check versus full pack-data verification.",
+      "governing_condition_default_exception": "Default check validates repository structure but does not read all pack data; --read-data reads pack files at greater time/bandwidth cost. Neither is an application-level restore/use test.",
+      "applicability": "Only for evaluating restic-style repository alternatives; not selected product behavior."
+    },
+    {
+      "id": "S13",
+      "title": "SQLite VACUUM and VACUUM INTO",
+      "exact_url": "https://www.sqlite.org/lang_vacuum.html",
+      "released_version_or_commit": "Live official SQLite documentation, page last updated 2025-07-12.",
+      "locator": "VACUUM INTO semantics and interruption/durability conditions, lines 40-48.",
+      "access_utc": "2026-10-12T04:27:15Z",
+      "observed_operation": "Opened the official page and checked snapshot consistency, destination precondition, interrupted output, and synchronous-mode flush caveat.",
+      "governing_condition_default_exception": "VACUUM INTO is a consistent snapshot; unplanned shutdown/power loss during the operation may leave incomplete/corrupt output. The stated post-completion protection depends on NORMAL/FULL synchronous plus functioning OS/filesystem/hardware.",
+      "applicability": "Only if SQLite VACUUM INTO is selected. Keep output private until the command completes and independent verification passes."
+    }
+  ]
+}

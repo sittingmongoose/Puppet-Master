@@ -1,0 +1,42 @@
+{
+  "schema": "er13.unstarted_stage_route_fork_manifest.v1",
+  "created_at_utc": "2026-10-12T04:55:45.094223+00:00",
+  "files": [
+    {
+      "relative_path": "PINS.json",
+      "sha256": "372cb986b9e2129278a58977615f2a71e486a97acebb3f11a1b774f59b3e8607",
+      "bytes": 4321
+    },
+    {
+      "relative_path": "README.md",
+      "sha256": "f6b0a3e11036fbda91d48ac3adb1a751e21d02b862be1218bbb2156c7cc0785a",
+      "bytes": 5421
+    },
+    {
+      "relative_path": "dispatcher.js",
+      "sha256": "fed6bd1e4a12d736326a68d26fe6c357fb2a20ec503e6809b36b0ef2c1371fd5",
+      "bytes": 3254
+    },
+    {
+      "relative_path": "route_fork.py",
+      "sha256": "cf08f0f929da932cd212b948d9fa578462eae1b7378a9698f9f85da4b549f605",
+      "bytes": 10401
+    },
+    {
+      "relative_path": "tests.py",
+      "sha256": "9a4e2a1eaf0a375c91f28fc77e1cdbd84d9171ba7763962f144eb120abb1cded",
+      "bytes": 6681
+    }
+  ],
+  "checks_path": "ER13_RUNTIME/state/route-fork-v1/CHECKS.json",
+  "checks_sha256": "5df490c0994782191475c66fe9a2e20aff08086c92afe6ba9a36b6c239842cdb",
+  "passed": 26,
+  "dispatcher_js_syntax_compiles": true,
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "actual_arm_preparations": 0,
+  "original_stage_mutations": 0,
+  "physical_provenance": "UNKNOWN",
+  "qualification": "finite MOCK source/API only; not native proof",
+  "root_amendment_sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18"
+}

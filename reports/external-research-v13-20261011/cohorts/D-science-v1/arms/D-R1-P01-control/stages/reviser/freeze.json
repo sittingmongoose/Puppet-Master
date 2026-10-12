@@ -1,0 +1,111 @@
+{
+  "prepared_at_utc": "2026-10-12T04:42:53.508Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-12T05:00:53.508Z",
+  "whole_deadline_utc": "2026-10-12T05:16:34.778Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P01-control-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R1-P01-control-critic-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/inputs/brief.md",
+      "sha256": "51b4c5cfca3e449dc7a0a6919054962715da07804dfc8312bd0bf10b5bd3bad1",
+      "bytes": 2404
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/reviser/assignment.md",
+      "sha256": "16845bca2c267e464d522ca3af4f46e685c495974421ae7e921ab99efa0e2de1",
+      "bytes": 9984
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/reviser/input-map.json",
+      "sha256": "cd9becd4b1e7308b99c5a8a7b7402a8f19381c88d03edd27f8d479f90bf1e038",
+      "bytes": 2625
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/discovery.md",
+      "sha256": "440b58cce47ae19bc229827633711c2c7ef8333008a0c63fdba55e0c7660eed6",
+      "bytes": 6308
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/draft.md",
+      "sha256": "18f7acfd1666aa87d673a51788435f863ec4f731030fc43fcf2861a43a838e73",
+      "bytes": 23682
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/source-map.json",
+      "sha256": "34e2319da604dd9e4cd1c19394c2211fb16c3781f9687e2879e57a38bac8aca8",
+      "bytes": 16166
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "c28298e96002946015ec68ccd6834f18b5fd1878c5811d98ebdd9626c7a71666",
+      "bytes": 2234
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "f15200deb8f3a280dd789e4e5277d8247ef4b0c0dbc7223455fd42ba5a5bfd83",
+      "bytes": 472
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/critique.md",
+      "sha256": "1cd89f14b1aa5fb94eec27802647d119cdfa2493d554d93394bcc7616e45d8cc",
+      "bytes": 13757
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/source-map.json",
+      "sha256": "862681a89c3d1b1d59f08f51938d10cc4edee690a0c11fe7452dc5929cb5dfbf",
+      "bytes": 15621
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/sources/index.md",
+      "sha256": "0e25dff6d7834b6715223eecd12b20b556bb351809ef9e630a91f5e8eb5f6d0e",
+      "bytes": 17135
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/sources/index.md",
+      "sha256": "2a9a7109db8ce4e9a51cb1c5480a739893de2a408ccba4effeb5862ea538ccf9",
+      "bytes": 15519
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 reviser stage, run D-R1-P01-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/investigator/sources/index.md"
+      ]
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/sources/index.md"
+      ]
+    }
+  ],
+  "request_sha256": "34fba9b75c1121a2ea6a8899ec268c463031c0e7cca223401c16ed86f3387fa5"
+}

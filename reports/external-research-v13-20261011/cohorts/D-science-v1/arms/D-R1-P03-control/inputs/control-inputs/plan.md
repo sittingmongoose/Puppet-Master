@@ -1,0 +1,11 @@
+# D-P03 — Provisional design for review
+
+The draft exports records and preferences to structured text, copies attachments into an archive, and includes a manifest of member digests. A backup marker would become current after the archive is closed and its manifest can be read back. The draft assumes this establishes consistency between records and attachments even while users edit the workspace; investigate snapshot boundaries and concurrency rather than accepting archive closure as proof.
+
+Restore would extract to a temporary directory, verify listed digests, and show a preview of record counts and attachment conflicts. A new workspace could then replace its empty store. A merge would use record identifiers and attachment filenames to choose updates, retaining conflicting items under renamed paths. The implications for references, identifier collisions, and migration order need explicit review.
+
+For protected archives, the draft adds passphrase-based encryption around the complete package and stores its format version in an outer header. It proposes one corruption message for any failed opening attempt. Compare protection and usability choices using governing mechanisms, distinguishing wrong credentials, damage, unsupported versions, and metadata exposure where possible without promising impossible diagnosis.
+
+Give evidence-backed dispositions for consistency, publication, integrity, migration, and merge rules. Compare direct restore with staged restoration and incremental with whole-workspace approaches. Propose witnesses for interruption during backup, missing members, duplicated names, schema changes, failed merge, and passphrase loss. Label any checks actually executed and avoid claiming our future application or real user archive has been restored.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

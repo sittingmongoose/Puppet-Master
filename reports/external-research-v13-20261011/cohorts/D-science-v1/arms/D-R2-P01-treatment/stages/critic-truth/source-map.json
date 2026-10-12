@@ -1,0 +1,114 @@
+{
+  "run_id": "D-R2-P01-treatment",
+  "stage": "critic-truth",
+  "scope_basis": "Truth/applicability review of released brief, exact revealed plan and investigator package named in input-map.json",
+  "case_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/inputs/brief.md",
+      "locator": "Paragraph 3: visibility after permission changes; no external uploads, live-only immutable citations or revocation promise for exported copies"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/revealed-plan.md",
+      "locator": "Chunk identity, results, citations, permission filters, caches, ranking, editions, missing passages and validation requests"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/draft.md",
+      "locator": "Clause dispositions, permission/cache sequence, edition/index state model, owner decisions and validation status"
+    }
+  ],
+  "observed_access_window_utc": {
+    "start": "2026-10-12T04:25:39Z",
+    "end": "2026-10-12T04:28:00Z",
+    "precision_note": "Bounded interval for direct web open/find operations; individual request timestamps were not exposed."
+  },
+  "sources": [
+    {
+      "id": "S05",
+      "title": "OpenSearch Documentation: Document-Level Security",
+      "url": "https://docs.opensearch.org/latest/security/access-control/document-level-security/",
+      "version_or_commit": "Current /latest docs as served 2026-10-12; plugin release not selected",
+      "locator": "TLQ evaluation and DLS modes; DLS and multiple roles; DLS and write permissions",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official docs and inspected adaptive TLQ evaluation, role-combination and write sections.",
+      "governing_condition_default_exception": "Adaptive TLQ evaluation is the documented default. DLS queries combine with OR. With a DLS role and a non-DLS role, DLS still filters by default; plugins.security.dfm_empty_overrides_all permits the non-DLS role to override. DLS filters reads, not writes.",
+      "applicability": "Material configuration caveat for this engine; does not establish source ACL freshness or protection of all metadata channels."
+    },
+    {
+      "id": "S08",
+      "title": "Azure AI Search Query-Time ACL and RBAC Enforcement",
+      "url": "https://learn.microsoft.com/en-us/azure/search/search-query-access-control-rbac-enforcement",
+      "version_or_commit": "Example uses REST API 2026-08-01-preview; article last updated 2026-09-17",
+      "locator": "Limitations and freshness; behavior change in preview API versions",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official Microsoft Learn page and inspected failure, freshness and preview-version behavior.",
+      "governing_condition_default_exception": "ACL evaluation failure returns 5xx without partial results. Freshness depends on ingestion; push/custom ingestion requires updating affected documents. Before 2025-11-01-preview, some earlier previews returned all documents without a user token; from November 2025 ACL filters apply and protected content is omitted if the token is absent.",
+      "applicability": "Demonstrates query-time fail-closed behavior and version history, not that an integration meets the brief’s freshness requirement."
+    },
+    {
+      "id": "S09",
+      "title": "Azure AI Search: Indexing ACLs Using the Push REST API",
+      "url": "https://learn.microsoft.com/en-us/azure/search/search-index-access-control-lists-and-rbac-push-api",
+      "version_or_commit": "Push ACL feature and API example are preview; page last updated 2026-09-17",
+      "locator": "Preview warning; limitations; ACL values last written; user/group and RBAC-scope limits",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official page and inspected preview, freshness and limit statements.",
+      "governing_condition_default_exception": "Preview is not covered by SLA and is not recommended for production. Permission reflects the ACL values last written until affected documents are updated/reingested. Each userIds/groupIds field allows at most 1,000 values; an index allows five unique RBAC-scope values.",
+      "applicability": "Specific ingestion trade-off and preview limit; not a general engine rule or production recommendation."
+    },
+    {
+      "id": "S10",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation published 2017-02-23",
+      "locator": "§4.1 Time State; §4.2.4 Text Quote Selector; §4.2.5 Text Position Selector",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened the Recommendation and inspected selector, ambiguity and access warnings.",
+      "governing_condition_default_exception": "Quote selectors copy normalized text; prefix/suffix are recommended; multiple matches can designate all copies. Position selectors move under edits. Quote text can be unsafe to copy for restricted content.",
+      "applicability": "Locator/state vocabulary, not proof of source authenticity, authorization or retention."
+    },
+    {
+      "id": "S11",
+      "title": "Microsoft Graph driveItemVersion Resource and Get Operation",
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/driveitemversion?view=graph-rest-1.0 ; https://learn.microsoft.com/en-us/graph/api/driveitemversion-get?view=graph-rest-1.0",
+      "version_or_commit": "Microsoft Graph v1.0; resource page last updated 2025-10-22",
+      "locator": "Version ID/content; instance attribute @microsoft.graph.downloadUrl; Get version content",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official resource and Get pages; inspected version and download URL notes.",
+      "governing_condition_default_exception": "A driveItemVersion has a read-only ID. The instance download URL requires no authentication, lasts up to one hour, cannot be cached, and may not be invalidated immediately by permission removal.",
+      "applicability": "Supports avoiding temporary download URLs as durable citations; retention and current authorization remain separate checks."
+    },
+    {
+      "id": "S12",
+      "title": "Elastic Documentation: Document-Level and Field-Level Security",
+      "url": "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+      "version_or_commit": "Current docs as served 2026-10-12; deployment version/license not selected",
+      "locator": "Multiple roles with document and field-level security; DLS limitations; request-cache conditions",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official docs and inspected role composition, aggregate/statistics exposure and cache caveats.",
+      "governing_condition_default_exception": "DLS queries combine by OR; a role without a document query can grant access to all documents. Restricted documents still affect global relevance statistics and aggregate queries may expose information. Cache disabling applies only in documented cases.",
+      "applicability": "Supports a vendor-specific configuration warning; verify the selected deployment and address side channels."
+    },
+    {
+      "id": "S13",
+      "title": "Elastic Documentation: Aliases",
+      "url": "https://www.elastic.co/docs/manage-data/data-store/aliases",
+      "version_or_commit": "Current docs as served 2026-10-12; release not pinned",
+      "locator": "Multiple actions; Multiple action results; must_exist failure guard",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official alias docs and inspected multi-action and partial-result behavior.",
+      "governing_condition_default_exception": "Multiple alias changes can be submitted in one atomic operation, but docs describe partial per-action success when an action fails; must_exist=true can make the complete list fail if one action fails.",
+      "applicability": "Candidate publication mechanism with complete-action success verification; it does not establish ACL freshness or historical retention."
+    },
+    {
+      "id": "S18",
+      "title": "Microsoft SharePoint Version History Limits FAQ",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/faqs-for-versions",
+      "version_or_commit": "Microsoft Learn page last updated 2025-02-26",
+      "locator": "Expired/trimmed version purge; legal holds and retention; gradual count trimming",
+      "access_utc": "2026-10-12T04:25:39Z–2026-10-12T04:28:00Z (bounded review window)",
+      "observed_operation": "Opened official FAQ and inspected purge and retention/hold behavior.",
+      "governing_condition_default_exception": "Expired/count-trimmed versions are permanently deleted after purge; background purge can take days. Retention/holds defer deletion while active; a version can be deleted after a hold is lifted.",
+      "applicability": "SharePoint-specific evidence that archive retention is a policy decision; do not generalize it to other stores."
+    }
+  ]
+}

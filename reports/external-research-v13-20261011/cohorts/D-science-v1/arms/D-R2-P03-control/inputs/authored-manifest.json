@@ -1,0 +1,32 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T04:33:50.256650+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "configs/D-R2-P03-control.json",
+      "bytes": 1403,
+      "sha256": "91e7a50139f4938297880714d27f22c3127eaa092863a6f2e3a552fe517b9fbb"
+    },
+    {
+      "path": "control-inputs/brief.md",
+      "bytes": 2409,
+      "sha256": "d7a7fcce7656aa8fd0638fe5dc7cde5a335961ce1f8d31bf049916c7be433cd8"
+    },
+    {
+      "path": "control-inputs/plan.md",
+      "bytes": 2241,
+      "sha256": "ab4e366c681798f8e7de0480f19a8cce2bad747ed2be59608d3e0fee99174493"
+    },
+    {
+      "path": "run/D-R2-P03-control/stages/investigator/precondition-blocker.json",
+      "bytes": 1039,
+      "sha256": "8089b43c2c072ee5164a9bb5dc1e1ec643953124b8690fe3583d0630c048cfcf"
+    },
+    {
+      "path": "run/D-R2-P03-control/control/run.json",
+      "bytes": 582,
+      "sha256": "0f4961d6e7a9d90aae9fe6165257f460516bec6131ebc567864760a191340bde"
+    }
+  ]
+}

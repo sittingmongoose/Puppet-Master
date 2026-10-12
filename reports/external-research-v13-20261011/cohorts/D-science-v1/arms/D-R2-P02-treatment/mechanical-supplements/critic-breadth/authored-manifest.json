@@ -1,0 +1,37 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T04:44:00.040659+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "native-capture.js",
+      "bytes": 4169,
+      "sha256": "3d33abbb58398e7d3e8b21a2bd585cf19509ce9b341a861c6698e51eaa518984"
+    },
+    {
+      "path": "prospective-capture-v1.json",
+      "bytes": 7687,
+      "sha256": "0ab5335dbca8e0b6e021ba870e8135d6d89c38c34fe6944be3bd0505f81be292"
+    },
+    {
+      "path": "native-goal-attempt.json",
+      "bytes": 108,
+      "sha256": "515c4a716ad124f8df3fd4dc6b2fa676491b068c5af3c9717c05526d4d6de105"
+    },
+    {
+      "path": "prospective-terminal-capture-v1.json",
+      "bytes": 10496,
+      "sha256": "c19b31bb57e17c3e822b2d5d7a1dbc03bf2f85240bf12c724772d7b651710f64"
+    },
+    {
+      "path": "native-terminal-capture.js",
+      "bytes": 3307,
+      "sha256": "45e424acf3b8454f9c78d3cc5585220dd8b8f9dac27f2552207419abd227ef4b"
+    },
+    {
+      "path": "native-terminal-check.py",
+      "bytes": 8966,
+      "sha256": "df755488646c925e64e01141b2c1a58140873fa4a4bd92c1aadd771e47640a2c"
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "run_id": "D-R1-P03-control",
+  "stage": "critic",
+  "sources": [
+    {
+      "id": "SRC-PY-ZIP",
+      "title": "Python zipfile documentation",
+      "url": "https://docs.python.org/3.14/library/zipfile.html",
+      "version_or_commit": "CPython docs 3.14.8 (version shown on page at access)",
+      "locator": "ZipFile.testzip() lines 231-235; ZipFile.open duplicate-name note lines 186-187; extractall warning lines 207-211; ZIP path and compatibility notes lines 92-98, 240-252",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the official API documentation for valid ZIP detection, member iteration/open, testzip, extraction, and compression/version notes.",
+      "governing_condition_default_exception": "testzip reads every member and checks CRCs and headers, returning first bad filename or None. ZIP64 is enabled by default by this module; optional compressors may be unavailable in a Python build. Duplicate names are representable and APIs can take ZipInfo. extractall warns about untrusted paths; zipfile.Path itself does not sanitize names.",
+      "applicability": "Applies if a ZIP container or Python zipfile is chosen; examples of integrity and path-policy questions generalize to archive design.",
+      "limitations": "CRC/header success is not a cryptographic authenticity check and, by inference from the API's contract, does not prove that the application-expected member set or relationships are complete or that a restored workspace is usable. The docs do not define this product's format."
+    },
+    {
+      "id": "SRC-SQL-BACKUP",
+      "title": "SQLite Online Backup API",
+      "url": "https://sqlite.org/backup.html",
+      "version_or_commit": "Current official documentation; no page release version displayed",
+      "locator": "Online Backup API overview; Using the SQLite Online Backup API; section 3.1 File and Database Connection Locking",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the documentation describing backup from a live SQLite database.",
+      "governing_condition_default_exception": "A completed call sequence creates a bitwise-identical snapshot of the source at backup start. Other connections may write while a backup proceeds; external writes can force restart, and repeated restarts can prevent completion. Online Backup API copies a database into another database, not arbitrary app files.",
+      "applicability": "Use if the eventual workspace has SQLite; it informs safe database capture but does not settle consistency with attachments/preferences.",
+      "limitations": "No app-specific schema, external attachment inventory, or restore/merge behavior is specified."
+    },
+    {
+      "id": "SRC-SQL-WAL",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://sqlite.org/wal.html",
+      "version_or_commit": "Current official documentation; no page release version displayed",
+      "locator": "Section 4, The WAL File",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the official description of the database WAL file lifecycle and persistent state.",
+      "governing_condition_default_exception": "While connections are open in WAL mode there is a companion -wal file. It is normally deleted after clean last close, but may persist after unclean exit or persistent-WAL configuration. The WAL is part of persistent database state and should be kept with a copied/moved database; separating them may lose committed work or corrupt it.",
+      "applicability": "Applies to direct-copy approaches for a workspace database configured for WAL; motivates using SQLite backup APIs or a quiesced coordinated capture.",
+      "limitations": "This page is not an application-level snapshot protocol and says nothing about separate attachment files/preferences."
+    },
+    {
+      "id": "SRC-SQL-ATOMIC",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "version_or_commit": "Current official documentation; page explicitly scopes its walkthrough to rollback-journal mode",
+      "locator": "Section 1 Introduction; section 4 Rollback; section 5 Multi-file Commit",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the official explanation of SQLite transaction atomicity and its journal assumptions.",
+      "governing_condition_default_exception": "The article says SQLite transactions appear atomic across the participating database change, including crash interruption, under the described mechanism; the walkthrough applies to rollback mode, with WAL treated separately. Multi-file commit through ATTACH is a distinct mechanism, not a transaction over arbitrary filesystem resources.",
+      "applicability": "Use to bound claims about database transaction atomicity and to motivate a separate app-level commit boundary for resources/preferences.",
+      "limitations": "It does not establish a cross-platform atomic swap of a mixed database/files workspace or durability on every filesystem/device."
+    },
+    {
+      "id": "SRC-SQL-FK",
+      "title": "SQLite Foreign Key Support",
+      "url": "https://sqlite.org/foreignkeys.html",
+      "version_or_commit": "Current official documentation; page states feature introduced in SQLite 3.6.19",
+      "locator": "Section 2, Enabling Foreign Key Support",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read SQLite's official conditions for enforcing declared foreign keys.",
+      "governing_condition_default_exception": "Foreign-key enforcement is disabled by default for backwards compatibility and must be enabled per database connection, outside a transaction; compile flags can affect availability/defaults. Deferred constraints are checked at commit.",
+      "applicability": "If SQLite is selected, tests/validation must check connection initialization and app-level relationships; absent external files are not represented by an ordinary SQL FK.",
+      "limitations": "This documents engine behavior, not whether a prospective application actually enables or correctly uses foreign keys."
+    },
+    {
+      "id": "SRC-RESTIC-BACKUP",
+      "title": "Backing up — restic",
+      "url": "https://restic.readthedocs.io/en/stable/040_backup.html",
+      "version_or_commit": "restic documentation 0.19.1 (page title at access)",
+      "locator": "Backing up; File change detection; Skip creating snapshots if unchanged; metadata and path notes",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the official current backup workflow and change-detection documentation.",
+      "governing_condition_default_exception": "A directory at a point in time is a snapshot; content is deduplicated. Default parent selection groups by hostname and backup paths. Change detection can rely on metadata for same-path regular files; Unix conditions include mtime, ctime, size, inode, Windows uses path/size/mtime; `--force` disables this shortcut. Some metadata is not stored, and snapshot creation can be skipped only with an option.",
+      "applicability": "Useful as a mature content-addressed incremental-repository alternative and a source for explicit change-detection caveats.",
+      "limitations": "Restic snapshots filesystem paths, not this application's records, migrations, merge conflicts, user preferences, or attachment-reference semantics."
+    },
+    {
+      "id": "SRC-RESTIC-RESTORE",
+      "title": "Restoring from backup — restic",
+      "url": "https://restic.readthedocs.io/en/stable/050_restore.html",
+      "version_or_commit": "restic documentation 0.19.1 (page title at access)",
+      "locator": "Restoring in-place; overwrite policy; deleting files not in snapshot; dry runs",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read official restore target, overwrite, delete, and dry-run semantics.",
+      "governing_condition_default_exception": "In-place restore can leave a partially restored state if interrupted. Restore defaults to overwriting existing target files (`--overwrite always`); `--delete` removes files not in the snapshot and requires a narrowed include/exclude filter when using `--target`. Docs recommend reviewing destructive dry runs.",
+      "applicability": "A concrete alternative requiring an app staging/preview layer; its filesystem restore defaults are unsafe to copy blindly for a live workspace.",
+      "limitations": "Does not prove how a particular application should merge records or validate a candidate workspace."
+    },
+    {
+      "id": "SRC-RESTIC-CHECK",
+      "title": "Troubleshooting — restic",
+      "url": "https://restic.readthedocs.io/en/stable/077_troubleshooting.html",
+      "version_or_commit": "restic documentation 0.19.1 (page title at access)",
+      "locator": "Section 1, Finding damaged data; restic check --read-data; checking again after repair",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the official repository-damage diagnosis/repair workflow.",
+      "governing_condition_default_exception": "`restic check --read-data` checks repository metadata, packs, snapshots, trees, and reads stored data; it can entail downloading the whole repository, so without the flag less data is read. Repairs are followed by another check.",
+      "applicability": "Supports separating metadata checks, data-byte reads, and app-level restoration; cost is material for large/offline media.",
+      "limitations": "Repository consistency does not establish that an application can migrate or use extracted data."
+    },
+    {
+      "id": "SRC-RESTIC-INTERRUPT",
+      "title": "Save an interrupted snapshot when backup is interrupted by SIGINT — restic issue #2960",
+      "url": "https://github.com/restic/restic/issues/2960",
+      "version_or_commit": "Issue opened 2020-09-28; reporter's binary: restic 0.10.0 (v0.10.0-23-g506fcfd4-dirty); issue status open when accessed",
+      "locator": "Issue description and output of `restic version`",
+      "access_utc": "2026-10-12T04:20:59Z",
+      "observed_operation": "Read primary project issue report about SIGINT during a backup.",
+      "governing_condition_default_exception": "Reporter states interruption saves no snapshot, though already-stored blobs/index may remain and data is unavailable to normal snapshot restore until a recovery operation. This is an issue report, not a reproduced result by this researcher.",
+      "applicability": "Illustrates why data written and valid, selectable backup published must be separately tracked.",
+      "limitations": "Historical user report for restic 0.10.0; current restic behavior may differ. Do not generalize as current product behavior."
+    },
+    {
+      "id": "SRC-JOP-IMPORT-EXPORT",
+      "title": "Joplin import/export documentation",
+      "url": "https://github.com/laurent22/joplin/blob/dev/readme/apps/import_export.md",
+      "version_or_commit": "Repository dev branch, mutable; no commit SHA was exposed/pinned by the page reviewed",
+      "locator": "Exporting section; ENEX link restoration discussion; importing into a new separate notebook",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read Joplin's official repository documentation for interchange formats and import/export behavior.",
+      "governing_condition_default_exception": "JEX is described as a TAR file containing multiple item types and as lossless for notes and selected metadata. The docs also say ENEX lacks sufficient ID data for some links and imports may guess link targets by title; ambiguous titles can fail. ENEX import creates a separate notebook.",
+      "applicability": "A product example for a single portable package and for the distinction between declared format fidelity and application link semantics.",
+      "limitations": "Mutable branch and Joplin-specific behaviors; the word “lossless” is not independent proof of all failure cases."
+    },
+    {
+      "id": "SRC-JOP-JEX-IMPORT-DUP",
+      "title": "Make it clear that importing a jex backup can duplicate your notes — Joplin issue #14791",
+      "url": "https://github.com/laurent22/joplin/issues/14791",
+      "version_or_commit": "Issue reports Joplin 3.5.13 on Windows; opened 2026-03-17; closed at time accessed",
+      "locator": "Description and proposed warning text",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read a primary maintainer-repository issue describing user confusion about JEX import versus replacement and duplicate notes after sync.",
+      "governing_condition_default_exception": "Issue says importing is additive/intended for adding or restoring notes, can duplicate existing collection, and syncing the same collection after import can create duplicates; it proposes a warning. Issue is closed but no linked fixing PR or release detail was inspected.",
+      "applicability": "Supports distinct explicit restore and merge modes, preview of duplicates, and clear naming/confirmation.",
+      "limitations": "User issue/proposal, not a general platform guarantee; closure alone does not prove the proposed change shipped."
+    },
+    {
+      "id": "SRC-JOP-JEX-UNICODE",
+      "title": "JEX export corrupts notes on Joplin for Android — issue #9069",
+      "url": "https://github.com/laurent22/joplin/issues/9069",
+      "version_or_commit": "Reporter uses Joplin Android 2.12.2 on Android 10; opened 2023-10-16; issue links closed PR #9076",
+      "locator": "Issue description, environment, reproduction steps, and linked #9076",
+      "access_utc": "2026-10-12T04:20:59Z",
+      "observed_operation": "Read a primary project bug report concerning export/import damage to non-ASCII characters.",
+      "governing_condition_default_exception": "Reporter says Android JEX export replaces characters such as £ and é with `?`, and that relying only on such backups damaged thousands of occurrences. A linked PR appears on the issue; its page timed out when opened, so its details/release were not verified.",
+      "applicability": "Supports cross-platform round-trip tests with Unicode and cautions against relying on one platform's export test.",
+      "limitations": "Historical single reporter incident on one old app version; fix/release status and current behavior unverified."
+    },
+    {
+      "id": "SRC-JOP-ABS-PATH",
+      "title": "Joplin absolute resource path and missing JEX image report — issue #6211",
+      "url": "https://github.com/laurent22/joplin/issues/6211",
+      "version_or_commit": "Reporter uses Joplin 2.7.13 on Windows 10; opened 2022-02-28; linked PR #6865 merged 2023-01-11",
+      "locator": "Issue report lines with file:/// resource URLs and missing JEX resources; reproduction and version",
+      "access_utc": "2026-10-12T04:20:59Z",
+      "observed_operation": "Read the primary issue report and its stated reproduction for absolute resource links and absent package images.",
+      "governing_condition_default_exception": "Reporter says copied content had absolute resource URLs that broke cross-device use and that exported JEX lacked those images. The issue links a PR narrowly scoped to paste from WYSIWYG into Markdown editor.",
+      "applicability": "Supports explicit reference and payload inventory and a validator that finds dangling attachment references.",
+      "limitations": "The report is a particular capture path; not evidence that all JEX exports omit attachments. The linked PR is separately indexed as SRC-JOP-ABS-PATH-FIX and resolves one editor path only."
+    },
+    {
+      "id": "SRC-JOP-PATH-FIX",
+      "title": "Desktop fix for files without extension — issue #12049 and PR #12974",
+      "url": "https://github.com/laurent22/joplin/pull/12974",
+      "version_or_commit": "Issue reproduction reports Joplin 3.3.3 revision 23254e6; PR merged into dev 2025-09-08 as commit c27d542; 11 checks passed per PR page",
+      "locator": "PR summary, reviewer discussion on importer integration test, merged commit and checks; linked issue https://github.com/laurent22/joplin/issues/12049",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read project issue and merged fix PR for Markdown-linked files with absent extensions.",
+      "governing_condition_default_exception": "Issue reports one relative attachment not imported, another with wrong extension, and one with extension working. PR changes `fileExtension`/`filename` path logic; review asks for tests at importer level after initially failing checks; final page records 11 checks passed and merge commit.",
+      "applicability": "Shows path/name edge cases and release history matter; use integration-level fixtures for attachment references and Unicode/no-extension names.",
+      "limitations": "Joplin-specific importer bug and fix; not a generic archive defect or proof of a current Joplin regression. The PR merged to dev; release containing it was not verified."
+    },
+    {
+      "id": "SRC-AGE-SPEC",
+      "title": "age file format specification",
+      "url": "https://github.com/C2SP/C2SP/blob/main/age.md",
+      "version_or_commit": "Format v1; repository main branch mutable; commit SHA not exposed/pinned in this review",
+      "locator": "Version line and v1 format; scrypt recipient stanza; body key wrapping",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read the primary format specification for passphrase-based encryption.",
+      "governing_condition_default_exception": "Passphrase mode derives a wrapping key with scrypt using a random salt and specified work factor, then wraps the random file key with ChaCha20-Poly1305. The identity implementation SHOULD bound work factor, and a scrypt stanza cannot be mixed with other recipient stanzas.",
+      "applicability": "A concrete comparison for optional passphrase encryption and why format/KDF/AEAD behavior is more informative than an 'encrypted' label.",
+      "limitations": "Format specification alone does not select an implementation, UX, archival compatibility policy, forgotten-passphrase recovery route, or product threat model."
+    },
+    {
+      "id": "SRC-AGE-CLI",
+      "title": "age project README and CLI usage",
+      "url": "https://github.com/FiloSottile/age",
+      "version_or_commit": "Repository main, mutable; no commit SHA pinned in this review",
+      "locator": "README Usage and Passphrases sections",
+      "access_utc": "2026-10-12T04:20:40Z",
+      "observed_operation": "Read official project instructions for passphrase and recipient modes.",
+      "governing_condition_default_exception": "CLI exposes interactive passphrase encryption and recipient/identity modes; README demonstrates generating a random passphrase and separately protecting identity files. No product recovery mechanism is described.",
+      "applicability": "Illustrates passphrase UX and alternative recipient-key workflows for a future selection discussion.",
+      "limitations": "CLI workflow is not evidence that this library/package meets a desktop application's UI, platform, or key-management requirements; absence of described recovery is not a universal mathematical claim."
+    },
+    {
+      "id": "SRC-JOP-ABS-PATH-FIX",
+      "title": "Narrow fix for an absolute image path pasted between Joplin editors — PR #6865",
+      "url": "https://github.com/laurent22/joplin/pull/6865",
+      "version_or_commit": "Merged 2023-01-11 into Joplin dev in six commits; no release tag identified in this review",
+      "locator": "PR description and merge record; specifically copying an image from WYSIWYG and pasting into Markdown editor",
+      "access_utc": "2026-10-12T04:20:59Z",
+      "observed_operation": "Read the primary code-review/merge record linked from issue #6211.",
+      "governing_condition_default_exception": "The PR says it replaces an absolute resource path in pasted Markdown with the internal link when possible. It describes the WYSIWYG-to-Markdown clipboard path, and records a merge after CI and manual testing on Ubuntu.",
+      "applicability": "A narrow repair-history example that points to cross-editor and cross-platform attachment-reference tests.",
+      "limitations": "Does not establish a universal repair for all file:/// paths, JEX omission cases, platforms, or current releases; no release version containing this change was identified."
+    },
+    {
+      "id": "SRC-JOP-PATH-ISSUE",
+      "title": "Files without extension are not imported properly — Joplin issue #12049",
+      "url": "https://github.com/laurent22/joplin/issues/12049",
+      "version_or_commit": "Reporter identifies Joplin 3.3.3, revision 23254e6; opened 2025-04-03; closed with linked PR #12974",
+      "locator": "Issue reproduction of three relative file links: no extension with ./, no extension without ./, and a file with extension",
+      "access_utc": "2026-10-12T04:20:59Z",
+      "observed_operation": "Read the primary user report linked from the importer-fix PR.",
+      "governing_condition_default_exception": "Reporter says one no-extension path is imported under a wrong extension, another is not imported, and a named-extension path imports correctly.",
+      "applicability": "Supports edge-case fixtures covering paths, identity and imported relationships, especially extensionless attachment names.",
+      "limitations": "Reporter case for Joplin 3.3.3; specific platform importer behavior, not a general archive format guarantee."
+    },
+    {
+      "id": "CRIT-SQLITE-PRAGMA-INTEGRITY",
+      "title": "Pragma statements supported by SQLite",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_or_commit": "Current official SQLite documentation; mutable page; no release version displayed",
+      "locator": "PRAGMA integrity_check and PRAGMA foreign_key_check sections",
+      "access_utc": "2026-10-12T04:33:35Z (page-open review timestamp, obtained immediately after opening the page)",
+      "observed_operation": "Opened the official PRAGMA reference after checking the investigator's integrity-check citation. Confirmed integrity_check does a low-level format/consistency check and detects UNIQUE, CHECK, and NOT NULL constraint errors; it does not find FOREIGN KEY errors, for which foreign_key_check is provided.",
+      "governing_condition_default_exception": "A full integrity_check checks the whole database unless a table name is supplied for a partial check. It does not check foreign-key violations; the separate foreign_key_check pragma reports those.",
+      "applicability": "Directly supports distinguishing low-level SQLite database integrity from relational foreign-key checks and application-level references to external attachment files.",
+      "limitations": "Documents SQLite engine behavior only; it does not validate application semantics, external resource presence, migration success, or usability of a restored workspace."
+    }
+  ],
+  "critic_review": {
+    "reviewed_at_utc": "2026-10-12T04:33:35Z",
+    "reviewed_scope": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/inputs/brief.md",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/investigator/discovery.md",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/investigator/draft.md",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/investigator/source-map.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/investigator/revealed-plan.md",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/investigator/sources/README.md"
+    ],
+    "independently_opened_carried_source_ids": [
+      "SRC-PY-ZIP",
+      "SRC-SQL-BACKUP",
+      "SRC-SQL-WAL",
+      "SRC-SQL-ATOMIC",
+      "SRC-SQL-FK",
+      "SRC-RESTIC-BACKUP",
+      "SRC-RESTIC-RESTORE",
+      "SRC-RESTIC-CHECK",
+      "SRC-RESTIC-INTERRUPT",
+      "SRC-JOP-IMPORT-EXPORT",
+      "SRC-JOP-JEX-IMPORT-DUP",
+      "SRC-JOP-JEX-UNICODE",
+      "SRC-JOP-ABS-PATH",
+      "SRC-JOP-ABS-PATH-FIX",
+      "SRC-JOP-PATH-ISSUE",
+      "SRC-JOP-PATH-FIX",
+      "SRC-AGE-SPEC",
+      "SRC-AGE-CLI"
+    ],
+    "web_access_time_note": "Direct pages were opened during 2026-10-12T04:27:42Z–2026-10-12T04:33:35Z; individual fetch seconds were not exposed except the final SQLite page-open review timestamp. Original carried access timestamps remain unchanged.",
+    "source_observations": [
+      {
+        "source_id": "SRC-RESTIC-INTERRUPT",
+        "observation": "Direct issue page remains open and identifies the reporter's binary as restic 0.10.0. Comments include a 2025 note about failed-upload files and a 2025 note about refactored SIGINT handling in 0.17.x. Keep the example historical; it does not establish current restic 0.19.1 interruption behavior."
+      },
+      {
+        "source_id": "SRC-JOP-JEX-IMPORT-DUP",
+        "observation": "The issue describes users assuming JEX import replaces existing notes and says duplicates arise if they then enable sync with the same notes already on another device. The issue is closed and links commit dd29cc2; no release containing that commit was verified. Treat it as a product-specific UX/behavior report, not a generic test of import semantics."
+      },
+      {
+        "source_id": "SRC-JOP-PATH-FIX",
+        "observation": "Direct PR page confirms commit c27d542 merged into dev on 2025-09-08 and 11 checks passed. Its review history includes a request to test file import because related tests were failing; it remains a Joplin-specific importer repair."
+      }
+    ],
+    "executed_critic_research": "Directly opened the carried primary documentation/issues listed above and the SQLite PRAGMA documentation below. No archive, storage, application migration, fault-injection, or real-user-data validation was run."
+  }
+}

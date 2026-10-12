@@ -1,0 +1,90 @@
+{
+  "prepared_at_utc": "2026-10-12T04:37:29.134Z",
+  "stage": "critic-breadth",
+  "stage_deadline_utc": "2026-10-12T04:43:29.134Z",
+  "whole_deadline_utc": "2026-10-12T05:18:11.150Z",
+  "stage_budget_s": 360,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/inputs/brief.md",
+      "sha256": "f112bf6a0ba5bb27f04a2c258216098b5fa673e84cb023e1b1b90350ccd4ecb2",
+      "bytes": 2343
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/critic-breadth/assignment.md",
+      "sha256": "acfaf4677293e883dc599674fcd85adc3ed16b8a545ad95b6eee9d284904851b",
+      "bytes": 10006
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/critic-breadth/input-map.json",
+      "sha256": "7a61cef771145aa602ec0fbb5be893b3c6691671ae3e76db13c9b4931e9af4cd",
+      "bytes": 2064
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "2297d6bda964437f265e189aa99e7e4363a6625d0b89e5c494b2087a4ea8c90d",
+      "bytes": 14379
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/draft.md",
+      "sha256": "9aca14bd6f42cb5956876c00f0d633845fc430f78e0bd63a4ba148d5d3a375a2",
+      "bytes": 24811
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "f5b7ec5af73947c5e7053a8d083ba6ee1d78b8c4e0f8b9cbec66ac1317e9e70c",
+      "bytes": 24086
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "58f202584f015d98ea3590cf4e217bf07a651663defc46065fc3bf844801d49c",
+      "bytes": 2175
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "7b12fe9b05a8d93d84c93206477aff9d33399a1e88475daeba0ed1bb5f9b3f67",
+      "bytes": 477
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "cde284926fbc4decd814b1c7189c45aac5d825cb23a3e8d3da581a8f93cb8394",
+      "bytes": 4915
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 critic-breadth stage, run D-R2-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/critic-breadth/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 360.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/investigator/sources/index.md"
+      ]
+    }
+  ],
+  "request_sha256": "126ae077000200a09a8deb348d47dfb0bc09fcbfecd0129cc9bcdb5bb3b065be"
+}

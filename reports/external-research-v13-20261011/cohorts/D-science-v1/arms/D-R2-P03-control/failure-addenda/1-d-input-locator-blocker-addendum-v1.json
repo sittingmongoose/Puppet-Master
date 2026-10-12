@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-10-12T04:24:33.166935+00:00",
+  "original_candidate_blocker": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/run/D-R2-P03-control/stages/investigator/precondition-blocker.json",
+    "sha256": "8089b43c2c072ee5164a9bb5dc1e1ec643953124b8690fe3583d0630c048cfcf",
+    "actual_bytes_copy": "ER13_RUNTIME/state/dispatcher-v1/arms/D-R2-P03-control/investigator-precondition-blocker.raw.json"
+  },
+  "candidate_reported_absolute_brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/inputs/brief.md",
+  "candidate_reported_path_exists_now": false,
+  "declared_input_map_absolute_brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/run/D-R2-P03-control/inputs/brief.md",
+  "declared_exists_now": true,
+  "declared_sha256": "d7a7fcce7656aa8fd0638fe5dc7cde5a335961ce1f8d31bf049916c7be433cd8",
+  "prepared_config_brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-control/control-inputs/brief.md",
+  "prepared_sha256": "d7a7fcce7656aa8fd0638fe5dc7cde5a335961ce1f8d31bf049916c7be433cd8",
+  "reported_equals_declared": false,
+  "candidate_absence_claim_preserved": true,
+  "cause_qualification": "Actual candidate blocker names admitted/ARM/inputs/brief.md; generated input-map and assignment specify admitted/ARM/run/ARM/inputs/brief.md. Reported locator differs from declared existing exact frozen locator. No generated locator mutation indicated; runtime/agent cause beyond wrong reported locator unproven.",
+  "original_failure_held": true,
+  "no_research_replacement": true,
+  "changes_to_used_stage": false,
+  "case_body_read_into_model": false
+}

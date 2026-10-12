@@ -1,0 +1,28 @@
+{
+  "run_id": "D-R2-P01-treatment",
+  "stage": "critic-breadth",
+  "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/inputs/brief.md",
+  "predecessors": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/plan-reveal.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/sources/INDEX.md"
+  ],
+  "source_roots": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/sources"
+  ],
+  "allowed_write_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/critic-breadth",
+  "stage_deadline_utc": "2026-10-12T04:31:28.469Z",
+  "whole_deadline_utc": "2026-10-12T05:18:05.184Z",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/investigator/revealed-plan.md"
+}

@@ -1,0 +1,70 @@
+{
+  "run_id": "D-R2-P03-treatment",
+  "runtime_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment",
+  "brief_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/control-inputs/brief.md",
+  "plan_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/control-inputs/plan.md",
+  "whole_deadline_utc": "2026-10-12T05:18:16.672Z",
+  "whole_budget_s": 3600,
+  "t0_utc": "2026-10-12T04:18:16.672Z",
+  "output_selection": {
+    "investigator": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json"
+    ],
+    "critic-breadth": [
+      "source-map.json",
+      "critique.md"
+    ],
+    "critic-truth": [
+      "source-map.json",
+      "critique.md"
+    ],
+    "reviser": [
+      "source-map.json",
+      "final.md"
+    ]
+  },
+  "final_stage": "reviser",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic-breadth": 360,
+    "critic-truth": 360,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "R0",
+  "stage_prompt_deltas": {
+    "critic-truth": "Explicitly challenge consequential negative/default/limit claims and proposed criticism that removes a capability or forces an architectural choice using governing primary context and release/version exceptions, where these can change the decision. Retain full ordinary review elsewhere. Record uncertainty honestly; undetermined cannot replace feasible required research. Do not refresh every source merely to extend the audit trail, and do not weaken material review coverage.\n"
+  },
+  "method_delta_files": {
+    "critic-truth": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  },
+  "public_recipe_choice": "B06",
+  "activation_capture_version": "exact-capture-v21",
+  "dispatch_owner": "root",
+  "method_card_file": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/control-inputs/method/method.json",
+    "sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+    "bytes": 1393
+  },
+  "neutral_or_unused_method_deltas": {
+    "investigator": "empty; ordinary investigation unchanged",
+    "reviser": "unused empty supplemental delta; ordinary reviser unchanged",
+    "critic-breadth": "empty supplemental delta; ordinary complementary breadth critic unchanged"
+  }
+}

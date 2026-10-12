@@ -1,0 +1,11 @@
+# D-P04 — Provisional design for review
+
+The draft assigns each shape a persistent identifier and stores connector endpoints by those identifiers. A comment anchor contains an object identifier plus an offset within its bounds. Grouping would retain child identifiers, and moving or resizing would transform the offset. Region comments would use their rectangle as a fallback. Research how these choices behave after replacement, splitting, nested transforms, and deletion rather than assuming geometry determines intent.
+
+Disconnected operations would merge through an operation log. Deleting an object would mark it unavailable while preserving its last geometry; a later edit referring to it would restore it as a conflicted object. The draft assumes this is more useful than losing a comment target. Examine alternatives that preserve the comment without reviving the target, including explicit unresolved states and user-directed reassignment.
+
+Old geometry would remain until all participants acknowledge the deletion, after which compaction would retain only an anchor summary. A read-only export would include current geometry, comment text, and a screenshot of unresolved targets. Investigate participant membership, long-disconnected clients, information exposure, and whether a screenshot provides sufficient review context.
+
+Provide explicit dispositions for identity, coordinate fallback, deletion, merging, history retention, and export. Compare mechanisms that merge edits with mechanisms that preserve referential intent, identifying their different guarantees. Propose checks for concurrent deletion/commenting, identical replacements, regrouping, delayed reconnection, and compaction. Report any executed synthetic histories separately, without claiming live collaboration or access-control validation.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

@@ -1,0 +1,671 @@
+{
+  "run_id": "D-R2-P04-control",
+  "stage": "reviser",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Tantivy 0.26.2 tokenizer documentation",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "release_or_commit": "tantivy 0.26.2",
+      "locator": "Module tokenizer; default, raw, en_stem, custom tokenizer sections",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Web search result and documentation excerpt inspected; no code run.",
+      "governing_condition_default_exception": "Default tokenizer splits on punctuation and whitespace, lowercases, and drops tokens longer than 40 characters. en_stem adds English stemming. Tokenizers are selected by text field; custom tokenizers can be registered.",
+      "applicability": "Tantivy is a Rust full-text engine candidate. Its built-ins do not establish language-aware segmentation for every script; select analyzers explicitly and test query/index parity.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened the exact Tantivy 0.26.2 tokenizer docs and reviewed default/en_stem/custom-tokenizer sections. Confirmed default punctuation/whitespace splitting, lowercasing, removal above 40 characters, and per-field tokenizer configuration; no code run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "Tantivy 0.26.2 IndexWriter documentation",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "release_or_commit": "tantivy 0.26.2",
+      "locator": "IndexWriter::commit, ::rollback, ::delete_term",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Web search result and documentation excerpt inspected; no code run.",
+      "governing_condition_default_exception": "Adds and deletes become visible on commit. A delete affects previously committed documents and documents added earlier in the same commit; rollback returns to the last commit.",
+      "applicability": "Tantivy can publish a complete new version after successful extraction, but index publication and notebook metadata need an explicit coordination strategy.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened exact Tantivy 0.26.2 IndexWriter docs and reviewed commit, rollback, and delete_term. Confirmed pending updates/deletes become visible on commit and rollback returns to last commit; no index run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "Tantivy issue: Multi-Language Index?",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/issues/2619",
+      "release_or_commit": "Issue #2619, opened 2025-04-09; observed open in source page/search result on access date",
+      "locator": "Issue question about indexing mixed language documents including Japanese and Chinese",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official project issue search result inspected; no code run.",
+      "governing_condition_default_exception": "Issue documents an unresolved design question about mixed-language indexing and tokenizers; it is not a guarantee of a product limitation or feature status beyond the observed issue.",
+      "applicability": "Supports treating multilingual analyzers as a validation/selection decision instead of assuming one default tokenizer handles all languages.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened the official Tantivy issue and checked the issue description/status. It asks how mixed Japanese/Chinese and other language tokenization should be configured; it is an open question, not a support guarantee.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "Lindera tokenizer integration for Tantivy",
+      "exact_url": "https://docs.rs/lindera-tantivy/5.0.1/lindera_tantivy/tokenizer/index.html",
+      "release_or_commit": "lindera-tantivy 5.0.1; docs.rs dependency listing observed Tantivy ^0.26.1",
+      "locator": "Tokenizer module; LinderaTokenizer description; crate release dependency metadata",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official crate documentation/search excerpt inspected; no code run.",
+      "governing_condition_default_exception": "The integration adapts Lindera morphological analysis to Tantivy tokenization. Dictionary selection/build features are separate deployment choices.",
+      "applicability": "Potential Japanese, Korean, or Chinese analyzer alternative; dictionary size, licensing, script routing, and analyzer-version migration need owner review and fixtures.",
+      "critic_review": {
+        "independent_status": "partially_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "The exact versioned docs URL returned an internal access error. A docs.rs result for lindera-tantivy 5.0.1 confirmed release/dependency metadata (Tantivy ^0.26.1); a separate latest module page described LinderaTokenizer morphological analysis. Exact 5.0.1 module contents were not independently opened.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "SQLite FTS5 documentation",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "release_or_commit": "SQLite FTS5 documentation, accessed 2026-10-12; docs do not expose a pinned SQLite build in this page",
+      "locator": "Sections 4.3.1 unicode61, 4.3.3 porter, 4.3.4 trigram, external/contentless tables",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official SQLite documentation search result and page excerpts inspected; no database opened or query run.",
+      "governing_condition_default_exception": "Default unicode61 uses Unicode 6.1 categories and removes Latin-script diacritics by default; porter is English-specific; trigram enables substring matching but queries shorter than three Unicode characters do not match via trigram full-text search.",
+      "applicability": "Embedded lexical/search candidate with potentially simple metadata co-transaction. Its exact tokenizer behavior and build availability must be verified for the selected SQLite build; CJK segmentation and script-specific recall need tests.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened the official FTS5 docs and inspected unicode61, porter, and trigram sections. Confirmed Unicode 6.1 defaults, Latin diacritic behavior, and the under-three-Unicode-character full-text trigram limitation; no SQLite database/query run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "SQLite forum report on Polish Ł tokenization",
+      "exact_url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "release_or_commit": "SQLite forum discussion 2020-05-11 / maintainer reply 2021-01-11; release context 3.30.1 in report",
+      "locator": "Initial report and maintainer explanation of Unicode decomposition behavior",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official SQLite forum page search result excerpt inspected; no reproducer run.",
+      "governing_condition_default_exception": "The discussion explains that Ł/ł has no canonical decomposition to L/l plus a mark in the Unicode data used by unicode61, so remove_diacritics does not fold it as the reporter expected.",
+      "applicability": "Concrete warning that diacritic removal is not universal transliteration; avoid promising multilingual equivalence from unicode61 and retain original spellings.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened SQLite forum discussion and read maintainer explanation that Ł/ł lack a canonical base-letter decomposition in the tokenizer data and are not folded to L/l by remove_diacritics. No reproducer run; discussion is a scoped example.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "lopdf 0.45.0 Document API",
+      "exact_url": "https://docs.rs/lopdf/0.45.0/lopdf/struct.Document.html",
+      "release_or_commit": "lopdf 0.45.0",
+      "locator": "extract_text_chunks_with_limit and extract_text_with_limit",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official docs.rs release documentation search excerpt inspected; no PDF parsed.",
+      "governing_condition_default_exception": "Limited methods bound decompressed page content and return a memory-limit error for an over-limit page; the ordinary extraction counterpart is not bounded by this parameter.",
+      "applicability": "Page-at-a-time extraction is a modest digital-PDF path with page-only locators and explicit decompression caps. No text layer means no text is yielded; scans require separate OCR.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Retrieved exact lopdf 0.45.0 API documentation in search results and confirmed extract_text_with_limit and extract_text_chunks_with_limit bound decompressed content per page and surface MemoryLimitExceeded. No PDF parsed.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "Tesseract command-line usage: TSV output",
+      "exact_url": "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html",
+      "release_or_commit": "Official tessdoc main page, version not pinned in URL; current release notes separately list 5.5.3 (2026-07-24)",
+      "locator": "TSV output example and columns level/page/block/paragraph/line/word, left/top/width/height/confidence/text",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official Tesseract documentation search excerpt inspected; no OCR command run.",
+      "governing_condition_default_exception": "TSV is requested by the tsv config; its coordinates are on the OCR image canvas and require a tested mapping to PDF displayed coordinates after raster scale/rotation/crop.",
+      "applicability": "Offline OCR can yield word/page boxes for scanned pages; retain source as OCR-derived and expose page-only until coordinate transformation is validated.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened official Tesseract command-usage documentation and reviewed TSV output example/columns. Confirmed level/page/block/paragraph/line/word and image-canvas left/top/width/height/confidence/text output. No OCR command run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "Tesseract regression report and fix history: issue #4014",
+      "exact_url": "https://github.com/tesseract-ocr/tesseract/issues/4014",
+      "release_or_commit": "Issue #4014; regression bisected to commit 842cca1; fix PR #4136; issue says fixed in 5.3.3",
+      "locator": "Issue activity describing 5.0.0-beta-20210916 as last known working, later reproduction and merged fix",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official project issue history search excerpt inspected; no OCR run.",
+      "governing_condition_default_exception": "The report concerns recognition of a particular Excel-like TIFF sample, not a broad accuracy result; maintainer bisect/fix evidence is scoped to that regression.",
+      "applicability": "Shows the value of pinning engine versions and keeping public/synthetic OCR fixtures. It cannot predict accuracy on private notebook attachments.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened official Tesseract issue #4014. Confirmed the report concerns one Excel-like TIFF and a version regression; issue history points to PR #4136 and 5.3.3. This is not general accuracy evidence; no OCR run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "OCRmyPDF v15.2.0 documentation snapshot",
+      "exact_url": "https://ocrmypdf.readthedocs.io/_/downloads/en/v15.2.0/pdf/",
+      "release_or_commit": "OCRmyPDF documentation v15.2.0",
+      "locator": "Sidecar text documentation",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Search result from the official versioned documentation snapshot inspected; no OCRmyPDF command run.",
+      "governing_condition_default_exception": "The documented sidecar contains OCR text found by OCRmyPDF; existing-text pages are not included in that sidecar.",
+      "applicability": "Do not treat this sidecar alone as a complete replacement of all per-page extracted text for mixed native-text/scanned PDFs.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened the official OCRmyPDF v15.2.0 PDF documentation snapshot and inspected the sidecar passage. It says existing-text pages and skipped pages are absent from the OCR sidecar; no command run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "ECMA-376 Office Open XML File Formats standard page",
+      "exact_url": "https://ecma-international.org/publications-and-standards/standards/ecma-376/",
+      "release_or_commit": "5th edition, December 2021; Part 2 adopted in the latest edition; other parts listed at their cited 2015/2016 editions",
+      "locator": "Standard scope and parts list",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official Ecma standard page search result excerpt inspected; no package parsed.",
+      "governing_condition_default_exception": "The standard defines OOXML vocabularies, document representation, packaging, and consumer/producer requirements; the listed parts have distinct editions.",
+      "applicability": "Basis for an optional PPTX package reader. An implementation must follow package relationships and namespaces and scope which slide content kinds it actually reads.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened Ecma International ECMA-376 page. Confirmed fifth edition December 2021, four parts, and the distinct cited editions; no package parsed.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "quick-xml 0.42.0 Reader documentation",
+      "exact_url": "https://docs.rs/quick-xml/0.42.0/quick_xml/reader/struct.Reader.html",
+      "release_or_commit": "quick-xml 0.42.0",
+      "locator": "Reader namespace behavior and DecodingReader note",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official docs.rs release documentation search excerpt inspected; no XML parsed.",
+      "governing_condition_default_exception": "Reader is a streaming UTF-8 event reader and does not resolve namespace prefixes; use namespace-aware reading for namespaced OOXML. Non-UTF-8 input requires the encoding feature and decoding adapter.",
+      "applicability": "A direct PPTX parser needs bounded ZIP member reads plus namespace-aware streaming XML and explicit supported-content tests.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened exact quick-xml 0.42.0 Reader docs and checked namespace and DecodingReader passages. Confirmed Reader does not resolve namespace prefixes; encoding support requires the feature/adapter for non-UTF-8. No XML parsed.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "zip 8.6.0 ZipFile documentation",
+      "exact_url": "https://docs.rs/zip/8.6.0/zip/read/struct.ZipFile.html",
+      "release_or_commit": "zip 8.6.0",
+      "locator": "ZipFile::size, ::compressed_size, ::enclosed_name warning",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official docs.rs release documentation search excerpt inspected; no archive read.",
+      "governing_condition_default_exception": "Entry names may contain absolute paths or traversal; enclosed_name is recommended if extracting to paths. size and compressed_size expose declared values but streaming byte caps remain needed.",
+      "applicability": "PPTX is a ZIP package; avoid writing package members to user-selected paths and enforce both declared and actual byte/entry limits.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened exact zip 8.6.0 ZipFile docs. Confirmed archive member paths can be absolute/traversal, enclosed_name validates path safety, and declared sizes are exposed. No archive read.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S14",
+      "title": "W3C WebVTT specification",
+      "exact_url": "https://www.w3.org/TR/webvtt1/",
+      "release_or_commit": "W3C WebVTT specification page observed 2026-10-12",
+      "locator": "Cue timing: start/end offsets; cue overlap/order; timestamp requirements",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "W3C specification search excerpt inspected; no transcript parsed.",
+      "governing_condition_default_exception": "Cue end must be later than its start; cues can overlap and are listed by start time; timestamps are offsets for the cue block.",
+      "applicability": "User-supplied VTT can support cue text with a start/end time locator. Validate malformed timing; do not fabricate times for transcripts without cues.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened W3C WebVTT specification and inspected cue timestamp rules. Start offsets are ordered and cue end is later than cue start; inference: intervals may overlap because the cue rules require ordered starts and end-after-start but do not require a later cue to start after the prior cue ends. No transcript parsed.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "from": "2026-10-12T04:39:00Z",
+          "through": "2026-10-12T04:40:02Z"
+        },
+        "observed_operation": "Opened W3C WebVTT specification and checked cue timing rules: starts are nondecreasing, each end exceeds its start, and intervals may overlap. This defines track-relative offsets, not binding to an audio byte revision.",
+        "governing_condition_default_exception": "Cue times are track-relative; the spec does not establish that a supplied track corresponds to a given audio revision.",
+        "applicability": "Use cue times only when the application binds that exact transcript revision to an exact audio revision; binding is provenance, not proof of accuracy/synchronization."
+      }
+    },
+    {
+      "source_id": "S15",
+      "title": "OCRmyPDF sidecar regression history: issue #194",
+      "exact_url": "https://github.com/ocrmypdf/OCRmyPDF/issues/194",
+      "release_or_commit": "Issue #194; regression in v5.4.1 fixed in v5.4.2 per maintainer; release note in v5 history",
+      "locator": "Issue discussion; release notes v5.4.2",
+      "access_utc": {
+        "from": "2026-10-12T04:21:14Z",
+        "through": "2026-10-12T04:22:33Z"
+      },
+      "observed_operation": "Official project issue and release-note search excerpts inspected; no OCR command run.",
+      "governing_condition_default_exception": "The specific sidecar-empty regression was reported and fixed; older history should not be generalized to current output quality.",
+      "applicability": "For any OCR pipeline, fixture the actual output artifacts and regression cases instead of trusting exit status alone.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened OCRmyPDF issue #194. Confirmed a specific v5.4.1 sidecar-empty regression and maintainer statement that it was fixed in v5.4.2; not evidence of current-version quality.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S16",
+      "title": "Tantivy 0.26.2 segment updater source and deletion test",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/indexer/segment_updater.rs",
+      "release_or_commit": "Tantivy tag 0.26.2; commit hash not displayed on inspected source page",
+      "locator": "delete_all_docs_min test, lines 3509 onward; index add/commit/delete_term/commit, reader reload and empty-segment assertions",
+      "access_utc": {
+        "from": "2026-10-12T04:22:33Z",
+        "through": "2026-10-12T04:27:15Z"
+      },
+      "observed_operation": "Opened pinned repository source and inspected the named Rust test; did not execute it.",
+      "governing_condition_default_exception": "This upstream unit test exercises deleting terms across committed segments and verifies an empty reader after reload. It does not test atomic coordination with an external attachment metadata database.",
+      "applicability": "Primary code/test evidence for the Tantivy commit/delete candidate; application still needs its own per-attachment generation and membership race tests.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened Tantivy tag 0.26.2 source file and located delete_all_docs_min (around source line 3509). It commits documents, applies deletion, and tests reader state; no test executed and no external metadata/membership race is covered.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S17",
+      "title": "SQLite FTS5 Unicode61 tokenizer implementation",
+      "exact_url": "https://github.com/sqlite/sqlite/blob/master/ext/fts5/fts5_tokenize.c",
+      "release_or_commit": "SQLite repository master as observed; exact commit hash was not exposed by the inspected source page (UNKNOWN)",
+      "locator": "Unicode61Tokenizer initialization defaults and category/diacritic handling",
+      "access_utc": {
+        "from": "2026-10-12T04:22:33Z",
+        "through": "2026-10-12T04:27:15Z"
+      },
+      "observed_operation": "Opened official SQLite source excerpt; no compilation or tokenizer call was run.",
+      "governing_condition_default_exception": "Implementation initializes Unicode token categories to L*, N*, Co and simple diacritic removal; options can alter categories and remove_diacritics behavior.",
+      "applicability": "Corroborates that FTS5 language behavior is tokenizer/config specific. Pin the SQLite release/build in an implementation and retain a direct tokenizer fixture.",
+      "critic_review": {
+        "independent_status": "partially_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Official SQLite master source search result exposed Unicode61 initialization defaults (L* N* Co and simple diacritic removal). Branch is mutable and exact commit remains UNKNOWN; no compile/tokenizer run.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S18",
+      "title": "SQLite upstream FTS5 Unicode tokenizer test",
+      "exact_url": "https://github.com/sqlite/sqlite/blob/master/ext/fts5/test/fts5unicode.test",
+      "release_or_commit": "SQLite repository master as observed; exact commit hash was not exposed by the inspected source page (UNKNOWN)",
+      "locator": "Lines 391–458: FTS5 capability gate; default-tokenizer equivalence to unicode61; tokenizer examples",
+      "access_utc": {
+        "from": "2026-10-12T04:22:33Z",
+        "through": "2026-10-12T04:27:15Z"
+      },
+      "observed_operation": "Opened upstream Tcl test source and inspected the capability gate and default tokenizer assertions; test not executed.",
+      "governing_condition_default_exception": "The file exits when the build lacks SQLITE_ENABLE_FTS5; it checks that an unqualified fts5 table behaves like explicit unicode61 for the shown fixture.",
+      "applicability": "Primary upstream test evidence that FTS5 availability is a build condition and that a small test confirms only its stated cases; verify the shipped build and add application-specific script fixtures.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened SQLite master FTS5 Tcl test source and inspected lines 391–458. The test file exits without SQLITE_ENABLE_FTS5 and compares default FTS5 tokenization with unicode61 on shown fixtures; test not executed. Exact commit remains UNKNOWN.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S19",
+      "title": "lopdf 0.45.0 source and security/test changelog",
+      "exact_url": "https://docs.rs/crate/lopdf/0.45.0/source/CHANGELOG.md",
+      "release_or_commit": "lopdf crate 0.45.0 (release date 2026-09-08); changelog includes 0.44.0 (2026-07-10)",
+      "locator": "v0.44.0 decompression-bound features and tests demonstrating unbounded stream decompression; v0.45.0 crafted-PDF crash/bounds fixes",
+      "access_utc": {
+        "from": "2026-10-12T04:22:33Z",
+        "through": "2026-10-12T04:27:15Z"
+      },
+      "observed_operation": "Inspected official crate changelog excerpt for release and test entries; no PDF or test was run.",
+      "governing_condition_default_exception": "The changelog says 0.44 added bounded text/stream/load decompression and tests, and 0.45 added additional parser bounds/crash fixes. It does not prove all PDF attacks are eliminated.",
+      "applicability": "Supports selecting bounded APIs and hostile-input fixtures, while leaving independent caps, failure reporting, and version pinning as application obligations.",
+      "critic_review": {
+        "independent_status": "unresolved_access",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Direct docs.rs changelog access returned an internal error and search did not retrieve enough of the exact 0.45.0 changelog to verify the described historical entries. This does not negate the separately checked 0.45.0 bounded API in S07; changelog-specific assertions remain unconfirmed in this critic pass.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "from": "2026-10-12T04:39:00Z",
+          "through": "2026-10-12T04:40:02Z"
+        },
+        "observed_operation": "Critic could not access the docs.rs page. Opened official lopdf GitHub changelog at main and checked v0.44.0/v0.45.0 entries; no PDF or test run.",
+        "result": "Confirms bounded text/load/stream decompression and unbounded-stream tests in v0.44.0, and additional parser bounds/crafted-PDF crash fixes in v0.45.0; see S25.",
+        "limit": "Does not imply that all PDF risks are eliminated."
+      }
+    },
+    {
+      "source_id": "S20",
+      "title": "Tesseract regression fix PR #4136",
+      "exact_url": "https://github.com/tesseract-ocr/tesseract/pull/4136",
+      "release_or_commit": "Merged 2023-10-05 as commit 063ad31; fix targets regression from commit 842cca1 and issue #4014",
+      "locator": "PR description and merged commit; regression cause was signed layout scores converted to unsigned; fix included in 5.3.3 per issue/release history",
+      "access_utc": {
+        "from": "2026-10-12T04:22:33Z",
+        "through": "2026-10-12T04:27:15Z"
+      },
+      "observed_operation": "Opened official pull request and inspected maintainer fix description and merge metadata; no OCR/test run.",
+      "governing_condition_default_exception": "This PR fixes a specific layout-detection regression; the inspected PR shows one merged commit and does not establish broad OCR accuracy or a universal fixture suite.",
+      "applicability": "Use scoped issue-to-fix-to-release history to choose a public regression fixture and pin tested OCR versions; do not generalize the case.",
+      "critic_review": {
+        "independent_status": "independently_checked",
+        "access_utc": {
+          "from": "2026-10-12T04:29:57Z",
+          "through": "2026-10-12T04:33:14Z"
+        },
+        "observed_operation": "Opened official Tesseract PR #4136 and inspected its description and merge metadata. Confirmed signed-to-unsigned layout-score regression description, merged commit 063ad31, and link to issue #4014; no test executed.",
+        "notes": "This critic observation supplements and does not overwrite the carried investigator identity, locator, or source ID."
+      }
+    },
+    {
+      "source_id": "S21",
+      "title": "Tantivy repository changelog (release-currentness check)",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/blob/main/CHANGELOG.md",
+      "release_or_commit": "main branch as observed; 0.27.0 appears as the first release heading; exact commit UNKNOWN",
+      "locator": "Top of CHANGELOG.md; 0.27.0 heading followed by 0.26.2",
+      "access_utc": {
+        "from": "2026-10-12T04:32:01Z",
+        "through": "2026-10-12T04:33:14Z"
+      },
+      "observed_operation": "Official repository changelog search result inspected; no library code/test run.",
+      "governing_condition_default_exception": "This establishes a newer listed release than the reviewed 0.26.2 docs/test source at the time of this check, not behavioral compatibility or a release date.",
+      "applicability": "Version freshness follow-up for the candidate; retain 0.26.2 behavioral claims as scoped to that release and recheck APIs/tests before implementation.",
+      "reviser_review": {
+        "access_utc": {
+          "from": "2026-10-12T04:39:00Z",
+          "through": "2026-10-12T04:40:02Z"
+        },
+        "observed_operation": "Opened official Tantivy main-branch CHANGELOG.md and inspected first release headings.",
+        "result": "0.27.0 is listed above 0.26.2 and includes breaking API changes; this confirms relative version currentness but not 0.27.0 tokenizer/indexer behavior or support status.",
+        "limit": "Main is mutable and exact commit was not exposed; keep 0.26.2 evidence release-bound."
+      }
+    },
+    {
+      "source_id": "S22",
+      "title": "OCRmyPDF official releases page (release-currentness check)",
+      "exact_url": "https://github.com/ocrmypdf/OCRmyPDF/releases",
+      "release_or_commit": "v17.13.0 listed latest; tag commit 1a1cfb5; release page excerpt shows 28 Sep 18:55, year not displayed in excerpt",
+      "locator": "Latest release listing and v17.13.0 entry",
+      "access_utc": {
+        "from": "2026-10-12T04:32:01Z",
+        "through": "2026-10-12T04:33:14Z"
+      },
+      "observed_operation": "Official GitHub releases search result inspected; no OCRmyPDF command run.",
+      "governing_condition_default_exception": "The release listing establishes currentness at the time viewed; it does not establish that the older v15.2.0 sidecar behavior is unchanged in v17.13.0.",
+      "applicability": "Shows that v15.2.0 documentation is a historical version snapshot; recheck current docs before relying on OCRmyPDF behavior in an implementation.",
+      "reviser_review": {
+        "access_utc": {
+          "from": "2026-10-12T04:39:00Z",
+          "through": "2026-10-12T04:40:02Z"
+        },
+        "observed_operation": "Opened official OCRmyPDF releases page and checked release list/v17.13.0 entry.",
+        "result": "v17.13.0 is marked Latest; tag commit 1a1cfb5. The displayed date is September 28 without a displayed year.",
+        "limit": "A latest release listing does not establish formal support policy or transfer older behavior."
+      }
+    },
+    {
+      "source_id": "S23",
+      "title": "Library of Congress SubRip (SRT) format description",
+      "exact_url": "https://www.loc.gov/preservation/digital/formats/fdd/fdd000569.shtml",
+      "release_or_commit": "Format Description FDD000569; last significant update 2025-05-27; page status Preliminary; accessed 2026-10-12",
+      "locator": "Identification/description of counter, start/end arrow, timecode, text and blank line; transparency notes on encoding variation",
+      "access_utc": {
+        "from": "2026-10-12T04:39:00Z",
+        "through": "2026-10-12T04:40:02Z"
+      },
+      "observed_operation": "Opened the format description and inspected common structure and encoding notes; no parser/file was run.",
+      "governing_condition_default_exception": "Preliminary format description, not normative SRT conformance specification. It summarizes common structure and notes encoding variation.",
+      "applicability": "Supports retaining SRT as a candidate only; does not establish parser, encoding detector, robustness, or tested support."
+    },
+    {
+      "source_id": "S24",
+      "title": "OCRmyPDF 17.13.0 cookbook: sidecar text output",
+      "exact_url": "https://ocrmypdf.readthedocs.io/en/latest/cookbook.html",
+      "release_or_commit": "OCRmyPDF docs 17.13.0 as served by latest docs; release page lists v17.13.0/tag commit 1a1cfb5 as latest at inspection [S22]",
+      "locator": "Produce PDF and text file containing OCR text; sidecar note and all-text extraction note",
+      "access_utc": {
+        "from": "2026-10-12T04:39:00Z",
+        "through": "2026-10-12T04:40:02Z"
+      },
+      "observed_operation": "Opened current official cookbook and inspected sidecar note; no command run.",
+      "governing_condition_default_exception": "Sidecar omits pages already containing text; with --pages it includes only OCRed pages; pages skipped by options/timeouts are absent. Docs point to another tool for all PDF text.",
+      "applicability": "Confirms mixed-PDF sidecar caveat in current docs; does not establish OCR quality or notebook-corpus behavior."
+    },
+    {
+      "source_id": "S25",
+      "title": "lopdf official changelog for v0.44.0 and v0.45.0",
+      "exact_url": "https://github.com/J-F-Liu/lopdf/blob/main/CHANGELOG.md",
+      "release_or_commit": "Official main branch as accessed; changelog lists v0.45.0 (2026-09-08) and v0.44.0 (2026-07-10); exact main commit not exposed",
+      "locator": "Top changelog entries: v0.45.0 parser bounds/crafted-PDF fixes; v0.44.0 bounded text/load/stream decompression and unbounded-stream tests",
+      "access_utc": {
+        "from": "2026-10-12T04:39:00Z",
+        "through": "2026-10-12T04:40:02Z"
+      },
+      "observed_operation": "Opened official changelog and inspected current release entries; no PDF or upstream test run.",
+      "governing_condition_default_exception": "Changelog reports scoped changes; it does not establish absence of other parser/security defects.",
+      "applicability": "Resolves critic-stage inability to verify S19 changelog facts; independent limits, hostile-input fixtures, and implementation version selection remain necessary."
+    }
+  ],
+  "review_method": "Independent primary-source checks; no parser, index, OCR engine, or fixture was executed.",
+  "review_access_utc": {
+    "from": "2026-10-12T04:29:57Z",
+    "through": "2026-10-12T04:33:14Z"
+  },
+  "inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/inputs/brief.md",
+      "sha256": "8270394984090bb4a4bd8e15463b6d4fe2a697e13fa8f05c0bde29eb8168a812"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/discovery.md",
+      "sha256": "0c76a92415d251c7472995238fb437e89ad1f0d5e0f9744428a760e7b350c75b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/draft.md",
+      "sha256": "f98cb5efa2089ff481aa28434985b1650324217006cedc44f549ece077c0fa25"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/source-map.json",
+      "sha256": "a0438cfe33d2456ad14330ce8dde951e3fc03664a67f2ca5b107ba59f9ef3e2a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/revealed-plan.md",
+      "sha256": "6aff429d38b8870908fba9fe1990d233f83a48e95a464aecfa78d8dd0ad169a6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/plan-reveal.json",
+      "sha256": "a7927e04735188577ed08f801e2557a153ad5989276660148dc0b5163d948539"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/sources/index.md",
+      "sha256": "b4926eaed625fa679a870bacd56971e2fb62c971e64b24c638f025f03f9ae803"
+    }
+  ],
+  "reviser_review": {
+    "method": "Independent recheck of disputed claims against official primary documentation/repository pages; no code, parser, OCR, index, fixture, or upstream test executed.",
+    "access_utc": {
+      "from": "2026-10-12T04:39:00Z",
+      "through": "2026-10-12T04:40:02Z"
+    },
+    "disposition_summary": {
+      "transcript_audio_revision": "Accepted material incompleteness; amended design/tests. WebVTT gives cue time, not exact audio-revision binding.",
+      "currentness": "Accepted and qualified; verified newer/current version listings and OCRmyPDF current sidecar docs. Release listing is not formal support policy.",
+      "srt": "Accepted original gap; added preliminary Library of Congress format description. Parser support remains unresolved.",
+      "lopdf": "Critic-stage access uncertainty rechecked; official changelog confirms scoped v0.44.0/v0.45.0 entries, not complete PDF security."
+    },
+    "inputs_reviewed": [
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/inputs/brief.md",
+        "sha256": "8270394984090bb4a4bd8e15463b6d4fe2a697e13fa8f05c0bde29eb8168a812"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/discovery.md",
+        "sha256": "0c76a92415d251c7472995238fb437e89ad1f0d5e0f9744428a760e7b350c75b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/draft.md",
+        "sha256": "f98cb5efa2089ff481aa28434985b1650324217006cedc44f549ece077c0fa25"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/source-map.json",
+        "sha256": "a0438cfe33d2456ad14330ce8dde951e3fc03664a67f2ca5b107ba59f9ef3e2a"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/revealed-plan.md",
+        "sha256": "6aff429d38b8870908fba9fe1990d233f83a48e95a464aecfa78d8dd0ad169a6"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/plan-reveal.json",
+        "sha256": "a7927e04735188577ed08f801e2557a153ad5989276660148dc0b5163d948539"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/investigator/sources/index.md",
+        "sha256": "b4926eaed625fa679a870bacd56971e2fb62c971e64b24c638f025f03f9ae803"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/critic/critique.md",
+        "sha256": "8751b6c907387319418edddf12066d63ba6f428c24c28b03c24ee51b0df124ca"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/critic/source-map.json",
+        "sha256": "70ebbc82083cf1baf7d7e924055c024894541786787d4ca485b62f4c66464b5a"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/critic/sources/index.md",
+        "sha256": "0fdb491a6c775d1e424becff804a69fceac4faf936225f3284b9b7a231e04204"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/reviser/assignment.md",
+        "sha256": "a8ff001f92b07990da5fb6d6b0b4f21889f8936882a022c983665d9157d26c61"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/reviser/input-map.json",
+        "sha256": "d6e15bb21e57f7a2244f1413ca1c34a24e00e605c77e45b924a4f9e6327175ee"
+      }
+    ],
+    "final_sha256": "744c9ff187bb4d87abc7d5940bfe45b61d15b9427184621b5dfd0130c2569202"
+  }
+}

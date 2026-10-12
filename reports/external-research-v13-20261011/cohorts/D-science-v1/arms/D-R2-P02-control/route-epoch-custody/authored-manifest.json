@@ -1,0 +1,62 @@
+{
+  "schema": "er13.authored_freeze.v1",
+  "frozen_at_utc": "2026-10-12T04:59:45.765496+00:00",
+  "evaluation_started": false,
+  "files": [
+    {
+      "path": "state/route-fork-v1/D-R2-P02-control-reviser-config.json",
+      "bytes": 1403,
+      "sha256": "b4483c91093cbcaa28aa6582533e2dd52bb4e609704e49a256f6d81cb184f022"
+    },
+    {
+      "path": "state/route-fork-v1/D-R2-P02-control-reviser-config.route-epoch.json",
+      "bytes": 33245,
+      "sha256": "2582d85fccb372aae5279312ca3fe1df8bf9ab5dce9fd6347ffe28a472021868"
+    },
+    {
+      "path": "state/dispatch-release-account-fork-v1.json",
+      "bytes": 1777,
+      "sha256": "c4bbefdd1204d3035b179f56dc0b05ace49b04dc7bce81097292873e83c51696"
+    },
+    {
+      "path": "state/account-routing-amendment-v1.json",
+      "bytes": 1884,
+      "sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/MANIFEST.json",
+      "bytes": 1483,
+      "sha256": "d41d620fd80074205897e80652239ee70c1e2cb0335d5d709048cccff5fe369b"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/SHA256SUMS",
+      "bytes": 467,
+      "sha256": "f7967b4e72fa672db0d965e77007d5423ca69af20a2143407521e8d2957fec6e"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/PINS.json",
+      "bytes": 4321,
+      "sha256": "372cb986b9e2129278a58977615f2a71e486a97acebb3f11a1b774f59b3e8607"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/README.md",
+      "bytes": 5421,
+      "sha256": "f6b0a3e11036fbda91d48ac3adb1a751e21d02b862be1218bbb2156c7cc0785a"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/dispatcher.js",
+      "bytes": 3254,
+      "sha256": "fed6bd1e4a12d736326a68d26fe6c357fb2a20ec503e6809b36b0ef2c1371fd5"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/route_fork.py",
+      "bytes": 10401,
+      "sha256": "cf08f0f929da932cd212b948d9fa578462eae1b7378a9698f9f85da4b549f605"
+    },
+    {
+      "path": "helpers/unstarted-stage-route-fork-v1/tests.py",
+      "bytes": 6681,
+      "sha256": "9a4e2a1eaf0a375c91f28fc77e1cdbd84d9171ba7763962f144eb120abb1cded"
+    }
+  ]
+}

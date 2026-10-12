@@ -1,0 +1,488 @@
+[
+  {
+    "arm_id": "D-R2-P03-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "d1e0d951d66f3d01e2a8eb009c30e8b673b98b13eee48dbeb7ffc1b43a214851",
+    "capture_auxiliary_members": 6,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [
+      "native-completion-attempt.json",
+      "native-completion-output-snapshot.json",
+      "native-terminal-capture-checked.json"
+    ],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "f0895d32641e07e0514879d503de1815c79c1fff337a4077a16cea7afa17d2d7",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "010565f2288216f5de0c873c780c3a8425a00415f251adf64230d91939b38e0a",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P03-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "b97dc794771d44b6280ca7463ccf655396e299d38b6c46a00d4c4dc0501f9c2c",
+    "capture_auxiliary_members": 7,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [
+      "native-completion-attempt.json",
+      "native-completion-output-snapshot.json",
+      "native-terminal-capture-checked.json"
+    ],
+    "failure_files_retained": [
+      "native-terminal-capture-failed.json"
+    ],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "cfa179806e59dfc32f6df88fb78304d5f10f1e9edcb449c08b41e78fee44fd17",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "106c53059ee1e426dba2eb3f4bf21db5050e52c2dea2debf5e8c7a1405a7af5a",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P02-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "83e0208458ba1671edbcafed6ebd3c63a7c2b9878286103a086050815fd63e81",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P02-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "959740e133224ea9fe1cb9f77077bb33439ddf93df349adf7db79ae5f51890a7",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P02-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "1b9d3d805608da982c8103c6d1a96a69ee4699bb914cb20f15dc05ae91c377da",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "2f71fa4b88fa6dfcc2de42836109818b0948cb6a2a178b0c6c4e7b9686cfe812",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "b1233360861ee91840fd41ca35c7fc89e9ff5676a8baa4801f40544adaf6228a",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P03-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "b78005d8b717b0a626dac3793b4c1233b6a17d93511c21f3c6f60657aaea2278",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P03-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "cd3b22c9650df35f99d4ceadee2083204480bcc413ff9a639fbc3f2cf82b4135",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P03-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "8848f1902b0f7e0f11b883a4e3af9f2c5bb4a07e26daab3c30703e1c9af648e1",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "01f2352447214256ab938cfcc5c0bc2cef519e21bd9f2ebd52103acd0ec67105",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "d65f043a3b6d7a94421f42e0559014b4076f29793a585330378e80f139ca908c",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "6867006dc2b00bb3133ade2d424ba1d6540be8aba234f728bd3c05f41870a197",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "61f8025632ea3260582d4aceb9049a37e383bc6588c5befc6eafe363f7519106",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "c5f419c88259c314a9c8a21118aa46e1147fdca592140ed59edf7445aa605559",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P04-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "6b6eb3d9b4273fba43e7b3aa134f9adeaba9bc0425fe0384ac0b330f293a4b9b",
+    "capture_auxiliary_members": 6,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [
+      "native-completion-attempt.json",
+      "native-completion-output-snapshot.json",
+      "native-terminal-capture-checked.json"
+    ],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "03c9f9ffe37107f8cff0c4e217f291325c753f190325737a0c0cda2809aaaebc",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "f9b3fbc087d7818dc613dc2dd8419a991d9a655f0083e0935f1e7d6b35458f1a",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P04-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "0b92632bd94aa6b82fdc089326add04a64b5e2722928ec11bf01f4c3cd1ce19f",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P04-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "6fd7f8224fa6a78ad5405a64717f9c36dfa34e15990df3fb4058de490dcf0228",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P04-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "134eef65195e814b3ced5073626af0395c5a6ae7ac8e402f8693f234231a5235",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "949d56a0b6f84e1617e74653da97664ab1eb3d3b9e010cd9b7a54ffa601165e6",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "a0a834beabab3b7e9a1f84958ecb3d534e656b146e01e8e7cafc62ebb003a9fa",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "4f00717dedc42c46091a4ce3f2426d74e41d3cb775458262f241a022dceba9cc",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "8c107986720c597933aff44fe772dce7c36c17a219385d2e30c5b05d78d121a5",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "b193bd67fd4932a45459f7d991babe9c77a0fc8e018a13488243025a344256ef",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P01-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "22d9f812a3cdb78477427b8a0301583652e8d225e7715ed55dcbcb7ce180326e",
+    "capture_auxiliary_members": 7,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [
+      "native-completion-attempt.json",
+      "native-completion-output-snapshot.json",
+      "native-terminal-capture-checked.json"
+    ],
+    "failure_files_retained": [
+      "native-terminal-capture-failed.json"
+    ],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "a6d86a727548141d8872419133ab34013d98ed06ae7d760a1cfb1f745a72410c",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "539199fb97d1fc07117f8c443644527317db57cc411d86c1cf3764e5cea3f131",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P01-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "ec6a6719248b5bd5150e418c9041bdc8fca6859711a635dce5fb32bc2060ab45",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P01-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "1988fff8c82014115716cb8ca22c9f1b98b0b38b3ad2e0b9e5db1efd2773c672",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R1-P01-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "bbe544c631448918493adc4ec8ef3de02dd470d535a0e5468330409682c6406b",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "81e10a8a9e540abf0af6e72d43bbb8594fbaaa9b84a09622fbf4fbf41266516d",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "4953c1dafe551b23a39ae6cba8d22d6a29c21754bac9fecba9cd6262747035da",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "ba16706836a0e9c528353c5674887a8fee3dcf9c65d48ec8bb7433efe46cc261",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "c85f8ec7a8aeb7d03fddeb18fd1e99f964697f1c248abfc98c552e54886915e9",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "64013f7bcc7b569915cb3786ee5e8f1d2932db98870f3d8a265b7f20825aeac2",
+    "capture_auxiliary_members": 9,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "D-R2-P02-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "aa73023bc12f66dc01bd5d7ffdfce00b7120315baae67818516e035894e507ba",
+    "capture_auxiliary_members": 6,
+    "required_auxiliary_count": 9,
+    "missing_auxiliary_files": [
+      "native-completion-attempt.json",
+      "native-completion-output-snapshot.json",
+      "native-terminal-capture-checked.json"
+    ],
+    "failure_files_retained": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  }
+]

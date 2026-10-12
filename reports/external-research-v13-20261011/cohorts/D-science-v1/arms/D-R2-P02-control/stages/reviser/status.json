@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P02-control-reviser-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P02-control-reviser-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P02-control-reviser-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-D-R2-P02-control-reviser-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P02-control-reviser-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the reviser stage in **6m 21s**. The activation binding guard passed, and the same native Goal completed with `terminal_capture_checked=true`. No nested agents or tests were run.\n\n- [Final disposition](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/final.md>)\n- [Source map](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/source-map.json>) and [source index](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/sources/README.md>)\n- [Native activation receipt](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/native-goal-active.json>) and [terminal receipt](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/native-goal-terminal.json>)",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P02-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:a19fc52a-bbe9-4d01-95b8-c2aab2f1120d",
+  "providerInstanceId": "codex_private_epoch_2",
+  "model": "gpt-6-luna",
+  "summary": "Completed the reviser stage in **6m 21s**. The activation binding guard passed, and the same native Goal completed with `terminal_capture_checked=true`. No nested agents or tests were run.\n\n- [Final disposition](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/final.md>)\n- [Source map](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/source-map.json>) and [source index](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/sources/README.md>)\n- [Native activation receipt](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/native-goal-active.json>) and [terminal receipt](<ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/native-goal-terminal.json>)",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-D-R2-P02-control-reviser-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:a19fc52a-bbe9-4d01-95b8-c2aab2f1120d",
+  "waitTimedOut": false
+}

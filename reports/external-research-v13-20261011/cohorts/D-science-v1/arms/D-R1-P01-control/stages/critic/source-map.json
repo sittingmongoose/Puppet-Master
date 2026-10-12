@@ -1,0 +1,216 @@
+{
+  "run_id": "D-R1-P01-control",
+  "stage": "critic",
+  "scope": "Independent critic review of the released D-P01 brief and exact revealed investigator plan/package.",
+  "source_ids_preserved_from": "../investigator/source-map.json",
+  "source_index": {
+    "path": "sources/index.md",
+    "sha256": "2a9a7109db8ce4e9a51cb1c5480a739893de2a408ccba4effeb5862ea538ccf9",
+    "note": "Detailed bounded notes for the unchanged S01-S18 identities and exact URLs."
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "exact_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version_or_commit": "W3C Recommendation, WCAG 2.2, 2024-12-12",
+      "locator": "§§1.4.4, 1.4.10, 3.3.1, 3.3.3, 4.1.3",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened exact Recommendation; inspected error identification, reflow threshold, and status-message definition.",
+      "governing_condition_default_exception": "Detected errors are identified and described in text; known correction suggestions are given unless they jeopardize security or purpose; non-context-changing status messages are programmatically determinable without focus; resize/reflow criteria have defined thresholds and exceptions.",
+      "applicability": "Normative baseline for error, status, and layout proposals; does not dictate one summary design or establish translation/AT compatibility.",
+      "evidence_note": "sources/index.md#s01"
+    },
+    {
+      "source_id": "S02",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_or_commit": "WCAG 2.2 supporting document; live and informative, no fixed release shown",
+      "locator": "SC 4.1.3 intent, definition, examples, live-region note",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened exact page and inspected the live-region over-notification note.",
+      "governing_condition_default_exception": "Status covers success/result, waiting, progress, or errors without context change; it must be exposed without focus; creating additional status messages is not required, and live regions can become over-notifying.",
+      "applicability": "Supports concise non-focus-taking updates and message-volume testing; informative, not compatibility evidence.",
+      "evidence_note": "sources/index.md#s02"
+    },
+    {
+      "source_id": "S03",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21.html",
+      "version_or_commit": "WCAG 2.2 technique page; informative and live",
+      "locator": "Examples 1-2 and Tests",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; read aria-invalid and aria-describedby examples.",
+      "governing_condition_default_exception": "Example marks a field invalid after validation failure and associates its readable error; this is a sufficient technique, not the only method.",
+      "applicability": "Supports an HTML association/state option, not universal AT behavior.",
+      "evidence_note": "sources/index.md#s03"
+    },
+    {
+      "source_id": "S04",
+      "exact_url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+      "version_or_commit": "WAI Forms Tutorial, live page, no fixed release shown",
+      "locator": "Overall feedback, inline feedback, After submit, During typing",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; checked its after-submit focus example and typing-feedback section.",
+      "governing_condition_default_exception": "Provides combined overall/inline examples, suggests focus to first invalid input after submit, and describes optional typing feedback; does not set async response freshness rules.",
+      "applicability": "Provides alternative notification patterns, not portal compatibility evidence.",
+      "evidence_note": "sources/index.md#s04"
+    },
+    {
+      "source_id": "S05",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "version_or_commit": "WCAG 2.2 supporting document; live and informative",
+      "locator": "SC 1.4.10, basic text reflow, viewport equivalence",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; checked the 320 CSS-pixel threshold and 400% viewport explanation.",
+      "governing_condition_default_exception": "Vertical content fits a 320 CSS-pixel viewport without loss or two-dimensional scrolling, except portions requiring two-dimensional layout for use or meaning.",
+      "applicability": "Grounds a narrow-layout check, not fit of expanded translations.",
+      "evidence_note": "sources/index.md#s05"
+    },
+    {
+      "source_id": "S06",
+      "exact_url": "https://html.spec.whatwg.org/multipage/dom.html",
+      "version_or_commit": "WHATWG HTML Living Standard, moving document, no fixed release or commit",
+      "locator": "§3.2.6.2 language determination; §3.2.6.4 dir attribute and Auto state",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; inspected Auto-state first-strong-directionality heuristic.",
+      "governing_condition_default_exception": "lang supplies language metadata; dir supports ltr/rtl/auto; auto uses a very crude first-strong heuristic and is a last resort when direction is truly unknown and no better server-side heuristic applies.",
+      "applicability": "Supports explicit locale direction and cautious auto for unknown-direction input; does not prove bidi rendering quality.",
+      "evidence_note": "sources/index.md#s06"
+    },
+    {
+      "source_id": "S07",
+      "exact_url": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html",
+      "version_or_commit": "WHATWG HTML Living Standard, moving page; retrieved text last updated 2026-09-08, no fixed release/commit",
+      "locator": "§4.10.21.4 Security; §4.10.21 Constraints",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; read server/client validation security text.",
+      "governing_condition_default_exception": "Client constraint validation is for user experience; servers should not rely on it because checks can be bypassed or absent.",
+      "applicability": "Supports the authority split, not portal business rules.",
+      "evidence_note": "sources/index.md#s07"
+    },
+    {
+      "source_id": "S08",
+      "exact_url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+      "version_or_commit": "OWASP Cheat Sheet Series maintained page, no fixed release/commit exposed",
+      "locator": "Client-only checks; Validate Structured Data; Validating Free-form Unicode Text",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; inspected server-side and free-form Unicode guidance.",
+      "governing_condition_default_exception": "Repeat checks on the server; preserve legitimate punctuation/scripts in free-form text; define consistent normalization if needed.",
+      "applicability": "Supports server authority and a multilingual text contract; portal-specific validation limits remain unknown.",
+      "evidence_note": "sources/index.md#s08"
+    },
+    {
+      "source_id": "S09",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version_or_commit": "RFC 9110, HTTP Semantics, 2022-06",
+      "locator": "§13.1.1 If-Match; §13.2 precondition evaluation; §15.5.13 412",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened RFC; checked strong If-Match comparison, failed-precondition behavior, and already-succeeded exception.",
+      "governing_condition_default_exception": "If-Match commonly prevents lost updates; a false condition normally prevents method application and may return 412, but origin server may return success if it can determine the same state-changing request already succeeded.",
+      "applicability": "Supports conditional writes if the API implements validators; does not define conflict UI or idempotency behavior.",
+      "evidence_note": "sources/index.md#s09"
+    },
+    {
+      "source_id": "S10",
+      "exact_url": "https://design-system.service.gov.uk/components/error-summary/",
+      "version_or_commit": "Live maintained GOV.UK Design System documentation; no fixed version; history through Frontend v6.2.0",
+      "locator": "How it works; example markup; field links; recent changes",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened guidance; checked summary focus, one link per answer, and matching inline wording.",
+      "governing_condition_default_exception": "Conventional validation pattern focuses summary, links each error to the related answer, and matches summary/inline wording.",
+      "applicability": "Maintained error-navigation candidate; delayed focus needs the brief-specific guard.",
+      "evidence_note": "sources/index.md#s10"
+    },
+    {
+      "source_id": "S11",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/releases/tag/v6.5.1",
+      "version_or_commit": "GOV.UK Frontend v6.5.1, release commit efdc06c, released 2026-09-14",
+      "locator": "Release header, commit, Fixes",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened release record; confirmed tag, short commit, and service-navigation example fix.",
+      "governing_condition_default_exception": "Release note does not describe error-summary behavior changes.",
+      "applicability": "Identifies a candidate version only; no version-specific summary behavior was tested.",
+      "evidence_note": "sources/index.md#s11"
+    },
+    {
+      "source_id": "S12",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/issues/1410",
+      "version_or_commit": "Issue #1410, opened 2019-05-31; linked PR #1459; fixed on retest 2019-10-07",
+      "locator": "Description, screen-reader observations, cause, linked repair, activity",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened issue; checked legacy-page focus report, missing JavaScript explanation, and retest status.",
+      "governing_condition_default_exception": "Concerned an older component in a legacy example without expected GOV.UK Elements JavaScript; linked repair applied to that assembled example.",
+      "applicability": "Historical evidence about assembly-specific focus behavior, not current AT proof.",
+      "evidence_note": "sources/index.md#s12"
+    },
+    {
+      "source_id": "S13",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/pull/1459",
+      "version_or_commit": "PR #1459, merged 2019-06-18, linked resolution to #1410",
+      "locator": "PR title, merged discussion, legacy full-page example changes",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened linked PR; checked stated legacy JavaScript/focus repair.",
+      "governing_condition_default_exception": "Repair ensures legacy JavaScript runs on legacy pages and restores the legacy summary example; no asynchronous SPA test.",
+      "applicability": "Bounded failure/fix lineage only.",
+      "evidence_note": "sources/index.md#s13"
+    },
+    {
+      "source_id": "S14",
+      "exact_url": "https://github.com/alphagov/govuk-design-system/issues/2799",
+      "version_or_commit": "Issue #2799, opened 2023-05-24, closed as completed",
+      "locator": "Description, code reference, user comments, closure activity",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened issue; checked href/input ID mismatch, reported failed return, and later closure comment.",
+      "governing_condition_default_exception": "Example href #telephone-number did not target input id payment-amount; issue later closed, with commenter noting guidance might be sufficient and their cross-check might have been mistaken.",
+      "applicability": "Specific reported example-page failure mode, not verified current component defect or release-level fix.",
+      "evidence_note": "sources/index.md#s14"
+    },
+    {
+      "source_id": "S15",
+      "exact_url": "https://designsystem.digital.gov/components/validation/",
+      "version_or_commit": "Live USWDS page; download v3.14.0; unsupported after v3.12.0 per docs; immutable component commit not inspected",
+      "locator": "About, code/guidance, known issues, latest updates",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; checked lifecycle warning, checklist example, and server-mirroring guidance.",
+      "governing_condition_default_exception": "Top validation checklist gives live client-side feedback; page says unsupported after v3.12.0 due to major usability/accessibility issues.",
+      "applicability": "Bounded alternative/caution; the v3.14.0 download does not imply support or recommendation.",
+      "evidence_note": "sources/index.md#s15"
+    },
+    {
+      "source_id": "S16",
+      "exact_url": "https://github.com/uswds/uswds/issues/5642",
+      "version_or_commit": "Public research issue #5642, opened 2023-11-28, closed as not planned",
+      "locator": "Summary, observations, implementation recommendations, research method",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened issue; checked five-participant findings and high-fidelity prototype scope.",
+      "governing_condition_default_exception": "In that prototype, all five participants missed a changed validation status until it was pointed out and expected inline or submit-time error feedback.",
+      "applicability": "Small study-specific caution, not universal or compatibility evidence.",
+      "evidence_note": "sources/index.md#s16"
+    },
+    {
+      "source_id": "S17",
+      "exact_url": "https://github.com/uswds/uswds/issues/5750",
+      "version_or_commit": "Public research issue #5750, opened 2023-10-25, closed",
+      "locator": "Summary, observations, affected-user groups, research method",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened issue; checked four confused participants and prototype setting.",
+      "governing_condition_default_exception": "Four prototype participants were confused by the top validation message and expected inline or submit-time validation; issue separately notes five visually impaired participants in the research.",
+      "applicability": "Pattern-specific caution only.",
+      "evidence_note": "sources/index.md#s17"
+    },
+    {
+      "source_id": "S18",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html",
+      "version_or_commit": "WCAG 2.2 supporting document, updated 2026-06-12; informative",
+      "locator": "SC 3.3.1 interpretation; user-agent native HTML validation",
+      "access_utc": "2026-10-12T04:38:36Z",
+      "observed_operation": "Reopened page; inspected native-browser validation limitations.",
+      "governing_condition_default_exception": "Native validation generally blocks invalid submit and focuses the first invalid control; messages can be generic and may not persist/magnify; only the first error may be exposed per attempt.",
+      "applicability": "Alternative limitation, not a replacement for server validation.",
+      "evidence_note": "sources/index.md#s18"
+    }
+  ],
+  "limitations": [
+    "No portal code, API contract, locale catalog, user data, assistive technology, or integration environment was provided or tested.",
+    "No translation-quality or assistive-technology compatibility claim is made.",
+    "The investigator's reported artifact/hash checks were not rerun in this critic stage."
+  ]
+}

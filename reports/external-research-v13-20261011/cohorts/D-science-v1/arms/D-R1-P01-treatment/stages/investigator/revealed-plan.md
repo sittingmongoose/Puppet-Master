@@ -1,0 +1,11 @@
+# D-P01 — Provisional design for review
+
+The draft validates locally while typing, then sends a server check whenever a field loses focus. It places returned messages beside the field and summarizes them above the submit control. A single live status region would announce validation completion and save outcomes. The draft assumes field-local messages plus that region are enough to convey asynchronous state; examine message association, ordering, verbosity, and language direction in actual implementations.
+
+A request sequence number would discard older validation responses. Remote changes would update untouched fields and mark edited fields as conflicts. The form would keep the current keyboard position, except that submission would move focus to the first invalid field. Unsaved text would remain in local form state until a successful save clears it. Research whether these rules survive delayed checks, simultaneous save and conflict responses, or navigation away from the form.
+
+Labels and errors would use flexible layout, with no hardcoded field heights. The initial proposal treats the document's reading direction as sufficient for all mixed-language content. Compare that assumption with alternatives for user-entered notes, identifiers, and error-summary links. The plan also needs a clear distinction between validation success and durable save success.
+
+Provide retain/revise/reject/unresolved dispositions with supporting primary context rather than accepting the draft as specification. Propose checks for out-of-order replies, disappearing fields, zoom, keyboard error navigation, interrupted saves, and remote invalidation. State any actually executed checks and their fixture limits separately from proposed assistive-technology and translation evaluations.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.
