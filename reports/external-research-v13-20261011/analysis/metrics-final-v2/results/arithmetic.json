@@ -1,0 +1,3208 @@
+{
+  "schema": "er13.arithmetic.v1",
+  "primary_rows": 80,
+  "extra_rows": 65,
+  "charged_extra_rows": 2,
+  "charged_extra_stage_starts_known_subtotal": 2,
+  "charged_extra_stage_starts_total": 2,
+  "groups": [
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 32,
+      "passing_outputs": 13,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 32,
+          "observed": 27,
+          "unknown": 5,
+          "known_subtotal": 13814733,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 32,
+          "observed": 0,
+          "unknown": 32,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 32,
+          "observed": 32,
+          "unknown": 0,
+          "known_subtotal": 53638.64899992943,
+          "all_assigned_total": 53638.64899992943,
+          "passing_output_sample_quotient": 4126.049923071494
+        },
+        "started_context_seconds": {
+          "assigned": 32,
+          "observed": 32,
+          "unknown": 0,
+          "known_subtotal": 53578.78900027275,
+          "all_assigned_total": 53578.78900027275,
+          "passing_output_sample_quotient": 4121.4453077132885
+        },
+        "context_union_seconds": {
+          "assigned": 32,
+          "observed": 32,
+          "unknown": 0,
+          "known_subtotal": 52062.18600010872,
+          "all_assigned_total": 52062.18600010872,
+          "passing_output_sample_quotient": 4004.7835384699015
+        },
+        "context_overlap_seconds": {
+          "assigned": 32,
+          "observed": 32,
+          "unknown": 0,
+          "known_subtotal": 1516.603000164032,
+          "all_assigned_total": 1516.603000164032,
+          "passing_output_sample_quotient": 116.66176924338707
+        },
+        "delivery_seconds": {
+          "assigned": 32,
+          "observed": 25,
+          "unknown": 7,
+          "known_subtotal": 47948.81595468521,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 32,
+          "observed": 31,
+          "unknown": 1,
+          "known_subtotal": 54579.54097247124,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "COMPONENT",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B01",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 2,
+          "unknown": 2,
+          "known_subtotal": 445401,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 5737.670000076294,
+          "all_assigned_total": 5737.670000076294,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 5736.075000047684,
+          "all_assigned_total": 5736.075000047684,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 5736.075000047684,
+          "all_assigned_total": 5736.075000047684,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 2,
+          "unknown": 2,
+          "known_subtotal": 2570.892181158066,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 5739.381338119507,
+          "all_assigned_total": 5739.381338119507,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B02",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 1956030,
+          "all_assigned_total": 1956030,
+          "passing_output_sample_quotient": 978015.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7676.93399977684,
+          "all_assigned_total": 7676.93399977684,
+          "passing_output_sample_quotient": 3838.46699988842
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7672.648999214172,
+          "all_assigned_total": 7672.648999214172,
+          "passing_output_sample_quotient": 3836.324499607086
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7672.648999214172,
+          "all_assigned_total": 7672.648999214172,
+          "passing_output_sample_quotient": 3836.324499607086
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9566.672884702682,
+          "all_assigned_total": 9566.672884702682,
+          "passing_output_sample_quotient": 4783.336442351341
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9566.672884702682,
+          "all_assigned_total": 9566.672884702682,
+          "passing_output_sample_quotient": 4783.336442351341
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B03",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 1,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2114643,
+          "all_assigned_total": 2114643,
+          "passing_output_sample_quotient": 2114643.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 8763.325000047684,
+          "all_assigned_total": 8763.325000047684,
+          "passing_output_sample_quotient": 8763.325000047684
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 8756.9969997406,
+          "all_assigned_total": 8756.9969997406,
+          "passing_output_sample_quotient": 8756.9969997406
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7764.754999399185,
+          "all_assigned_total": 7764.754999399185,
+          "passing_output_sample_quotient": 7764.754999399185
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 992.2420003414154,
+          "all_assigned_total": 992.2420003414154,
+          "passing_output_sample_quotient": 992.2420003414154
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9457.638526916504,
+          "all_assigned_total": 9457.638526916504,
+          "passing_output_sample_quotient": 9457.638526916504
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9457.638526916504,
+          "all_assigned_total": 9457.638526916504,
+          "passing_output_sample_quotient": 9457.638526916504
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "COMPONENT",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B04",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 625258,
+          "all_assigned_total": 625258,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3511.2969999313354,
+          "all_assigned_total": 3511.2969999313354,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3509.4260001182556,
+          "all_assigned_total": 3509.4260001182556,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3509.4260001182556,
+          "all_assigned_total": 3509.4260001182556,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3512.853711128235,
+          "all_assigned_total": 3512.853711128235,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3512.853711128235,
+          "all_assigned_total": 3512.853711128235,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "COMPONENT",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B05",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 656171,
+          "all_assigned_total": 656171,
+          "passing_output_sample_quotient": 328085.5
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3431.3289997577667,
+          "all_assigned_total": 3431.3289997577667,
+          "passing_output_sample_quotient": 1715.6644998788834
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3428.383999824524,
+          "all_assigned_total": 3428.383999824524,
+          "passing_output_sample_quotient": 1714.191999912262
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3428.383999824524,
+          "all_assigned_total": 3428.383999824524,
+          "passing_output_sample_quotient": 1714.191999912262
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3432.9042177200317,
+          "all_assigned_total": 3432.9042177200317,
+          "passing_output_sample_quotient": 1716.4521088600159
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3432.9042177200317,
+          "all_assigned_total": 3432.9042177200317,
+          "passing_output_sample_quotient": 1716.4521088600159
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B06",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 3,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2384249,
+          "all_assigned_total": 2384249,
+          "passing_output_sample_quotient": 794749.6666666666
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7979.553000450134,
+          "all_assigned_total": 7979.553000450134,
+          "passing_output_sample_quotient": 2659.851000150045
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7972.5349996089935,
+          "all_assigned_total": 7972.5349996089935,
+          "passing_output_sample_quotient": 2657.511666536331
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7539.02599978447,
+          "all_assigned_total": 7539.02599978447,
+          "passing_output_sample_quotient": 2513.0086665948234
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 433.5089998245239,
+          "all_assigned_total": 433.5089998245239,
+          "passing_output_sample_quotient": 144.50299994150797
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 10308.082229852676,
+          "all_assigned_total": 10308.082229852676,
+          "passing_output_sample_quotient": 3436.027409950892
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 10308.082229852676,
+          "all_assigned_total": 10308.082229852676,
+          "passing_output_sample_quotient": 3436.027409950892
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B07",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 1,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 1915912,
+          "all_assigned_total": 1915912,
+          "passing_output_sample_quotient": 1915912.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7833.50600028038,
+          "all_assigned_total": 7833.50600028038,
+          "passing_output_sample_quotient": 7833.50600028038
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7819.799999952316,
+          "all_assigned_total": 7819.799999952316,
+          "passing_output_sample_quotient": 7819.799999952316
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7819.799999952316,
+          "all_assigned_total": 7819.799999952316,
+          "passing_output_sample_quotient": 7819.799999952316
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 11867.17574429512,
+          "all_assigned_total": 11867.17574429512,
+          "passing_output_sample_quotient": 11867.17574429512
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 11867.17574429512,
+          "all_assigned_total": 11867.17574429512,
+          "passing_output_sample_quotient": 11867.17574429512
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "COMPONENT",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B08",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 662614,
+          "all_assigned_total": 662614,
+          "passing_output_sample_quotient": 331307.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3422.404000043869,
+          "all_assigned_total": 3422.404000043869,
+          "passing_output_sample_quotient": 1711.2020000219345
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3415.973999977112,
+          "all_assigned_total": 3415.973999977112,
+          "passing_output_sample_quotient": 1707.986999988556
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3415.973999977112,
+          "all_assigned_total": 3415.973999977112,
+          "passing_output_sample_quotient": 1707.986999988556
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3423.846956014633,
+          "all_assigned_total": 3423.846956014633,
+          "passing_output_sample_quotient": 1711.9234780073166
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 3423.846956014633,
+          "all_assigned_total": 3423.846956014633,
+          "passing_output_sample_quotient": 1711.9234780073166
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B09",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2373775,
+          "all_assigned_total": 2373775,
+          "passing_output_sample_quotient": 1186887.5
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 8645.538999557495,
+          "all_assigned_total": 8645.538999557495,
+          "passing_output_sample_quotient": 4322.769499778748
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 8634.067999839783,
+          "all_assigned_total": 8634.067999839783,
+          "passing_output_sample_quotient": 4317.033999919891
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 8634.067999839783,
+          "all_assigned_total": 8634.067999839783,
+          "passing_output_sample_quotient": 4317.033999919891
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 11682.500759124756,
+          "all_assigned_total": 11682.500759124756,
+          "passing_output_sample_quotient": 5841.250379562378
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 11682.500759124756,
+          "all_assigned_total": 11682.500759124756,
+          "passing_output_sample_quotient": 5841.250379562378
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B10",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2006863,
+          "all_assigned_total": 2006863,
+          "passing_output_sample_quotient": 1003431.5
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 6832.487999677658,
+          "all_assigned_total": 6832.487999677658,
+          "passing_output_sample_quotient": 3416.243999838829
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 6818.9369995594025,
+          "all_assigned_total": 6818.9369995594025,
+          "passing_output_sample_quotient": 3409.4684997797012
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 6818.9369995594025,
+          "all_assigned_total": 6818.9369995594025,
+          "passing_output_sample_quotient": 3409.4684997797012
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9564.63359284401,
+          "all_assigned_total": 9564.63359284401,
+          "passing_output_sample_quotient": 4782.316796422005
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9564.63359284401,
+          "all_assigned_total": 9564.63359284401,
+          "passing_output_sample_quotient": 4782.316796422005
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B11",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 2,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2213140,
+          "all_assigned_total": 2213140,
+          "passing_output_sample_quotient": 1106570.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7823.790999650955,
+          "all_assigned_total": 7823.790999650955,
+          "passing_output_sample_quotient": 3911.8954998254776
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7813.292999744415,
+          "all_assigned_total": 7813.292999744415,
+          "passing_output_sample_quotient": 3906.6464998722076
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7813.292999744415,
+          "all_assigned_total": 7813.292999744415,
+          "passing_output_sample_quotient": 3906.6464998722076
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": 0.0
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9528.9064848423,
+          "all_assigned_total": 9528.9064848423,
+          "passing_output_sample_quotient": 4764.45324242115
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9528.9064848423,
+          "all_assigned_total": 9528.9064848423,
+          "passing_output_sample_quotient": 4764.45324242115
+        }
+      }
+    },
+    {
+      "stratum": [
+        "product",
+        "FULL",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "B12",
+        null,
+        null,
+        null,
+        "One native cumulative maximum per birth; full arm total only complete terminal native coverage"
+      ],
+      "assigned": 4,
+      "passing_outputs": 1,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 2209425,
+          "all_assigned_total": 2209425,
+          "passing_output_sample_quotient": 2209425.0
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7833.374000072479,
+          "all_assigned_total": 7833.374000072479,
+          "passing_output_sample_quotient": 7833.374000072479
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 7821.093000173569,
+          "all_assigned_total": 7821.093000173569,
+          "passing_output_sample_quotient": 7821.093000173569
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 6994.811000108719,
+          "all_assigned_total": 6994.811000108719,
+          "passing_output_sample_quotient": 6994.811000108719
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 826.2820000648499,
+          "all_assigned_total": 826.2820000648499,
+          "passing_output_sample_quotient": 826.2820000648499
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9138.579427957535,
+          "all_assigned_total": 9138.579427957535,
+          "passing_output_sample_quotient": 9138.579427957535
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 9138.579427957535,
+          "all_assigned_total": 9138.579427957535,
+          "passing_output_sample_quotient": 9138.579427957535
+        }
+      }
+    },
+    {
+      "stratum": [
+        "preparation",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "preparation",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 6,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 6,
+          "observed": 6,
+          "unknown": 0,
+          "known_subtotal": 6237.719999790192,
+          "all_assigned_total": 6237.719999790192,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 6,
+          "observed": 6,
+          "unknown": 0,
+          "known_subtotal": 6235.755999803543,
+          "all_assigned_total": 6235.755999803543,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 6,
+          "observed": 6,
+          "unknown": 0,
+          "known_subtotal": 6235.755999803543,
+          "all_assigned_total": 6235.755999803543,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 6,
+          "observed": 6,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 6,
+          "observed": 0,
+          "unknown": 6,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "support",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "route_probe",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 2,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 369.57499980926514,
+          "all_assigned_total": 369.57499980926514,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 365.8310000896454,
+          "all_assigned_total": 365.8310000896454,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 365.8310000896454,
+          "all_assigned_total": 365.8310000896454,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "support",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "support",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 3,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 11397.180999994278,
+          "all_assigned_total": 11397.180999994278,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 11396.598999977112,
+          "all_assigned_total": 11396.598999977112,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 11396.598999977112,
+          "all_assigned_total": 11396.598999977112,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "support",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "dispatch_support",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 2,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 2,
+          "observed": 1,
+          "unknown": 1,
+          "known_subtotal": 1590346,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 17291.263000011444,
+          "all_assigned_total": 17291.263000011444,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 17290.91200017929,
+          "all_assigned_total": 17290.91200017929,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 17290.91200017929,
+          "all_assigned_total": 17290.91200017929,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "publication",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "publication",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 4,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 28412.415999889374,
+          "all_assigned_total": 28412.415999889374,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 28411.151000499725,
+          "all_assigned_total": 28411.151000499725,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 28411.151000499725,
+          "all_assigned_total": 28411.151000499725,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 4,
+          "observed": 4,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 4,
+          "observed": 0,
+          "unknown": 4,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "evaluation",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "evaluation_coordination",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 3,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 3,
+          "observed": 1,
+          "unknown": 2,
+          "known_subtotal": 147840,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 17826.495000123978,
+          "all_assigned_total": 17826.495000123978,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 17823.267000198364,
+          "all_assigned_total": 17823.267000198364,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 17823.267000198364,
+          "all_assigned_total": 17823.267000198364,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 3,
+          "observed": 3,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "support",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "accounting",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 3,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 3,
+          "observed": 2,
+          "unknown": 1,
+          "known_subtotal": 892.0930001735687,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 3,
+          "observed": 2,
+          "unknown": 1,
+          "known_subtotal": 891.2369999885559,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 3,
+          "observed": 2,
+          "unknown": 1,
+          "known_subtotal": 891.2369999885559,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 3,
+          "observed": 2,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 3,
+          "observed": 0,
+          "unknown": 3,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "evaluation",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "separate_coverage_completion",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 1,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 1,
+          "observed": 1,
+          "unknown": 0,
+          "known_subtotal": 1179.263000011444,
+          "all_assigned_total": 1179.263000011444,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 1,
+          "observed": 1,
+          "unknown": 0,
+          "known_subtotal": 1179.0590000152588,
+          "all_assigned_total": 1179.0590000152588,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 1,
+          "observed": 1,
+          "unknown": 0,
+          "known_subtotal": 1179.0590000152588,
+          "all_assigned_total": 1179.0590000152588,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 1,
+          "observed": 1,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "support",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "scientific_consolidation",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 2,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 7623.393000125885,
+          "all_assigned_total": 7623.393000125885,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 7623.02999997139,
+          "all_assigned_total": 7623.02999997139,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 7623.02999997139,
+          "all_assigned_total": 7623.02999997139,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 2,
+          "observed": 2,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 2,
+          "observed": 0,
+          "unknown": 2,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "evaluation",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "independent_evaluation",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 38,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 38,
+          "observed": 38,
+          "unknown": 0,
+          "known_subtotal": 39280.62000107765,
+          "all_assigned_total": 39280.62000107765,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 38,
+          "observed": 38,
+          "unknown": 0,
+          "known_subtotal": 39261.030999183655,
+          "all_assigned_total": 39261.030999183655,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 38,
+          "observed": 38,
+          "unknown": 0,
+          "known_subtotal": 39261.030999183655,
+          "all_assigned_total": 39261.030999183655,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 38,
+          "observed": 38,
+          "unknown": 0,
+          "known_subtotal": 0,
+          "all_assigned_total": 0,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 38,
+          "observed": 0,
+          "unknown": 38,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    },
+    {
+      "stratum": [
+        "root_observation",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "root_observation",
+        null,
+        null,
+        null,
+        "One actual context birth; task followups/autoruns separate. Missing inference/billing never zero"
+      ],
+      "assigned": 1,
+      "passing_outputs": 0,
+      "metrics": {
+        "input_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "cached_input_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "output_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "reasoning_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "goal_tokens": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "subscription_consumption": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "billing_amount": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "active_provider_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "created_context_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "started_context_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "context_union_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "context_overlap_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "delivery_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        },
+        "request_to_terminal_seconds": {
+          "assigned": 1,
+          "observed": 0,
+          "unknown": 1,
+          "known_subtotal": 0,
+          "all_assigned_total": null,
+          "passing_output_sample_quotient": null
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Unknown is not zero. Cached input/reasoning are subsets; Goal counters may overlap and are never added to provider counters.",
+    "Quotients are sample quotients, not expected retry cost or billing. Zero passing outputs is undefined.",
+    "Delivery is unknown for missing finals. No cold end-to-end total is inferred from unrelated medians.",
+    "No inference of quality equivalence, affordability or scientific gains. Paired/factorial analysis needs independent assessments and complete matching."
+  ]
+}

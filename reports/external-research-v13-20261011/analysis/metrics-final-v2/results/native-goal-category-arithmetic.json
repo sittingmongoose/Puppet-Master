@@ -1,0 +1,507 @@
+[
+  {
+    "category": "accounting",
+    "actual_T3_context_births": 3,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 0,
+      "unknown": 3,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 0,
+      "unknown": 3,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "dispatch_support",
+    "actual_T3_context_births": 2,
+    "observed_native_goal_births": 1,
+    "completed_goal_births": 1,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 1,
+      "unknown": 1,
+      "known_subtotal": 1590346,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 1,
+      "unknown": 1,
+      "known_subtotal": 15402,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 16730.0,
+        "union_seconds": 16730.0,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 16730.0,
+        "union_seconds": 16730.0,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "evaluation_coordination",
+    "actual_T3_context_births": 3,
+    "observed_native_goal_births": 1,
+    "completed_goal_births": 1,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 1,
+      "unknown": 2,
+      "known_subtotal": 147840,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 1,
+      "unknown": 2,
+      "known_subtotal": 1082,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 1083.0,
+        "union_seconds": 1083.0,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 1083.0,
+        "union_seconds": 1083.0,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "independent_evaluation",
+    "actual_T3_context_births": 38,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 38,
+      "observed": 0,
+      "unknown": 38,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 38,
+      "observed": 0,
+      "unknown": 38,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "preparation",
+    "actual_T3_context_births": 6,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 6,
+      "observed": 0,
+      "unknown": 6,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 6,
+      "observed": 0,
+      "unknown": 6,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "product",
+    "actual_T3_context_births": 199,
+    "observed_native_goal_births": 199,
+    "completed_goal_births": 192,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_subtotal": 34738883,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_subtotal": 119960,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 199,
+      "observed": 192,
+      "unknown": 7,
+      "known_intervals": {
+        "summed_seconds": 120212.0,
+        "union_seconds": 9109.0,
+        "overlap_wall_seconds": 8203.0,
+        "excess_context_seconds": 111103.0
+      },
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "publication",
+    "actual_T3_context_births": 4,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 4,
+      "observed": 0,
+      "unknown": 4,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 4,
+      "observed": 0,
+      "unknown": 4,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "root_observation",
+    "actual_T3_context_births": 1,
+    "observed_native_goal_births": 1,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_subtotal": 0,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_subtotal": 0,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "route_probe",
+    "actual_T3_context_births": 2,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 0,
+      "unknown": 2,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 0,
+      "unknown": 2,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "scientific_consolidation",
+    "actual_T3_context_births": 2,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 0,
+      "unknown": 2,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 0,
+      "unknown": 2,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "separate_coverage_completion",
+    "actual_T3_context_births": 1,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  },
+  {
+    "category": "support",
+    "actual_T3_context_births": 3,
+    "observed_native_goal_births": 0,
+    "completed_goal_births": 0,
+    "context_goal_coverage_complete": false,
+    "native_tokens": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 0,
+      "unknown": 3,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_cumulative_elapsed": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 0,
+      "unknown": 3,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "native_intervals": {
+      "actual_intervals": 0,
+      "observed": 0,
+      "unknown": 0,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "elapsed_is_inference": false,
+    "root_is_whole_campaign_total": false
+  }
+]

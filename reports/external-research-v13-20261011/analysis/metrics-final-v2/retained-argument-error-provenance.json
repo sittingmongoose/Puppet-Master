@@ -1,0 +1,19 @@
+{
+  "call": {
+    "threadId": "context-cfa241029e01dbb6",
+    "view": "activity",
+    "limit": 1,
+    "runLimit": 1000,
+    "maxCharsPerItem": 1
+  },
+  "actualReturn": {
+    "content": [
+      {
+        "type": "text",
+        "text": "tool call error: tool call failed for `t3-code/t3_thread_read`\n\nCaused by:\n    Mcp error: -32602: Invalid parameters for tool 't3_thread_read': Expected a value less than or equal to 50\n      at [\"runLimit\"]"
+      }
+    ],
+    "isError": true
+  },
+  "captured_utc": "2026-10-12T05:52:33.300Z"
+}

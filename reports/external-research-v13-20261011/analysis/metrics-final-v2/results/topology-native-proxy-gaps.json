@@ -1,0 +1,2340 @@
+[
+  {
+    "predecessor_context": "context-bbf563d59c279cdb",
+    "child_context": "context-3dc8b7a3b8ea68bc",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 65.0,
+    "native_proxy_wait_seconds": 65.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 26.921000003814697,
+    "T3_handoff_wait_proxy_seconds": 26.921000003814697,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-02f5dc0f7f0ec849",
+    "child_context": "context-ac6a818950b8f48f",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 65.0,
+    "native_proxy_wait_seconds": 65.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 13.69700002670288,
+    "T3_handoff_wait_proxy_seconds": 13.69700002670288,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-87d523e766fe9076",
+    "child_context": "context-956f47fa9918fe40",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 56.0,
+    "native_proxy_wait_seconds": 56.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 22.110000133514404,
+    "T3_handoff_wait_proxy_seconds": 22.110000133514404,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-538aaaf6fa612b0c",
+    "child_context": "context-2f9abca716916609",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 77.0,
+    "native_proxy_wait_seconds": 77.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 33.819000005722046,
+    "T3_handoff_wait_proxy_seconds": 33.819000005722046,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-538aaaf6fa612b0c",
+    "child_context": "context-e7a8c6fe1f7b3519",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 61.0,
+    "native_proxy_wait_seconds": 61.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 37.23100018501282,
+    "T3_handoff_wait_proxy_seconds": 37.23100018501282,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-cb0b5e8dab50471d",
+    "child_context": "context-02af67df19752325",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 74.0,
+    "native_proxy_wait_seconds": 74.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 45.17799997329712,
+    "T3_handoff_wait_proxy_seconds": 45.17799997329712,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e2e8fe88bb568a62",
+    "child_context": "context-85d8717594f89d5d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 91.0,
+    "native_proxy_wait_seconds": 91.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 52.0550000667572,
+    "T3_handoff_wait_proxy_seconds": 52.0550000667572,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6f9cb39a8e66b477",
+    "child_context": "context-82f66fc81ef16c5a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 91.0,
+    "native_proxy_wait_seconds": 91.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 60.467000007629395,
+    "T3_handoff_wait_proxy_seconds": 60.467000007629395,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-bbf563d59c279cdb",
+    "child_context": "context-f4f649280e0e429d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 397.0,
+    "native_proxy_wait_seconds": 397.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 341.595999956131,
+    "T3_handoff_wait_proxy_seconds": 341.595999956131,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-3dc8b7a3b8ea68bc",
+    "child_context": "context-f4f649280e0e429d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 85.0,
+    "native_proxy_wait_seconds": 85.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 32.605000019073486,
+    "T3_handoff_wait_proxy_seconds": 32.605000019073486,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f950e06b89d0a10a",
+    "child_context": "context-87a945a02455445d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 242.0,
+    "native_proxy_wait_seconds": 242.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 198.36500000953674,
+    "T3_handoff_wait_proxy_seconds": 198.36500000953674,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-645376f41add84f8",
+    "child_context": "context-40b66a23ca3b4d95",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A8/run/A-F02-A8/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 89.0,
+    "native_proxy_wait_seconds": 89.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 63.175999879837036,
+    "T3_handoff_wait_proxy_seconds": 63.175999879837036,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-590773b18169034e",
+    "child_context": "context-1679257a366b605c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 67.0,
+    "native_proxy_wait_seconds": 67.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 37.03999996185303,
+    "T3_handoff_wait_proxy_seconds": 37.03999996185303,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0c8eda2438be5ec4",
+    "child_context": "context-8e46c7b46bb9bdcb",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 69.0,
+    "native_proxy_wait_seconds": 69.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 36.36800003051758,
+    "T3_handoff_wait_proxy_seconds": 36.36800003051758,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-02f5dc0f7f0ec849",
+    "child_context": "context-503182579d02d364",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 884.0,
+    "native_proxy_wait_seconds": 884.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 841.6099998950958,
+    "T3_handoff_wait_proxy_seconds": 841.6099998950958,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ac6a818950b8f48f",
+    "child_context": "context-503182579d02d364",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 253.0,
+    "native_proxy_wait_seconds": 253.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 222.15100002288818,
+    "T3_handoff_wait_proxy_seconds": 222.15100002288818,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-cb0b5e8dab50471d",
+    "child_context": "context-ec27750681011f9a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 562.0,
+    "native_proxy_wait_seconds": 562.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 535.4340000152588,
+    "T3_handoff_wait_proxy_seconds": 535.4340000152588,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-02af67df19752325",
+    "child_context": "context-ec27750681011f9a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 232.0,
+    "native_proxy_wait_seconds": 232.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 203.61899995803833,
+    "T3_handoff_wait_proxy_seconds": 203.61899995803833,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-354a789975deff95",
+    "child_context": "context-3c6174b68aa72e41",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 360.0,
+    "native_proxy_wait_seconds": 360.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 151.7779998779297,
+    "T3_handoff_wait_proxy_seconds": 151.7779998779297,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-19fb5868a431fa1c",
+    "child_context": "context-5e80ea445e7b5326",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 283.0,
+    "native_proxy_wait_seconds": 283.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 242.94500017166138,
+    "T3_handoff_wait_proxy_seconds": 242.94500017166138,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4e9aea63ed978a97",
+    "child_context": "context-670460a08f5f085b",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 358.0,
+    "native_proxy_wait_seconds": 358.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 332.1560001373291,
+    "T3_handoff_wait_proxy_seconds": 332.1560001373291,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f950e06b89d0a10a",
+    "child_context": "context-58c51048548ee01f",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 227.0,
+    "native_proxy_wait_seconds": 227.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 201.28600001335144,
+    "T3_handoff_wait_proxy_seconds": 201.28600001335144,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-941a9494c5eb5231",
+    "child_context": "context-1234f0b9adf4146a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 214.0,
+    "native_proxy_wait_seconds": 214.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 192.51700019836426,
+    "T3_handoff_wait_proxy_seconds": 192.51700019836426,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b94d67b008cee864",
+    "child_context": "context-e063a84e7f3b9c7d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 270.0,
+    "native_proxy_wait_seconds": 270.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 227.67300009727478,
+    "T3_handoff_wait_proxy_seconds": 227.67300009727478,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-190a0e4240a11c1d",
+    "child_context": "context-38a255855a1159f4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 404.0,
+    "native_proxy_wait_seconds": 404.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 373.7480001449585,
+    "T3_handoff_wait_proxy_seconds": 373.7480001449585,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-2fc72b45f40c9ff6",
+    "child_context": "context-1cff4b0790214597",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 147.0,
+    "native_proxy_wait_seconds": 147.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 95.39100003242493,
+    "T3_handoff_wait_proxy_seconds": 95.39100003242493,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ea71e5e339353a4f",
+    "child_context": "context-fa699cb4a87f1edb",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 92.0,
+    "native_proxy_wait_seconds": 92.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 50.53999996185303,
+    "T3_handoff_wait_proxy_seconds": 50.53999996185303,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-87d523e766fe9076",
+    "child_context": "context-438f4a8b8a1e2f8d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 819.0,
+    "native_proxy_wait_seconds": 819.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 770.9760000705719,
+    "T3_handoff_wait_proxy_seconds": 770.9760000705719,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-956f47fa9918fe40",
+    "child_context": "context-438f4a8b8a1e2f8d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 188.0,
+    "native_proxy_wait_seconds": 188.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 152.26399993896484,
+    "T3_handoff_wait_proxy_seconds": 152.26399993896484,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-538aaaf6fa612b0c",
+    "child_context": "context-1f5c162f8c133a46",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 636.0,
+    "native_proxy_wait_seconds": 636.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 615.8100001811981,
+    "T3_handoff_wait_proxy_seconds": 615.8100001811981,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-2f9abca716916609",
+    "child_context": "context-1f5c162f8c133a46",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 268.0,
+    "native_proxy_wait_seconds": 268.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 243.57500004768372,
+    "T3_handoff_wait_proxy_seconds": 243.57500004768372,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e7a8c6fe1f7b3519",
+    "child_context": "context-1f5c162f8c133a46",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 323.0,
+    "native_proxy_wait_seconds": 323.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 305.9410002231598,
+    "T3_handoff_wait_proxy_seconds": 305.9410002231598,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ccde7df3074077cf",
+    "child_context": "context-6ab6bceb0bad3878",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-treatment/run/B02-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-treatment/run/B02-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 212.0,
+    "native_proxy_wait_seconds": 212.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 172.6380000114441,
+    "T3_handoff_wait_proxy_seconds": 172.6380000114441,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-5dc36382d1abd6c6",
+    "child_context": "context-02b8fa2b6402209c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 291.0,
+    "native_proxy_wait_seconds": 291.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 272.8309998512268,
+    "T3_handoff_wait_proxy_seconds": 272.8309998512268,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6eb0d86a7881bf16",
+    "child_context": "context-ce1d352205e349f5",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 202.0,
+    "native_proxy_wait_seconds": 202.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 157.51699995994568,
+    "T3_handoff_wait_proxy_seconds": 157.51699995994568,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-63a1cdb603c84eda",
+    "child_context": "context-23952e26add7a01d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 138.0,
+    "native_proxy_wait_seconds": 138.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 106.22899985313416,
+    "T3_handoff_wait_proxy_seconds": 106.22899985313416,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-312703e7a2c16bb8",
+    "child_context": "context-e9abd33bef7a28c1",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 363.0,
+    "native_proxy_wait_seconds": 363.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 322.09699988365173,
+    "T3_handoff_wait_proxy_seconds": 322.09699988365173,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6f9cb39a8e66b477",
+    "child_context": "context-2d28de9212538aa4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1402.0,
+    "native_proxy_wait_seconds": 1402.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1251.12700009346,
+    "T3_handoff_wait_proxy_seconds": 1251.12700009346,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-82f66fc81ef16c5a",
+    "child_context": "context-2d28de9212538aa4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 687.0,
+    "native_proxy_wait_seconds": 687.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 513.970999956131,
+    "T3_handoff_wait_proxy_seconds": 513.970999956131,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-354a789975deff95",
+    "child_context": "context-8a5f63669dc05d32",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1067.0,
+    "native_proxy_wait_seconds": 1067.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 849.8449997901917,
+    "T3_handoff_wait_proxy_seconds": 849.8449997901917,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-3c6174b68aa72e41",
+    "child_context": "context-8a5f63669dc05d32",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 179.0,
+    "native_proxy_wait_seconds": 179.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 149.60399985313416,
+    "T3_handoff_wait_proxy_seconds": 149.60399985313416,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-590773b18169034e",
+    "child_context": "context-08ea61100124f349",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1340.0,
+    "native_proxy_wait_seconds": 1340.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1316.9139997959137,
+    "T3_handoff_wait_proxy_seconds": 1316.9139997959137,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1679257a366b605c",
+    "child_context": "context-08ea61100124f349",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 412.0,
+    "native_proxy_wait_seconds": 412.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 377.34499979019165,
+    "T3_handoff_wait_proxy_seconds": 377.34499979019165,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-19fb5868a431fa1c",
+    "child_context": "context-30d81235740ff537",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1000.0,
+    "native_proxy_wait_seconds": 1000.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 943.7060000896454,
+    "T3_handoff_wait_proxy_seconds": 943.7060000896454,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-5e80ea445e7b5326",
+    "child_context": "context-30d81235740ff537",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 417.0,
+    "native_proxy_wait_seconds": 417.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 362.510999917984,
+    "T3_handoff_wait_proxy_seconds": 362.510999917984,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4e9aea63ed978a97",
+    "child_context": "context-28efeacafbcf3e86",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1058.0,
+    "native_proxy_wait_seconds": 1058.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1031.2720000743866,
+    "T3_handoff_wait_proxy_seconds": 1031.2720000743866,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-670460a08f5f085b",
+    "child_context": "context-28efeacafbcf3e86",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 306.0,
+    "native_proxy_wait_seconds": 306.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 274.6840000152588,
+    "T3_handoff_wait_proxy_seconds": 274.6840000152588,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f950e06b89d0a10a",
+    "child_context": "context-31b7625788b880b8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 923.0,
+    "native_proxy_wait_seconds": 923.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 898.6930000782013,
+    "T3_handoff_wait_proxy_seconds": 898.6930000782013,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-87a945a02455445d",
+    "child_context": "context-31b7625788b880b8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 555.0,
+    "native_proxy_wait_seconds": 555.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 536.5360000133514,
+    "T3_handoff_wait_proxy_seconds": 536.5360000133514,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-58c51048548ee01f",
+    "child_context": "context-31b7625788b880b8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 510.0,
+    "native_proxy_wait_seconds": 510.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 491.335000038147,
+    "T3_handoff_wait_proxy_seconds": 491.335000038147,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-190a0e4240a11c1d",
+    "child_context": "context-68d52a74d6c358bc",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1110.0,
+    "native_proxy_wait_seconds": 1110.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1061.7940001487732,
+    "T3_handoff_wait_proxy_seconds": 1061.7940001487732,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-38a255855a1159f4",
+    "child_context": "context-68d52a74d6c358bc",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 373.0,
+    "native_proxy_wait_seconds": 373.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 316.2880001068115,
+    "T3_handoff_wait_proxy_seconds": 316.2880001068115,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-2fc72b45f40c9ff6",
+    "child_context": "context-1d75dda22323da63",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 834.0,
+    "native_proxy_wait_seconds": 834.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 783.7290000915527,
+    "T3_handoff_wait_proxy_seconds": 783.7290000915527,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1cff4b0790214597",
+    "child_context": "context-1d75dda22323da63",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 237.0,
+    "native_proxy_wait_seconds": 237.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 214.8140001296997,
+    "T3_handoff_wait_proxy_seconds": 214.8140001296997,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-941a9494c5eb5231",
+    "child_context": "context-4a8f92907de99fea",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 913.0,
+    "native_proxy_wait_seconds": 913.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 894.6570000648499,
+    "T3_handoff_wait_proxy_seconds": 894.6570000648499,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1234f0b9adf4146a",
+    "child_context": "context-4a8f92907de99fea",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-treatment/run/B09-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 189.0,
+    "native_proxy_wait_seconds": 189.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 169.99699997901917,
+    "T3_handoff_wait_proxy_seconds": 169.99699997901917,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e2e8fe88bb568a62",
+    "child_context": "context-e116e062d66338d8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1386.0,
+    "native_proxy_wait_seconds": 1386.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1358.4210000038147,
+    "T3_handoff_wait_proxy_seconds": 1358.4210000038147,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-85d8717594f89d5d",
+    "child_context": "context-e116e062d66338d8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 712.0,
+    "native_proxy_wait_seconds": 712.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 685.2689998149872,
+    "T3_handoff_wait_proxy_seconds": 685.2689998149872,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b94d67b008cee864",
+    "child_context": "context-d2eb9707562faef4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 964.0,
+    "native_proxy_wait_seconds": 964.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 933.5320000648499,
+    "T3_handoff_wait_proxy_seconds": 933.5320000648499,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e063a84e7f3b9c7d",
+    "child_context": "context-d2eb9707562faef4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 261.0,
+    "native_proxy_wait_seconds": 261.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 230.52400016784668,
+    "T3_handoff_wait_proxy_seconds": 230.52400016784668,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-3664efe2fd2c04a1",
+    "child_context": "context-6c66f63a8b5ddc5e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 917.0,
+    "native_proxy_wait_seconds": 917.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 708.4590001106262,
+    "T3_handoff_wait_proxy_seconds": 708.4590001106262,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1b871fbb21bfd6bf",
+    "child_context": "context-8c0564e392450b45",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 601.0,
+    "native_proxy_wait_seconds": 601.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 573.6519999504089,
+    "T3_handoff_wait_proxy_seconds": 573.6519999504089,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d3c5e45debad75a9",
+    "child_context": "context-4f8168fa0390f7c6",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 812.0,
+    "native_proxy_wait_seconds": 812.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 759.3270001411438,
+    "T3_handoff_wait_proxy_seconds": 759.3270001411438,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b1baf5b749df1781",
+    "child_context": "context-7edaae3ef561896e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 812.0,
+    "native_proxy_wait_seconds": 812.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 562.1489999294281,
+    "T3_handoff_wait_proxy_seconds": 562.1489999294281,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-09d156ab85dd62e2",
+    "child_context": "context-e01aa33bd74531b4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 390.0,
+    "native_proxy_wait_seconds": 390.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 364.702999830246,
+    "T3_handoff_wait_proxy_seconds": 364.702999830246,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ea71e5e339353a4f",
+    "child_context": "context-7d730bc713991348",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 2113.0,
+    "native_proxy_wait_seconds": 2113.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 2084.912999868393,
+    "T3_handoff_wait_proxy_seconds": 2084.912999868393,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-fa699cb4a87f1edb",
+    "child_context": "context-7d730bc713991348",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1066.0,
+    "native_proxy_wait_seconds": 1066.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 985.3629999160767,
+    "T3_handoff_wait_proxy_seconds": 985.3629999160767,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-3664efe2fd2c04a1",
+    "child_context": "context-138aaf300ef02b4c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1808.0,
+    "native_proxy_wait_seconds": 1808.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1626.210000038147,
+    "T3_handoff_wait_proxy_seconds": 1626.210000038147,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6c66f63a8b5ddc5e",
+    "child_context": "context-138aaf300ef02b4c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 400.0,
+    "native_proxy_wait_seconds": 400.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 365.1749999523163,
+    "T3_handoff_wait_proxy_seconds": 365.1749999523163,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1babe67f49cd2788",
+    "child_context": "context-9923457a85109a4b",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1023.0,
+    "native_proxy_wait_seconds": 1023.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 992.1879999637604,
+    "T3_handoff_wait_proxy_seconds": 992.1879999637604,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1b871fbb21bfd6bf",
+    "child_context": "context-b9db9585d8aa6007",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1516.0,
+    "native_proxy_wait_seconds": 1516.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1492.2729997634888,
+    "T3_handoff_wait_proxy_seconds": 1492.2729997634888,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-8c0564e392450b45",
+    "child_context": "context-b9db9585d8aa6007",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 647.0,
+    "native_proxy_wait_seconds": 647.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 615.6479997634888,
+    "T3_handoff_wait_proxy_seconds": 615.6479997634888,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b1baf5b749df1781",
+    "child_context": "context-ba9d298a162ecec2",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1647.0,
+    "native_proxy_wait_seconds": 1647.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1479.0629999637604,
+    "T3_handoff_wait_proxy_seconds": 1479.0629999637604,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-7edaae3ef561896e",
+    "child_context": "context-ba9d298a162ecec2",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-control/run/B07-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 399.0,
+    "native_proxy_wait_seconds": 399.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 364.81700015068054,
+    "T3_handoff_wait_proxy_seconds": 364.81700015068054,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-c9049363a8a7d743",
+    "child_context": "context-53436a6b10f146ef",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 254.0,
+    "native_proxy_wait_seconds": 254.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 223.80400013923645,
+    "T3_handoff_wait_proxy_seconds": 223.80400013923645,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-5dc36382d1abd6c6",
+    "child_context": "context-fc0e2dddb0779ce0",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1937.0,
+    "native_proxy_wait_seconds": 1937.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1905.5309998989105,
+    "T3_handoff_wait_proxy_seconds": 1905.5309998989105,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-02b8fa2b6402209c",
+    "child_context": "context-fc0e2dddb0779ce0",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1045.0,
+    "native_proxy_wait_seconds": 1045.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 999.9300000667572,
+    "T3_handoff_wait_proxy_seconds": 999.9300000667572,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-45e1826fe040ee70",
+    "child_context": "context-afe32a79f4db6f5f",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 540.0,
+    "native_proxy_wait_seconds": 540.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 513.8139998912811,
+    "T3_handoff_wait_proxy_seconds": 513.8139998912811,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d3c5e45debad75a9",
+    "child_context": "context-0dd528a2a3f66c06",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1736.0,
+    "native_proxy_wait_seconds": 1736.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1676.5210001468658,
+    "T3_handoff_wait_proxy_seconds": 1676.5210001468658,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4f8168fa0390f7c6",
+    "child_context": "context-0dd528a2a3f66c06",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 426.0,
+    "native_proxy_wait_seconds": 426.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 383.07299995422363,
+    "T3_handoff_wait_proxy_seconds": 383.07299995422363,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f9ed3547ba99cc4a",
+    "child_context": "context-13a83635f9b18418",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 405.0,
+    "native_proxy_wait_seconds": 405.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 358.6819999217987,
+    "T3_handoff_wait_proxy_seconds": 358.6819999217987,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6eb0d86a7881bf16",
+    "child_context": "context-436d40ffedd4c638",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1829.0,
+    "native_proxy_wait_seconds": 1829.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1790.641000032425,
+    "T3_handoff_wait_proxy_seconds": 1790.641000032425,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ce1d352205e349f5",
+    "child_context": "context-436d40ffedd4c638",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1076.0,
+    "native_proxy_wait_seconds": 1076.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1035.8570001125336,
+    "T3_handoff_wait_proxy_seconds": 1035.8570001125336,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a11117b3482d0ba2",
+    "child_context": "context-6af43ae6161ee8b3",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 500.0,
+    "native_proxy_wait_seconds": 500.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 399.04500007629395,
+    "T3_handoff_wait_proxy_seconds": 399.04500007629395,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6e859aac487e73c1",
+    "child_context": "context-8dee54c3a116502c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 909.0,
+    "native_proxy_wait_seconds": 909.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 883.021999835968,
+    "T3_handoff_wait_proxy_seconds": 883.021999835968,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-63a1cdb603c84eda",
+    "child_context": "context-1b2680fdc8894e5a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1752.0,
+    "native_proxy_wait_seconds": 1752.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1733.7489998340607,
+    "T3_handoff_wait_proxy_seconds": 1733.7489998340607,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-23952e26add7a01d",
+    "child_context": "context-1b2680fdc8894e5a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1084.0,
+    "native_proxy_wait_seconds": 1084.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1060.7839999198914,
+    "T3_handoff_wait_proxy_seconds": 1060.7839999198914,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-312703e7a2c16bb8",
+    "child_context": "context-a03bc9961d061bad",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1970.0,
+    "native_proxy_wait_seconds": 1970.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1950.3029999732971,
+    "T3_handoff_wait_proxy_seconds": 1950.3029999732971,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e9abd33bef7a28c1",
+    "child_context": "context-a03bc9961d061bad",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1004.0,
+    "native_proxy_wait_seconds": 1004.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 964.2150001525879,
+    "T3_handoff_wait_proxy_seconds": 964.2150001525879,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-aee1464d7de9ff6a",
+    "child_context": "context-e41b80dd485ecc45",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 454.0,
+    "native_proxy_wait_seconds": 454.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 431.1510000228882,
+    "T3_handoff_wait_proxy_seconds": 431.1510000228882,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a31974de5ff16b5f",
+    "child_context": "context-f9c3722d5e3468e9",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 281.0,
+    "native_proxy_wait_seconds": 281.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 210.60899996757507,
+    "T3_handoff_wait_proxy_seconds": 210.60899996757507,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-09d156ab85dd62e2",
+    "child_context": "context-8d9e539b28f7e935",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-treatment/run/B12-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 394.0,
+    "native_proxy_wait_seconds": 394.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 367.0039999485016,
+    "T3_handoff_wait_proxy_seconds": 367.0039999485016,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-238eef7e78dd95c3",
+    "child_context": "context-e34fd19bea735ea4",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 552.0,
+    "native_proxy_wait_seconds": 552.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 521.4930000305176,
+    "T3_handoff_wait_proxy_seconds": 521.4930000305176,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6e859aac487e73c1",
+    "child_context": "context-a0e17861a66332c1",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 910.0,
+    "native_proxy_wait_seconds": 910.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 886.0929999351501,
+    "T3_handoff_wait_proxy_seconds": 886.0929999351501,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-1babe67f49cd2788",
+    "child_context": "context-592e9b8291545a96",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1444.0,
+    "native_proxy_wait_seconds": 1444.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1413.1500000953674,
+    "T3_handoff_wait_proxy_seconds": 1413.1500000953674,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-9923457a85109a4b",
+    "child_context": "context-592e9b8291545a96",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 190.0,
+    "native_proxy_wait_seconds": 190.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 160.40500020980835,
+    "T3_handoff_wait_proxy_seconds": 160.40500020980835,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-45e1826fe040ee70",
+    "child_context": "context-3aa47333aa3967ba",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1037.0,
+    "native_proxy_wait_seconds": 1037.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1006.539999961853,
+    "T3_handoff_wait_proxy_seconds": 1006.539999961853,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-afe32a79f4db6f5f",
+    "child_context": "context-3aa47333aa3967ba",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 151.0,
+    "native_proxy_wait_seconds": 151.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 129.34800004959106,
+    "T3_handoff_wait_proxy_seconds": 129.34800004959106,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f9ed3547ba99cc4a",
+    "child_context": "context-648b6a0dc830a065",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 921.0,
+    "native_proxy_wait_seconds": 921.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 893.3139998912811,
+    "T3_handoff_wait_proxy_seconds": 893.3139998912811,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-13a83635f9b18418",
+    "child_context": "context-648b6a0dc830a065",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 88.0,
+    "native_proxy_wait_seconds": 88.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 48.64199995994568,
+    "T3_handoff_wait_proxy_seconds": 48.64199995994568,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-aee1464d7de9ff6a",
+    "child_context": "context-bd0012d69bbc858f",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1163.0,
+    "native_proxy_wait_seconds": 1163.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1142.9670000076294,
+    "T3_handoff_wait_proxy_seconds": 1142.9670000076294,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e41b80dd485ecc45",
+    "child_context": "context-bd0012d69bbc858f",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 146.0,
+    "native_proxy_wait_seconds": 146.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 82.91300010681152,
+    "T3_handoff_wait_proxy_seconds": 82.91300010681152,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-c9049363a8a7d743",
+    "child_context": "context-1faa966b7bff9905",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 669.0,
+    "native_proxy_wait_seconds": 669.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 628.058000087738,
+    "T3_handoff_wait_proxy_seconds": 628.058000087738,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-53436a6b10f146ef",
+    "child_context": "context-1faa966b7bff9905",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 105.0,
+    "native_proxy_wait_seconds": 105.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 75.48900008201599,
+    "T3_handoff_wait_proxy_seconds": 75.48900008201599,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a11117b3482d0ba2",
+    "child_context": "context-75e1437134bd70bd",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 1124.0,
+    "native_proxy_wait_seconds": 1124.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 1019.6489999294281,
+    "T3_handoff_wait_proxy_seconds": 1019.6489999294281,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6af43ae6161ee8b3",
+    "child_context": "context-75e1437134bd70bd",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 135.0,
+    "native_proxy_wait_seconds": 135.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 85.04399991035461,
+    "T3_handoff_wait_proxy_seconds": 85.04399991035461,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a31974de5ff16b5f",
+    "child_context": "context-80f3cac612bfa48a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 975.0,
+    "native_proxy_wait_seconds": 975.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 948.8849999904633,
+    "T3_handoff_wait_proxy_seconds": 948.8849999904633,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f9c3722d5e3468e9",
+    "child_context": "context-80f3cac612bfa48a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 53.0,
+    "native_proxy_wait_seconds": 53.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 30.061000108718872,
+    "T3_handoff_wait_proxy_seconds": 30.061000108718872,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-238eef7e78dd95c3",
+    "child_context": "context-d2770312485b8afb",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 947.0,
+    "native_proxy_wait_seconds": 947.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 919.1979999542236,
+    "T3_handoff_wait_proxy_seconds": 919.1979999542236,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-e34fd19bea735ea4",
+    "child_context": "context-d2770312485b8afb",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 35.0,
+    "native_proxy_wait_seconds": 35.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 10.864000082015991,
+    "T3_handoff_wait_proxy_seconds": 10.864000082015991,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a79cde1658991f19",
+    "child_context": "context-f54763aade2a4b27",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 170.0,
+    "native_proxy_wait_seconds": 170.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 143.85599994659424,
+    "T3_handoff_wait_proxy_seconds": 143.85599994659424,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-91c79a8073eefcff",
+    "child_context": "context-dd1f8297d030f37e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 37.0,
+    "native_proxy_wait_seconds": 37.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 11.516000032424927,
+    "T3_handoff_wait_proxy_seconds": 11.516000032424927,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b6cf56443188df1e",
+    "child_context": "context-32b8e2c9945522e8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 62.0,
+    "native_proxy_wait_seconds": 62.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 33.52300000190735,
+    "T3_handoff_wait_proxy_seconds": 33.52300000190735,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0c4dc9b6da1f287b",
+    "child_context": "context-b3041354d4aaae75",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 42.0,
+    "native_proxy_wait_seconds": 42.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 17.73799991607666,
+    "T3_handoff_wait_proxy_seconds": 17.73799991607666,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d6854873504e1854",
+    "child_context": "context-a67def2d45e7628a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 44.0,
+    "native_proxy_wait_seconds": 44.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 12.236000061035156,
+    "T3_handoff_wait_proxy_seconds": 12.236000061035156,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d6854873504e1854",
+    "child_context": "context-02c070c648ded94c",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 44.0,
+    "native_proxy_wait_seconds": 44.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 9.73800015449524,
+    "T3_handoff_wait_proxy_seconds": 9.73800015449524,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d939e42aaf999550",
+    "child_context": "context-4b76c8c675464df3",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-treatment/run/C-R1-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-treatment/run/C-R1-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 46.0,
+    "native_proxy_wait_seconds": 46.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 22.230000019073486,
+    "T3_handoff_wait_proxy_seconds": 22.230000019073486,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-91c79a8073eefcff",
+    "child_context": "context-c8bd8bfdc90b9b75",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 35.0,
+    "native_proxy_wait_seconds": 35.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 9.16700005531311,
+    "T3_handoff_wait_proxy_seconds": 9.16700005531311,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-492d8769ae471106",
+    "child_context": "context-94a0b5dccc1e4747",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 37.0,
+    "native_proxy_wait_seconds": 37.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 12.400999784469604,
+    "T3_handoff_wait_proxy_seconds": 12.400999784469604,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a79cde1658991f19",
+    "child_context": "context-472eb7ac56979667",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 567.0,
+    "native_proxy_wait_seconds": 567.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 541.7939999103546,
+    "T3_handoff_wait_proxy_seconds": 541.7939999103546,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-f54763aade2a4b27",
+    "child_context": "context-472eb7ac56979667",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-control/run/C-R1-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 51.0,
+    "native_proxy_wait_seconds": 51.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 18.236999988555908,
+    "T3_handoff_wait_proxy_seconds": 18.236999988555908,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d6854873504e1854",
+    "child_context": "context-5545876fd93334cd",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 320.0,
+    "native_proxy_wait_seconds": 320.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 287.28400015830994,
+    "T3_handoff_wait_proxy_seconds": 287.28400015830994,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-02c070c648ded94c",
+    "child_context": "context-5545876fd93334cd",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 32.0,
+    "native_proxy_wait_seconds": 32.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 16.818000078201294,
+    "T3_handoff_wait_proxy_seconds": 16.818000078201294,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a67def2d45e7628a",
+    "child_context": "context-5545876fd93334cd",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/run/C-R2-P01-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 140.0,
+    "native_proxy_wait_seconds": 140.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 117.97900009155273,
+    "T3_handoff_wait_proxy_seconds": 117.97900009155273,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4a37c13070e2a6a5",
+    "child_context": "context-d48d039f0f179e58",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/run/C-R1-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 83.0,
+    "native_proxy_wait_seconds": 83.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 19.71399998664856,
+    "T3_handoff_wait_proxy_seconds": 19.71399998664856,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b6cf56443188df1e",
+    "child_context": "context-65523b51a9916022",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 725.0,
+    "native_proxy_wait_seconds": 725.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 692.8069999217987,
+    "T3_handoff_wait_proxy_seconds": 692.8069999217987,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-32b8e2c9945522e8",
+    "child_context": "context-65523b51a9916022",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-control/run/C-R1-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 154.0,
+    "native_proxy_wait_seconds": 154.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 12.799000024795532,
+    "T3_handoff_wait_proxy_seconds": 12.799000024795532,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0c4dc9b6da1f287b",
+    "child_context": "context-2c956ac0d616b12b",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 515.0,
+    "native_proxy_wait_seconds": 515.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 484.3840000629425,
+    "T3_handoff_wait_proxy_seconds": 484.3840000629425,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-b3041354d4aaae75",
+    "child_context": "context-2c956ac0d616b12b",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-control/run/C-R2-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 46.0,
+    "native_proxy_wait_seconds": 46.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 15.920000076293945,
+    "T3_handoff_wait_proxy_seconds": 15.920000076293945,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-91c79a8073eefcff",
+    "child_context": "context-366ac86d3a1c189a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 395.0,
+    "native_proxy_wait_seconds": 395.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 367.62800002098083,
+    "T3_handoff_wait_proxy_seconds": 367.62800002098083,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-c8bd8bfdc90b9b75",
+    "child_context": "context-366ac86d3a1c189a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 39.0,
+    "native_proxy_wait_seconds": 39.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 18.693000078201294,
+    "T3_handoff_wait_proxy_seconds": 18.693000078201294,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-dd1f8297d030f37e",
+    "child_context": "context-366ac86d3a1c189a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 219.0,
+    "native_proxy_wait_seconds": 219.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 187.9079999923706,
+    "T3_handoff_wait_proxy_seconds": 187.9079999923706,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-492d8769ae471106",
+    "child_context": "context-98ac1ffbd0990e16",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 561.0,
+    "native_proxy_wait_seconds": 561.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 536.2779998779297,
+    "T3_handoff_wait_proxy_seconds": 536.2779998779297,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-94a0b5dccc1e4747",
+    "child_context": "context-98ac1ffbd0990e16",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-control/run/C-R2-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 34.0,
+    "native_proxy_wait_seconds": 34.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 13.411999940872192,
+    "T3_handoff_wait_proxy_seconds": 13.411999940872192,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-10dd61783f8d5326",
+    "child_context": "context-316c4adefd11340b",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 45.0,
+    "native_proxy_wait_seconds": 45.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 20.545000076293945,
+    "T3_handoff_wait_proxy_seconds": 20.545000076293945,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-fae5ad21a2823849",
+    "child_context": "context-63d6e7cddb30edd7",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 62.0,
+    "native_proxy_wait_seconds": 62.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 21.740999937057495,
+    "T3_handoff_wait_proxy_seconds": 21.740999937057495,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-9af9d84962f13efc",
+    "child_context": "context-d0f632c633d6e553",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 38.0,
+    "native_proxy_wait_seconds": 38.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 12.991999864578247,
+    "T3_handoff_wait_proxy_seconds": 12.991999864578247,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-9af9d84962f13efc",
+    "child_context": "context-aa0867164281daa9",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 38.0,
+    "native_proxy_wait_seconds": 38.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 16.259000062942505,
+    "T3_handoff_wait_proxy_seconds": 16.259000062942505,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-10dd61783f8d5326",
+    "child_context": "context-689bdc47a3595b95",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P03-treatment/run/D-R2-P03-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 48.0,
+    "native_proxy_wait_seconds": 48.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 23.691999912261963,
+    "T3_handoff_wait_proxy_seconds": 23.691999912261963,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-bfdf3f8f6bcc0ab6",
+    "child_context": "context-d9377d19207ba2f8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 54.0,
+    "native_proxy_wait_seconds": 54.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 25.033999919891357,
+    "T3_handoff_wait_proxy_seconds": 25.033999919891357,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-fc3a6deba87c650e",
+    "child_context": "context-13e722f7f95c1d01",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 49.0,
+    "native_proxy_wait_seconds": 49.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 23.638000011444092,
+    "T3_handoff_wait_proxy_seconds": 23.638000011444092,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0085bbfe4107b7d0",
+    "child_context": "context-ef24a3df267a5818",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 48.0,
+    "native_proxy_wait_seconds": 48.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 24.466000080108643,
+    "T3_handoff_wait_proxy_seconds": 24.466000080108643,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-04843b3c62878642",
+    "child_context": "context-d6b92a2336770bcb",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 69.0,
+    "native_proxy_wait_seconds": 69.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 19.94700002670288,
+    "T3_handoff_wait_proxy_seconds": 19.94700002670288,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4bc3390f0ec93a72",
+    "child_context": "context-7f279474f5fb3e36",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 73.0,
+    "native_proxy_wait_seconds": 73.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 37.42300009727478,
+    "T3_handoff_wait_proxy_seconds": 37.42300009727478,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-4bc3390f0ec93a72",
+    "child_context": "context-8291ea940aa70999",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 67.0,
+    "native_proxy_wait_seconds": 67.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 31.780999898910522,
+    "T3_handoff_wait_proxy_seconds": 31.780999898910522,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-bfdf3f8f6bcc0ab6",
+    "child_context": "context-8474b8aa4f3a9354",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 525.0,
+    "native_proxy_wait_seconds": 525.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 502.05399990081787,
+    "T3_handoff_wait_proxy_seconds": 502.05399990081787,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d9377d19207ba2f8",
+    "child_context": "context-8474b8aa4f3a9354",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 56.0,
+    "native_proxy_wait_seconds": 56.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 23.057999849319458,
+    "T3_handoff_wait_proxy_seconds": 23.057999849319458,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a4b4dcba0bcac0b1",
+    "child_context": "context-9d0280d4c00ba512",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 65.0,
+    "native_proxy_wait_seconds": 65.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 18.87000012397766,
+    "T3_handoff_wait_proxy_seconds": 18.87000012397766,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-099f39cb557ba635",
+    "child_context": "context-997700d6d29b6717",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-treatment/run/D-R1-P04-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-treatment/run/D-R1-P04-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 36.0,
+    "native_proxy_wait_seconds": 36.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 17.411999940872192,
+    "T3_handoff_wait_proxy_seconds": 17.411999940872192,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ef80d26ea8137ce5",
+    "child_context": "context-bd22ff5577370314",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 54.0,
+    "native_proxy_wait_seconds": 54.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 22.68400001525879,
+    "T3_handoff_wait_proxy_seconds": 22.68400001525879,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ad2dc42f9307b23c",
+    "child_context": "context-b93cbd6b21546d7a",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-truth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/critic-truth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 69.0,
+    "native_proxy_wait_seconds": 69.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 21.17199993133545,
+    "T3_handoff_wait_proxy_seconds": 21.17199993133545,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-6e52f0cfaef32069",
+    "child_context": "context-f6fb26d97f7fb07d",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 54.0,
+    "native_proxy_wait_seconds": 54.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 17.89300012588501,
+    "T3_handoff_wait_proxy_seconds": 17.89300012588501,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-627a0d5fce8fd1f9",
+    "child_context": "context-0abb231c52546a58",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 50.0,
+    "native_proxy_wait_seconds": 50.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 20.193000078201294,
+    "T3_handoff_wait_proxy_seconds": 20.193000078201294,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ad2dc42f9307b23c",
+    "child_context": "context-fa95b39e06bbcda8",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-breadth/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/stages/critic-breadth/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 75.0,
+    "native_proxy_wait_seconds": 75.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 18.000999927520752,
+    "T3_handoff_wait_proxy_seconds": 18.000999927520752,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-fc3a6deba87c650e",
+    "child_context": "context-1731d24c4c814fdf",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 555.0,
+    "native_proxy_wait_seconds": 555.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 528.5759999752045,
+    "T3_handoff_wait_proxy_seconds": 528.5759999752045,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-13e722f7f95c1d01",
+    "child_context": "context-1731d24c4c814fdf",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 75.0,
+    "native_proxy_wait_seconds": 75.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 25.222000122070312,
+    "T3_handoff_wait_proxy_seconds": 25.222000122070312,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0085bbfe4107b7d0",
+    "child_context": "context-8122dd47986403e0",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 609.0,
+    "native_proxy_wait_seconds": 609.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 590.7369999885559,
+    "T3_handoff_wait_proxy_seconds": 590.7369999885559,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-ef24a3df267a5818",
+    "child_context": "context-8122dd47986403e0",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 50.0,
+    "native_proxy_wait_seconds": 50.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 19.87999987602234,
+    "T3_handoff_wait_proxy_seconds": 19.87999987602234,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-04843b3c62878642",
+    "child_context": "context-96f6eca3e7a8d2de",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 729.0,
+    "native_proxy_wait_seconds": 729.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 683.4520001411438,
+    "T3_handoff_wait_proxy_seconds": 683.4520001411438,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-d6b92a2336770bcb",
+    "child_context": "context-96f6eca3e7a8d2de",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 52.0,
+    "native_proxy_wait_seconds": 52.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 20.54200005531311,
+    "T3_handoff_wait_proxy_seconds": 20.54200005531311,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-627a0d5fce8fd1f9",
+    "child_context": "context-33541f1226c4c38e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 661.0,
+    "native_proxy_wait_seconds": 661.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 634.7130000591278,
+    "T3_handoff_wait_proxy_seconds": 634.7130000591278,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-0abb231c52546a58",
+    "child_context": "context-33541f1226c4c38e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 58.0,
+    "native_proxy_wait_seconds": 58.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 36.41199994087219,
+    "T3_handoff_wait_proxy_seconds": 36.41199994087219,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-2f0bebe53dba9d6d",
+    "child_context": "context-a259ddc83fd6bc2e",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/critic/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 60.0,
+    "native_proxy_wait_seconds": 60.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 16.742999792099,
+    "T3_handoff_wait_proxy_seconds": 16.742999792099,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a4b4dcba0bcac0b1",
+    "child_context": "context-bd8e5163fedb4dc5",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 467.0,
+    "native_proxy_wait_seconds": 467.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 420.4610002040863,
+    "T3_handoff_wait_proxy_seconds": 420.4610002040863,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-9d0280d4c00ba512",
+    "child_context": "context-bd8e5163fedb4dc5",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-control/run/D-R1-P01-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 35.0,
+    "native_proxy_wait_seconds": 35.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 17.652000188827515,
+    "T3_handoff_wait_proxy_seconds": 17.652000188827515,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-2f0bebe53dba9d6d",
+    "child_context": "context-61d263fd0bfd4023",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 979.0,
+    "native_proxy_wait_seconds": 979.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 940.8989999294281,
+    "T3_handoff_wait_proxy_seconds": 940.8989999294281,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  },
+  {
+    "predecessor_context": "context-a259ddc83fd6bc2e",
+    "child_context": "context-61d263fd0bfd4023",
+    "evidence_refs": [
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/stages/reviser/freeze.json"
+    ],
+    "native_proxy_signed_gap_seconds": 350.0,
+    "native_proxy_wait_seconds": 350.0,
+    "provider_wait_seconds": null,
+    "T3_terminal_to_child_start_signed_gap_seconds": 322.54100012779236,
+    "T3_handoff_wait_proxy_seconds": 322.54100012779236,
+    "semantics": "Explicit frozen edge; native timestamps and T3 quiet-to-child-start proxy distinct. Negative gap can indicate fork overlap, not serial wait; no inference claim"
+  }
+]

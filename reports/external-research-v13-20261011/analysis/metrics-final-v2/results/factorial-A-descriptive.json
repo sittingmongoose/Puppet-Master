@@ -1,0 +1,418 @@
+[
+  {
+    "block_id": "A-F01",
+    "metric": "native_goal_tokens",
+    "cells": {
+      "R0": 468210,
+      "A1": 624508,
+      "A8": 616067,
+      "A1_A8": 643584
+    },
+    "A1_effect": 156298,
+    "A8_effect": 147857,
+    "interaction": -128781,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "native_cumulative_elapsed_seconds",
+    "cells": {
+      "R0": 1403,
+      "A1": 2161,
+      "A8": 1892,
+      "A1_A8": 2256
+    },
+    "A1_effect": 758,
+    "A8_effect": 489,
+    "interaction": -394,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "native_interval_sum_seconds",
+    "cells": {
+      "R0": 1405.0,
+      "A1": 2162.0,
+      "A8": 1894.0,
+      "A1_A8": 2258.0
+    },
+    "A1_effect": 757.0,
+    "A8_effect": 489.0,
+    "interaction": -393.0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "native_interval_union_seconds",
+    "cells": {
+      "R0": 1405.0,
+      "A1": 2162.0,
+      "A8": 1894.0,
+      "A1_A8": 2258.0
+    },
+    "A1_effect": 757.0,
+    "A8_effect": 489.0,
+    "interaction": -393.0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "native_overlap_wall_seconds",
+    "cells": {
+      "R0": 0,
+      "A1": 0,
+      "A8": 0,
+      "A1_A8": 0
+    },
+    "A1_effect": 0,
+    "A8_effect": 0,
+    "interaction": 0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T0_native_completion_proxy_seconds",
+    "cells": {
+      "R0": null,
+      "A1": 2418.6349589824677,
+      "A8": 2693.5523369312286,
+      "A1_A8": 3433.6560940742493
+    },
+    "A1_effect": null,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T0_custody_upper_bound_seconds",
+    "cells": {
+      "R0": null,
+      "A1": null,
+      "A8": null,
+      "A1_A8": null
+    },
+    "A1_effect": null,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T0_quiet_latency_seconds",
+    "cells": {
+      "R0": null,
+      "A1": 2459.460958957672,
+      "A8": 2703.740336894989,
+      "A1_A8": 3450.94109416008
+    },
+    "A1_effect": null,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T3_created_context_sum_seconds",
+    "cells": {
+      "R0": 1529.0069999694824,
+      "A1": 2284.838000059128,
+      "A8": 2128.24799990654,
+      "A1_A8": 2414.3410000801086
+    },
+    "A1_effect": 755.8310000896454,
+    "A8_effect": 599.2409999370575,
+    "interaction": -469.73799991607666,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T3_started_context_sum_seconds",
+    "cells": {
+      "R0": 1528.0729999542236,
+      "A1": 2283.6459999084473,
+      "A8": 2126.7679998874664,
+      "A1_A8": 2413.4340002536774
+    },
+    "A1_effect": 755.5729999542236,
+    "A8_effect": 598.6949999332428,
+    "interaction": -468.9069995880127,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T3_context_union_seconds",
+    "cells": {
+      "R0": 1528.0729999542236,
+      "A1": 2283.6459999084473,
+      "A8": 2126.7679998874664,
+      "A1_A8": 2413.4340002536774
+    },
+    "A1_effect": 755.5729999542236,
+    "A8_effect": 598.6949999332428,
+    "interaction": -468.9069995880127,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "T3_context_overlap_wall_seconds",
+    "cells": {
+      "R0": 0,
+      "A1": 0,
+      "A8": 0,
+      "A1_A8": 0
+    },
+    "A1_effect": 0,
+    "A8_effect": 0,
+    "interaction": 0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F01",
+    "metric": "provider_turn_wall_seconds",
+    "cells": {
+      "R0": 1528.0729999542236,
+      "A1": 2283.6459999084473,
+      "A8": 2126.7679998874664,
+      "A1_A8": 2413.4340002536774
+    },
+    "A1_effect": 755.5729999542236,
+    "A8_effect": 598.6949999332428,
+    "interaction": -468.9069995880127,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "native_goal_tokens",
+    "cells": {
+      "R0": 523243,
+      "A1": 682952,
+      "A8": 542901,
+      "A1_A8": 732797
+    },
+    "A1_effect": 159709,
+    "A8_effect": 19658,
+    "interaction": 30187,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "native_cumulative_elapsed_seconds",
+    "cells": {
+      "R0": 1575,
+      "A1": 2278,
+      "A8": 1868,
+      "A1_A8": 2282
+    },
+    "A1_effect": 703,
+    "A8_effect": 293,
+    "interaction": -289,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "native_interval_sum_seconds",
+    "cells": {
+      "R0": 1578.0,
+      "A1": 2281.0,
+      "A8": 1868.0,
+      "A1_A8": 2283.0
+    },
+    "A1_effect": 703.0,
+    "A8_effect": 290.0,
+    "interaction": -288.0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "native_interval_union_seconds",
+    "cells": {
+      "R0": 1578.0,
+      "A1": 2281.0,
+      "A8": 1868.0,
+      "A1_A8": 2283.0
+    },
+    "A1_effect": 703.0,
+    "A8_effect": 290.0,
+    "interaction": -288.0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "native_overlap_wall_seconds",
+    "cells": {
+      "R0": 0,
+      "A1": 0,
+      "A8": 0,
+      "A1_A8": 0
+    },
+    "A1_effect": 0,
+    "A8_effect": 0,
+    "interaction": 0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T0_native_completion_proxy_seconds",
+    "cells": {
+      "R0": 1910.055634021759,
+      "A1": 2829.941386938095,
+      "A8": null,
+      "A1_A8": 2778.268543958664
+    },
+    "A1_effect": 919.8857529163361,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T0_custody_upper_bound_seconds",
+    "cells": {
+      "R0": null,
+      "A1": null,
+      "A8": null,
+      "A1_A8": null
+    },
+    "A1_effect": null,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T0_quiet_latency_seconds",
+    "cells": {
+      "R0": 1925.6846339702606,
+      "A1": 2848.6693868637085,
+      "A8": null,
+      "A1_A8": 2789.94354391098
+    },
+    "A1_effect": 922.9847528934479,
+    "A8_effect": null,
+    "interaction": null,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T3_created_context_sum_seconds",
+    "cells": {
+      "R0": 1691.619999885559,
+      "A1": 2546.856000185013,
+      "A8": 1929.0279998779297,
+      "A1_A8": 2375.366000175476
+    },
+    "A1_effect": 855.2360002994537,
+    "A8_effect": 237.4079999923706,
+    "interaction": -408.89800000190735,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T3_started_context_sum_seconds",
+    "cells": {
+      "R0": 1688.4649999141693,
+      "A1": 2546.044000148773,
+      "A8": 1928.505000114441,
+      "A1_A8": 2373.9320001602173
+    },
+    "A1_effect": 857.5790002346039,
+    "A8_effect": 240.0400002002716,
+    "interaction": -412.1520001888275,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T3_context_union_seconds",
+    "cells": {
+      "R0": 1688.4649999141693,
+      "A1": 2546.044000148773,
+      "A8": 1928.505000114441,
+      "A1_A8": 2373.9320001602173
+    },
+    "A1_effect": 857.5790002346039,
+    "A8_effect": 240.0400002002716,
+    "interaction": -412.1520001888275,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "T3_context_overlap_wall_seconds",
+    "cells": {
+      "R0": 0,
+      "A1": 0,
+      "A8": 0,
+      "A1_A8": 0
+    },
+    "A1_effect": 0,
+    "A8_effect": 0,
+    "interaction": 0,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  },
+  {
+    "block_id": "A-F02",
+    "metric": "provider_turn_wall_seconds",
+    "cells": {
+      "R0": 1688.4649999141693,
+      "A1": 2546.044000148773,
+      "A8": 1928.505000114441,
+      "A1_A8": 2373.9320001602173
+    },
+    "A1_effect": 857.5790002346039,
+    "A8_effect": 240.0400002002716,
+    "interaction": -412.1520001888275,
+    "descriptive_only": true,
+    "R0_assignment_charged_once": true,
+    "equal_quality_saving": "NOT_ESTABLISHED"
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "schema": "er13.final80.correction-input-map.v4",
+  "files": [
+    {
+      "source": "ER13_RUNTIME/state/final80-root-metadata-correction-authorization-v4.json",
+      "sha256": "81ea97a8c9f55f9cda49b2b7070a7e49aabe11654c1178436c68e38070b63715",
+      "bytes": 1633,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/provenance/root-final-metadata-run-limit-error.raw.json",
+      "sha256": "a3db3196808425a16071bf95728539e69478033903a717295edf4a8b8f36ecce",
+      "bytes": 550,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/state/metrics-final-v1/corrected-final-root-boundary-v4.json",
+      "sha256": "80d63442345987388a88133c663e687192b4cffed1ed584d14b3068e8cc0ee9f",
+      "bytes": 9723,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/state/metrics-final-v1/final-v4/capture-validation.json",
+      "sha256": "8606dbd7e171de57760efcc4586e5b7532129ceca247f4526672c712c7984022",
+      "bytes": 420,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/state/metrics-final-v1/final-v4/boundaries-corrected-v4.json",
+      "sha256": "bdb06bd1bce448f44804218a9ac45a2c18ed5bd60868cf6835a2524dff951aaf",
+      "bytes": 1379306,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/state/metrics-final-v1/final-v4/arithmetic-inputs-pin-v4.json",
+      "sha256": "e67e370185596727aae7cf9d2347daf937f3c2861957edbc188315bc221ed340",
+      "bytes": 604,
+      "private_raw_included": false
+    },
+    {
+      "source": "ER13_RUNTIME/state/metrics-final-v1/final-v4/arithmetic-inputs-v4.json",
+      "sha256": "23b917ce70246599d3b77a83c72d782b9c525b4569f539331ad3a4aebcc66ede",
+      "bytes": 5528903,
+      "private_raw_included": false
+    }
+  ],
+  "supported_args": {
+    "limit": 1,
+    "runLimit": 50,
+    "maxCharsPerItem": 1
+  },
+  "remaining_calls": 263,
+  "reused_root_row": 1,
+  "metadata_capture_successes": 264,
+  "oldfailed264_raw_error_loss_unchanged": true
+}

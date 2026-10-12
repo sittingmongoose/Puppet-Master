@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "private_public_arithmetic_equal": [
+    "coverage.json",
+    "failure-inclusive-track-totals.json",
+    "failure-inclusive-quotients.json",
+    "factorial-A-descriptive.json",
+    "paired-ABCD.json",
+    "context-category-accounting.json",
+    "context-occupancy.json",
+    "topology-native-proxy-gaps.json"
+  ],
+  "privacy_literal_checks": 288,
+  "private_literals_found": 0,
+  "helper_source_hashes": {
+    "results.py": "77cd7e11ce03d11dfe31029d7e8abb30b19864bf3bc57f13d189a765dc3d7800",
+    "lifetimes.py": "116ae8cba21642dba621214d66a3450f8cb861922701dd9469f32255e10be332"
+  },
+  "helpers_unchanged": true,
+  "source_reevaluation": 0,
+  "live_rereads": 0,
+  "original_count": 80,
+  "route_probe_charge": 2,
+  "observed_usability_missing_preserved": true,
+  "provider_run_coverage_scope_preserved": true
+}

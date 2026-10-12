@@ -1,0 +1,860 @@
+[
+  {
+    "category": "product",
+    "actual_context_births": 199,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_subtotal": 199,
+      "complete_total": 199,
+      "per_assigned": 1.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 199,
+    "observed_started_run_records": 199,
+    "observed_ended_run_records": 199,
+    "observed_run_status_counts": {
+      "completed": 193,
+      "interrupted": 6
+    },
+    "complete_run_history_contexts": 199,
+    "closed_contexts": 199,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_subtotal": 132978.01999807358,
+      "complete_total": 132978.01999807358,
+      "per_assigned": 668.2312562717265,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 133129.85899925232,
+        "union_seconds": 9186.09200000763,
+        "overlap_wall_seconds": 8328.236999988556,
+        "excess_context_seconds": 123943.76699924469
+      },
+      "all_intervals": {
+        "summed_seconds": 133129.85899925232,
+        "union_seconds": 9186.09200000763,
+        "overlap_wall_seconds": 8328.236999988556,
+        "excess_context_seconds": 123943.76699924469
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 199,
+      "observed": 199,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 132978.01999807358,
+        "union_seconds": 9185.159999847412,
+        "overlap_wall_seconds": 8326.462000131607,
+        "excess_context_seconds": 123792.85999822617
+      },
+      "all_intervals": {
+        "summed_seconds": 132978.01999807358,
+        "union_seconds": 9185.159999847412,
+        "overlap_wall_seconds": 8326.462000131607,
+        "excess_context_seconds": 123792.85999822617
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "preparation",
+    "actual_context_births": 6,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 6,
+      "observed": 6,
+      "unknown": 0,
+      "known_subtotal": 10,
+      "complete_total": 10,
+      "per_assigned": 1.6666666666666667,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 10,
+    "observed_started_run_records": 10,
+    "observed_ended_run_records": 10,
+    "observed_run_status_counts": {
+      "completed": 10
+    },
+    "complete_run_history_contexts": 6,
+    "closed_contexts": 6,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 6,
+      "observed": 6,
+      "unknown": 0,
+      "known_subtotal": 5463.143999814987,
+      "complete_total": 5463.143999814987,
+      "per_assigned": 910.5239999691645,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 6,
+      "observed": 6,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 6237.719999790192,
+        "union_seconds": 2250.4169998168945,
+        "overlap_wall_seconds": 2223.449000120163,
+        "excess_context_seconds": 3987.302999973297
+      },
+      "all_intervals": {
+        "summed_seconds": 6237.719999790192,
+        "union_seconds": 2250.4169998168945,
+        "overlap_wall_seconds": 2223.449000120163,
+        "excess_context_seconds": 3987.302999973297
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 6,
+      "observed": 6,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 6235.755999803543,
+        "union_seconds": 2250.2229998111725,
+        "overlap_wall_seconds": 2222.992000102997,
+        "excess_context_seconds": 3985.5329999923706
+      },
+      "all_intervals": {
+        "summed_seconds": 6235.755999803543,
+        "union_seconds": 2250.2229998111725,
+        "overlap_wall_seconds": 2222.992000102997,
+        "excess_context_seconds": 3985.5329999923706
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "route_probe",
+    "actual_context_births": 2,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_subtotal": 2,
+      "complete_total": 2,
+      "per_assigned": 1.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 2,
+    "observed_started_run_records": 2,
+    "observed_ended_run_records": 2,
+    "observed_run_status_counts": {
+      "completed": 2
+    },
+    "complete_run_history_contexts": 2,
+    "closed_contexts": 2,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_subtotal": 365.8310000896454,
+      "complete_total": 365.8310000896454,
+      "per_assigned": 182.9155000448227,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 369.57499980926514,
+        "union_seconds": 241.30399990081787,
+        "overlap_wall_seconds": 128.27099990844727,
+        "excess_context_seconds": 128.27099990844727
+      },
+      "all_intervals": {
+        "summed_seconds": 369.57499980926514,
+        "union_seconds": 241.30399990081787,
+        "overlap_wall_seconds": 128.27099990844727,
+        "excess_context_seconds": 128.27099990844727
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 365.8310000896454,
+        "union_seconds": 240.67000007629395,
+        "overlap_wall_seconds": 125.16100001335144,
+        "excess_context_seconds": 125.16100001335144
+      },
+      "all_intervals": {
+        "summed_seconds": 365.8310000896454,
+        "union_seconds": 240.67000007629395,
+        "overlap_wall_seconds": 125.16100001335144,
+        "excess_context_seconds": 125.16100001335144
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "support",
+    "actual_context_births": 3,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_subtotal": 5,
+      "complete_total": 5,
+      "per_assigned": 1.6666666666666667,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 5,
+    "observed_started_run_records": 5,
+    "observed_ended_run_records": 5,
+    "observed_run_status_counts": {
+      "completed": 4,
+      "interrupted": 1
+    },
+    "complete_run_history_contexts": 3,
+    "closed_contexts": 3,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_subtotal": 6805.029000043869,
+      "complete_total": 6805.029000043869,
+      "per_assigned": 2268.343000014623,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 11397.180999994278,
+        "union_seconds": 11397.180999994278,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 11397.180999994278,
+        "union_seconds": 11397.180999994278,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 11396.598999977112,
+        "union_seconds": 11396.598999977112,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 11396.598999977112,
+        "union_seconds": 11396.598999977112,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "dispatch_support",
+    "actual_context_births": 2,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_subtotal": 30,
+      "complete_total": 30,
+      "per_assigned": 15.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 30,
+    "observed_started_run_records": 29,
+    "observed_ended_run_records": 30,
+    "observed_run_status_counts": {
+      "completed": 28,
+      "cancelled": 1,
+      "interrupted": 1
+    },
+    "complete_run_history_contexts": 2,
+    "closed_contexts": 2,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 1,
+      "unknown": 1,
+      "known_subtotal": 305.1270000934601,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 17291.263000011444,
+        "union_seconds": 16985.954999923706,
+        "overlap_wall_seconds": 305.30800008773804,
+        "excess_context_seconds": 305.30800008773804
+      },
+      "all_intervals": {
+        "summed_seconds": 17291.263000011444,
+        "union_seconds": 16985.954999923706,
+        "overlap_wall_seconds": 305.30800008773804,
+        "excess_context_seconds": 305.30800008773804
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 17290.91200017929,
+        "union_seconds": 16985.78500008583,
+        "overlap_wall_seconds": 305.1270000934601,
+        "excess_context_seconds": 305.1270000934601
+      },
+      "all_intervals": {
+        "summed_seconds": 17290.91200017929,
+        "union_seconds": 16985.78500008583,
+        "overlap_wall_seconds": 305.1270000934601,
+        "excess_context_seconds": 305.1270000934601
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "publication",
+    "actual_context_births": 4,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 4,
+      "observed": 4,
+      "unknown": 0,
+      "known_subtotal": 29,
+      "complete_total": 29,
+      "per_assigned": 7.25,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 29,
+    "observed_started_run_records": 29,
+    "observed_ended_run_records": 29,
+    "observed_run_status_counts": {
+      "completed": 28,
+      "interrupted": 1
+    },
+    "complete_run_history_contexts": 4,
+    "closed_contexts": 4,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 4,
+      "observed": 4,
+      "unknown": 0,
+      "known_subtotal": 6114.8930015563965,
+      "complete_total": 6114.8930015563965,
+      "per_assigned": 1528.7232503890991,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 4,
+      "observed": 4,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 28412.415999889374,
+        "union_seconds": 15361.327999830246,
+        "overlap_wall_seconds": 13051.088000059128,
+        "excess_context_seconds": 13051.088000059128
+      },
+      "all_intervals": {
+        "summed_seconds": 28412.415999889374,
+        "union_seconds": 15361.327999830246,
+        "overlap_wall_seconds": 13051.088000059128,
+        "excess_context_seconds": 13051.088000059128
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 4,
+      "observed": 4,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 28411.151000499725,
+        "union_seconds": 15360.264000415802,
+        "overlap_wall_seconds": 13050.887000083923,
+        "excess_context_seconds": 13050.887000083923
+      },
+      "all_intervals": {
+        "summed_seconds": 28411.151000499725,
+        "union_seconds": 15360.264000415802,
+        "overlap_wall_seconds": 13050.887000083923,
+        "excess_context_seconds": 13050.887000083923
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "evaluation_coordination",
+    "actual_context_births": 3,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_subtotal": 67,
+      "complete_total": 67,
+      "per_assigned": 22.333333333333332,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 67,
+    "observed_started_run_records": 67,
+    "observed_ended_run_records": 67,
+    "observed_run_status_counts": {
+      "completed": 64,
+      "failed": 2,
+      "interrupted": 1
+    },
+    "complete_run_history_contexts": 3,
+    "closed_contexts": 3,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_subtotal": 6344.254999637604,
+      "complete_total": 6344.254999637604,
+      "per_assigned": 2114.751666545868,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 17826.495000123978,
+        "union_seconds": 17234.644999980927,
+        "overlap_wall_seconds": 591.8500001430511,
+        "excess_context_seconds": 591.8500001430511
+      },
+      "all_intervals": {
+        "summed_seconds": 17826.495000123978,
+        "union_seconds": 17234.644999980927,
+        "overlap_wall_seconds": 591.8500001430511,
+        "excess_context_seconds": 591.8500001430511
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 17823.267000198364,
+        "union_seconds": 17231.674000024796,
+        "overlap_wall_seconds": 591.5930001735687,
+        "excess_context_seconds": 591.5930001735687
+      },
+      "all_intervals": {
+        "summed_seconds": 17823.267000198364,
+        "union_seconds": 17231.674000024796,
+        "overlap_wall_seconds": 591.5930001735687,
+        "excess_context_seconds": 591.5930001735687
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "accounting",
+    "actual_context_births": 3,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 3,
+      "unknown": 0,
+      "known_subtotal": 5,
+      "complete_total": 5,
+      "per_assigned": 1.6666666666666667,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 5,
+    "observed_started_run_records": 5,
+    "observed_ended_run_records": 4,
+    "observed_run_status_counts": {
+      "completed": 4,
+      "running": 1
+    },
+    "complete_run_history_contexts": 3,
+    "closed_contexts": 2,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 3,
+      "observed": 2,
+      "unknown": 1,
+      "known_subtotal": 891.2369999885559,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 3,
+      "observed": 2,
+      "unknown": 1,
+      "known_intervals": {
+        "summed_seconds": 892.0930001735687,
+        "union_seconds": 892.0930001735687,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": null
+    },
+    "started_residence": {
+      "actual_intervals": 3,
+      "observed": 2,
+      "unknown": 1,
+      "known_intervals": {
+        "summed_seconds": 891.2369999885559,
+        "union_seconds": 891.2369999885559,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": null
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "separate_coverage_completion",
+    "actual_context_births": 1,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_subtotal": 1,
+      "complete_total": 1,
+      "per_assigned": 1.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 1,
+    "observed_started_run_records": 1,
+    "observed_ended_run_records": 1,
+    "observed_run_status_counts": {
+      "completed": 1
+    },
+    "complete_run_history_contexts": 1,
+    "closed_contexts": 1,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_subtotal": 1179.0590000152588,
+      "complete_total": 1179.0590000152588,
+      "per_assigned": 1179.0590000152588,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 1179.263000011444,
+        "union_seconds": 1179.263000011444,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 1179.263000011444,
+        "union_seconds": 1179.263000011444,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 1179.0590000152588,
+        "union_seconds": 1179.0590000152588,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 1179.0590000152588,
+        "union_seconds": 1179.0590000152588,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "scientific_consolidation",
+    "actual_context_births": 2,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_subtotal": 4,
+      "complete_total": 4,
+      "per_assigned": 2.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 4,
+    "observed_started_run_records": 4,
+    "observed_ended_run_records": 4,
+    "observed_run_status_counts": {
+      "completed": 4
+    },
+    "complete_run_history_contexts": 2,
+    "closed_contexts": 2,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_subtotal": 3199.121999979019,
+      "complete_total": 3199.121999979019,
+      "per_assigned": 1599.5609999895096,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 7623.393000125885,
+        "union_seconds": 7623.393000125885,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 7623.393000125885,
+        "union_seconds": 7623.393000125885,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 2,
+      "observed": 2,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 7623.02999997139,
+        "union_seconds": 7623.02999997139,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 7623.02999997139,
+        "union_seconds": 7623.02999997139,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "independent_evaluation",
+    "actual_context_births": 38,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 38,
+      "observed": 38,
+      "unknown": 0,
+      "known_subtotal": 38,
+      "complete_total": 38,
+      "per_assigned": 1.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 38,
+    "observed_started_run_records": 38,
+    "observed_ended_run_records": 38,
+    "observed_run_status_counts": {
+      "completed": 38
+    },
+    "complete_run_history_contexts": 38,
+    "closed_contexts": 38,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 38,
+      "observed": 38,
+      "unknown": 0,
+      "known_subtotal": 39261.030999183655,
+      "complete_total": 39261.030999183655,
+      "per_assigned": 1033.1850262943067,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 38,
+      "observed": 38,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 39280.62000107765,
+        "union_seconds": 10463.394000291824,
+        "overlap_wall_seconds": 8871.491999864578,
+        "excess_context_seconds": 28817.226000785828
+      },
+      "all_intervals": {
+        "summed_seconds": 39280.62000107765,
+        "union_seconds": 10463.394000291824,
+        "overlap_wall_seconds": 8871.491999864578,
+        "excess_context_seconds": 28817.226000785828
+      }
+    },
+    "started_residence": {
+      "actual_intervals": 38,
+      "observed": 38,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 39261.030999183655,
+        "union_seconds": 10461.697999954224,
+        "overlap_wall_seconds": 8868.919999599457,
+        "excess_context_seconds": 28799.33299922943
+      },
+      "all_intervals": {
+        "summed_seconds": 39261.030999183655,
+        "union_seconds": 10461.697999954224,
+        "overlap_wall_seconds": 8868.919999599457,
+        "excess_context_seconds": 28799.33299922943
+      }
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  },
+  {
+    "category": "root_observation",
+    "actual_context_births": 1,
+    "metadata_reported_autorun_count": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_subtotal": 22,
+      "complete_total": 22,
+      "per_assigned": 22.0,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "observed_autorun_timestamps": 22,
+    "observed_started_run_records": 19,
+    "observed_ended_run_records": 19,
+    "observed_run_status_counts": {
+      "queued": 2,
+      "running": 1,
+      "completed": 14,
+      "cancelled": 1,
+      "interrupted": 4
+    },
+    "complete_run_history_contexts": 1,
+    "closed_contexts": 0,
+    "provider_turn_wall": {
+      "assigned_or_actual_denominator": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_subtotal": null,
+      "complete_total": null,
+      "per_assigned": null,
+      "per_observed_delivered_source_PASS": null,
+      "per_explicit_observed_usable_pass": null,
+      "known_subtotal_per_observed_delivered_source_PASS": null,
+      "known_subtotal_quotient_is_full_cost": false
+    },
+    "created_residence": {
+      "actual_intervals": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "started_residence": {
+      "actual_intervals": 1,
+      "observed": 0,
+      "unknown": 1,
+      "known_intervals": null,
+      "all_intervals": null
+    },
+    "provider_inference": null,
+    "billing": null,
+    "cache": null
+  }
+]

@@ -1,0 +1,418 @@
+[
+  {
+    "arm_id": "B03-P01-control",
+    "original_author_contexts": [
+      "context-238eef7e78dd95c3"
+    ],
+    "original_author_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 1393.6490001678467,
+        "union_seconds": 1393.6490001678467,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 1393.6490001678467,
+        "union_seconds": 1393.6490001678467,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "native_births_observed": 1,
+    "saved_wait_receipts": [],
+    "residence_is_charged_original_context": true,
+    "wait_provider_inference": null,
+    "new_Goal_for_wait": false
+  },
+  {
+    "arm_id": "B03-P01-treatment",
+    "original_author_contexts": [
+      "context-3ce86f20418ce015"
+    ],
+    "original_author_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 2045.983999967575,
+        "union_seconds": 2045.983999967575,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 2045.983999967575,
+        "union_seconds": 2045.983999967575,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "native_births_observed": 1,
+    "saved_wait_receipts": [
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/retained-ready.json",
+        "sha256": "6b7532e2ac6c8fba8762e51e738197a9c9addf6153bf61dcfb73a864ad2dd0a9",
+        "saved_metadata": {
+          "root_observed_at_utc": "2026-10-12T01:18:45.426539+00:00",
+          "author_ready_sha256": "e9ad1576f0e67e2dbebdcf75796c1df18b24b7aabb47f647cf70cb8499bf7586",
+          "waiting_sha256": "a1f81217f6913262178adc49b71f5690597764cac2cfadb948e6a7e121175833",
+          "native_identity": {
+            "threadId": "native-c360ace17329667c",
+            "createdAt": 1791766709
+          },
+          "task_status": {
+            "taskId": "task-a0aa5932e88d00d1",
+            "childThreadId": "context-3ce86f20418ce015",
+            "childRunId": "opaque-73b352f3961e2788",
+            "childNodeId": "task-a0aa5932e88d00d1",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "waitTimedOut": false
+          },
+          "task_status_raw": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"task-a0aa5932e88d00d1\",\"childThreadId\":\"context-3ce86f20418ce015\",\"childRunId\":\"opaque-73b352f3961e2788\",\"childNodeId\":\"task-a0aa5932e88d00d1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "task-a0aa5932e88d00d1",
+              "childThreadId": "context-3ce86f20418ce015",
+              "childRunId": "opaque-73b352f3961e2788",
+              "childNodeId": "task-a0aa5932e88d00d1",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "waitTimedOut": false
+            },
+            "isError": false
+          },
+          "draft_source_plan_files": [
+            {
+              "relative_path": "discovery.md",
+              "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2",
+              "bytes": 19055
+            },
+            {
+              "relative_path": "draft.md",
+              "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48",
+              "bytes": 18945
+            },
+            {
+              "relative_path": "source-map.json",
+              "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e",
+              "bytes": 19049
+            },
+            {
+              "relative_path": "revealed-plan.md",
+              "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+              "bytes": 2334
+            },
+            {
+              "relative_path": "plan-reveal.json",
+              "sha256": "cae5f9fecc127a85a908531cf5b2e872623a880022333c902041461c2c259fd0",
+              "bytes": 475
+            },
+            {
+              "relative_path": "sources/index.md",
+              "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa",
+              "bytes": 4619
+            }
+          ],
+          "predecessor_is_terminal": false,
+          "science_qualified": false
+        }
+      },
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/author-ready.json",
+        "sha256": "e9ad1576f0e67e2dbebdcf75796c1df18b24b7aabb47f647cf70cb8499bf7586",
+        "saved_metadata": {
+          "version": "b03.author-ready.v1",
+          "draft_frozen_at_utc": "2026-10-12T01:13:10.101335+00:00",
+          "run_id": "B03-P01-treatment",
+          "taskId": "task-a0aa5932e88d00d1",
+          "t3_child_context": "context-3ce86f20418ce015",
+          "native_identity": {
+            "threadId": "native-c360ace17329667c",
+            "createdAt": 1791766709
+          },
+          "native_active_sha256": "67114d704f363c33d388e6d0cba8370310d9801246c99020d1fa735e673374ce",
+          "native_create_sha256": "30810aa52eec54f71ef8e9600f50f82cbc061caa27bba0fdf19704a99ebcb46c",
+          "files": [
+            {
+              "relative_path": "discovery.md",
+              "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2",
+              "bytes": 19055
+            },
+            {
+              "relative_path": "draft.md",
+              "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48",
+              "bytes": 18945
+            },
+            {
+              "relative_path": "source-map.json",
+              "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e",
+              "bytes": 19049
+            },
+            {
+              "relative_path": "revealed-plan.md",
+              "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+              "bytes": 2334
+            },
+            {
+              "relative_path": "plan-reveal.json",
+              "sha256": "cae5f9fecc127a85a908531cf5b2e872623a880022333c902041461c2c259fd0",
+              "bytes": 475
+            },
+            {
+              "relative_path": "sources/index.md",
+              "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa",
+              "bytes": 4619
+            }
+          ],
+          "waiting_is_activity": false,
+          "occupancy_counted_separately": true,
+          "goal_completion_claimed": false,
+          "binding_basis": "Original assigned capture path + unique frozen machine objective + direct full native responses; T3 and provider IDs are separate namespaces",
+          "provider_session_mapping_independently_proved": false
+        }
+      },
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/waiting.json",
+        "sha256": "a1f81217f6913262178adc49b71f5690597764cac2cfadb948e6a7e121175833",
+        "saved_metadata": {
+          "wait_started_at_utc": "2026-10-12T01:13:10.210674+00:00",
+          "pid": 399606,
+          "process_birth": "2098300",
+          "ready_sha256": "e9ad1576f0e67e2dbebdcf75796c1df18b24b7aabb47f647cf70cb8499bf7586",
+          "whole_deadline_utc": "2026-10-12T01:58:13.299000+00:00",
+          "waiting_is_inference": false,
+          "resident_occupancy_is_free": false
+        }
+      }
+    ],
+    "residence_is_charged_original_context": true,
+    "wait_provider_inference": null,
+    "new_Goal_for_wait": false
+  },
+  {
+    "arm_id": "B03-P02-control",
+    "original_author_contexts": [
+      "context-1babe67f49cd2788"
+    ],
+    "original_author_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 502.6470000743866,
+        "union_seconds": 502.6470000743866,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 502.6470000743866,
+        "union_seconds": 502.6470000743866,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "native_births_observed": 1,
+    "saved_wait_receipts": [],
+    "residence_is_charged_original_context": true,
+    "wait_provider_inference": null,
+    "new_Goal_for_wait": false
+  },
+  {
+    "arm_id": "B03-P02-treatment",
+    "original_author_contexts": [
+      "context-a6cd220c0aace98b"
+    ],
+    "original_author_residence": {
+      "actual_intervals": 1,
+      "observed": 1,
+      "unknown": 0,
+      "known_intervals": {
+        "summed_seconds": 2209.364999771118,
+        "union_seconds": 2209.364999771118,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      },
+      "all_intervals": {
+        "summed_seconds": 2209.364999771118,
+        "union_seconds": 2209.364999771118,
+        "overlap_wall_seconds": 0,
+        "excess_context_seconds": 0.0
+      }
+    },
+    "native_births_observed": 1,
+    "saved_wait_receipts": [
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/control/retained-ready.json",
+        "sha256": "92a5d59f7e48691e4a43b730ca9d22da7c2029920157a40b378037f2bd9fe8dc",
+        "saved_metadata": {
+          "root_observed_at_utc": "2026-10-12T01:18:46.973033+00:00",
+          "author_ready_sha256": "16aaeb4a59ca62c7348ba3debe15303d58925fb5d962a5839e0f0d5108a70162",
+          "waiting_sha256": "70b66470a0d369385a93747c37610061480c8a3a4c409fc279a389bd0b6ef374",
+          "native_identity": {
+            "threadId": "native-3cb14352c188d9f1",
+            "createdAt": 1791766721
+          },
+          "task_status": {
+            "taskId": "task-438af19e80857389",
+            "childThreadId": "context-a6cd220c0aace98b",
+            "childRunId": "opaque-40367fafb2e322d7",
+            "childNodeId": "task-438af19e80857389",
+            "status": "running",
+            "workState": "working",
+            "hasPendingChildRuns": false,
+            "latestTerminalRunId": null,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "waitTimedOut": false
+          },
+          "task_status_raw": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"taskId\":\"task-438af19e80857389\",\"childThreadId\":\"context-a6cd220c0aace98b\",\"childRunId\":\"opaque-40367fafb2e322d7\",\"childNodeId\":\"task-438af19e80857389\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "task-438af19e80857389",
+              "childThreadId": "context-a6cd220c0aace98b",
+              "childRunId": "opaque-40367fafb2e322d7",
+              "childNodeId": "task-438af19e80857389",
+              "status": "running",
+              "workState": "working",
+              "hasPendingChildRuns": false,
+              "latestTerminalRunId": null,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "waitTimedOut": false
+            },
+            "isError": false
+          },
+          "draft_source_plan_files": [
+            {
+              "relative_path": "discovery.md",
+              "sha256": "0bde87575295e43e786c76f5c2c6f86d437d1de751b9ac3eb41cd4d9bce32ec2",
+              "bytes": 11190
+            },
+            {
+              "relative_path": "draft.md",
+              "sha256": "1949787c257eb11a5178ccc9b8dac1435b37f86fa6d4861495819997d9108f29",
+              "bytes": 28933
+            },
+            {
+              "relative_path": "source-map.json",
+              "sha256": "ee4d3ee838037072a59c715df5829fda6e990f88e77423d0ad552fae4280325d",
+              "bytes": 18557
+            },
+            {
+              "relative_path": "revealed-plan.md",
+              "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+              "bytes": 2354
+            },
+            {
+              "relative_path": "plan-reveal.json",
+              "sha256": "ed09bb1f0d60f9884d768447012ef730ce6523021b057ac619aa80a5ec62711d",
+              "bytes": 475
+            },
+            {
+              "relative_path": "sources/index.md",
+              "sha256": "a6b54050b061d7e2c467cde5a24e7abb7eddc9bbe458a790b64751a3b0888793",
+              "bytes": 6352
+            }
+          ],
+          "predecessor_is_terminal": false,
+          "science_qualified": false
+        }
+      },
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/control/author-ready.json",
+        "sha256": "16aaeb4a59ca62c7348ba3debe15303d58925fb5d962a5839e0f0d5108a70162",
+        "saved_metadata": {
+          "version": "b03.author-ready.v1",
+          "draft_frozen_at_utc": "2026-10-12T01:12:27.581067+00:00",
+          "run_id": "B03-P02-treatment",
+          "taskId": "task-438af19e80857389",
+          "t3_child_context": "context-a6cd220c0aace98b",
+          "native_identity": {
+            "threadId": "native-3cb14352c188d9f1",
+            "createdAt": 1791766721
+          },
+          "native_active_sha256": "ffafd3d4fe0d1a91cc1cbdf511cce447149c2c8332772f346164838d12d75ffc",
+          "native_create_sha256": "ebd5dd9725f33cdd85cb01474132af9a336ef27eed4e02ab0a8e92257a825636",
+          "files": [
+            {
+              "relative_path": "discovery.md",
+              "sha256": "0bde87575295e43e786c76f5c2c6f86d437d1de751b9ac3eb41cd4d9bce32ec2",
+              "bytes": 11190
+            },
+            {
+              "relative_path": "draft.md",
+              "sha256": "1949787c257eb11a5178ccc9b8dac1435b37f86fa6d4861495819997d9108f29",
+              "bytes": 28933
+            },
+            {
+              "relative_path": "source-map.json",
+              "sha256": "ee4d3ee838037072a59c715df5829fda6e990f88e77423d0ad552fae4280325d",
+              "bytes": 18557
+            },
+            {
+              "relative_path": "revealed-plan.md",
+              "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+              "bytes": 2354
+            },
+            {
+              "relative_path": "plan-reveal.json",
+              "sha256": "ed09bb1f0d60f9884d768447012ef730ce6523021b057ac619aa80a5ec62711d",
+              "bytes": 475
+            },
+            {
+              "relative_path": "sources/index.md",
+              "sha256": "a6b54050b061d7e2c467cde5a24e7abb7eddc9bbe458a790b64751a3b0888793",
+              "bytes": 6352
+            }
+          ],
+          "waiting_is_activity": false,
+          "occupancy_counted_separately": true,
+          "goal_completion_claimed": false,
+          "binding_basis": "Original assigned capture path + unique frozen machine objective + direct full native responses; T3 and provider IDs are separate namespaces",
+          "provider_session_mapping_independently_proved": false
+        }
+      },
+      {
+        "source": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-treatment/run/B03-P02-treatment/control/waiting.json",
+        "sha256": "70b66470a0d369385a93747c37610061480c8a3a4c409fc279a389bd0b6ef374",
+        "saved_metadata": {
+          "wait_started_at_utc": "2026-10-12T01:12:27.683503+00:00",
+          "pid": 398119,
+          "process_birth": "2094048",
+          "ready_sha256": "16aaeb4a59ca62c7348ba3debe15303d58925fb5d962a5839e0f0d5108a70162",
+          "whole_deadline_utc": "2026-10-12T01:58:18.392000+00:00",
+          "waiting_is_inference": false,
+          "resident_occupancy_is_free": false
+        }
+      }
+    ],
+    "residence_is_charged_original_context": true,
+    "wait_provider_inference": null,
+    "new_Goal_for_wait": false
+  }
+]

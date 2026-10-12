@@ -1,0 +1,118 @@
+{
+  "schema": "er13.final_root_derivative_review.v1",
+  "status": "NO_MATERIAL_DERIVATIVE_BLOCKERS",
+  "completed_utc": "2026-10-12T06:09:21.332094+00:00",
+  "review_rounds": 1,
+  "authoritative_READY_sha256": "46c51447435df373888896f8d9f10258e3e4dbe84c00b461dde02f16ea5fa464",
+  "material_blockers": [],
+  "nonmaterial_scope_limits": [
+    {
+      "id": "L1",
+      "topic": "strict comparability",
+      "finding": "All 42 reference/candidate rows retain equal requested model/effort/tier signatures and equal observed model sets. Effective observed tier/effort is UNKNOWN in every context. Provider-epoch sets differ for D-R2-P02 (D6); routing/service/cache/topology effects remain confounded. No strict equal-quality optimizer, 20\u201330% or 2x claim is supported."
+    },
+    {
+      "id": "L2",
+      "topic": "native/resources",
+      "finding": "199 product native births have 192 latest complete observations. Native token known subtotal 34,738,883 is not a complete final total. Native cumulative active/paused counters are observation proxies, not billed tokens, inference or a whole-campaign counter. No total billing/cache/subscription amount is available."
+    },
+    {
+      "id": "L3",
+      "topic": "finite coverage",
+      "finding": "80 originals retain 33 PASS/38 FAIL/9 UNASSESSED, 64 FULL/16 COMPONENT. Six FULL complete finals are missing; two COMPONENT capped partial freezes remain incomplete. Source PASS33 and complete-axis PASS31 remain distinct from strict delivered-usable UNKNOWN. B10 original six-axis UNASSESSED boundary and separate completion exclusion are preserved."
+    },
+    {
+      "id": "L4",
+      "topic": "time and overhead",
+      "finding": "264 saved contexts have 412 run records and complete history (maximum runCount47), but only 408 start timestamps, 408 end timestamps and 406 records with both. Root and correction remain open at capture. Their eventual duration, this later derivative review, publication/archive/cleanup and complete experiment billing remain outside the snapshot or UNKNOWN."
+    },
+    {
+      "id": "L5",
+      "topic": "cold preparation",
+      "finding": "No cold end-to-end COMPONENT total is claimed. The user-specified 9m23s preparation segment excludes earlier unmeasured reads and cannot be promoted to a full cold cost. The pinned final arithmetic package does not expose that standalone segment\u2019s start/end clocks, so its numeric duration was not independently reproduced. Component preparation and isolated discovery costs stay separate/UNKNOWN; no medians are summed."
+    },
+    {
+      "id": "L6",
+      "topic": "bounded publication authority",
+      "finding": "Earlier sealed-v4 packaging named an older compute hash. The explicit same-turn final READY authority supersedes it; all final authority/member hashes match. The earlier source-only pending-metrics snapshot is preserved. The later root FINAL_REPORT wrapper and root installation/Git readback are outside this review."
+    }
+  ],
+  "reproduction": {
+    "invocations": 1,
+    "meaningful_result_members_byte_identical": 26,
+    "total_result_members": 26,
+    "independent_arithmetic_checks": 23,
+    "failed_independent_checks": [],
+    "public_private_numeric_comparison_pass": true
+  },
+  "facts": {
+    "original_source_counts": {
+      "PASS": 33,
+      "FAIL": 38,
+      "UNASSESSED": 9
+    },
+    "assigned_scopes": {
+      "FULL": 64,
+      "COMPONENT": 16
+    },
+    "D_source_counts": {
+      "PASS": 6,
+      "FAIL": 5,
+      "UNASSESSED": 5
+    },
+    "source_PASS_delivered": 33,
+    "complete_axis_source_PASS": 31,
+    "strict_usable_PASS": "UNKNOWN",
+    "actual_product_contexts": 199,
+    "original_grader_contexts": 38,
+    "saved_all_contexts": 264,
+    "reported_run_records": 412,
+    "maximum_thread_runCount": 47,
+    "complete_histories": 264,
+    "started_records": 408,
+    "ended_records": 408,
+    "records_with_both_boundaries": 406,
+    "product_and_original_grading_closed": true,
+    "open_nonproduct_contexts": 2,
+    "native_product_births": 199,
+    "native_product_latest_completed": 192,
+    "native_product_tokens_known_subtotal": 34738883,
+    "native_product_final_total": "UNKNOWN",
+    "paired_BCD_blocks": 36,
+    "A_factorial_blocks": 2,
+    "reference_candidate_rows": 42,
+    "shared_R0_charged_once": true,
+    "observational_call_overhead": {
+      "failed_v3": 264,
+      "root_preflight_correction": 4,
+      "supported_v4": 263
+    },
+    "product_created_context_occupancy_seconds": {
+      "summed": 133129.85899925232,
+      "union": 9186.09200000763,
+      "overlap_wall": 8328.236999988556,
+      "excess": 123943.76699924469
+    }
+  },
+  "source_grading_and_selection": "Not performed; originals unchanged, root owns selection",
+  "final_authority_member_hash_checks": 78,
+  "source_only_manifest_member_hash_checks": 11,
+  "own_work_outside264_snapshot": true,
+  "no_scientific_adjudication_recommended": true,
+  "forbidden_actions_taken": {
+    "new_Goals": 0,
+    "new_candidates": 0,
+    "new_graders": 0,
+    "regrades": 0,
+    "native_metadata_reads": 0,
+    "upstream_source_fetches": 0,
+    "nested_tasks": 0,
+    "Git_operations": 0,
+    "testsuite_reruns": 0
+  },
+  "cleanup": {
+    "scratch_removed": true,
+    "waiter_started": false,
+    "children_started": false
+  }
+}

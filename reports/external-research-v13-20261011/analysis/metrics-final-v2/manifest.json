@@ -1,0 +1,202 @@
+{
+  "schema": "er13.final80.public-bundle-manifest.v2",
+  "publication_target": "analysis/metrics-final-v2",
+  "authorization_sha256": "7748d8f7d56fba070b99d79391a37991a589dd229bd58fc77b5638e244e030c4",
+  "private_result_manifest_sha256": "bedbe78219c9cd9a0ecb702835ba6b5428222cc45f4275f174e327e72dccd807",
+  "files": [
+    {
+      "path": "CHECK_RESULTS.json",
+      "sha256": "c4909df0f8137ca1fde3190c20dfbd0b87342006c6f48642c110e18f0c73a082",
+      "bytes": 835
+    },
+    {
+      "path": "README.md",
+      "sha256": "a501e140b07cbd4aefbe239eebb92c87ebbac90395b339b6247c6e53635e1e34",
+      "bytes": 2035
+    },
+    {
+      "path": "arithmetic-inputs.json",
+      "sha256": "89819734722dce18f13a94470f9114fb3be0cb2d25ae51b3226176113ae91bd2",
+      "bytes": 4610967
+    },
+    {
+      "path": "correction-input-map.json",
+      "sha256": "50ac250bbb43220398aaff7443eb7a73b365eda86e75879244da8a4f9558dc4a",
+      "bytes": 2016
+    },
+    {
+      "path": "exact-input-map.json",
+      "sha256": "77a629ff3ada1c6b96b0934e67123fb9a69edb1c423dc0466b43407adb47b88e",
+      "bytes": 1266051
+    },
+    {
+      "path": "field-selector-provenance.json",
+      "sha256": "cc748b352728ec8860483bca99d3cb7a6a5a74faace7a59f1ef49f7fa7cdb333",
+      "bytes": 216895
+    },
+    {
+      "path": "final_compute_v4.py",
+      "sha256": "eb76c9cffc42698309a93b7eabc793ab8ace23740a2d9d2d901d07038fb821af",
+      "bytes": 37118
+    },
+    {
+      "path": "helpers/lifetimes.py",
+      "sha256": "116ae8cba21642dba621214d66a3450f8cb861922701dd9469f32255e10be332",
+      "bytes": 4022
+    },
+    {
+      "path": "helpers/results.py",
+      "sha256": "77cd7e11ce03d11dfe31029d7e8abb30b19864bf3bc57f13d189a765dc3d7800",
+      "bytes": 10605
+    },
+    {
+      "path": "normalization-policy.json",
+      "sha256": "7062b7456ce08afbf738e606af6b39be531aed4dbeaeb50fdf1dbeb95436951a",
+      "bytes": 532
+    },
+    {
+      "path": "results/accounting-report.md",
+      "sha256": "3f2849218cd2e1c7367a8141b65cfaec19a7970029aca54f3f93388cdb28e9d5",
+      "bytes": 3650
+    },
+    {
+      "path": "results/arithmetic.json",
+      "sha256": "231a43436b5b62c4ecefa50cb2d2c88198ddbbec04c1610cceffb17aff1907be",
+      "bytes": 93480
+    },
+    {
+      "path": "results/attempt-records.json",
+      "sha256": "50eda845da6e11bdf5fc653a8ab34453dc7564e36431c0680ba6235188eb40a0",
+      "bytes": 134474
+    },
+    {
+      "path": "results/b03-retained-author-residence.json",
+      "sha256": "5414bb86efcaff3ea31f14ca40e5316a543625bbcb763974ce1ab02bb2a2ae67",
+      "bytes": 17293
+    },
+    {
+      "path": "results/context-category-accounting.json",
+      "sha256": "146560aa0b9018ff6c96e32a4f024f6617c30326caa81b86f0fac308383701e8",
+      "bytes": 27564
+    },
+    {
+      "path": "results/context-lifetimes.json",
+      "sha256": "a899edc8e62ce35d5550c67edf4ffb9f42527c845825989910b0e12c70c86115",
+      "bytes": 297261
+    },
+    {
+      "path": "results/context-observations.json",
+      "sha256": "12e589de0640bb007d3e64318ac969948f13cd30c5ebf7621d4a7b74d8aab0a3",
+      "bytes": 811611
+    },
+    {
+      "path": "results/context-occupancy.json",
+      "sha256": "2d3e5b7f2039f9e6fb5bba292061d34b3a92f0a3bb4e9b1e01e05024c1d278ee",
+      "bytes": 296
+    },
+    {
+      "path": "results/contexts.json",
+      "sha256": "1e3fc70ae21f86ad27c94a5a37578ca28b24682744fbfea0d7500f1b1580d26d",
+      "bytes": 96521
+    },
+    {
+      "path": "results/coverage.json",
+      "sha256": "b6aaeb6cc827b181c3e131c0815eb5def8b203be978e541dd937d1396a6a299f",
+      "bytes": 5280
+    },
+    {
+      "path": "results/discovery-stage-cost-scope.json",
+      "sha256": "6af87ffd23a4b9118d9bc2846f4145982c1d7c3c47b2baaeae1329d2f102cd72",
+      "bytes": 23915
+    },
+    {
+      "path": "results/factorial-A-descriptive.json",
+      "sha256": "ea6c021fc2c08f921172a9801f6b157ee73a0d3142a1f4d19b5f0cf682647781",
+      "bytes": 10369
+    },
+    {
+      "path": "results/failure-inclusive-quotients.json",
+      "sha256": "d98c8c46ab9629a394006d1007f1d3360fad555e6d472a3873ed1e011e74340f",
+      "bytes": 547969
+    },
+    {
+      "path": "results/failure-inclusive-track-totals.json",
+      "sha256": "997c17a1b6715216a7eccc732327aa9880419f5069e1e496282da665184aa777",
+      "bytes": 33845
+    },
+    {
+      "path": "results/individual-autoruns.json",
+      "sha256": "b55815f00945bf0562cab0d0b66edb4bc6bb7237869e0d30048f3b031ff5b62d",
+      "bytes": 195779
+    },
+    {
+      "path": "results/manifest.json",
+      "sha256": "dbef860f79d9ffbfea44e3fdc96e80dd694808dedfc94d007b0a8dd5718ae5cf",
+      "bytes": 4472
+    },
+    {
+      "path": "results/native-goal-births.json",
+      "sha256": "0e5bb18bce95c336762d5137bb4af62ff900946c3efded2c89356bc4aed3ee0c",
+      "bytes": 664164
+    },
+    {
+      "path": "results/native-goal-category-arithmetic.json",
+      "sha256": "c03c8e470340bf518bed42eaf8999f0cfe832311c4a00918813a6deace0f0414",
+      "bytes": 16151
+    },
+    {
+      "path": "results/native-stage-and-arm-accounting.json",
+      "sha256": "71c76ae00f2ef8541665ef69649799e330f972d0c76756c5ffe217f9e6d2fc66",
+      "bytes": 303390
+    },
+    {
+      "path": "results/observation-overhead.json",
+      "sha256": "bd97e18caedeade8dad9f19b3c93fba5ee54680416bc46e8364b234e023d26dd",
+      "bytes": 151
+    },
+    {
+      "path": "results/operational-failure-accounting.json",
+      "sha256": "6b2fc93d791cda456bb1fcb114af5b39043c64c3c421b76c8e09dfae7ce627c3",
+      "bytes": 2508
+    },
+    {
+      "path": "results/paired-ABCD.json",
+      "sha256": "8f45c25cc540b99a62bd6bbb873d99e0b3c967aa6f19cc54f5fd02dd5df3cb16",
+      "bytes": 1273881
+    },
+    {
+      "path": "results/results.csv",
+      "sha256": "5f418e2d7d4a145a641b5eefd9fe8c9a4147aec2af1129a41a16534f4420b065",
+      "bytes": 127483
+    },
+    {
+      "path": "results/results.json",
+      "sha256": "f850b74a259125c83b12e9474087a4d325a7e7c0cc6014ca003cf340caf59bd0",
+      "bytes": 347648
+    },
+    {
+      "path": "results/thin-records-80.json",
+      "sha256": "f31c47ca4d68514ce753628c9e54ca45bdc94c31e0295c15eb756ef84db0231e",
+      "bytes": 1863469
+    },
+    {
+      "path": "results/topology-native-proxy-gaps.json",
+      "sha256": "8d017981264acb9910f05d33062fc39ec48a215de15f2a6c0d70e7f69e138f59",
+      "bytes": 138464
+    },
+    {
+      "path": "retained-argument-error-provenance.json",
+      "sha256": "b5846b54dbd43cd58b05a364fd4c73e2fe0dca7eeedae5a9bb91bda08ec2beae",
+      "bytes": 538
+    },
+    {
+      "path": "source-member-verification.json",
+      "sha256": "cad056503143eada3ceb625723669a0a0b58e771b12394b3b5b726415a2de1aa",
+      "bytes": 176712
+    }
+  ],
+  "privacy_pass": true,
+  "runnable_helper_closure": true,
+  "root_owns_Git": true,
+  "metadata_capture_limitations_explicit": true
+}

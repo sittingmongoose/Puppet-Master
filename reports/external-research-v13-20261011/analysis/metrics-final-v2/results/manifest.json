@@ -1,0 +1,134 @@
+{
+  "schema": "er13.final80.results-manifest.v2",
+  "arithmetic_input_sha256": "89819734722dce18f13a94470f9114fb3be0cb2d25ae51b3226176113ae91bd2",
+  "source_selector_map_sha256": "3e2afdbe93078c544e200166fd798582d124ad2443a9720deac6082324a1180e",
+  "authorization_sha256": "7748d8f7d56fba070b99d79391a37991a589dd229bd58fc77b5638e244e030c4",
+  "compute_source_sha256": "eb76c9cffc42698309a93b7eabc793ab8ace23740a2d9d2d901d07038fb821af",
+  "files": [
+    {
+      "path": "accounting-report.md",
+      "sha256": "3f2849218cd2e1c7367a8141b65cfaec19a7970029aca54f3f93388cdb28e9d5",
+      "bytes": 3650
+    },
+    {
+      "path": "arithmetic.json",
+      "sha256": "231a43436b5b62c4ecefa50cb2d2c88198ddbbec04c1610cceffb17aff1907be",
+      "bytes": 93480
+    },
+    {
+      "path": "attempt-records.json",
+      "sha256": "50eda845da6e11bdf5fc653a8ab34453dc7564e36431c0680ba6235188eb40a0",
+      "bytes": 134474
+    },
+    {
+      "path": "b03-retained-author-residence.json",
+      "sha256": "5414bb86efcaff3ea31f14ca40e5316a543625bbcb763974ce1ab02bb2a2ae67",
+      "bytes": 17293
+    },
+    {
+      "path": "context-category-accounting.json",
+      "sha256": "146560aa0b9018ff6c96e32a4f024f6617c30326caa81b86f0fac308383701e8",
+      "bytes": 27564
+    },
+    {
+      "path": "context-lifetimes.json",
+      "sha256": "a899edc8e62ce35d5550c67edf4ffb9f42527c845825989910b0e12c70c86115",
+      "bytes": 297261
+    },
+    {
+      "path": "context-observations.json",
+      "sha256": "12e589de0640bb007d3e64318ac969948f13cd30c5ebf7621d4a7b74d8aab0a3",
+      "bytes": 811611
+    },
+    {
+      "path": "context-occupancy.json",
+      "sha256": "2d3e5b7f2039f9e6fb5bba292061d34b3a92f0a3bb4e9b1e01e05024c1d278ee",
+      "bytes": 296
+    },
+    {
+      "path": "contexts.json",
+      "sha256": "1e3fc70ae21f86ad27c94a5a37578ca28b24682744fbfea0d7500f1b1580d26d",
+      "bytes": 96521
+    },
+    {
+      "path": "coverage.json",
+      "sha256": "b6aaeb6cc827b181c3e131c0815eb5def8b203be978e541dd937d1396a6a299f",
+      "bytes": 5280
+    },
+    {
+      "path": "discovery-stage-cost-scope.json",
+      "sha256": "6af87ffd23a4b9118d9bc2846f4145982c1d7c3c47b2baaeae1329d2f102cd72",
+      "bytes": 23915
+    },
+    {
+      "path": "factorial-A-descriptive.json",
+      "sha256": "ea6c021fc2c08f921172a9801f6b157ee73a0d3142a1f4d19b5f0cf682647781",
+      "bytes": 10369
+    },
+    {
+      "path": "failure-inclusive-quotients.json",
+      "sha256": "d98c8c46ab9629a394006d1007f1d3360fad555e6d472a3873ed1e011e74340f",
+      "bytes": 547969
+    },
+    {
+      "path": "failure-inclusive-track-totals.json",
+      "sha256": "997c17a1b6715216a7eccc732327aa9880419f5069e1e496282da665184aa777",
+      "bytes": 33845
+    },
+    {
+      "path": "individual-autoruns.json",
+      "sha256": "b55815f00945bf0562cab0d0b66edb4bc6bb7237869e0d30048f3b031ff5b62d",
+      "bytes": 195779
+    },
+    {
+      "path": "native-goal-births.json",
+      "sha256": "0e5bb18bce95c336762d5137bb4af62ff900946c3efded2c89356bc4aed3ee0c",
+      "bytes": 664164
+    },
+    {
+      "path": "native-goal-category-arithmetic.json",
+      "sha256": "c03c8e470340bf518bed42eaf8999f0cfe832311c4a00918813a6deace0f0414",
+      "bytes": 16151
+    },
+    {
+      "path": "native-stage-and-arm-accounting.json",
+      "sha256": "71c76ae00f2ef8541665ef69649799e330f972d0c76756c5ffe217f9e6d2fc66",
+      "bytes": 303390
+    },
+    {
+      "path": "observation-overhead.json",
+      "sha256": "bd97e18caedeade8dad9f19b3c93fba5ee54680416bc46e8364b234e023d26dd",
+      "bytes": 151
+    },
+    {
+      "path": "operational-failure-accounting.json",
+      "sha256": "6b2fc93d791cda456bb1fcb114af5b39043c64c3c421b76c8e09dfae7ce627c3",
+      "bytes": 2508
+    },
+    {
+      "path": "paired-ABCD.json",
+      "sha256": "8f45c25cc540b99a62bd6bbb873d99e0b3c967aa6f19cc54f5fd02dd5df3cb16",
+      "bytes": 1273881
+    },
+    {
+      "path": "results.csv",
+      "sha256": "5f418e2d7d4a145a641b5eefd9fe8c9a4147aec2af1129a41a16534f4420b065",
+      "bytes": 127483
+    },
+    {
+      "path": "results.json",
+      "sha256": "f850b74a259125c83b12e9474087a4d325a7e7c0cc6014ca003cf340caf59bd0",
+      "bytes": 347648
+    },
+    {
+      "path": "thin-records-80.json",
+      "sha256": "f31c47ca4d68514ce753628c9e54ca45bdc94c31e0295c15eb756ef84db0231e",
+      "bytes": 1863469
+    },
+    {
+      "path": "topology-native-proxy-gaps.json",
+      "sha256": "8d017981264acb9910f05d33062fc39ec48a215de15f2a6c0d70e7f69e138f59",
+      "bytes": 138464
+    }
+  ]
+}

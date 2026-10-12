@@ -1,0 +1,44 @@
+[
+  {
+    "source": "ER13_RUNTIME/state/first-setup-blocker.json",
+    "sha256": "711647e09d84368b9cc1440b728b940d4a8fa80a69fce2203429243bd943177e",
+    "saved_metadata": {
+      "arm": "A-F01-R0",
+      "operation": "initial_materialize",
+      "result": "finite public dependency inventory mismatch",
+      "candidate_starts": 0,
+      "original_t0_exact": "UNKNOWN: initial failed subprocess arguments not persisted",
+      "conservative_t0_bound": "2026-10-12T00:17:34.697467+00:00",
+      "whole_deadline_for_repair": "2026-10-12T01:17:34.697467+00:00",
+      "rule": "original failure retained; no later T0 reset or extended allowance; timings qualified with interval/missing-data limitation",
+      "observed_record_at": "2026-10-12T00:25:59.096934+00:00"
+    }
+  },
+  {
+    "source": "ER13_RUNTIME/state/D-eval-start-failure-retry.raw.json",
+    "sha256": "6d42298b1e23a847fa0104434d99c5c71bc3ee240ff9eaac531be8f6a6781a86",
+    "saved_metadata": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"taskId\":\"task-3941c28a31b5df48\",\"childThreadId\":\"context-c1a20267fd737058\",\"childRunId\":\"opaque-75f3f972dd17768b\",\"childNodeId\":\"task-3941c28a31b5df48\",\"status\":\"failed\",\"workState\":\"result_available\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":\"opaque-75f3f972dd17768b\",\"latestTerminalStatus\":\"failed\",\"latestTerminalSummary\":\"The provider could not start this turn. Retry the turn; if it keeps failing, check the provider setup and server logs.\",\"latestTerminalResultContextTransferId\":\"opaque-d22ee77276fcdb2d\",\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6.1-sol\",\"summary\":\"The provider could not start this turn. Retry the turn; if it keeps failing, check the provider setup and server logs.\",\"resultContextTransferId\":\"opaque-d22ee77276fcdb2d\",\"waitTimedOut\":false}"
+        }
+      ],
+      "structuredContent": {
+        "taskId": "task-3941c28a31b5df48",
+        "childThreadId": "context-c1a20267fd737058",
+        "childRunId": "opaque-75f3f972dd17768b",
+        "childNodeId": "task-3941c28a31b5df48",
+        "status": "failed",
+        "workState": "result_available",
+        "hasPendingChildRuns": false,
+        "latestTerminalRunId": "opaque-75f3f972dd17768b",
+        "latestTerminalStatus": "failed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "waitTimedOut": false
+      },
+      "isError": false
+    }
+  }
+]
