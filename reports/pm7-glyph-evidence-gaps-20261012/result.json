@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "status": "READ_ONLY_DIAGNOSIS / HOLD; NEXT_PLAN_NOT_AUTHORIZED",
+  "utc": "2026-10-12T14:04:04.900972+00:00",
+  "worker": "codex-pm7-glyph-compose",
+  "frozen_parent": "51947158937facd296aaf5d6cc0f03ead2dd7d82",
+  "branch": "fix/pm7-glyphs-compose-20261012",
+  "owner_review": {
+    "inputs": [
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-final-owner-review/REVIEW.md",
+        "sha256": "f55d36407ced064ee6b3f719a4ad0af50fafe16f0a934d19746be604af5bdd75"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-final-owner-review/inspected-evidence.sha256",
+        "sha256": "6dea22964eb021d01754f1647121372d360fecb3be7455504a3ac72ada92ad67"
+      },
+      {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-final-owner-review/SHA256SUMS",
+        "sha256": "bfa782003a763bde5c3eedd2f887d5d7fe791b8699c037cf6102da6e53d4f35b"
+      }
+    ],
+    "opened_images": 16,
+    "hashed_not_opened_images": 2,
+    "D1": "Scoped owner approval current BasicDark HISTORY rest/hover/focus and darksame-ink bloom",
+    "D2": "Scoped current BasicDark SPARKLES tourchip look approval",
+    "D3": "Scoped sampled GlassLight narrow rest/hover/focus/RM approval; continuity HOLD",
+    "D4": "Visible stack/hovered stage/bell approval only;16stageREST+FDwarn dismiss-hover+FDsuccess check-hover not established by sheets",
+    "D5": "Only old7f/890 wideGlassLight approved; other9unopened",
+    "D6": "GDflatgear note only, no halo/act; no R1aggregate approval",
+    "all_bounds": "Actual16image paths/hashes are in inspected-evidence.sha256; no full criterion/source/landing GO"
+  },
+  "frozen_artifacts": {
+    "source": "81617137658b89ace8af7eeac2baf8c5918364f8",
+    "publication": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+    "app_bytes": 18866028,
+    "app_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "rail_bytes": 19500575,
+    "rail_sha256": "454cc7ef4ce3f28a337585a1654f39dfc5e227399f03acb25cb65740a3ca30e9",
+    "old519_NOTES_sha256": "85f9165ae082c449ad9093202b9ec4a787ce3e45c9c2e60188e499065705042f",
+    "old519_result_sha256": "3ccb5bff94e36310c69da49d9e6c32a01d2be6d61fae9efccbc92a36e9c04e2e",
+    "old_raw_aggregate": "4422721dbad92787c4c41ee364a4a7958628532e384245af99f20f443420bc30",
+    "old_visual": "62dbd5c34d67a59974b0d5309ff1ed42deaa265bed3b49628afa37b9cbd84692",
+    "old_completion": "49f077871ae5b7d356dfc4ef7b3dfd5950ff45b5a3ede9952465b8b4c6300224",
+    "original559_42_manifest": "defde16dd3b2a5a271b41ad9864dbcfb47c5b9e4c775ecffd4d92491bb817d9e",
+    "root_custody_receipt": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-final-mechanical-review/root-review.json",
+      "sha256": "87ca943d66ff5c2ab439d842ca672c52597f40d2c85fd1ad8e01a6a28a76a63b"
+    }
+  },
+  "proven_findings": [
+    "All18requested N2sheet cells were planned400ms before probe begin. The stage setup waits300ms;2FDhover setup waits250ms. This is premature selection for requested settled pose; \u00b1500ms mapping is not calibrated. No actualframeUTC/sourcefault inferred.",
+    "19of20continuity-held rows intentionally hide target opacity0!important for behindfield screenshot inside held motion trace:4chips+15narrow, every recorded invisible sample inside its paired measurement. This is test-instrumentation interference, without changing old contrast/probe statuses.",
+    "Existing full narrow frame24s shows a25x30-like target fragment atorigin while sourceprobe rect2.5,443,14,14 and sheetcrop0,435,30,30. Fixedcrop misses the renderedfragment at thisframe. Existing RDfocus foreground25x30/native-active700x900 support a clip/surface correspondence, not its causal attribution."
+  ],
+  "unknown_findings": [
+    "Whether recorder, page compositor or screenshot clipping produced each white/nearblack cell. No synchronized surface rectangle/actualfirst-frame wallclock/exactPNGexposure or rendererror trace. CompleteH264stop is not uninterruptedpaint proof.",
+    "GLnarrowRM has0invisible trace samples/no paired hide;19row interference explanation is not transferred to RM.",
+    "Exactsettled exposure of8Glass N2PNGpairs: before effectiveopacity0.999395\u20130.999954/after1, no exposure/animation-end timestamp; complete static appearance is not continuous settled proof."
+  ],
+  "timing": {
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/timing.json",
+      "sha256": "6e0c0c990ac64fd47b6780f21ca7da33f69885224693181f3bde0d4b4f8e51e1"
+    },
+    "formula": "estimatedU0=unitStoppingUTC-duration_ms-100; seek=(plannedUTC-estimatedU0)/1000",
+    "note": "video_zero_estimate_utc_ms is unitStarted; extraction uses separate estimated_first_frame_utc_ms. Declared\u00b1500ms is assumption, not calibrated guarantee; no per-frame UTC exported.",
+    "extraction": "fps24+tile60 over2.5s/crop/neighbor scale; end is singleframe.14px/H264limits. Original runtime paths now cleaned: future approved decode needs local immutablemovie copies and oldhead/hash binding."
+  },
+  "N2_inventory": {
+    "candidate_pairs": 18,
+    "stage_rest": 16,
+    "FDhover_components": 2,
+    "foregounds_viewed": 18,
+    "static_availability": "All18foregrounds show complete kind+close; may supply missing source-look samples for owner without rerun. Ownerapproval pending; no temporal/strictzero upgrade.",
+    "limitations": "First2FriendlyLight PNGs full1920x1080/afterarrays absent; other16header crops omit some hostcorner context;8Glass preprobe opacity<1, exacttimestamp absent. Keep allsource flags and strict15(53exact+6missing+9nonzeroWH) unchanged.",
+    "case_ids": [
+      "N2-friendly-light-stage-info-rest",
+      "N2-friendly-light-stage-warn-rest",
+      "N2-friendly-light-stage-error-rest",
+      "N2-friendly-light-stage-success-rest",
+      "N2-friendly-dark-stage-info-rest",
+      "N2-friendly-dark-stage-warn-rest",
+      "N2-friendly-dark-stack-warn-hover",
+      "N2-friendly-dark-stage-error-rest",
+      "N2-friendly-dark-stage-success-rest",
+      "N2-friendly-dark-stack-success-hover",
+      "N2-glass-light-stage-info-rest",
+      "N2-glass-light-stage-warn-rest",
+      "N2-glass-light-stage-error-rest",
+      "N2-glass-light-stage-success-rest",
+      "N2-glass-dark-stage-info-rest",
+      "N2-glass-dark-stage-warn-rest",
+      "N2-glass-dark-stage-error-rest",
+      "N2-glass-dark-stage-success-rest"
+    ]
+  },
+  "existing_fullframe_diagnostic": {
+    "files": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-1.png",
+        "sha256": "8e435587d75406b122bf7c527f22ed107f700b562cd3d63daabbe85f892bc038"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-12.png",
+        "sha256": "8a96652ec59dc9c14e46ab24c061db3b35d44ef94f9cfd0dc11c3db9cd438959"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-24.png",
+        "sha256": "1dbf11f6a5673472c0a980d283b61a58c977ac9144c8523b21317cbc247956e2"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-40.png",
+        "sha256": "8c4025463b1ce99d2c469874f0449e0f3e23543be61cde82007e426e6f3d0063"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-60.png",
+        "sha256": "be5cbe7620f7d56b9563d926aada65065a38d353961fab3ef98f4e11014377a0"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-check-90.png",
+        "sha256": "608af5774687503ff326dd8da2035883bdc63041e5ae7f304868b53626c5e0ff"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-physical.png",
+        "sha256": "f6f1ca4f1da3fb7c94faef72cb524d81c600621d39c3f82d77553d83fe71b541"
+      }
+    ],
+    "pair": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n3-narrow-source816-focus-route/NEW-NARROW-retro-dark-focus-visible--foreground.png",
+        "sha256": "68ed2fc309eb75a79fbb76f20bc2af820b5716a7d3fa661777ed3c498de8bbe8"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n3-narrow-source816-focus-route/NEW-NARROW-retro-dark-focus-visible--native-active.png",
+        "sha256": "6208e9b23ec8bc195d4fddddc27d81a7f0468d74f7ddce09653f44084f937874"
+      }
+    ],
+    "frame24_nominal_utc_ms": 1791800630785.493,
+    "case": "NEW-NARROW-retro-dark-focus-visible-native-act",
+    "pose": "Actual menu-open keyboardfocus, not altered fixture",
+    "classification": "One proven crop/physical-position mismatch; underlying cause UNKNOWN"
+  },
+  "boilerplate_audit": {
+    "file": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/frame-review.json",
+      "sha256": "d8745c3bbcbc0e4b465918232ac06dde5f0596f83e0f492c35b81ab47f14083f"
+    },
+    "repeated_paragraph_groups": {
+      "nonR1": 32,
+      "R1": 24
+    },
+    "unsupported_text": "One visible wave/three-part sparkles statement is not eachcase observation: HISTORY hasWAVE, SPARKLESseq; flatnx-a-none tool hasnoact. Reused menu/page/gesture sentences are not evidence thoseactions occurred in unrelatedrow. No blanket20/24visualPASS from text.",
+    "kept_separate": [
+      "Old immutable measured/probe and Code recorded verdicts",
+      "Sampled mechanical observations requiring actualframe review",
+      "Owner65actual16image scoped approvals",
+      "Stillunverified continuousact/paint/return criteria"
+    ],
+    "old_results_not_upgraded_downgraded_or_edited": true
+  },
+  "minimum_plan": [
+    {
+      "id": "P0",
+      "scope": "Existing18N2ownerreview",
+      "execution_authorized": false,
+      "cases": [
+        "N2-friendly-light-stage-info-rest",
+        "N2-friendly-light-stage-warn-rest",
+        "N2-friendly-light-stage-error-rest",
+        "N2-friendly-light-stage-success-rest",
+        "N2-friendly-dark-stage-info-rest",
+        "N2-friendly-dark-stage-warn-rest",
+        "N2-friendly-dark-stack-warn-hover",
+        "N2-friendly-dark-stage-error-rest",
+        "N2-friendly-dark-stage-success-rest",
+        "N2-friendly-dark-stack-success-hover",
+        "N2-glass-light-stage-info-rest",
+        "N2-glass-light-stage-warn-rest",
+        "N2-glass-light-stage-error-rest",
+        "N2-glass-light-stage-success-rest",
+        "N2-glass-dark-stage-info-rest",
+        "N2-glass-dark-stage-warn-rest",
+        "N2-glass-dark-stage-error-rest",
+        "N2-glass-dark-stage-success-rest"
+      ],
+      "action": "Rootmayassign owner review ONLY18existing foreground pairs with behind/probe metadata; complete static source-look samples exist, no GPUorcontrast rerun. Owner decides missinglook sufficiency; exacttemporal settlement not claimed."
+    },
+    {
+      "id": "P1",
+      "scope": "N2hardware only if P0insufficient",
+      "execution_authorized": false,
+      "cases": [
+        "N2-friendly-light-stage-info-rest",
+        "N2-friendly-light-stage-warn-rest",
+        "N2-friendly-light-stage-error-rest",
+        "N2-friendly-light-stage-success-rest",
+        "N2-friendly-dark-stage-info-rest",
+        "N2-friendly-dark-stage-warn-rest",
+        "N2-friendly-dark-stack-warn-hover",
+        "N2-friendly-dark-stage-error-rest",
+        "N2-friendly-dark-stage-success-rest",
+        "N2-friendly-dark-stack-success-hover",
+        "N2-glass-light-stage-info-rest",
+        "N2-glass-light-stage-warn-rest",
+        "N2-glass-light-stage-error-rest",
+        "N2-glass-light-stage-success-rest",
+        "N2-glass-dark-stage-info-rest",
+        "N2-glass-dark-stage-warn-rest",
+        "N2-glass-dark-stage-error-rest",
+        "N2-glass-dark-stage-success-rest"
+      ],
+      "action": "Onlyowner-rejected poses, max18. First normalP1000hardware fullframe extraction from existing4N2movies over each recordedbegin-0.5s..ended+0.5s,max24samples/pose; matchtitle/severity/published target/normalpage againstpair before selecting glyph+corner crop. Annotate approximateUTC/oldhead and intentionalhiddenframes; never usebegin-400ms. If nostableoriginalmovie pose, rootmayseparatelyauthorize ONLYthosemissingposes in one normaladmittedsession using unchanged toast.push/important skipStage and actualselectors, baseline\u2192settledpublishedpose\u2192leave, no measurement rerun/opacity setter/timer override.",
+      "selectors": "Per-case exact oldselector in inventory; published #rsStage .n-card svg.nx / #rsClip .n-card:first-child .n-x and actualdone kind (glyphkey in inventory)"
+    },
+    {
+      "id": "P2",
+      "scope": "Chipfilm only under HOSTstop",
+      "execution_authorized": false,
+      "cases": [
+        "NEW-CHIP-basic-dark-resume-not-done-hover-native-act",
+        "NEW-CHIP-basic-dark-tourchip-not-done-hover-native-act",
+        "NEW-CHIP-basic-dark-resume-not-done-focus-visible-native-act",
+        "NEW-CHIP-basic-dark-tourchip-not-done-focus-visible-native-act"
+      ],
+      "action": "Nochiprecapture/acceptancerestart. Existing19row interference alreadyproves criticalinterval contamination. Ifcase-specific segment reviewneeded, separatelyauthorize existingfilm fullframe hardware extraction ONLY4tracewindows, mark intentionalhideinterval, binde6f/bb87/002dmovieSHA. Canreview sampledstart/act/held/postleave, cannotclose uninterruptedcriterion acrosshide. Anynewnative-onlychiprecording requireslaterexplicitroot scopeamendment afterheldhost/source disposition."
+    },
+    {
+      "id": "P3",
+      "scope": "15narrow normalnative continuity rows",
+      "execution_authorized": false,
+      "cases": [
+        "N3-NARROW-basic-dark-native-hover",
+        "N3-NARROW-basic-light-native-hover",
+        "N3-NARROW-friendly-dark-native-hover",
+        "N3-NARROW-friendly-light-native-hover",
+        "N3-NARROW-glass-dark-native-hover",
+        "NEW-NARROW-glass-light-hover-native-act",
+        "NEW-NARROW-glass-light-focus-visible-native-act",
+        "NEW-NARROW-retro-dark-hover-native-act",
+        "NEW-NARROW-retro-dark-focus-visible-native-act",
+        "NEW-NARROW-retro-light-hover-native-act",
+        "NEW-NARROW-retro-light-focus-visible-native-act",
+        "NEW-NARROW-nier-dark-hover-native-act",
+        "NEW-NARROW-nier-dark-focus-visible-native-act",
+        "NEW-NARROW-nier-light-hover-native-act",
+        "NEW-NARROW-nier-light-focus-visible-native-act"
+      ],
+      "action": "TheseONLY15previouslyUNVERIFIEDmotionposes include intentionalhide; re-extraction cannot make originalcriticalinterval unbroken. Rootmayauthorize onefresh normalGLOBAL session, native-onlyH264windowcapture, CSS700x900/DPR1 setBEFORErecording, exactpublished20x44tab and .o55-demopill>svg.nx. Preparepublishedwelcome/lookmenu outsidecriticalinterval. Baseline1s\u2192trustedownhover/ShiftTab held2s\u2192trustedleave/Tab rest1s, read-onlynative probes; NO screenshot/measureGlyphs/opacity manipulation duringcriticalinterval. This separates evidence acquisition frompairedcontrast without changinganyacceptancepredicate.",
+      "focus": "Exactpublished .o55-demomenu .o55-demoitem firstrow, setupfocus labelledprogrammatic, trustedShiftTab toownbutton, menuOPENpose honest; trustedTableave, Escapeaftercriticalinterval only.",
+      "excluded": "Other5unrunfocus, chips, passedcontrast/pill/matrix, failedRMmenu"
+    },
+    {
+      "id": "P4",
+      "scope": "GLnarrowRM firstexistingmovie check",
+      "execution_authorized": false,
+      "cases": [
+        "NEW-NARROW-glass-light-RM"
+      ],
+      "trace_utc_bounds": [
+        1791800616233,
+        1791800618055
+      ],
+      "nominal_seek_seconds": [
+        8.947507080078125,
+        11.769507080078125
+      ],
+      "action": "First fullframe hardware extraction ONLYthisoldRMtrace\u00b10.5s,max24samples, binde6f/bb87/movie76a8; no pairedhide/invisibleprobe samples inRM. Correctedselection mayresolve pretrace/crop gap withoutrecording. Requiresvisiblelit/stillandreturn, no probe-onlyPASS. Ifcriticalpose stillmissing, onlythen proposeone native-onlyRMrecording underP3sameprofile/route/caps, newrootGOrequired."
+    },
+    {
+      "id": "P5",
+      "scope": "Unopenedsource-look/case-prose review",
+      "execution_authorized": false,
+      "action": "Ownercaninspect existingact/end sheets for9otherwide looks and23otherR1recordedrows, keyedby frozenbindings/probes. No recapture justifiedmerelybygenerictext; write case-specificobservedidentity/act/paint/limits. Keepoldreportsimmutable. RMmenucauseUNDETERMINED/no replay. Unrunother5narrowfocus and83chipposes remainunverified/excluded absentnewscope."
+    },
+    {
+      "id": "P6",
+      "scope": "Futureauthority/admission/missingfacts",
+      "execution_authorized": false,
+      "action": "RootspecificGOrequired beforeanydecode/record. P1000localruntime/profile/output; installedordinaryagent-browser/agent-record, oneownedbrowser/recording, GLOBALhelperavailability/caps5recordings(3withMoonlight)/8browserswhile recording. No bypass/service/config/sandbox/T3 changes. ActualH264_nvenc/QuadroP1000renderer/FPS/DPR/viewport/head/page/helper/driver/admission/stop binding; no performancecertification. Establish700x900before separatelystartingnormalwindowrecord, neverresize recording. Admission unavailable=>HOLDexacterror.",
+      "missingfacts": [
+        "Actualvideo firstframe wallclock/per-frame clockcalibration, exactPNGexposure timestamps",
+        "Recordedwindow/compositor rectangle atblankintervals",
+        "Helperowner confirmation ofclippedCDPscreenshot/window surface behavior; no inferredrecorder/sourcecause"
+      ]
+    }
+  ],
+  "retained_holds": [
+    "N1NOELIGIBLE/originalspark",
+    "BasicLight2.49HOST/Jared-NoPills,83/90chipposes/bothlabels/RMSTOP",
+    "Continuousgap/return/eightGlass exactsettled exposure/N2ownerreview",
+    "N2strict15unchanged",
+    "N4noproducer",
+    "R1RMmenuundetermined/no replay",
+    "2272CRLF15pathsFAILEDexit2/noexemption",
+    "MandatoryWindows/GLY4/Jared/fullsource-root-land"
+  ],
+  "activity": {
+    "new_browser_recorder_GPU_SSH_runtime_server_tests_video_decoder_exports_collages_generators_driver_runs": 0,
+    "passedtests_or_global969_rehash": 0,
+    "source_helper_oldreport_rawevidence_edits": 0,
+    "existing_images_viewed": 27,
+    "extra_workers_model_account_platform_changes": 0
+  },
+  "completion_binding": "Separate share completion receipt binds newreport-only childof519, exact2paths/ordinaryhooks/dualpush/unchangedproduction/0resources; no dependent nextstep executed.",
+  "analysis_sources": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/extraction-plan.json",
+      "sha256": "d17790c128e2f310d94d9f7f4cccafe3cce535820287bd296a1e6029ce78e0c1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/frame-extraction.py",
+      "sha256": "900771aba438d21d9336c3b3acd822cba1d410a247ca4c5d8319de46d6727ffb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/frame-extraction-addendum.py",
+      "sha256": "e783ef386844584072b68b3efab113a3d2f1f8cea9081f460090dd50c0821eb1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/timing.json",
+      "sha256": "6e0c0c990ac64fd47b6780f21ca7da33f69885224693181f3bde0d4b4f8e51e1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/N2-hardware-contact-sheet-receipts.json",
+      "sha256": "65be0467b1188ad646c1c5aa9e9a3e57f5f8f1bc4a5a403041303f13117f9284"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/narrow-capture-diagnostic-extraction.json",
+      "sha256": "2ee8130a23ecdaf162557c9169bfb12f5666248588b9dc286682ed045fa29c8a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/N2-retained-capture-geometry-audit.json",
+      "sha256": "b54fdb04aa94159d295908b77f93044cb8f462b48bd72f035842a00dd1a7195b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/N2-geometry-description-correction.json",
+      "sha256": "96664785264fc02ae373b96652aeab488443fe49530c103d07cb9f511092921c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/R1-final-recorded-method-proof.json",
+      "sha256": "f79e9c1fde30b6c4f7ade74f8d467176d6b6d5311bc8a2b2cb4eadf85e774ce5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/R1-RM-menu-readonly-diagnosis.json",
+      "sha256": "db663e67f8146da0911c2780f4dbb4bbf4f07eb44774ed8cc403b9d480d9bc26"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-session-artifact-bindings.json",
+      "sha256": "dd94a16082415d00021974afb8f62568d7aa8d1af31518d5eeae823529813014"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-source-union-custody.json",
+      "sha256": "937035cce5f484ef235e6d0163fe93d381200f130b49cdd4ef87d69eb7fcef34"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/artifact-selector-unaffected-reuse-proof.json",
+      "sha256": "2bf4437cec31a0649010189f5bfa1ec6d5e9ab8844bf7f0b3b48d57a048c71f5"
+    }
+  ],
+  "evidence_bindings": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-evidence-gap-diagnosis/evidence-bindings.json",
+    "sha256": "60c9e30fa8e270fbe181c4bf573aa5301b21485122b2ca8aef8f91da0cd44cf2",
+    "N2cases": 18,
+    "native_gap_cases": 20,
+    "native_claim_cases": 56,
+    "timing_files": 8
+  },
+  "count_reconciliation": {
+    "continuous_held_total": 20,
+    "chip_rows": 4,
+    "chip_case_ids": [
+      "NEW-CHIP-basic-dark-resume-not-done-hover-native-act",
+      "NEW-CHIP-basic-dark-tourchip-not-done-hover-native-act",
+      "NEW-CHIP-basic-dark-resume-not-done-focus-visible-native-act",
+      "NEW-CHIP-basic-dark-tourchip-not-done-focus-visible-native-act"
+    ],
+    "narrow_rows": 16,
+    "narrow_case_ids": [
+      "N3-NARROW-basic-dark-native-hover",
+      "N3-NARROW-basic-light-native-hover",
+      "N3-NARROW-friendly-dark-native-hover",
+      "N3-NARROW-friendly-light-native-hover",
+      "N3-NARROW-glass-dark-native-hover",
+      "NEW-NARROW-glass-light-hover-native-act",
+      "NEW-NARROW-glass-light-focus-visible-native-act",
+      "NEW-NARROW-glass-light-RM",
+      "NEW-NARROW-retro-dark-hover-native-act",
+      "NEW-NARROW-retro-dark-focus-visible-native-act",
+      "NEW-NARROW-retro-light-hover-native-act",
+      "NEW-NARROW-retro-light-focus-visible-native-act",
+      "NEW-NARROW-nier-dark-hover-native-act",
+      "NEW-NARROW-nier-dark-focus-visible-native-act",
+      "NEW-NARROW-nier-light-hover-native-act",
+      "NEW-NARROW-nier-light-focus-visible-native-act"
+    ],
+    "normal_narrow_rows": 15,
+    "normal_narrow_hover": 10,
+    "normal_narrow_focus": 5,
+    "GlassLight_RM_rows": 1,
+    "RM_case_id": "NEW-NARROW-glass-light-RM",
+    "proven_paired_interference_total": 19,
+    "scope_disclosure": "Earlier root/owner65 compact wording labelled20as narrow; actual immutablecase IDs show20TOTAL=4chip+16narrow. Sealed owner65/519/559/raw/verdicts unchanged. All20HOLD;4chiprowsSTOP/no recapture/83remainingchip acceptance. Other5unrunfocus excluded.",
+    "no_criterion_change_or_waiver": true
+  }
+}
