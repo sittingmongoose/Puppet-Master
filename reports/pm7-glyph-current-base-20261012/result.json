@@ -1,6 +1,6 @@
 {
   "status": "IN_PROGRESS",
-  "checkpoint": "Normal hardware admission and immutable input custody verified; N1-N4 acceptance outstanding.",
+  "checkpoint": "Separate A6 transport and actual N1 scope discovery completed. N1 remains UNVERIFIED/HOLD; independent N2-N4 continue.",
   "tested_candidate_source_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
   "actual_admission_worktree_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
   "environment": {
@@ -29,18 +29,54 @@
   },
   "immutable_original_raw_manifest_sha256": "defde16dd3b2a5a271b41ad9864dbcfb47c5b9e4c775ecffd4d92491bb817d9e",
   "sealed_review_manifest_sha256": "d20508c4ca8cc92cdda076af5dc004d3b885ac378ad0a2979392345087b74c51",
-  "N1": "NOT_RUN",
+  "N1": "UNVERIFIED/HOLD",
   "N2": "NOT_RUN",
   "N3": "NOT_RUN",
   "N4": "NOT_RUN",
   "original_collector_coverage_limitation": "#o55-tourchip excluded by frozen gate; original gate is unchanged. Same-channel amendment authorizes a separate exact-two-site supplemental collector.",
   "supplemental_criteria": "Add only #o55-tourchip to scopeOf and floaters roots; inverse projection must recover original bytes.",
-  "production_changes": [],
+  "production_changes": "Only the root-authorized separate classA6 transport; original 559 report/raw packet and all four app pages unchanged.",
   "no_look_or_landing_acceptance": true,
   "accidental_direct_Chromium": "Failed SSH diagnostic invocation aborted with No usable sandbox; retained as diagnostic only, corrected census found no surviving browser; no direct retry/configuration override.",
   "remaining": [
-    "Implement and perform exact N1-N4 case checks, visuals and contrast; any failure stops relevant acceptance for owner.",
-    "Transport separately authorized classA6 68e at this clean checkpoint, preserving all page/driver/other production blobs.",
-    "Windows rail review and GLY4/Jared gates remain external."
-  ]
+    "N1 exact published eligible target disposition from original owner; no acceptance inferred.",
+    "Run/review independent N2/N3/N4 new-current-base cases.",
+    "Windows rail review and GLY4/Jared gates external."
+  ],
+  "N1_scope": {
+    "visible_enrolled_hosts": 33,
+    "exact_bridge_eligible_hosts": 0,
+    "pointer": [
+      896.9921875,
+      265
+    ],
+    "actual_PMH_hover": "article.pmu-card.pmh-on, ov-skyline, Glass",
+    "remaining": "a-c in all4 required looks and ReducedMotion; source target disposition pending",
+    "raw_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n1-discovery/SHA256SUMS",
+      "sha256": "0543c423d4a2b0d62d971d6064d366cf5867bb3597fce556b825032aee15e14f"
+    }
+  },
+  "format_transport": {
+    "head": "6cd9a808cf1d4d8938bc3c40e593ea5c47ee11a8",
+    "parents": [
+      "55c3c8e8db19960579eb745905a912c4ea3e7f9e",
+      "68e329027e7b1e1d53f853f75cdf094fd4a056c2"
+    ],
+    "exact_six_only": true,
+    "all_other_blobs_modes_unchanged": true,
+    "four_page_bytes_equal559": true,
+    "Settings_drivers_and_original_reports_unchanged": true,
+    "build_map_AST_unchanged": true,
+    "residual_whitespace": {
+      "exit_code": 2,
+      "findings": 2272,
+      "paths": 15,
+      "all_trailing_whitespace_CRLF": true
+    },
+    "manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/format-transport/SHA256SUMS",
+      "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
+    }
+  }
 }

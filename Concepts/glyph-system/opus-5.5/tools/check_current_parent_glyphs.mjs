@@ -40,6 +40,9 @@ if (inverseSource !== collectorSource) throw new Error('HOLD: supplementary coll
 const companion = Function('return (' + companionSource + ')')();
 if (companion.toString() !== companionSource) throw new Error('HOLD: supplementary collector serialization changed');
 mkdirSync(out, { recursive: true });
+writeFileSync(join(out, 'helper-source.mjs'), readFileSync(new URL(import.meta.url)));
+writeFileSync(join(out, 'collector-original.js'), collectorSource);
+writeFileSync(join(out, 'collector-tourchip.js'), companionSource);
 const result = {
   schema_version: 1, mode, started_utc: new Date().toISOString(), status: 'RUNNING',
   candidate_source_head: candidateHead, worktree_head_at_run: worktreeHead,
@@ -127,6 +130,211 @@ async function admission(page) {
   await page.screenshot({ path: join(out, 'admission-usage-targets.png') });
   await sleep(1500);
 }
+async function n1(page) {
+  const pointer = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll('.pmu-card')];
+    const card = cards.find((e) => {
+      const r = e.getBoundingClientRect();
+      return r.width > 100 && r.height > 100 && r.top > 100 && r.bottom < innerHeight && e.querySelector('svg.nx');
+    });
+    if (!card) return null;
+    const r = card.getBoundingClientRect();
+    return { x: r.x + r.width / 2, y: r.y + r.height / 2, widget: card.dataset.widget };
+  });
+  if (!pointer) throw new Error('HOLD: no visible glyph-bearing Usage card for exact N1 target discovery');
+  await page.evaluate(() => {
+    window.__pmgTrustedInput = [];
+    for (const type of ['pointermove', 'pointerdown', 'pointerup', 'click', 'keydown']) {
+      document.addEventListener(type, (e) => window.__pmgTrustedInput.push({ type, trusted: e.isTrusted,
+        at: performance.now(), utc_ms: Date.now(), x: e.clientX ?? null, y: e.clientY ?? null, key: e.key ?? null }), { capture: true, passive: true });
+    }
+  });
+  await page.mouse.move(5, 5);
+  await page.mouse.move(pointer.x, pointer.y);
+  await sleep(1300);
+  const discovery = await page.evaluate(() => {
+    const visible = (e) => {
+      const r = e.getBoundingClientRect(), cs = getComputedStyle(e);
+      return r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight && cs.display !== 'none' && cs.visibility !== 'hidden';
+    };
+    const hosts = [...document.querySelectorAll('[data-pmh-kind]')].filter(visible);
+    const gs = (e) => [...e.querySelectorAll(':scope > svg.nx:not(.nx-self), :scope > :not(button,summary,[role="button"],[data-action]) > svg.nx:not(.nx-self)')];
+    return {
+      eligible_hosts: hosts.filter((e) => gs(e).length).map((e) => ({ id: e.id, cls: e.className, widget: e.dataset.widget, glyphs: gs(e).map((g) => g.dataset.nx) })),
+      visible_enrolled_host_count: hosts.length,
+      enrolled_hosts_with_deeper_glyphs: hosts.filter((e) => e.querySelector('svg.nx')).map((e) => ({ id: e.id, cls: e.className, widget: e.dataset.widget,
+        glyphs: [...e.querySelectorAll('svg.nx')].map((g) => {
+          let depth = 0, n = g; while (n && n !== e) { depth++; n = n.parentElement; }
+          const cs = getComputedStyle(g);
+          return { glyph: g.dataset.nx, depth, classes: g.getAttribute('class'), parent: g.parentElement.tagName,
+            own_button_host: !!g.closest('button,summary,[role="button"],[data-action]'), halo_alpha: cs.getPropertyValue('--nx-hi-a'), ink: cs.stroke };
+        }) })),
+      PMH_state: window.PMH.state(), input: window.__pmgTrustedInput,
+      root_transition: document.documentElement.getAttribute('data-pm-page-transition'),
+      moments: [...document.querySelectorAll('[data-pmu-moment]')].map((e) => ({ id: e.id, value: e.getAttribute('data-pmu-moment') })),
+    };
+  });
+  result.N1_discovery = { look: 'glass-dark', reduced: false, pointer, ...discovery };
+  await page.screenshot({ path: join(out, 'n1-trusted-pointer-exact-bridge-targets.png') });
+  if (!discovery.eligible_hosts.length) {
+    result.cases.push({ id: 'N1-target-discovery', status: 'UNVERIFIED', reason: 'No visible enrolled PMH target has an svg.nx at the exact bridge child/grandchild selector depth. Deeper glyphs are recorded without expanding the bridge or changing geometry.',
+      remaining: 'All N1 a–c look/motion cases require an eligible source-specified target; no card glyph ignite acceptance claimed.' });
+    result.status = 'UNVERIFIED';
+    return;
+  }
+  throw new Error('HOLD: eligible N1 targets discovered; full interaction adapter not yet implemented');
+}
+const TEN_LOOKS = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
+const TOAST_KINDS = ['info', 'warn', 'error', 'success'];
+function contrastMethod() {
+  // Reuse the source owner's accepted field measurement, not the old campaign or its state setup.
+  const text = readFileSync(resolve(arg('--contrast-source')), 'utf8');
+  const marker = 'const MEASURE = ';
+  const start = text.indexOf(marker);
+  const end = text.indexOf('\n};\n', start) + 2;
+  if (start < 0 || end < start) throw new Error('HOLD: cannot locate source-owner contrast function');
+  const original = text.slice(start + marker.length, end);
+  const measure = Function('return (' + original + ')')();
+  if (measure.toString() !== original) throw new Error('HOLD: source contrast function serialization changed');
+  result.contrast_method = { source_sha256: sha(text), function_sha256: sha(original), verbatim: true,
+    method: 'Effective computed glyph ink/opacity over median and 10th/90th-percentile actual behind-field pixels from a screenshot with glyphs hidden; rendered foreground screenshot and hardware frames support this measurement.' };
+  writeFileSync(join(out, 'contrast-method.js'), original);
+  return measure;
+}
+async function glyphMetadata(page, selector) {
+  return page.evaluate((sel) => [...document.querySelectorAll(sel)].flatMap((svg, i) => {
+    const r = svg.getBoundingClientRect();
+    let op = 1;
+    for (let n = svg; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n); op *= Number(cs.opacity);
+      if (cs.visibility === 'hidden' || cs.display === 'none') op = 0;
+    }
+    if (op < 0.05 || !r.width || r.bottom <= 0 || r.top >= innerHeight) return [];
+    const cs = getComputedStyle(svg), button = svg.closest('button'), card = svg.closest('.n-card,#o55-resume,#o55-tourchip,.o55-demopill');
+    const br = button?.getBoundingClientRect(), cr = card?.getBoundingClientRect(), cc = card && getComputedStyle(card);
+    const clips = [];
+    for (let p = svg.parentElement; p && p !== document.body; p = p.parentElement) {
+      const pc = getComputedStyle(p);
+      if (/(hidden|clip|auto|scroll)/.test(pc.overflowX + pc.overflowY)) {
+        const pr = p.getBoundingClientRect();
+        clips.push({ tag: p.tagName, id: p.id, cls: p.className, overflow: [pc.overflowX, pc.overflowY], radius: pc.borderRadius,
+          rect: { x: pr.x, y: pr.y, w: pr.width, h: pr.height } });
+      }
+    }
+    return [{ index: i, x: r.x, y: r.y, w: r.width, h: r.height, ink: cs.stroke, op,
+      glyph: svg.dataset.nx, key: svg.closest('.nx-st')?.dataset.k || svg.dataset.nx,
+      where: svg.closest('#rsStage,#rsStack,#o55-resume,#o55-tourchip,.o55-demo')?.id,
+      halo_alpha: cs.getPropertyValue('--nx-hi-a'), halo_width: cs.getPropertyValue('--nx-hi-w'),
+      button: br && { x: br.x, y: br.y, w: br.width, h: br.height },
+      card: cr && { x: cr.x, y: cr.y, w: cr.width, h: cr.height, radius: cc.borderRadius }, clips }];
+  }), selector);
+}
+async function measureGlyphs(page, measure, id, selector, fields = {}) {
+  const began = await page.evaluate(() => ({ utc_ms: Date.now(), at: performance.now() }));
+  const rects = await glyphMetadata(page, selector);
+  if (!rects.length) throw new Error('UNVERIFIED: required visible glyph state missing: ' + id);
+  const foreground = await page.screenshot({ path: join(out, id + '--foreground.png') });
+  await page.evaluate((sel) => {
+    window.__pmgHidden = [...new Set([...document.querySelectorAll(sel)].map((e) => e.closest('.nx-st') || e))]
+      .map((e) => ({ e, value: e.style.getPropertyValue('opacity'), priority: e.style.getPropertyPriority('opacity') }));
+    for (const r of window.__pmgHidden) r.e.style.setProperty('opacity', '0', 'important');
+  }, selector);
+  let behind;
+  try { behind = await page.screenshot({ path: join(out, id + '--behind.png') }); }
+  finally {
+    await page.evaluate(() => {
+      for (const r of window.__pmgHidden || []) {
+        if (r.value) r.e.style.setProperty('opacity', r.value, r.priority); else r.e.style.removeProperty('opacity');
+      }
+      delete window.__pmgHidden;
+    });
+  }
+  const after = await glyphMetadata(page, selector);
+  const measured = await page.evaluate(measure, [behind.toString('base64'), rects]);
+  const peak = await page.evaluate(async ([fg, bg, rows]) => {
+    const load = async (s) => { const i = new Image(); i.src = 'data:image/png;base64,' + s; await i.decode();
+      const c = document.createElement('canvas'); c.width = i.width; c.height = i.height; const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(i, 0, 0); return { g, w: c.width, h: c.height }; };
+    const a = await load(fg), b = await load(bg), scale = a.w / innerWidth;
+    const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+    const lum = (r, g, bb) => .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(bb);
+    return rows.map((r) => {
+      const x = Math.max(0, Math.floor(r.x * scale)), y = Math.max(0, Math.floor(r.y * scale));
+      const w = Math.min(a.w - x, Math.ceil(r.w * scale)), h = Math.min(a.h - y, Math.ceil(r.h * scale));
+      const p = a.g.getImageData(x, y, w, h).data, q = b.g.getImageData(x, y, w, h).data;
+      const ratios = [], samples = [];
+      for (let i = 0; i < p.length; i += 4) {
+        const d = Math.max(...[0, 1, 2].map((j) => Math.abs(p[i + j] - q[i + j])));
+        if (d < 4) continue;
+        const l1 = lum(p[i], p[i + 1], p[i + 2]), l2 = lum(q[i], q[i + 1], q[i + 2]);
+        const ratio = (Math.max(l1, l2) + .05) / (Math.min(l1, l2) + .05);
+        ratios.push(ratio); samples.push({ delta: d, ratio, fg: [p[i], p[i + 1], p[i + 2]], behind: [q[i], q[i + 1], q[i + 2]] });
+      }
+      ratios.sort((x2, y2) => x2 - y2); samples.sort((x2, y2) => y2.delta - x2.delta);
+      return { glyph: r.glyph, changed_pixels: ratios.length, observed_pixel_max_contrast: ratios.at(-1) ?? null,
+        observed_pixel_p90_contrast: ratios[Math.floor(ratios.length * .9)] ?? null,
+        five_largest_delta_samples: samples.slice(0, 5), note: 'Foreground pairs include antialiasing and halos; observed peak supports, and does not replace, the source-owner effective-core contrast gate.' };
+    });
+  }, [foreground.toString('base64'), behind.toString('base64'), rects]);
+  const sameRects = rects.length === after.length && rects.every((r, i) => ['x', 'y', 'w', 'h'].every((k) => Math.abs(r[k] - after[i][k]) < 0.1));
+  const gate = measured.every((r) => r.ratio >= 3 && r.worst >= 3);
+  const support = peak.every((r) => r.observed_pixel_max_contrast >= 3);
+  const row = { id, ...fields, began, ended: await page.evaluate(() => ({ utc_ms: Date.now(), at: performance.now() })),
+    actual_glyphs: rects, hidden_without_layout_shift: sameRects, measured, foreground_pixel_support: peak,
+    contrast_status: !sameRects ? 'UNVERIFIED' : !gate ? 'HOLD' : !support ? 'UNVERIFIED' : 'MEASURED',
+    visual_status: 'PENDING_FRAME_REVIEW' };
+  result.cases.push(row); save();
+  console.log(JSON.stringify({ id, contrast_status: row.contrast_status, glyphs: measured.map((r) => ({ key: r.key, ratio: r.ratio, worst: r.worst })) }));
+  return row;
+}
+async function collectPills(page, id, fields) {
+  const original = await page.evaluate(collector, { scopes: ['shell', 'floaters'] });
+  const supplementary = await page.evaluate(companion, { scopes: ['floaters'] });
+  const row = { id, ...fields, original_gate: { label: 'original shell,floaters', ...original },
+    supplementary_gate: { label: 'supplementary floaters/tourchip', ...supplementary },
+    original_coverage_limitation_retained: true,
+    status: original.findings.length || supplementary.findings.length ? 'HOLD' : 'PASS' };
+  result.cases.push(row); save(); return row;
+}
+async function n2(page) {
+  const measure = contrastMethod();
+  await page.evaluate(() => window.PM_PAGES.go('dashboard'));
+  await sleep(700);
+  let hold = false;
+  for (const look of ['friendly-light', 'friendly-dark', 'glass-light', 'glass-dark']) {
+    const state = await setLook(page, look);
+    await page.mouse.move(5, 1050);
+    await page.evaluate(() => { window.toast.clear(); window.toast.collapse(); });
+    await sleep(1000);
+    const bell = await measureGlyphs(page, measure, 'N2-' + look + '-empty-bell', '#rsStack .rs-empty-bell', { requirement: 'N2', look, state, phase: 'empty-bell' });
+    if (bell.contrast_status !== 'MEASURED') { hold = true; break; }
+    for (const severity of TOAST_KINDS) {
+      for (const pose of ['rest', 'hover']) {
+        await page.evaluate((sev) => window.toast.push({ title: 'Current-base ' + sev, body: 'Glyph contrast and corner check.', severity: sev, important: false }), severity);
+        await sleep(300);
+        if (pose === 'hover') { await page.locator('#rsStage .n-x').last().hover(); await sleep(200); }
+        const row = await measureGlyphs(page, measure, 'N2-' + look + '-stage-' + severity + '-' + pose,
+          '#rsStage .n-card:last-child svg.nx', { requirement: 'N2', look, state, phase: 'stage', severity, pose });
+        await sleep(2300);
+        await page.mouse.move(5, 1050);
+        if (row.contrast_status !== 'MEASURED') { hold = true; break; }
+      }
+      if (hold) break;
+      await page.evaluate((sev) => window.toast.important({ title: 'Current-base ' + sev, body: 'Glyph contrast and corner check.', severity: sev }, { skipStage: true }), severity);
+      await sleep(600);
+      for (const pose of ['rest', 'hover']) {
+        if (pose === 'hover') { await page.locator('#rsClip .n-card').first().locator('.n-x').hover(); await sleep(250); }
+        const row = await measureGlyphs(page, measure, 'N2-' + look + '-stack-' + severity + '-' + pose,
+          '#rsClip .n-card:first-child svg.nx', { requirement: 'N2', look, state, phase: 'stack-front', severity, pose });
+        if (row.contrast_status !== 'MEASURED') { hold = true; break; }
+      }
+      await page.mouse.move(5, 1050);
+      if (hold) break;
+    }
+    if (hold) break;
+  }
+  result.N2_contrast = hold ? 'HOLD_OR_UNVERIFIED; remaining contrast cases stopped for owner' : 'MEASURED_PENDING_FRAME_REVIEW';
+  result.status = hold ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
+}
 try {
   result.global_helper_sessions_before = command(['list']);
   session = command(['start', '--record', join(out, mode + '.mp4'), '--codec', 'h264']);
@@ -140,8 +348,10 @@ try {
   page.on('pageerror', (error) => { result.errors.push({ kind: 'pageerror', message: error.message }); save(); });
   page.on('console', (message) => { if (message.type() === 'error') { result.errors.push({ kind: 'console', message: message.text() }); save(); } });
   await admission(page);
-  if (mode !== 'admission') throw new Error('HOLD: case mode not implemented: ' + mode);
-  result.status = 'ADMISSION_VERIFIED';
+  if (mode === 'admission') result.status = 'ADMISSION_VERIFIED';
+  else if (mode === 'n1') await n1(page);
+  else if (mode === 'n2') await n2(page);
+  else throw new Error('HOLD: case mode not implemented: ' + mode);
 } catch (error) {
   result.status = 'HOLD'; result.errors.push({ kind: 'harness', message: String(error), stack: error.stack }); process.exitCode = 2;
 } finally {
