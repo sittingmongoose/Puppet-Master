@@ -149,7 +149,11 @@
   }
   function lensFilter(W, H, m, rimBlur, id) {
     var key = id || (m.maps[1].length + ':' + W + 'x' + H + ':' + m.scale.toFixed(2) + ':' + rimBlur);
-    if (filterByKey.has(key)) return filterByKey.get(key);
+    if (filterByKey.has(key)) {
+      var cached = filterByKey.get(key);
+      if (!cached.el.isConnected) ensureDefs().appendChild(cached.el);
+      filterByKey.delete(key); filterByKey.set(key, cached); return cached;
+    }
     var f = document.createElementNS(SVGNS, 'filter'); id = id || ('lgf' + (fid++));
     f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', W); f.setAttribute('height', H);
     f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
@@ -168,11 +172,22 @@
     }
     f.innerHTML = h;
     ensureDefs().appendChild(f);
-    var rec = { id: id, el: f, scale: m.scale };
+    var rec = { id: id, el: f, scale: m.scale, displacement: f.querySelectorAll('feDisplacementMap'), writtenScale: sc };
     filterByKey.set(key, rec);
     return rec;
   }
-  function setLensScale(f, k) { f.el.querySelectorAll('feDisplacementMap').forEach(function (n) { n.setAttribute('scale', (f.scale * k).toFixed(2)); }); }
+  function setLensScale(f, k) {
+    var value = (f.scale * k).toFixed(2); if (value === f.writtenScale) return;
+    f.displacement.forEach(function (n) { n.setAttribute('scale', value); }); f.writtenScale = value;
+  }
+  /* Active filters stay alive; a small inactive pool reuses the same SVG and maps when a bead or tab returns to a
+     previous size. Replaced strips and resize history cannot grow the SVG tree without a bound. */
+  function pruneLensFilters() {
+    var used = new Set(), idle = [];
+    glassSet.forEach(function (e) { if (e.isConnected && e.__lgF) used.add(e.__lgF); });
+    filterByKey.forEach(function (f, key) { if (f.id !== 'lg-knob' && !used.has(f)) idle.push(key); });
+    for (var i = 0; i < idle.length - 16; i++) { var key = idle[i], f = filterByKey.get(key); f.el.remove(); filterByKey.delete(key); }
+  }
 
   /* ---- glass kinds -------------------------------------------------------------------------------------------------
      bezel and thickness in px; blur before the refraction; ca = chromatic split at the rim; mag = lens magnification;
@@ -347,14 +362,19 @@
   /* ---- springs ------------------------------------------------------------------------------------------------------
      A damped spring from 0 to 1 sampled at 60 fps until it rests: the same curve every motion uses, so everything moves
      like one material. Returns [{t, x, v}] with t in ms. */
+  var springCache = new Map();
   function spring(stiff, damp, mass, v0) {
+    var key = [stiff, damp, mass || 1, v0 || 0].join('|');
+    if (springCache.has(key)) return springCache.get(key);
     var x = 0, v = v0 || 0, dt = 1 / 120, out = [{ t: 0, x: 0, v: v }], t = 0;
     for (var i = 0; i < 1200; i++) {
       var a = (-stiff * (x - 1) - damp * v) / (mass || 1); v += a * dt; x += v * dt; t += dt;
       if (i % 2 === 1) out.push({ t: t * 1000, x: x, v: v });
       if (Math.abs(x - 1) < 0.0006 && Math.abs(v) < 0.004 && t > 0.1) break;
     }
-    out[out.length - 1].x = 1; return out;
+    out[out.length - 1].x = 1;
+    if (springCache.size >= 16) springCache.delete(springCache.keys().next().value);
+    springCache.set(key, out); return out;
   }
   var LIQUID = [230, 19, 1];   /* a lively spring: one clear overshoot, a small second one */
   var SOFT = [170, 22, 1];
@@ -381,13 +401,15 @@
      the sheet, the wallpaper and the label together and magnifies them as one, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding), so a lens is never
      covered by the surface its strip lives in */
-  var lenses = new Map(), layer = null;
+  var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
     var host = strip && strip.closest && strip.closest('#pm-o55-onboarding .o55-win');
     if (host) {
-      var own = host.querySelector(':scope > .lg-lenses-local');
+      var own = localLayers.get(host);
+      if (own && own.isConnected && own.parentElement === host) return own;
+      own = host.querySelector(':scope > .lg-lenses-local');
       if (!own) { own = el('div', { class: 'lg-lenses-local', 'aria-hidden': 'true' }); host.appendChild(own); }
-      return own;
+      localLayers.set(host, own); return own;
     }
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
@@ -407,18 +429,55 @@
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
     if (L && L.lens.isConnected) return L;
-    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind });
-    lensLayer(strip).appendChild(lens);
-    L = { lens: lens, rect: null, anim: null, cfg: cfg }; lenses.set(strip, L); return L;
+    if (L) disposeLens(L);
+    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
+    own.appendChild(lens);
+    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, scaleFrame: 0, scaleFilter: null, scrubCleanup: null, cfg: cfg }; lenses.set(strip, L); return L;
   }
   function setLensBox(L, R) {
-    var s = L.lens.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; L.rect = R;
+    var s = L.lens.style, A = L.rect;
+    if (!A || A.x !== R.x) s.left = R.x + 'px'; if (!A || A.y !== R.y) s.top = R.y + 'px';
+    if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
     mount(L.lens, L.cfg.kind);
+  }
+  function stopLensScale(L) {
+    if (L.scaleFrame) cancelAnimationFrame(L.scaleFrame); L.scaleFrame = 0;
+    if (L.scaleFilter) setLensScale(L.scaleFilter, 1); L.scaleFilter = null;
+  }
+  function stopLensTravel(L) {
+    stopLensScale(L);
+    if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
+  }
+  function removeLensElement(e) {
+    if (typeof unmount === 'function') unmount(e);
+    else { glassSet.delete(e); if (sizeWatch) sizeWatch.unobserve(e); e.__lgF = null; e.__lgSig = null; }
+    e.remove();
+  }
+  function disposeLens(L) {
+    stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
+    removeLensElement(L.lens); L.rect = null;
+    if (L.layer && L.layer.classList.contains('lg-lenses-local') && !L.layer.children.length) {
+      if (L.layer.parentElement) localLayers.delete(L.layer.parentElement); L.layer.remove();
+    }
+  }
+  function pruneLenses() {
+    lenses.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); lenses.delete(strip); } });
+    if (bead && (!bead.isConnected || (beadOn && !beadOn.isConnected))) { resetBead(); removeLensElement(bead); bead = null; }
+    menuMotions.forEach(function (M, menu) {
+      if (!menu.isConnected || (menu.id === 'lg-demo-pop' && !menu.hasAttribute('data-open'))) resetMenuMorph(menu);
+      else M.animations.forEach(function (target, an) { if (!target.isConnected) { an.cancel(); M.animations.delete(an); } });
+    });
+    pruneLensFilters();
+  }
+  function suspendLensMotion() {
+    lenses.forEach(function (L) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
+    menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
   /* travel from A to B: the drop lifts (grows a little and magnifies more), stretches along its path with its speed,
      thins across it, overshoots and wobbles once, all from one spring */
   function travel(L, A, B, vertical) {
-    if (L.anim) L.anim.cancel();
+    stopLensTravel(L);
     setLensBox(L, B);
     var S = spring.apply(null, LIQUID), dist = vertical ? B.y - A.y : B.x - A.x, frames = [];
     var sw = A.w / B.w, shh = A.h / B.h;
@@ -430,21 +489,37 @@
       var sx = (vertical ? w * across : w * along), sy = (vertical ? h * along : h * across);
       frames.push({ offset: S[i].t / S[S.length - 1].t, transform: (vertical ? 'translate3d(0,' : 'translate3d(') + off.toFixed(2) + (vertical ? 'px,0)' : 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
     }
-    L.anim = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' });
-    var f = L.lens.__lgF, base = f && f.scale;
+    var an = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' }); L.anim = an;
+    var f = L.lens.__lgF;
     /* while it travels the drop thickens a little: the refraction rises by up to 15 % and settles with it */
-    if (f) { var t0 = performance.now(), dur = S[S.length - 1].t; (function tick() { var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI)); if (k < 1 && L.anim) requestAnimationFrame(tick); else setLensScale(f, 1); })(); }
-    L.anim.onfinish = function () { L.anim = null; };
+    if (f) {
+      L.scaleFilter = f; var t0 = performance.now(), dur = S[S.length - 1].t;
+      (function tick() {
+        L.scaleFrame = 0;
+        if (L.anim !== an || !L.strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { stopLensTravel(L); return; }
+        if (L.lens.__lgF !== f) { stopLensScale(L); return; }
+        var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI));
+        if (k < 1) L.scaleFrame = requestAnimationFrame(tick); else stopLensScale(L);
+      })();
+    }
+    an.onfinish = function () { if (L.anim === an) { L.anim = null; stopLensScale(L); } };
   }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
-    if (!target || !visible(target) || !visible(strip)) { L.lens.style.opacity = '0'; L.rect = null; return; }
-    L.lens.style.opacity = '';
+    if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+    if (L.lens.style.opacity) L.lens.style.opacity = '';
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
-    if (!A || reduced() || !isGlass()) { if (A && reduced()) L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); setLensBox(L, R); return; }
-    if (Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5) return;
+    var quiet = reduced();
+    var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
+    if ((quiet && !L.reducedAnim) || !isGlass()) stopLensTravel(L);
+    if (still) return;
+    if (!A || quiet || !isGlass()) {
+      stopLensTravel(L);
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
+      setLensBox(L, R); return;
+    }
     travel(L, A, R, !!cfg.vertical || Math.abs(A.y - R.y) > Math.abs(A.x - R.x));
   }
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
@@ -455,28 +530,36 @@
       var cfg = STRIPS[i]; if (!cfg.scrub) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
       var L = lenses.get(strip); if (!L || !L.rect) return;
+      if (L.scrubCleanup) L.scrubCleanup();
       var sx = e.clientX, moved = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible);
       var onMove = function (ev) {
+        if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;
         if (!moved && Math.abs(dx) < 6) return;
-        if (!moved) { moved = true; L.dragging = true; if (L.anim) L.anim.cancel(); L.lens.setAttribute('data-lg-lifted', ''); }
-        var sr = strip.getBoundingClientRect(), lr = lensLayer(strip).getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
+        if (!moved) { moved = true; L.dragging = true; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); }
+        var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
         L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.14,1.16)';
         ev.preventDefault();
       };
+      var removeListeners = function () {
+        document.removeEventListener('pointermove', onMove, true); document.removeEventListener('pointerup', onUp, true); document.removeEventListener('pointercancel', onUp, true);
+        if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
+      };
+      var cleanup = function () { removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; };
       var onUp = function (ev) {
-        document.removeEventListener('pointermove', onMove, true); document.removeEventListener('pointerup', onUp, true);
+        removeListeners();
         if (!moved) return;
-        var sr = strip.getBoundingClientRect(), best = null, bd = 1e9;
+        if (ev.type === 'pointercancel' || !strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
+        var best = null, bd = 1e9;
         items.forEach(function (it) { var r = it.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
-        var cur = L.lens.getBoundingClientRect(), lr2 = lensLayer(strip).getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
-        L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        var cur = L.lens.getBoundingClientRect(), lr2 = L.layer.getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
+        cleanup();
         if (best && !best.classList.contains('active')) { L.rect = from; best.click(); } else { travel(L, from, L.rect, false); }
         var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); document.removeEventListener('click', swallow, true); };
         document.addEventListener('click', swallow, true); setTimeout(function () { document.removeEventListener('click', swallow, true); }, 0);
       };
-      document.addEventListener('pointermove', onMove, true); document.addEventListener('pointerup', onUp, true);
+      L.scrubCleanup = cleanup; document.addEventListener('pointermove', onMove, true); document.addEventListener('pointerup', onUp, true); document.addEventListener('pointercancel', onUp, true);
       return;
     }
   }
@@ -541,13 +624,15 @@
      icon swells inside it (the self-reflection Jared liked on the lenses, now on the rail's and toolbars' buttons) ---- */
   var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev';
   var bead = null, beadOn = null, beadRect = null, beadAnim = null, beadHide = 0;
-  function beadEl() { if (bead && bead.isConnected) return bead; bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
+  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
+  function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; }
+  function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
-    clearTimeout(beadHide);
-    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect();
+    clearTimeout(beadHide); beadHide = 0;
+    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect(); beadOn = t;
     var R = { x: r.left - lr.left - 2, y: r.top - lr.top - 2, w: r.width + 4, h: r.height + 4 }, A = beadRect;
     var s = b.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; mount(b, 'bead');
-    if (beadAnim) beadAnim.cancel();
+    stopBeadAnimation();
     if (reduced()) { b.classList.add('on'); beadRect = R; return; }
     if (A && b.classList.contains('on')) {
       var S = spring.apply(null, LIQUID), dx = A.x - R.x, dy = A.y - R.y, dist = Math.hypot(dx, dy), fr = [];
@@ -558,11 +643,19 @@
       b.classList.add('on');
       beadAnim = b.animate([{ transform: 'scale(.55)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: 0.6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.3,1.3,.5,1)' });
     }
+    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
     beadRect = R;
   }
   function beadOff() {
     clearTimeout(beadHide);
-    beadHide = setTimeout(function () { if (!bead || !bead.classList.contains('on')) return; beadAnim = bead.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim.onfinish = function () { bead.classList.remove('on'); beadRect = null; }; }, 140);
+    beadHide = setTimeout(function () {
+      beadHide = 0;
+      if (!bead || !bead.isConnected || !isGlass()) { resetBead(); return; }
+      if (!bead.classList.contains('on')) return;
+      stopBeadAnimation(); var b = bead;
+      var an = b.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim = an;
+      an.onfinish = function () { if (beadAnim === an && bead === b) { beadAnim = null; b.classList.remove('on'); beadRect = null; } };
+    }, 140);
   }
   document.addEventListener('pointerover', function (e) {
     if (!isGlass() || e.pointerType === 'touch') return;
@@ -588,16 +681,36 @@
   }, true);
 
   /* ---- morph: a menu pours out of its control ------------------------------------------------------------------ */
-  var lastPress = null;
+  var lastPress = null, menuMotions = new Map();
   document.addEventListener('pointerdown', function (e) { lastPress = e.target.closest && e.target.closest('button, [role="button"], .pm6-tb-menu-trigger, .pmu-ctlbtn'); }, true);
+  function resetMenuMorph(menu) {
+    var M = menuMotions.get(menu);
+    if (M) {
+      if (M.frame) cancelAnimationFrame(M.frame);
+      if (M.held) menu.style.opacity = '';
+      M.animations.forEach(function (target, an) { an.onfinish = null; an.oncancel = null; an.cancel(); }); M.animations.clear(); menuMotions.delete(menu);
+    }
+    menu.__lgMorphed = false;
+  }
+  function menuAnimation(menu, target, frames, options) {
+    var M = menuMotions.get(menu), an = target.animate(frames, options); M.animations.set(an, target);
+    var done = function () { M.animations.delete(an); if (!M.frame && !M.animations.size && menuMotions.get(menu) === M) menuMotions.delete(menu); };
+    an.onfinish = done; an.oncancel = done; return an;
+  }
   function morph(menu, anchor) {
     if (!isGlass() || !visible(menu) || menu.__lgMorphed) return;
-    menu.__lgMorphed = true;
-    if (reduced()) { menu.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
+    resetMenuMorph(menu); menu.__lgMorphed = true;
+    var M = { frame: 0, held: false, animations: new Map() }; menuMotions.set(menu, M);
+    if (reduced()) { menuAnimation(menu, menu, [{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
     /* the menu's own opening animation starts a moment after ours and would win: run ours on the next frame, after
        cancelling it, holding the first keyframe so the menu never flashes at full size */
-    menu.style.opacity = '0';
-    requestAnimationFrame(function () { menu.style.opacity = ''; morphNow(menu, anchor); });
+    menu.style.opacity = '0'; M.held = true;
+    M.frame = requestAnimationFrame(function () {
+      M.frame = 0; menu.style.opacity = ''; M.held = false;
+      if (!isGlass() || !visible(menu) || menuMotions.get(menu) !== M) { resetMenuMorph(menu); return; }
+      if (reduced()) { menuAnimation(menu, menu, [{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
+      morphNow(menu, anchor);
+    });
   }
   function morphNow(menu, anchor) {
     menu.getAnimations().forEach(function (an) { an.cancel(); });
@@ -609,24 +722,25 @@
       frames.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (tx0 * (1 - p)).toFixed(1) + 'px,' + (ty0 * (1 - p)).toFixed(1) + 'px,0) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
     }
     menu.style.transformOrigin = '0 0';
-    menu.animate(frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
-    menu.animate([{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
-    Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { k.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
+    menuAnimation(menu, menu, frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
+    menuAnimation(menu, menu, [{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
+    Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { menuAnimation(menu, k, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
       if (!L.rect) return;
+      if (!menus.length) { if (L.lens.classList.contains('lg-under')) L.lens.classList.remove('lg-under'); return; }
       var r = L.lens.getBoundingClientRect(), hit = menus.some(function (m) { return r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
-      L.lens.classList.toggle('lg-under', hit);
+      if (L.lens.classList.contains('lg-under') !== hit) L.lens.classList.toggle('lg-under', hit);
     });
   }
   function scanMenus() {
     var open = Array.prototype.slice.call(document.querySelectorAll('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open')).filter(visible).map(function (m) { return m.getBoundingClientRect(); });
     if (bead) bead.classList.toggle('lg-under', open.length > 0);
-    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else m.__lgMorphed = false; });
+    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else resetMenuMorph(m); });
     lensesUnder(open);
-    document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else m.__lgMorphed = false; });
-    document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else m.__lgMorphed = false; });
+    document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else resetMenuMorph(m); });
+    document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else resetMenuMorph(m); });
   }
 
   /* ---- materialize: glass arrives by ramping its refraction and its frost, not by fading ---------------------------- */
