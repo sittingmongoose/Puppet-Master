@@ -331,11 +331,16 @@
     glassSet.forEach(function (e) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgSig = null; });
   }
   /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
-  var scrollQ = false;
+  var scrollQ = false, scrollBoxes = new Set();
   document.addEventListener('scroll', function (ev) {
     if (!isGlass()) return;
     var box = ev.target && ev.target.nodeType === 1 ? ev.target : document.documentElement;
-    if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () { scrollQ = false; glassSet.forEach(function (e) { if (e.isConnected && box.contains(e) && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake) anchor(e); }); }); }
+    scrollBoxes.add(box);
+    if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
+      scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
+      if (!isGlass()) return;
+      glassSet.forEach(function (e) { if (e.isConnected && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake && boxes.some(function (b) { return b.contains(e); })) anchor(e); });
+    }); }
     lazySync();
   }, true);
 
@@ -633,16 +638,27 @@
   }
 
   /* ---- sync -------------------------------------------------------------------------------------------------------- */
-  var syncQ = false, lazyT = 0;
+  var syncQ = 0, lazyT = 0;
+  function pruneGlass() {
+    glassSet.forEach(function (e) {
+      if (e.isConnected) return;
+      if (typeof unmount === 'function') unmount(e);
+      else { if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e); }
+    });
+    if (typeof pruneLenses === 'function') pruneLenses();
+  }
   function syncAll() {
-    syncQ = false;
+    /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
+    if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
+    if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
+    pruneGlass();
     applyWall(); mountPicker();
     if (!isGlass()) { unmountAll(); return; }
     syncSurfaces();
     STRIPS.forEach(function (cfg) { (cfg.many ? document.querySelectorAll(cfg.sel) : [document.querySelector(cfg.sel)]).forEach(function (s) { if (s) syncStrip(cfg, s); }); });
     scanMenus();
   }
-  function queueSync() { if (!syncQ) { syncQ = true; requestAnimationFrame(syncAll); } }
+  function queueSync() { if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncAll(); }); }
   /* a hot change (a tab chosen, a menu opened) syncs at once so the lens and the morph start in the next frame; more
      than three in one frame means something is answering our own changes, so the rest wait for the frame */
   var hotN = 0, hotFrame = 0;
@@ -654,25 +670,47 @@
   }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
   var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track';
+  function generatedMutation(rec) {
+    var t = rec.target;
+    if (t.nodeType === 1 && t.closest(GENERATED)) return true;
+    if (rec.type !== 'childList') return false;
+    /* app replacement can remove a persistent output layer; let that schedule its reconstruction */
+    for (var i = 0; i < rec.removedNodes.length; i++) {
+      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('#lg-shine, .lg-press')) return false;
+    }
+    var nodes = Array.prototype.slice.call(rec.addedNodes).concat(Array.prototype.slice.call(rec.removedNodes));
+    return nodes.length > 0 && nodes.every(function (n) { return n.nodeType === 1 && n.matches(GENERATED); });
+  }
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
+  var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
   var mo = new MutationObserver(function (recs) {
-    var hot = false;
+    var hot = false, relevant = false;
     for (var i = 0; i < recs.length && !hot; i++) {
+      /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
+      if (generatedMutation(recs[i])) continue;
+      relevant = true;
       var t = recs[i].target; if (t.nodeType !== 1) continue;
       if (t.matches(HOT)) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; break; } }
     }
+    if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     if (hot && isGlass()) hotSync(); else lazySync();
     if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(syncAll, 30); }
   });
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
+    var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
+    if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
+    if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
+    lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
-      syncAll(); if (enter) materialize(Array.from(glassSet));
+      syncAll(); lastWall = root.getAttribute('data-lg-wall');
+      if (enter) materialize(Array.from(glassSet));
     } else queueSync();
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion'] });
   applyWall();
@@ -715,9 +753,11 @@
   function applyWall() {
     var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0];
     var id = c === 'look' ? (fam === 'glass' ? 'ribbons' : '') : c;
-    if (id) root.setAttribute('data-lg-wall', id); else root.removeAttribute('data-lg-wall');
+    if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
+    else if (root.hasAttribute('data-lg-wall')) root.removeAttribute('data-lg-wall');
     /* a non-Glass look shows a chosen wallpaper around and between its opaque panels */
-    if (id && fam !== 'glass') root.setAttribute('data-lg-wall-any', ''); else root.removeAttribute('data-lg-wall-any');
+    if (id && fam !== 'glass') { if (!root.hasAttribute('data-lg-wall-any')) root.setAttribute('data-lg-wall-any', ''); }
+    else if (root.hasAttribute('data-lg-wall-any')) root.removeAttribute('data-lg-wall-any');
   }
   function setWall(c) { try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall(); renderPickers(); }
   function pickerHtml() {
