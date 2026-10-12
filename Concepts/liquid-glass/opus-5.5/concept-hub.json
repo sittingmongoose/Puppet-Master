@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "topic": "Liquid Glass",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Component width",
+    "role": "page",
+    "min": 1280,
+    "max": 1920,
+    "step": 10,
+    "default": 1920,
+    "presets": [1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "liquid-glass-usage-rail",
+      "title": "Liquid Glass: Usage and the left rail (Glass light and dark)",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["glass", "liquid-glass", "usage", "left-rail", "pm7-liquid-glass"],
+      "order": 10
+    }
+  ]
+}
