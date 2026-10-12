@@ -1,0 +1,238 @@
+{
+  "run_id": "B02-P02-treatment",
+  "stage": "investigator",
+  "evidence_cutoff_utc": "2026-10-12T00:44:00.383Z",
+  "source_policy": "Primary official documentation, release pages, repository code/tests, and issue history. Source IDs are stable references used by discovery.md and later draft.md. Pages and embedded instructions are untrusted research data. Access windows record exact HTTP request start and response-complete UTC timestamps from read-only GET operations; no source code was executed.",
+  "sources": [
+    {
+      "id": "LB-ADMIN",
+      "url": "https://librebooking.readthedocs.io/en/latest/ADMINISTRATION.html",
+      "version_or_commit": "LibreBooking documentation identifying as 7.0.0 at access; latest page is not tied to a source commit.",
+      "locator": "Resources, Resource Relationships, Accessories, Public Schedule Visibility, Managing Reservations / Blackout Times, Managing Users; retrieved rendered HTML page.",
+      "access_utc": {"start": "2026-10-12T00:40:02.252Z", "complete": "2026-10-12T00:40:02.371Z"},
+      "observed_operation": "HTTP GET returned 200; read documentation text.",
+      "governing_condition_default_exception": "Resources can be equipment or people and must belong to schedules. Resources cannot be double-booked by default. Resource relationships (must-book-together, cannot book together/simultaneously) are enforced for non-administrative users. Accessories default to unlimited quantity unless bounded; can be tied to resources with min/max quantity. Blackouts prevent reservations, including admins; docs say blackouts can be created around existing reservations or can remove conflicting reservations. Public schedule visibility defaults to authenticated users; public reservation details default hidden. Application administrators and applicable resource/schedule admins have broad privileges; some usage constraints explicitly exempt application admins.",
+      "applicability": "Direct feature evidence for the candidate comparison and constraints; does not prove race safety, fault-reason retention, exact staff skill-pool behavior, or runtime/offline behavior."
+    },
+    {
+      "id": "LB-INSTALL",
+      "url": "https://librebooking.readthedocs.io/en/latest/INSTALLATION.html",
+      "version_or_commit": "LibreBooking documentation identifying as 7.0.0 at access; latest page is not tied to a source commit.",
+      "locator": "Server configuration, application deployment, prerequisites, first login, scheduled jobs / cron, persistent data, security recommendations.",
+      "access_utc": {"start": "2026-10-12T00:40:02.371Z", "complete": "2026-10-12T00:40:02.561Z"},
+      "observed_operation": "HTTP GET returned 200; read rendered installation/deployment documentation.",
+      "governing_condition_default_exception": "Self-hosted web deployment; documented prerequisites include PHP 8.2+, Apache 2.4 or equivalent routing, MySQL 8+ or MariaDB 10.6+. Reminder and other optional email functions rely on jobs/configuration; container deployments need persistent configuration/data and cron setup. Documentation permits staff-created users when self-registration is off.",
+      "applicability": "Supports a locally hosted deployment comparison and operational burden estimate. It does not prove WAN-independent runtime or a particular account flow works without email; test with no external dependency before adoption."
+    },
+    {
+      "id": "LB-RELEASE",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "version_or_commit": "LibreBooking v7.0.0, released 2026-10-06, tag commit 422b4b0.",
+      "locator": "v7.0.0 release notes and comparison with v6.1.0.",
+      "access_utc": {"start": "2026-10-12T00:40:02.561Z", "complete": "2026-10-12T00:40:02.888Z"},
+      "observed_operation": "HTTP GET returned 200; read official release page.",
+      "governing_condition_default_exception": "Release notes include removal of the web-based phpScheduleIt 1.2 migration and clarification of support/fix policy. Release page lists v6.1.0 as preceding release.",
+      "applicability": "Pins the candidate version and change boundary; review the applicable security advisory and current supported release again before any later adoption."
+    },
+    {
+      "id": "LB-README",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "version_or_commit": "Official repository README on the live default page; exact branch HEAD commit not captured, so commit identity is UNKNOWN. It names v7.0.0 as the security threshold.",
+      "locator": "Security notices and project/about/runtime sections.",
+      "access_utc": {"start": "2026-10-12T00:40:02.888Z", "complete": "2026-10-12T00:40:03.350Z"},
+      "observed_operation": "HTTP GET returned 200; read current repository page.",
+      "governing_condition_default_exception": "README warns all versions before 7.0.0 contain a critical unauthenticated administrator-account takeover vulnerability and says fixes will not be backported to 6.x or earlier. The live page also announced an additional high-impact security release planned for 2026-10-13; it did not disclose that future issue's details. Repository describes LibreBooking as a fork of Booked Scheduler's last open-source 2020 version and lists its runtime/deployment context.",
+      "applicability": "Security/version evidence as displayed on 2026-10-12; the planned future release is not proof that v7.0.0 is compromised. Recheck exact security status before selection."
+    },
+    {
+      "id": "LB-AVAIL",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/Validation/ResourceAvailabilityRule.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "ResourceAvailabilityRule::Validate, IsInConflict, GetErrorString.",
+      "access_utc": {"start": "2026-10-12T00:40:03.350Z", "complete": "2026-10-12T00:40:03.380Z"},
+      "observed_operation": "HTTP GET of raw tagged PHP source returned 200; read source text only.",
+      "governing_condition_default_exception": "Validation reads conflicts via a conflict identifier. When retry parameter skipconflicts is true, it removes conflicting occurrences from the proposed series, logs skipped occurrences, and proceeds only if remaining instances satisfy the conflict result; otherwise returns an error/retry response.",
+      "applicability": "Evidence of application-level conflict checking and optional recurring-series skip behavior. This method alone does not establish atomic database enforcement under two interleaved requests."
+    },
+    {
+      "id": "LB-AVAIL-TEST",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/tests/Application/Reservation/ResourceAvailabilityRuleTest.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "Tests for multi-resource conflict identification, buffers, reservation/blackout repository retrieval, repeated occurrences, and skip-conflict retry; no parallel request test located in this file.",
+      "access_utc": {"start": "2026-10-12T00:40:03.380Z", "complete": "2026-10-12T00:40:03.414Z"},
+      "observed_operation": "HTTP GET of raw tagged PHPUnit test source returned 200; read source text only; test suite not executed.",
+      "governing_condition_default_exception": "Fixtures/mocks exercise logical validation inputs and outputs; they do not simulate interleaved database writes.",
+      "applicability": "Supports feature-path coverage only; concurrency remains a proposed validation."
+    },
+    {
+      "id": "LB-BLACKOUT-SVC",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/ManageBlackoutsService.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "IManageBlackoutsService::Add/Update and ManageBlackoutsService::Add; title/resource IDs/repeat/conflict-resolution arguments; HasMissingRequiredTerminationDate.",
+      "access_utc": {"start": "2026-10-12T00:40:03.414Z", "complete": "2026-10-12T00:40:03.444Z"},
+      "observed_operation": "HTTP GET of raw tagged PHP source returned 200; read source text only.",
+      "governing_condition_default_exception": "Add accepts blackout interval, resource IDs, title, conflict-resolution strategy, and repeat options. It rejects non-positive intervals and recurring options missing the required end/termination date; it loads the active server user ID as creator.",
+      "applicability": "Confirms a bounded recurrence and title-based blackout service interface. The interface does not itself prove that a separate fault reason is copied to each changed reservation or retained as dispute history."
+    },
+    {
+      "id": "LB-BLACKOUT-TEST",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/tests/Application/Reservation/ReservationConflictResolutionTest.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "testDeletesReservation; testCanBlackoutAroundReservations; testIfTotallyConflictsThenDoNotHandle; testIfTotallyConflictsThenDeleteOccurrence.",
+      "access_utc": {"start": "2026-10-12T00:40:03.444Z", "complete": "2026-10-12T00:40:03.478Z"},
+      "observed_operation": "HTTP GET of raw tagged PHPUnit test source returned 200; read source text only; tests not executed.",
+      "governing_condition_default_exception": "One handler deletes a conflicting reservation instance and notifies; another splits a recurring blackout around an existing reservation, and a fully conflicting recurrence instance can be omitted.",
+      "applicability": "Direct evidence that the product offers materially different conflict resolutions. Does not endorse either policy for safety-critical equipment or prove an adequate reason/history record."
+    },
+    {
+      "id": "LB-RES-HANDLER",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/ReservationHandler.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "ReservationHandler::Handle, validation then persistence calls.",
+      "access_utc": {"start": "2026-10-12T00:40:03.478Z", "complete": "2026-10-12T00:40:03.519Z"},
+      "observed_operation": "HTTP GET of raw tagged PHP source returned 200; read source text only.",
+      "governing_condition_default_exception": "The handler adjusts retry parameters, validates the series, and on a valid result calls the persistence service; persistence exceptions are logged/rethrown.",
+      "applicability": "Shows a validation-before-persist application path. The read does not prove no transaction/locking exists below these calls, so the finding is specifically that this inspected path/test is not concurrency proof."
+    },
+    {
+      "id": "LB-REPO",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/Domain/Access/ReservationRepository.php",
+      "version_or_commit": "LibreBooking v7.0.0 tag commit 422b4b0.",
+      "locator": "ReservationRepository::InsertSeries, Add, Update; primary/additional resource and accessory persistence.",
+      "access_utc": {"start": "2026-10-12T00:40:03.519Z", "complete": "2026-10-12T00:40:03.555Z"},
+      "observed_operation": "HTTP GET of raw tagged PHP source returned 200; read source text only.",
+      "governing_condition_default_exception": "A reservation series is inserted and primary/additional resource rows and accessory quantity rows are written; instances/events are then persisted via repository commands.",
+      "applicability": "Supports a compound-resource data model. The reviewed method does not by itself establish transaction atomicity across all commands."
+    },
+    {
+      "id": "LB-ISSUE-1535",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1535",
+      "version_or_commit": "Issue reports LibreBooking develop at commit add7ebfbe; not pinned to v7.0.0.",
+      "locator": "Issue title/body, reproduction steps and related issues #1533/#1536; open status as observed.",
+      "access_utc": {"start": "2026-10-12T00:40:03.555Z", "complete": "2026-10-12T00:40:04.018Z"},
+      "observed_operation": "HTTP GET returned 200; read issue description and version/status metadata.",
+      "governing_condition_default_exception": "Reporter describes recurrence widget state shared across instances; specifically add/edit blackout dialogs coexist. Body links to a browser-freeze fix and separate timezone/termination-date issue.",
+      "applicability": "A development-branch report, not proof of released-version impact. Motivates tests of concurrent blackout dialogs and recurrence end dates/DST on the selected release."
+    },
+    {
+      "id": "LB-ISSUE-1536",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1536",
+      "version_or_commit": "LibreBooking develop issue; exact affected source commit not captured in this record.",
+      "locator": "Issue title: repeat termination date off by one day west of UTC; fallback path drifts backward.",
+      "access_utc": {"start": "2026-10-12T00:43:59.199Z", "complete": "2026-10-12T00:43:59.763Z"},
+      "observed_operation": "HTTP GET returned 200; the title/status was cross-referenced from the issue body and the current issue list; detailed implementation/reproduction was not relied on.",
+      "governing_condition_default_exception": "Reported as a development recurrence.js issue; issue existence is not evidence that v7.0.0 is affected.",
+      "applicability": "Version-scoped recurrence test signal only; verify status/fix commit and rerun DST/end-date tests against whichever release is considered."
+    },
+    {
+      "id": "LB-ISSUE-1416",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1416",
+      "version_or_commit": "Issue reports version 3.0.3; closed status displayed at access.",
+      "locator": "Reproduction and expected behavior for deleting one occurrence of a recurring reservation.",
+      "access_utc": {"start": "2026-10-12T00:43:59.763Z", "complete": "2026-10-12T00:44:00.383Z"},
+      "observed_operation": "HTTP GET returned 200; read issue body/version/status; no claim about current release.",
+      "governing_condition_default_exception": "Reported an exception while deleting one instance rather than the entire series on v3.0.3.",
+      "applicability": "Historical version-specific regression precedent; requires current-version instance-cancel validation, not a finding of a v7.0.0 defect."
+    },
+    {
+      "id": "LB-CHANGELOG",
+      "url": "https://github.com/LibreBooking/librebooking/blob/develop/CHANGELOG.md",
+      "version_or_commit": "LibreBooking develop changelog, unpinned page; relevant v4.3.0 entries identify commits 4cda32d and 8840ec0.",
+      "locator": "v4.3.0 blackout recurring-termination fixes; later release history for recurrence/browser behavior.",
+      "access_utc": {"start": "2026-10-12T00:43:58.400Z", "complete": "2026-10-12T00:43:59.199Z"},
+      "observed_operation": "HTTP GET returned 200; read changelog text and cited commit summaries.",
+      "governing_condition_default_exception": "Changelog records UI requirement and service termination-date enforcement for recurring blackouts in v4.3.0.",
+      "applicability": "History for recurring-blackout lifecycle and regression tests; code path was separately read at v7.0.0 tag."
+    },
+    {
+      "id": "MRBS-HOME",
+      "url": "https://mrbs.sourceforge.io/",
+      "version_or_commit": "Official MRBS project page, rolling; latest inspected release separately pinned as 1.12.2.",
+      "locator": "Introduction / feature list.",
+      "access_utc": {"start": "2026-10-12T00:40:04.018Z", "complete": "2026-10-12T00:40:04.287Z"},
+      "observed_operation": "HTTP GET returned 200; read official project description.",
+      "governing_condition_default_exception": "Project describes a PHP/MySQL/PostgreSQL web/intranet app, flexible repeats, conflict rejection, reporting and read-only/user/admin levels.",
+      "applicability": "Useful simpler room/resource-booking comparator; feature claims do not establish multi-resource compound booking or transactional race safety."
+    },
+    {
+      "id": "MRBS-RELEASE",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/releases/tag/v1.12.2",
+      "version_or_commit": "MRBS 1.12.2, tag commit 38d51e0, released 2026-05-26.",
+      "locator": "Release notes: changes since 1.12.1.",
+      "access_utc": {"start": "2026-10-12T00:40:04.287Z", "complete": "2026-10-12T00:40:04.717Z"},
+      "observed_operation": "HTTP GET returned 200; read official pinned release notes.",
+      "governing_condition_default_exception": "Lists fixes for unauthenticated open redirect in kiosk mode, potential SSRF in import, and a bug editing a series when prevent-simultaneous-bookings is used (#3965).",
+      "applicability": "Version/security and recurrence-concurrency regression evidence; does not prove all other overlap paths safe."
+    },
+    {
+      "id": "MRBS-SCHEMA",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/tables.pg.sql",
+      "version_or_commit": "MRBS 1.12.2 tag, commit 38d51e0.",
+      "locator": "mrbs_room, mrbs_repeat, mrbs_entry tables; room_id field and repeat_id relationship.",
+      "access_utc": {"start": "2026-10-12T00:40:04.717Z", "complete": "2026-10-12T00:40:04.835Z"},
+      "observed_operation": "HTTP GET of raw tagged PostgreSQL schema returned 200; read DDL only.",
+      "governing_condition_default_exception": "A room has capacity metadata; each repeat series and each entry stores one room_id, and an entry may reference its repeat series.",
+      "applicability": "Supports the one-room-per-entry/series limitation in the reviewed schema. It does not rule out external customization."
+    },
+    {
+      "id": "MRBS-NEWS",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/NEWS",
+      "version_or_commit": "MRBS 1.12.2 tag, commit 38d51e0.",
+      "locator": "1.12.2 and recent release history; recurrence/edit and deletion fixes; security entries.",
+      "access_utc": {"start": "2026-10-12T00:40:04.835Z", "complete": "2026-10-12T00:40:05.000Z"},
+      "observed_operation": "HTTP GET of raw tagged NEWS returned 200; read release history only.",
+      "governing_condition_default_exception": "History includes repeated-series editing and cancellation fixes, date/DST fixes, privacy-related reporting changes, and maximum-simultaneous-booking behavior.",
+      "applicability": "Release/fix history showing recurring booking and privacy behavior can regress; validate the exact target version and configured policy."
+    },
+    {
+      "id": "MRBS-AUTH",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/blob/v1.12.2/AUTHENTICATION",
+      "version_or_commit": "MRBS 1.12.2 tag, commit 38d51e0.",
+      "locator": "Users Authentication / Principles / User interface.",
+      "access_utc": {"start": "2026-10-12T00:40:05.000Z", "complete": "2026-10-12T00:40:05.444Z"},
+      "observed_operation": "HTTP GET returned 200; read official tagged authentication documentation.",
+      "governing_condition_default_exception": "Level 0 can view most pages but not change; level 1 can make and change own bookings; level 2 administrators can change others' bookings. Auth validates username/password; booking username is retained during session.",
+      "applicability": "Supports local/auth-role discussion and role tests; does not establish the workshop's appropriate privacy configuration."
+    },
+    {
+      "id": "PG-RANGE",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version_or_commit": "PostgreSQL official version 18 documentation.",
+      "locator": "§8.17.10 Range Types / Constraints; exclusion examples using range overlap and btree_gist equality plus overlap.",
+      "access_utc": {"start": "2026-10-12T00:40:05.444Z", "complete": "2026-10-12T00:40:05.812Z"},
+      "observed_operation": "HTTP GET returned 200; read official documentation section.",
+      "governing_condition_default_exception": "Exclusion constraints can reject overlapping ranges; btree_gist permits combining equality on a resource key with overlap on a timestamp range.",
+      "applicability": "Design evidence for database-enforced capacity-one claims per resource. A full multi-resource booking still needs all rows committed in one transaction and appropriate statuses/buffers."
+    },
+    {
+      "id": "SQLITE-TXN",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "SQLite official living transaction documentation; page does not identify a pinned SQLite release.",
+      "locator": "§2.1 Read transactions versus write transactions; DEFERRED/IMMEDIATE/EXCLUSIVE behavior.",
+      "access_utc": {"start": "2026-10-12T00:40:05.812Z", "complete": "2026-10-12T00:40:05.968Z"},
+      "observed_operation": "HTTP GET returned 200; read official transaction documentation.",
+      "governing_condition_default_exception": "Many simultaneous readers are supported; only one simultaneous writer. Default is DEFERRED. BEGIN IMMEDIATE starts a write transaction early and can return SQLITE_BUSY if another writer is active.",
+      "applicability": "Supports a serialized low-concurrency local-host option with explicit busy handling; does not establish workload suitability without measurement."
+    },
+    {
+      "id": "SQLITE-WHEN",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "version_or_commit": "SQLite official living guidance; page does not identify a pinned SQLite release.",
+      "locator": "Appropriate Uses sections on high concurrency, client/server applications, and network access.",
+      "access_utc": {"start": "2026-10-12T00:40:05.968Z", "complete": "2026-10-12T00:40:06.104Z"},
+      "observed_operation": "HTTP GET returned 200; read official usage guidance.",
+      "governing_condition_default_exception": "SQLite is appropriate for device-local storage and low writer concurrency; many clients directly sharing one database over a network or needing concurrent writers point toward client/server RDBMS. It allows only one writer at a time.",
+      "applicability": "Guides the one-host SQLite vs LAN service/PostgreSQL comparison. The 100-member count does not itself tell us write concurrency."
+    },
+    {
+      "id": "SQLITE-NET",
+      "url": "https://www.sqlite.org/useovernet.html",
+      "version_or_commit": "SQLite official living network-filesystem guidance; page does not identify a pinned SQLite release.",
+      "locator": "Introduction, remote database file risks, performance/reliability options.",
+      "access_utc": {"start": "2026-10-12T00:40:06.104Z", "complete": "2026-10-12T00:40:06.225Z"},
+      "observed_operation": "HTTP GET returned 200; read official guidance.",
+      "governing_condition_default_exception": "Directly opening one SQLite file from multiple networked systems risks locking, sync, corruption, and performance problems; guidance prefers a client/server database or a local SQLite file accessed only by a server process on the data host.",
+      "applicability": "Rules out putting a shared SQLite file on a network share; supports browser-to-local-application-server as a different architecture."
+    }
+  ]
+}

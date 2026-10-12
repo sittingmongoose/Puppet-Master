@@ -1,0 +1,671 @@
+{
+  "schema_version": 1,
+  "run_id": "A-F01-A1_A8",
+  "stage": "critic",
+  "source_ids_preserved": "S01–S21 retain the investigator’s exact URL binding; S22–S23 are critic additions.",
+  "records": [
+    {
+      "id": "S01",
+      "title": "SQLite Session Extension introduction",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "release_or_commit": "SQLite documentation; 3.54.0 current release context recorded at access (S06); page version not separately tagged",
+      "locator": "Sections describing changesets/patchsets, enabling the extension, and limitations",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read primary documentation for session-generated database changesets and patchsets.",
+      "governing_condition_default_exception": "Session extension is disabled by default and requires SQLITE_ENABLE_SESSION and SQLITE_ENABLE_PREUPDATE_HOOK. Changesets apply against compatible schema/database state; only tables with declared primary keys are tracked, NULL primary-key rows are ignored, and virtual tables are unsupported.",
+      "applicability": "Optional row-delta transport for an SQLite implementation, not an append-only domain event log or policy for semantic conflicts.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Read official Session introduction; confirmed default-disabled build flags and declared-primary-key/virtual-table limitations.",
+        "locator": "Sections 1.2–1.3.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "SQLite Session Extension API",
+      "url": "https://www.sqlite.org/session.html",
+      "release_or_commit": "SQLite documentation; version context S06; page version not separately tagged",
+      "locator": "sqlite3session, changeset generation/apply, conflict callback, and changeset behavior sections",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read API details for session capture, applying a changeset, and conflict handling.",
+      "governing_condition_default_exception": "Changeset application invokes conflict handling that can omit, abort, or replace conflicting changes. Repeated edits within one session coalesce; reverted changes can disappear. The consumer must supply handling behavior and compatible schema.",
+      "applicability": "Useful only if the selected build enables the extension and the application separately records durable event history and user-facing merge decisions.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Opened the official Session API during the check; no distinct critic conclusion relies on API details beyond S01.",
+        "locator": "Session API page.",
+        "applicability": "Carried investigator record remains the source of detailed coalescing note; not independently asserted here."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "release_or_commit": "SQLite documentation; version context S06; page version not separately tagged",
+      "locator": "WAL persistence, synchronous behavior, and WAL limitations sections",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official WAL behavior and documented deployment limits.",
+      "governing_condition_default_exception": "WAL with synchronous=FULL synchronizes the WAL on each commit; NORMAL may lose a recently committed transaction after OS crash or power loss. WAL requires participating processes on the same host and is not suitable as a cross-host/network-filesystem synchronization mechanism; active database state includes the WAL sidecar.",
+      "applicability": "Potential local store durability baseline only; it is not the multi-laptop replication protocol. Actual guarantees depend on filesystem/device behavior.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened WAL overview, same-host limitations, FULL/NORMAL sync behavior, and live WAL-file state.",
+        "locator": "Sections 1, 2.3, 4.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "SQLite PRAGMA documentation",
+      "url": "https://www.sqlite.org/pragma.html",
+      "release_or_commit": "SQLite documentation; version context S06; page version not separately tagged",
+      "locator": "PRAGMA synchronous section",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read documented durability settings and their conditions.",
+      "governing_condition_default_exception": "Durability behavior is controlled by synchronous mode and journal mode; NORMAL and FULL have different sync frequency and crash-loss properties. The selected setting must be applied and verified for the chosen build/database.",
+      "applicability": "Supports a deliberate local durability decision; does not by itself guarantee hardware honors flushes or recover external media files.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened synchronous mode definitions and matrix; WAL FULL is ACID, NORMAL may lose commit durability after system crash/power loss.",
+        "locator": "PRAGMA synchronous section.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "SQLite Online Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "release_or_commit": "SQLite documentation; version context S06; page version not separately tagged",
+      "locator": "Online Backup API overview and backup procedure",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official API guidance for consistent database snapshots.",
+      "governing_condition_default_exception": "The Online Backup API copies a consistent snapshot while source database connections may be active; this is the documented mechanism for a live database snapshot rather than arbitrary copying of only the main database file.",
+      "applicability": "Useful for local backup/recovery tests. A snapshot does not merge independently edited replicas.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened Online Backup API snapshot description; it makes a consistent snapshot, not a replica merge.",
+        "locator": "Snapshot overview and completion semantics.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "SQLite release history",
+      "url": "https://www.sqlite.org/changes.html",
+      "release_or_commit": "SQLite 3.54.0 release dated 2026-10-09",
+      "locator": "3.54.0 and 3.53.0 release entries, including session changegroup additions and WAL-reset corruption fix follow-ups",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream release chronology and versioned changes.",
+      "governing_condition_default_exception": "The latest release entry observed during this survey is 3.54.0; changelog inclusion does not identify the version or compile options shipped by an application.",
+      "applicability": "Pin and qualify the exact SQLite binary/options in any prototype; do not infer a bundled engine version from upstream current releases.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened release chronology; 3.54.0 dated 2026-10-09.",
+        "locator": "3.54.0 release entry.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Automerge document conflicts",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "release_or_commit": "Automerge documentation; release context v3.4.1 independently identified by S08-S09",
+      "locator": "Conflicts section and getConflicts behavior",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official conflict API guide for concurrent assignments.",
+      "governing_condition_default_exception": "Independent properties can merge; for concurrent assignments to one property, normal property access chooses a deterministic value while getConflicts exposes conflicting values. Reassigning can resolve the conflict. Deterministic selection is not an operator choice.",
+      "applicability": "Candidate offline merge model if its language bindings and app semantics fit; deletion/media policy and the review surface remain application-owned.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened conflict guide; a deterministic winner is read while competing values remain available through conflict API.",
+        "locator": "Conflicts guide.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Automerge JavaScript implementation at v3.4.1",
+      "url": "https://github.com/automerge/automerge/blob/js/automerge-3.4.1/javascript/src/implementation.ts",
+      "release_or_commit": "Tag js/automerge-3.4.1; release commit 8d7b12f; release date 2026-08-12",
+      "locator": "getConflicts implementation around lines 3790-3902 in the inspected tag",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read tagged implementation behind documented conflict enumeration.",
+      "governing_condition_default_exception": "Conflict enumeration is tied to property/object identity and operation IDs; ordinary reads use an internal deterministic winner. Behavior in this file is specifically the tagged JavaScript implementation.",
+      "applicability": "Grounds the v3.4.1 JS behavior; does not establish Rust binding parity or resolve nested-object lifecycle edge cases.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened tagged JS implementation; conflict docs and implementation are scoped to the tagged JavaScript surface.",
+        "locator": "getConflicts implementation around lines 3790–3902.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Automerge JavaScript package metadata at v3.4.1",
+      "url": "https://github.com/automerge/automerge/blob/js/automerge-3.4.1/javascript/package.json",
+      "release_or_commit": "Tag js/automerge-3.4.1; package version 3.4.1; release commit 8d7b12f",
+      "locator": "version and scripts fields",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read tagged package metadata to pin release identity and available test command.",
+      "governing_condition_default_exception": "Package metadata identifies version 3.4.1 and a TypeScript/Mocha test command; no tests were executed in this investigator stage.",
+      "applicability": "Establishes the surveyed JS package release and how its own tests are invoked, not test results or Rust behavior."
+    },
+    {
+      "id": "S10",
+      "title": "Automerge repository README at v3.4.1",
+      "url": "https://github.com/automerge/automerge/blob/js/automerge-3.4.1/README.md",
+      "release_or_commit": "Tag js/automerge-3.4.1; release commit 8d7b12f",
+      "locator": "Implementation and language support overview",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream overview for core implementation and supported interfaces.",
+      "governing_condition_default_exception": "Repository describes a Rust core with JavaScript/WASM/C-facing interfaces; a repository-level statement does not establish maturity or ergonomics of each binding.",
+      "applicability": "Rust feasibility lead only; prototype the actual Rust API and packaging before choosing it."
+    },
+    {
+      "id": "S11",
+      "title": "Automerge Rust mapping layer (Autosurgeon) README",
+      "url": "https://github.com/automerge/autosurgeon",
+      "release_or_commit": "Repository README; surveyed commit/version not pinned in this pass (UNKNOWN)",
+      "locator": "README sections describing Reconcile, Hydrate, fork, and merge",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read project documentation for a higher-level Rust mapping candidate.",
+      "governing_condition_default_exception": "The README presents typed mapping/reconciliation over Automerge; repository state and API version were not pinned, and no local prototype or tests were run.",
+      "applicability": "Candidate for a Rust spike only; do not treat as a selected dependency or proven integration.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened upstream README; confirms Rust mapping library, but the page does not establish parity with the JS conflict API or pin the library version.",
+        "locator": "README quickstart and version note.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Automerge issue 526",
+      "url": "https://github.com/automerge/automerge/issues/526",
+      "release_or_commit": "Issue #526; issue status observed Open; linked commit reference c73883b; applicability to v3.4.1 unverified",
+      "locator": "Report concerning reassignment of a conflicting nested object/array and reference errors",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream issue and linked fix/history context.",
+      "governing_condition_default_exception": "Reported object identity/lineage can affect merge/reassignment behavior. A linked commit alone does not prove the issue is resolved in the inspected release; no reproducer was run here.",
+      "applicability": "Specific unresolved qualification for a CRDT prototype, especially nested photo/record structures; do not claim it reproduces in 3.4.1.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened issue report; it concerns object/array reassignment lineage. No behavior in JS 3.4.1 was established.",
+        "locator": "Issue #526 description/activity.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Automerge issue 889",
+      "url": "https://github.com/automerge/automerge/issues/889",
+      "release_or_commit": "Issue #889; report cites @automerge 2.1.11; issue observed Open; applicability to 3.4.1 unverified",
+      "locator": "Report concerning no-op assignment disappearing from conflicts",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream issue report and release context.",
+      "governing_condition_default_exception": "The report names version 2.1.11; it does not establish behavior in v3.4.1. No-op preservation semantics require a version-specific test.",
+      "applicability": "A version-qualification test for conflict-history expectations, not evidence that v3.4.1 has this defect.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened issue #889; report names @automerge/automerge 2.1.11. GitHub shows Closed and converted to a discussion on 2026-09-10, contradicting the carried source-map status Open.",
+        "locator": "Issue description and metadata/activity.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "CouchDB conflict handling",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "release_or_commit": "CouchDB 3.5.x stable documentation; exact rendered build/package version not pinned (UNKNOWN)",
+      "locator": "Conflict detection and resolution; winner selection; tombstones and revision history sections",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official replication-conflict documentation.",
+      "governing_condition_default_exception": "Replicas can retain conflicting leaf revisions; deterministic winner is returned in ordinary access while _conflicts/open_revs can expose alternatives. Deletions propagate as tombstones. Compaction/pruning can remove old non-leaf bodies; revision trees are not an application audit log.",
+      "applicability": "Useful replication candidate if all relevant conflict leaves are surfaced and app policy is layered on top; pin the server release and retention behavior.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened CouchDB conflict docs; basic GET shows deterministic winner only; conflicts=true exposes IDs, open_revs retrieves leaf revisions; non-leaf bodies can be discarded on compaction and revisions pruned.",
+        "locator": "Sections on conflict resolution, basic GET/open_revs, compaction.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "CouchDB replication introduction",
+      "url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "release_or_commit": "CouchDB 3.5.x stable documentation; exact rendered build/package version not pinned (UNKNOWN)",
+      "locator": "Replication direction, checkpoints, deletion, and filtering sections",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official replication overview for push/pull behavior and recovery conditions.",
+      "governing_condition_default_exception": "One-way replication pushes or pulls; configuring both directions supports bidirectional exchange. Checkpoints permit resumption and deletions replicate. Content-dependent filters may mishandle deleted docs; a _deleted:true document retaining body can preserve attachment data.",
+      "applicability": "Supports a sync option but requires explicit deletion/filter policy and media-transfer controls.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened replication guide; push/pull are one way each, checkpoints resume, deletes replicate, selectors/filter choices affect documents.",
+        "locator": "Replication procedure and filtering.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "CouchDB common document attachment API",
+      "url": "https://docs.couchdb.org/en/stable/api/document/common.html",
+      "release_or_commit": "CouchDB 3.5.x stable documentation; exact rendered build/package version not pinned (UNKNOWN)",
+      "locator": "Document attachment request/response and stubs/metadata",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official attachment API for metadata versus byte transfer.",
+      "governing_condition_default_exception": "Attachment stubs/metadata can refer to content while attachment requests or replication transfer bytes. Keeping photo bytes outside replicated documents avoids implicit content replication only if app/replication configuration also enforces that separation.",
+      "applicability": "Supports a manifest/reference design; never infer that references alone prevent a configured replicator from moving bytes.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened attachment API; ordinary responses show attachment summary/stub; content is returned when requested.",
+        "locator": "Attachments section.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "CouchDB document best practices",
+      "url": "https://docs.couchdb.org/en/stable/best-practices/documents.html",
+      "release_or_commit": "CouchDB 3.5.x stable documentation; exact rendered build/package version not pinned (UNKNOWN)",
+      "locator": "Document design and revision-history guidance",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official document guidance on revision trees versus product history.",
+      "governing_condition_default_exception": "Revision history is replication/conflict machinery and can be pruned; durable application-level history must be represented by the application when required.",
+      "applicability": "Supports explicit journal/history rather than using CouchDB revisions as the complete user-visible audit trail."
+    },
+    {
+      "id": "S18",
+      "title": "Apache CouchDB PR 6129",
+      "url": "https://github.com/apache/couchdb/pull/6129",
+      "release_or_commit": "Merged 2026-09-25 as commit 83a487b; PR head c885b36",
+      "locator": "PR description and merge metadata; attachments/recreate-after-delete behavior",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream fix history for a consequential attachment replication edge case.",
+      "governing_condition_default_exception": "The report describes recreated deleted documents retaining an attachment revision position of 1 instead of 3, preventing same-named attachment replication. Merge to upstream main is not proof that a packaged server includes the fix.",
+      "applicability": "Version-pin and test delete/recreate plus same-name attachment replication before selecting CouchDB; this edge case closely matches delete/photo overlap.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened PR metadata and description; commit 83a487b merged Sep 25, 2026; recreated attachment revpos was left at 1 instead of 3.",
+        "locator": "PR discussion/merge metadata.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S19",
+      "title": "CouchDB PR 6129 changed files and tests",
+      "url": "https://github.com/apache/couchdb/pull/6129/files",
+      "release_or_commit": "Merged commit 83a487b; tests in the PR; upstream PR reports 56 checks passed (not run by this stage)",
+      "locator": "Changes to couch_att.erl, couch_db_updater.erl, and couch_db_recreate_att_tests.erl",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Inspected upstream code/test diff and reported CI result.",
+      "governing_condition_default_exception": "Tests cover recreate-after-delete, multiple deletes, atts_since, and replication scenarios. The 56-check result belongs to upstream PR automation; it is not a local execution or deployment guarantee.",
+      "applicability": "Provides concrete regression-test cases for a CouchDB evaluation; reproduce against the pinned candidate release."
+    },
+    {
+      "id": "S20",
+      "title": "CouchDB 3.5 release notes",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+      "release_or_commit": "3.5.x release-note page; the PR 6129 entry is listed under 3.5.3; distribution status/version at deployment not established",
+      "locator": "3.5.3 changes entry referencing PR 6129",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read official release notes to compare merged fix with versioned release history.",
+      "governing_condition_default_exception": "Documentation listing a change under a release entry is not sufficient to identify which package is installed or approved; the release catalog/package must be checked at adoption time.",
+      "applicability": "Supports the issue-to-fix lineage but requires exact candidate package verification.",
+      "critic_review": {
+        "access_utc": {
+          "start": "2026-10-12T00:53:01Z",
+          "end": "2026-10-12T00:58:30Z",
+          "precision": "critic review batch window; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Reopened 3.5.x release page; PR 6129 is listed under Version 3.5.3. This establishes upstream 3.5.3 inclusion, not which distribution is deployed.",
+        "locator": "Version 3.5.3 bugfix entry.",
+        "applicability": "Independent recheck supports only the version/surface and conditions stated here."
+      },
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S21",
+      "title": "Apache CouchDB PR 6025",
+      "url": "https://github.com/apache/couchdb/pull/6025",
+      "release_or_commit": "Merged 2026-06-05 as commit e4eea5a",
+      "locator": "PR description and changes addressing datasync after file reset/truncate",
+      "access_utc": {
+        "start": "2026-10-12T00:35:52Z",
+        "end": "2026-10-12T00:35:53Z",
+        "precision": "batch retrieval interval; per-page timestamp unavailable"
+      },
+      "observed_operation": "Read upstream durability-related fix history.",
+      "governing_condition_default_exception": "The reported fix handles datasync behavior after file reset/truncate; merged upstream code does not establish package inclusion or remove filesystem/hardware durability dependencies.",
+      "applicability": "Additional reason to pin and crash-test a CouchDB candidate on the actual storage stack; not a substitute for local power-loss validation."
+    }
+  ],
+  "additional_records": [
+    {
+      "id": "S22",
+      "title": "CouchDB Replication Protocol",
+      "url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+      "release_or_commit": "Apache CouchDB 3.5 stable documentation; exact rendered build/package is not pinned (UNKNOWN). Protocol version 3.",
+      "locator": "Section 2.4.2: fetching documents with leaf revisions and attachments; multipart responses; uploading a document with attachments.",
+      "access_utc": {
+        "start": "2026-10-12T00:53:01Z",
+        "end": "2026-10-12T00:58:30Z",
+        "precision": "critic review batch window; per-page request timestamps unavailable"
+      },
+      "observed_operation": "Opened official protocol after the ordinary packet; checked whether replication transfers embedded attachment bytes and how bodies are retrieved.",
+      "governing_condition_default_exception": "The protocol describes documents and their attachments in replication responses and uploads; protocol content is conditional on attachment data being part of the CouchDB document. It does not say that an external URI reference is fetched.",
+      "applicability": "Supports separating photo bytes from replicated CouchDB document attachments to avoid implicit transfer; external-reference fetching remains application behavior.",
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    },
+    {
+      "id": "S23",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "release_or_commit": "Official SQLite documentation; page is not separately release-tagged (UNKNOWN).",
+      "locator": "Hardware Assumptions, especially flush/fsync semantics and filesystem/device caveat.",
+      "access_utc": {
+        "start": "2026-10-12T00:53:01Z",
+        "end": "2026-10-12T00:58:30Z",
+        "precision": "critic review batch window; per-page request timestamps unavailable"
+      },
+      "observed_operation": "Opened official atomic-commit documentation to check local save durability assumptions.",
+      "governing_condition_default_exception": "SQLite assumes operating-system flush/fsync completes pending writes; documentation notes broken flush primitives can defeat power-loss safety. Atomic commit depends on stated VFS and storage assumptions.",
+      "applicability": "Qualifies local durability claims; does not identify behavior of the unknown survey application or hardware.",
+      "reviser_review": {
+        "access_utc": {
+          "captured": "2026-10-12T01:24:28Z",
+          "precision": "timestamp captured immediately after batched primary-source browse; per-page request timestamps unavailable"
+        },
+        "observed_operation": "Independently reopened governing primary source during reviser adjudication; see final.md SCW disposition and the original URL/locator in this record."
+      }
+    }
+  ],
+  "independent_review": {
+    "access_utc": {
+      "start": "2026-10-12T00:53:01Z",
+      "end": "2026-10-12T00:58:30Z",
+      "precision": "critic review batch window; per-page request timestamps unavailable"
+    },
+    "independently_reopened_ids": [
+      "S01",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S18",
+      "S20",
+      "S02"
+    ],
+    "not_independently_reopened_ids": [
+      "S09",
+      "S10",
+      "S17",
+      "S19",
+      "S21"
+    ],
+    "notable_corrections": [
+      {
+        "source_id": "S13",
+        "carried_statement": "Issue status observed Open.",
+        "critic_observation": "GitHub page showed Closed and converted to discussion on 2026-09-10; the issue text still scopes its reported behavior to @automerge/automerge 2.1.11."
+      },
+      {
+        "source_id": "S20",
+        "critic_observation": "Official 3.5.x release notes put PR 6129 under Version 3.5.3, establishing the upstream version inclusion; installed distribution remains unknown."
+      }
+    ]
+  },
+  "reviser_review": {
+    "access_utc": {
+      "captured": "2026-10-12T01:24:28Z",
+      "precision": "batch verification capture; individual page request timestamps unavailable"
+    },
+    "reopened_ids": [
+      "S03",
+      "S04",
+      "S07",
+      "S08",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S16",
+      "S18",
+      "S20",
+      "S22",
+      "S23"
+    ],
+    "scope": "Independent reviser checks for SCW-01 through SCW-06 and material CouchDB conflict-body distinction; no executable or app tests run."
+  }
+}

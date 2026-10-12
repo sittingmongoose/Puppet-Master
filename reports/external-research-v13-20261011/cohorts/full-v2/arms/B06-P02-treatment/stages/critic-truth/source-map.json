@@ -1,0 +1,85 @@
+{
+  "reviewer": "critic-truth",
+  "run_id": "B06-P02-treatment",
+  "accessed_at_utc": "2026-10-12T00:59:07Z",
+  "note": "Independent source IDs T01–T07 are additive and do not replace or rebind investigator IDs S00–S19. No source text was archived. GitHub pages were read as source pages; URLs point to mutable main/stable/current pages unless a version is stated.",
+  "sources": [
+    {
+      "id": "T01",
+      "title": "PowerSync Handling Update Conflicts",
+      "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+      "released_version_or_commit": "Repository main branch; exact commit SHA not captured (UNKNOWN).",
+      "locator": "Source file rendered lines 192–212; ordered client upload queue, backend-defined handling, simplest per-field LWW, idempotency, per-client incrementing operation ID, example validation.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened the official PowerSync documentation source and searched/read the rendered conflict-handling passage.",
+      "governing_condition_default_exception": "Backend behavior is app-defined; the simplest implementation uses per-field LWW; queued operations can be repeated; per-client operation IDs may support deduplication; custom validation/conflict handling is possible.",
+      "applicability": "Supports an explicit backend contract and idempotency proposal; does not provide cross-client ordering, claim fairness, or authorization policy."
+    },
+    {
+      "id": "T02",
+      "title": "Apache CouchDB replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "CouchDB documentation 3.5 stable branch; exact patch version not pinned.",
+      "locator": "Sections 2.3.1–2.3.3: replicated branches/default winner, single-node stale-revision 409, revision-tree leaves and application conflict resolution.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened the official CouchDB 3.5 conflict guide and inspected replication, conflict-winner and revision-tree passages.",
+      "governing_condition_default_exception": "Replication retains branches; default reads/views show a deterministic winner; a stale _rev update on one node is rejected with 409; merging branches is application-specific.",
+      "applicability": "Validates the draft's warning about hidden branches and its requirement for application-level business reconciliation."
+    },
+    {
+      "id": "T03",
+      "title": "Apache CouchDB database security API",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "released_version_or_commit": "CouchDB documentation 3.5 stable branch; exact patch version not pinned.",
+      "locator": "GET/PUT /{db}/_security; members/admins, membership behavior and permissions.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened the official API reference and reviewed the database-security model.",
+      "governing_condition_default_exception": "Database membership grants database-wide access according to the documented member/admin roles; it does not itself define the app's volunteer-specific row/field authorization model.",
+      "applicability": "Supports the draft's caveat that group membership is not a complete fine-grained volunteer policy."
+    },
+    {
+      "id": "T04",
+      "title": "Automerge document conflict reference",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "released_version_or_commit": "Current documentation; copyright 2026; exact library release/commit not displayed (UNKNOWN).",
+      "locator": "Conflicts section, especially same-property winner and getConflicts behavior; lines 60–112 in rendered source.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened the official reference at the conflict section and read the same-property, conflict API and operation-ordering passages.",
+      "governing_condition_default_exception": "Concurrent same-property updates yield a deterministic winner with alternatives queryable via getConflicts; a subsequent assignment resolves/removes the conflict record; ordering uses operation counter then actor ID, not wall-clock time.",
+      "applicability": "Supports using Automerge for collaborative content only with app-level state rules and a separate durable event log if history is required."
+    },
+    {
+      "id": "T05",
+      "title": "PostgreSQL 18 INSERT documentation",
+      "url": "https://www.postgresql.org/docs/current/sql-insert.html",
+      "released_version_or_commit": "PostgreSQL 18 current documentation; no Git commit applicable.",
+      "locator": "INSERT / ON CONFLICT arbiter and atomic insert-or-update behavior.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened PostgreSQL's official current INSERT reference and inspected ON CONFLICT and atomicity passages.",
+      "governing_condition_default_exception": "A unique constraint/index can arbitrate ON CONFLICT; DO UPDATE has an atomic insert-or-update result under concurrency when the arbiter and statement conditions are satisfied; partial uniqueness must match the intended schema/predicate.",
+      "applicability": "Supports a canonical active-claim invariant in the proposed relational service, not offline arbitration fairness or business policy."
+    },
+    {
+      "id": "T06",
+      "title": "MDN Storage quotas and eviction criteria",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "released_version_or_commit": "Current MDN article, last modified 2026-01-05 at access; no release/commit applicable.",
+      "locator": "Sections on QuotaExceededError, best-effort versus persistent storage, eviction under pressure and origin-wide eviction.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Opened the MDN reference and read the quota, eviction and persistence passages.",
+      "governing_condition_default_exception": "Writes can exceed quota; best-effort origin data can be evicted under browser/device policies; persistence status and quotas differ by browser; eviction can remove all data for an origin.",
+      "applicability": "Supports bounded cache, explicit storage errors, and platform-specific durability validation; it does not promise draft survival after eviction."
+    },
+    {
+      "id": "T07",
+      "title": "PouchDB IndexedDB concurrency PR #9093",
+      "url": "https://github.com/apache/pouchdb/pull/9093",
+      "released_version_or_commit": "PR commit 2a54197 visible in investigator source map; page status/resolution not independently established in this review.",
+      "locator": "Reviewer comment dated 2025-06-17 stating the claimed integration test file did not appear changed; PR patch description.",
+      "accessed_at_utc": "2026-10-12T00:59:07Z",
+      "observed_operation": "Re-opened the public pull-request page and inspected the patch/reviewer-comment excerpt; did not establish a reliable current status or resolution.",
+      "governing_condition_default_exception": "The reviewed item is a proposed change and a specific reviewer concern; neither proves a general defect nor establishes a released fix.",
+      "applicability": "Preserve the investigator's cautious treatment as a test risk only; no conclusion about current release behavior."
+    }
+  ]
+}

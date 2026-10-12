@@ -1,0 +1,5 @@
+# Reuse the published finite v1 materializer
+
+Use the exact v1 publication at commit `47b2ed72a712291a2853d3f4068d1251495ebda5`, not the historical task requests in this v2 addition. The relative sibling full-science-cohort-v1 contains `helpers/materialize-er13-v1/sealed/full-v1/`, its full existing source closure and `NEW_MATERIALIZATION.md`. `helper-closure-reference.json` records exact v1 manifest/filelist hashes for checking that edition.
+
+Verify and restore v1 with its existing mapper to a new caller-owned local review directory, then follow v1 NEW_MATERIALIZATION.md and the sealed helper README: repin only the new install, provide new brief/plan/unique run ID, new frozen T0/future deadline and actually authorized live route; choose the used R0/A1/A8/A1+A8/B02/B06/B07/B09/B10 method from the existing finite materializer. Native launch remains Root-authorized dispatcher work. The placeholders ER13_RUNTIME/ER13_WORKTREE/AUTHORIZED_PROVIDER_INSTANCE are not live identities. No new framework, runnable old request, helper duplication,265-test rerun or fresh native/scientific execution is claimed by v2.

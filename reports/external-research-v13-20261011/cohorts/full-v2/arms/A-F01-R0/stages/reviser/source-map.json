@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "run_id": "A-F01-R0",
+  "stage": "reviser",
+  "scope": "Complete revised proposal for the original disconnected field-survey edit journal brief and released plan P1-P9; preserves investigator and critic source lineages and adds independent current SQLite primary-document checks.",
+  "source_id_policy": "S01-S21 are the unchanged investigator-stage IDs, C01-C12 are the unchanged critic-stage IDs, and R01-R02 are new reviser-stage IDs. IDs in separate namespaces are not replacements for one another. Original source records are nested unchanged under lineage_maps.",
+  "lineage_maps": {
+    "investigator": {
+      "schema_version": 1,
+      "run_id": "A-F01-R0",
+      "stage": "investigator",
+      "scope": "brief-only independent discovery; exact plan not read",
+      "accessed_utc": "2026-10-12T00:33:22Z",
+      "source_count": 21,
+      "sources": [
+        {
+          "id": "S01",
+          "title": "SQLite Write-Ahead Logging",
+          "exact_url": "https://www.sqlite.org/wal.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Overview, concurrency, checkpoints, synchronous durability, WAL sidecar and compatibility",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Opened and read primary documentation.",
+          "governing_condition_default_exception": "WAL is optional; all processes using it must be on one host; one writer; default auto-checkpoint at 1000 pages; database and WAL are joint persistent state; NORMAL can lose recent commits on power loss.",
+          "applicability": "Local durability candidate and safe transfer boundary.",
+          "limits": "Does not specify this app's distributed merge rules or validate its filesystem/VFS."
+        },
+        {
+          "id": "S02",
+          "title": "SQLite synchronous PRAGMA",
+          "exact_url": "https://www.sqlite.org/pragma.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "synchronous setting and rollback/WAL matrix",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read official PRAGMA reference.",
+          "governing_condition_default_exception": "FULL in WAL is ACID; NORMAL preserves consistency but can roll back latest transaction after power loss; actual default depends on journal mode.",
+          "applicability": "Define when local save may be reported durable.",
+          "limits": "Hardware/filesystem behavior still needs qualification."
+        },
+        {
+          "id": "S03",
+          "title": "SQLite Session Extension introduction",
+          "exact_url": "https://www.sqlite.org/sessionintro.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Capture/apply changesets and application conflict callback",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read overview and sample API usage.",
+          "governing_condition_default_exception": "Changesets need compatible schema and compatible starting data; conflicts require app handling.",
+          "applicability": "Candidate row-delta helper, not a domain policy.",
+          "limits": "Not a complete event history or automatic semantic merge."
+        },
+        {
+          "id": "S04",
+          "title": "SQLite Session Module API",
+          "exact_url": "https://www.sqlite.org/session.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Primary key capture; changeset_apply conflict types and OMIT/REPLACE/ABORT",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read API details.",
+          "governing_condition_default_exception": "Tables without primary keys and rows with NULL primary-key values are not recorded; apply invokes callback for applicable conflicts.",
+          "applicability": "Avoid generic row overwrite and define schema requirements.",
+          "limits": "Check extension availability in eventual embedded build."
+        },
+        {
+          "id": "S05",
+          "title": "SQLite Online Backup API",
+          "exact_url": "https://www.sqlite.org/backup.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Online Backup snapshot and other backup techniques",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read official backup docs.",
+          "governing_condition_default_exception": "Online Backup creates a coherent snapshot while users continue; external raw copy during OS/power failure can be corrupt.",
+          "applicability": "Safe basis for manual snapshot/export.",
+          "limits": "A snapshot is not a merge protocol."
+        },
+        {
+          "id": "S06",
+          "title": "SQLite corruption cautions",
+          "exact_url": "https://www.sqlite.org/howtocorrupt.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Crash recovery; journal/WAL pairing",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read official recovery warning.",
+          "governing_condition_default_exception": "Journal files are needed after interrupted writes; moving/removing sidecar files can defeat recovery.",
+          "applicability": "Do not sync a live database as independent files.",
+          "limits": "Does not solve DB plus photo filesystem transactions."
+        },
+        {
+          "id": "S07",
+          "title": "SQLite testing methods",
+          "exact_url": "https://www.sqlite.org/testing.html",
+          "released_version_or_commit": "Current official documentation, unpinned",
+          "locator": "Crash tests, VFS fault injection and integrity checks",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read upstream test strategy.",
+          "governing_condition_default_exception": "Modified VFS simulates abrupt failure at I/O points and checks transaction outcome and integrity.",
+          "applicability": "Failure-oriented validation shape.",
+          "limits": "No tests were run in this stage."
+        },
+        {
+          "id": "S08",
+          "title": "SQLite 3.50.0 release identity",
+          "exact_url": "https://www.sqlite.org/releaselog/3_50_0.html",
+          "released_version_or_commit": "3.50.0, 2025-05-29; source ID dfc790f998f450d9c35e3ba1c8c89c17466cb559f87b0239e4aab9d34e28f742",
+          "locator": "Release summary and source ID",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read release log.",
+          "governing_condition_default_exception": "Pins one source release; other SQLite docs are current/unpinned.",
+          "applicability": "Identity for tagged source/test review, not dependency choice.",
+          "limits": "Runtime must be independently pinned and qualified."
+        },
+        {
+          "id": "S09",
+          "title": "SQLite crash regression test source",
+          "exact_url": "https://github.com/sqlite/sqlite/blob/version-3.50.0/test/crash.test",
+          "released_version_or_commit": "SQLite repo tag version-3.50.0; source identity S08",
+          "locator": "crash-1.1 through crash-1.11, commit-sync interruption and reopened state checks",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Inspected source, not executed.",
+          "governing_condition_default_exception": "Cited tests focus on rollback-journal crash recovery and use modified I/O routines.",
+          "applicability": "Concrete test design for save interrupted at multiple sync points.",
+          "limits": "Not a WAL or application-domain test."
+        },
+        {
+          "id": "S10",
+          "title": "CouchDB conflict/revision model",
+          "exact_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+          "released_version_or_commit": "CouchDB 3.5 stable docs; current stable release notes include 3.5.3; page itself is not version-pinned.",
+          "locator": "Conflict leaves, deterministic winner, 409 on local stale revision, resolution",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read versioned primary docs.",
+          "governing_condition_default_exception": "Replicated leaves survive; ordinary reads select one deterministic winner; local stale _rev writes are rejected and retried by caller.",
+          "applicability": "Sync alternative and evidence that data preservation still needs an operator review surface.",
+          "limits": "Winner selection is not scientific review; document granularity may be coarse."
+        },
+        {
+          "id": "S11",
+          "title": "CouchDB replication protocol",
+          "exact_url": "https://docs.couchdb.org/en/stable/replication/protocol.html",
+          "released_version_or_commit": "CouchDB 3.5 stable docs; current stable release notes include 3.5.3; page itself is not version-pinned.",
+          "locator": "Push/pull, checkpoints, retry behavior and large-attachment streaming",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read protocol and attachment sections.",
+          "governing_condition_default_exception": "HTTP replication is unidirectional per run; push then pull exchanges both ways; large attachments may use multipart streaming; some errors are not retried.",
+          "applicability": "Mature sync alternative and attachment cost control.",
+          "limits": "Still requires reachable peers; manual removable media is not supplied by HTTP sync."
+        },
+        {
+          "id": "S12",
+          "title": "CouchDB 3.5 release history",
+          "exact_url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+          "released_version_or_commit": "3.5.x, includes 3.5.3",
+          "locator": "3.5.3 bug fix #6129",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read release notes.",
+          "governing_condition_default_exception": "3.5.3 fixes attachment revision positions after recreating deleted documents, allowing same-name recreated attachments to replicate.",
+          "applicability": "Relevant delete/photo edge case.",
+          "limits": "Version-specific fix, not evidence all CouchDB attachment replication fails."
+        },
+        {
+          "id": "S13",
+          "title": "CouchDB bug reproducer",
+          "exact_url": "https://github.com/apache/couchdb/issues/6126",
+          "released_version_or_commit": "Reported on 2026-09-23 against 3.5.2; closed by fix merged 83a487b 2026-09-25",
+          "locator": "Issue steps: delete and recreate same ID/name with different bytes while intermediate delete is not replicated",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read upstream report and reproducer.",
+          "governing_condition_default_exception": "Target can show same revision metadata but retain old attachment bytes if delete was not replicated first.",
+          "applicability": "Regression target and need to verify content, not revision metadata alone.",
+          "limits": "Specific version/scenario; fixed in 3.5.3."
+        },
+        {
+          "id": "S14",
+          "title": "CouchDB attachment revision fix",
+          "exact_url": "https://github.com/apache/couchdb/pull/6129",
+          "released_version_or_commit": "Fix commit c885b36; merge 83a487b; included in 3.5.3 notes",
+          "locator": "Maintainer explanation: revpos not advanced on re-create",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read PR and fix summary; no build/tests executed.",
+          "governing_condition_default_exception": "Recreated attachment revpos must advance so same-name bytes replicate.",
+          "applicability": "Issue-to-fix history for conflict/attachment overlap.",
+          "limits": "No independent reproduction run."
+        },
+        {
+          "id": "S15",
+          "title": "CouchDB replication coordinator source",
+          "exact_url": "https://github.com/apache/couchdb/blob/3.5.3/src/couch_replicator/src/couch_replicator.erl",
+          "released_version_or_commit": "Apache CouchDB repo tag 3.5.3",
+          "locator": "replicate/2, do_replication_loop/1, job status states and embedded EUnit checks",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Inspected implementation and embedded tests; no CouchDB process run.",
+          "governing_condition_default_exception": "States distinguish pending/running/crashing/completed/failed; continuous option controls coordinator loop.",
+          "applicability": "Repository implementation evidence for visible retry/progress states.",
+          "limits": "Pair with protocol docs and issue reproducer; not whole correctness proof."
+        },
+        {
+          "id": "S16",
+          "title": "Automerge conflict API",
+          "exact_url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+          "released_version_or_commit": "JS docs v3.4.1",
+          "locator": "Same-key concurrent puts and returned conflict values",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read versioned API reference.",
+          "governing_condition_default_exception": "Default conflict value is arbitrary but deterministic; API exposes all values; later assignment can resolve it.",
+          "applicability": "Local-first CRDT alternative and review mechanics.",
+          "limits": "Does not supply domain deletion or photo policy."
+        },
+        {
+          "id": "S17",
+          "title": "Automerge merge rules",
+          "exact_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+          "released_version_or_commit": "Current unversioned docs",
+          "locator": "Map concurrent delete vs set rule",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read official merge semantics.",
+          "governing_condition_default_exception": "Concurrent set of a deleted key remains in merged map.",
+          "applicability": "Logical tombstones are required for no-silent-resurrection guarantee.",
+          "limits": "Verify against chosen pinned library."
+        },
+        {
+          "id": "S18",
+          "title": "Automerge storage/compaction model",
+          "exact_url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+          "released_version_or_commit": "Current unversioned Automerge Repo docs",
+          "locator": "Incremental changes, snapshots and concurrent storage adapter keys",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read docs.",
+          "governing_condition_default_exception": "Repo periodically snapshots/compacts accumulated changes; storage keys prevent compaction overwriting unseen changes.",
+          "applicability": "Alternative storage adapter and history-retention considerations.",
+          "limits": "Describes automerge-repo, not desktop durability or manual export."
+        },
+        {
+          "id": "S19",
+          "title": "Automerge implementation",
+          "exact_url": "https://github.com/automerge/automerge/blob/8d7b12f/javascript/src/implementation.ts",
+          "released_version_or_commit": "Commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994, JS v3.4.1",
+          "locator": "saveIncremental/save/merge/getConflicts, source around 3678-3917",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Inspected pinned source, not executed.",
+          "governing_condition_default_exception": "Implementation exposes incremental save, full save, merge and conflict values.",
+          "applicability": "Repository code/API feasibility.",
+          "limits": "Application still owns persistence, transport, photos and operator choices."
+        },
+        {
+          "id": "S20",
+          "title": "Automerge conflict tests",
+          "exact_url": "https://github.com/automerge/automerge/blob/8d7b12f/javascript/test/conflicts.ts",
+          "released_version_or_commit": "Commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994, JS v3.4.1",
+          "locator": "Tests around conflict values retained across actors and changes within callback, roughly lines 481-643",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Inspected pinned test source, not run.",
+          "governing_condition_default_exception": "Tests inspect alternatives for conflicting values and explicitly mutate to resolve.",
+          "applicability": "Test shape for preserving values until operator choice.",
+          "limits": "Does not cover tombstones, photos or three devices."
+        },
+        {
+          "id": "S21",
+          "title": "Automerge release identity",
+          "exact_url": "https://github.com/automerge/automerge/releases",
+          "released_version_or_commit": "JS v3.4.1 tag js/automerge-3.4.1 at commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994",
+          "locator": "Release list and version tag",
+          "accessed_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+          "observed_operation": "Read release listing.",
+          "governing_condition_default_exception": "Pinned tag identifies reviewed source.",
+          "applicability": "Identity for S19-S20.",
+          "limits": "Release alone does not establish suitability."
+        }
+      ],
+      "access_window_utc": "2026-10-12T00:30:46Z/2026-10-12T00:38:18.163Z",
+      "access_time_precision": "Exact per-fetch timestamps were not surfaced; pages were fetched within this UTC interval.",
+      "source_map_revision_note": "Before draft delivery, exact URLs were corrected to the pages opened. Stable source IDs and topics remain unchanged."
+    },
+    "critic": {
+      "schema_version": 1,
+      "run_id": "A-F01-R0",
+      "stage": "critic",
+      "scope": "Independent primary-source checks of the investigator package and released plan for the disconnected field-survey edit journal brief.",
+      "access_window_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+      "access_time_precision": "Web tool did not expose an exact per-fetch timestamp; each source below was opened or searched during this UTC interval.",
+      "sources": [
+        {
+          "id": "C01",
+          "title": "SQLite Write-Ahead Logging",
+          "exact_url": "https://www.sqlite.org/wal.html",
+          "released_version_or_commit": "Current official documentation as retrieved 2026-10-12; unpinned",
+          "locator": "Sections 1, 2.2–2.3, 4 and 11: WAL same-host/single-writer boundary, sidecars, synchronous behavior, WAL-reset bug and affected/fixed versions",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened primary documentation and read the concurrency/durability passages and WAL-reset bug advisory.",
+          "governing_condition_default_exception": "WAL requires same-host access, has one writer, and treats the WAL as database state. NORMAL can lose committed transactions after power failure. The rare WAL-reset race requires multiple connections with concurrent writes/checkpoints; affected versions through 3.51.2, fixed in 3.51.3+ with named backports.",
+          "applicability": "Supports local-only WAL and power-loss cautions; adds conditional build/version and test gate if WAL is chosen.",
+          "limits": "Does not select this application’s storage engine or test its build/filesystem."
+        },
+        {
+          "id": "C02",
+          "title": "SQLite PRAGMA synchronous",
+          "exact_url": "https://www.sqlite.org/pragma.html",
+          "released_version_or_commit": "Current official documentation as retrieved 2026-10-12; unpinned",
+          "locator": "synchronous matrix and FULL/NORMAL descriptions, approximately lines 824–844",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the official PRAGMA reference and located the synchronous matrix.",
+          "governing_condition_default_exception": "FULL in WAL is documented as ACID; NORMAL in WAL remains consistent but may roll back a transaction after power loss. Filesystem and hardware remain relevant to durability.",
+          "applicability": "Checks the draft’s SQLite power-loss qualification.",
+          "limits": "Documentation does not qualify a target laptop’s VFS or storage hardware."
+        },
+        {
+          "id": "C03",
+          "title": "How To Corrupt An SQLite Database File",
+          "exact_url": "https://www.sqlite.org/howtocorrupt.html",
+          "released_version_or_commit": "Current official documentation as retrieved 2026-10-12; unpinned",
+          "locator": "Hot journal/WAL pairing and filesystem locking sections",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the official caution page and read its WAL-copy and network filesystem conditions.",
+          "governing_condition_default_exception": "After interrupted writes, journal/WAL files must accompany the database; network filesystem locking defects can corrupt concurrent access.",
+          "applicability": "Checks the draft’s recommendation against syncing a live embedded database as separate files.",
+          "limits": "Does not establish an atomic protocol between the database and a separate photo store."
+        },
+        {
+          "id": "C04",
+          "title": "SQLite Session Extension",
+          "exact_url": "https://www.sqlite.org/sessionintro.html",
+          "released_version_or_commit": "Current official documentation as retrieved 2026-10-12; unpinned",
+          "locator": "Introduction, limitations and conflicts; compatible starting data/schema, primary-key requirements and conflict callbacks",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened primary docs and read the extension limitations and apply behavior.",
+          "governing_condition_default_exception": "Changesets apply to compatible table schemas/starting data; captured tables need declared primary keys; conflicts are handled through app-selected omit/abort/replace behavior. The extension is disabled by default in a build unless enabled.",
+          "applicability": "Checks the draft’s characterization of Session as a row-delta helper rather than a domain merge policy.",
+          "limits": "Does not provide this app’s event history or conflict semantics."
+        },
+        {
+          "id": "C05",
+          "title": "Apache CouchDB 3.5 conflict model",
+          "exact_url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+          "released_version_or_commit": "CouchDB 3.5 stable documentation; page not minor-version pinned",
+          "locator": "Sections 2.3.1–2.3.4: unidirectional push/pull, retained revision leaves, deterministic winner and conflict retrieval",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the primary documentation and inspected the replication and conflict passages.",
+          "governing_condition_default_exception": "Independent replicated revisions coexist; a default read chooses one deterministic winner, while conflict-aware retrieval exposes other leaves.",
+          "applicability": "Checks the CouchDB alternative and need for application conflict review.",
+          "limits": "Does not evaluate a desktop deployment or guarantee a domain-appropriate winner."
+        },
+        {
+          "id": "C06",
+          "title": "CouchDB issue #6126: attachments after delete and recreate",
+          "exact_url": "https://github.com/apache/couchdb/issues/6126",
+          "released_version_or_commit": "Issue opened 2026-09-23 against CouchDB 3.5.2; closed with linked fix",
+          "locator": "Issue description and reproducer steps, especially delete/recreate same document ID and attachment name with different bytes while the intermediate deletion is not replicated",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the upstream issue and read the version, condition and reproducer; did not run it.",
+          "governing_condition_default_exception": "The issue reports stale attachment replication in the specified delete/recreate and skipped-intermediate-delete scenario, for transient and certain interrupted continuous replication.",
+          "applicability": "Supports a narrow attachment regression case and checking content by digest.",
+          "limits": "A specific reported scenario/version, not evidence of general CouchDB failure; no independent reproduction."
+        },
+        {
+          "id": "C07",
+          "title": "CouchDB PR #6129",
+          "exact_url": "https://github.com/apache/couchdb/pull/6129",
+          "released_version_or_commit": "Fix commit c885b36; merge commit 83a487b on 2026-09-25",
+          "locator": "Maintainer description of attachment revpos not advancing on recreated docs and merged commit",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the upstream PR and inspected maintainer explanation and merge state; did not build or test CouchDB.",
+          "governing_condition_default_exception": "The fix advances attachment revision position when recreating a deleted document.",
+          "applicability": "Checks issue-to-fix history for the attachment edge case.",
+          "limits": "PR inspection is not an independent reproduction."
+        },
+        {
+          "id": "C08",
+          "title": "Apache CouchDB 3.5.x release notes",
+          "exact_url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+          "released_version_or_commit": "3.5.3 release notes",
+          "locator": "Version 3.5.3 bugfix entry #6129",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened and searched the official release notes for version 3.5.3 and #6129.",
+          "governing_condition_default_exception": "The 3.5.3 entry says recreated same-name attachments now replicate from source to target where they previously did not.",
+          "applicability": "Checks the draft’s version-specific fixed-release statement.",
+          "limits": "Release notes do not prove every attachment path correct."
+        },
+        {
+          "id": "C09",
+          "title": "Automerge merge rules",
+          "exact_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+          "released_version_or_commit": "Current unversioned official documentation as retrieved 2026-10-12",
+          "locator": "Map merge rules, lines 62–74",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened and read the documented map conflict rules.",
+          "governing_condition_default_exception": "For concurrent map operations, a set to a key deleted by the other operation remains as the set value; two concurrent sets expose one arbitrary but convergent default.",
+          "applicability": "Checks the need for application-owned logical tombstones and human conflict presentation.",
+          "limits": "Unversioned docs should be compared with the exact library release selected."
+        },
+        {
+          "id": "C10",
+          "title": "Automerge getConflicts API",
+          "exact_url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+          "released_version_or_commit": "JavaScript API docs v3.5.0 as observed",
+          "locator": "Function description and concurrent put behavior, lines 5–12",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened the current API reference and checked its displayed version and description.",
+          "governing_condition_default_exception": "Concurrent puts to a map key may conflict; the API selects a deterministic arbitrary value and exposes alternatives through getConflicts.",
+          "applicability": "Checks current API semantics and identifies that the unpinned URL now resolves to v3.5.0.",
+          "limits": "This mutable page is not the v3.4.1 source identity used by the investigator."
+        },
+        {
+          "id": "C11",
+          "title": "Automerge JavaScript implementation",
+          "exact_url": "https://github.com/automerge/automerge/blob/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+          "released_version_or_commit": "Commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994; JS v3.4.1 tag identity carried by investigator source map",
+          "locator": "saveIncremental, save, merge and getConflicts implementation, around source lines 3657–3917",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened pinned upstream source; inspected function definitions and docstrings; did not execute code.",
+          "governing_condition_default_exception": "Source exposes incremental/full save, merge and conflict retrieval; returned API behavior does not itself implement field-survey deletion or attachment policy.",
+          "applicability": "Checks the investigator’s pinned-code feasibility statements.",
+          "limits": "Implementation inspection is not a persistence, protocol or application guarantee."
+        },
+        {
+          "id": "C12",
+          "title": "Automerge JavaScript conflict tests",
+          "exact_url": "https://github.com/automerge/automerge/blob/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+          "released_version_or_commit": "Commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994; JS v3.4.1 tag identity carried by investigator source map",
+          "locator": "Conflict inspection and alternative-preservation tests, around lines 484–643",
+          "accessed_utc": "2026-10-12T00:43:55Z/2026-10-12T00:45:45Z",
+          "observed_operation": "Opened pinned upstream tests and read conflict-preservation/resolution cases; did not run them.",
+          "governing_condition_default_exception": "Tests create concurrent values, inspect alternatives and exercise explicit updates; they are library unit tests.",
+          "applicability": "Checks the test-shape description in the investigator draft.",
+          "limits": "Does not cover tombstones, photos, three laptops or desktop durability."
+        }
+      ],
+      "access_time_precision_note": "The window is the observed reviewer research interval; individual web fetch timestamps were not exposed. Source identifiers C01–C12 are critic-stage IDs and do not replace or rebind investigator IDs S01–S21."
+    }
+  },
+  "independent_primary_rechecks": [
+    {
+      "id": "R01",
+      "title": "SQLite Write-Ahead Logging and WAL-reset advisory",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Current official SQLite documentation, unpinned; page says last updated 2026-08-25T19:42:39Z.",
+      "locator": "Sections 2.2 and 11–11.2: WAL concurrency, affected/fixed versions and backports, affected connection condition, and the rarity/advisory text.",
+      "accessed_utc": "2026-10-12T00:50:33Z",
+      "observed_operation": "Opened the official primary WAL page and read the concurrency and WAL-reset sections, including the current affected-version range and the later reproducer note; no code or database was executed.",
+      "governing_condition_default_exception": "SQLite states that WAL-reset corruption is possible on WAL databases in versions 3.7.0 through 3.51.2 and fixed in 3.51.3+, with backports in 3.50.7 and 3.44.6. The stated condition is at least two connections to the same database file with concurrent writes/checkpoints. The page characterizes the race as rare and recommends upgrading to a fixed version.",
+      "applicability": "Conditional SQLite selection gate: if this proposal's implementation selects WAL, pin a fixed build/backport and include appropriate multi-connection/checkpoint regression coverage. This does not disqualify SQLite or rollback journaling.",
+      "limits": "The documentation is unpinned and is not a test of a target application, embedded binary, VFS, filesystem, laptop, or regression harness. Individual fetch timestamps were not exposed by the web tool; the UTC time is the immediately observed wrapper clock after retrieval."
+    },
+    {
+      "id": "R02",
+      "title": "SQLite PRAGMA synchronous",
+      "exact_url": "https://www.sqlite.org/pragma.html",
+      "released_version_or_commit": "Current official SQLite documentation, unpinned, retrieved 2026-10-12.",
+      "locator": "The synchronous description and matrix, especially FULL and NORMAL at lines 820–844 of the retrieved page.",
+      "accessed_utc": "2026-10-12T00:52:25Z",
+      "observed_operation": "Opened the official PRAGMA reference at the synchronous section and read the durability matrix; no application setting or database was inspected.",
+      "governing_condition_default_exception": "The page describes FULL in WAL as ACID and NORMAL in WAL as consistent but potentially not durable after power loss/system crash; actual guarantees remain conditioned on VFS/filesystem/hardware.",
+      "applicability": "Supports the proposal's separation of transaction consistency from power-loss durability and its requirement to pin/test the actual local-store configuration.",
+      "limits": "Does not qualify the desktop application's eventual build or target storage stack. Individual fetch timestamps were not exposed by the web tool; the UTC time is the immediately observed wrapper clock after retrieval."
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "critique_id": "C-01",
+      "disposition": "accepted and amended",
+      "change": "Added fixed SQLite WAL version/backport gate and conditional concurrent-connection/checkpoint validation requirement.",
+      "supporting_source_ids": [
+        "R01",
+        "R02",
+        "C01",
+        "C02"
+      ]
+    },
+    {
+      "critique_id": "C-02",
+      "disposition": "accepted as an unresolved external input",
+      "change": "Made identifying and reviewing the existing desktop application's repository, callers, tests, build, release history and supported platforms an explicit integration prerequisite.",
+      "supporting_source_ids": []
+    },
+    {
+      "critique_id": "C-03",
+      "disposition": "accepted",
+      "change": "P2 now links to S13-S14. Original S16 and critic C10 remain separately preserved; pinned v3.4.1 behavior is attributed to S19-S20, not silently inferred from the mutable API page.",
+      "supporting_source_ids": [
+        "S13",
+        "S14",
+        "S16",
+        "S19",
+        "S20",
+        "C10"
+      ]
+    }
+  ],
+  "lineage_annotations": [
+    {
+      "source_id": "S16",
+      "annotation": "Investigator map entry retained verbatim, including its v3.4.1 page label. Critic source C10 separately records that the mutable API URL displayed v3.5.0. Final release-specific v3.4.1 claims rely on pinned S19-S20; S16 is not silently rewritten."
+    },
+    {
+      "source_ids": [
+        "S13",
+        "S14"
+      ],
+      "annotation": "These original investigator IDs are now cited directly in the plan P2 disposition for the CouchDB delete/recreate attachment case."
+    }
+  ],
+  "access_time_precision": "For R01-R02, the web tool did not expose per-fetch timestamps; recorded access times are the immediately observed UTC clock readings after retrieval, as explicitly noted in each source record."
+}

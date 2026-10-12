@@ -1,0 +1,184 @@
+{
+  "stage": "critic",
+  "run_id": "B06-P02-control",
+  "reviewed_artifacts": {
+    "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/inputs/brief.md",
+    "investigator_package": "stages/investigator/{discovery.md,draft.md,source-map.json,revealed-plan.md,plan-reveal.json,sources/index.md}",
+    "revealed_plan_sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881"
+  },
+  "sources": [
+    {
+      "id": "C01",
+      "title": "Replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "source_kind": "Apache CouchDB official docs",
+      "version_or_commit": "Stable 3.5 docs; no patch commit bound",
+      "locator": "Replication directions, conflicts, winner, 409 behavior, application resolution",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Unidirectional replication; concurrent branches can coexist; ordinary reads expose deterministic winner; apps must inspect/resolve; same-node stale _rev may return 409.",
+      "applicability": "Supports P04, P07-P08; replication does not decide domain state."
+    },
+    {
+      "id": "C02",
+      "title": "Database security API",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "source_kind": "Apache CouchDB official API docs",
+      "version_or_commit": "Stable 3.5 docs",
+      "locator": "_security member/role conditions",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Matching authenticated database members may read database documents; empty/unset security object conditions differ; not per-field authorization.",
+      "applicability": "Supports F-01 and UI-hidden fields caveat."
+    },
+    {
+      "id": "C03",
+      "title": "Authentication API",
+      "url": "https://docs.couchdb.org/en/stable/api/server/authn.html",
+      "source_kind": "Apache CouchDB official API docs",
+      "version_or_commit": "Stable 3.5 docs",
+      "locator": "Proxy and JWT authentication sections",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Proxy handler/config and trusted headers required; shared secret/HMAC strongly recommended; JWT requires configured trust/claims; does not identify this center’s IdP.",
+      "applicability": "Supports conditional identity integration; roles remain unknown."
+    },
+    {
+      "id": "C04",
+      "title": "Replication introduction",
+      "url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "source_kind": "Apache CouchDB official docs",
+      "version_or_commit": "Stable 3.5 docs",
+      "locator": "Replication direction/configuration",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Replication direction and setup are explicit; bidirectional replication is not domain merge policy.",
+      "applicability": "Supports alternative comparison."
+    },
+    {
+      "id": "C05",
+      "title": "Document attachment API",
+      "url": "https://docs.couchdb.org/en/stable/api/document/attachments.html",
+      "source_kind": "Apache CouchDB official API docs",
+      "version_or_commit": "Stable 3.5 docs",
+      "locator": "PUT/DELETE attachment endpoints; current revision requirement",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Updating/deleting attachment revises parent document and requires current revision; no app-level size, cellular, resumable transfer or all-cache deletion guarantee.",
+      "applicability": "Supports photo workflow constraints without overclaiming protocol capability."
+    },
+    {
+      "id": "C06",
+      "title": "Issue #6126: attachment recreation replication report",
+      "url": "https://github.com/apache/couchdb/issues/6126",
+      "source_kind": "Apache CouchDB issue tracker",
+      "version_or_commit": "Opened 2026-09-23; reporter says 3.5.2; closed via PR #6129",
+      "locator": "Description/version/reproduction condition",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Report concerns same document ID and attachment name recreated before delete replicates; changed attachment may fail to reach target under specified transient/continuous replication conditions. Not local reproduction.",
+      "applicability": "Supports only bounded regression scenario."
+    },
+    {
+      "id": "C07",
+      "title": "PR #6129 source and EUnit additions",
+      "url": "https://github.com/apache/couchdb/pull/6129/files",
+      "source_kind": "Apache CouchDB repo PR/diff",
+      "version_or_commit": "Merged 2026-09-25; commit c885b36; current view displayed Checks 0",
+      "locator": "couch_att.erl; couch_db_updater.erl; couch_db_recreate_att_tests.erl",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Fix adjusts attachment revision position on recreated deleted documents; regression module added. Current page does not support draft’s 56-passed claim; critic did not run tests.",
+      "applicability": "Supports code/test history and F-02."
+    },
+    {
+      "id": "C08",
+      "title": "CouchDB 3.5.x release notes",
+      "url": "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+      "source_kind": "Apache CouchDB official release notes",
+      "version_or_commit": "3.5.x branch lists 3.5.3",
+      "locator": "3.5.3 fix entry linking PR #6129",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Release note says same-name attachments recreated after document deletion now replicate source to target; not proof of local execution or all attachment correctness.",
+      "applicability": "Supports exact release/fix linkage."
+    },
+    {
+      "id": "C09",
+      "title": "PowerSync custom conflict resolution",
+      "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution",
+      "source_kind": "PowerSync official docs",
+      "version_or_commit": "Live docs; no release/commit shown",
+      "locator": "Client/backend upload flow and duplicate operation guidance",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Local SQLite queue uploads to backend; repeated operations can arrive and docs recommend clientId + operation ID deduplication; examples require app code.",
+      "applicability": "Supports alternative and app-level dedup responsibility."
+    },
+    {
+      "id": "C10",
+      "title": "PowerSync Sync Streams overview",
+      "url": "https://docs.powersync.com/sync/streams/overview",
+      "source_kind": "PowerSync official docs",
+      "version_or_commit": "Live docs; no release/commit shown",
+      "locator": "Partial sync and local persistence",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Streams select client subsets and persist subscribed data to local SQLite for offline use; app/service must configure authorization and data projection.",
+      "applicability": "Supports selective sync alternative and local-copy privacy caveat."
+    },
+    {
+      "id": "C11",
+      "title": "PowerSync licensing/terms",
+      "url": "https://powersync.com/legal/licensing-terms",
+      "source_kind": "PowerSync official terms",
+      "version_or_commit": "Current page observed 2026-10-12; no tagged version",
+      "locator": "Open Edition, Cloud/Enterprise and SDK sections",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Open Edition free source-available FSL; Cloud/Enterprise paid; SDKs Apache-2.0. Does not establish per-volunteer account pricing.",
+      "applicability": "Supports distinction between named app identity and vendor seats."
+    },
+    {
+      "id": "C12",
+      "title": "Automerge conflict semantics",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "source_kind": "Automerge official docs",
+      "version_or_commit": "Live docs; 2026 copyright, no release/commit shown",
+      "locator": "Same-property writes, conflicts object, operation ordering",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Independent changes combine; same-property concurrent values retain alternatives while displaying deterministic winner; order is operation ID/counter and actor ID, not wall clock.",
+      "applicability": "Supports CRDT component only, not domain policy."
+    },
+    {
+      "id": "C13",
+      "title": "Chrome storage persistence",
+      "url": "https://developer.chrome.com/docs/web-platform/storage-buckets/",
+      "source_kind": "Chrome for Developers",
+      "version_or_commit": "Page states Chromium 122+; last updated 2022-11-04 UTC",
+      "locator": "persist(), eviction, explicit-user-clear caveat",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Independently reopened/read for this critic review.",
+      "conditions_defaults_exceptions": "Storage may be evicted under pressure; persist() asks for persistence but explicit user action can still clear it; Chromium-specific and dated page.",
+      "applicability": "Supports no archive promise and device/browser validation."
+    },
+    {
+      "id": "C14",
+      "title": "CouchDB performance — deleted documents",
+      "url": "https://docs.couchdb.org/en/stable/maintenance/performance.html",
+      "source_kind": "Apache CouchDB official documentation",
+      "version_or_commit": "Stable 3.5 docs; no patch commit bound",
+      "locator": "Deleted documents section",
+      "accessed_at_utc": "2026-10-12T01:10:02Z",
+      "observed_operation": "Opened and read deleted-document retention passage.",
+      "conditions_defaults_exceptions": "Normal deletion creates a new _deleted revision that remains after compaction so deletion can replicate; tombstones consume storage. This does not establish backup/export expiry or physical erasure.",
+      "applicability": "Supports P13 deletion semantics and separation from retention/erasure policy."
+    }
+  ],
+  "review_notes": [
+    "Critic C IDs are independent and do not rebind investigator S01-S24.",
+    "Live pages without public version IDs are not assigned invented versions.",
+    "No source tests, application, build or reproducer were run by this critic."
+  ]
+}

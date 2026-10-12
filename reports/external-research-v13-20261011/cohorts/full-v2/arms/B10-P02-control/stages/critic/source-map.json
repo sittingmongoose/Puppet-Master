@@ -1,0 +1,163 @@
+{
+  "schema_version": "1",
+  "run_id": "B10-P02-control",
+  "stage": "critic",
+  "access_timezone": "UTC",
+  "access_time_precision": "The web tool exposed request-batch boundaries, not per-URL retrieval timestamps. access_utc ranges state the observed batch window; exact per-page seconds are unavailable.",
+  "sources": [
+    {
+      "id": "C01",
+      "title": "Creating a Book — Quarto",
+      "url": "https://quarto.org/docs/books/",
+      "version_or_commit": "Current official documentation; no release pin displayed",
+      "locator": "Overview: supported formats and HTML full-text search; publishing/output examples",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened and searched official book documentation during the critic’s batched source check.",
+      "governing_condition_default_exception": "Books support HTML, PDF, Typst, Word, EPUB and AsciiDoc; HTML books are websites and support full-text search.",
+      "applicability": "Supports format comparison only; does not prove offline cache behavior or equivalent output accessibility."
+    },
+    {
+      "id": "C02",
+      "title": "Website Search — Quarto",
+      "url": "https://quarto.org/docs/websites/website-search.html",
+      "version_or_commit": "Current official documentation; no release pin displayed",
+      "locator": "Overview and search configuration; locally built index default; Algolia alternative",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened and searched official search documentation.",
+      "governing_condition_default_exception": "Search is enabled by default for websites/books and indexes site contents with a locally built index unless hosted Algolia is configured.",
+      "applicability": "Supports local-index claim; says nothing by itself about local-file execution or PWA cache completeness."
+    },
+    {
+      "id": "C03",
+      "title": "Deploying Your Docs — MkDocs",
+      "url": "https://www.mkdocs.org/user-guide/deploying-your-docs/",
+      "version_or_commit": "Current official docs; no release pin displayed",
+      "locator": "Local Files: file:// settings, search plugin condition, relative links, theme support files",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened the official deployment guide and read its local-file/offline section.",
+      "governing_condition_default_exception": "For direct file:// distribution, set site_url empty and directory URLs off; disable search or use a compatible plugin; use relative links and avoid CDN-only theme assets.",
+      "applicability": "Applies to file-distributed sites, not a blanket limit on hosted HTTPS sites."
+    },
+    {
+      "id": "C04",
+      "title": "Pandoc User’s Guide",
+      "url": "https://pandoc.org/MANUAL.html",
+      "version_or_commit": "Current public manual; no release pin displayed",
+      "locator": "Conversion model and limits; reader/format options; DOCX extensions",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened the primary manual; read the conversion-model warning and relevant DOCX format/extension sections.",
+      "governing_condition_default_exception": "Pandoc’s intermediate representation is less expressive than many formats; complex tables and formatting details may not map, so conversions from more expressive sources may be lossy.",
+      "applicability": "Supports a constrained Word import and review workflow; not a verdict on a particular sample conversion."
+    },
+    {
+      "id": "C05",
+      "title": "Pandoc DOCX reader implementation",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers/Docx.hs",
+      "version_or_commit": "Tag 3.12.1; investigator records commit e51c9c6",
+      "locator": "runStyleToTransform / Ext_styles branch around source lines 2533–2564; extraAttr",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened pinned release-tag source and inspected the Ext_styles branch.",
+      "governing_condition_default_exception": "Custom style attributes are retained only when the reader’s Ext_styles option is enabled; default behavior follows other style transformations.",
+      "applicability": "Corroborates conditional style metadata behavior; does not establish visual or layout fidelity."
+    },
+    {
+      "id": "C06",
+      "title": "Pandoc DOCX reader tests and 3.12.1 release notes",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/test/Tests/Readers/Docx.hs; https://github.com/jgm/pandoc/releases/tag/3.12.1",
+      "version_or_commit": "Tag 3.12.1; release commit e51c9c6",
+      "locator": "Test group 'custom styles': default and +styles fixtures/goldens; release notes data-URI escaping fix #11942 and DOCX performance",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened pinned tests and release notes; inspected fixtures and release entries; did not execute tests.",
+      "governing_condition_default_exception": "Focused tests cover a particular custom-style fixture in default and +styles modes; release notes record the 3.12.1 fix for data-URI escaping that broke --embed-resources.",
+      "applicability": "Shows regression coverage and upgrade-retest rationale, not arbitrary document support or actual handbook import validation."
+    },
+    {
+      "id": "C07",
+      "title": "PDF Basics — Quarto",
+      "url": "https://quarto.org/docs/output-formats/pdf-basics.html",
+      "version_or_commit": "Current official documentation; no release pin displayed",
+      "locator": "PDF Accessibility & Standards; PDF/UA, document tagging, fig-alt, veraPDF and manual attention",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened the official guide at its accessibility section and read the described standards and validation.",
+      "governing_condition_default_exception": "Quarto can request PDF/UA and propagate fig-alt, but cannot by itself guarantee accessibility; validation may identify issues requiring manual attention.",
+      "applicability": "Supports separate PDF validation and limits any accessibility claim."
+    },
+    {
+      "id": "C08",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/wcag/",
+      "version_or_commit": "W3C Recommendation, WCAG 2.2, 2023-10-05",
+      "locator": "SC 1.1.1 Non-text Content; SC 2.1.1 Keyboard",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened W3C Recommendation; checked normative non-text alternative and keyboard criteria.",
+      "governing_condition_default_exception": "Non-text content needs an equivalent-purpose text alternative except listed cases; functionality must be operable through a keyboard interface subject to the criterion’s exception.",
+      "applicability": "Normative basis for product requirements; not evidence of implementation conformance."
+    },
+    {
+      "id": "C09",
+      "title": "Images Tutorial — WAI/W3C; Developing a Keyboard Interface — WAI-ARIA APG",
+      "url": "https://www.w3.org/WAI/tutorials/images/; https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+      "version_or_commit": "Current W3C WAI guidance; no release pin displayed",
+      "locator": "Images: complex images and images of text; APG: visible/predictable focus and DOM/tab/read order",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened both official WAI pages and read the relevant image alternative and keyboard-order sections.",
+      "governing_condition_default_exception": "WAI recommends complete text equivalents for complex diagrams and avoiding images of readable text; APG describes alignment between DOM tab sequence and screen-reader reading order.",
+      "applicability": "Informative implementation guidance; WCAG remains the normative source."
+    },
+    {
+      "id": "C10",
+      "title": "Using Service Workers — MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+      "version_or_commit": "Current MDN guide; no release pin displayed",
+      "locator": "Secure-context requirement; installation/cache process; replacing existing service worker and waiting behavior",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened the official MDN guide at secure-context and update sections.",
+      "governing_condition_default_exception": "Service workers require HTTPS (localhost is secure for development); install handlers choose cached assets; a new worker waits while old controlled clients remain open unless skipWaiting is used.",
+      "applicability": "Supports explicit offline-ready/cache/update tests; does not prove that a proposed app is offline-capable."
+    },
+    {
+      "id": "C11",
+      "title": "IndexedDB terminology and Storage quotas/eviction — MDN",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology; https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "version_or_commit": "Current MDN guides; IndexedDB page last modified 2026-09-04; no API release pin",
+      "locator": "IndexedDB same-origin, synchronization/full-text limits and wipe conditions; Storage persistence/best-effort and private browsing",
+      "access_utc": "2026-10-12T00:48:41Z",
+      "operation": "Opened both primary technical guides and checked the stated storage and API limits.",
+      "governing_condition_default_exception": "IndexedDB is not designed to sync with a server or provide SQL-like full-text search; origin data is best-effort by default, user-cleared, subject to quota/eviction, and private-session data is usually deleted when the session ends.",
+      "applicability": "Supports local-only progress boundaries and loss disclosures; browser-specific persistence remains variable."
+    },
+    {
+      "id": "C12",
+      "title": "Quarto issue #14756 — dashboard search index omitted",
+      "url": "https://github.com/quarto-dev/quarto-cli/issues/14756",
+      "version_or_commit": "Issue opened 2026-08-08; open at critic retrieval; reporter environment Quarto 1.10.18",
+      "locator": "Issue description, reproduction, actual/expected behavior; dashboard-only and mixed-site cases",
+      "access_utc": "2026-10-12T00:48:41Z–2026-10-12T00:49:37Z",
+      "operation": "Opened the primary issue and checked its state, report and reproduction details.",
+      "governing_condition_default_exception": "Reporter reports no search.json for dashboard-only sites and dashboard omission from mixed indexes; issue remains open and reports behavior, not a reproduced critic test.",
+      "applicability": "Dashboard-specific caution only; not evidence about ordinary HTML lessons."
+    },
+    {
+      "id": "C13",
+      "title": "MkDocs 1.6.1 search-index implementation",
+      "url": "https://github.com/mkdocs/mkdocs/blob/1.6.1/mkdocs/contrib/search/search_index.py",
+      "version_or_commit": "Tag 1.6.1; investigator records commit bb7e8b6",
+      "locator": "Index entry and serialization implementation around add_entry_from_context/generate_search_index",
+      "access_utc": "2026-10-12T00:49:37Z",
+      "operation": "Opened the pinned source file; checked its identity and implementation context.",
+      "governing_condition_default_exception": "The release-tag module constructs index entries and serializes page/config data; the precise included text depends on indexing configuration.",
+      "applicability": "Supports a narrow claim about an index implementation; no claim that the index works through file://."
+    },
+    {
+      "id": "C14",
+      "title": "Pandoc reader registry/caller",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers.hs",
+      "version_or_commit": "Tag 3.12.1; investigator records commit e51c9c6",
+      "locator": "DOCX reader export/registry and getReader dispatch, approx. lines 650–985",
+      "access_utc": "2026-10-12T00:49:37Z",
+      "operation": "Opened the pinned caller/registry source.",
+      "governing_condition_default_exception": "DOCX is registered as a binary reader; getReader dispatches by format and applies reader extension options.",
+      "applicability": "Confirms an actual import path and option pipeline; does not validate an author-facing import workflow."
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "run_id": "B06-P02-treatment",
+  "stage": "investigator",
+  "case_input": "assigned brief only before release",
+  "discovery_precedes_plan_release": true,
+  "source_ids": "S00-S19 stable in this stage",
+  "sources": [
+    {
+      "id": "S00",
+      "title": "Volunteer shift handover across unreliable connections (assigned case brief)",
+      "url": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+      "released_version_or_commit": "Run-provided input; no external version",
+      "locator": "Entire brief",
+      "accessed_at_utc": "2026-10-12T00:36:00Z (read immediately after stage activation; second precision inferred from tool sequence)",
+      "observed_operation": "Read the listed brief before external discovery; extracted all named tasks/constraints.",
+      "governing_condition_default_exception": "Proposal-only research; no live invitations, accounts, deployment, or records; role/retention policies are unknown.",
+      "applicability": "Authoritative statement of this stage’s product problem and constraints."
+    },
+    {
+      "id": "S01",
+      "title": "Handling Update Conflicts — PowerSync docs source",
+      "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+      "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+      "locator": "Handling Update Conflicts; ordered upload queue, PUT/PATCH/DELETE, idempotency, LWW default, backend validation, CRDT note.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened source file and inspected the operation/policy sections.",
+      "governing_condition_default_exception": "Backend policy is unopinionated; a simple backend can be per-field last-write-wins. Upload operations can be replayed and must be idempotent. Backend may validate or ignore writes, such as updates after completion.",
+      "applicability": "Supports a PowerSync-style alternative only when custom domain reconciliation is implemented; directly informs stale-resolution and duplicate-write design."
+    },
+    {
+      "id": "S02",
+      "title": "PowerSync Supabase Integration Guide",
+      "url": "https://github.com/powersync-ja/powersync-docs/blob/main/integrations/supabase/guide.mdx",
+      "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+      "locator": "Architecture and Configure Supabase; local SQLite/upload queue and row-level security passages.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened current guide and inspected offline architecture/security passages.",
+      "governing_condition_default_exception": "Local SQLite reads/writes and queued uploads work offline in the guide’s integration; writes go to Postgres through Supabase Data API. It warns that without RLS, anon/authenticated keys can read/write all rows; explicit grants/RLS are required under newer project defaults.",
+      "applicability": "Evidence that offline persistence and access control are separate concerns; do not infer secure row scoping from sync alone."
+    },
+    {
+      "id": "S03",
+      "title": "PowerSync SDK legacy attachment helper README",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments/README.md",
+      "released_version_or_commit": "SDK repository main branch; no pin displayed (UNKNOWN).",
+      "locator": "Package warning, attachment states, queued upload/download, delete, cache expiration.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened SDK repository file and read package notice and lifecycle.",
+      "governing_condition_default_exception": "README explicitly says this helper is deprecated in favor of built-in SDK attachment functionality; describes queued states/retry, local/cloud deletion, and a default 100-record cache in this legacy helper.",
+      "applicability": "Evidence that attachment lifecycle is separate; do not select this deprecated package or transfer its defaults to a current app."
+    },
+    {
+      "id": "S04",
+      "title": "PowerSync React Native attachment storage adapters README",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments-storage-react-native/README.md",
+      "released_version_or_commit": "SDK repository main branch; exact commit UNKNOWN.",
+      "locator": "README package status and local/remote storage responsibilities, lines 193–270.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened README and inspected stability warning plus storage interfaces.",
+      "governing_condition_default_exception": "Adapter is explicitly alpha/testing-only, breaking changes expected, and not recommended for production. App supplies local storage and remote upload/download/delete callbacks.",
+      "applicability": "Material caveat for optional photo implementation; validate current released platform support before choosing any helper."
+    },
+    {
+      "id": "S05",
+      "title": "Apache CouchDB 3.5 replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "CouchDB documentation 3.5 branch, stable URL; exact patch version not pinned.",
+      "locator": "Sections 2.3.2–2.3.7, default winner, _conflicts, deleted leaves, application-specific merging.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened stable documentation and inspected conflict/model sections and REST API examples.",
+      "governing_condition_default_exception": "Concurrent replicated branches retain leaf revisions; ordinary GET returns only deterministically selected winner, while conflicts=true/open_revs exposes others. Resolution is application-specific and losers must be deleted explicitly.",
+      "applicability": "Key warning for CouchDB/PouchDB: replication transports branches but does not decide task/issue semantics."
+    },
+    {
+      "id": "S06",
+      "title": "PouchDB replication and conflicts guides",
+      "url": "https://pouchdb.com/guides/replication.html; https://pouchdb.com/guides/conflicts.html",
+      "released_version_or_commit": "Rolling guides; exact source commit/version UNKNOWN.",
+      "locator": "Bidirectional replication, retry, deletion and conflict resolution; append-only delta pattern.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened replication guide and inspected result/guide text for conflict and append-only design.",
+      "governing_condition_default_exception": "Local/remote PouchDB can bidirectionally sync; winner is deterministic but conflicts remain; guide says app can surface or ignore them; document removal creates a tombstone.",
+      "applicability": "Relevant direct-replication alternative and reason to model meaningful change records so update conflicts are limited."
+    },
+    {
+      "id": "S07",
+      "title": "Apache CouchDB database security API",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "released_version_or_commit": "CouchDB documentation 3.5 branch, stable URL; exact patch version not pinned.",
+      "locator": "GET /{db}/_security; members/admins and default behavior.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened API documentation and inspected database-member defaults.",
+      "governing_condition_default_exception": "Members can read every document and write/edit non-design documents; empty membership permits regular document reads/writes. CouchDB 3.x newly created DBs default to admin-only.",
+      "applicability": "Warns that CouchDB member access is broad; roles and document-level validation/scoping require explicit design."
+    },
+    {
+      "id": "S08",
+      "title": "PouchDB 9.0.0 release",
+      "url": "https://github.com/apache/pouchdb/releases",
+      "released_version_or_commit": "PouchDB 9.0.0, tag commit abbreviated b2882c1, released 2024-06-21; page marked Latest at access.",
+      "locator": "9.0.0 highlights and changelog.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened release list; inspected release notes and Latest marker.",
+      "governing_condition_default_exception": "Release reports major IndexedDB stability/performance improvements and more reliable browser tests, and introduces a default .find() result limit of 25.",
+      "applicability": "Candidate version/history baseline; older-issue search must paginate, and release-level stability claims do not prove app-specific offline behavior."
+    },
+    {
+      "id": "S09",
+      "title": "PouchDB IndexedDB sequence/concurrency report and proposed fix",
+      "url": "https://github.com/apache/pouchdb/issues/8599; https://github.com/apache/pouchdb/pull/9093",
+      "released_version_or_commit": "Issue #8599 opened 2023-02-10 against PouchDB 8.0/Chrome; PR #9093 opened 2025-06-16 with commit 2a54197; both Open when inspected, not a released fix.",
+      "locator": "Issue repro after more than 1000 replicated docs; PR report of parallel bulkDocs and metadata.seq; reviewer comment about absent named test file.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened issue and PR; inspected environment/repro, claimed fix/test, and reviewer’s test-file objection.",
+      "governing_condition_default_exception": "Issue is a user report, not a universal defect. Proposed PR says parallel IndexedDB bulkDocs could leave metadata.seq below doc.seq; PR remained open and reviewer questioned the claimed test. No evidence reviewed that it shipped.",
+      "applicability": "Keep as a validation risk for PouchDB/browser adapter; do not describe it as fixed by v9 or as a verified general failure."
+    },
+    {
+      "id": "S10",
+      "title": "Automerge conflict reference and welcome guide",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/; https://automerge.org/docs/hello/",
+      "released_version_or_commit": "Current Automerge documentation; no release/commit pin displayed (UNKNOWN); copyright says 2026.",
+      "locator": "Same-property writes/getConflicts/internal operation ID and offline/network-agnostic Repo model.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened both docs and inspected conflict defaults and offline sync model.",
+      "governing_condition_default_exception": "Different properties merge; same-property concurrent updates choose a deterministic default and keep alternatives queryable via getConflicts. LWW ordering is counter plus actor ID, not wall clock.",
+      "applicability": "CRDT alternative for notes; still requires application policy for status, exclusive claims, authorization, and human conflict UX."
+    },
+    {
+      "id": "S11",
+      "title": "Automerge Repo sync server README",
+      "url": "https://github.com/automerge/automerge-repo-sync-server",
+      "released_version_or_commit": "Repository main; no release tag/commit observed (UNKNOWN).",
+      "locator": "README lines 210–228; repository contains src and test directories.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened repository README and inspected deployment/security description.",
+      "governing_condition_default_exception": "README calls it an unsecured Express app and partly a demonstration; two described configuration variables are port and data directory. Publish workflow runs tests, but that is not deployment security.",
+      "applicability": "Do not use demo sync server for production shared access without a separately designed authorization boundary."
+    },
+    {
+      "id": "S12",
+      "title": "PostgreSQL 18 INSERT and unique index docs",
+      "url": "https://www.postgresql.org/docs/current/sql-insert.html; https://www.postgresql.org/docs/current/sql-createindex.html",
+      "released_version_or_commit": "PostgreSQL 18 current documentation as returned by site; no Git commit applicable.",
+      "locator": "INSERT ON CONFLICT atomic behavior and partial-unique-index support; CREATE INDEX WHERE predicate.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened SQL reference and inspected unique arbiter, ON CONFLICT, partial-index, and atomicity passages.",
+      "governing_condition_default_exception": "Unique indexes/constraints arbitrate concurrent inserts; ON CONFLICT DO UPDATE guarantees atomic insert-or-update outcome under high concurrency absent other errors. Partial unique indexes restrict uniqueness to a subset.",
+      "applicability": "Supports a proposed active-claim invariant in a relational backend; does not itself define fair/offline claimant adjudication."
+    },
+    {
+      "id": "S13",
+      "title": "MDN PWA offline and background operation",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Offline_and_background_operation",
+      "released_version_or_commit": "Current MDN article; no release/commit pin (UNKNOWN).",
+      "locator": "Background sync event lifetime, worker termination, periodic background availability/scheduling.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened PWA guide and inspected worker lifecycle and background-sync caveats.",
+      "governing_condition_default_exception": "Browsers may stop service workers; Background Sync may retry only a bounded amount/time; periodic sync timing is browser-controlled and may be absent. Offline content can be only as recent as last foreground/app refresh.",
+      "applicability": "A responsive PWA cannot promise instant/background delivery; show pending state and sync on foreground/open."
+    },
+    {
+      "id": "S14",
+      "title": "MDN storage quotas and eviction criteria",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "released_version_or_commit": "Current MDN article; no release/commit pin (UNKNOWN).",
+      "locator": "Best-effort vs persistent storage and quota exhaustion.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened article and inspected IndexedDB/Cache persistence and quota sections.",
+      "governing_condition_default_exception": "Browser origin data is best-effort by default and can be evicted; persist() request handling differs; quota overflow can raise QuotaExceededError.",
+      "applicability": "Browser drafts/photos need bounded storage, explicit errors, a persistence request where justified, and recovery path."
+    },
+    {
+      "id": "S15",
+      "title": "PowerSync JS SDK repository and background-sync sample",
+      "url": "https://github.com/powersync-ja/powersync-js; https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/README.md",
+      "released_version_or_commit": "SDK repository main; no immutable SHA displayed in README (UNKNOWN).",
+      "locator": "Root README package/demo index; background sync sample lines 198–266, 286–310.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened repository README and demo README; inspected supported clients, test note, and OS scheduling caveats.",
+      "governing_condition_default_exception": "Repo advertises Web, React Native, Node/desktop clients and tests; sample configures OS background tasks and says OS chooses execution time, with physical-device caveats.",
+      "applicability": "Supports architecture comparison and need to test target-platform foreground/background behavior; examples are not delivery guarantees."
+    },
+    {
+      "id": "S16",
+      "title": "PowerSync JS upload-queue issue report",
+      "url": "https://github.com/powersync-ja/powersync-js/issues/605",
+      "released_version_or_commit": "Issue #605 opened 2025-05-19; Open at inspection; reporter used React Native 1.25.x-era packages, not a confirmed current-release repro.",
+      "locator": "Reporter describes local SQLite changes/message loss with rapid activity and getNextCrudTransaction/uploadData.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Opened GitHub issue, verified Open state, and read only reported behavior.",
+      "governing_condition_default_exception": "Unresolved user report with no root cause established in inspected excerpt; not evidence of generally confirmed product defect.",
+      "applicability": "Motivation to test burst/retry/offline upload queues and replay if evaluating PowerSync."
+    },
+    {
+      "id": "S17",
+      "title": "CouchDB authentication and security guide",
+      "url": "https://docs.couchdb.org/en/stable/intro/security.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 stable documentation; exact patch version not in URL.",
+      "locator": "Authentication database, roles, cookie session, database authorization.",
+      "accessed_at_utc": "2026-10-12T00:41:54Z",
+      "observed_operation": "Inspected primary documentation result while evaluating direct replication identity requirements.",
+      "governing_condition_default_exception": "CouchDB’s _users database stores users; roles are user-defined and assigned by admins; per-database members/admins are broad DB permissions.",
+      "applicability": "Direct replication can be self-hosted but still requires a defined identity/provisioning and role strategy."
+    },
+    {
+      "id": "S18",
+      "title": "PowerSync React Native background-sync sample implementation",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/library/utils.ts",
+      "released_version_or_commit": "SDK repository main branch; sample current at access; no commit SHA displayed (UNKNOWN).",
+      "locator": "TaskManager.defineTask, minimum interval, pending-write example, PowerSync status listener, AppState register/unregister logic (lines 402–495 and 503–570).",
+      "accessed_at_utc": "2026-10-12T00:48:42Z",
+      "observed_operation": "Opened and read the actual TypeScript sample implementation.",
+      "governing_condition_default_exception": "Sample schedules a nominal 15-minute task, inserts mock demo data, initializes/syncs PowerSync, and resolves after a changed lastSyncedAt with no transfer in flight; surrounding README says OS decides execution time. This is sample code, not a service guarantee.",
+      "applicability": "Repository-code evidence for background task wiring and its caveat; do not copy the demo insert into the production app."
+    },
+    {
+      "id": "S19",
+      "title": "PowerSync JS issue with transaction grouping and upload caller",
+      "url": "https://github.com/powersync-ja/powersync-js/issues/48",
+      "released_version_or_commit": "Issue #48 opened 2024-02-07, shown Closed at access; reporter used @journeyapps/powersync-sdk-react-native 1.0.1 and iOS simulator. No fix/release link or resolution was visible in the inspected issue page.",
+      "locator": "Reported writeTransaction caller, uploadData/getNextCrudTransaction example, and log where two inserts returned as separate one-op transactions (lines 154–196).",
+      "accessed_at_utc": "2026-10-12T00:48:42Z",
+      "observed_operation": "Inspected an actual caller and its output on the closed issue page; no closure explanation was found in reviewed content.",
+      "governing_condition_default_exception": "A single reported version/OS case; issue is closed, but closure is not proof of how it was resolved. Treat transaction grouping as a test question rather than a confirmed current bug.",
+      "applicability": "Caller/test-history source for idempotent upload and transaction-boundary validation in any SDK evaluation."
+    }
+  ],
+  "plan_release": {
+    "revealed_copy": "revealed-plan.md",
+    "revealed_at_utc": "2026-10-12T00:46:48.103Z",
+    "discovery_sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+    "plan_sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881"
+  }
+}

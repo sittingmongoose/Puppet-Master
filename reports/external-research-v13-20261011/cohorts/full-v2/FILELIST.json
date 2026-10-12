@@ -1,0 +1,4045 @@
+{
+  "schema": "er13.public_filelist.v1",
+  "files": [
+    {
+      "path": "NEW_MATERIALIZATION.md",
+      "sha256": "c7d8bf35c3b2416222aa99024b910a4f50a3c7ab0c62e0964482dbb3739402f5",
+      "bytes": 1120
+    },
+    {
+      "path": "README.md",
+      "sha256": "92ffb8d65aabfb8a736d1c5d0d617cba4e00d82c0691b3e2fe8e9d7a1bb19160",
+      "bytes": 3271
+    },
+    {
+      "path": "arms/A-F01-A1/inputs/authored-manifest.json",
+      "sha256": "1ea38846db319ad644896105dc73c082c923b05fd5920f4baa1f3690b45037fb",
+      "bytes": 616
+    },
+    {
+      "path": "arms/A-F01-A1/inputs/configs/A-F01-A1.json",
+      "sha256": "7eff6d7daa8dbdd6cd4dd09ec99b3991fa6b88a1daf48f68652ca1976adf57e7",
+      "bytes": 1266
+    },
+    {
+      "path": "arms/A-F01-A1/inputs/control-inputs/brief.md",
+      "sha256": "a988b5f9e03d7c408c8d7115e5d67b3a74f0af52b470c653b3a988565d087c72",
+      "bytes": 2247
+    },
+    {
+      "path": "arms/A-F01-A1/inputs/control-inputs/plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/assignment.md",
+      "sha256": "3836b5c95ac8da839799145f2091b3a66f41a70becb7081a995a95d1d69c7a2d",
+      "bytes": 9324
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/critique.md",
+      "sha256": "f71f089349e8b106cc2b9517a760da930eb254484c260c5b6a018d31399f4ff2",
+      "bytes": 16294
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/dispatch.json",
+      "sha256": "f5fd29fbd0f9780496937a8af74e35a27930dede286901bfc99abfda45af925d",
+      "bytes": 10063
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/eval-ready-status.json",
+      "sha256": "40916062e44edf8e0344661d098e4971deec5341c034b07d76dc87f7bd1fff29",
+      "bytes": 6943
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/freeze.json",
+      "sha256": "5739bcf21202dcabb483cf342ee98f190fa51d8a8a13e0e2c39276b43ece3318",
+      "bytes": 3733
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/input-map.json",
+      "sha256": "e94d95601f21e110f919935901b8a2681c736655af24d205095de2543b67b30a",
+      "bytes": 1475
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/manifest.json",
+      "sha256": "741cf1172783b5aa1492bed6895811e72e4716f2518878bc60b6a4b36de55b77",
+      "bytes": 2191
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/native-goal-active.json",
+      "sha256": "2b3cfc356feba096b6d26e3b4cb0fddc449ce6c731aa8d6e03591afe1bb77ccf",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/native-goal-create.json",
+      "sha256": "2b3cfc356feba096b6d26e3b4cb0fddc449ce6c731aa8d6e03591afe1bb77ccf",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/native-goal-terminal.json",
+      "sha256": "262c8959abde4e8cd4828ab46960053985ca6034d2f6ec3b6f75343d4e966fda",
+      "bytes": 783
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/request.json",
+      "sha256": "0421fc3311d4d08bd33a01e9ee6d088b4045dd335bd97fcc5ff1771e2a045e67",
+      "bytes": 6838
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/source-map.json",
+      "sha256": "e0bcc08f5f66eb3e52cd394bd9482bb153b66ce4a9441a8a35d5ed989f52251e",
+      "bytes": 19135
+    },
+    {
+      "path": "arms/A-F01-A1/stages/critic/status.json",
+      "sha256": "49297f32290bfadf370c87070379df3c82da437c96d401936552475e7db1e805",
+      "bytes": 3464
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/assignment.md",
+      "sha256": "a53cd5141053511c46bdd1609150d17675b98decfc60cd018f640d9775da9fa1",
+      "bytes": 9767
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/discovery.md",
+      "sha256": "54d89f407a04054cccfddefb0cf279b9d963e03b4ae69bed44f9e3d0cf1dab1a",
+      "bytes": 7364
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/dispatch.json",
+      "sha256": "13798342e6ba58033947682a68691585fbc72bb86c6d8f3364670560e4b00f5c",
+      "bytes": 10201
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/draft.md",
+      "sha256": "b67e503f9a726765b65d730054f22bd65b892556c83d7fb8fd65e131b206b083",
+      "bytes": 28654
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/eval-ready-status.json",
+      "sha256": "665ef5f445d75ccb60eb6355a9cbc13339ba387eac4d3dcc30bc0c1ec115f3aa",
+      "bytes": 11307
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/freeze.json",
+      "sha256": "b5c17f9d6d6e6fd2448f2161bddf2a2db15139b4018c7b8888bc20754532d444",
+      "bytes": 1747
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/input-map.json",
+      "sha256": "acffcae0ae52c191f956bc76249310ff990672cb1c8977c6c3becae2ec12d75e",
+      "bytes": 713
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/manifest.json",
+      "sha256": "86dde6b3b55d25938cfcfc054fb87faa08943a1bd87d93a2578daff2cd8c1fea",
+      "bytes": 2861
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/native-goal-active.json",
+      "sha256": "e652e9e740260e1b8726ce2f331673bdd98fb95cd02b13c71a9a00afc67d976f",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/native-goal-create.json",
+      "sha256": "e652e9e740260e1b8726ce2f331673bdd98fb95cd02b13c71a9a00afc67d976f",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/native-goal-terminal.json",
+      "sha256": "cc74076ac991fcfeb653d400311cf4cc54e759bd47f570bafaa790984b40e5df",
+      "bytes": 795
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/plan-reveal.json",
+      "sha256": "7d136fbe442704c5323a3abb5bd78f5f115d27e798b6346837d2cfeb9044a53e",
+      "bytes": 418
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/request.json",
+      "sha256": "4c8acd833b842d363d6d0e115bb4e1d97705aafab6ed6602ccbb88c880e24615",
+      "bytes": 6904
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/revealed-plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/source-map.json",
+      "sha256": "d923fdd25240c2035153a3d07fcd176553d0ea4336b1a31ccf6f26a5c04e070d",
+      "bytes": 13704
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/sources/index.md",
+      "sha256": "2373f671f5ee2ae4285b25516312086eda609840aa786b1b10d617a488c3533c",
+      "bytes": 2732
+    },
+    {
+      "path": "arms/A-F01-A1/stages/investigator/status.json",
+      "sha256": "8c26dcba970a4457ea95192a6ca6c5770f85af5422b0d8f24a15d70f4222d89f",
+      "bytes": 5642
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/assignment.md",
+      "sha256": "21b473e62c0717309e2a825335b2406be5f84652fe8f97b61aadc57a1eae8056",
+      "bytes": 9311
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/dispatch.json",
+      "sha256": "7a752890642ca47fb9dfedd21062e0449df776287bf03f141cc4d0822e51088a",
+      "bytes": 10086
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/eval-ready-status.json",
+      "sha256": "f3f77ac22e0fe5228c37fd8bf842c517764752720e08c55176b659f362cd43d9",
+      "bytes": 9207
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/final.md",
+      "sha256": "39b4d7bed2a9414daa000f118457a1b5dee9baa01b77a17354c59d74712964bc",
+      "bytes": 35696
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/freeze.json",
+      "sha256": "91daab34a8476f8002f8ae260ec939330deccb957c33fc62e00e63aa33f0e03e",
+      "bytes": 4622
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/input-map.json",
+      "sha256": "b413e8095f85d2cd4a57a260baaee7531b2c76a8b10410b8d61482f933ef0485",
+      "bytes": 1774
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/manifest.json",
+      "sha256": "ff93d499425ad73f4276c3cdc367ce084f65155482aa5dcdba30436153a117f8",
+      "bytes": 2376
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/native-goal-active.json",
+      "sha256": "cd6bea3a891d1efc35e23ecd601fb32838c5851ff706b1b56c64240954e9cc57",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/native-goal-create.json",
+      "sha256": "cd6bea3a891d1efc35e23ecd601fb32838c5851ff706b1b56c64240954e9cc57",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/native-goal-terminal.json",
+      "sha256": "47151aa2dfda919fccdbbeb5e2db5c1cc6c5edd6852803ebe47dccfdb3eb25b6",
+      "bytes": 785
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/request.json",
+      "sha256": "7d578c8b5589867b4fb62ab8b768b5fc1dfcb0992ee0d84d8bd10f8a71886281",
+      "bytes": 6849
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/source-map.json",
+      "sha256": "7af85ebe6b24c0f7f340bd948a0ae2d822224ab9cf90848f08f664f9e35cd9f5",
+      "bytes": 64292
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/sources/index.md",
+      "sha256": "09d358f57d1097f0be6e28ea46929a750068f916f9e7a59daa244a725d394226",
+      "bytes": 3770
+    },
+    {
+      "path": "arms/A-F01-A1/stages/reviser/status.json",
+      "sha256": "3efa8a55052b6e97e2940eb87befe308eb9efd1d80b1d9a7b7bf1e9e928b23ca",
+      "bytes": 4597
+    },
+    {
+      "path": "arms/A-F01-A1_A8/inputs/authored-manifest.json",
+      "sha256": "722bbc7a341445031072b71a6dd039bd573465a66396c4f8d5f9b52603a9117f",
+      "bytes": 619
+    },
+    {
+      "path": "arms/A-F01-A1_A8/inputs/configs/A-F01-A1_A8.json",
+      "sha256": "6cf87343a7153bd8fc785646788be8ba8b3723f104df8c6529f44d4527afb934",
+      "bytes": 2638
+    },
+    {
+      "path": "arms/A-F01-A1_A8/inputs/control-inputs/brief.md",
+      "sha256": "a988b5f9e03d7c408c8d7115e5d67b3a74f0af52b470c653b3a988565d087c72",
+      "bytes": 2247
+    },
+    {
+      "path": "arms/A-F01-A1_A8/inputs/control-inputs/plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/assignment.md",
+      "sha256": "901a837d457e2951d1fbc8a38659329a7b5c4a263012d6eebf0433fd5e5806fb",
+      "bytes": 12774
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/critique.md",
+      "sha256": "5d4a6ef8ee009d3254d22887397ceb788e8b875e055c1650168da328a1bd39c0",
+      "bytes": 21721
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/dispatch.json",
+      "sha256": "72ac02834e13ea746c1fc88acbcfb45e6ec8dfcb73843d8e7e7f5571fd45c6a3",
+      "bytes": 10198
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/eval-ready-status.json",
+      "sha256": "af9ba376fac77fec0d662da3b86f485c0209ff0360e4643080a1ac95f9f6666d",
+      "bytes": 11195
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/freeze.json",
+      "sha256": "5776b9159d8f8e0e065a7215110f408ffb633ba8bb143a932a1a724937f881b3",
+      "bytes": 6540
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/input-map.json",
+      "sha256": "7b8c4f03bd51a64fb52d83f32aa88b80c03272f024b0d7634d029998b6a54545",
+      "bytes": 1538
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/manifest.json",
+      "sha256": "6fae92235d42edf0c8765969762c6a5a5be758710985759dcaea586de200e4f0",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/native-goal-active.json",
+      "sha256": "15b0aa67c496982a987641a3794c3513e319e6539cfd4f7e9b2e0342a836750b",
+      "bytes": 463
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/native-goal-create.json",
+      "sha256": "15b0aa67c496982a987641a3794c3513e319e6539cfd4f7e9b2e0342a836750b",
+      "bytes": 463
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/native-goal-terminal.json",
+      "sha256": "39961199653942364897f69acace454a6d276651463c37f4dfbef1d557a8bf5f",
+      "bytes": 792
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/request.json",
+      "sha256": "6d9d1b6c7349f07844abb5e3cc61c4480787b6fade03d4b62e513098440a2a9d",
+      "bytes": 6901
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/source-map.json",
+      "sha256": "c93b25f5602aabfbf40f68966266e537f33ecbcdbd1c05799996048495966ec2",
+      "bytes": 34878
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/sources/index.md",
+      "sha256": "45f3f87e15018a5bc50892f1d2bb0b0383ac7a492335ff640f2772d4a5ef133c",
+      "bytes": 3772
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/critic/status.json",
+      "sha256": "681661a2de7e71c4c612df189ba1093c0628bafc14d2fb3b9f2ec890e7a86a03",
+      "bytes": 5586
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/assignment.md",
+      "sha256": "63158f54834f51d4f5c41c8f9c9695e885baa43a504d3d4109087b3aa80a241e",
+      "bytes": 9833
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/discovery.md",
+      "sha256": "de27915be2aa0161163c5bc8dea37dbd95855ba01bd4b291de4366950788227a",
+      "bytes": 8382
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/dispatch.json",
+      "sha256": "e8776a9cd91b7e02d46d3d9206afdb1e26bddba1b5863d3db803acbf56e0df06",
+      "bytes": 10336
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/draft.md",
+      "sha256": "84b8bfbee29567b666db5180bbf93b9ddbc8986aec353c9c1ae4f50f0b5faec3",
+      "bytes": 29370
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/eval-ready-status.json",
+      "sha256": "f3937d0bb8d2381b30026fd19f64593148c41c8f3013d8cc7304c9a79c6df0a0",
+      "bytes": 8953
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/freeze.json",
+      "sha256": "2453c06fafe410f1d0cf7116a945b3c66de4a1bb68c1bfc88f9ea8427e2fec1d",
+      "bytes": 4286
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/input-map.json",
+      "sha256": "201372268bb66bf90f5b41c2664ac575fc138c1c5e0b0bead4a029ca87020744",
+      "bytes": 734
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/manifest.json",
+      "sha256": "974c07877e879369bb9204b5af212531a1b077b3da75c98c06d4266771bb4410",
+      "bytes": 2867
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/native-goal-active.json",
+      "sha256": "1211ed638c19e3e0e2dbdaf66e26bee0c5b03928ad9983646d5ca428eca1f746",
+      "bytes": 475
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/native-goal-create.json",
+      "sha256": "1211ed638c19e3e0e2dbdaf66e26bee0c5b03928ad9983646d5ca428eca1f746",
+      "bytes": 475
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/native-goal-terminal.json",
+      "sha256": "44ae84e35f08ae1dcfe4929f69de0b335165fb7bcd3ab7620794085605d121ac",
+      "bytes": 805
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/plan-reveal.json",
+      "sha256": "d68b48d0dd6fc164de8b2fe3599093f5b099a471ad2d23a9f2a231a3a26c60d2",
+      "bytes": 424
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/request.json",
+      "sha256": "036c9e3dadd5ef617e9da3332ef7806b4f8138b692e7a50871a5503905b77344",
+      "bytes": 6967
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/revealed-plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/source-map.json",
+      "sha256": "e0b9f2b721d4519aa60b332439c9b66f72b27a4327b65735992913f631dea059",
+      "bytes": 22211
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/sources/index.md",
+      "sha256": "2a1f5504f12ec6e1bfd1ec65ce6f09588e2bdaa9abf554f150c88c0737475c4e",
+      "bytes": 3493
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/investigator/status.json",
+      "sha256": "24cd772a08cf7301e61ac4f25bcc5c5f73e6b2f41adaa140d1de5e102281aefc",
+      "bytes": 4468
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/assignment.md",
+      "sha256": "cffd4f7f555fa44afab322bad6a20f28749066ec0c5cf824da9b48e664788922",
+      "bytes": 11078
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/dispatch.json",
+      "sha256": "fd4218da55256c464179d63166bf6c33e973e8568d43a4ffa2ed5fc4b61d09fc",
+      "bytes": 10221
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/eval-ready-status.json",
+      "sha256": "310c582f300246b1c651e5a4cd00c1dd8630f59b40347389b39a94080a177f8d",
+      "bytes": 9417
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/final.md",
+      "sha256": "4de5e4784701f4cb79b8ddf1c2b892a139edf77c00788ce631c57ab1810425a0",
+      "bytes": 33044
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/freeze.json",
+      "sha256": "200aefe74dc6363fdf640e53ff53c20b759e90f3bd4ed7435804718f3f4a5e16",
+      "bytes": 7816
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/input-map.json",
+      "sha256": "24e64f523e96deef8229018bd0cc2477cfec560b295e8872cca583bbd0aea602",
+      "bytes": 1965
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/manifest.json",
+      "sha256": "928ce454443af06fd49c4a2d32225fd5b5bc0e9c44fc8a3554d13151c83a1628",
+      "bytes": 2197
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/native-goal-active.json",
+      "sha256": "26621e892f33b2abe324d53730bb0d765b06d373a549200cc5d80ff287c08410",
+      "bytes": 465
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/native-goal-create.json",
+      "sha256": "26621e892f33b2abe324d53730bb0d765b06d373a549200cc5d80ff287c08410",
+      "bytes": 465
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/native-goal-terminal.json",
+      "sha256": "8334b238851f23d64e61f33ef1c26651556e452213fea9e50cf3808f4fb4dac7",
+      "bytes": 793
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/request.json",
+      "sha256": "6cfef1d6d1772508d270f0609e5b7e69478277381724e9b58f451311e63a766c",
+      "bytes": 6912
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/source-map.json",
+      "sha256": "0ee8b14bbd20693b6deb99e401ce9b5458bd7e390ef8e45abc587a547e5799bc",
+      "bytes": 41031
+    },
+    {
+      "path": "arms/A-F01-A1_A8/stages/reviser/status.json",
+      "sha256": "a7cf304eecdda9306784674efba0fe03fc1d7236299a3797a70c2572dc9e7e50",
+      "bytes": 4699
+    },
+    {
+      "path": "arms/A-F01-A8/inputs/authored-manifest.json",
+      "sha256": "fb19bd35d39812d75e0c73af160aaaf7f85eb7ebef0665b1c064f860ca59e356",
+      "bytes": 616
+    },
+    {
+      "path": "arms/A-F01-A8/inputs/configs/A-F01-A8.json",
+      "sha256": "16c89f0e7b8315efaf802e2a5446ae298c74dbecadf460259c33b1f9f5cb0c8f",
+      "bytes": 2605
+    },
+    {
+      "path": "arms/A-F01-A8/inputs/control-inputs/brief.md",
+      "sha256": "a988b5f9e03d7c408c8d7115e5d67b3a74f0af52b470c653b3a988565d087c72",
+      "bytes": 2247
+    },
+    {
+      "path": "arms/A-F01-A8/inputs/control-inputs/plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/assignment.md",
+      "sha256": "34a64e2d216d4c356eab3914aa320652b56621ef3402801d612c0fdff3baf1ca",
+      "bytes": 12723
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/critique.md",
+      "sha256": "e6b87b7c64a59d839d5b01c56bb5a72dbeafe907069e83792bfbe6fc92286717",
+      "bytes": 18163
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/dispatch.json",
+      "sha256": "caa19389ccc69fa5754458b421c468df25e53c8bd1bc647dd20bad9c0b597389",
+      "bytes": 10063
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/eval-ready-status.json",
+      "sha256": "77c25e8581b2b51eb61ab45c758b8d799f596478c0786cc575ea4af4c580e079",
+      "bytes": 10889
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/freeze.json",
+      "sha256": "49ae4337a6e9918b0b6572cb8e59e789b9f2a7c25c03506d4f760137bb8924d5",
+      "bytes": 6410
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/input-map.json",
+      "sha256": "8ed15e495d4a5c9d0db6e9d849b16fec6a28cdaeb442bee70ff2a0a132ad628e",
+      "bytes": 1475
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/manifest.json",
+      "sha256": "bafd2868aa7992bdd0e0425bf66ce309196703dd3e5bc290d2b85b68d04633bc",
+      "bytes": 2378
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/native-goal-active.json",
+      "sha256": "df7398d98f961298909659bc4a3cd2bf115409cf2e564d7e9beacfbdfea1d0db",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/native-goal-create.json",
+      "sha256": "df7398d98f961298909659bc4a3cd2bf115409cf2e564d7e9beacfbdfea1d0db",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/native-goal-terminal.json",
+      "sha256": "b258cbfa15ea0fe0e45a1be6b994335ac87f5bd66e2fe637e4be6e1aa816294d",
+      "bytes": 783
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/request.json",
+      "sha256": "cfd46009118e650d0981b18395e8c0ff91b8e333b66dd23c692ddc129fd10c1c",
+      "bytes": 6838
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/source-map.json",
+      "sha256": "254c5bc7d6aa6f2e6db2caa7c0a7434a93eaa5fa2df548902b843dd6dd51b7d1",
+      "bytes": 26472
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/sources/index.md",
+      "sha256": "f8400257c25c08e5de91f95b225b4008d785c4851a957ef1c4897b70f202deca",
+      "bytes": 1541
+    },
+    {
+      "path": "arms/A-F01-A8/stages/critic/status.json",
+      "sha256": "8c1b106595083de6b5b6c92b1b8a9927790d434d6f0624ad15103392b1a9f6b1",
+      "bytes": 5434
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/assignment.md",
+      "sha256": "999f8d575ef13c2f0a0a7a81319df7ed8d78b3e9904b3576e069470aa338b228",
+      "bytes": 9767
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/discovery.md",
+      "sha256": "dcd9d91f19682c86317c1b75ada6ce3592fa3feb0a8cf58168d8120fe90f5618",
+      "bytes": 9514
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/dispatch.json",
+      "sha256": "60b3a1e1dcfaec22ec81b1ccd1c6c4a147c71fd1dc6ce6f2b7f9e35b258b8321",
+      "bytes": 10201
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/draft.md",
+      "sha256": "d75af32b46b78b586ef25fef26111afeafa08759b3ac356c7a33aac9bd626d92",
+      "bytes": 22043
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/eval-ready-status.json",
+      "sha256": "37b127f3b684cbe04a78021a4b0c40276d397da7721da6166fced8029b7b6fe7",
+      "bytes": 8261
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/freeze.json",
+      "sha256": "969a8a774e688aaf640fee2d1ac31e509684042cb0a10cbc779428305fe5755a",
+      "bytes": 4220
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/input-map.json",
+      "sha256": "315a1228e8f05902ce7c3b46113c95ff93f6ce7f5e727f557e9b3990e5b67aaf",
+      "bytes": 713
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/manifest.json",
+      "sha256": "ccccc7a439a8e7d6e9f36662e130ec4755d348d152c3caee0b72ccedba01ecaa",
+      "bytes": 2861
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/native-goal-active.json",
+      "sha256": "8873d677fca39ccf086c4d6cbc3b9255b69d1085ca3eeb8ac0e452620a79f6fb",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/native-goal-create.json",
+      "sha256": "8873d677fca39ccf086c4d6cbc3b9255b69d1085ca3eeb8ac0e452620a79f6fb",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/native-goal-terminal.json",
+      "sha256": "4c502ae1a0846127e6c479bdaa53095d1bd1acf2b2c7596e30f6d94f3d80d5fe",
+      "bytes": 795
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/plan-reveal.json",
+      "sha256": "c2d6ae192817c5d40d0dcc5b86634c62da99e271e8960238dbb349599850aef5",
+      "bytes": 418
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/request.json",
+      "sha256": "c4fd27e71d8915729b5c954aacaed1f026d14cb9185aae9552ffd351774b0337",
+      "bytes": 6904
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/revealed-plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/source-map.json",
+      "sha256": "6f6dbf38cef6a28bf2b44ec4a1867a1c13d6a94f577d54503adc11abf1d08ed2",
+      "bytes": 21509
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/sources/index.md",
+      "sha256": "6925e9719099a56057a803ead93fe05effc7738945f12ed88c6eeadb05299747",
+      "bytes": 1427
+    },
+    {
+      "path": "arms/A-F01-A8/stages/investigator/status.json",
+      "sha256": "71fea8086b24efa29dc2479a171b5e87795d9323a098aced8caf9e7c92580fee",
+      "bytes": 4124
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/assignment.md",
+      "sha256": "a31f353fa2d9cb5ad8a7da20b1bb018832b18251f138aada0f542a9a468b94ba",
+      "bytes": 11027
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/dispatch.json",
+      "sha256": "b172ef07027a7fcc15a908a3a29a5066db64f8e26645e9c6837125c0db58d427",
+      "bytes": 10086
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/eval-ready-status.json",
+      "sha256": "a9ba282a23467a7b4afb8c5b17b8c28df56448dd847801c14c220d80bcf760fb",
+      "bytes": 7591
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/final.md",
+      "sha256": "8ad557eab2b6ce069c3370c84b107c26a42db0dbbdb99e219b4e0352c3874c50",
+      "bytes": 34978
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/freeze.json",
+      "sha256": "cb7ae13fd0783a9bd32a22ad3f08e3ed13a727bb2b33d74901fbcc25e94350cd",
+      "bytes": 7646
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/input-map.json",
+      "sha256": "c227dfdb2eaed071a1d0ab95915d223035865a7bc75ecb937c65a3dd9e024987",
+      "bytes": 1878
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/manifest.json",
+      "sha256": "53d3ad16959b651f6781d8447b9dd44ca66fcacafc9e795d1a34f8e3db585ac8",
+      "bytes": 2377
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/native-goal-active.json",
+      "sha256": "a8ef9c0c3e3b30266c79d93c253e3230ef98f17989e168a7c207203ba2de4f47",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/native-goal-create.json",
+      "sha256": "a8ef9c0c3e3b30266c79d93c253e3230ef98f17989e168a7c207203ba2de4f47",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/native-goal-terminal.json",
+      "sha256": "151c84e067eb2df026a34a70a6f49fea30bb58989d8d1b8905e80eb3209c9534",
+      "bytes": 785
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/request.json",
+      "sha256": "f9cf64798a66ea81a646aa1877da2b7ce4d72198e8dcb32c78867ed4ff5205fb",
+      "bytes": 6849
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/source-map.json",
+      "sha256": "79e998ff75dc558aa0796e003a688b4460178ac2496935954683ec7a9aed06fa",
+      "bytes": 32869
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/sources/index.md",
+      "sha256": "b084f999e29d8526e1126a7cc41f4e9f76dc8d70a42e774eca11fad28defe4cf",
+      "bytes": 4822
+    },
+    {
+      "path": "arms/A-F01-A8/stages/reviser/status.json",
+      "sha256": "81f40a2705cb1287974a8bca8e96cc76e86ea592ae61f23066fd1d05d1c033fb",
+      "bytes": 3787
+    },
+    {
+      "path": "arms/A-F01-R0/inputs/authored-manifest.json",
+      "sha256": "46d2f10fb71c94d9721bbb31083122fa4180cdbdb8dcc6120e1a051a188c3c44",
+      "bytes": 616
+    },
+    {
+      "path": "arms/A-F01-R0/inputs/configs/A-F01-R0.json",
+      "sha256": "a8f4b4c2ab6ef043fe8936b8c8e4c4a39cab74360af7d018d6fb6a7a240a0c0a",
+      "bytes": 1266
+    },
+    {
+      "path": "arms/A-F01-R0/inputs/control-inputs/brief.md",
+      "sha256": "a988b5f9e03d7c408c8d7115e5d67b3a74f0af52b470c653b3a988565d087c72",
+      "bytes": 2247
+    },
+    {
+      "path": "arms/A-F01-R0/inputs/control-inputs/plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/assignment.md",
+      "sha256": "dee1f961cff6ce2f2cd8d6ead467c234749d1ff1ae9cb17a9bfe8cfd885c8278",
+      "bytes": 9324
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/critique.md",
+      "sha256": "3f4989ebb54217e693fe74cb204134bd71b4bc241a02bb4869651922f222e4ae",
+      "bytes": 10841
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/dispatch.json",
+      "sha256": "554b220ca003bf1539ea3490fb9a57ae6ec5a9b01b8fbe52b99bc3e4a07726d2",
+      "bytes": 10063
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/eval-ready-status.json",
+      "sha256": "9f2c26b9f05d23de12b686b56ed116e2100d832c319f66b25520db34d0d97c70",
+      "bytes": 9241
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/freeze.json",
+      "sha256": "234915fe94d0ac66e3389438c1a8fb47101dbcdcb740fb29ea7fd3264089cfb4",
+      "bytes": 3722
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/input-map.json",
+      "sha256": "099bd58e8c8c250e447d234e1c8fbfa02677b2988c9a3c37a14bc2eef7b8db4f",
+      "bytes": 1475
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/manifest.json",
+      "sha256": "f17e443f4b718e16c388893098825477c2239da8a6a7f9dc62d37dc0efd4b9a7",
+      "bytes": 2376
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/native-goal-active.json",
+      "sha256": "6c453fbaf2a5c2cadf5321ea108cd375641a89026ca51157ab17aeaf119c561b",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/native-goal-create.json",
+      "sha256": "6c453fbaf2a5c2cadf5321ea108cd375641a89026ca51157ab17aeaf119c561b",
+      "bytes": 454
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/native-goal-terminal.json",
+      "sha256": "3ecde82709c676131aafd99ac690ac7cf60d051ad67bf9de038bcd7a5646dc48",
+      "bytes": 783
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/request.json",
+      "sha256": "6c93ec134729a7ff029cab6221b7a8886a5fe1be117d0a32fd686459f78b9307",
+      "bytes": 6838
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/source-map.json",
+      "sha256": "47061ed1322c5d4beb8a340d85a64d6b6c914b2c8e5b06df41a1249c7af82d02",
+      "bytes": 12429
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/sources/index.md",
+      "sha256": "20053dfc201eedb868e2f66c5c82e12363a09f5c3cd426c3552e6bbbdf3b9c69",
+      "bytes": 781
+    },
+    {
+      "path": "arms/A-F01-R0/stages/critic/status.json",
+      "sha256": "e972336003353d4741f606db1a719ff039c386fc55af4f1db5f1e34cf0294a1b",
+      "bytes": 4610
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/assignment.md",
+      "sha256": "bdbb234a5eff82dfbf091bc850842d010b73f87f5e0dfe3e918b70d00ee2956e",
+      "bytes": 9767
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/discovery.md",
+      "sha256": "d9cab1d6ab3dbf7e5f9b6c76a3d4000f3e5a4c9735ba1f10e4f868630a09edbd",
+      "bytes": 8539
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/dispatch.json",
+      "sha256": "adc5e367d45a402567e77aa83c47d8e4e251982a25e9f348507ad8473b505de8",
+      "bytes": 10201
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/draft.md",
+      "sha256": "d2915c84bbfa6bf5f6f235a6c5d5298927e3ade2dd08280ebf1b747f4280f5a6",
+      "bytes": 21328
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/eval-ready-status.json",
+      "sha256": "1b56528ec299ca172e42103d8644b614c3a5e9339345110805b8779f2b1abc76",
+      "bytes": 8429
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/freeze.json",
+      "sha256": "47d24089b839d0c5a6d1b45b7376d3dc1860ccf777d67ee86611553da4173cf6",
+      "bytes": 1738
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/input-map.json",
+      "sha256": "0946dc1c55819f391a09a7dadb78f995428f17c0efccb6e730e8157ed9a614af",
+      "bytes": 713
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/manifest.json",
+      "sha256": "d56a986178d1f8abd21f12acb748b2a763d3db35597470d4320d2ab584535b83",
+      "bytes": 2860
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/native-goal-active.json",
+      "sha256": "6ec57e26e97b90bcb714f1922929784e2624b1540e899ecd14754d55d93e9ffd",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/native-goal-create.json",
+      "sha256": "6ec57e26e97b90bcb714f1922929784e2624b1540e899ecd14754d55d93e9ffd",
+      "bytes": 466
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/native-goal-terminal.json",
+      "sha256": "2e9f316d1f8ba4ecc8977a51e68c596895d6c965cdd6bbaa792756a6fbf33c01",
+      "bytes": 795
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/plan-reveal.json",
+      "sha256": "b18cf0ab88665e7e56122279a001c888e684c4ec55b96b0875a076ba56ef5a78",
+      "bytes": 418
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/request.json",
+      "sha256": "2f0e447b794ea3905e2bf367556367178de1ab8cef035ff06b4e62b39e7e31aa",
+      "bytes": 6904
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/revealed-plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/source-map.json",
+      "sha256": "594e5282388c97aabe8d46ff150f3c924f680c864461ff34b931729206849620",
+      "bytes": 16832
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/sources/index.md",
+      "sha256": "d14f1fdd433ea436eafbb8576973acec1d5dbb46900058eccb1cb3eeeb4d5a27",
+      "bytes": 905
+    },
+    {
+      "path": "arms/A-F01-R0/stages/investigator/status.json",
+      "sha256": "718a895fae0c969e644b2b9939df6a611c27ac534268e1c13f7745c260dcfb73",
+      "bytes": 4208
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/assignment.md",
+      "sha256": "b1a47461d717ab200679f7b44b5d9e9b42bd5d87349e8ef70da4919fb8b07a03",
+      "bytes": 9311
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/dispatch.json",
+      "sha256": "8f5a8dd2da9df722d7e99c4f8a93be35312df5c4ffa59c48b70079c9d65d6b15",
+      "bytes": 10086
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/eval-ready-status.json",
+      "sha256": "f1adef20b6683da6d66d64a76cd8619399945bc62281c5dbfaed93bc31282946",
+      "bytes": 8773
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/final.md",
+      "sha256": "f684f7e615350273466feb90f93e6c610ce34575b9f109f48033a8f5b862b97c",
+      "bytes": 26426
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/freeze.json",
+      "sha256": "c0cc903710456f2f82f2622e3efffe2341d8d7033ffa6042f99c309980070c06",
+      "bytes": 4956
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/input-map.json",
+      "sha256": "84262466f80e93bb803bd8001f2d1c7caab5fc6bf9565e599656a6c08f69bd47",
+      "bytes": 1878
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/manifest.json",
+      "sha256": "65c1163aeef194989fb32507a390223bcea166d27fe6ebc6fa607a7f6585a1f0",
+      "bytes": 2376
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/native-goal-active.json",
+      "sha256": "e77848d65e6c38cb40fa4526b985829ccdebfe032a0f537f83da9b78178c706d",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/native-goal-create.json",
+      "sha256": "e77848d65e6c38cb40fa4526b985829ccdebfe032a0f537f83da9b78178c706d",
+      "bytes": 456
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/native-goal-terminal.json",
+      "sha256": "1785af02ac21aeb3c3be54d44953f39048fcfb0e60d89e28671d8f96cedec85b",
+      "bytes": 784
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/request.json",
+      "sha256": "0aaf53ff7e73833fd7d633ab54a25ee6dfd1273cad309bf7db5b35b558946c28",
+      "bytes": 6849
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/source-map.json",
+      "sha256": "25c2f93bf3c3210d1a6fb832e486ae1d79b2324b214fa762e71f81860b86a50a",
+      "bytes": 36465
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/sources/index.md",
+      "sha256": "7086741a606a20aaba79c43a63dd5bd7480007b614e92e2fb2ce3f7ebefb86e1",
+      "bytes": 1325
+    },
+    {
+      "path": "arms/A-F01-R0/stages/reviser/status.json",
+      "sha256": "4f7436c21322d8d89d54533b2d8b968da0a6b86e4cf65f38475058ccf53948c0",
+      "bytes": 4377
+    },
+    {
+      "path": "arms/B02-P02-control/inputs/authored-manifest.json",
+      "sha256": "88a00f815f46d7b496dec8dd43a73a8eb004d96cdea2e374ee47eff3e3fd06f1",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B02-P02-control/inputs/configs/B02-P02-control.json",
+      "sha256": "422ceb976062322b3cfdefdddc6a25cb30573e3a2d8667de422eceb073da5c48",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B02-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "43126aa1ece6faea6819a103a3c8decc797d3fcbebd6f6b4487584297d850e00",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "4b51c824e823a867e2c9d3737a355726e166d7d8c57a3fcb2c9dcf75d7f95824",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/assignment.md",
+      "sha256": "1e49a9bbb3e2fde1dc9088123dc9992a6c2db5606647846c69bc402fdd42d01e",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/critique.md",
+      "sha256": "76ccb4cdbbcaf1c0a96629f383df4e2f9a2f838cb4e7f0510fd179b3bd56f138",
+      "bytes": 10446
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/dispatch.json",
+      "sha256": "41e8f1ea2f78ad8d325b800edb6df4dd6095b28de0e769f98a32e8a61a46ee19",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "3c4fbf3f361f625f5de7b7c8a965b22d087c2c72d0f24d4a9a843ae5a1951d76",
+      "bytes": 8111
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/freeze.json",
+      "sha256": "bbd6d1b918d95a4e25909b8ad9756a27fe7a585dce7f9071e2d88d0967297836",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/input-map.json",
+      "sha256": "fd2935a7d63d5271bdba4163949b7ed884a07fe57cdae2f86dbd5720f956257a",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/manifest.json",
+      "sha256": "f7a5c6525011e0f087474ad6863d67fffab27dad4415ffa903ccdb1f8edafcbd",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "afd3e2cf6e7247df3591bbbda491e693e64ff6927d8f16319b823999b7b048b5",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "afd3e2cf6e7247df3591bbbda491e693e64ff6927d8f16319b823999b7b048b5",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "3d55d22b439e30b1556634856dc0aae26443b7a0b8b546e002d86f0b0d691a65",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/request.json",
+      "sha256": "05caeb2aa3e2565c6725eadd1e9fb56e49e45bf40fd5ca785e213720f3cd7d38",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/source-map.json",
+      "sha256": "3ef15c8d28c71687984f4f9a081c52faa12b446571acdd9be4c9303d62af51f6",
+      "bytes": 32516
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/sources/index.md",
+      "sha256": "dbd25a7f4e228651fb78bc391671236595734a2fb9b2c012cff32c47581a8935",
+      "bytes": 2807
+    },
+    {
+      "path": "arms/B02-P02-control/stages/critic/status.json",
+      "sha256": "c76163885b4f100ce94164f564972144072d76dba2d6afb8225947631faa5b52",
+      "bytes": 4047
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/assignment.md",
+      "sha256": "179b391bfa4a2b035891e1c81704ede27e2e93f6a2365e7837fed32eb0aa3d7d",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/discovery.md",
+      "sha256": "7e525f5614c565d93f3f869f848029ae97ef3bb79712510b871f68ecf8a1f1ca",
+      "bytes": 10609
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/dispatch.json",
+      "sha256": "8735080944bc5c415f6d248ea1f5e4b523980bb5b1b7caef1f22f890b7dd41c5",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/draft.md",
+      "sha256": "3ee2f5c0a7beee221ab51325980a1dafeb193ba00c7d1d7da9406c51c8dbdb3f",
+      "bytes": 27990
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "71564b7ea17286f909dc43deb4abff30da698b5be2fd570c7cdf96d18ddab6a0",
+      "bytes": 11649
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/freeze.json",
+      "sha256": "8038eb736564fd2c438e331c462b956d68132c1c9f3a90e8c45bb66c18a3f627",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/input-map.json",
+      "sha256": "725e9a95c09286ee09a43057f185d7356c4a140e4d1160281b1057e2b640b567",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/manifest.json",
+      "sha256": "c8938babfdb40a934b1173b89df05801f26b6959dd14b9a9fbee433229ac4a85",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "2fdd436b475b72aedfbaa96728c85a07d409867f7dd53a547ce847cf00eba81d",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "2fdd436b475b72aedfbaa96728c85a07d409867f7dd53a547ce847cf00eba81d",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "1dae9f0cea31a3b807b293342c82eaac245b00e3a5c8e16e2c440172941f55eb",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "59e4219302246f7fadab93cf620e8adeab74957c28c2048587b2a27a5231105d",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/request.json",
+      "sha256": "f939b050e449614f706c0b16e9d1601e987a3b138c0e1cbde40218789b259525",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "4b51c824e823a867e2c9d3737a355726e166d7d8c57a3fcb2c9dcf75d7f95824",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/source-map.json",
+      "sha256": "e1cc779102b7211c702d7bd2c73c40612abeb8cb199264587ac004bfe6173fe1",
+      "bytes": 22076
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/sources/index.md",
+      "sha256": "5de8a608f20c3e5d11b57a2d6e47b1a0e8b6878a1061a86532e471f98f33e982",
+      "bytes": 8344
+    },
+    {
+      "path": "arms/B02-P02-control/stages/investigator/status.json",
+      "sha256": "c57dc57611bb831c1dd8df334ac082f6f6a5403d641647bc48e04e22cead8c4e",
+      "bytes": 5813
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/assignment.md",
+      "sha256": "4be99a8f1083d223d4362dc9ae770506b60f25fd7bc066271dceac7d72d3cd68",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/dispatch.json",
+      "sha256": "9e8aa7ae4bbdd7444f15df80d353e38f0e803feeaeaa1e73b9c2d012c7b3f014",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "607e1d1dea2ceb857f92d4746cad714206e24ca231647f03086bb51fa0196f73",
+      "bytes": 8229
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/final.md",
+      "sha256": "487a1ac5976563bc5d30313731d407d7d969696cc62445ee1566e5f62847ca92",
+      "bytes": 31788
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/freeze.json",
+      "sha256": "7a0a92f351b10fb06a6fb2618b2ccdb1a0cd23f9ffd4ab19e7d57bde42daf652",
+      "bytes": 5250
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/input-map.json",
+      "sha256": "75311d41ff18fb6f7502f421c854e1a2e42210911097637abb4e7a2cb24cbd12",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/manifest.json",
+      "sha256": "6cdb1d49d472c91a080cd55975c650a4dcb117fb6aab23bf33258a8cae865c44",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "d959346ede6677442604bc7896d2f548759098b4533581bfd25ebdb05f772092",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "d959346ede6677442604bc7896d2f548759098b4533581bfd25ebdb05f772092",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "4a5bf3f7f38c4f0d60613fe36bdad6551a767bb56e252774afc100949ad14b22",
+      "bytes": 805
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/request.json",
+      "sha256": "8504507a6eb70a04f3a77d77aa72ec65a3983974ddd65fd92b10e2e939099235",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/source-map.json",
+      "sha256": "b4316d3745991b5ce9fc93899ec60ff075832144004ae7cbe081832729ffb8ca",
+      "bytes": 34890
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/sources/index.md",
+      "sha256": "830c6f0f6a635937e0b344f5c536e2b8d7989bac913e748466579cb7eb69be8f",
+      "bytes": 12731
+    },
+    {
+      "path": "arms/B02-P02-control/stages/reviser/status.json",
+      "sha256": "fa995a4ef3f0a55b3ed5413c39325f704ed9c4de12b28a6ce16f24cf3de385eb",
+      "bytes": 4106
+    },
+    {
+      "path": "arms/B02-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "23116cb3ea128e72457347b3adaeae9fd23e9708c0348197ca0674e9a1d5e150",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B02-P02-treatment/inputs/configs/B02-P02-treatment.json",
+      "sha256": "4942d8450e5e7a9306556d2e06995b3d8900565bfa82bcbb373b14dbf4ae090c",
+      "bytes": 1243
+    },
+    {
+      "path": "arms/B02-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "43126aa1ece6faea6819a103a3c8decc797d3fcbebd6f6b4487584297d850e00",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "4b51c824e823a867e2c9d3737a355726e166d7d8c57a3fcb2c9dcf75d7f95824",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/assignment.md",
+      "sha256": "1c1c6c3eeb2de1f5c8100aafea5603657fcf7a205477eba00b0209735848d539",
+      "bytes": 10206
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/critique.md",
+      "sha256": "27ed12b102288adfbc22261e3d7460221caeb39b38beebc5ef86c2e9feaafc50",
+      "bytes": 11932
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "f6796f90329da2ce25f15abc416cb41c1035bc47927813c9f11e7ef1f10a6167",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "bf805a9f1265a8e6834c4305444a5413f47203339d773ac4b57dc952d4463afb",
+      "bytes": 9121
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/final.md",
+      "sha256": "fd1a46d5c88381748cb85460b036363026ed0e3dbb15b90fe2741fb795232785",
+      "bytes": 36949
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/freeze.json",
+      "sha256": "5257165f34a5958462b81b36779e7e51baa2bbff317a0d355fbe5dbae43b3ded",
+      "bytes": 3981
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/input-map.json",
+      "sha256": "88c9344c9e82a4ce5779140956f91abd5a19b251c68a7791b4397d2885799fc4",
+      "bytes": 1665
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/manifest.json",
+      "sha256": "bf02a5cb6da03ede5a83db729ef524b530cbad7a74b1ad31ac02c769b7be3f27",
+      "bytes": 2542
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/native-goal-active.json",
+      "sha256": "917b1af3ea33bf952471c10eb3854a6dcf779f5fa7a218b1f719942b82105bcc",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "917b1af3ea33bf952471c10eb3854a6dcf779f5fa7a218b1f719942b82105bcc",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "fb46af8578490ca3ffaba1812c53f63cdc8bef1886999b02a8f6bd720f829a59",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/request.json",
+      "sha256": "0bc3aae3f90742f10e8f20977b4dd59666a74a7be9943f3ff1e98ef8e291c9f7",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/source-map.json",
+      "sha256": "b7ac58ba6bb077dd06ad4994d9749d2cdc8cc772e4f17a0448f875643077a4f3",
+      "bytes": 30915
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/sources/README.md",
+      "sha256": "e17f651a0646410427ba1d52cd0670a4c199864a0534c8115d8f77524c57cf11",
+      "bytes": 2063
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/critic/status.json",
+      "sha256": "045f63245354bac5e70989faed9d75846818b3ff444aca45c1cade3a7f82b6bb",
+      "bytes": 4549
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "5526edcfc7e1ae6bda16a5370567512e9bc10815cbc4e8630e806408dd0af5b2",
+      "bytes": 10139
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "806f8bc9d534eb38235a18b3c16214f308794336f525ba26bce56eff1fedb6d1",
+      "bytes": 17864
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "650bce37dbaadb06273b9fdb2106b2e3ae9d07e9f0dd538d30714cb25f39f27e",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/draft.md",
+      "sha256": "177f6e49ae2819c0ccedd1c738268c85f348df19f3254e6254e8376fb28670b8",
+      "bytes": 35368
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "837d1ddc3b7f087adc2a90e75009ee8f6fa3f49805666493545eaf8af0537a49",
+      "bytes": 9391
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "159115f99a022bbfbb4059096b9d704c82337e8ccebe71e2ee0755c43d648b54",
+      "bytes": 1819
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "aed6670589660fcc076f2470799349774c7e062bc49b36756221c176a41f05a6",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "55aa2366b0e7d1c505e878504e19435b1280d4aba8c0b7bd7ab86a916604bf5b",
+      "bytes": 2873
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "e035a78d9083e76e967b73c264c7eb966a8b35e50cc7a34f28cf81720dcb3f90",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "e035a78d9083e76e967b73c264c7eb966a8b35e50cc7a34f28cf81720dcb3f90",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "00c9f501b6ae211388f3a0a9c9198e8d3be5e31838daeebad5cd84085d096bf9",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "a53adee7ad0a2a23e6aac8fdf54b8b2e1f60db05811771e3b9f30a47ae0df55d",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/request.json",
+      "sha256": "8bdcedc24601cb60a65ce41b70eb1361bfac8ba1d5436916eb18ba7d75f95ca4",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4b51c824e823a867e2c9d3737a355726e166d7d8c57a3fcb2c9dcf75d7f95824",
+      "bytes": 2363
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "4deb8bc99b15af86c02a07b81a9dcfed6c28b06f4083d1eadabc1033b8dff19d",
+      "bytes": 23440
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/sources/README.md",
+      "sha256": "b4e55e6c7ad5abf3e794130dd00dc0c40ecc4c75f022beac055ef6d8374352d2",
+      "bytes": 1574
+    },
+    {
+      "path": "arms/B02-P02-treatment/stages/investigator/status.json",
+      "sha256": "69240f46af66f484e7801af0e309bf167c358adbd5e55a0c03cb922c35d43a75",
+      "bytes": 4685
+    },
+    {
+      "path": "arms/B06-P02-control/inputs/authored-manifest.json",
+      "sha256": "dfde992312ce89894cfba84f8904b3f7667088ea13ba7ef99c1d3bb883da434f",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B06-P02-control/inputs/configs/B06-P02-control.json",
+      "sha256": "b5d2cd9aefe799725d0489d8847ea2558a6e75f408d70e7736fba30bcf8aba42",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B06-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "0c31c92a6b8fc79d1bad8d22831d827e946fdd9dbdf5665b28233125e73932bf",
+      "bytes": 2362
+    },
+    {
+      "path": "arms/B06-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/assignment.md",
+      "sha256": "82d8735b3dd58d6e2a9923c8ea90f99364a34071acbaac386789902902cb9dd5",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/critique.md",
+      "sha256": "3fefc4f8a2a46d8d563d3e7b439801ade2114e46df0e6637042f58bd98efd37f",
+      "bytes": 10190
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/dispatch.json",
+      "sha256": "a0e31ef5950f905853c887f87db209e80d9f55d92e4fe20599fae1b68e439e1d",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "23ac1e0c3cd000d85bed75a686edf7cfa24bf120699a8ce1212a6166471fbb85",
+      "bytes": 9823
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/freeze.json",
+      "sha256": "b3386ef5ca6bce890147c26912974e422fe42b53cabf27400a67cfcb7139d933",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/input-map.json",
+      "sha256": "01d8a0af7ddd213ca2ed8276239c91c95f6c2d51c589b7bfe2e0c26300c8725a",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/manifest.json",
+      "sha256": "15449d58b40331fa867dd570a4a8a5b49a3e1b72b252ad0879870da687ab26df",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "3ed9d47562b9bdbc8b3e41b010dd6d63d8570a6a847137d5a496c753aaed8fd9",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "3ed9d47562b9bdbc8b3e41b010dd6d63d8570a6a847137d5a496c753aaed8fd9",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "e22338783fa76aa8945706823dd12b3283a673727b3ac9804d72f69877ba38b1",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/request.json",
+      "sha256": "8ac7ce21eef310650c68a62d45f15242c93edfb56757d1f82755d867bb0a1efb",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/source-map.json",
+      "sha256": "2602f7735cb79ba87a6cbfcd7da3a170a9166a756a684aba20bb8f141f84b444",
+      "bytes": 11367
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/sources/index.md",
+      "sha256": "579dec09b94d208c72fbf6730eabfb5ba20d5adaddabd5dc7c8434a6265c0e2f",
+      "bytes": 2302
+    },
+    {
+      "path": "arms/B06-P02-control/stages/critic/status.json",
+      "sha256": "5bf562b2a7fc706f8a3a06c51c3bca0f6bcf69f2471338eed75353d74851542a",
+      "bytes": 4903
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/assignment.md",
+      "sha256": "16fde471f2e8d1aa7bad9fd43a6e0a07eba086857eb213769f375bc3d533b61c",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/discovery.md",
+      "sha256": "0b17bc77b40e2cb202a4b5fb4b5b1e51df34d105cc8c3781ac10eb338eb53a11",
+      "bytes": 15908
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/dispatch.json",
+      "sha256": "c8ce94fa337090a192f8d24f0707de986e02dd84686ebf97e0121b068c507599",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/draft.md",
+      "sha256": "b4a0ccf50a10a66f97e5f5474cddaa2873172759943200db848684f9723ab7f2",
+      "bytes": 26265
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "78bd6d1298b0bd50b11c418bcd3fe3378f886a71f2f6bdde8bd09c7bc8586e76",
+      "bytes": 8915
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/freeze.json",
+      "sha256": "686d3b59632cf5a021a4a7e6e1bd5f7c10a89701c78e820017bb8bb6a510a815",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/input-map.json",
+      "sha256": "fd5d66d862633125cf87096985b54c5686a3a2b4d1aa4a858395f129e857ce4f",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/manifest.json",
+      "sha256": "96f46613fdf344430573fafde4fb5d3fdec3cfc4ca08dae5e809bfb3bcdbdb65",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "a3663b7f1a8dd41194379a7c4ff681f6fbfa7d803f52652db4b9987e660b2394",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "a3663b7f1a8dd41194379a7c4ff681f6fbfa7d803f52652db4b9987e660b2394",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "25b1174ce277b44f7943216e3adc78cb7dfc55b56facc17a1bdc1136ee9396ac",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "ec47a610421157217f045b43739a065e567da161f79c03f450f76ce437c677ec",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/request.json",
+      "sha256": "b45e0eb97167cb6adf4fb9bc6794a05a8808c3d073d1efba6a46e31fa791bb0f",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/source-map.json",
+      "sha256": "28e3c6f605ec51d3541ade7b29cedbc91d75ca5058dcf30c73ae8a3632907753",
+      "bytes": 21891
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/sources/index.md",
+      "sha256": "2f0d2d5bd9926b71b3925e9368d335f52067dc2af7b7e47a435079260ef559f5",
+      "bytes": 4400
+    },
+    {
+      "path": "arms/B06-P02-control/stages/investigator/status.json",
+      "sha256": "2dc8af9ae386d7eaa1203f2dabba8e8ab1d4e7f5cde2baeff54e7f529a591fa6",
+      "bytes": 4451
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/assignment.md",
+      "sha256": "d076374b0388b2e4dcb7e4979d46922dea1ec8537d961ad8f8c7c1dac8b8cd10",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/dispatch.json",
+      "sha256": "7f352512fa4cb8efe99f343aa02ec3906f61dd5710271511be240f46a16ad213",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "6fe5e688ba127ec3c08194e2c98c48c07dc7f6780c7aa1cafa7da2e520116ca7",
+      "bytes": 9949
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/final.md",
+      "sha256": "0b1c637935f9fde568e0a54e8d8f28bab578dd4de8d8b7d36aed7e5d9e0bc206",
+      "bytes": 29404
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/freeze.json",
+      "sha256": "bd6fd2af16f74d403b5ce9bfd8fb77538c556b2a6bdee0fb86505a148e19f00d",
+      "bytes": 5249
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/input-map.json",
+      "sha256": "759c99ee7bd98197c739c1dc63c947448b29fb55ca6f86cde8627b590be9f9b9",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/manifest.json",
+      "sha256": "2b577662924adf0b3d577219ef0e797a52453f00699cbd85e34a297d17538cc8",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "c539fda9f9b81e2fe925001008428a1f62398b227b332896ffbfe531249f71e5",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "c539fda9f9b81e2fe925001008428a1f62398b227b332896ffbfe531249f71e5",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "fba5d38b2c14941c5817bb5ec0868c165a09428f99fc4251c4cb35e0f0493a1b",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/request.json",
+      "sha256": "d5747a69961a9a51d1f1688a24331182f231aa25ed9a126ccdefbb53a0bdd156",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/source-map.json",
+      "sha256": "7b8873fa3d414d95bbc8769621e025808fcbe520f3b52ff07692b5308565bfc7",
+      "bytes": 36939
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/sources/index.md",
+      "sha256": "e3cc22c6992d010900dd4f7ed23f5d316f639ea12f18a14b5db99dd870df5a23",
+      "bytes": 9879
+    },
+    {
+      "path": "arms/B06-P02-control/stages/reviser/status.json",
+      "sha256": "1775d34c60164d1546c2a6abaab3baee7093250f24a518deb8267ea940f741dd",
+      "bytes": 4966
+    },
+    {
+      "path": "arms/B06-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "d4f09da308208146a5dc9fc9f712a8d982e5ae3780ed63f6b54b130d9ec21455",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B06-P02-treatment/inputs/configs/B06-P02-treatment.json",
+      "sha256": "3a0f8eaa1471a2bd7d64be5b5263187b7525f802fc93e684fe12268f757d1748",
+      "bytes": 1427
+    },
+    {
+      "path": "arms/B06-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "0c31c92a6b8fc79d1bad8d22831d827e946fdd9dbdf5665b28233125e73932bf",
+      "bytes": 2362
+    },
+    {
+      "path": "arms/B06-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/assignment.md",
+      "sha256": "7703dd4452f3898e96952f0fecc6ddc740e7a7e192165c2720d4b927d7d41196",
+      "bytes": 9454
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/critique.md",
+      "sha256": "760b88c75b9b332afe694fa682453761a3d2273554d4c7a9a08ef3b6b663a6df",
+      "bytes": 8426
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/dispatch.json",
+      "sha256": "85a54cc1aeee81c47e76a44db3b6884e41b711dc1110713f8cf86bd8a096f495",
+      "bytes": 10526
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/eval-ready-status.json",
+      "sha256": "c64f4ca9f3af851ec334eefbb0385b12e5635789cd31f3a1d811ec11083efc4f",
+      "bytes": 10195
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/freeze.json",
+      "sha256": "1983e831b74452f26c5b196d325b4c94460ed1d5ef16e924f69d9c59e1a86cb0",
+      "bytes": 4018
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/input-map.json",
+      "sha256": "8a6a5a85cf4397bcd3b7c2f527e50bff012489dc35b7c62350c81404d770a0d4",
+      "bytes": 1681
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/manifest.json",
+      "sha256": "f79ff8fd4be011a1acb9a3cd35ed8bd68297adaf710d40afd30b71ce25cc3385",
+      "bytes": 2402
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/native-goal-active.json",
+      "sha256": "ffd770e53c6912766094e69b7952c0ccce6a190d5f5674e0a6b176b8a6b6df07",
+      "bytes": 497
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/native-goal-create.json",
+      "sha256": "ffd770e53c6912766094e69b7952c0ccce6a190d5f5674e0a6b176b8a6b6df07",
+      "bytes": 497
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/native-goal-terminal.json",
+      "sha256": "c74d8521078dd3a2ec02fb2ec5510dfd7062596ae97fd3a4a20d29299171c11c",
+      "bytes": 825
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/request.json",
+      "sha256": "ec458e965d38c19482dbfa30604da27aaf3712bc74ad1dc6c73d048b86a7b671",
+      "bytes": 7097
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/source-map.json",
+      "sha256": "fe8d99149eed0880ae3da2f99960578991cbc56f302204fd9236fbe42465aa41",
+      "bytes": 5107
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/sources/README.md",
+      "sha256": "cecc80e7521697ae6eb97d2ef3da93569803869460e61ef1924669a5f57525be",
+      "bytes": 1194
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-breadth/status.json",
+      "sha256": "a18a1425c57849e05dce4c08502df1a65ced50d97a33dca7856efd737b1fa99c",
+      "bytes": 5085
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/assignment.md",
+      "sha256": "00dc31ac6b5cf6faaed41821beab49e08f8563442a39d5c159b9ad5ee65efbca",
+      "bytes": 9441
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/critique.md",
+      "sha256": "0a70df0cd4f184226002c0139b6c4500504b7c861eb6102bb0c4d945abcbbc0a",
+      "bytes": 7772
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/dispatch.json",
+      "sha256": "c90def7416cb8e2201ffe244bec3ef12d619ccc91e81bf06f5042caf4192884d",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/eval-ready-status.json",
+      "sha256": "ac0b4fff3ef97b06f9e31a05cd4319c63617564624c227b1eaa98cb10afec325",
+      "bytes": 8699
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/freeze.json",
+      "sha256": "b7ac2b23a75774c8138655df189430b76b9492a42854b3334e05f5a0f0192852",
+      "bytes": 4008
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/input-map.json",
+      "sha256": "af293df760b70beef2bae67d664da4390925421dd42ae32a70d62da00f0beabe",
+      "bytes": 1677
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/manifest.json",
+      "sha256": "98a7a81b7087056e0daae2e5af652b2534383e4db524144d41eab5ad0318a385",
+      "bytes": 2210
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/native-goal-active.json",
+      "sha256": "5bd506c22caa0bf97dab020b6b3a81e7869520f5d9f3f447e40b8fc9180a2ed0",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/native-goal-create.json",
+      "sha256": "5bd506c22caa0bf97dab020b6b3a81e7869520f5d9f3f447e40b8fc9180a2ed0",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/native-goal-terminal.json",
+      "sha256": "b1a0c8e5d234b06e824a4ef8c4786227653bb20779e50c0236a32dfe04835c91",
+      "bytes": 821
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/request.json",
+      "sha256": "f6a7560a0f4f84064862377cd607e79e96f23fa8c9656d8c49aa68beeb117e6e",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/source-map.json",
+      "sha256": "acdb9e3535542bdce3dd6ded3a603d5da6e06da740ab6d07d4538256fc4affb7",
+      "bytes": 7553
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/critic-truth/status.json",
+      "sha256": "3b6e7d5f005f96706609f6a3b6020c81556285386f3e485565a4019ea89c3ab0",
+      "bytes": 4339
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "4e78142206c7037c9875a21a95a70f45f43ffa00a263bae2acec8a74e893909f",
+      "bytes": 10249
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+      "bytes": 12995
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "f6a8f1d0379356396ba7b33ccefb2e51fd3cf5395ff2bab9b10c952e6acc4ff8",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/draft.md",
+      "sha256": "63407117941142d73c3916098fdeb9549daaf4a2be5f27d3e23631101883084a",
+      "bytes": 24574
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "a1228309573fee182b830fe1e7caf0a711b83d704dce72a3ecd9e4e90ec69f98",
+      "bytes": 7523
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "4ae810ee6497601bea791803a73758f0aaf5c2eaec8dd8d1677e919d98e42669",
+      "bytes": 1819
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "79e5395f926db21dae3948a3c10d9a05066530e94d87c171e659417cf763d9cf",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "257bec5425e4ce3e743a3d3e9058d3a70288ebcb60c264a1a2ef131c1e1ca3c3",
+      "bytes": 2873
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "deb4c8a664dd7630b4bc3df0bfa5844d137f36b750b352427ddda81a2d440139",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "deb4c8a664dd7630b4bc3df0bfa5844d137f36b750b352427ddda81a2d440139",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "d2d123bfbc0e7a4ce4db85ec137617e63a6a834815d699e18aeda23cf2b659cf",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "2c96f794c2ad8376970e823fbb87217728a9e966b54082314c13c26b7a871933",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/request.json",
+      "sha256": "422a016248f2575d6a3aa3542dd75741d44c2e586b33f9f9bc8c2c5a891400b0",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "41bdd444ad2e51c6d612d3b023a666def4cb73121ae38e800ca84da6fe8913d1",
+      "bytes": 20303
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/sources/README.md",
+      "sha256": "cd1a6a7aba2b7955013c20e327d096f406d63be28faa6ff73a1b624abdca6695",
+      "bytes": 1778
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/investigator/status.json",
+      "sha256": "cc424ac228e98dcc5855a837fa16c1523b2cb8c29684fe33cfa9da8efdd59306",
+      "bytes": 3753
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "73a03cd27cb2733f130ef49564b83fa34a24087de9840c781f752f5fd5dcd922",
+      "bytes": 10083
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/dispatch.json",
+      "sha256": "4dab1699f83c75f83fa0a563951eb0c04a66eee1dbdb8e699e0a13b11560df9a",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "a1ea1f3373ae45fac2b31f2457f99ef36bd8b5a0662c86857f852bf8c6d701e7",
+      "bytes": 11157
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/final.md",
+      "sha256": "2dd9a6216253d150d4f9f2e1b900bf8983b2fbbfb87a1636e844b9a41f6dbbfa",
+      "bytes": 35189
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/freeze.json",
+      "sha256": "4e214ef0a345a9805eb5e068567a8138cdcf540d49e4a093482b986a1d2719ed",
+      "bytes": 6393
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "b73ad80ec3587ce561ad83546e2875678a8a6e484bce0a3ab8c10f5d3f690478",
+      "bytes": 2542
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/manifest.json",
+      "sha256": "3aabaac4f699b5a53c19db1824c5f4e46094b63dcedf0951b059c704c356791f",
+      "bytes": 2388
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "d2f4aeece9a9b47bb3d1b78c173f8173f2f3063ed02ceb0331d51d184e5b8c68",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "d2f4aeece9a9b47bb3d1b78c173f8173f2f3063ed02ceb0331d51d184e5b8c68",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "820121c87996cf92b8dbb68095b1b0436a978bfc6d48c3f17c432cdced3ce630",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/request.json",
+      "sha256": "16b0cc890823e7ba91690de27b549f98ad162b57eea4afc742685cdda9dd56e0",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/source-map.json",
+      "sha256": "8587d665fa105abab2b9e862129bf355d2e61e54c0c8a4abe69d17d390604b0c",
+      "bytes": 44560
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/sources/README.md",
+      "sha256": "92cb10eb6bc4c494a1ebc50514b4e37ae89eb430a6ca859b3ae119b2ac92550d",
+      "bytes": 1727
+    },
+    {
+      "path": "arms/B06-P02-treatment/stages/reviser/status.json",
+      "sha256": "1b783ac1ce46d03e81e545ffe624bb286f77b1c1fe9d2791b5c72f394fc59433",
+      "bytes": 5568
+    },
+    {
+      "path": "arms/B07-P01-control/inputs/authored-manifest.json",
+      "sha256": "7c35dcfc05c29123704ac0b13bc31b10c07c0a4918a16a27505b9216f123112f",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B07-P01-control/inputs/configs/B07-P01-control.json",
+      "sha256": "9b6c29f8b632ecd91a1e7eab5820d79885fe02b6ff5095ba165a835a6868f6cb",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B07-P01-control/inputs/control-inputs/brief.md",
+      "sha256": "464dc31042b3c3b817dab87a37f16a2f5f2afb975c9c6e6df83745b2f7ac9f3b",
+      "bytes": 2311
+    },
+    {
+      "path": "arms/B07-P01-control/inputs/control-inputs/plan.md",
+      "sha256": "0bc254bf2a6a44977ac7037923782331552ecee5afdcc79df4264e6452b2c7fa",
+      "bytes": 2391
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/assignment.md",
+      "sha256": "3848dd7be3e2b5ae296c3a483d5237aaa78d1e2d68678da9246babb9108ba11f",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/critique.md",
+      "sha256": "cf54f13588df375d629497d28a82507cc37cb5e54095e704d7a539d98a54bc16",
+      "bytes": 10712
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/dispatch.json",
+      "sha256": "1ebaf9aa269b00c4d78ab683d49a94a0f4a501b83ac26ab97f5891e1f3d965f6",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/eval-ready-status.json",
+      "sha256": "8ec8c7e3b07d3d710ba65218ba99f5667d1a22933c11fffdf67889b8786fd28a",
+      "bytes": 8287
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/freeze.json",
+      "sha256": "616560c47311a21381a664319aab78b5746ea011d1b58f1f1805747b45394d4b",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/input-map.json",
+      "sha256": "bff0bf69386fe7914f10db02bc0f7a8f97961e33edaa2fe4a98ed9a1a59e7cd0",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/manifest.json",
+      "sha256": "089b81a377ab46e727dd4738ed033286f5ab3c533e9f4ed84130a5b42ac456b2",
+      "bytes": 2198
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/native-goal-active.json",
+      "sha256": "7558d1f52c22f46513d9ea041d062b2f7e7ddec7c8584ad8d9d62ba10fbc577e",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/native-goal-create.json",
+      "sha256": "7558d1f52c22f46513d9ea041d062b2f7e7ddec7c8584ad8d9d62ba10fbc577e",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/native-goal-terminal.json",
+      "sha256": "a6f6f00d619b8aa4331b83adaf4e5ed24c92cb461de24993a50750212b552942",
+      "bytes": 803
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/request.json",
+      "sha256": "294633f8e81d6c5040941a61f72505561532d7f87f1bf2a2bb19a3e30d7d940c",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/source-map.json",
+      "sha256": "e9d0e12654d0c7b819137bdacee1a6f99842506c6f8f4e044a36d834c9bbabd7",
+      "bytes": 14099
+    },
+    {
+      "path": "arms/B07-P01-control/stages/critic/status.json",
+      "sha256": "b8464c8f376d4f0212c4c9dd2055488254cc30d4f583ceb3cf4f56bbf1eca272",
+      "bytes": 4135
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/assignment.md",
+      "sha256": "4e511ce1d5418aa25dea8966933b6d10671334b166b13b0c44b5dbc3b184bcbe",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/discovery.md",
+      "sha256": "788582eb19f13c93d8e86ffd5c57a8bff06691d0e0127f06eed2e0b351830476",
+      "bytes": 15055
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/dispatch.json",
+      "sha256": "8c83f0f6d9bf45d1a7fe49bd97fb872c60ed902ff2d0c79a3dff368892fb42db",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/draft.md",
+      "sha256": "59562ffcded35909e10eb457b6b9ec5bd2604fb8aabc6e7f3a3c19d86d7c804a",
+      "bytes": 17438
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/eval-ready-status.json",
+      "sha256": "59a2570fc4289094ececa6e6fa44038763b0a9669d8f509baf992be680acf60e",
+      "bytes": 8889
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/freeze.json",
+      "sha256": "863c29df9c1e2d0de0ab73c3e55ea13305673a598bbf1d4078d2f2880b1a90b0",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/input-map.json",
+      "sha256": "a788401ac62abd695901362863a20b0f5f41f4f9b11367d21b49b6f357e53f23",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/manifest.json",
+      "sha256": "00bbfc2469bba805f1f4039bdef2e91e0c45d5c7bfddc5075c7661416d9edf3a",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/native-goal-active.json",
+      "sha256": "b37e9dee089c6a86b82c3115dca28d821e0c53e7cbf89027867c92cfebb79007",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/native-goal-create.json",
+      "sha256": "b37e9dee089c6a86b82c3115dca28d821e0c53e7cbf89027867c92cfebb79007",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "181c5fae8207032d043b9f712cd1ec3e24363ade81e1817c9b18160b4204e992",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "2143c0d6c46be9e29488576707c96c8cd8297a0af64d8439e2559003df6490a9",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/request.json",
+      "sha256": "5027a3435f1d7f8fced59926405811db40975707df6d566c198b34da07aed669",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "0bc254bf2a6a44977ac7037923782331552ecee5afdcc79df4264e6452b2c7fa",
+      "bytes": 2391
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/source-map.json",
+      "sha256": "968c359d03fe563c5c18999c3906707e6a3a6b08dcbbddeffed2141715930f5f",
+      "bytes": 15231
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/sources/index.md",
+      "sha256": "a37fef49dd7f673a1d847a146af156ecfdbdaac05d8a323544c0d7af865ad583",
+      "bytes": 3725
+    },
+    {
+      "path": "arms/B07-P01-control/stages/investigator/status.json",
+      "sha256": "3fd518324a5c4b5a9891d2baa14b30660eab11b41e1bca378a359e4e5ab3a3e8",
+      "bytes": 4435
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/assignment.md",
+      "sha256": "218643661fd77bb318e47433a2153fa98799e2d2d63b21e8ba7b5edb1a727ae3",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/dispatch.json",
+      "sha256": "cb92b8c7c5a305a035d68967513ae8f3058c476fefa45fccc1299d99f49210dc",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/eval-ready-status.json",
+      "sha256": "f4fd2ab6b20746c06799bf645ac132d538e1e140c35836b337bb35a40ae41c68",
+      "bytes": 9533
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/final.md",
+      "sha256": "6fefd1d4364ee5ec2e96b0704f04eef81f7b61e96a9df862a7b7679970aa1a1d",
+      "bytes": 26435
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/freeze.json",
+      "sha256": "92fb9159d188c806043acf6cc2f6b49923dffececa42a65ccc227feee6b68946",
+      "bytes": 4877
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/input-map.json",
+      "sha256": "1d2f7cbd7e98579afb17023499906ed751d07f27d6a0f6493f5df4cc3dda4a52",
+      "bytes": 1963
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/manifest.json",
+      "sha256": "ccc12fdf9e0a156b294772831b45cb5353ff5ac7cbec058d95768e43582be91b",
+      "bytes": 2197
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/native-goal-active.json",
+      "sha256": "105b9e64f15a378601add06e543c286c9681bcabdc18546f9f6818938d1cb642",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/native-goal-create.json",
+      "sha256": "105b9e64f15a378601add06e543c286c9681bcabdc18546f9f6818938d1cb642",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "5aa09cc5c46e65854204603c7c662a324491a59d320f05d9cec423922c88a321",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/request.json",
+      "sha256": "4d437d7bd0d85daad514c1cf5f07ce0495b81188a2e332a1e05c9772fab3aa0b",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/source-map.json",
+      "sha256": "a0e51bba234ea17f309903c05bf0111fa8f11d9215050e8e8bc15f74541672cc",
+      "bytes": 24483
+    },
+    {
+      "path": "arms/B07-P01-control/stages/reviser/status.json",
+      "sha256": "c2748b5868bb79f10be464d12816f5ad9201313ac7a3a880b4d81486429b6309",
+      "bytes": 4758
+    },
+    {
+      "path": "arms/B07-P01-treatment/inputs/authored-manifest.json",
+      "sha256": "2ef5fc8bc09d7ac3f5a2046b4a00e3268202d32b0a0100d5f182a7969f5c3348",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B07-P01-treatment/inputs/configs/B07-P01-treatment.json",
+      "sha256": "29879ec5a3e09be4028519c01c4ed777f92d310a9ba867fa5b70d79c07af1234",
+      "bytes": 2560
+    },
+    {
+      "path": "arms/B07-P01-treatment/inputs/control-inputs/brief.md",
+      "sha256": "464dc31042b3c3b817dab87a37f16a2f5f2afb975c9c6e6df83745b2f7ac9f3b",
+      "bytes": 2311
+    },
+    {
+      "path": "arms/B07-P01-treatment/inputs/control-inputs/plan.md",
+      "sha256": "0bc254bf2a6a44977ac7037923782331552ecee5afdcc79df4264e6452b2c7fa",
+      "bytes": 2391
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/assignment.md",
+      "sha256": "5f4f73e0a1a3c247e57cc91c121acf0b78a8cd1029c705e13929b269f218079d",
+      "bytes": 9973
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/critique.md",
+      "sha256": "bc42d1592bee23dae37afa53418c5fd30d1d70b2b3a3f7fa794ee66d71cee2f6",
+      "bytes": 14361
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/dispatch.json",
+      "sha256": "190a67144843982e70eae05a637ccc395c220427be44c16741cf72e5ddb6c0f5",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "38efc2fe4389c59120435bdffc32b51fdac197848f3e6374d634fb5edb814192",
+      "bytes": 9487
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/freeze.json",
+      "sha256": "e3aee2270b18f331c32e8c1551c0390492b5afd23c4e9be05ca8d1da94fdc76c",
+      "bytes": 5523
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/input-map.json",
+      "sha256": "60c9f2171ac9e197eb2d8b103ff05a159d9dba7f452e009e9d00a5bbf9811d99",
+      "bytes": 1799
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/manifest.json",
+      "sha256": "1c31050782416b8ec040163a71cfd07b1342171df877fd704164cbbd4a5fec32",
+      "bytes": 2387
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/native-goal-active.json",
+      "sha256": "0f5c1d32ac750e5ca622dd8a7c1b15b0629fa3d15a4ebd0f071f86f3fde28d33",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/native-goal-create.json",
+      "sha256": "0f5c1d32ac750e5ca622dd8a7c1b15b0629fa3d15a4ebd0f071f86f3fde28d33",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "0a877fd5f56042272ec0428c573478fa7aa33cbce735c20637797d2bdbe18003",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/request.json",
+      "sha256": "2927f3c876dfa6c7cc8fab4440c74b47b654a653dc2d53934a5edf07a9a58d30",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/source-map.json",
+      "sha256": "16e5416621627cff0f5d6132c7ac9b82210dbf024865bbcd5b4d77511d66959d",
+      "bytes": 18893
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/sources/index.md",
+      "sha256": "5aaa3043eb5771a8a724b3b6c9c6021d9eb7c6e45fba3ad59810b9bf009f2b41",
+      "bytes": 5743
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/critic/status.json",
+      "sha256": "22746d6c35e8c0d081c16fbbfe89d65006b7ccda20e92cb69ec5dd1b3313aa17",
+      "bytes": 4729
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "0af888b5b01c641515ae84bf4cd4fc14ebe4b3abac24348355bbd13513509198",
+      "bytes": 9965
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "b14835879ff97377c79c45b7b011532abe2d82dd6f621f84844f7eda16869ee7",
+      "bytes": 16864
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/dispatch.json",
+      "sha256": "87ba966929d6d45313d312444f8d77231efdd20bf4c890cb1a7c9a9e65e86b23",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/draft.md",
+      "sha256": "e7f2a62cec7c6b5641de9b62c0d12699f1e7d093994c28fbda5e5a4be260a5b0",
+      "bytes": 29391
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "292038032db01be9ee88494b8e8b0e3a8bcc5a851ebb5e7e57771dbd4d466073",
+      "bytes": 10219
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/freeze.json",
+      "sha256": "007498418f8ca4aa65eafccb9a305f210eaeb1f5ff98612ab9dd1aeee11a3012",
+      "bytes": 2543
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "28d6c145a54ab975edd1a7c1b236703e8a1baccac1e9cc26a489b8b22bfa5318",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/manifest.json",
+      "sha256": "a62db4428a1bb1e7bc8dea9e8d22eef1cbd226b00b5206c04f2d7da470237128",
+      "bytes": 3070
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "0dc06fbecdfd7a45e9c35f0c28589a418ffb3824a71915acfa9d409ac8a57c1c",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "0dc06fbecdfd7a45e9c35f0c28589a418ffb3824a71915acfa9d409ac8a57c1c",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "1d94456b4b08189706d8f9d88dff8cb29e032df8d558b01e604c4fb495f0671f",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "b8dc4095f0f3dd1b584760ff6e54b8180a0a58360e8923550cb0010c59e95194",
+      "bytes": 437
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/request.json",
+      "sha256": "f2349ce25b5ff429045593af2891c1995ddbd41666408af8336e40784204c3fb",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "0bc254bf2a6a44977ac7037923782331552ecee5afdcc79df4264e6452b2c7fa",
+      "bytes": 2391
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "48c4ec7bca3ea6403ebc62e50772e76d062ff9b7aff572db32fca4c1f152386e",
+      "bytes": 12974
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "416dcb3e85cda055d592baaa8253479297252b8f7174f6f6181f246109d9b9e3",
+      "bytes": 9931
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/sources/source-map.json",
+      "sha256": "17a822f8dfb0267515988cfb40f4d8dece97b5b929a1751b7962225f44c7cfe5",
+      "bytes": 11822
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/investigator/status.json",
+      "sha256": "b0041b183973f5b0bad1c5ff1fd0528aa0b991919e9756da1e861f97d54238c4",
+      "bytes": 5103
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/assignment.md",
+      "sha256": "e8fdf379e545027522011afda1fb7442257f893b3cf6cca9d9905afd7476a8b2",
+      "bytes": 9464
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/dispatch.json",
+      "sha256": "43e1a2266963d0eb9d6e22fff2c05519bb1eb8c6537648184f7a74e9bf834bd8",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "39158629145a03939900e821bc1c6f556ebeaaf6752398edc6f35184ea4db573",
+      "bytes": 8445
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/final.md",
+      "sha256": "5474c5c8958bb5a4ba3b86d595c3954b0d00bcb45dc55cc34eff3377bb4013e5",
+      "bytes": 34213
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/freeze.json",
+      "sha256": "41a8dc40a97cd0c3ea355cba18d303f4235be291609f4db9c54dcab4ad05090d",
+      "bytes": 6454
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/input-map.json",
+      "sha256": "6b4ac69c672903c4911e50386f35052115758f845ffffaae86f936bb611cc2a0",
+      "bytes": 2274
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/manifest.json",
+      "sha256": "69fd7d63c923081d0da01f12d3cb6a0a5cc25fc7a051b5a8a0943113b68e5356",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "ec0062bedbea7251cedfddbe5ec5897d984bb3a8c3b96cda96d98fe09d4a7414",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "ec0062bedbea7251cedfddbe5ec5897d984bb3a8c3b96cda96d98fe09d4a7414",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "62599387b242a15c49d08194518131b3946cd1ac114c32917499dd69980850fa",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/request.json",
+      "sha256": "10a0f4cbacfbf9a309ad3e2ca7c3104276e5b58b2631d4a6410ff49eb40f2fe9",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/source-map.json",
+      "sha256": "fd2cda331b96a60f6fd78602c79a03d57a610435a73df1ad0fc5a638efe3b52d",
+      "bytes": 25034
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/sources/index.md",
+      "sha256": "7fa4e356e3c23b7a2bb5b99a9e93fdec52ed99911a83c31f6e88fed1aecf48ec",
+      "bytes": 9058
+    },
+    {
+      "path": "arms/B07-P01-treatment/stages/reviser/status.json",
+      "sha256": "4bc6f0bf20615c002ee21622c3b1d7099e77bbb1538b36fb71b4ea05e5feb14c",
+      "bytes": 4214
+    },
+    {
+      "path": "arms/B07-P02-control/inputs/authored-manifest.json",
+      "sha256": "75f085a2d6313aceacf28d5995ed3811f96a9c4c391119463e25b37751eadb91",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B07-P02-control/inputs/configs/B07-P02-control.json",
+      "sha256": "e2ffe389e800b9fab9d9c8a68eb90c83ae53bce3869698d9b8f49be0461b81c1",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B07-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "35f7b4e31d11d22e539032e83288c48e1a2d7afcd8a25c445c0f1d4ee56ab83e",
+      "bytes": 2340
+    },
+    {
+      "path": "arms/B07-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+      "bytes": 2420
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/assignment.md",
+      "sha256": "a25ad1b137b64b97c33f6914bd8a01a19cf60d4f81daf6a65f0e36f5792f3684",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/critique.md",
+      "sha256": "22d861a2e4932bdc5e02fabe865913b324bb739b631b1980f4e33abecd08e187",
+      "bytes": 8869
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/dispatch.json",
+      "sha256": "da16d77295db1ec73e5251f101d611f174ec01d624973c155bd9e19bb7623a4c",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "b3a6572fd4c67bb22297f934c7ff13245e0c7a357ba656cbbdcd30ac4e9a2409",
+      "bytes": 9381
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/freeze.json",
+      "sha256": "33726577a9608cd058963ef78eea9ffe7aea580fba9be2bcfa8891957c69326f",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/input-map.json",
+      "sha256": "30da12441dc394e1bebba2bbe7097201f59f54c6f132badf1ceb4c67acbab854",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/manifest.json",
+      "sha256": "dab6a1f551e22897f40c9a7a41feda8583dbc414372c4970b01142abbee8188f",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "61fb67ff17d53a5f45d14509fe9f7db6bf3a9c40eff404e6f2d81b140d76901c",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "61fb67ff17d53a5f45d14509fe9f7db6bf3a9c40eff404e6f2d81b140d76901c",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "3411bd0874078babebc60249617c6a13d7df90de40c3e94cf6a8b3652f7dbd80",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/request.json",
+      "sha256": "3d679e293868ee598c5cbcd26ba0162ae3a3cf22826e5b2921e93062a9992f4a",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/source-map.json",
+      "sha256": "d5341c590f68902984cfb7ca6e4fbbc140a92c0346f46124d6818ffdefb1e64f",
+      "bytes": 11821
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/sources/index.md",
+      "sha256": "2e241ea86b0f5103a0696de48969ede4c248d47d305b0b5df066e90150862637",
+      "bytes": 2612
+    },
+    {
+      "path": "arms/B07-P02-control/stages/critic/status.json",
+      "sha256": "ac2ad282402441d5b012ee59dcd1463c0c9af7f5b421a873bea2ed4ec372b9f5",
+      "bytes": 4681
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/assignment.md",
+      "sha256": "7ac9f09cfcd102dae9a38e6df9e850a4bd3a5a2ac25e7dddb6829411affa49c7",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/discovery.md",
+      "sha256": "c4d2ebd72704b3d2a8d6e9c5a05b98b9face64b5d14c2764fb412eb6e911f29a",
+      "bytes": 11159
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/dispatch.json",
+      "sha256": "b830d78989be62a87558c8b6b0cb24f1bff5e18e2152a93a4f8096032dc8726e",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/draft.md",
+      "sha256": "b6fb4f702751d023ec4d3df8e6879859d4fa305187929a82452cf92481a722d6",
+      "bytes": 19876
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "e0738689da4dda962ab2bd816a09d7b7a4ae368291dfa342f2c02fbeb941404f",
+      "bytes": 9937
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/freeze.json",
+      "sha256": "feda84b72fe75df7b3c7eaec5263cd5fcda372c87bdaa29cdb70d4725dafbf8d",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/input-map.json",
+      "sha256": "ec64b626abcd01a9b1dde889520bbea33722775ce6583fb9d37bb26ad2437cb2",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/manifest.json",
+      "sha256": "7caa19770eb71daec19921773b373407ff921c3d450a3f14847274bd8bee036d",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "cc5accfce325b5b82380c9fdfd2cab32e1cce8f8b41ff4b03a8d244b20acf8af",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "cc5accfce325b5b82380c9fdfd2cab32e1cce8f8b41ff4b03a8d244b20acf8af",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "332ad5d7f2f03a6e8096a374c23c6510c3ecdc96ebfe270d2da804c5f6f46220",
+      "bytes": 817
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "6ed09a9960a9237fe738e707cc3ec9ef8baf0945fc4cd369cc10023043e019f9",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/request.json",
+      "sha256": "1af6ee890c6b51c5eb32eeb8e26ce1abf1bb96e401656a0cfb4adfab639a8bea",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+      "bytes": 2420
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/source-map.json",
+      "sha256": "1264741102948f1c01b6947465e465f39013a3eec94fdd4ea549b0263aef5276",
+      "bytes": 12310
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/sources/index.md",
+      "sha256": "1382941060a44bad041afcab5d764fce706eaf5727695991282aeaca275ffae5",
+      "bytes": 2330
+    },
+    {
+      "path": "arms/B07-P02-control/stages/investigator/status.json",
+      "sha256": "83f09d245a05edc044486a7470832e649218e9f3dd8b2cd65a33098907f8f480",
+      "bytes": 4957
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/assignment.md",
+      "sha256": "a19bd2a80f92aeb0fc17435f3d38cc7c3b1db7b67acf022948fc547533fe9fc9",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/dispatch.json",
+      "sha256": "d2f598044d727881acea61ebfd1382f3a53d05e2904872ef928493fbe7fbd095",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "f7a43e8f6992a66bcd546552ebe193acdba5186a687ef10a322f3a385e6c87de",
+      "bytes": 9925
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/final.md",
+      "sha256": "fbf10b411c8d2efaf96bb2afd42778c7ee0b9a4ef032042d6b0b1b81a78eb04e",
+      "bytes": 19966
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/freeze.json",
+      "sha256": "55dcd0d891848830ab4aad26ac6d2f51e5cde777b2153f0b78d2256db57bb804",
+      "bytes": 5249
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/input-map.json",
+      "sha256": "31b386bcd7a6db8b181dd2bb9b7070794ffa67409e1dea8b179b1c669d5be382",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/manifest.json",
+      "sha256": "61ac38e8af8961c401fab34681001c8bf1fdf02ae9fbf4d051f5c247c5449812",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "c4e4a00f09b228ae72a9452bc532c321258735f215fbcb20b5144fabd03dc8bd",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "c4e4a00f09b228ae72a9452bc532c321258735f215fbcb20b5144fabd03dc8bd",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "28e6fce59fe1c588fe76e8827a63259efda8e697c80949c490ad3d491a053114",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/request.json",
+      "sha256": "05df14893217752f227e84e97bb2a4bf363c76b883d446f91c4e57ff5e84c290",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/source-map.json",
+      "sha256": "4159b822bdf8499077f19e86535788654ea11d835b21fe48adaae1399b095b89",
+      "bytes": 20590
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/sources/index.md",
+      "sha256": "7314f1465fe15000cc564f52558753931a5a3961ef9d2c387b1a4d09be937a84",
+      "bytes": 4812
+    },
+    {
+      "path": "arms/B07-P02-control/stages/reviser/status.json",
+      "sha256": "cc2d67ab27fda3c14274e25e94346e22d42892392e3f729eff41bc7f26f91b3a",
+      "bytes": 4954
+    },
+    {
+      "path": "arms/B07-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "d6299203901ad5a183a240557f6fb5b2506a44544758ee6770c5a8a7bb1d3355",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B07-P02-treatment/inputs/configs/B07-P02-treatment.json",
+      "sha256": "828bf48c6802353ebd083400aa1f63de5bb8216af1fc45f0d4af488b0af549ba",
+      "bytes": 2560
+    },
+    {
+      "path": "arms/B07-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "35f7b4e31d11d22e539032e83288c48e1a2d7afcd8a25c445c0f1d4ee56ab83e",
+      "bytes": 2340
+    },
+    {
+      "path": "arms/B07-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+      "bytes": 2420
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/assignment.md",
+      "sha256": "b6fab1c93362d046e9244ff26a9a2d0bf2433d1aefe6cb15456d522d2b27e909",
+      "bytes": 9973
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/critique.md",
+      "sha256": "ba4fcc4be6979ab035d4dc6de3c1f461c58df82004c86e22bfd5976ded3af6ec",
+      "bytes": 19712
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "4a3bcd3b2f0b21d7c8f7feb69580b995248320b97488166ec1f25849650309b2",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "eb736e4a3c6e5a8e0853089fc5b37a74ffb4e463fab2d10d96c027522c55dc55",
+      "bytes": 9187
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/freeze.json",
+      "sha256": "c52f37a0fb514186f1912b9eb9b3f6725a4bac2a7a3467d9c2c1ae320748d37b",
+      "bytes": 5120
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/input-map.json",
+      "sha256": "181010299bcdc4c90015a25dcce466b83ef142b1894bec1d3452e891bfb4795a",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/manifest.json",
+      "sha256": "f9c41cd95695b7bd6f52952898dccb7b40b48c386ae50ed3527f61abf753d407",
+      "bytes": 2387
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/native-goal-active.json",
+      "sha256": "e45947eb2dd9f0d012e478534cd22372ea3ea020103dfc3313bd6e784ab77168",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "e45947eb2dd9f0d012e478534cd22372ea3ea020103dfc3313bd6e784ab77168",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "cd8c6a613d6d41fc40dc3ae54ae93676af4fc6ab7f8c4df8a6aa8a64553a8c00",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/request.json",
+      "sha256": "90f40f84e20f6941aa2bea1d9ddfd4e5ea886b801a59fd685ecf3b83bb9805a0",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/source-map.json",
+      "sha256": "2085216ac0163697a2c1356037be646a3302504c4d15c89d45d5549ad35244e9",
+      "bytes": 17351
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/sources/index.md",
+      "sha256": "40fc0985358745e795b6932e4eead0e5f29fa35296065d40d839487d7a88b5d3",
+      "bytes": 3382
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/critic/status.json",
+      "sha256": "0b6f94a590fdc1af5504e894c64879086680089a315a4d7ad6692c297338ea1f",
+      "bytes": 4585
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "d0bb95d5ebac2cf3bffcddba22ff8a3f4ca2235a5950d840b34b044888dfbd43",
+      "bytes": 9965
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "1060c66fecc6e7c4326978447c0b9592f651680dff80b1c30358bc092f000c5f",
+      "bytes": 6306
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "7fede39d94e5bd081b06c4345ac757c79da88ee923203df83855d64d64a8f2a8",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/draft.md",
+      "sha256": "1defd0bd0be7b7090c1eb85369d73876758d13017d087284be02f81609a920c0",
+      "bytes": 24981
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "1176a91f88197a6b22dd2b9760b1f9727319f8b778bf2d1cf1e35206f6ae08d5",
+      "bytes": 10275
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "c65406912989c55864878f61feecabe04c57b5f3dbea84fe95d615752f898d57",
+      "bytes": 2543
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "dc7c9661fd28935d874e7681e23ed5b4b64e8376a36acd0b23bfc7e036072f95",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "ed2a65f691667448da02ca33412508e6e9530229e82b60360d3dcb0e66355f72",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "7f3f1c84bf7ee25d5bf85475eef6739feb6c27caf240f3f62b96acbcc4c49b8a",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "7f3f1c84bf7ee25d5bf85475eef6739feb6c27caf240f3f62b96acbcc4c49b8a",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "5f46fe43fd928ba8828f59f30c35de658aef18ea091b7f50b09d1ee44a6e4b89",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "db9199c9ceb398bdde37cfe861ad10994afedeb3c2f9c96abaad9d28ae482441",
+      "bytes": 436
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/request.json",
+      "sha256": "1bf716ff75f60b7926d9d74586b8831b918d8c38ede682ea65408ff75f95aa16",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+      "bytes": 2420
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "366b96b3e3349b66da244631a25a06ea6166c326cf03c3037582aef29e53c1e0",
+      "bytes": 19011
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "76d90df6fc9b5cf3b0281ae21bc25ebd48c9af740c248cc9f49351c94e6f9e48",
+      "bytes": 3422
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/investigator/status.json",
+      "sha256": "866369ce187c8be492b748ba675c48d5ddf031f9d3a3e3ab847a23560b2b89e6",
+      "bytes": 5125
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "40afccacf44ed32bf17ca5a6dc4df04824315007b0bf4095a5508b639a65c864",
+      "bytes": 9464
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/dispatch.json",
+      "sha256": "875d37ba0ba8f8d8bdadd20e36892eee99ef799d56b2a17166bbe2c49ece83ff",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "e097624085e3c28de283fc7881aac08756b57170dc7dc1a58e1129477a910dce",
+      "bytes": 9617
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/final.md",
+      "sha256": "719f4c5eef224e6cdfa88e79144e46b8b27ebfda27de6aa611efe53873af7120",
+      "bytes": 26277
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/freeze.json",
+      "sha256": "cc65c95d7a8e22d566404eb61c6b03a73ebda3038667c879908338a9a29720c5",
+      "bytes": 6055
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "f362b29f413bed14fbe09ff1f67f899b9577440b5a812dd40352dbb71c7105cb",
+      "bytes": 2139
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/manifest.json",
+      "sha256": "05d35abb4915272936cd2aa6c7451fe0e6f6c6205daf9009dfa314cc47d1d160",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "6f356aaee6556d00d310582e59d78c728844b29f60d0aab4d53c24f70cec5c09",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "6f356aaee6556d00d310582e59d78c728844b29f60d0aab4d53c24f70cec5c09",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "eb5b3581dd44c0da6dcfb14d7358bf3e2bb9d55a0e4f5a39001952d65c35725d",
+      "bytes": 811
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/request.json",
+      "sha256": "008c2e7b47414c193d10b4eb7804e5d0eb21d0832e9a4deab19db077dfdb0cec",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/source-map.json",
+      "sha256": "d34c981b03fcc69d700ce4d5c49988d537055a405c99a4ba3f253f5f0bcc8723",
+      "bytes": 46687
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/sources/index.md",
+      "sha256": "135e3b301bb154c61fb3db53c98e4d040a76ba9a1e8c24d8fbf47b347bf25eaa",
+      "bytes": 4135
+    },
+    {
+      "path": "arms/B07-P02-treatment/stages/reviser/status.json",
+      "sha256": "723afb7b60853687552cfa0535a687bf153c126e3d5be01c7a2d1c8f52a2203b",
+      "bytes": 4798
+    },
+    {
+      "path": "arms/B09-P01-control/inputs/authored-manifest.json",
+      "sha256": "a940d3bfb34af821d68fbfa0960b1b5f0185e8b91b8653c3403c29513fb80bee",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B09-P01-control/inputs/configs/B09-P01-control.json",
+      "sha256": "958b8006dc545fb04612ee206f96b87b574fe4c37544c1b9f725705e3a276048",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B09-P01-control/inputs/control-inputs/brief.md",
+      "sha256": "38b97542db84680933501648395ce6bf7a03c6cbb191aca8d122e24cb8386d50",
+      "bytes": 2263
+    },
+    {
+      "path": "arms/B09-P01-control/inputs/control-inputs/plan.md",
+      "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4",
+      "bytes": 2278
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/assignment.md",
+      "sha256": "46b5d559b9566c0e1549fbe127916d280a8c83d1466fd841d0594398eb22589c",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/critique.md",
+      "sha256": "9aa1737f4f6e018b12e66e2ca90da4b4debbc92a64eda9fb8033719e7ba5d769",
+      "bytes": 13019
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/dispatch.json",
+      "sha256": "6098d01a474eb811dc6345a9cfcb581b57dae3a55f33f2379d035fdafc35d0be",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/eval-ready-status.json",
+      "sha256": "0364b0f530ef41767280c3cb9cb85f1b66713f5a05b16016ae0473e90145f43b",
+      "bytes": 7377
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/freeze.json",
+      "sha256": "77d444a82a8cb5e20f2b9753b0e3ed1f3b06a4983682aa7a35a919179397dd57",
+      "bytes": 3920
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/input-map.json",
+      "sha256": "13053cb23e16e3006f6bfc77185117625dfd4543b99d8c25ec1c761ac3c8b069",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/manifest.json",
+      "sha256": "dedbbba7eb815852873ff1b7ae82cd29f34e837472ec9a987a4e7cf06859b2cb",
+      "bytes": 2032
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/native-goal-active.json",
+      "sha256": "99aeddc0e77993cd9d67713577a85895d9446a2b3431f691bbc4c50f82e9f8cc",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/native-goal-terminal.json",
+      "sha256": "336a95bde4a3747eb6a6db7c1529fd2edda2f7834c07531c47ad38aedde193fc",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/request.json",
+      "sha256": "b8cecc7f6702b5e727cfea4efad0b0b98fc997197de2589a35b59301b6f805b8",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/source-map.json",
+      "sha256": "c2677e7350c6b207156465ed21e29d9e6a6842ecc559ddc3f249daf427975a8b",
+      "bytes": 32230
+    },
+    {
+      "path": "arms/B09-P01-control/stages/critic/status.json",
+      "sha256": "a83d4b9b44a838a32452eb17ee35ff5c8e778d7702ab62d97bc5989e0e66e890",
+      "bytes": 3679
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/assignment.md",
+      "sha256": "6672f9fc10fc277083f66e950e9576af67ae144145b0c312f149e7e05b265f81",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/discovery.md",
+      "sha256": "8e2295083c78ecbb909d0fa8eeefdfa4aeaa65d0ca717fe0e806c73713582be5",
+      "bytes": 10114
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/dispatch.json",
+      "sha256": "1deca139db019caed20306a9f8e13e1943eb92944ff18b656d5716bbca0e022e",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/draft.md",
+      "sha256": "bae6360c205398726bfa8697f17c79e4906fcb1c8941a7f45321636ce73e6b92",
+      "bytes": 22164
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/eval-ready-status.json",
+      "sha256": "817d521996b8932713525dbc002ea3e518fae8c8a7d579c4b356ee03cc178925",
+      "bytes": 9169
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/freeze.json",
+      "sha256": "957f5bf946cb88daf50918e68b91271e163d4f405e5feeaae908df155d422d67",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/input-map.json",
+      "sha256": "7d0f4df68a5860d05186fb3e6dc636be31017c7498f305a3dccf9ed0899b4e31",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/manifest.json",
+      "sha256": "bdafa60bcb3ad02ee4f1ec815ec954f39e98ede01f08beb079fef44d583e6e1f",
+      "bytes": 2869
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/native-goal-active.json",
+      "sha256": "2f50a98947e2f6b3aad65a5ee6f40fd7ababe90c32156b17c7a8bada97fe989a",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/native-goal-create.json",
+      "sha256": "2f50a98947e2f6b3aad65a5ee6f40fd7ababe90c32156b17c7a8bada97fe989a",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "9fcaeab66d5556f96b632403bce4b28747dd350bb4515be236bb45a811270caf",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/plan-reveal.json",
+      "sha256": "cac0bf5ff3602592184d20ee7029f3e6e878d8567ea84f5ab3d2d785f14cb171",
+      "bytes": 433
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/request.json",
+      "sha256": "34f98cbd1e4848dfc7b694fdd972e886c18f0d21b275c40ed52399d3e938a19e",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/revealed-plan.md",
+      "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4",
+      "bytes": 2278
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/source-map.json",
+      "sha256": "a0b471fc3031e75a7770ce122f1fe2924392f299a1c82aa2661316437f8a8543",
+      "bytes": 23527
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/sources/index.md",
+      "sha256": "956b7f4eae69ae6face1b1e61d3b703dbde4b0dd4b28401fc105641bcb582bd7",
+      "bytes": 7007
+    },
+    {
+      "path": "arms/B09-P01-control/stages/investigator/status.json",
+      "sha256": "6bff24c5e291cef03a8f1258c7c0b80a90b00620e83ac43130b82b653a533c6e",
+      "bytes": 4575
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/assignment.md",
+      "sha256": "c38d4e9f41e5faae37d3df20c3cca14020ac68397b437bf769645294a1370014",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/dispatch.json",
+      "sha256": "5de67e45cf46545689ba43310524e60765b48eea7dc74a9c31c76f744c500f23",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/eval-ready-status.json",
+      "sha256": "744e848f12281b63013bc7d013eab0cc3215b28552112d7dff759e4c360c66ce",
+      "bytes": 10205
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/final.md",
+      "sha256": "77d749fa8ec150f80881043ab98858ecbe39a87a7babcc845fa5a7b5127ae3d2",
+      "bytes": 26780
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/freeze.json",
+      "sha256": "7bee8befed094ceb7c515345970afc2854600d21b08f3e353b5170d84c7eaf0b",
+      "bytes": 4877
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/input-map.json",
+      "sha256": "c888b7e40d209205e945a26dda66a9bb041f885574bb02671f31eab462c0403a",
+      "bytes": 1963
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/manifest.json",
+      "sha256": "71ffdee7f01972f5ba90f86e0acc408d3af4007146716bfaaa017dd8e72eea19",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/native-goal-active.json",
+      "sha256": "817ff8d670726f6d4c2e4284653bec452b7469d8b876eadbdd0ed2dd2a972ea4",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/native-goal-create.json",
+      "sha256": "817ff8d670726f6d4c2e4284653bec452b7469d8b876eadbdd0ed2dd2a972ea4",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "2c53314d24ac55caf7ef7a07f7b92b578a4ff3a3612ed696cabc8e1c9f835ea5",
+      "bytes": 806
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/request.json",
+      "sha256": "fb62e47e1c01e9f2437161c7132c72d8f21c31b8209faa5f27d6a4967d34bce2",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/source-map.json",
+      "sha256": "533c9ebbc3dddff812bcf7690cec8ca7866166c39ef20a76b2d53bd4614b5063",
+      "bytes": 37541
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/sources/index.md",
+      "sha256": "8599d922e375f89ff5d9be6140eb7ccd798491c727ed761ec144605d21f2111a",
+      "bytes": 10729
+    },
+    {
+      "path": "arms/B09-P01-control/stages/reviser/status.json",
+      "sha256": "7f1e4dfa17daae82952d61068a962c83ed4eeacb785fefb09341ebf1acf12bb6",
+      "bytes": 5092
+    },
+    {
+      "path": "arms/B09-P01-treatment/inputs/authored-manifest.json",
+      "sha256": "62746530c372d1a611f4b8bb5b46447535bc0a186c293d081a2617a31657d869",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B09-P01-treatment/inputs/configs/B09-P01-treatment.json",
+      "sha256": "510d4dceb0496821c73e950d72f448403de8dc94cafe2841e576e0375eff0114",
+      "bytes": 2997
+    },
+    {
+      "path": "arms/B09-P01-treatment/inputs/control-inputs/brief.md",
+      "sha256": "38b97542db84680933501648395ce6bf7a03c6cbb191aca8d122e24cb8386d50",
+      "bytes": 2263
+    },
+    {
+      "path": "arms/B09-P01-treatment/inputs/control-inputs/plan.md",
+      "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4",
+      "bytes": 2278
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/assignment.md",
+      "sha256": "3a1ca4298508cb00d3e636b4a314fd0fc25ab0f4f815027e4ed971b7a6827ef4",
+      "bytes": 9477
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/critique.md",
+      "sha256": "64cdf34569a0ed231688325e90d7bbee73bfc276c6c7592eaa566e5db8aa8b93",
+      "bytes": 12711
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/dispatch.json",
+      "sha256": "01e3c3316b1967de4ca2c6aa252a449b164134a0cb84b4030542ead8672709f2",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "2bb9b8a4f9a6432fbdd94f84e19395d1b2e4231bed0a5b8a375f452a6e22141c",
+      "bytes": 7639
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/freeze.json",
+      "sha256": "4ee9fae873a89accb14182001c1197a54beb16239e9135f43fae7a41df7bc95a",
+      "bytes": 4701
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/input-map.json",
+      "sha256": "81e83f420da27ffc4513528c988b4a405010462ec97231e4f0e7bcfebca87afa",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/manifest.json",
+      "sha256": "1348db6af508849f4850de6911cd59ae4a58aeccbb4c8cba133f2371345a55e4",
+      "bytes": 2200
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/native-goal-active.json",
+      "sha256": "6163daf22f2f5efeba28bd26205a6765e179f5264503d1bb4cd4533522ef7351",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/native-goal-create.json",
+      "sha256": "6163daf22f2f5efeba28bd26205a6765e179f5264503d1bb4cd4533522ef7351",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "c909f525f767c9f17dcabfc685047247ba612a568ab46c2c08cce4da44f0a819",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/request.json",
+      "sha256": "0774b9185b139abefaf13231bbdb19a64cf6e011c5d36ee09da64ddf2651f751",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/source-map.json",
+      "sha256": "ae08ff127e53b307c299e9ea2a647c2d4e710d1b8c6e495dbab81c3bfb83c786",
+      "bytes": 28735
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/critic/status.json",
+      "sha256": "6990efc0343c138e14d9743ba368c52dbb07aa17a66877ad60837bd7003a7e77",
+      "bytes": 3811
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/assignment.md",
+      "sha256": "93a3eec75087c5f39b2f16b459eb34319e7d723bdf4f91c254e404803c629a07",
+      "bytes": 10458
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/discovery.md",
+      "sha256": "7670b22199aa7720ab42dbaeece5830070827d035c2e32aee2da89a0a74277f2",
+      "bytes": 8724
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/dispatch.json",
+      "sha256": "f35cf7953a7b50669739103b1055512a7733c1a2ecf4756e9820129c6767c799",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/draft.md",
+      "sha256": "c6a02d167c9b6a65b083793254ab86cc051b11fb6e1715dccfdf948a65aa9b8e",
+      "bytes": 17751
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "53221b56b83cc1b3b613576806fa864e0dedf4d184d806862f7f4505197390ca",
+      "bytes": 10683
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/freeze.json",
+      "sha256": "8a43bd65180793a5085ab5a80be3ce6b2d29f1f54c3eb6565539210b4dcdfc85",
+      "bytes": 2962
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/input-map.json",
+      "sha256": "2b295235f9eafd871370ec8b61080a4258b5a8f207cc268a225aba2f529f2ca9",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/manifest.json",
+      "sha256": "30508d1a6205fed7b06c038d4e48f1289c8650cff1fea2d16e0391491ea78d21",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "5eed7d4da97aa195aa846f9781c07d7fb6f4d780ef2caef5ab5f0c95f03cfc78",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "5eed7d4da97aa195aa846f9781c07d7fb6f4d780ef2caef5ab5f0c95f03cfc78",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "8548f3aad6efeaed37b1132e373613bd2c384aea443bcf94d754e28d0a7dc323",
+      "bytes": 823
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "163192b6b5b18b1e7a6d5a08ebbe36d8fa605c3e71610cade0181fb39c3c9c5a",
+      "bytes": 436
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/request.json",
+      "sha256": "b391304127d5f7dc71f3c5235c3f49d45ff9ca263648365ba9213d59f7a23975",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4",
+      "bytes": 2278
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/source-map.json",
+      "sha256": "3f0fa684c918e93330c1ef0f6dd1eee534d10a32a7de22f27b9c0d4062708900",
+      "bytes": 17379
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/sources/index.md",
+      "sha256": "9c18c0970c9512da049d03ad26eb1b9abd8617ebb9697242a56e2236d00238ba",
+      "bytes": 3599
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/investigator/status.json",
+      "sha256": "b9cf3d10ded12f52bd861d10dd7ceed460c0355d2970de02e632f9be44119820",
+      "bytes": 5329
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/assignment.md",
+      "sha256": "26cf3eacf78df665fd8ccaf9b632a63be216aefaa628b901df4bb265bf541cbf",
+      "bytes": 9978
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/dispatch.json",
+      "sha256": "37ee16f6d9dff41366767ae74e34478b5db72b46e688dd1f8f2ccacf41800d7a",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "39a1d0a49a539fb5bf11cfbdcffd709c92266d5209aaf3ea592400584e67919c",
+      "bytes": 10633
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/final.md",
+      "sha256": "4f3fc5066b1abd80fe814adfcdaf26d234e37eae642c245df431007ab3b0225d",
+      "bytes": 25111
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/freeze.json",
+      "sha256": "6416760d60e67ba3561f95300bc5e4d94f168a586c5b071a3354bce06671bd34",
+      "bytes": 6115
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/input-map.json",
+      "sha256": "adb9bf8cacfb5262e6e2e5cd36303bcc1779978ef8349dad17211032e271cc98",
+      "bytes": 2017
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/manifest.json",
+      "sha256": "ca387b6a6f0e31d948653cf3ba7d8cadcc76e75f992dbdebe2846601c501047c",
+      "bytes": 2386
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "a76acffb9e920e9608fa5a3fd1d5c95ca639e9d47c2dceb0786f4a5c278c683d",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "a76acffb9e920e9608fa5a3fd1d5c95ca639e9d47c2dceb0786f4a5c278c683d",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "3baa6cef7085d2bb415873adc45fef3df2af16203cbbbb082bfc33d0f15567c6",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/request.json",
+      "sha256": "86150386f6071d36154a1a8e2213190fe90319cd7089eb7efd82049824845ebd",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/source-map.json",
+      "sha256": "92e4bf1371979837e3c548ea1d271458497ec44b75e217750b9c3e2544b4e543",
+      "bytes": 40047
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/sources/index.md",
+      "sha256": "81a4aaf18816c9f4a28170d306b6b09ad6a45ab03d45e0153e2518999ee0ce4a",
+      "bytes": 6191
+    },
+    {
+      "path": "arms/B09-P01-treatment/stages/reviser/status.json",
+      "sha256": "3f20b49ddaf28e0a5e594c5c27a4112444656de3126ec9e187d97a0657b523e8",
+      "bytes": 5304
+    },
+    {
+      "path": "arms/B10-P02-control/inputs/authored-manifest.json",
+      "sha256": "44402569662483a9e77551553f606d80d98cd4ff4a63650231f8df6e920f3c51",
+      "bytes": 623
+    },
+    {
+      "path": "arms/B10-P02-control/inputs/configs/B10-P02-control.json",
+      "sha256": "bc6d12a92e5487af575ec49d45c6bffb79a0d7ff2c6d9f78e8edca580cbebc87",
+      "bytes": 1301
+    },
+    {
+      "path": "arms/B10-P02-control/inputs/control-inputs/brief.md",
+      "sha256": "ad54ba180a1c532f5dec55580fe585fb6cbf2185c67563850c3895b7b1f08b64",
+      "bytes": 2481
+    },
+    {
+      "path": "arms/B10-P02-control/inputs/control-inputs/plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/assignment.md",
+      "sha256": "495121e0cd7b6473c2d16fce3aebd45be0624ea9832beb501719bc668f73e7de",
+      "bytes": 9443
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/critique.md",
+      "sha256": "3bf72b0a3a7bc06311fb6d27c48f1eabd87cb6c5f6c8db485b5b11e4a372480c",
+      "bytes": 10988
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/dispatch.json",
+      "sha256": "aff475103f4a86a99c2772c5b2f69fa95821c5d22032fc9a825a6e839ecec758",
+      "bytes": 10280
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/eval-ready-status.json",
+      "sha256": "a43513bc703f1a02772ebe4aff0297cbf8c775c12075f5ff03f519552b48e029",
+      "bytes": 8391
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/freeze.json",
+      "sha256": "0ef048307c3b09474d88724d5561ed22a8cddc15cd4a009d45fc522b9a2d9bf7",
+      "bytes": 3919
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/input-map.json",
+      "sha256": "0d1259b96a307b076917ecd0f559a50abe523b936ff8ff6db77cec70bc70c410",
+      "bytes": 1622
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/manifest.json",
+      "sha256": "e9edd8a31f62e94168a1cc464135a9f3f9fba84f24c5e991a20db92bef901c7b",
+      "bytes": 2384
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/native-goal-active.json",
+      "sha256": "1237665de4055d925cfdfe66ac46564cbf0435b357ed79e2dad9239d2c835598",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/native-goal-create.json",
+      "sha256": "1237665de4055d925cfdfe66ac46564cbf0435b357ed79e2dad9239d2c835598",
+      "bytes": 475
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/native-goal-terminal.json",
+      "sha256": "f4216d279001d2bdef7e32a65bfb6dc744975cba5007d0a4baf9d8fdbbf4279e",
+      "bytes": 804
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/request.json",
+      "sha256": "ea3c2b0ebd2611d818e2163af9b5fa9468f71b041f5d234a50b763e6b3e3c987",
+      "bytes": 6971
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/source-map.json",
+      "sha256": "3dfa45b6de7e13dd54394df16c00bcd61ba57639d5df425a348e8934a8e00363",
+      "bytes": 12456
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/sources/index.md",
+      "sha256": "b47e8006898dce4be44c4de9642ae3a22180c49079d894a34bbb9a202a185ab8",
+      "bytes": 2096
+    },
+    {
+      "path": "arms/B10-P02-control/stages/critic/status.json",
+      "sha256": "be752ccf135127e3c4daf6c479051ebb298563405d93950ae80ef8d16f5cceb1",
+      "bytes": 4187
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/assignment.md",
+      "sha256": "63a1052bf7e9d77fc273a4f14a976316ba3624d0ecdf91aa376d228e793801ec",
+      "bytes": 9921
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/discovery.md",
+      "sha256": "c2fc7c6bc8a8f8c67624b5b6d63c5de2e4853867e4dbe19217f6bb8a8a00d01e",
+      "bytes": 5786
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/dispatch.json",
+      "sha256": "d02c5b5679125591c3bde43e3c3ebf88df9233e771d0126e078403e4f55aad53",
+      "bytes": 10418
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/draft.md",
+      "sha256": "c89e7911dcf5929dd56ebba3c9b4aa0f4dab541aefd1c7136aae2c6767b4ddfe",
+      "bytes": 32842
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/eval-ready-status.json",
+      "sha256": "fde37f43e547e8206388f9e7b40ecc76cb830d05f64815748603b649b164510f",
+      "bytes": 10343
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/freeze.json",
+      "sha256": "5179b2f50e36dab7c5515bfa420078683806275d72d3a4abb640ad3267d9e6cf",
+      "bytes": 1801
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/input-map.json",
+      "sha256": "cfc652cb6ec33a73de3e9b3984b20899751a7cbc3247f89a0c05ce7ab831c55b",
+      "bytes": 762
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/manifest.json",
+      "sha256": "5ee18f8066dc49f857d07a1aa283562fee9768d52c879ade918fb0b557346b78",
+      "bytes": 2868
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/native-goal-active.json",
+      "sha256": "95737daf75e2e7fb6f89c59241e531425d3323ac09108926232dc7f7dcbf65d0",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/native-goal-create.json",
+      "sha256": "95737daf75e2e7fb6f89c59241e531425d3323ac09108926232dc7f7dcbf65d0",
+      "bytes": 487
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/native-goal-terminal.json",
+      "sha256": "97b38d1ce7c8a60a9902180f2b3238e10763aff1314cbf1b27536493993a39e2",
+      "bytes": 816
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/plan-reveal.json",
+      "sha256": "c7afe2a53ac757666d341182441fad439f0648d72f698d163fc0e9e9d8b44850",
+      "bytes": 432
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/request.json",
+      "sha256": "b5a17ef7519dcdd83838306e079150fb919d289501339d89a0330729dcb8f868",
+      "bytes": 7037
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/revealed-plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/source-map.json",
+      "sha256": "09b45191b093edc1f3f26614e57ebc5436729d67f4d03fe047139675e180750c",
+      "bytes": 14111
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/sources/index.md",
+      "sha256": "f4372375d49b120147e6197e5d23a28201c00375068ecba7a4d064b9c2792c10",
+      "bytes": 2560
+    },
+    {
+      "path": "arms/B10-P02-control/stages/investigator/status.json",
+      "sha256": "5c94e28ab322d9bd43b1e53ef7d1176963056bb75633541561a332668620a0eb",
+      "bytes": 5159
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/assignment.md",
+      "sha256": "c6bc66374e145885e479a98fbe6128631d40453991a368ecffacc0cb64348062",
+      "bytes": 9430
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/dispatch.json",
+      "sha256": "4f6445f2e66f9ceaa23276497cb0be10d51043397b5eb6142300aeb164069109",
+      "bytes": 10303
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/eval-ready-status.json",
+      "sha256": "bc6a9736c3fec77ead9e51fed9654ed464c38a51e018fced8efadf63ac22a0c9",
+      "bytes": 8305
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/final.md",
+      "sha256": "30555c3b7bbb7ef168e7ba948d6df5e6edc272e805b3b9abc4ecf2ac4240a292",
+      "bytes": 34977
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/freeze.json",
+      "sha256": "5b8ebd352d442d0658b7dbd45b54c564d2ece4eaf13c2efd9bbbdb38e6af9f16",
+      "bytes": 5245
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/input-map.json",
+      "sha256": "4a3df3e7cea7162357c4005c0dce705276295d6b99b0c71dd0d5b0b749bc5164",
+      "bytes": 2081
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/manifest.json",
+      "sha256": "eaefe1f9818cd79164cfd07e4299ffa29dda02d8086ccb7e9de8ad799602de5e",
+      "bytes": 2383
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/native-goal-active.json",
+      "sha256": "447e6b993cbf5618692608b13541b6f117ba3bad77a460c6a3db66940f17ff71",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/native-goal-create.json",
+      "sha256": "447e6b993cbf5618692608b13541b6f117ba3bad77a460c6a3db66940f17ff71",
+      "bytes": 477
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/native-goal-terminal.json",
+      "sha256": "032a73f089977ec92159066e5d047b461434355c8c9d9da896b6bff4cc9410c3",
+      "bytes": 805
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/request.json",
+      "sha256": "125515f98c4b979f6ac98ad7b96dc1459e1ec7c89bea75e341e556ef98693803",
+      "bytes": 6982
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/source-map.json",
+      "sha256": "7a451f0dd17e2441679b1c5a6fec90250fbdbdff27cb5fe0bb938c118d504447",
+      "bytes": 28567
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/sources/index.md",
+      "sha256": "264464cf4d06234a439f2b7601c5a9e379af30fa61b62fd13c2d09be9db9501f",
+      "bytes": 7216
+    },
+    {
+      "path": "arms/B10-P02-control/stages/reviser/status.json",
+      "sha256": "faa19d14ac896fbdf8c58b54fae821f9fbc81553711929f49c9150ef09602130",
+      "bytes": 4144
+    },
+    {
+      "path": "arms/B10-P02-treatment/inputs/authored-manifest.json",
+      "sha256": "cdc9f0c4991f4db79cc2b2cef63280c113f31aad73bf96bab82052c2309edecf",
+      "bytes": 625
+    },
+    {
+      "path": "arms/B10-P02-treatment/inputs/configs/B10-P02-treatment.json",
+      "sha256": "491c5cc36f05e5359136bb4b133f51a14f6a08fcab29e681efa508fcc06fed1a",
+      "bytes": 2620
+    },
+    {
+      "path": "arms/B10-P02-treatment/inputs/control-inputs/brief.md",
+      "sha256": "ad54ba180a1c532f5dec55580fe585fb6cbf2185c67563850c3895b7b1f08b64",
+      "bytes": 2481
+    },
+    {
+      "path": "arms/B10-P02-treatment/inputs/control-inputs/plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/assignment.md",
+      "sha256": "178dcd316dac16cf66ed0f1e062fd6a6aef35647f1f17fc1d51561d38f591562",
+      "bytes": 10033
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/critique.md",
+      "sha256": "e04b0353d7cc6aa0e0cbc88985eb49b1a09d2a419704dc4ecf15036f970f2ca2",
+      "bytes": 10787
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/dispatch.json",
+      "sha256": "1d579facb55f9ef6b09ef6784b19187707ebe895e8319a1e8fbc3a3bbd8a210f",
+      "bytes": 10342
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/eval-ready-status.json",
+      "sha256": "725e64f50f681cf3b90293a29d69fd71c50517611e519c2c870757c38503b4af",
+      "bytes": 9795
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/freeze.json",
+      "sha256": "abbca9bf1adfbcc17f04351c30b6f14955eba3fc3d3ad7de54a1d50ac37479dd",
+      "bytes": 5180
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/input-map.json",
+      "sha256": "14fc55642afb06028dfd2e8684f232623153797a101fe602a69541536a4b1bd9",
+      "bytes": 1664
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/manifest.json",
+      "sha256": "14eb75e0499a8be40b417e5ceda712ec188350b338405fe81940955bfb53d5a0",
+      "bytes": 2387
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/native-goal-active.json",
+      "sha256": "792261c46edc0324986921e43be76eec7f985f38ca928806ee5bb492d42d9399",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/native-goal-create.json",
+      "sha256": "792261c46edc0324986921e43be76eec7f985f38ca928806ee5bb492d42d9399",
+      "bytes": 481
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/native-goal-terminal.json",
+      "sha256": "8e3f73f7e55f2373d2b6b02f733449395947d0636fc926452e175da33c49d44b",
+      "bytes": 810
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/request.json",
+      "sha256": "b5708f464e4c6d5dc7b63f10c673a326d7ed55d6e96c44d731f5e1cae0b2f9cd",
+      "bytes": 7009
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/source-map.json",
+      "sha256": "53c746dedada15c5f499b576952d97e64afa2cad11c0808293b05e157d61c34c",
+      "bytes": 13632
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/sources/index.md",
+      "sha256": "e9294a7932863e7b95b6cb1d89a05341c4406bf59386f03bfcbf938e6008a592",
+      "bytes": 2003
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/critic/status.json",
+      "sha256": "7c6f3b1910d83ccd4b24b4e2f543ff7c66a31027ccaa707313eb15f2a710973d",
+      "bytes": 4891
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "e78a91a3b0e28a8a681114f0bb67a975e4b6ab5eae2707975994ba3e3d579bb4",
+      "bytes": 9965
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "2e7bd6697c82f51071d826690f3952eb7fec3adef9f307882dadea1ae5ed3c9a",
+      "bytes": 5361
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/dispatch.json",
+      "sha256": "12f9afb9705d2cfe70d9b4d87f8ea5153ab8d12e3c7a2d931ba395620114bfae",
+      "bytes": 10480
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/draft.md",
+      "sha256": "1b83bb08f0bd2b36afef03c3b7d829362f18f36f970bed5b47d2975fd646074e",
+      "bytes": 31957
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/eval-ready-status.json",
+      "sha256": "2fbeba91fc80341209768a2e5d3540c104a950501fc363db74c097a8c2b2c853",
+      "bytes": 9233
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/freeze.json",
+      "sha256": "f3901d12c46a23170d7bc37d6e9aac866932bdbba6c53d0cba2e129a9c2709ec",
+      "bytes": 2543
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "a4e9ba251939299f3428765685403b3882192accbb17f8872100f1d3c89fa7a2",
+      "bytes": 776
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/manifest.json",
+      "sha256": "4bcd43ab33e45d3eba6bcc5ca10f88c08632d99044fd333fcb13aa85ae97bc2c",
+      "bytes": 2870
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/native-goal-active.json",
+      "sha256": "266cefcc37d5d4d2f88bae50052234b73b83bd516bf89122c754c23ef9b1d0f7",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/native-goal-create.json",
+      "sha256": "266cefcc37d5d4d2f88bae50052234b73b83bd516bf89122c754c23ef9b1d0f7",
+      "bytes": 493
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/native-goal-terminal.json",
+      "sha256": "acba36d41c26720905924af57d42dfecbd1756ff8d64d8d4f8b2c91fecdd4068",
+      "bytes": 822
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "2d2fe9777775a53814903907a48af34e8908d61ccf6d2a19bbbd8dc23b5eef68",
+      "bytes": 436
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/request.json",
+      "sha256": "fa2d3e177b416c843907d9bb731fbd4e5dd73e94a1985364efd7ed968ec7e9cb",
+      "bytes": 7075
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "24d6612c2d1625ad12699cec6d4edef7711b113c0bca933e62d03aefe2c4c7dc",
+      "bytes": 18272
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "e6dd2976d05919fa5acc65333efb3f7fdd44e05dd63fdab617c8791e930e4188",
+      "bytes": 2900
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/investigator/status.json",
+      "sha256": "9b391e4c1ee659325d4014572122ebf793976c69c8d77615fea7c1de119d3bf6",
+      "bytes": 4607
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "8ea91d6a56ac69e1b0f4242877675c96b73aceefa47aae752d454b52854d57c6",
+      "bytes": 9464
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/dispatch.json",
+      "sha256": "86dc075451312227aa4266a56543b574f3a4bbcd657c1e179100c866cf0a9bef",
+      "bytes": 10365
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/eval-ready-status.json",
+      "sha256": "587db47ffcf4e132c74b85c91e2908f48805b155b1e5e4d34554ccb95f7b2680",
+      "bytes": 9277
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/final.md",
+      "sha256": "73417321c2c2b8badb6f10aa9adb6d8f58c860a8e31517570f3851d6940e1e78",
+      "bytes": 42541
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/freeze.json",
+      "sha256": "b3f3b6290f00d82d4dd98d110bd593d16057aa4a8c74f9a9e8454e003132d323",
+      "bytes": 6055
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "d377ca6f261eb8a52fededfb4da364c0c5beeee9bd8b5c420784bf55b170f836",
+      "bytes": 2139
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/manifest.json",
+      "sha256": "12f8ed160097f4d1a25c6be1e22b1da77283735d70782969eefcd9b39364734f",
+      "bytes": 2385
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/native-goal-active.json",
+      "sha256": "5c4d2e9b10b9b54ecb7f89189d82406c70e382953fff1505ee8d4d71e3f25257",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/native-goal-create.json",
+      "sha256": "5c4d2e9b10b9b54ecb7f89189d82406c70e382953fff1505ee8d4d71e3f25257",
+      "bytes": 483
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/native-goal-terminal.json",
+      "sha256": "79b38c1e5b912e7c8632509c30deee5c65f237e845e7b133e6554804743e4779",
+      "bytes": 812
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/request.json",
+      "sha256": "d88f83b543bc4f448d7f78005f38130762daff99308f4ca58f93ab0d7d80c79c",
+      "bytes": 7020
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/source-map.json",
+      "sha256": "659636e52916c2b0ae3d53ba52926d880332111cd7305e30909ed7d83bfc2d6a",
+      "bytes": 42699
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/sources/index.md",
+      "sha256": "9453ee887a3be9e847549ca6a673890d89b573cd0b3105c1a906ddcd0c17159e",
+      "bytes": 3036
+    },
+    {
+      "path": "arms/B10-P02-treatment/stages/reviser/status.json",
+      "sha256": "f24b4e3bdcb2602df8007f5a2261d0b490db6c0951fd9228e22d6f79ad4ab88c",
+      "bytes": 4632
+    },
+    {
+      "path": "checks/privacy.json",
+      "sha256": "2135a6f521ef5e9f22cbe557add9f958137013882c8ce0556c3adba73d0b1bbe",
+      "bytes": 411
+    },
+    {
+      "path": "checks/source-integrity.json",
+      "sha256": "932bd2fdf12ec92d1a68b69e2d34f9d3910d00671ce4ccf3260f9364d408ce8b",
+      "bytes": 12011
+    },
+    {
+      "path": "completed-outputs.json",
+      "sha256": "810ffe3a1824dc5eb49956883893240e09997264cf0331f83617c4ff4291815f",
+      "bytes": 9743
+    },
+    {
+      "path": "helper-closure-reference.json",
+      "sha256": "1fcdc5999d01da65a484bb8d90ae7a36a61f4309d5dcf01543bc149bf9dbb3a9",
+      "bytes": 736
+    },
+    {
+      "path": "notifications/A-F01.json",
+      "sha256": "ba0c4f348353cb724c7934e291e0436fb344c3283b88b7f5ed7d07f80840f290",
+      "bytes": 24808
+    },
+    {
+      "path": "notifications/B02-P02.json",
+      "sha256": "37f1d9a07d5c7257f8f105cd7b8ef4905769032da263743a96205d916bd3f432",
+      "bytes": 11146
+    },
+    {
+      "path": "notifications/B06-P02.json",
+      "sha256": "82454cc55346ed728869e3377dd8142d57325f85a4fc1fcadc02d29e68c38a69",
+      "bytes": 14787
+    },
+    {
+      "path": "notifications/B07-P01.json",
+      "sha256": "aac23e6c0cef5276bd77612f61916813b1b79be1605cc2c1f4147771bc36b069",
+      "bytes": 12915
+    },
+    {
+      "path": "notifications/B07-P02.json",
+      "sha256": "d2a833467a9bca65abc535fffc6c9645c3d45eb4f0505f0a490546f26945379e",
+      "bytes": 12915
+    },
+    {
+      "path": "notifications/B09-P01.json",
+      "sha256": "3d904d6de2a17e162f73a53877845ef9bbb4def959449c7309242c5250d98a9f",
+      "bytes": 14368
+    },
+    {
+      "path": "notifications/B10-P02.json",
+      "sha256": "88fe4cbaca9b754d620a8471059cbc4079f7425ab8cf4a16408c727a98b7d76b",
+      "bytes": 12915
+    },
+    {
+      "path": "original-evidence-gaps.json",
+      "sha256": "1162c6c2673f89fe37ebd8dc09432c63896be3dd621c60b673998592a05291c6",
+      "bytes": 810
+    },
+    {
+      "path": "original-public-hashes.json",
+      "sha256": "80f9da20ebddc4147c5c977850340c5ea14fcb3a7f93904c0295a7e9a4bc185d",
+      "bytes": 263846
+    },
+    {
+      "path": "path-resolution.json",
+      "sha256": "7107b95f4a400f8b2f447c3073bbb74cb72cfde06ba1c7033ebcdd4849f64a02",
+      "bytes": 150319
+    },
+    {
+      "path": "provenance/first-setup-blocker.json",
+      "sha256": "711647e09d84368b9cc1440b728b940d4a8fa80a69fce2203429243bd943177e",
+      "bytes": 558
+    },
+    {
+      "path": "public-manifest.json",
+      "sha256": "093156bb45cd075c3a7a7c30c24f4c5608c480f48dbb4bc3eb10dcd959e9bcfe",
+      "bytes": 267103
+    },
+    {
+      "path": "publication-policy.json",
+      "sha256": "449524f55c964e053cb15ec191a318ebdc239b220b3d0506b367a82b70e9cbc2",
+      "bytes": 493
+    },
+    {
+      "path": "restore_source_layout.py",
+      "sha256": "6afae2f1f4ddb6fc375b0b5b0acc8dc180cdeef1be5611889f7b7758a0de1cfb",
+      "bytes": 2006
+    },
+    {
+      "path": "rubrics/A-F01.json",
+      "sha256": "79b99b91e488196ec1624c62d9c415cc2851315b61dcfe8b373fb7fc172f9f10",
+      "bytes": 4136
+    },
+    {
+      "path": "rubrics/B02-P02.json",
+      "sha256": "3a8d76494d8bfbd262be15ac65fbe6dc179ae7e641b53ba17e8f289b809b226a",
+      "bytes": 4351
+    },
+    {
+      "path": "rubrics/B06-P02.json",
+      "sha256": "c194c7f29f8932f5481f97cd36720a4200c7db6b0f8e39a4a2cc7b2012e90db5",
+      "bytes": 4179
+    },
+    {
+      "path": "rubrics/B07-P01.json",
+      "sha256": "74748f30847a3266ec24cea182c8d8658ac4ec82b30bc30e468b6c950322d028",
+      "bytes": 4126
+    },
+    {
+      "path": "rubrics/B07-P02.json",
+      "sha256": "b7916952331d1dc831ca0e960ff109f14c3c1e5d5ce362493e309331ef61124a",
+      "bytes": 4143
+    },
+    {
+      "path": "rubrics/B09-P01.json",
+      "sha256": "25e3033980f4d23ae33ebeaef4358fa650dbd428f56f2e6a6f9917d0dbfd620c",
+      "bytes": 4266
+    },
+    {
+      "path": "rubrics/B10-P02.json",
+      "sha256": "e0f7b7414f487b71da6f4021ecb5786badd579e9f4f8715cfd2b2f05ae7b5641",
+      "bytes": 4379
+    },
+    {
+      "path": "source-capsules.json",
+      "sha256": "669fe43aa7eeb7f6513beaeaeb61684d469a4c9623c58561f44c9794a762c5fd",
+      "bytes": 1296618
+    },
+    {
+      "path": "source-index.json",
+      "sha256": "4a9be75c1f832f538832907799d7f9d1f3107d0faffc1a72718fa2320d77e53e",
+      "bytes": 276
+    },
+    {
+      "path": "stage-evidence-inventory.json",
+      "sha256": "abd50c62ba88efc0d8871ee4ad69715c8e46cea6fee9c927a16c9ddd97340d41",
+      "bytes": 38883
+    }
+  ]
+}

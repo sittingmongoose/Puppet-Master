@@ -1,0 +1,24 @@
+{
+  "B09-P01-control_critic": {
+    "original_missing_members": [
+      "native-goal-create.json",
+      "sources/index.md"
+    ],
+    "retained": [
+      "native-goal-active.json",
+      "native-goal-terminal.json",
+      "source-map.json"
+    ],
+    "same_birth_exact_objective": "reported in exact pinned packet; active and terminal retained",
+    "provenance": "UNKNOWN; original named creation-capture absence not repaired",
+    "no_active_fill": true
+  },
+  "A-F01-R0": {
+    "original_t0_exact": "UNKNOWN",
+    "packet_t0_is": "conservative bound, not exact original admission clock",
+    "conservative_t0_bound": "2026-10-12T00:17:34.697467+00:00",
+    "clock_record": "provenance/first-setup-blocker.json",
+    "original_failure_retained": true,
+    "no_clock_reset_or_extended_allowance": true
+  }
+}

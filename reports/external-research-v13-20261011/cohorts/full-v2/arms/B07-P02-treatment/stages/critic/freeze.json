@@ -1,0 +1,100 @@
+{
+  "prepared_at_utc": "2026-10-12T00:56:06.368Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-12T01:08:06.368Z",
+  "whole_deadline_utc": "2026-10-12T01:37:02.330Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B07-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/inputs/brief.md",
+      "sha256": "35f7b4e31d11d22e539032e83288c48e1a2d7afcd8a25c445c0f1d4ee56ab83e",
+      "bytes": 2340
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/assignment.md",
+      "sha256": "9f66c5c437fd016b30c98b290e54aec6d6fd94243a10891ed2555a32e9a737d0",
+      "bytes": 10277
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/input-map.json",
+      "sha256": "07c357c34bb8b5c6c18ba7c894d49834d65057ae5c85c0915e876b533f0c1660",
+      "bytes": 2027
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "1060c66fecc6e7c4326978447c0b9592f651680dff80b1c30358bc092f000c5f",
+      "bytes": 6306
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/draft.md",
+      "sha256": "1defd0bd0be7b7090c1eb85369d73876758d13017d087284be02f81609a920c0",
+      "bytes": 24981
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "6ca3c90857bb40c76eabb81cae599000eaf0e050dcb26f0d76dbc6ded4a1cee9",
+      "bytes": 19049
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+      "bytes": 2420
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "772496f126026cecf79b49c3e0f4a814a06ec5e3b8cbb9d014dc8b62d197ba69",
+      "bytes": 474
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/sources/index.md",
+      "sha256": "02eb66c1098f567b2398140ae82c48cd247db709c9670c2b9117b235dbb8ad03",
+      "bytes": 3460
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "bytes": 419
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 critic stage, run B07-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": "First establish substantive coverage of every required mechanism/alternative family and useful discovered opportunity before micro-corrections. Then verify consequential claims and proposed changes. Use this same critic context and total maximum budget; no additional reviewer. Preserve all ordinary review obligations, source correctness and false-rejection control. Do not restrict criticism to a few pivotal claims.\n",
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 720.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/sources/index.md"
+      ]
+    }
+  ],
+  "request_sha256": "1b2c31c57778172c81708e62e1ad28d2062aae61e3fc19d96a1545b1e5b3bb02"
+}

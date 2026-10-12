@@ -1,0 +1,11 @@
+# Draft plan: Disconnected field-survey edit journal
+
+The draft uses a transactional embedded store for observations and a second append-only journal carrying operation identifiers, author labels, and per-record revision numbers. Photos remain in a directory selected by the operator; journal entries hold relative references and hashes. Each laptop exchanges journal segments through a relay on the office network, with removable-media bundles as a fallback. Nothing requires a hosted account.
+
+For now, the relay accepts operations in arrival order. A revision mismatch opens a conflict card showing the old value and both edits. Nonoverlapping field edits are proposed for automatic merging, while delete-versus-edit is routed to review. The draft assumes that laptop-local revision numbers plus an author label uniquely identify operations, and that acknowledgment permits discarding sent segments. Whether either assumption survives reinstall, lost acknowledgments, and interrupted transfer is unresolved. Wall-clock timestamps are display information, not a winner rule.
+
+Save and journal append should appear atomic to the application. The draft has not yet selected one database transaction or a coordinated file protocol, and attachment copying remains an explicit action. It proposes a retention setting for resolved conflicts but leaves recovery after retention open. Validation would replay duplicate segments, interrupt saves, reconnect after competing deletion and photo addition, and restore a copied store. No checks have been run. A staged proposal should settle identity and durability before adding convenient merge behavior.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

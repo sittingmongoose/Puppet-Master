@@ -1,0 +1,204 @@
+{
+  "run_id": "A-F01-A1",
+  "stage": "investigator",
+  "sources": [
+    {
+      "id": "BRF-01",
+      "title": "Assigned survey brief",
+      "url": null,
+      "released_version_or_commit": "User-provided file; no version token",
+      "locator": "Entire document, four paragraphs",
+      "access_utc": "2026-10-12T00:33:22Z",
+      "observed_operation": "Read directly after binding gate passed",
+      "governing_condition_default_exception": "Three disconnected-for-a-week laptops; <=50,000 observations/season; separate photos; overlap includes edit/delete/photo; no account, automatic upload, wall-clock-only winner or silent resurrection; manual transfer required",
+      "applicability": "Authoritative brief; sole case input before plan release"
+    },
+    {
+      "id": "CDB-01",
+      "title": "CouchDB replication/conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 stable docs; stable URL not commit-pinned",
+      "locator": "§2.3.3-2.3.4, lines 82-135",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official docs at named sections",
+      "governing_condition_default_exception": "Conflicts are leaf revisions; ordinary GET hides conflict existence and returns deterministic winner; conflicts=true lists other leaves; compaction discards non-leaf bodies; revision pruning bounds history",
+      "applicability": "Couch/Pouch alternative; requires explicit enumeration and separate archival retention"
+    },
+    {
+      "id": "PDB-01",
+      "title": "PouchDB replication guide",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "released_version_or_commit": "Official current guide, unversioned and not package-pinned",
+      "locator": "Multi-master setup, sync, live retry, local peers",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official guide and inspected sync/retry and peer examples",
+      "governing_condition_default_exception": "sync combines push/pull; live retry can recover transient offline error; local PouchDB may replicate to another local PouchDB; arbitrary deterministic winner remains",
+      "applicability": "Shows account-free local peer path and reconnect model; desktop integration still unknown"
+    },
+    {
+      "id": "PDB-02",
+      "title": "PouchDB conflict guide",
+      "url": "https://pouchdb.com/guides/conflicts.html",
+      "released_version_or_commit": "Official current guide, unversioned",
+      "locator": "Eventual conflicts, _conflicts, revision reads, immutable-delta section",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened offline concurrent edit example and APIs",
+      "governing_condition_default_exception": "After concurrent branches reconnect a deterministic revision wins; callers can request/fetch losing revisions; same-document conflict history is retained until resolved/pruned",
+      "applicability": "Supports explicit review and operation-log alternative; winner alone is insufficient"
+    },
+    {
+      "id": "PDB-03",
+      "title": "PouchDB attachments guide",
+      "url": "https://pouchdb.com/guides/attachments.html",
+      "released_version_or_commit": "Official current guide, unversioned",
+      "locator": "Default attachment stub and attachments:true, lines 26-77",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened guide and compared normal and full attachment reads",
+      "governing_condition_default_exception": "Normal reads return metadata stub/digest; attachments:true returns full base64 payload; these are database-managed binary attachments",
+      "applicability": "Distinguishes stored photo references from database attachments; do not embed photo bytes in ordinary sync"
+    },
+    {
+      "id": "PDB-04",
+      "title": "PouchDB IndexedDB attachment issue #8456",
+      "url": "https://github.com/apache/pouchdb/issues/8456",
+      "released_version_or_commit": "Opened 2022-02-23; closed by PR #8460",
+      "locator": "Issue description and reproduction, lines 156-207",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened first-party issue; read two-branch replication conditions",
+      "governing_condition_default_exception": "IndexedDB replication of conflicting revisions could give an attachment ref to a non-winning revision that never held the attachment; compaction/branch change exposed it",
+      "applicability": "Concrete attachment lifecycle edge case for merge/delete/compaction validation"
+    },
+    {
+      "id": "PDB-05",
+      "title": "PouchDB attachment fix and integration test #8460",
+      "url": "https://github.com/apache/pouchdb/pull/8460/files",
+      "released_version_or_commit": "Merged 2022-03-29; fix 1a30d05, merge c563e34",
+      "locator": "bulkDocs.js and tests/integration/test.attachments.js, test #8456 bad attachment rev after replication",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened PR diff; read predicate and test; did not execute",
+      "governing_condition_default_exception": "Fix references an attachment only if the written revision has it; regression test replicates branches, removes attachment branch, compacts, and expects stale stub fetch to fail 412",
+      "applicability": "Issue-to-fix-to-test evidence, not evidence our own design was tested"
+    },
+    {
+      "id": "PDB-06",
+      "title": "PouchDB 7.3.0 release",
+      "url": "https://github.com/apache/pouchdb/releases/tag/7.3.0",
+      "released_version_or_commit": "7.3.0 release commit 2e2aa6c",
+      "locator": "Official release notes list #8460",
+      "access_utc": "2026-10-12T00:33:22Z",
+      "observed_operation": "Opened official PouchDB release list; 7.3.0 release section and #8460 entry were visible. Direct tag re-open returned a fetch error.",
+      "governing_condition_default_exception": "Release notes list erroneous attachment revision reference fix in bulkDocs",
+      "applicability": "Shows issue fix shipped; adoption would need current version and adapter review"
+    },
+    {
+      "id": "PDB-07",
+      "title": "PouchDB 8.0.0 delete semantics release note",
+      "url": "https://github.com/apache/pouchdb/releases/tag/8.0.0",
+      "released_version_or_commit": "8.0.0 commit 6cebe42; released 2022-12-15",
+      "locator": "Purge release note lines 453-458",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official release notes at deletion statement",
+      "governing_condition_default_exception": "Normal remove creates _deleted=true revision so delete replicates; purge physically removes data and is administrative",
+      "applicability": "Supports tombstone replication; does not specify simultaneous edit/delete business precedence"
+    },
+    {
+      "id": "SQL-01",
+      "title": "SQLite Session Extension introduction",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "released_version_or_commit": "Official current API doc; extension since 3.13.0; disabled by default absent build flags",
+      "locator": "§1.1-1.3, §2.2-2.3, lines 49-65 and 112-121",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official docs; read transfer use case, flags, limitations and coalescing",
+      "governing_condition_default_exception": "Changesets require same schema and compatible baseline; declared primary keys; virtual tables and NULL primary keys omitted; repeated writes in session coalesce",
+      "applicability": "Good manual-patch alternative, not readable durable per-edit history"
+    },
+    {
+      "id": "SQL-02",
+      "title": "SQLite Session C interface",
+      "url": "https://www.sqlite.org/session.html",
+      "released_version_or_commit": "Official current API reference; deployed behavior depends on bundled SQLite version",
+      "locator": "changeset_apply callbacks; conflict classes and OMIT/ABORT/REPLACE",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official C reference; inspected callback choices and patchset limits",
+      "governing_condition_default_exception": "Patchsets omit original values and cannot detect DATA conflicts; apply_v2 rebase API is marked experimental",
+      "applicability": "Requires app-authored policy; never treat REPLACE as user resolution"
+    },
+    {
+      "id": "SQL-03",
+      "title": "SQLite Atomic Commit/crash tests",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "released_version_or_commit": "Official live technical doc, not release-pinned",
+      "locator": "§8 crash tests and §9 platform caveats, lines 405-438",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official technical doc and read simulated crash and flush caveats",
+      "governing_condition_default_exception": "Modified VFS crash tests simulate partial/out-of-order writes and verify all-or-none after reopen; actual durability depends on locks, fsync/flush, hardware and preserving hot-journal names",
+      "applicability": "Grounds save/reopen validation; not proof for target laptop or file-transfer layer"
+    },
+    {
+      "id": "AM-01",
+      "title": "Automerge conflict API",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "released_version_or_commit": "Official current docs, unversioned; release separately AM-04",
+      "locator": "Same-property conflicts, getConflicts, operation IDs, lines 63-112",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official docs and read merge examples",
+      "governing_condition_default_exception": "Different fields can merge; same-property concurrent values persist, default read chooses deterministic winner; getConflicts exposes both; new assignment hides conflict; actor/counter ordering, not clock",
+      "applicability": "Candidate merge engine only if app exposes and retains review branches"
+    },
+    {
+      "id": "AM-02",
+      "title": "Automerge merge rules",
+      "url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "released_version_or_commit": "Official current docs, unversioned",
+      "locator": "Map merge rules lines 62-74",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official under-the-hood page and inspected delete/set rules",
+      "governing_condition_default_exception": "Concurrent set of key x and delete of x yields set value",
+      "applicability": "Represent observation delete as explicit tombstone outside map-key removal; test business delete precedence"
+    },
+    {
+      "id": "AM-03",
+      "title": "Automerge Repo storage/compaction",
+      "url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+      "released_version_or_commit": "Official current docs, unversioned",
+      "locator": "Concurrent local storage and compaction lines 99-105",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official storage docs and read concurrent-compaction case",
+      "governing_condition_default_exception": "Repo reloads and merges stored changes; documented compaction removes only changes incorporated in that compacted snapshot",
+      "applicability": "Check pinned desktop binding and export/history retention before adoption"
+    },
+    {
+      "id": "AM-04",
+      "title": "Automerge JavaScript release tag",
+      "url": "https://github.com/SmartBear/automerge/releases/tag/js/automerge-3.3.2",
+      "released_version_or_commit": "JS 3.3.2, commit b4a1bbe",
+      "locator": "Official releases entry js/automerge-3.3.2",
+      "access_utc": "2026-10-12T00:33:22Z",
+      "observed_operation": "Opened official Automerge releases listing; it exposed the js/automerge-3.3.2 tag and short commit b4a1bbe. Direct tag re-open returned a fetch error; no code executed.",
+      "governing_condition_default_exception": "Release page shows a versioned JS tag",
+      "applicability": "Pin any compatibility prototype to a concrete version; unversioned docs are not claimed to match it exactly"
+    },
+    {
+      "id": "RX-01",
+      "title": "RxDB replication engine",
+      "url": "https://rxdb.info/replication.html",
+      "released_version_or_commit": "Official current docs, unversioned",
+      "locator": "Offline/checkpoint protocol and conflict handler, lines 57-109 and 141-157",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened official docs; inspected handlers, checkpoint/resync and default policy",
+      "governing_condition_default_exception": "Requires pull/push/stream handlers; offline changes resume by checkpoint; default conflict handler discards fork and uses master; custom handler available; deletion marker defaults _deleted",
+      "applicability": "Use only with custom loss-preserving policy/backend; not built-in manual transfer"
+    },
+    {
+      "id": "CDB-02",
+      "title": "CouchDB replication protocol source",
+      "url": "https://github.com/apache/couchdb/blob/main/src/docs/src/replication/protocol.rst",
+      "released_version_or_commit": "Apache CouchDB main, not release-pinned",
+      "locator": "Conflict errors, checkpoints and network instability optimisations",
+      "access_utc": "2026-10-12T00:41:45Z",
+      "observed_operation": "Opened first-party protocol specification",
+      "governing_condition_default_exception": "HTTP/1.1 peer replication; 409 for concurrent resource updates; preserve checkpoints and handle unstable networks",
+      "applicability": "Supports resumable reconnect principle; transport-specific and not manual-file workflow"
+    }
+  ]
+}

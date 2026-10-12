@@ -1,0 +1,130 @@
+{
+  "prepared_at_utc": "2026-10-12T01:07:38.017Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-12T01:25:38.017Z",
+  "whole_deadline_utc": "2026-10-12T01:35:37.398Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B06-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic-breadth",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B06-P02-treatment-critic-breadth-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/status.json"
+    },
+    {
+      "stage": "critic-truth",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B06-P02-treatment-critic-truth-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-truth/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+      "sha256": "0c31c92a6b8fc79d1bad8d22831d827e946fdd9dbdf5665b28233125e73932bf",
+      "bytes": 2362
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "4a27ada1828d8a6f81ebd8b7a42b23f3933f8921ac11f955017af84e49487be7",
+      "bytes": 10387
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "9ea1c654124f00be93548ee97b57796d8f49985a7261e5b8301b2d2431a4dd90",
+      "bytes": 3171
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+      "bytes": 12995
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/draft.md",
+      "sha256": "63407117941142d73c3916098fdeb9549daaf4a2be5f27d3e23631101883084a",
+      "bytes": 24574
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "5409e7b0d3197363f2ce555fc9ef797fe2c9a098214b18e47cb6fbcfdf763454",
+      "bytes": 20341
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "5def93be3ba2e436174a197e869d39d71361f82135024903a9f5374628c9b600",
+      "bytes": 475
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/critique.md",
+      "sha256": "760b88c75b9b332afe694fa682453761a3d2273554d4c7a9a08ef3b6b663a6df",
+      "bytes": 8426
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/source-map.json",
+      "sha256": "3c15edd273307ab3003f26e95203bfdb63b2a43c43a0b336ac2a09f4cfa2b625",
+      "bytes": 5183
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-truth/critique.md",
+      "sha256": "0a70df0cd4f184226002c0139b6c4500504b7c861eb6102bb0c4d945abcbbc0a",
+      "bytes": 7772
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-truth/source-map.json",
+      "sha256": "acdb9e3535542bdce3dd6ded3a603d5da6e06da740ab6d07d4538256fc4affb7",
+      "bytes": 7553
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources/README.md",
+      "sha256": "cd1a6a7aba2b7955013c20e327d096f406d63be28faa6ff73a1b624abdca6695",
+      "bytes": 1778
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/sources/README.md",
+      "sha256": "cecc80e7521697ae6eb97d2ef3da93569803869460e61ef1924669a5f57525be",
+      "bytes": 1194
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 reviser stage, run B06-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources/README.md"
+      ]
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/sources/README.md"
+      ]
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-truth/sources",
+      "paths": []
+    }
+  ],
+  "request_sha256": "435d2e88dfbcdcaf6be43d0479b578d361a70e0db4dfa3356145a425204c1ed2"
+}

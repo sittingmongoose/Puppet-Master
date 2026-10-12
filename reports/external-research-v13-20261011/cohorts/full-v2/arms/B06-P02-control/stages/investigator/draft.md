@@ -1,0 +1,136 @@
+# Draft proposal — Volunteer shift handover across unreliable connections
+
+**Status:** provisional research proposal, not an endorsed technology choice.  
+**Scope:** the full user brief and the exact plan released to this stage.  
+**Evidence boundary:** sources are indexed in [sources/index.md](sources/index.md) and identified as S01–S24 in [source-map.json](source-map.json). Conditions and unknowns are stated below. Validation items are proposals unless marked executed.
+
+## 1. Clause-by-clause disposition of the released plan
+
+| Plan clause | Disposition | Reason and treatment |
+|---|---|---|
+| **P01.** “Stable issue identifiers, event history, and a separate acknowledgment table.” | **Accept with detail.** Use stable issue IDs and distinct events for comments, claims, read acknowledgments, resolution, and deliberate reopening. An acknowledgment event points to a note and volunteer identity; it does not mutate issue status. | Prevents acknowledgment from being mistaken for closure. Identity and acknowledgment visibility still require an owner decision. |
+| **P02.** “Mobile clients cache current-shift issues.” | **Accept with a freshness boundary.** Cache the current shift handover, active tasks, unresolved issues and only the older history authorized for that volunteer. Label the last successful sync and every local pending event. | A browser-managed local store is not an archive. Browser eviction and explicit data clearing remain possible; PouchDB uses IndexedDB in modern browsers, and Chromium persistence requests have browser-specific conditions (S02, S24). |
+| **P03.** “Queue comments and claims offline.” | **Accept with claim correction.** Queue comments as append-only observations. Queue each claim as a provisional claim event. Disconnected devices cannot promise exclusive ownership; preserve competing claims and request an explicit leader assignment when they reconnect. | Do not silently choose a claimant through last-write-wins. The center must decide whether offline claims remain provisional or are disabled where exclusive assignment is essential. |
+| **P04.** “A shared service accepts events and produces the next shift summary.” | **Accept as an architectural option.** A connected authority validates queued operations and produces a concise summary of what changed since the prior shift, with unresolved items carried forward. Compare document replication, a server-authoritative upload API, a CRDT-assisted client, and a custom outbox before selecting one. | CouchDB replication is directional and a two-way arrangement needs both directions; PowerSync places queued writes and business conflict policy at the application backend (S05, S16). Neither implies that application-level issues have been reconciled. |
+| **P05.** “Search issue titles/notes excludes contact fields.” | **Accept and tighten.** Search an allowlisted projection of issue ID, short title, equipment/location tags, dates, status and resolution. Exclude phone/email fields from the index, result payload, snippets, logs and volunteer offline datasets. Authorize before returning results. Treat free-text notes as potentially containing accidental contact details. | CouchDB database members can read all documents in a database, so a hidden UI field is not record-level protection (S08). Sync Streams can select rows and columns, but synced values persist on the client (S18). The role matrix and permitted history remain owner decisions. |
+| **P06.** “No read score or productivity ranking.” | **Accept.** Do not build leaderboards, read-rate summaries, personal completion metrics, or performance analytics. Keep a read acknowledgment as a task-handover receipt only. | Individual or aggregate visibility of acknowledgments and how long receipts are kept remain decisions for the organization. |
+| **P07.** “Resolution is an explicit event with a reason.” | **Accept and add concurrency guards.** Record actor, server-accepted time, reason, issue ID and the expected prior revision/state. A stale resolution or reopen operation is rejected or held for review after a conflicting state change. | CouchDB rejects stale revision writes on one node but disconnected replicas can converge with multiple branches and expose a deterministic winner; that winner is not a domain resolution (S03, S06). |
+| **P08.** “Later comments do not alter a resolution; a new claim on a resolved issue prompts review.” | **Accept with a strict boundary.** Permit a late comment as history without changing status. A claim queued from a stale resolved view is shown as stale and not applied as a state transition. Offer the authorized leader a review action; reopening requires a separate explicit command and reason. | This prevents an old offline write from silently reopening an issue. The owner must define who may reopen and whether a queued claim can be considered after review. |
+| **P09.** “Device-generated event identifiers are assumed unique.” | **Correct.** Generate an operation key for each event, scope it to actor/client identity, enforce a server-side uniqueness constraint, and make replay idempotent. A repeated key with identical payload is a retry; the same key with different payload is an integrity conflict to quarantine. | A copied outbox can repeat saved keys. Do not rely on timestamps or client-generated IDs without server deduplication. PowerSync likewise documents idempotent upload processing and operation IDs (S16–S17). |
+| **P10.** “Queued writes retain original access rights until reconnection.” | **Reject as an implicit security rule; require owner policy.** Recheck current authorization when the server receives each operation. If a volunteer was revoked, block the operation and show a recoverable “not synced: access changed” state. Do not let a stale client credential extend rights invisibly. Owners must decide whether authenticated events made before removal may be accepted under a documented, bounded rule. | CouchDB security changes are controlled by an administrator, and a member’s database permissions are live access rules (S08–S09). An offline client cannot learn that access was revoked until it reconnects; no evidence makes this plan assumption safe by itself. |
+| **P11.** “Examine volunteer-leaving and restored-backup cases.” | **Accept as required failure analysis.** For departure, distinguish event creation before removal from server receipt after removal; compare reject-at-replay with any explicitly approved, bounded grace rule. For a shared restored backup, test whether copied outbox IDs collide and whether attribution remains correct. | The brief requires revoked-access and duplicate-event validation. These are unresolved policy and integrity questions, not facts that primary technical documentation can answer for this center. |
+| **P12.** “Photos upload only after an explicit action on a suitable connection.” | **Accept with measurable limits.** Keep photos optional, locally staged, and absent from summaries/search by default. Show file size before upload; use a defined size/compression limit; default to Wi-Fi-only upload with an explicit cellular override. Display staged, uploading, failed, uploaded and deletion-pending states. | CouchDB attachment operations update the parent document revision and require current revision information for updates/deletion (S10). Its changes feed leaves attachment bytes out by default; including them base64-encodes them (S07). “Suitable connection,” size limit and prohibited image content need owner decisions. |
+| **P13.** “Attachment deletion is separate but cache removal/retention is unsettled.” | **Keep open, with safe interim behavior.** Record a deletion request, remove the local preview where possible, queue a tombstone, and propagate it to online clients. Show deletion as pending until the server accepts it. Do not promise erasure from disconnected devices, backups or exports. | Normal CouchDB deletion leaves a tombstone so deletion can replicate, even after compaction (S11). The center must decide retention period, backup expiry, purge authority and how long offline devices may retain copies. |
+| **P14.** “Workshop invitation codes; identity value is open.” | **Keep as an owner decision and correct the design conditionally.** A shared or reusable code proves possession of a code, not which volunteer read or changed a note. If per-person attribution, removal, or leader/volunteer roles are required, use a one-use code mapped to an individually named app identity or an existing organizational identity provider. The app need not require each person to buy a separate commercial service account; identity and operating cost must be selected by the organization. | CouchDB can accept external proxy or JWT identities under configured trust conditions (S09). No source establishes that the center has such an identity provider or that its invitation codes are unique, revocable, or identity-bound. Do not issue codes or create accounts in this research stage. |
+| **P15.** “Validate two offline claims, stale resolutions, revoked access, duplicate events, sensitive search, and deletion across caches.” | **Accept and expand.** Include reconnect order permutations, duplicate retry with same/different payload, restored-backup key collision, a comment after resolution, explicit reopen, actual phone/browser storage conditions, and photo upload blocked by cellular policy. | These cases target the assumptions and failure paths above. All remain proposed validation, not executed checks. |
+| **P16.** “No live data or accounts have been accessed.” | **Accept as a scope boundary.** This stage accessed no center records, invited no volunteer, created no account, and performed no deployment. | The research is a proposal, not implementation or operational approval. |
+| **P17.** “Adoption begins with one synthetic shift before policies/photo questions close.” | **Accept for a synthetic workflow rehearsal; limit real use.** A no-account, synthetic-record walkthrough can precede unresolved policy choices. Any real volunteer access or live records require approved minimum roles, identity, retention and recovery rules. Keep photos off until image and deletion policy is settled. | The proposed sequence below preserves the early synthetic exercise without treating it as approval to deploy. |
+| **P18.** “Provisional; use primary evidence, retain unknown user-data questions; no deployment requested.” | **Accept.** Preserve unresolved organizational rules as explicit owner decisions; do not fill them in by inference. No future deployment is requested or performed. | Technical documentation cannot decide the center’s retention, access, identity, or acceptable mobile-data policy. |
+
+## 2. Revised proposal
+
+### Shift workflow
+
+At shift start, show a dated summary of new tasks, comments since the prior cutoff, changes in ownership, newly raised equipment problems, and unresolved or explicitly resolved issues. Carry unresolved items forward with their stable ID and last accepted status. Mark whether each change is server-confirmed, pending on this device, or blocked for review. The summary should help volunteers answer “what changed and what still needs attention,” without exposing a raw audit stream or ranking individual readers.
+
+Store read acknowledgment separately from issue state. A volunteer may mark a note read; resolving an equipment problem is a different action with a reason and an authorized actor. The acknowledgment can help a handover, but must not imply repair, closure, assignment or performance. Whether a shift leader can view acknowledgments by name is open.
+
+Represent comments and claims as independent events with stable operation keys. Two offline claims on one task remain visible as competing provisional claims until an authorized person reconciles them. If the center wants exclusive task ownership even during a full outage, it must choose to block offline claim confirmation; two disconnected devices cannot coordinate an exclusive lock.
+
+Issue status is a server-validated state machine. A resolve or reopen event includes the state/version it was based on. When a stale phone reconnects after the issue was resolved, the service rejects or quarantines any state-changing write and shows the latest issue; it does not apply an old value over the current state. Comments may still be appended with their original creation time and a separate server receipt time. An intentional reopen is a new explicit event, permitted only to roles the organization selects.
+
+### Search and access
+
+Keep older-issue search useful with issue titles, tags for equipment/location, dates, current status and resolution summary. Exclude private contact details from indexed fields, result payloads, snippets and offline caches. Free-text notes should be screened or guided so volunteers do not paste contact information into generally searchable text. Perform authorization on the server for every search and each returned issue; UI hiding does not protect fields returned by an API.
+
+Access choices are not settled. A preferred investigation path is an existing organizational identity provider, if one exists, with named identities mapped to the selected roles. Another is organization-managed named accounts in a self-hosted service. Workshop-issued codes may be used as one-time enrollment links only if each maps to the intended identity, expires, and can be revoked. A group code alone cannot support reliable read attribution or per-person revocation. Keep volunteer, shift-leader and administrator permissions as a policy matrix for owner approval; this proposal does not prescribe which volunteers may search historical records or who may resolve/reopen issues.
+
+At sync time, the service evaluates current permissions. A queued write from an identity that has since left is blocked and retained locally as an unsynced/reviewable item with no silent reassignment. The center must decide whether a bounded, verifiable grace rule is needed for actions made before revocation. This policy cannot be inferred from the brief.
+
+### Photo handling and retention
+
+Keep photo capture optional. Store a photo as a staged local attachment until the volunteer confirms upload. Display a byte estimate and the upload rule before transfer. Default to Wi-Fi-only; permit cellular transfer only through a clear per-upload override or a setting the organization approves. Fetch a thumbnail or full image only when requested, not when building a handover digest or a search result. Set a maximum file size and image transformation after owner review; the numeric limit is undecided.
+
+A deletion creates a distinct deletion event. Remove the local display, queue the deletion for sync, and show pending versus server-confirmed status. On reconnection, propagate the deletion to other clients. A device that stays offline can retain its copy until it receives the deletion; backup and export copies follow a separate retention rule. Do not label a photo “erased everywhere” until the approved policy defines server retention, client-cache expiry, disconnected-device behavior, backups and hard purge. Until those choices are approved, keep photo upload disabled in any real-data pilot.
+
+### Synchronization alternatives
+
+| Approach | What it provides | Main tradeoff for this workflow |
+|---|---|---|
+| PouchDB + CouchDB replication | Local browser documents and self-hostable document replication; supports offline editing and bidirectional synchronization. | App must inspect and resolve concurrent revisions; default document views can hide losing branches. Database-level members can read all documents, so contact privacy needs a stronger boundary. Browser storage and attachment conflict behavior must be tested. [S02–S10] |
+| PowerSync with a relational backend | Local SQLite and selective per-client sync with a sequential upload queue; backend can validate status transitions, deduplicate operations and record conflicts. | The backend must implement domain rules. Self-hosting adds operations and lacks the hosted dashboard; service licensing/edition, support and cost need review. [S16–S20] |
+| Automerge with an app sync service | Offline merging can preserve independent edits and expose same-field alternatives. | It is a merge library, not identity, access control, search, retention or a repair workflow. Same-property winner ordering is not a business decision. [S21–S22] |
+| Custom local outbox + authenticated API | Exact server control over claims, acknowledgments, search projection, revocation and state transitions. | The team builds and maintains storage, queueing, retry, dedupe, migrations and operational monitoring. |
+
+No approach is selected here. A short prototype or design review should compare the same synthetic failure scenarios against each shortlisted option and include hosting, license, support, browser/device and recovery costs.
+
+## 3. Adoption sequence
+
+1. **Synthetic workflow rehearsal:** one shift leader and a few volunteers walk through a synthetic handover. Agree on summary cutoff, note acknowledgment meaning, claim behavior, and resolution/reopen language. No real accounts or records are required for this step.
+2. **Policy and identity decisions:** approve a role matrix, named identity source, access removal behavior, contact-data boundary, retention/backups, photo rules and cellular policy before using live records.
+3. **Small no-photo pilot:** if separately authorized, trial notes, task claims, handover summaries and old-issue search with a small rotating group over one or two weekly shifts. Keep the existing method available as fallback.
+4. **Failure review:** run the cases below with synthetic accounts and devices. Fix confusing pending, stale, denied, and conflict states before widening use.
+5. **Optional photo pilot:** after photo size, upload, cache deletion, backup and retention rules are approved, test photos with non-sensitive synthetic images. Expand toward the roughly 30 volunteers only after the failure criteria pass.
+
+This is a proposed order only. This stage issued no invitations and started no pilot.
+
+## 4. Failure-oriented validation plan
+
+All items below are **proposed, not executed**.
+
+- **Offline work and persistence:** open the most recent cached handover, draft a comment and provisional claim without signal, restart the app, then reconnect. Verify pending/synced/blocked labels, durable queue behavior on supported phones, quota warning and recovery after browser site-data clearing.
+- **Competing claims:** two phones claim the same task offline, then reconnect in both orders. Verify that both claims remain visible and neither silently owns the task. Test any approved exclusive-claim policy.
+- **Acknowledgment versus resolution:** acknowledge a note attached to an unresolved equipment issue. Verify that the issue stays open in the next summary and that no read score, ranking or productivity report appears.
+- **Stale status write:** resolve an issue on one device; replay an older status edit, resolve and reopen from another offline device. Verify current state wins through an explicit rejection/review path, and only a separate authorized reopen event changes it.
+- **Comments after resolution:** submit a note from a stale client after the issue was resolved. Verify it can be retained as a comment if policy permits, while the issue stays resolved.
+- **Identity and revocation:** enqueue a change, remove/revoke that identity, then reconnect. Verify the chosen policy is applied, no operation is silently attributed to another user, and the user sees a recoverable denial. Test whether a one-use invite maps to a distinct identity without requiring a new commercial account.
+- **Idempotency and restored backups:** retry the same queued event repeatedly and verify one effect. Replay the same operation key with a different payload and verify it is quarantined. Restore a test backup to a second device, create new events on both, and verify keys do not collide or suppress distinct work.
+- **Search privacy:** search by issue title, equipment, location and note text. Include synthetic phone/email strings in test records and verify they do not appear in indexed results, snippets, logs, or the ordinary volunteer's offline dataset. Test unauthorized issue IDs directly against the API.
+- **Photo bandwidth:** stage a large synthetic photo with cellular data disabled. Verify that no photo bytes upload before explicit approval, Wi-Fi default is honored, the byte estimate is accurate enough for the selected policy, and failures remain resumable/reviewable without duplicating the attachment.
+- **Photo deletion and retention:** delete a staged photo offline, reconnect, then inspect a second online client and a deliberately offline client. Verify pending versus propagated deletion, cache expiry behavior, and the owner-approved backup rule. Do not use this test to claim physical erasure beyond the systems actually inspected.
+- **Replication-specific regression:** if CouchDB/PouchDB is selected, test two replicas where an attachment-bearing issue is deleted and recreated with the same ID/name before the intermediate delete replicates; interrupt and retry replication. Run on the pinned released server/client versions because CouchDB 3.5.2 had a reported failure and release notes list a fix in 3.5.3 (S12–S15).
+- **Shift-scale usability:** rehearse a full shift change using roughly 30 synthetic volunteer identities across the supported phones, focusing on summary readability, leader reconciliation time, poor-reception behavior and no accidental contact disclosure.
+
+## 5. Corrections, optional improvements, owner decisions, and uncertainties
+
+### Required corrections to the released plan
+
+- Do not treat offline claims as exclusive until a server accepts them; preserve multiple claims and require explicit reconciliation.
+- Do not replay queued status changes as unconditional writes or let a late stale claim reopen a resolved issue.
+- Do not assume event-key uniqueness or retained authorization. Use server idempotency/collision handling and recheck current authorization on replay.
+- Do not treat a workshop invitation code as a volunteer identity unless it is one-use, mapped to a named identity and revocable.
+- Do not call attachment deletion complete while copies may remain on disconnected phones or in backups.
+
+### Optional improvements
+
+- Show the leader a changed-since-previous-shift digest and an unresolved-items section.
+- Keep comment text append-only while status is validated separately.
+- Make sync state and last successful sync visible; let a volunteer retry a blocked event without silently changing its identity or payload.
+- Use a photo size cap, local thumbnail, explicit byte estimate and Wi-Fi-only default.
+- Keep a short audit of who resolved/reopened an issue without exposing readership as performance analytics.
+
+### Owner decisions that remain open
+
+- Who may read, write, claim, resolve, reopen, search historical issues, manage identities, and administer retention.
+- Existing organization identity provider, onboarding and offboarding method, whether named per-person identity is required for every volunteer, and whether one-time invite codes are approved.
+- Whether a queued event created before revocation may be accepted; whether current membership at replay is decisive; how rejected work is recovered without misattribution.
+- Whether multiple provisional task claims are acceptable during outages or offline claim confirmation must be disabled.
+- Which contact details or personal information may ever be stored in notes; whether free-text notes are searchable by all volunteers.
+- Retention periods for issues, event histories, acknowledgments, attachments, logs, backups, exports and local caches; who may request permanent purge.
+- Permitted photo subject matter, size/compression limit, cellular override, local cache lifetime, deletion promise and backup expiry.
+- Whether individual read receipts are needed, who can see them and how long to retain them. The no-performance-score constraint remains fixed.
+
+### Already-covered, rejected, and uncertain points
+
+- **Already covered and preserved:** stable issue IDs, event history, separate acknowledgment, explicit resolution reason, comments that do not alter resolution, no reading score, title/note search excluding contact fields, explicit photo upload, synthetic first rehearsal, and proposed failure cases.
+- **Rejected as an implicit design assumption:** exclusive offline ownership; treating a generic invitation code as identity; automatically applying queued writes with their original permissions; claiming deletion from every copy after removing one attachment.
+- **Uncertain:** identity provider availability, code uniqueness/revocation, role matrix, event retention, grace treatment for work queued before access removal, contact-data policy, backup/cache retention, photo size/data limits, whether PowerSync licensing/operations fit, and whether volunteer devices use browser or native storage.
+- **Evidence condition:** CouchDB 3.5.2's attachment report is tied to delete/recreate before delete replication; the 3.5 release notes list PR 6129 as a fix. CouchDB documents a revision-tree conflict model, and PowerSync documents a backend-owned write/conflict policy. These are product-specific conditions, not universal promises for every alternative.
+
+## 6. Checks actually run
+
+- Read the exact brief and the one helper-released plan copy.
+- Read the required primary-source documentation and inspected CouchDB issue, merged code diff, added regression-test names and release note.
+- The reveal helper recorded discovery SHA-256 `0b17bc77b40e2cb202a4b5fb4b5b1e51df34d105cc8c3781ac10eb338eb53a11` and revealed-plan SHA-256 `4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881`.
+- I did not run the product's EUnit suite, build software, execute a replication reproduction, create accounts, issue invitations, deploy a service, or use center records. The PR page's reported checks are upstream evidence, not checks run for this stage.
+

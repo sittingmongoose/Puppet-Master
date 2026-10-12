@@ -1,0 +1,167 @@
+{
+  "stage": "investigator",
+  "run_id": "B07-P01-control",
+  "research_brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/inputs/brief.md",
+  "discovery_status": "Brief-only discovery; exact plan withheld until the required one-time helper release.",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "RFC 4180 — Common Format and MIME Type for CSV Files",
+      "url": "https://www.rfc-editor.org/rfc/rfc4180.html",
+      "release_or_commit": "RFC 4180, Informational, October 2005",
+      "locator": "§2 items 3–7 and ABNF; optional header, comma-separated fields, equal field counts, spaces are data, quoted embedded CR/LF/comma/quote.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened the RFC and inspected the format definition.",
+      "governing_condition_default_exception": "The described common format uses comma delimiters; headers are optional and should be signaled; quoted fields may contain commas and line breaks; spaces are significant. RFC explicitly says it is informational, not an Internet Standard.",
+      "applicability": "Baseline for record boundaries and why physical lines do not equal logical records; supplier variations require explicit dialect profiles.",
+      "evidence_limitations": "Informational 2005 description; not evidence that every supplier follows RFC 4180."
+    },
+    {
+      "source_id": "S02",
+      "title": "W3C Metadata Vocabulary for Tabular Data",
+      "url": "https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/",
+      "release_or_commit": "W3C Recommendation, 17 December 2015",
+      "locator": "Dialect Description and default dialect (§5.9); tableSchema / columns examples including titles, datatype/format, required and primaryKey.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened the dated W3C Recommendation and searched dialect/schema properties.",
+      "governing_condition_default_exception": "Default description identifies UTF-8, CRLF/LF, quote character, doubleQuote, header, comma delimiter, and whitespace behavior; descriptions may override these. Column metadata can carry titles, datatypes/formats and constraints.",
+      "applicability": "Useful model for a versioned local supplier profile combining dialect and column mapping; adopt only a documented subset. Its table primaryKey is file-schema metadata and does not make supplier codes globally unique in the stock domain.",
+      "evidence_limitations": "Web-oriented metadata model; does not prescribe the application's matching, duplicate, inventory, transaction, or UX policy."
+    },
+    {
+      "source_id": "S03",
+      "title": "Rust csv 1.4.0 ReaderBuilder API",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "release_or_commit": "csv crate 1.4.0",
+      "locator": "ReaderBuilder methods delimiter, has_headers, flexible, quote, escape, double_quote; record iteration and reusable read_record examples.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened docs.rs 1.4.0 API reference and inspected configuration defaults and iteration examples.",
+      "governing_condition_default_exception": "Delimiter defaults to comma, header handling defaults on, and unequal record field counts error by default; flexible(true) disables that count check. Quote is double quote by default; non-doubled backslash-style escapes are disabled unless configured.",
+      "applicability": "Concrete Rust parser option for streaming raw records under an explicit supplier profile; validate strictness and encoding behavior against app requirements.",
+      "evidence_limitations": "Library behavior only; no stock app repository or caller was provided."
+    },
+    {
+      "source_id": "S04",
+      "title": "Rust csv 1.4.0 Position API",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Position.html",
+      "release_or_commit": "csv crate 1.4.0",
+      "locator": "Position overview and byte(), line(), record() methods.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened versioned position reference.",
+      "governing_condition_default_exception": "Each position contains byte offset, line number and record index; byte and record begin at 0, line begins at 1. Reader assigns record positions.",
+      "applicability": "Use a stable logical record number and byte offset for audit/review; display physical line as a convenience and test multiline and CRLF cases before relying on it.",
+      "evidence_limitations": "Does not define the product's displayed source-location convention or ensure every parser's line counting agrees."
+    },
+    {
+      "source_id": "S05",
+      "title": "BurntSushi rust-csv reader source and inline tests",
+      "url": "https://raw.githubusercontent.com/BurntSushi/rust-csv/1.4.0/src/reader.rs",
+      "release_or_commit": "Git ref 1.4.0; crate release 1.4.0; commit SHA not separately resolved",
+      "locator": "ReaderBuilder::flexible (around line 300); ReaderState::add_record; #[cfg(test)] module and read_record_unequal_ok test (around lines 2097–2280).",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened and searched the tagged upstream source; inspected the unequal-length check and in-file tests.",
+      "governing_condition_default_exception": "ReaderState compares later record width with the first parsed width when flexible is false and attaches the record position to UnequalLengths; flexible true bypasses this width error. Inline tests demonstrate the option.",
+      "applicability": "Source-level corroboration for strict width validation and row attribution; malformed rows should be classified for review, not made permissive by default.",
+      "evidence_limitations": "Upstream parser test/source, not tests for the stock application or supplier files."
+    },
+    {
+      "source_id": "S06",
+      "title": "Python 3.14 csv module documentation",
+      "url": "https://docs.python.org/3.14/library/csv.html",
+      "release_or_commit": "Python documentation 3.14.8, accessed 2026-10-12",
+      "locator": "reader and DictReader; Dialect attributes; Sniffer; Reader Objects line_num.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened Python 3.14 documentation and inspected string conversion, dialect, strict, and line_num behavior.",
+      "governing_condition_default_exception": "Reader yields strings unless QUOTE_NONNUMERIC is selected; Dialect.strict defaults false; line_num counts source lines and is not the number of records when fields span multiple lines. Sniffer infers a dialect from a supplied sample.",
+      "applicability": "Lightweight standard-library alternative and a useful comparison for row-level diagnostics; keep inference advisory and raw values textual.",
+      "evidence_limitations": "Language/runtime not specified for target app; behavior must be checked against the app's pinned runtime."
+    },
+    {
+      "source_id": "S07",
+      "title": "CPython 3.14.8 csv implementation and tests",
+      "url": "https://github.com/python/cpython/blob/v3.14.8/Lib/csv.py",
+      "release_or_commit": "CPython release tag v3.14.8",
+      "locator": "Lib/csv.py Sniffer.sniff and _guess_delimiter; Lib/test/test_csv.py test_read_linenum, test_roundtrip_quoteed_newlines, test_read_bigfield.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened tagged implementation and test files; inspected the Sniffer source and tests for line counts, embedded newlines, and large fields.",
+      "governing_condition_default_exception": "Sniffer chooses from a sample and prefers comma/tab/semicolon/space/colon on ties; tests show line_num increments by input lines and reader/writer round-trip quoted newlines; test_read_bigfield exercises 50,000-character fields.",
+      "applicability": "Repository-code evidence for a minimal parser option and useful test scenarios; illustrates sample-based inference and that physical-line counts are not logical record numbers.",
+      "evidence_limitations": "The selected CPython test file is not a test suite for this application and no tests were run during this research.",
+      "related_urls": [
+        "https://github.com/python/cpython/blob/v3.14.8/Lib/test/test_csv.py"
+      ]
+    },
+    {
+      "source_id": "S08",
+      "title": "DuckDB CSV Import documentation (preview)",
+      "url": "https://duckdb.org/docs/preview/data/csv/overview",
+      "release_or_commit": "Moving preview documentation; no immutable release or commit exposed by the page at access",
+      "locator": "CSV sniffer and configuration options, especially sample_size, strict_mode, all_varchar, decimal_separator, thousands, and rejects handling.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened current preview docs via search result and inspected option/default summaries.",
+      "governing_condition_default_exception": "The docs describe dialect, header, and type auto-detection; sample_size defaults to 20,480 rows; strict_mode defaults true; column types, decimal and thousands separators, and reject storage are configurable.",
+      "applicability": "Local SQL/query-engine alternative for exploratory profiling or a staging area; a sample below the brief's 80,000-row ceiling cannot by itself prove all-row structure, and type/dialect inference should not authorize stock changes.",
+      "evidence_limitations": "Preview docs are moving and not a version pin. Recheck exact behavior against the chosen release; no benchmark or test was run."
+    },
+    {
+      "source_id": "S09",
+      "title": "DuckDB issue #25827 — dialect change can discard earlier rows",
+      "url": "https://github.com/duckdb/duckdb/issues/25827",
+      "release_or_commit": "Issue opened 17 September 2026; open / needs-triage when accessed; no fix or release link observed",
+      "locator": "Issue description, minimal three-line reproduction, 30,000-row reproduction, discussion of sniff buffer and sample_size.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened upstream issue, checked status, and inspected the report's reproduction and claimed option results.",
+      "governing_condition_default_exception": "Reporter describes a file with changing row dialect/width where default sniffing treats early content as preamble; report claims sample_size=-1 does not fix that case, while null_padding=true retains rows but changes interpretation. It was still open at access.",
+      "applicability": "High-consequence warning against trusting auto-sniffed row counts or treating a larger sample as proof; require explicit schema, full-file reconciliation, and pinned-version regression tests if DuckDB is considered.",
+      "evidence_limitations": "This is an open user report, not independently reproduced here and not proof of behavior in every DuckDB release."
+    },
+    {
+      "source_id": "S10",
+      "title": "BurntSushi rust-csv Discussion #402 — unequal field counts",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/402",
+      "release_or_commit": "Discussion; maintainer answer posted 13 September 2025",
+      "locator": "Question on mismatched header/record widths and accepted maintainer answer.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened the upstream discussion and read maintainer guidance.",
+      "governing_condition_default_exception": "Maintainer explains that changing header names does not change record-width validation and that flexible parsing disables the unequal-length error.",
+      "applicability": "Reinforces S03/S05; do not enable permissive widths as a silent fix because the importer still needs to show the row as a schema/validation issue.",
+      "evidence_limitations": "Discussion answer, not release note or target-app behavior."
+    },
+    {
+      "source_id": "S11",
+      "title": "SQLite Transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "release_or_commit": "Current SQLite documentation; no immutable release version exposed",
+      "locator": "Transaction lifecycle, rollback, BEGIN DEFERRED/IMMEDIATE, SQLITE_BUSY condition.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened transaction documentation and inspected write-start and busy behavior.",
+      "governing_condition_default_exception": "BEGIN IMMEDIATE starts a write transaction immediately and can fail SQLITE_BUSY if another writer is active; transaction/rollback semantics can provide a candidate atomic boundary.",
+      "applicability": "Conditional design option if the existing stock store is SQLite; keep the write transaction short and handle a busy conflict without partial application.",
+      "evidence_limitations": "Backend is unspecified; the proposal cannot assume SQLite semantics or transaction cost for 80,000 rows."
+    },
+    {
+      "source_id": "S12",
+      "title": "SQLite UPSERT",
+      "url": "https://www.sqlite.org/lang_upsert.html",
+      "release_or_commit": "SQLite UPSERT added in 3.24.0; generalized in 3.35.0; docs updated 2024-04-11",
+      "locator": "Conflict target and DO UPDATE semantics; §4 History.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened documentation and inspected conflict-update semantics and version history.",
+      "governing_condition_default_exception": "UPSERT chooses behavior on a uniqueness/primary-key conflict; DO UPDATE changes the conflicting row. Constraint violations in the DO UPDATE path abort the INSERT statement.",
+      "applicability": "Can support a unique import-batch/row ledger if SQLite is used; uniqueness keys must reflect supplier, file/profile and row identity, not a bare supplier product code.",
+      "evidence_limitations": "A database UPSERT alone does not define inventory snapshot-vs-delta semantics or make application logic idempotent."
+    },
+    {
+      "source_id": "S13",
+      "title": "PostgreSQL 18 COPY",
+      "url": "https://www.postgresql.org/docs/18/sql-copy.html",
+      "release_or_commit": "PostgreSQL 18 documentation",
+      "locator": "COPY FROM options ON_ERROR, REJECT_LIMIT, LOG_VERBOSITY, ENCODING; CSV NULL/header handling.",
+      "accessed_utc": "2026-10-12T00:41:17Z",
+      "observed_operation": "Opened PostgreSQL 18 reference and inspected default error action and reject reporting options.",
+      "governing_condition_default_exception": "COPY fails on processing errors by default; ON_ERROR can alter conversion-error behavior, and ignore may discard unlimited erroneous rows unless a REJECT_LIMIT is specified. Verbose mode can report input line and column for discarded conversion rows.",
+      "applicability": "Conditional server-database bulk-staging alternative. If used, land raw data in a private staging table and preserve rejected-row detail; don't use ignore as a substitute for reviewable row outcomes.",
+      "evidence_limitations": "No PostgreSQL backend was supplied; conversion-error handling does not define application identity, business validation, or all structural CSV errors."
+    }
+  ]
+}

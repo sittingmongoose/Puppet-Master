@@ -1,0 +1,188 @@
+{
+  "run_id": "B07-P02-control",
+  "stage": "critic",
+  "sources_index": "sources/index.md",
+  "independent_reviewed_at_utc": "2026-10-12T01:11:55Z",
+  "source_count": 15,
+  "preserved_investigator_source_ids": [
+    "SRC-001",
+    "SRC-002",
+    "SRC-003",
+    "SRC-004",
+    "SRC-005",
+    "SRC-006",
+    "SRC-007",
+    "SRC-008",
+    "SRC-009",
+    "SRC-010",
+    "SRC-011",
+    "SRC-012"
+  ],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "title": "Media Fragments URI 1.0 (basic)",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "released_version_or_commit": "W3C Recommendation, 2012-09-25",
+      "locator": "§4.2.1 lines 221-240; §6.1.1",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Opened official Recommendation; checked temporal syntax and validity.",
+      "governing_condition_default_exception": "Intervals are half-open; omitted begin/end default to 0/duration; hh:mm:ss does not signal frame accuracy.",
+      "applicability": "Supports interval convention and optional fragment export only; not local identity or decoder precision."
+    },
+    {
+      "id": "SRC-002",
+      "title": "Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "released_version_or_commit": "W3C Recommendation, 2017-02-23",
+      "locator": "§4.2.2 Fragment Selector; §4.2.5 Text Position Selector lines 973-993; State",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened Recommendation; checked selector definitions, character boundaries and stale-anchor warning.",
+      "governing_condition_default_exception": "Text positions are zero-based and start-inclusive/end-exclusive; edits make positions brittle and State can identify the representation.",
+      "applicability": "Optional text navigation/interchange only; does not create audio synchronization. Corrects investigator locator §4.2.10 to §4.2.5."
+    },
+    {
+      "id": "SRC-003",
+      "title": "WCAG 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "released_version_or_commit": "W3C Recommendation, 2023-10-05",
+      "locator": "SC 1.4.1, 2.1.1, 2.4.3, 2.4.7, 4.1.3; lines 462-473, 700-709, 946-954, 1451-1458",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Opened Recommendation; checked keyboard, color, focus and status-message criteria.",
+      "governing_condition_default_exception": "Normative for applicable web content; SC 4.1.3 covers programmatically exposed markup status messages without focus changes.",
+      "applicability": "Supports keyboard/non-color/focus goals; native accessibility behavior still depends on the selected toolkit/platform."
+    },
+    {
+      "id": "SRC-004",
+      "title": "WAI-ARIA APG Slider Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+      "released_version_or_commit": "Current, unversioned APG page",
+      "locator": "About/warning lines 24-26; media seek example lines 29-32; keys lines 33-52",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened APG page; checked slider key/value conventions and touch-AT warning.",
+      "governing_condition_default_exception": "APG is informative; arrows change by step, Home/End set endpoints, page keys are optional; AT testing is advised.",
+      "applicability": "Supports optional slider plus fields/buttons, not a complete accessible annotation editor."
+    },
+    {
+      "id": "SRC-005",
+      "title": "Peaks.js API Documentation",
+      "url": "https://github.com/bbc/peaks.js/blob/v3.4.2/doc/API.md",
+      "released_version_or_commit": "v3.4.2, commit 8144d61",
+      "locator": "Keyboard options lines 573-581; Segments API; player/waveform APIs",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Opened pinned API docs; checked keyboard defaults/nudge, segment API and waveform data.",
+      "governing_condition_default_exception": "Keyboard binding defaults false; nudge is 0.01 seconds. API does not establish accessible segment authoring.",
+      "applicability": "Visual candidate only. Release-status evidence is separately recorded as SRC-015."
+    },
+    {
+      "id": "SRC-006",
+      "title": "Peaks.js v3.4.2 demo caller",
+      "url": "https://github.com/bbc/peaks.js/blob/v3.4.2/demo/index.html",
+      "released_version_or_commit": "v3.4.2, commit 8144d61",
+      "locator": "Segment table near lines 1760-1800; config around 1978-2004",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Opened tagged caller; checked numeric fields, actions, keyboard opt-in and dataUri.",
+      "governing_condition_default_exception": "Demo shows list/time fields/actions, keyboard:true and precomputed dataUri; not an accessibility claim.",
+      "applicability": "Concrete caller pattern only; no production, performance or conformance guarantee."
+    },
+    {
+      "id": "SRC-007",
+      "title": "WaveSurfer.js Regions plugin source",
+      "url": "https://github.com/katspaugh/wavesurfer.js/blob/8.0.0/src/plugins/regions.ts",
+      "released_version_or_commit": "8.0.0, commit a1cdffd",
+      "locator": "RegionParams lines 2326-2373; constructor 2533-2545; drag streams; API 3605-3620",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Opened pinned source and searched for pointer/drag and keyboard handlers.",
+      "governing_condition_default_exception": "IDs may be passed; times are seconds; absent end becomes start; drag/resize default true. Searched file had pointer/drag code and no keydown match.",
+      "applicability": "Absence of a keydown match is scoped to this file; host controls remain necessary."
+    },
+    {
+      "id": "SRC-008",
+      "title": "WaveSurfer.js release history",
+      "url": "https://github.com/katspaugh/wavesurfer.js/releases",
+      "released_version_or_commit": "Release history accessed 2026-10-12; includes v8.0.0 at a1cdffd",
+      "locator": "v8.0.0 notable fixes around lines 345-372; issues #4353, #4348, #4359, #3631/#3658/#3781/#3866",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened release history; checked notes for early seek, post-pause timeupdate, hidden-container NaN seek, race and adjacent region behavior.",
+      "governing_condition_default_exception": "Release notes report fixes; they are not application-specific accessibility or fidelity tests.",
+      "applicability": "Regression cases for a prototype only; no claim proposed integration was tested."
+    },
+    {
+      "id": "SRC-009",
+      "title": "Audacity Manual: Label Tracks",
+      "url": "https://manual.audacityteam.org/man/label_tracks.html",
+      "released_version_or_commit": "Rolling online manual; no release tag on page",
+      "locator": "Limits lines 32-35; navigation 81-94; Label Editor 144-148; export behavior",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened manual; checked point/region labels, keyboard navigation, table editor, export and limits.",
+      "governing_condition_default_exception": "Tab/Shift+Tab navigation and keyboard-accessible Label Editor documented; >260 chars may not reload; hundreds/thousands may slow; Export Multiple uses uppermost label track.",
+      "applicability": "Workflow precedent, not embedded library; limits warrant caution about scale/export."
+    },
+    {
+      "id": "SRC-010",
+      "title": "GStreamer Seeking design documentation",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/seeking.html",
+      "released_version_or_commit": "Current unversioned design documentation",
+      "locator": "KEY_UNIT/ACCURATE, lines 63-108",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened official design page; checked accurate versus key-unit behavior.",
+      "governing_condition_default_exception": "Without ACCURATE, approximate seeks may occur; ACCURATE requires requested stream-relative position and may require processing from start; KEY_UNIT changes segment start.",
+      "applicability": "Backend example only; no runtime or universal codec guarantee."
+    },
+    {
+      "id": "SRC-011",
+      "title": "AVPlayer precise seek method (investigator URL)",
+      "url": "https://developer.apple.com/documentation/avfoundation/avplayer/seek%28to%3Atolerancebefore%3Atoleranceafter%3Acompletionhandler%3A%29",
+      "released_version_or_commit": "Current Apple AVFoundation docs; SDK/runtime unpinned",
+      "locator": "Tolerance and completion-handler behavior",
+      "accessed_utc": "2026-10-12T01:10:13Z",
+      "observed_operation": "Exact assigned URL returned internal error in review browser; official Apple pages checked separately as SRC-013 and SRC-014.",
+      "governing_condition_default_exception": "Original identity preserved; separate records verify the tolerance and interruption claims.",
+      "applicability": "Do not silently rebind this source ID."
+    },
+    {
+      "id": "SRC-012",
+      "title": "Web Audio API 1.1",
+      "url": "https://webaudio.github.io/web-audio-api/",
+      "released_version_or_commit": "Current W3C-hosted editor's draft",
+      "locator": "decodeAudioData §1.1.2; AudioBuffer; lines 808-848",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened spec; inspected encoded input, PCM decode and AudioBuffer behavior.",
+      "governing_condition_default_exception": "decodeAudioData consumes encoded ArrayBuffer data and decodes to linear PCM; if multiple audio tracks exist it decodes only the first.",
+      "applicability": "Relevant to Web Audio candidate and long-file profiling only."
+    },
+    {
+      "id": "SRC-013",
+      "title": "Apple AVPlayer seek with tolerances",
+      "url": "https://developer.apple.com/documentation/avfoundation/avplayer/seek%28to%3Atolerancebefore%3Atoleranceafter%3A%29?changes=_1",
+      "released_version_or_commit": "Current AVFoundation docs; SDK/runtime unpinned",
+      "locator": "Method discussion and toleranceBefore/toleranceAfter parameters",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Read official Apple search result and linked page.",
+      "governing_condition_default_exception": "Landing may vary within supplied tolerance; zero tolerances request sample-accurate seek and may add decoding delay.",
+      "applicability": "Backend example only if AVFoundation is selected."
+    },
+    {
+      "id": "SRC-014",
+      "title": "Apple AVPlayer seek completion handler",
+      "url": "https://developer.apple.com/documentation/avfoundation/avplayer/seek%28to%3Acompletionhandler%3A%29-75bls?changes=_3",
+      "released_version_or_commit": "Current AVFoundation docs; SDK/runtime unpinned",
+      "locator": "Discussion and finished result",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Read official Apple search result and linked page.",
+      "governing_condition_default_exception": "A seek already in progress can complete finished=false when another seek interrupts it.",
+      "applicability": "Supports adapter completion state only if AVPlayer is selected."
+    },
+    {
+      "id": "SRC-015",
+      "title": "Peaks.js release history",
+      "url": "https://github.com/bbc/peaks.js/releases",
+      "released_version_or_commit": "Release history accessed 2026-10-12",
+      "locator": "Release list lines 137-156 and 312-343",
+      "accessed_utc": "2026-10-12T01:11:55Z",
+      "observed_operation": "Opened upstream release list and checked v4.0.0-beta.2 status and v3.4.2 tag/commit.",
+      "governing_condition_default_exception": "v4.0.0-beta.2 is marked prerelease; v3.4.2 is a release at 8144d61.",
+      "applicability": "Direct evidence for release-status claims; supplements pinned API/caller records."
+    }
+  ]
+}

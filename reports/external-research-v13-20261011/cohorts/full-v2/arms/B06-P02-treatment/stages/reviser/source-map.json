@@ -1,0 +1,479 @@
+{
+  "run_id": "B06-P02-treatment",
+  "stage": "reviser",
+  "source_id_policy": "S00-S19, C01-C04, and T01-T07 are carried as their original registers with IDs and records unchanged. R01-R07 are this reviser's additive direct primary-source checks. Similar URLs retain separate IDs when the access record differs.",
+  "upstream_registers": [
+    {
+      "register_id": "investigator",
+      "source_map_path": "../investigator/source-map.json",
+      "register": {
+        "run_id": "B06-P02-treatment",
+        "stage": "investigator",
+        "case_input": "assigned brief only before release",
+        "discovery_precedes_plan_release": true,
+        "source_ids": "S00-S19 stable in this stage",
+        "sources": [
+          {
+            "id": "S00",
+            "title": "Volunteer shift handover across unreliable connections (assigned case brief)",
+            "url": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+            "released_version_or_commit": "Run-provided input; no external version",
+            "locator": "Entire brief",
+            "accessed_at_utc": "2026-10-12T00:36:00Z (read immediately after stage activation; second precision inferred from tool sequence)",
+            "observed_operation": "Read the listed brief before external discovery; extracted all named tasks/constraints.",
+            "governing_condition_default_exception": "Proposal-only research; no live invitations, accounts, deployment, or records; role/retention policies are unknown.",
+            "applicability": "Authoritative statement of this stage’s product problem and constraints."
+          },
+          {
+            "id": "S01",
+            "title": "Handling Update Conflicts — PowerSync docs source",
+            "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+            "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+            "locator": "Handling Update Conflicts; ordered upload queue, PUT/PATCH/DELETE, idempotency, LWW default, backend validation, CRDT note.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened source file and inspected the operation/policy sections.",
+            "governing_condition_default_exception": "Backend policy is unopinionated; a simple backend can be per-field last-write-wins. Upload operations can be replayed and must be idempotent. Backend may validate or ignore writes, such as updates after completion.",
+            "applicability": "Supports a PowerSync-style alternative only when custom domain reconciliation is implemented; directly informs stale-resolution and duplicate-write design."
+          },
+          {
+            "id": "S02",
+            "title": "PowerSync Supabase Integration Guide",
+            "url": "https://github.com/powersync-ja/powersync-docs/blob/main/integrations/supabase/guide.mdx",
+            "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+            "locator": "Architecture and Configure Supabase; local SQLite/upload queue and row-level security passages.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened current guide and inspected offline architecture/security passages.",
+            "governing_condition_default_exception": "Local SQLite reads/writes and queued uploads work offline in the guide’s integration; writes go to Postgres through Supabase Data API. It warns that without RLS, anon/authenticated keys can read/write all rows; explicit grants/RLS are required under newer project defaults.",
+            "applicability": "Evidence that offline persistence and access control are separate concerns; do not infer secure row scoping from sync alone."
+          },
+          {
+            "id": "S03",
+            "title": "PowerSync SDK legacy attachment helper README",
+            "url": "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments/README.md",
+            "released_version_or_commit": "SDK repository main branch; no pin displayed (UNKNOWN).",
+            "locator": "Package warning, attachment states, queued upload/download, delete, cache expiration.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened SDK repository file and read package notice and lifecycle.",
+            "governing_condition_default_exception": "README explicitly says this helper is deprecated in favor of built-in SDK attachment functionality; describes queued states/retry, local/cloud deletion, and a default 100-record cache in this legacy helper.",
+            "applicability": "Evidence that attachment lifecycle is separate; do not select this deprecated package or transfer its defaults to a current app."
+          },
+          {
+            "id": "S04",
+            "title": "PowerSync React Native attachment storage adapters README",
+            "url": "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments-storage-react-native/README.md",
+            "released_version_or_commit": "SDK repository main branch; exact commit UNKNOWN.",
+            "locator": "README package status and local/remote storage responsibilities, lines 193–270.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened README and inspected stability warning plus storage interfaces.",
+            "governing_condition_default_exception": "Adapter is explicitly alpha/testing-only, breaking changes expected, and not recommended for production. App supplies local storage and remote upload/download/delete callbacks.",
+            "applicability": "Material caveat for optional photo implementation; validate current released platform support before choosing any helper."
+          },
+          {
+            "id": "S05",
+            "title": "Apache CouchDB 3.5 replication and conflict model",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "released_version_or_commit": "CouchDB documentation 3.5 branch, stable URL; exact patch version not pinned.",
+            "locator": "Sections 2.3.2–2.3.7, default winner, _conflicts, deleted leaves, application-specific merging.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened stable documentation and inspected conflict/model sections and REST API examples.",
+            "governing_condition_default_exception": "Concurrent replicated branches retain leaf revisions; ordinary GET returns only deterministically selected winner, while conflicts=true/open_revs exposes others. Resolution is application-specific and losers must be deleted explicitly.",
+            "applicability": "Key warning for CouchDB/PouchDB: replication transports branches but does not decide task/issue semantics."
+          },
+          {
+            "id": "S06",
+            "title": "PouchDB replication and conflicts guides",
+            "url": "https://pouchdb.com/guides/replication.html; https://pouchdb.com/guides/conflicts.html",
+            "released_version_or_commit": "Rolling guides; exact source commit/version UNKNOWN.",
+            "locator": "Bidirectional replication, retry, deletion and conflict resolution; append-only delta pattern.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened replication guide and inspected result/guide text for conflict and append-only design.",
+            "governing_condition_default_exception": "Local/remote PouchDB can bidirectionally sync; winner is deterministic but conflicts remain; guide says app can surface or ignore them; document removal creates a tombstone.",
+            "applicability": "Relevant direct-replication alternative and reason to model meaningful change records so update conflicts are limited."
+          },
+          {
+            "id": "S07",
+            "title": "Apache CouchDB database security API",
+            "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+            "released_version_or_commit": "CouchDB documentation 3.5 branch, stable URL; exact patch version not pinned.",
+            "locator": "GET /{db}/_security; members/admins and default behavior.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened API documentation and inspected database-member defaults.",
+            "governing_condition_default_exception": "Members can read every document and write/edit non-design documents; empty membership permits regular document reads/writes. CouchDB 3.x newly created DBs default to admin-only.",
+            "applicability": "Warns that CouchDB member access is broad; roles and document-level validation/scoping require explicit design."
+          },
+          {
+            "id": "S08",
+            "title": "PouchDB 9.0.0 release",
+            "url": "https://github.com/apache/pouchdb/releases",
+            "released_version_or_commit": "PouchDB 9.0.0, tag commit abbreviated b2882c1, released 2024-06-21; page marked Latest at access.",
+            "locator": "9.0.0 highlights and changelog.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened release list; inspected release notes and Latest marker.",
+            "governing_condition_default_exception": "Release reports major IndexedDB stability/performance improvements and more reliable browser tests, and introduces a default .find() result limit of 25.",
+            "applicability": "Candidate version/history baseline; older-issue search must paginate, and release-level stability claims do not prove app-specific offline behavior."
+          },
+          {
+            "id": "S09",
+            "title": "PouchDB IndexedDB sequence/concurrency report and proposed fix",
+            "url": "https://github.com/apache/pouchdb/issues/8599; https://github.com/apache/pouchdb/pull/9093",
+            "released_version_or_commit": "Issue #8599 opened 2023-02-10 against PouchDB 8.0/Chrome; PR #9093 opened 2025-06-16 with commit 2a54197; both Open when inspected, not a released fix.",
+            "locator": "Issue repro after more than 1000 replicated docs; PR report of parallel bulkDocs and metadata.seq; reviewer comment about absent named test file.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened issue and PR; inspected environment/repro, claimed fix/test, and reviewer’s test-file objection.",
+            "governing_condition_default_exception": "Issue is a user report, not a universal defect. Proposed PR says parallel IndexedDB bulkDocs could leave metadata.seq below doc.seq; PR remained open and reviewer questioned the claimed test. No evidence reviewed that it shipped.",
+            "applicability": "Keep as a validation risk for PouchDB/browser adapter; do not describe it as fixed by v9 or as a verified general failure."
+          },
+          {
+            "id": "S10",
+            "title": "Automerge conflict reference and welcome guide",
+            "url": "https://automerge.org/docs/reference/documents/conflicts/; https://automerge.org/docs/hello/",
+            "released_version_or_commit": "Current Automerge documentation; no release/commit pin displayed (UNKNOWN); copyright says 2026.",
+            "locator": "Same-property writes/getConflicts/internal operation ID and offline/network-agnostic Repo model.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened both docs and inspected conflict defaults and offline sync model.",
+            "governing_condition_default_exception": "Different properties merge; same-property concurrent updates choose a deterministic default and keep alternatives queryable via getConflicts. LWW ordering is counter plus actor ID, not wall clock.",
+            "applicability": "CRDT alternative for notes; still requires application policy for status, exclusive claims, authorization, and human conflict UX."
+          },
+          {
+            "id": "S11",
+            "title": "Automerge Repo sync server README",
+            "url": "https://github.com/automerge/automerge-repo-sync-server",
+            "released_version_or_commit": "Repository main; no release tag/commit observed (UNKNOWN).",
+            "locator": "README lines 210–228; repository contains src and test directories.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened repository README and inspected deployment/security description.",
+            "governing_condition_default_exception": "README calls it an unsecured Express app and partly a demonstration; two described configuration variables are port and data directory. Publish workflow runs tests, but that is not deployment security.",
+            "applicability": "Do not use demo sync server for production shared access without a separately designed authorization boundary."
+          },
+          {
+            "id": "S12",
+            "title": "PostgreSQL 18 INSERT and unique index docs",
+            "url": "https://www.postgresql.org/docs/current/sql-insert.html; https://www.postgresql.org/docs/current/sql-createindex.html",
+            "released_version_or_commit": "PostgreSQL 18 current documentation as returned by site; no Git commit applicable.",
+            "locator": "INSERT ON CONFLICT atomic behavior and partial-unique-index support; CREATE INDEX WHERE predicate.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened SQL reference and inspected unique arbiter, ON CONFLICT, partial-index, and atomicity passages.",
+            "governing_condition_default_exception": "Unique indexes/constraints arbitrate concurrent inserts; ON CONFLICT DO UPDATE guarantees atomic insert-or-update outcome under high concurrency absent other errors. Partial unique indexes restrict uniqueness to a subset.",
+            "applicability": "Supports a proposed active-claim invariant in a relational backend; does not itself define fair/offline claimant adjudication."
+          },
+          {
+            "id": "S13",
+            "title": "MDN PWA offline and background operation",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Offline_and_background_operation",
+            "released_version_or_commit": "Current MDN article; no release/commit pin (UNKNOWN).",
+            "locator": "Background sync event lifetime, worker termination, periodic background availability/scheduling.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened PWA guide and inspected worker lifecycle and background-sync caveats.",
+            "governing_condition_default_exception": "Browsers may stop service workers; Background Sync may retry only a bounded amount/time; periodic sync timing is browser-controlled and may be absent. Offline content can be only as recent as last foreground/app refresh.",
+            "applicability": "A responsive PWA cannot promise instant/background delivery; show pending state and sync on foreground/open."
+          },
+          {
+            "id": "S14",
+            "title": "MDN storage quotas and eviction criteria",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+            "released_version_or_commit": "Current MDN article; no release/commit pin (UNKNOWN).",
+            "locator": "Best-effort vs persistent storage and quota exhaustion.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened article and inspected IndexedDB/Cache persistence and quota sections.",
+            "governing_condition_default_exception": "Browser origin data is best-effort by default and can be evicted; persist() request handling differs; quota overflow can raise QuotaExceededError.",
+            "applicability": "Browser drafts/photos need bounded storage, explicit errors, a persistence request where justified, and recovery path."
+          },
+          {
+            "id": "S15",
+            "title": "PowerSync JS SDK repository and background-sync sample",
+            "url": "https://github.com/powersync-ja/powersync-js; https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/README.md",
+            "released_version_or_commit": "SDK repository main; no immutable SHA displayed in README (UNKNOWN).",
+            "locator": "Root README package/demo index; background sync sample lines 198–266, 286–310.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened repository README and demo README; inspected supported clients, test note, and OS scheduling caveats.",
+            "governing_condition_default_exception": "Repo advertises Web, React Native, Node/desktop clients and tests; sample configures OS background tasks and says OS chooses execution time, with physical-device caveats.",
+            "applicability": "Supports architecture comparison and need to test target-platform foreground/background behavior; examples are not delivery guarantees."
+          },
+          {
+            "id": "S16",
+            "title": "PowerSync JS upload-queue issue report",
+            "url": "https://github.com/powersync-ja/powersync-js/issues/605",
+            "released_version_or_commit": "Issue #605 opened 2025-05-19; Open at inspection; reporter used React Native 1.25.x-era packages, not a confirmed current-release repro.",
+            "locator": "Reporter describes local SQLite changes/message loss with rapid activity and getNextCrudTransaction/uploadData.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Opened GitHub issue, verified Open state, and read only reported behavior.",
+            "governing_condition_default_exception": "Unresolved user report with no root cause established in inspected excerpt; not evidence of generally confirmed product defect.",
+            "applicability": "Motivation to test burst/retry/offline upload queues and replay if evaluating PowerSync."
+          },
+          {
+            "id": "S17",
+            "title": "CouchDB authentication and security guide",
+            "url": "https://docs.couchdb.org/en/stable/intro/security.html",
+            "released_version_or_commit": "Apache CouchDB 3.5 stable documentation; exact patch version not in URL.",
+            "locator": "Authentication database, roles, cookie session, database authorization.",
+            "accessed_at_utc": "2026-10-12T00:41:54Z",
+            "observed_operation": "Inspected primary documentation result while evaluating direct replication identity requirements.",
+            "governing_condition_default_exception": "CouchDB’s _users database stores users; roles are user-defined and assigned by admins; per-database members/admins are broad DB permissions.",
+            "applicability": "Direct replication can be self-hosted but still requires a defined identity/provisioning and role strategy."
+          },
+          {
+            "id": "S18",
+            "title": "PowerSync React Native background-sync sample implementation",
+            "url": "https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/library/utils.ts",
+            "released_version_or_commit": "SDK repository main branch; sample current at access; no commit SHA displayed (UNKNOWN).",
+            "locator": "TaskManager.defineTask, minimum interval, pending-write example, PowerSync status listener, AppState register/unregister logic (lines 402–495 and 503–570).",
+            "accessed_at_utc": "2026-10-12T00:48:42Z",
+            "observed_operation": "Opened and read the actual TypeScript sample implementation.",
+            "governing_condition_default_exception": "Sample schedules a nominal 15-minute task, inserts mock demo data, initializes/syncs PowerSync, and resolves after a changed lastSyncedAt with no transfer in flight; surrounding README says OS decides execution time. This is sample code, not a service guarantee.",
+            "applicability": "Repository-code evidence for background task wiring and its caveat; do not copy the demo insert into the production app."
+          },
+          {
+            "id": "S19",
+            "title": "PowerSync JS issue with transaction grouping and upload caller",
+            "url": "https://github.com/powersync-ja/powersync-js/issues/48",
+            "released_version_or_commit": "Issue #48 opened 2024-02-07, shown Closed at access; reporter used @journeyapps/powersync-sdk-react-native 1.0.1 and iOS simulator. No fix/release link or resolution was visible in the inspected issue page.",
+            "locator": "Reported writeTransaction caller, uploadData/getNextCrudTransaction example, and log where two inserts returned as separate one-op transactions (lines 154–196).",
+            "accessed_at_utc": "2026-10-12T00:48:42Z",
+            "observed_operation": "Inspected an actual caller and its output on the closed issue page; no closure explanation was found in reviewed content.",
+            "governing_condition_default_exception": "A single reported version/OS case; issue is closed, but closure is not proof of how it was resolved. Treat transaction grouping as a test question rather than a confirmed current bug.",
+            "applicability": "Caller/test-history source for idempotent upload and transaction-boundary validation in any SDK evaluation."
+          }
+        ],
+        "plan_release": {
+          "revealed_copy": "revealed-plan.md",
+          "revealed_at_utc": "2026-10-12T00:46:48.103Z",
+          "discovery_sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+          "plan_sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881"
+        }
+      }
+    },
+    {
+      "register_id": "critic-breadth",
+      "source_map_path": "../critic-breadth/source-map.json",
+      "register": {
+        "run_id": "B06-P02-treatment",
+        "stage": "critic-breadth",
+        "mapping_policy": "C IDs identify pages independently reopened for this critic. upstream_source_id preserves the corresponding investigator S ID; no S ID is reassigned. The full S00-S19 register remains in investigator/source-map.json.",
+        "inputs": {
+          "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+          "investigator_stage": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator",
+          "discovery_sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+          "revealed_plan_sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881"
+        },
+        "sources": [
+          {
+            "id": "C01",
+            "upstream_source_id": "S01",
+            "title": "Handling Update Conflicts — PowerSync documentation",
+            "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+            "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+            "locator": "Sections on server-authoritative reconciliation, ordered upload queue, idempotent operations and backend validation (rendered lines 192–212).",
+            "accessed_at_utc": "2026-10-12T00:57:29Z",
+            "observed_operation": "Opened the primary documentation page and read the conflict and operation-handling passages.",
+            "governing_condition_default_exception": "The backend application dictates how queued mutations are applied; the simplest example is per-field LWW; operations can be replayed and must be idempotent; backend validation/custom conflict handling is available.",
+            "applicability": "Supports the investigator's qualification that PowerSync-style sync does not itself supply this domain's stale-transition or duplicate-claim policy."
+          },
+          {
+            "id": "C02",
+            "upstream_source_id": "S05",
+            "title": "Apache CouchDB 3.5 replication and conflict model",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "released_version_or_commit": "Apache CouchDB documentation 3.5 stable branch; exact patch release not pinned.",
+            "locator": "Sections 2.3.1–2.3.4 on replication, deterministic winner, revision branches, conflict visibility and application merge (rendered lines 19–57, 82–135).",
+            "accessed_at_utc": "2026-10-12T00:57:29Z",
+            "observed_operation": "Opened the primary documentation page and read the replication/conflict model through the application-resolution passages.",
+            "governing_condition_default_exception": "Replicated branches can coexist; ordinary reads expose only the deterministic winner; clients must query conflicts and perform application-specific merging/resolution.",
+            "applicability": "Supports treating CouchDB/PouchDB as a replication alternative that still needs user-visible conflict handling for handover state."
+          },
+          {
+            "id": "C03",
+            "upstream_source_id": "S07",
+            "title": "Apache CouchDB database security API",
+            "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+            "released_version_or_commit": "Apache CouchDB documentation 3.5 stable branch; exact patch release not pinned.",
+            "locator": "GET /{db}/_security, members/admins behavior and default membership (rendered lines 5–35).",
+            "accessed_at_utc": "2026-10-12T00:57:37Z",
+            "observed_operation": "Opened the primary API page and read its member/admin permission and empty-membership passages.",
+            "governing_condition_default_exception": "Members can read database documents and write non-design documents; when membership lists are empty, regular document reads/writes are broadly allowed; newly created CouchDB 3.x databases default to admin-only.",
+            "applicability": "Shows that shared access depends on explicit database and document authorization design; it cannot determine the center's role or identity policy."
+          },
+          {
+            "id": "C04",
+            "upstream_source_id": "S10",
+            "title": "Automerge conflict reference",
+            "url": "https://automerge.org/docs/reference/documents/conflicts/",
+            "released_version_or_commit": "Current Automerge documentation; no release/commit pin displayed; copyright states 2026.",
+            "locator": "Conflicts section on concurrent same-property writes, getConflicts, and operation-ID ordering (rendered lines 58–112).",
+            "accessed_at_utc": "2026-10-12T00:57:37Z",
+            "observed_operation": "Opened the primary reference and read same-property conflict behavior and its ordering rule.",
+            "governing_condition_default_exception": "Concurrent updates to one property have a deterministic displayed winner while other values remain queryable through getConflicts; ordering uses operation counter and actor ID, not wall-clock time.",
+            "applicability": "Supports bounding Automerge to note collaboration unless the application adds explicit task/issue transition and conflict-review rules."
+          }
+        ]
+      }
+    },
+    {
+      "register_id": "critic-truth",
+      "source_map_path": "../critic-truth/source-map.json",
+      "register": {
+        "reviewer": "critic-truth",
+        "run_id": "B06-P02-treatment",
+        "accessed_at_utc": "2026-10-12T00:59:07Z",
+        "note": "Independent source IDs T01–T07 are additive and do not replace or rebind investigator IDs S00–S19. No source text was archived. GitHub pages were read as source pages; URLs point to mutable main/stable/current pages unless a version is stated.",
+        "sources": [
+          {
+            "id": "T01",
+            "title": "PowerSync Handling Update Conflicts",
+            "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+            "released_version_or_commit": "Repository main branch; exact commit SHA not captured (UNKNOWN).",
+            "locator": "Source file rendered lines 192–212; ordered client upload queue, backend-defined handling, simplest per-field LWW, idempotency, per-client incrementing operation ID, example validation.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened the official PowerSync documentation source and searched/read the rendered conflict-handling passage.",
+            "governing_condition_default_exception": "Backend behavior is app-defined; the simplest implementation uses per-field LWW; queued operations can be repeated; per-client operation IDs may support deduplication; custom validation/conflict handling is possible.",
+            "applicability": "Supports an explicit backend contract and idempotency proposal; does not provide cross-client ordering, claim fairness, or authorization policy."
+          },
+          {
+            "id": "T02",
+            "title": "Apache CouchDB replication and conflict model",
+            "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+            "released_version_or_commit": "CouchDB documentation 3.5 stable branch; exact patch version not pinned.",
+            "locator": "Sections 2.3.1–2.3.3: replicated branches/default winner, single-node stale-revision 409, revision-tree leaves and application conflict resolution.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened the official CouchDB 3.5 conflict guide and inspected replication, conflict-winner and revision-tree passages.",
+            "governing_condition_default_exception": "Replication retains branches; default reads/views show a deterministic winner; a stale _rev update on one node is rejected with 409; merging branches is application-specific.",
+            "applicability": "Validates the draft's warning about hidden branches and its requirement for application-level business reconciliation."
+          },
+          {
+            "id": "T03",
+            "title": "Apache CouchDB database security API",
+            "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+            "released_version_or_commit": "CouchDB documentation 3.5 stable branch; exact patch version not pinned.",
+            "locator": "GET/PUT /{db}/_security; members/admins, membership behavior and permissions.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened the official API reference and reviewed the database-security model.",
+            "governing_condition_default_exception": "Database membership grants database-wide access according to the documented member/admin roles; it does not itself define the app's volunteer-specific row/field authorization model.",
+            "applicability": "Supports the draft's caveat that group membership is not a complete fine-grained volunteer policy."
+          },
+          {
+            "id": "T04",
+            "title": "Automerge document conflict reference",
+            "url": "https://automerge.org/docs/reference/documents/conflicts/",
+            "released_version_or_commit": "Current documentation; copyright 2026; exact library release/commit not displayed (UNKNOWN).",
+            "locator": "Conflicts section, especially same-property winner and getConflicts behavior; lines 60–112 in rendered source.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened the official reference at the conflict section and read the same-property, conflict API and operation-ordering passages.",
+            "governing_condition_default_exception": "Concurrent same-property updates yield a deterministic winner with alternatives queryable via getConflicts; a subsequent assignment resolves/removes the conflict record; ordering uses operation counter then actor ID, not wall-clock time.",
+            "applicability": "Supports using Automerge for collaborative content only with app-level state rules and a separate durable event log if history is required."
+          },
+          {
+            "id": "T05",
+            "title": "PostgreSQL 18 INSERT documentation",
+            "url": "https://www.postgresql.org/docs/current/sql-insert.html",
+            "released_version_or_commit": "PostgreSQL 18 current documentation; no Git commit applicable.",
+            "locator": "INSERT / ON CONFLICT arbiter and atomic insert-or-update behavior.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened PostgreSQL's official current INSERT reference and inspected ON CONFLICT and atomicity passages.",
+            "governing_condition_default_exception": "A unique constraint/index can arbitrate ON CONFLICT; DO UPDATE has an atomic insert-or-update result under concurrency when the arbiter and statement conditions are satisfied; partial uniqueness must match the intended schema/predicate.",
+            "applicability": "Supports a canonical active-claim invariant in the proposed relational service, not offline arbitration fairness or business policy."
+          },
+          {
+            "id": "T06",
+            "title": "MDN Storage quotas and eviction criteria",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+            "released_version_or_commit": "Current MDN article, last modified 2026-01-05 at access; no release/commit applicable.",
+            "locator": "Sections on QuotaExceededError, best-effort versus persistent storage, eviction under pressure and origin-wide eviction.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Opened the MDN reference and read the quota, eviction and persistence passages.",
+            "governing_condition_default_exception": "Writes can exceed quota; best-effort origin data can be evicted under browser/device policies; persistence status and quotas differ by browser; eviction can remove all data for an origin.",
+            "applicability": "Supports bounded cache, explicit storage errors, and platform-specific durability validation; it does not promise draft survival after eviction."
+          },
+          {
+            "id": "T07",
+            "title": "PouchDB IndexedDB concurrency PR #9093",
+            "url": "https://github.com/apache/pouchdb/pull/9093",
+            "released_version_or_commit": "PR commit 2a54197 visible in investigator source map; page status/resolution not independently established in this review.",
+            "locator": "Reviewer comment dated 2025-06-17 stating the claimed integration test file did not appear changed; PR patch description.",
+            "accessed_at_utc": "2026-10-12T00:59:07Z",
+            "observed_operation": "Re-opened the public pull-request page and inspected the patch/reviewer-comment excerpt; did not establish a reliable current status or resolution.",
+            "governing_condition_default_exception": "The reviewed item is a proposed change and a specific reviewer concern; neither proves a general defect nor establishes a released fix.",
+            "applicability": "Preserve the investigator's cautious treatment as a test risk only; no conclusion about current release behavior."
+          }
+        ]
+      }
+    }
+  ],
+  "reviser_primary_rechecks": [
+    {
+      "id": "R01",
+      "title": "PowerSync Handling Update Conflicts",
+      "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+      "released_version_or_commit": "Documentation repository main branch; exact commit SHA not captured (UNKNOWN).",
+      "locator": "Rendered source lines 192–212: ordered per-client upload queue, sequential backend drain, app-defined conflict handling, simple per-field LWW example, idempotency, per-client incrementing operation ID, and possible backend validation.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened the official PowerSync documentation page and inspected the full conflict-handling passage around rendered lines 192–212.",
+      "governing_condition_default_exception": "Mutations are ordered in each client upload queue and sequentially drained against developer-configured backend endpoints. The backend decides application behavior; its simplest example is per-field last-write-wins. Operations can be replayed and must be idempotent; the docs mention a per-client operation ID for deduplication and custom validation.",
+      "applicability": "Confirms that queue ordering is per client and does not supply cross-volunteer ordering, exclusive task-claim policy, fairness, or current authorization rules. Those remain proposed service contracts."
+    },
+    {
+      "id": "R02",
+      "title": "Apache CouchDB replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 stable documentation; exact patch release not pinned.",
+      "locator": "Sections 2.3.1–2.3.4, rendered lines 21–57 and 60–81, 82–135: replicated branches, deterministic winner, stale _rev on one node, and application conflict resolution.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened the official CouchDB 3.5 conflict guide and read replication, winner, stale-revision, and conflict-resolution passages.",
+      "governing_condition_default_exception": "Replicated branches coexist; ordinary reads and views expose only the deterministic winner unless conflict data is requested. On one node, writing with a superseded _rev yields HTTP 409 and the application must retry/re-edit. Application-specific merging and resolving branches is required.",
+      "applicability": "Supports the alternative comparison while distinguishing replication conflicts from single-node optimistic-write rejection; neither is the volunteer-domain business rule."
+    },
+    {
+      "id": "R03",
+      "title": "Apache CouchDB database security API",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "released_version_or_commit": "Apache CouchDB 3.5 stable documentation; exact patch release not pinned.",
+      "locator": "GET /{db}/_security, rendered lines 12–30: member/admin scope, empty-membership behavior, and CouchDB 3.x new-database default.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened the official API documentation and inspected the member permissions, default membership, and new-database passages.",
+      "governing_condition_default_exception": "Members can read database documents and write ordinary non-design documents. With no members or roles, regular document reads and writes are broadly allowed; newly created CouchDB 3.x databases default to admin-only. This is database-level membership, not a complete row/field authorization design.",
+      "applicability": "Supports retaining an explicit volunteer role and search-filter design; no center access policy can be inferred from the database API."
+    },
+    {
+      "id": "R04",
+      "title": "Automerge document conflicts reference",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "released_version_or_commit": "Current Automerge documentation; exact library release/commit not displayed (UNKNOWN); page copyright states 2026.",
+      "locator": "Conflict section, rendered lines 92–112: default property value, getConflicts, conflict removal on next assignment, and operation counter/actor ordering.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened the official Automerge reference and inspected the complete same-property conflict example and lifecycle passage.",
+      "governing_condition_default_exception": "Concurrent same-property values remain queryable through getConflicts while the conflict exists; assigning to that property again automatically resolves and removes the conflict view. Default ordering uses operation counter then actor ID, not wall-clock time.",
+      "applicability": "Confirms that this conflict API is a current view, not an audit log. Durable handover review needs a separate application event history."
+    },
+    {
+      "id": "R05",
+      "title": "PostgreSQL 18 INSERT",
+      "url": "https://www.postgresql.org/docs/18/sql-insert.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; no Git commit applicable.",
+      "locator": "ON CONFLICT arbiter and atomic outcome, rendered lines 124–128.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened PostgreSQL 18 INSERT reference and inspected conflict target/arbiter and atomicity conditions.",
+      "governing_condition_default_exception": "ON CONFLICT DO UPDATE guarantees an atomic insert-or-update outcome under high concurrency when the specified/inferred arbiter applies and no independent error occurs. The conflict target chooses usable unique indexes or a named constraint.",
+      "applicability": "Supports a proposed canonical safeguard only; does not establish disconnected-client arbitration, fairness, or conflict UX."
+    },
+    {
+      "id": "R06",
+      "title": "PostgreSQL 18 CREATE INDEX",
+      "url": "https://www.postgresql.org/docs/18/sql-createindex.html",
+      "released_version_or_commit": "PostgreSQL 18 documentation; no Git commit applicable.",
+      "locator": "Partial-index definition and predicate, rendered lines 38 and 136–139.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened PostgreSQL 18 CREATE INDEX reference and inspected the WHERE predicate behavior for partial indexes.",
+      "governing_condition_default_exception": "A WHERE clause creates an index containing entries only for rows matching its predicate. The predicate must represent the intended active-claim subset; index/schema and ON CONFLICT arbiter must align.",
+      "applicability": "Supports limiting uniqueness to a chosen active-claim representation, subject to schema and transaction design. It does not decide which offline volunteer should win."
+    },
+    {
+      "id": "R07",
+      "title": "MDN Storage quotas and eviction criteria",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "released_version_or_commit": "Current MDN article; last modified 2026-01-05 at access.",
+      "locator": "Best-effort/persistent behavior, rendered lines 208–217; eviction triggers and origin-wide eviction, rendered lines 293–319.",
+      "accessed_at_utc": "2026-10-12T01:08:14Z–2026-10-12T01:11:52Z (bounded window; browser tool did not expose a per-open timestamp).",
+      "observed_operation": "Opened the MDN Storage API article and inspected default persistence, persist() request behavior, storage pressure, and eviction scope.",
+      "governing_condition_default_exception": "Best-effort origin storage is the default and can be evicted; persist() can be requested but approval differs by browser. Eviction can remove all origin data at once; private-browsing behavior and quotas differ.",
+      "applicability": "Supports bounded cache, visible storage failures, platform tests, and no promise of draft survival after eviction."
+    }
+  ]
+}

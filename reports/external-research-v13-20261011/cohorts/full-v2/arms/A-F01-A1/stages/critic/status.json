@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-A-F01-A1-critic-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-A-F01-A1-critic-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-A-F01-A1-critic-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-A-F01-A1-critic-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-A-F01-A1-critic-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the critic stage and saved the outputs:\n\n- [critique.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/critique.md) — review of the released plan and investigator draft, with classified findings.\n- [source-map.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/source-map.json) — 22 source records.\n\nThe exact activation and completion responses are saved as [native-goal-active.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/native-goal-active.json) and [native-goal-terminal.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/native-goal-terminal.json). The same native Goal is complete; its recorded usage is 214,520 tokens over 9m35s.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-A-F01-A1-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:d22e6319-271b-4985-b900-b380d981634b",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the critic stage and saved the outputs:\n\n- [critique.md](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/critique.md) — review of the released plan and investigator draft, with classified findings.\n- [source-map.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/source-map.json) — 22 source records.\n\nThe exact activation and completion responses are saved as [native-goal-active.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/native-goal-active.json) and [native-goal-terminal.json](ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/stages/critic/native-goal-terminal.json). The same native Goal is complete; its recorded usage is 214,520 tokens over 9m35s.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer12ref-A-F01-A1-critic-v1:target-thread:thread%3Adelegated-task%3Acommand%253Amcp%253Aaa961c28-af15-45d4-9d2f-1b9740f31cc8%253Adelegate-task%253Aer13-single-dispatcher-v1:d22e6319-271b-4985-b900-b380d981634b",
+  "waitTimedOut": false
+}

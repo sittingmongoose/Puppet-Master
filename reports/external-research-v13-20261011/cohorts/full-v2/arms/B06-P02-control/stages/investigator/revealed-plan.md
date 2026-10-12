@@ -1,0 +1,11 @@
+# Draft plan: Volunteer shift handover across unreliable connections
+
+The draft uses issue records with stable identifiers, an event history and a separate acknowledgment table. Mobile clients cache the current shift's issues and let volunteers queue comments and task claims while disconnected. A shared service accepts queued events and produces the next shift's summary. Search covers issue titles and notes but excludes contact fields. No reading score or individual productivity ranking is included.
+
+Issue resolution is an explicit event with a reason. The current merge design accepts later comments without changing resolution, while a new task claim on a resolved issue prompts review. It assumes device-generated event identifiers are unique and that queued writes can retain their original access rights until reconnection. Those assumptions need examination when a volunteer leaves a team or two devices share a restored backup. Acknowledgment never resolves the issue.
+
+Photos upload only after an explicit action on a suitable connection. The draft records attachment deletion separately but has not settled cache removal or retention once other phones have downloaded the photo. Access begins with workshop-issued invitation codes; whether those codes establish useful user identity is open. Proposed validation covers two offline claims, stale resolution updates, revoked access, duplicate events, sensitive search fields and deletion across caches. No live records or accounts have been accessed. Adoption would begin with one shift using synthetic examples before policy and attachment questions are closed.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

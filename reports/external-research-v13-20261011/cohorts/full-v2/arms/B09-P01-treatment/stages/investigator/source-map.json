@@ -1,0 +1,243 @@
+[
+  {
+    "source_id": "K1",
+    "title": "Koha Manual 24.05 — Circulation",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/circulation.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Check out/check in barcode fields, lines 76–83 and 530–533",
+      "Bundle checkout/checkin and scan verification, lines 744–795",
+      "Offline circulation multiple-computer transaction sorting/processing and limitations, lines 2239–2266"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; tool exposes batch request time, not per-page fetch completion",
+    "observed_operation": "Barcode circulation; kit-like bundles; offline transactions from multiple computers are uploaded, sorted consistently, and replayed; skipped bundle verification can be completed later.",
+    "governing_condition_default_exception": "Bundle content confirmation can be bypassed with a specific button; offline device logs must be combined and sorted to maintain issue-before-return order; offline rules may miss server-side patron checks.",
+    "applicability": "Useful mature alternative; informs kit and LAN-outage design. Not evidence that Koha is configured for this group."
+  },
+  {
+    "source_id": "K2",
+    "title": "Koha Manual 24.05 — Cataloging",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/cataloging.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Damaged status field and circulation effect, lines 3034–3055",
+      "Withdrawn field and availability display, lines 2893–2910"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Damaged status marks an item unavailable in search; withdrawn status is represented on the item record.",
+    "governing_condition_default_exception": "Damaged status alone does not prevent checkout or check-in; circulation blocking requires another restriction/configuration.",
+    "applicability": "Do not equate a displayed damaged/unavailable label with a hard maintenance hold."
+  },
+  {
+    "source_id": "K3",
+    "title": "Koha Manual 24.05 — Tools",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/tools.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Log viewer and log system preferences, lines 2055–2070; actor/action/object details lines 2072–2111"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Staff actions appear in the log viewer according to configured module logging preferences.",
+    "governing_condition_default_exception": "Some modules are not logged until preferences are enabled; values available vary by module.",
+    "applicability": "History/audit claims require enabling and testing relevant logs; reasoned correction events are not established by this page."
+  },
+  {
+    "source_id": "S1",
+    "title": "Snipe-IT — Managing Assets",
+    "exact_url": "https://snipe-it.readme.io/docs/managing-assets",
+    "released_version_or_commit": "Official online docs, no release version displayed; updated label says 6 months ago",
+    "locator": [
+      "Asset tag uniqueness and barcode recommendation, lines 15–20",
+      "Accountable target/person recommendation, lines 29–34"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Every asset has a unique asset tag; barcode labels are recommended; custom fields can cover attributes.",
+    "governing_condition_default_exception": "Labels are recommended but are not required by the software; docs discourage checkout to non-person targets.",
+    "applicability": "Supports unique physical identity; general IT asset workflow may not fit neighborhood tool lending."
+  },
+  {
+    "source_id": "S2",
+    "title": "Snipe-IT — General Settings",
+    "exact_url": "https://snipe-it.readme.io/docs/general-settings",
+    "released_version_or_commit": "Official online docs, no release version displayed",
+    "locator": [
+      "Checkin Preferences, 'Require Notes on Checkin/Checkout', lines 131–138",
+      "Email preference section around lines 90–127"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "An administrator can require notes on all check-ins and checkouts.",
+    "governing_condition_default_exception": "Setting is configurable and applies to every checkout/check-in; it does not establish immutable history, distinct correction reasons or a correction workflow.",
+    "applicability": "Candidate control for return explanations; must be tested for actor, retention and correction semantics."
+  },
+  {
+    "source_id": "S3",
+    "title": "Snipe-IT release v8.7.2",
+    "exact_url": "https://github.com/grokability/snipe-it/releases/tag/v8.7.2",
+    "released_version_or_commit": "Release v8.7.2",
+    "locator": [
+      "Release notes: duplicate checkout requests on double-click no longer create duplicate rows; source release page around line 510"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Release notes identify and fix duplicate checkout rows from double-clicking.",
+    "governing_condition_default_exception": "Fix is claimed for v8.7.2; actual scanner/client retry behavior still requires testing against selected version.",
+    "applicability": "Regression history makes duplicate scan/retry testing consequential."
+  },
+  {
+    "source_id": "S4",
+    "title": "Snipe-IT release v8.8.0",
+    "exact_url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+    "released_version_or_commit": "Release v8.8.0, marked latest at access",
+    "locator": [
+      "Release heading and Latest badge, lines 130–134"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Identifies v8.8.0 as latest release at the time of access.",
+    "governing_condition_default_exception": "Latest status may change; use an explicitly selected release/tag during procurement and validation.",
+    "applicability": "Anchors version comparison for Snipe-IT."
+  },
+  {
+    "source_id": "S5",
+    "title": "Snipe-IT v8.8.0 — Asset model",
+    "exact_url": "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Models/Asset.php",
+    "released_version_or_commit": "v8.8.0 tag",
+    "locator": [
+      "Searchable attributes and relations, lines 2575–2636",
+      "availableForCheckout(), lines 3124–3173",
+      "checkOut(), expected_checkin assignment, active assignee update and CheckoutableCheckedOut event, lines 3200–3311"
+    ],
+    "access_utc": "2026-10-12T00:47:45Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "At v8.8.0 tag, asset search includes name/tag/serial and status/model/category relations; checkout stores expected_checkin and last_checkout, associates an assignee, saves, then emits a checkout event and increments the counter. Availability checks require no current assignee, no deletion, and deployable status.",
+    "governing_condition_default_exception": "expected_checkin is a nullable expected date field, not an observed automatic return mechanism; the model method performs state assignment and dispatches an event, while complete API/UI transaction behavior requires separate testing.",
+    "applicability": "Code-level context for the general asset-manager alternative."
+  },
+  {
+    "source_id": "W1",
+    "title": "SpaceWorks commit d3cd13 — individual asset fix moves",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a",
+    "released_version_or_commit": "Immutable commit d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a; release tag relation not established",
+    "locator": [
+      "Commit title and changed files; backend/apps/admin_api/views_assets.py fix-shelf endpoint; backend/tests/test_handover_broken_reject.py test_individual_asset_can_move_to_fix_and_back"
+    ],
+    "access_utc": "2026-10-12T00:47:45Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Adds a staff action to move an individually tracked asset to/from a fix shelf, permission checks, transactional state changes and audit logging; tests assert maintenance/available states and quantity counters.",
+    "governing_condition_default_exception": "Applies to individually tracked products and requires staff edit permission; release tag for this commit was not identified.",
+    "applicability": "Strong evidence of a direct repair-hold feature, but check exact deployed release and regression behavior."
+  },
+  {
+    "source_id": "W2",
+    "title": "SpaceWorks commit 6707d60 — reconcile fix counts",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/6707d60b2bd680288d45785e94af52bc347f1897",
+    "released_version_or_commit": "Immutable commit 6707d60b2bd680288d45785e94af52bc347f1897; release tag relation not established",
+    "locator": [
+      "Commit title/diff and test for stale individual asset fix counts"
+    ],
+    "access_utc": "2026-10-12T00:47:45Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Fixes stale repair-shelf quantity reconciliation and adds regression coverage.",
+    "governing_condition_default_exception": "A later fix shows the feature’s summary counts required correction; no execution of that test was performed for this assignment.",
+    "applicability": "Availability counts should be independently reconciled in any candidate pilot."
+  },
+  {
+    "source_id": "W3",
+    "title": "SpaceWorks commit c371d6 — broken rejection and fix shelf",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+    "released_version_or_commit": "Immutable commit c371d6e25f7dc618e3d100ded56fa02a3e84261b; release tag relation not established",
+    "locator": [
+      "Commit title, individual-asset limitation and quantity-mode tests in backend/tests/test_handover_broken_reject.py"
+    ],
+    "access_utc": "2026-10-12T00:47:45Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Introduces reject-broken and needs-fix shelf behavior; individual-asset route was added later in W1.",
+    "governing_condition_default_exception": "Early behavior supported quantity tracking but deferred individual tracked damage flow; subsequent commit W1 adds an individual asset fix action.",
+    "applicability": "Shows feature evolution and need to verify exact build/tracking mode."
+  },
+  {
+    "source_id": "W4",
+    "title": "SpaceWorks self-hosting guide at commit d3cd13",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a/docs/self-hosting.md",
+    "released_version_or_commit": "Immutable commit d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a",
+    "locator": [
+      "Production Compose stack, upgrade and backup instructions; PostgreSQL dump and MinIO volume backup, around lines 280–395"
+    ],
+    "access_utc": "2026-10-12T00:47:45Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Describes a self-host deployment with PostgreSQL and separate object storage; backup instructions require both DB and MinIO data.",
+    "governing_condition_default_exception": "Database dump does not include MinIO objects; restore/recovery remains operator responsibility.",
+    "applicability": "Directly informs no-paid-cloud and recovery burden; indicates a heavier stack than this small group may need."
+  },
+  {
+    "source_id": "W5",
+    "title": "SpaceWorks modules documentation",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/docs/MODULES.md",
+    "released_version_or_commit": "Moving main branch; rendered page does not expose exact commit SHA; not a released build identity",
+    "locator": [
+      "Core evidence module and mandatory issue/return photos plus return remark, lines 191–199 and 244–250"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "States evidence upload is core and each issue/return requires a photo; return also requires a remark; photo objects may expire while event metadata remains.",
+    "governing_condition_default_exception": "This is mutable main-branch documentation, not a release guarantee; verify against a pinned candidate build before relying on it.",
+    "applicability": "Identifies a meaningful privacy/operational fit risk to test."
+  },
+  {
+    "source_id": "W6",
+    "title": "SpaceWorks changelog",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/CHANGELOG.md",
+    "released_version_or_commit": "Moving main branch; latest recorded changelog section observed is 0.7.5 (2026-08-11); main not pinned",
+    "locator": [
+      "Release process/versioning and changelog caveat lines 189–195; latest recorded release lines 192–195"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Explains release tags derive from main and states changelog gaps for versions 0.3.0–0.5.1; latest visible section is 0.7.5.",
+    "governing_condition_default_exception": "This changelog snapshot alone does not establish that 0.7.5 is the current latest installable release.",
+    "applicability": "Maturity and release/version identification must be verified before adoption."
+  },
+  {
+    "source_id": "D1",
+    "title": "SQLite — Appropriate Uses For SQLite",
+    "exact_url": "https://www.sqlite.org/whentouse.html",
+    "released_version_or_commit": "Official online documentation; page updated 2025-05-31",
+    "locator": [
+      "SQLite client/server and network-filesystem use cases, especially server-style app and many-writer discussion"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Distinguishes local embedded DB from server-mediated access and discourages direct multi-host access over network filesystems.",
+    "governing_condition_default_exception": "A single server process may serialize high-level access; simultaneous writers may warrant a client-server DB.",
+    "applicability": "Rules out sharing one SQLite DB file directly between volunteer laptops; single-host app remains a possible lightweight architecture."
+  },
+  {
+    "source_id": "D2",
+    "title": "SQLite — Write-Ahead Logging",
+    "exact_url": "https://www.sqlite.org/wal.html",
+    "released_version_or_commit": "Official online documentation; page updated 2026-08-25",
+    "locator": [
+      "WAL multi-process host constraint, lines 70–73; concurrency and release caveat around lines 70–90"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "WAL supports concurrent readers with one writer and requires all participating processes on the same host; it does not work over a network filesystem.",
+    "governing_condition_default_exception": "Use patched SQLite releases; the documented WAL-reset issue affected earlier versions and has fixed versions/backports.",
+    "applicability": "SQLite-on-server can be considered only with a pinned supported version and local storage."
+  },
+  {
+    "source_id": "D3",
+    "title": "PostgreSQL 18 — Constraints",
+    "exact_url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+    "released_version_or_commit": "PostgreSQL 18 documentation",
+    "locator": [
+      "Unique constraints and partial indexes, lines 177–198"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "Database-level unique constraints prevent duplicate identifiers; partial unique indexes can express uniqueness over selected rows.",
+    "governing_condition_default_exception": "Null behavior matters; require non-null item IDs and model any active-loan uniqueness explicitly.",
+    "applicability": "Basis for enforcing a unique physical-item identity and, where suitable, one-active-loan rule."
+  },
+  {
+    "source_id": "D4",
+    "title": "PostgreSQL 18 — Explicit Locking",
+    "exact_url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+    "released_version_or_commit": "PostgreSQL 18 documentation",
+    "locator": [
+      "Row-level FOR UPDATE locking behavior, lines 101–113"
+    ],
+    "access_utc": "2026-10-12T00:47:17Z batch-start; per-page fetch completion is not exposed",
+    "observed_operation": "A transaction using FOR UPDATE blocks competing updates/locks to the same rows until its transaction ends.",
+    "governing_condition_default_exception": "Locks must be held within a transaction with appropriate validation; locking alone does not replace unique constraints or idempotency checks.",
+    "applicability": "Supports serialized checkouts and damage transitions under two-client concurrency."
+  }
+]

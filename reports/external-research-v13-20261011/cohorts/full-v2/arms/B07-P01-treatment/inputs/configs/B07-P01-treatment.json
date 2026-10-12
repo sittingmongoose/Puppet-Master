@@ -1,0 +1,67 @@
+{
+  "run_id": "B07-P01-treatment",
+  "runtime_root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment",
+  "brief_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/control-inputs/brief.md",
+  "plan_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/control-inputs/plan.md",
+  "whole_deadline_utc": "2026-10-12T01:37:08.279Z",
+  "whole_budget_s": 3600,
+  "t0_utc": "2026-10-12T00:37:08.279Z",
+  "output_selection": {
+    "investigator": [
+      "source-map.json",
+      "discovery.md",
+      "draft.md",
+      "revealed-plan.md",
+      "plan-reveal.json"
+    ],
+    "critic": [
+      "source-map.json",
+      "critique.md"
+    ],
+    "reviser": [
+      "source-map.json",
+      "final.md"
+    ]
+  },
+  "final_stage": "reviser",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "R0",
+  "stage_prompt_deltas": {
+    "investigator": "",
+    "critic": "First establish substantive coverage of every required mechanism/alternative family and useful discovered opportunity before micro-corrections. Then verify consequential claims and proposed changes. Use this same critic context and total maximum budget; no additional reviewer. Preserve all ordinary review obligations, source correctness and false-rejection control. Do not restrict criticism to a few pivotal claims.\n",
+    "reviser": ""
+  },
+  "method_delta_files": {
+    "investigator": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/control-inputs/method/investigator_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "critic": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "bytes": 419
+    },
+    "reviser": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/control-inputs/method/reviser_prompt_delta.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "public_recipe_choice": "B07",
+  "activation_capture_version": "exact-capture-v21",
+  "dispatch_owner": "root"
+}

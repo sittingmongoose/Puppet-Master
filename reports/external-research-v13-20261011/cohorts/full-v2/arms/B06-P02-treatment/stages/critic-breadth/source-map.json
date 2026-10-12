@@ -1,0 +1,61 @@
+{
+  "run_id": "B06-P02-treatment",
+  "stage": "critic-breadth",
+  "mapping_policy": "C IDs identify pages independently reopened for this critic. upstream_source_id preserves the corresponding investigator S ID; no S ID is reassigned. The full S00-S19 register remains in investigator/source-map.json.",
+  "inputs": {
+    "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+    "investigator_stage": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator",
+    "discovery_sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+    "revealed_plan_sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881"
+  },
+  "sources": [
+    {
+      "id": "C01",
+      "upstream_source_id": "S01",
+      "title": "Handling Update Conflicts — PowerSync documentation",
+      "url": "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx",
+      "released_version_or_commit": "Documentation repository main branch; no release tag or commit SHA displayed (UNKNOWN).",
+      "locator": "Sections on server-authoritative reconciliation, ordered upload queue, idempotent operations and backend validation (rendered lines 192–212).",
+      "accessed_at_utc": "2026-10-12T00:57:29Z",
+      "observed_operation": "Opened the primary documentation page and read the conflict and operation-handling passages.",
+      "governing_condition_default_exception": "The backend application dictates how queued mutations are applied; the simplest example is per-field LWW; operations can be replayed and must be idempotent; backend validation/custom conflict handling is available.",
+      "applicability": "Supports the investigator's qualification that PowerSync-style sync does not itself supply this domain's stale-transition or duplicate-claim policy."
+    },
+    {
+      "id": "C02",
+      "upstream_source_id": "S05",
+      "title": "Apache CouchDB 3.5 replication and conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "released_version_or_commit": "Apache CouchDB documentation 3.5 stable branch; exact patch release not pinned.",
+      "locator": "Sections 2.3.1–2.3.4 on replication, deterministic winner, revision branches, conflict visibility and application merge (rendered lines 19–57, 82–135).",
+      "accessed_at_utc": "2026-10-12T00:57:29Z",
+      "observed_operation": "Opened the primary documentation page and read the replication/conflict model through the application-resolution passages.",
+      "governing_condition_default_exception": "Replicated branches can coexist; ordinary reads expose only the deterministic winner; clients must query conflicts and perform application-specific merging/resolution.",
+      "applicability": "Supports treating CouchDB/PouchDB as a replication alternative that still needs user-visible conflict handling for handover state."
+    },
+    {
+      "id": "C03",
+      "upstream_source_id": "S07",
+      "title": "Apache CouchDB database security API",
+      "url": "https://docs.couchdb.org/en/stable/api/database/security.html",
+      "released_version_or_commit": "Apache CouchDB documentation 3.5 stable branch; exact patch release not pinned.",
+      "locator": "GET /{db}/_security, members/admins behavior and default membership (rendered lines 5–35).",
+      "accessed_at_utc": "2026-10-12T00:57:37Z",
+      "observed_operation": "Opened the primary API page and read its member/admin permission and empty-membership passages.",
+      "governing_condition_default_exception": "Members can read database documents and write non-design documents; when membership lists are empty, regular document reads/writes are broadly allowed; newly created CouchDB 3.x databases default to admin-only.",
+      "applicability": "Shows that shared access depends on explicit database and document authorization design; it cannot determine the center's role or identity policy."
+    },
+    {
+      "id": "C04",
+      "upstream_source_id": "S10",
+      "title": "Automerge conflict reference",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "released_version_or_commit": "Current Automerge documentation; no release/commit pin displayed; copyright states 2026.",
+      "locator": "Conflicts section on concurrent same-property writes, getConflicts, and operation-ID ordering (rendered lines 58–112).",
+      "accessed_at_utc": "2026-10-12T00:57:37Z",
+      "observed_operation": "Opened the primary reference and read same-property conflict behavior and its ordering rule.",
+      "governing_condition_default_exception": "Concurrent updates to one property have a deterministic displayed winner while other values remain queryable through getConflicts; ordering uses operation counter and actor ID, not wall-clock time.",
+      "applicability": "Supports bounding Automerge to note collaboration unless the application adds explicit task/issue transition and conflict-review rules."
+    }
+  ]
+}

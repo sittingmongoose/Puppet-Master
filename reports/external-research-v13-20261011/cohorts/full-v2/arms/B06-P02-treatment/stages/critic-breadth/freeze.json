@@ -1,0 +1,85 @@
+{
+  "prepared_at_utc": "2026-10-12T00:55:57.842Z",
+  "stage": "critic-breadth",
+  "stage_deadline_utc": "2026-10-12T01:01:57.842Z",
+  "whole_deadline_utc": "2026-10-12T01:35:37.398Z",
+  "stage_budget_s": 360,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B06-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/inputs/brief.md",
+      "sha256": "0c31c92a6b8fc79d1bad8d22831d827e946fdd9dbdf5665b28233125e73932bf",
+      "bytes": 2362
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/assignment.md",
+      "sha256": "3f0f7867efcfe5b71c08f11eef8162127602cded03ac8fb1164d7bd28ebf572e",
+      "bytes": 9758
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/input-map.json",
+      "sha256": "07985a1b020d2ceeaee2278b1392eaea9e79b38b535969f20d9b3ea403ee2878",
+      "bytes": 2044
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+      "bytes": 12995
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/draft.md",
+      "sha256": "63407117941142d73c3916098fdeb9549daaf4a2be5f27d3e23631101883084a",
+      "bytes": 24574
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "5409e7b0d3197363f2ce555fc9ef797fe2c9a098214b18e47cb6fbcfdf763454",
+      "bytes": 20341
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "bytes": 2349
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "5def93be3ba2e436174a197e869d39d71361f82135024903a9f5374628c9b600",
+      "bytes": 475
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources/README.md",
+      "sha256": "cd1a6a7aba2b7955013c20e327d096f406d63be28faa6ff73a1b624abdca6695",
+      "bytes": 1778
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 critic-breadth stage, run B06-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/critic-breadth/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 360.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/stages/investigator/sources/README.md"
+      ]
+    }
+  ],
+  "request_sha256": "5494f6d0c16b07a119f05a1139af1deca17bf116c40956a1f42ff629ef879b8f"
+}

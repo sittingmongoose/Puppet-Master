@@ -1,0 +1,519 @@
+{
+  "run_id": "B07-P02-treatment",
+  "stage": "reviser",
+  "source_id_policy": "All investigator and critic records are preserved verbatim in separate inherited record sets. Rechecks use the same ID only when the exact source identity is the same; ELAN-UI-01's supplied unavailable URL remains distinct from recovered ELAN-UI-02. No source ID is silently rebound.",
+  "reviewed_inputs": [
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/inputs/brief.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/discovery.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/draft.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/revealed-plan.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/plan-reveal.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/critique.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/source-map.json",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/sources/index.md",
+    "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/critic/sources/index.md"
+  ],
+  "inherited_record_sets": [
+    {
+      "from_stage": "investigator",
+      "record_set": {
+        "assignment": "B07-P02-treatment",
+        "stage": "investigator",
+        "scope_source": {
+          "source_id": "BRIEF-01",
+          "exact_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/inputs/brief.md",
+          "version_or_commit": "Assigned exact brief; no version supplied",
+          "locator": "Entire file",
+          "accessed_utc": "2026-10-12T00:37:47Z",
+          "observed_operation": "Read directly with Path.read_text after native Goal binding gate passed",
+          "governing_condition_or_default_or_exception": "The brief is the complete discovery scope. The exact plan is withheld and must not be sought during this stage.",
+          "applicability": "Controls the product requirements, prohibitions, research, deliverable, and separation of proposed validation from executed work."
+        },
+        "plan_status": "Withheld during brief-only discovery; not sought or read. Reveal only after discovery.md and this map are saved.",
+        "sources": [
+          {
+            "source_id": "MEDIA-01",
+            "title": "Media Fragments URI 1.0 (basic)",
+            "url": "https://www.w3.org/TR/media-frags/",
+            "version_or_commit": "W3C Recommendation, Media Fragments URI 1.0 (2012)",
+            "locator": "§4.2.1 lines 221–230; §6.1.1 lines 335–356",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Web search and direct open of W3C TR",
+            "governing_condition_or_default_or_exception": "Temporal selector t=begin,end uses seconds/NPT by default; bounds are half-open [begin,end); omitted start defaults to 0 and omitted end to source duration. Empty/reversed ranges are invalid.",
+            "applicability": "Defines interoperable temporal-target syntax and a useful interval convention for exports. It does not define stable recording identity, sample accuracy, UI behavior, or replacement remapping."
+          },
+          {
+            "source_id": "ANNOT-01",
+            "title": "Web Annotation Data Model",
+            "url": "https://www.w3.org/TR/annotation-model/",
+            "version_or_commit": "W3C Recommendation (2017); status states stable Recommendation",
+            "locator": "§1 lines 87–100 (data model/transport); §4.2.1 lines 805–850 (FragmentSelector); §4.2.4–4.2.5 lines 930–993 (text quote/position selectors); §4.3.1 lines 1199–1205 (TimeState)",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Web search, direct open, and find within W3C TR",
+            "governing_condition_or_default_or_exception": "A FragmentSelector has a value plus a conformsTo reference. The model is a serialization/data model and does not prescribe a transport protocol. TextPositionSelector is brittle when source text changes; a State is recommended to identify the correct representation.",
+            "applicability": "Supports an optional local JSON-LD interoperability export and optional transcript text anchoring. It does not by itself identify the exact local recording bytes or justify deriving media timestamps from untimed transcript text."
+          },
+          {
+            "source_id": "HTML-01",
+            "title": "HTML Standard: media elements",
+            "url": "https://html.spec.whatwg.org/multipage/media.html",
+            "version_or_commit": "WHATWG Living Standard; snapshot accessed 2026-10-12",
+            "locator": "§4.8.11.6 lines 1798–1859 (duration/currentTime/timeline); §4.8.11.9 lines 2401–2479 (seekable, fastSeek, seeking algorithm)",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open and find in the WHATWG standard",
+            "governing_condition_or_default_or_exception": "duration is seconds, NaN when unavailable and Infinity for unbounded streams. currentTime is seconds on the resource's media timeline; setting it seeks. fastSeek trades precision for speed. Seeking clamps to source bounds and, when outside seekable ranges, chooses a nearest seekable point; seeking is asynchronous.",
+            "applicability": "A concrete example of why player adapters must report readiness/seek completion and actual position, and why time precision must not be inferred from decimal formatting. Local recordings normally have finite durations, but player/media metadata still governs actual seek results."
+          },
+          {
+            "source_id": "WAI-01",
+            "title": "WAI-ARIA Authoring Practices Guide: Slider Pattern",
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+            "version_or_commit": "Live APG page; no release tag; accessed 2026-10-12",
+            "locator": "Keyboard Interaction lines 33–45; roles/states/properties lines 46–53; Media Seek Slider example lines 29–32",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of W3C WAI-ARIA APG",
+            "governing_condition_or_default_or_exception": "Slider arrows change one step; Home/End select bounds; Page Up/Down may make larger steps; labels and value text are needed. APG warns touch-based assistive technology support can be inconsistent and calls for testing.",
+            "applicability": "A seek slider may be one labeled keyboard control, but cannot be the only way to create/edit intervals or navigate comments. Manual assistive-technology validation remains necessary."
+          },
+          {
+            "source_id": "WS-CODE-01",
+            "title": "WaveSurfer.js Regions plugin source",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/src/plugins/regions.ts",
+            "version_or_commit": "WaveSurfer.js 8.0.2; release commit f25d7a1",
+            "locator": "RegionParams lines 76–103; constructor defaults and clamp lines 143–207; initMouseEvents lines 398–470; resize-handle pointer/drag setup lines 213–258",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of version-pinned raw repository source; code read, not executed",
+            "governing_condition_or_default_or_exception": "start/end are seconds; default drag and resize are true; boundaries clamp to [0,totalDuration]; start=end is a point marker. The source wires click/mouseenter/mouseleave/dblclick, pointer, touch, and drag streams; no keyboard interval editing is exposed in this file.",
+            "applicability": "A candidate optional visual region layer. A separate semantic keyboard editor/list remains needed; disable pointer-only editing if it conflicts with required workflow."
+          },
+          {
+            "source_id": "WS-README-01",
+            "title": "WaveSurfer.js 8.0.2 README",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/README.md",
+            "version_or_commit": "WaveSurfer.js 8.0.2; commit f25d7a1",
+            "locator": "FAQ lines 151–170; tests lines 189–201",
+            "accessed_utc": "2026-10-12T00:42:18Z",
+            "observed_operation": "Direct open of version-pinned raw README",
+            "governing_condition_or_default_or_exception": "The project says full Web Audio decoding can fail on large clips from memory use and recommends pre-decoded peaks; it warns VBR media may mismatch the waveform. Stereo defaults to left/right in one waveform, with splitChannels for separate channels. The project describes Cypress e2e and visual-regression tests.",
+            "applicability": "Large-long-file, stereo, and VBR constraints must be measured with the actual local player/source. Precomputed peaks can remain local; README suggestions do not prove an implementation tested."
+          },
+          {
+            "source_id": "WS-TEST-01",
+            "title": "WaveSurfer.js Regions plugin Cypress tests",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/cypress/e2e/regions.cy.js",
+            "version_or_commit": "WaveSurfer.js 8.0.2; commit f25d7a1",
+            "locator": "beforeEach and stereo fixture lines 0–20; create/remove lines 23–60; pointer-drag and drag-selection tests lines 62–204; marker and channel tests lines 138–146 and 317–328",
+            "accessed_utc": "2026-10-12T00:42:45Z",
+            "observed_operation": "Direct open of version-pinned raw test file; inspected but not run",
+            "governing_condition_or_default_or_exception": "The suite loads a local stereo.mp3 with splitChannels=true and tests region create/remove, pointer-drag, drag selection, click playback, point marker (start=end), IDs, and channelIdx. This file does not contain keyboard/screen-reader or persisted-source-replacement tests.",
+            "applicability": "Shows what an existing region suite covers and omits; use as precedent for interaction/fidelity test design, not as evidence of accessible behavior or this proposal passing tests."
+          },
+          {
+            "source_id": "WS-ISSUE-01",
+            "title": "WaveSurfer discussion #2737: playhead out of sync on long audio",
+            "url": "https://github.com/katspaugh/wavesurfer.js/discussions/2737",
+            "version_or_commit": "Discussion opened 2023; reported WaveSurfer 6.6.1",
+            "locator": "Issue description and owner reply (reported width-calculation concern)",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of upstream GitHub discussion",
+            "governing_condition_or_default_or_exception": "A user reported increasing playhead/waveform offset on long MP3/WAV files under 6.6.1; owner replied that width calculation might be involved. This is a report, not a confirmed defect in 8.0.2 or a verified fix history.",
+            "applicability": "Historical warning to include long-file seek/audio synchronization checks; must not be generalized to all releases or media."
+          },
+          {
+            "source_id": "PEAKS-API-01",
+            "title": "Peaks.js API documentation",
+            "url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/doc/API.md",
+            "version_or_commit": "Peaks.js 3.4.2; release commit 8144d61",
+            "locator": "Options lines 324–383 (player, local/precomputed waveformData, credentials, multiChannel, keyboard); player customization lines 553–558; segments and events API",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of version-pinned raw API document",
+            "governing_condition_or_default_or_exception": "Can use a media element or custom player adapter. Precomputed local waveformData is an option; dataUri fetches remote data and withCredentials defaults false. multiChannel defaults false. keyboard defaults false and nudgeIncrement defaults 0.01 seconds; segment operations are also exposed by pointer-driven editing events.",
+            "applicability": "Promising visual adapter when playback is replaceable and local precomputed peaks are supplied. Enable keyboard behavior explicitly and add a semantic interval/comment editor; validate the current maintained branch and license."
+          },
+          {
+            "source_id": "PEAKS-STATE-01",
+            "title": "Peaks.js releases and repository README",
+            "url": "https://github.com/bbc/peaks.js/releases",
+            "version_or_commit": "Latest stable listed: 3.4.2 / 8144d61; latest listed prerelease: 4.0.0-beta.2 / abdc8cd (May release); repository README says ongoing development moved to Codeberg",
+            "locator": "Release list and release commits; README project status and feature/test overview",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of upstream release page and repository page",
+            "governing_condition_or_default_or_exception": "GitHub lists v4.0.0-beta.2 as a prerelease and v3.4.2 as the latest stable. GitHub README says development moved to https://codeberg.org/chrisn/peaks.js; that destination was unavailable through the browser tool during this pass.",
+            "applicability": "Pin and review the actual maintained upstream/release before selection; do not treat the GitHub README or old stable docs as current implementation guarantees."
+          },
+          {
+            "source_id": "PEAKS-TEST-01",
+            "title": "Peaks.js 3.4.2 package manifest",
+            "url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/package.json",
+            "version_or_commit": "Peaks.js 3.4.2; release commit 8144d61",
+            "locator": "scripts lines 45–58; test dependencies lines 67–88",
+            "accessed_utc": "2026-10-12T00:42:45Z",
+            "observed_operation": "Direct open of version-pinned raw package manifest; scripts inspected, not run",
+            "governing_condition_or_default_or_exception": "The test command starts Karma; project dependencies include Mocha/Chai/Sinon and browsers. No tests were executed for this stage.",
+            "applicability": "Confirms an upstream test harness exists, not that accessibility, local-only data, replacement identity, or this proposal have been verified."
+          },
+          {
+            "source_id": "PEAKS-ISSUE-01",
+            "title": "Peaks.js issue #573: waveform/audio mismatch after seek",
+            "url": "https://github.com/bbc/peaks.js/issues/573",
+            "version_or_commit": "GitHub issue opened 2026; user’s exact library version not stated in retrieved excerpt",
+            "locator": "Issue description lines 154–181; custom audioBuffer and seek behavior",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of upstream GitHub issue",
+            "governing_condition_or_default_or_exception": "A user reports audio beginning after the waveform/playhead position after custom seeking with an AudioBuffer; this is an open report without a confirmed root cause or fix in the excerpt.",
+            "applicability": "Reinforces explicit seek/readback and heard-passage checks for custom adapters; not evidence that all Peaks users or default integrations are faulty."
+          },
+          {
+            "source_id": "AUD-LABEL-01",
+            "title": "Audacity Manual: Importing and Exporting Labels",
+            "url": "https://manual.audacityteam.org/man/importing_and_exporting_labels.html",
+            "version_or_commit": "Online development manual; no version stated on page",
+            "locator": "Standard format lines 19 onward; export/import behavior lines 36–41",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of official Audacity manual page",
+            "governing_condition_or_default_or_exception": "Default text format uses tab-delimited start seconds, end seconds, and optional label text; point labels use identical start/end. If multiple label tracks exist, export combines all their labels. External import should use UTF-8 or ASCII.",
+            "applicability": "Useful readable-export precedent and test cases for point labels, UTF-8, and multi-track behavior; it is not proof this app should mirror all Audacity semantics."
+          },
+          {
+            "source_id": "AUD-KBD-01",
+            "title": "Audacity Support: keyboard shortcuts",
+            "url": "https://github.com/audacity/audacity-support/blob/main/basics/keyboard-shortcuts.md",
+            "version_or_commit": "Support repository main snapshot; commit not captured",
+            "locator": "Edit: Labels lines 299–308; selection boundaries lines 350–353",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of official Audacity support documentation",
+            "governing_condition_or_default_or_exception": "Describes Edit Labels as a keyboard-accessible table; Ctrl+B marks a cursor/selection, Ctrl+M marks playback position; [ and ] set selection boundaries from the playback cursor.",
+            "applicability": "Keyboard mark-in/out and list editing patterns for the proposal. These docs describe Audacity commands; they do not establish conformance of the proposed UI."
+          },
+          {
+            "source_id": "AUD-ISSUE-01",
+            "title": "Audacity issue #5690: label export selection/regression report",
+            "url": "https://github.com/audacity/audacity/issues/5690",
+            "version_or_commit": "Upstream issue opened 2023; reported versions 3.4.x and 3.5.0 alpha; status Open at access",
+            "locator": "Description/reproduction lines 159–201; version and platform lines 195–201",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Direct open of upstream GitHub issue",
+            "governing_condition_or_default_or_exception": "Reporter says export labels included all tracks regardless of selection and an export command became unavailable when nothing was selected after 3.4.0. No linked fixing PR/resolution was visible in the retrieved issue record.",
+            "applicability": "Historical report only. Include deterministic export-selection and empty-state regression tests; do not assert current Audacity behavior or import the reported defect as a requirement."
+          },
+          {
+            "source_id": "ELAN-UI-01",
+            "title": "ELAN manual: changing boundaries and entering annotations",
+            "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_boundaries_of_an_existing_selection_and_annotation.html",
+            "version_or_commit": "Official online manual; page does not expose a fixed release in the retrieved copy",
+            "locator": "Time-entry section lines 49–58 (hh:mm:ss:ms and default Ctrl+Shift+M); mouse drag, keyboard boundary adjustment, and dependent-tier caveats earlier in the section",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Web search and direct open of the official manual",
+            "governing_condition_or_default_or_exception": "Exact annotation boundaries may be typed as hh:mm:ss:ms via a dialog/shortcut. Tier constraints govern which annotations can be independently moved; dependent annotations may update or be discarded with parent changes. Its transcription table sorts by begin time and Enter moves to the next annotation.",
+            "applicability": "Useful exact-time-entry and list-navigation precedent; do not adopt mouse-drag as a required action or import ELAN's tier model without need."
+          },
+          {
+            "source_id": "EAF-SPEC-01",
+            "title": "ELAN Annotation Format 3.0 and ELAN",
+            "url": "https://www.mpi.nl/tools/elan/EAF_Annotation_Format_3.0_and_ELAN.pdf",
+            "version_or_commit": "EAF Annotation Format 3.0 PDF; retrieved document is 18 pages",
+            "locator": "Tier/time-slot constraints and Figure 2: top-level tier, Time Subdivision, Included In, Symbolic tiers",
+            "accessed_utc": "2026-10-12T00:42:05Z",
+            "observed_operation": "Official MPI PDF opened and search result text retrieved; PDF text gave tier rules but the browser did not expose a stable PDF line/page locator",
+            "governing_condition_or_default_or_exception": "Top-level same-tier alignable annotations cannot overlap, although gaps are allowed; different constrained tier types share/chain time slots according to their stereotype. Multiple tiers can express richer relationships.",
+            "applicability": "ELAN/EAF is an alternative for structured transcript/tier projects, but may be cumbersome for free comments that can overlap arbitrarily. Verify exact tier semantics before any compatibility/export implementation."
+          }
+        ],
+        "executed_checks": [
+          "Native Goal activation binding gate passed before brief/source reading.",
+          "Documentation, repository source, tests, release notes, issue reports, and manuals were read through the listed read-only web operations.",
+          "No application code or external test suite was run; no app/browser/accessibility check was executed."
+        ]
+      }
+    },
+    {
+      "from_stage": "critic",
+      "record_set": {
+        "assignment": "B07-P02-treatment",
+        "stage": "critic",
+        "reviewed_inputs": {
+          "brief": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/inputs/brief.md",
+          "discovery": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/discovery.md",
+          "draft": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/draft.md",
+          "source_map": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/source-map.json",
+          "revealed_plan": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/revealed-plan.md",
+          "plan_reveal": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/plan-reveal.json",
+          "source_index": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/stages/investigator/sources/index.md"
+        },
+        "source_ids": {
+          "policy": "Existing investigator source IDs retain their exact source identity. ELAN-UI-01 remains bound to the original supplied URL, whose direct open failed; recovered official URL is separately identified as ELAN-UI-02.",
+          "accessed_utc_checkpoint": "2026-10-12T01:02:47Z"
+        },
+        "sources": [
+          {
+            "source_id": "BRIEF-01",
+            "title": "Assigned brief: Accessible recording review annotations",
+            "url": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P02-treatment/run/B07-P02-treatment/inputs/brief.md",
+            "version_or_commit": "Assigned exact brief; no version supplied",
+            "locator": "Entire file",
+            "accessed_utc": "2026-10-12T00:56:34Z",
+            "observed_operation": "Read directly from the frozen input-map path after the native activation guard passed",
+            "governing_condition_or_default_or_exception": "The brief defines the product requirements, prohibitions, proposal scope and separation of proposed validation from executed work.",
+            "applicability": "Controls this critique’s coverage assessment."
+          },
+          {
+            "source_id": "MEDIA-01",
+            "title": "Media Fragments URI 1.0 (basic)",
+            "url": "https://www.w3.org/TR/media-frags/",
+            "version_or_commit": "W3C Recommendation, 25 September 2012",
+            "locator": "§4.2.1 lines 221–230; §6.1.1–6.2.2 lines 335–399",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in W3C Recommendation; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Temporal NPT uses seconds by default, permits fractional seconds and a colon time form; intervals are half-open. The colon form is a convenience and does not signal frame accuracy; empty or reversed ranges are invalid.",
+            "applicability": "Supports an interoperable interval convention and timing vocabulary, not local identity, UI or seek precision."
+          },
+          {
+            "source_id": "ANNOT-01",
+            "title": "Web Annotation Data Model",
+            "url": "https://www.w3.org/TR/annotation-model/",
+            "version_or_commit": "W3C Recommendation, 2017",
+            "locator": "§1 lines 87–100; §4.2.1 lines 808–850; §4.2.4–4.2.5 lines 930–993; §4.3.1 lines 1199–1212",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in W3C Recommendation; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Defines annotation data/serialization and selectors; does not prescribe transport. FragmentSelector should name its fragment syntax. TextPositionSelector is brittle after edits and may be paired with State.",
+            "applicability": "Supports optional local interchange and transcript anchoring, not an application timing inference rule."
+          },
+          {
+            "source_id": "HTML-01",
+            "title": "HTML Standard: media elements",
+            "url": "https://html.spec.whatwg.org/multipage/media.html",
+            "version_or_commit": "WHATWG Living Standard as accessed 2026-10-12",
+            "locator": "§4.8.11.6 lines 1798–1859; §4.8.11.9 lines 2401–2494",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in WHATWG Living Standard; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Media times are seconds; duration can be NaN or Infinity. Seeking is asynchronous; an out-of-range seekable target can be moved to a nearest seekable position. fastSeek trades precision for speed; precise seeking uses currentTime.",
+            "applicability": "Supports an adapter/readback/tolerance example. It does not prescribe behavior for the unspecified desktop player."
+          },
+          {
+            "source_id": "WAI-01",
+            "title": "WAI-ARIA APG Slider Pattern",
+            "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+            "version_or_commit": "Live APG page as accessed 2026-10-12; no release tag",
+            "locator": "Keyboard Interaction lines 33–41; Media Seek Slider example lines 29–32; AT test note lines 25–26",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in W3C APG; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Defines arrow, Home/End and optional Page Up/Down interaction, and media time value text. It warns some touch AT support can vary and calls for AT testing.",
+            "applicability": "Supports an optional seek slider and manual accessibility validation, not interval editor completeness."
+          },
+          {
+            "source_id": "WS-CODE-01",
+            "title": "WaveSurfer.js Regions plugin source",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/src/plugins/regions.ts",
+            "version_or_commit": "WaveSurfer.js 8.0.2; release commit f25d7a1",
+            "locator": "Defaults lines 186–194; pointer/mouse/touch event streams lines 401–408; resize and drag handling",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in version-pinned raw repository source; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Region positions are seconds; drag, resize and boundary-resize defaults are enabled; zero end defaults to start. The cited file wires pointer/mouse/touch interaction.",
+            "applicability": "Supports an optional visual region-layer comparison, not keyboard accessibility."
+          },
+          {
+            "source_id": "WS-README-01",
+            "title": "WaveSurfer.js 8.0.2 README",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/README.md",
+            "version_or_commit": "WaveSurfer.js 8.0.2; release commit f25d7a1",
+            "locator": "FAQ entries for large files and VBR, lines 150–162",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in version-pinned raw README; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "README warns full Web Audio decoding may fail for large clips from memory pressure and describes possible VBR waveform mismatch; pre-decoded peaks are suggested for large files.",
+            "applicability": "Supports measuring long/VBR media with the actual local player; README is not a validation result."
+          },
+          {
+            "source_id": "WS-TEST-01",
+            "title": "WaveSurfer.js Regions plugin Cypress tests",
+            "url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/cypress/e2e/regions.cy.js",
+            "version_or_commit": "WaveSurfer.js 8.0.2; release commit f25d7a1",
+            "locator": "Local stereo fixture and setup; region creation/removal, drag, marker and channel assertions",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open of version-pinned test file; inspected, not run; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "The file covers region interactions and a stereo fixture; it does not establish keyboard/screen-reader or replacement-binding behavior.",
+            "applicability": "A test-coverage comparison only; not proof of this proposal passing."
+          },
+          {
+            "source_id": "WS-ISSUE-01",
+            "title": "WaveSurfer discussion #2737: playhead out of sync on long audio",
+            "url": "https://github.com/katspaugh/wavesurfer.js/discussions/2737",
+            "version_or_commit": "Discussion dated 2023-03-21; reporter used WaveSurfer 6.6.1; closed unanswered",
+            "locator": "Issue description lines 142–165; maintainer/reporter replies lines 181–228",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in upstream discussion; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Reporter described increasing mouse-seek/playhead offset on long files. Maintainer suspected width calculation; reporter said a then-current alpha appeared to resolve it but raised compatibility concerns. No validated fix for 8.0.2 is established here.",
+            "applicability": "Historical prompt for long-file alignment tests only; not a version-wide defect claim."
+          },
+          {
+            "source_id": "PEAKS-API-01",
+            "title": "Peaks.js API documentation",
+            "url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/doc/API.md",
+            "version_or_commit": "Peaks.js 3.4.2; release commit 8144d61",
+            "locator": "Options lines 324–383; local/server waveform options lines 597–609; custom player and segment APIs",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open and find in version-pinned raw API; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Local waveformData/precomputed data and custom player are supported options; dataUri requests remote waveform data; multiChannel defaults false; keyboard defaults false; nudgeIncrement defaults to 0.01 seconds; segment events include pointer-drag inserts.",
+            "applicability": "Supports candidate waveform adapter assessment, not a full accessible annotation model."
+          },
+          {
+            "source_id": "PEAKS-STATE-01",
+            "title": "Peaks.js releases and repository README",
+            "url": "https://github.com/bbc/peaks.js/releases ; https://github.com/bbc/peaks.js",
+            "version_or_commit": "GitHub listed v3.4.2 as latest stable and v4.0.0-beta.2 as prerelease at access; commits 8144d61 and abdc8cd",
+            "locator": "Release entries for v3.4.2 and v4.0.0-beta.2; repository note at README lines 227–233",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open/find in upstream release and repository pages; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "The repository note says ongoing development moved to Codeberg. GitHub identifies 3.4.2 as Latest and 4.0.0-beta.2 as Pre-release in the inspected view.",
+            "applicability": "Supports pinning and checking the maintained upstream before selection; state is a dated repository snapshot."
+          },
+          {
+            "source_id": "PEAKS-ISSUE-01",
+            "title": "Peaks.js issue #573: Odd Waveform-Audio Mismatch in Playback",
+            "url": "https://github.com/bbc/peaks.js/issues/573",
+            "version_or_commit": "Issue opened 2026-07-30; reporter’s exact library version not stated; Open in inspected view",
+            "locator": "Description lines 147–154 and issue state lines 130–144",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open in upstream GitHub; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Reporter describes audio/playhead mismatch after moving playback through the waveform. The issue does not state a library version or establish a library-wide cause/fix.",
+            "applicability": "Supports explicit seek/readback/audio alignment validation, not a general Peaks defect assertion."
+          },
+          {
+            "source_id": "AUD-LABEL-01",
+            "title": "Audacity Manual: Importing and Exporting Labels",
+            "url": "https://manual.audacityteam.org/man/importing_and_exporting_labels.html",
+            "version_or_commit": "Online development manual; no fixed release stated",
+            "locator": "Default format lines 13–19; multi-track export/UTF-8 lines 36–44",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open in official manual; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Default text form is tab-delimited start seconds, end seconds and optional text; points have same start/end; exports combine all label tracks; imports require UTF-8 or ASCII handling.",
+            "applicability": "Readable export precedent and round-trip cases only."
+          },
+          {
+            "source_id": "AUD-KBD-01",
+            "title": "Audacity Support: keyboard shortcuts",
+            "url": "https://github.com/audacity/audacity-support/blob/main/basics/keyboard-shortcuts.md",
+            "version_or_commit": "Support repository main snapshot; commit not captured",
+            "locator": "Edit Labels lines 299–308; selection boundary commands lines 350–353",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open/find in official support repository; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Describes keyboard-accessible label table, mark-at-selection and mark-at-playback shortcuts, and setting selection boundaries from playback position.",
+            "applicability": "Interaction precedent, not proof of the proposed UI’s accessibility."
+          },
+          {
+            "source_id": "AUD-ISSUE-01",
+            "title": "Audacity issue #5690: Export Labels selection/regression report",
+            "url": "https://github.com/audacity/audacity/issues/5690",
+            "version_or_commit": "Issue opened 2023-11-27; reporter lists 3.4.x and 3.5.0 alpha; Open in inspected view",
+            "locator": "Description/reproduction lines 161–204; no branch/PR at page lines 308–315",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open/find in upstream GitHub issue; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Reporter describes selection/export behavior in those versions. Current inspected issue view remains open and lists no branch or pull request.",
+            "applicability": "A historical export regression prompt; not a statement of current Audacity behavior or this app."
+          },
+          {
+            "source_id": "ELAN-UI-01",
+            "title": "ELAN manual: Changing boundaries of an existing selection and annotation (supplied URL)",
+            "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_boundaries_of_an_existing_selection_and_annotation.html",
+            "version_or_commit": "Official online manual; page version not stated",
+            "locator": "Source-map locator claimed time entry around lines 49–58",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct open of the exact supplied URL returned an internal error; corresponding content located by official-site search at a different URL",
+            "governing_condition_or_default_or_exception": "Do not treat the supplied URL and corrected URL as identical. Direct content at this URL was unavailable in this review.",
+            "applicability": "Preserved as the original source identity; citation should be repaired rather than silently rebound."
+          },
+          {
+            "source_id": "ELAN-UI-02",
+            "title": "ELAN manual: Changing the boundaries of an existing selection and annotation (recovered official URL)",
+            "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_boundaries_of_an_existing_selection.html",
+            "version_or_commit": "Official online manual; page version not stated",
+            "locator": "Typed boundary section; time format and shortcut; tier constraint caveats",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Official-domain search result and direct open of recovered manual URL; reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Allows precise begin/end entry in hh:mm:ss:ms; tier constraints govern which annotations can be independently moved; some dependent annotations update or are discarded with parent changes.",
+            "applicability": "Confirms the ELAN typed-time comparison while preserving the broken supplied locator as a separate ID."
+          },
+          {
+            "source_id": "EAF-SPEC-01",
+            "title": "ELAN Annotation Format 3.0 and ELAN",
+            "url": "https://www.mpi.nl/tools/elan/EAF_Annotation_Format_3.0_and_ELAN.pdf",
+            "version_or_commit": "EAF Annotation Format 3.0; official 18-page PDF",
+            "locator": "Figure 2 tier/time-slot rules; official search extract on top-level, Time Subdivision, Included In and symbolic tiers",
+            "accessed_utc": "2026-10-12T01:02:47Z",
+            "observed_operation": "Direct PDF open returned an internal error; official-domain search extract retrieved; URL reopened in bounded batch",
+            "governing_condition_or_default_or_exception": "Top-level same-tier alignable annotations cannot overlap, while tiers with other stereotypes have distinct constraints. Full PDF page text was not independently exposed by the browser.",
+            "applicability": "Supports the bounded ELAN/EAF alternative comparison with an explicit retrieval limitation."
+          }
+        ]
+      }
+    }
+  ],
+  "reviewer_rechecks": [
+    {
+      "source_id": "MEDIA-01",
+      "title": "Media Fragments URI 1.0 (basic)",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "version_or_commit": "W3C Recommendation, 25 September 2012",
+      "locator": "§4.2.1 lines 221–235; direct open also inspected document status and scope",
+      "accessed_utc": "2026-10-12T01:25:42Z",
+      "observed_operation": "Reopened the W3C Recommendation directly; inspected temporal dimension syntax and interval semantics",
+      "governing_condition_or_default_or_exception": "Temporal fragments default to NPT seconds; bounds are half-open, begin included/end excluded. Fractional seconds are allowed; colon time is convenience and does not signal frame accuracy.",
+      "applicability": "Confirms proposed interval convention and the limit of millisecond display. It does not define local persistence, identity, or player seek accuracy."
+    },
+    {
+      "source_id": "ANNOT-01",
+      "title": "Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "version_or_commit": "W3C Recommendation, 2017",
+      "locator": "§1 lines 87–100 (model and no transport); §4.2.1 lines 805–819 (FragmentSelector)",
+      "accessed_utc": "2026-10-12T01:25:42Z",
+      "observed_operation": "Reopened official W3C Recommendation; read model, serialization, transport statement, and FragmentSelector semantics",
+      "governing_condition_or_default_or_exception": "The model expresses body/target annotations and selector data; it does not prescribe transport. FragmentSelector should identify the fragment syntax with conformsTo.",
+      "applicability": "Supports optional local serialization/interchange only; does not provide the app's player, store, identity rule, UI, or timing inference."
+    },
+    {
+      "source_id": "HTML-01",
+      "title": "HTML Standard: media elements",
+      "url": "https://html.spec.whatwg.org/multipage/media.html",
+      "version_or_commit": "WHATWG Living Standard as accessed 2026-10-12",
+      "locator": "§4.8.11.6 lines 1798–1838 (duration/currentTime/timeline origin); §4.8.11.9 lines 2401–2470 (seekable, fastSeek, seeking algorithm)",
+      "accessed_utc": "2026-10-12T01:25:42Z",
+      "observed_operation": "Reopened the WHATWG Living Standard directly at offsets and read duration, currentTime, media-timeline, seekable, fastSeek, and seeking algorithm text",
+      "governing_condition_or_default_or_exception": "Times and finite/unavailable duration are defined in seconds. Seeking is asynchronous; targets are bounded and targets outside seekable ranges may move to a nearest range. fastSeek is approximate-for-speed; currentTime is identified for precise seeking.",
+      "applicability": "Justifies adapter readback and measured tolerances for an HTML-media implementation. The brief's desktop engine is unspecified, so this does not establish universal player behavior."
+    },
+    {
+      "source_id": "WAI-01",
+      "title": "WAI-ARIA Authoring Practices Guide: Slider Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+      "version_or_commit": "Live APG page as accessed 2026-10-12; no release tag",
+      "locator": "Warning lines 23–26; media seek example line 32; keyboard interaction lines 33–41; accessible values lines 46–51",
+      "accessed_utc": "2026-10-12T01:25:42Z",
+      "observed_operation": "Reopened W3C APG slider page and read warning, media example, keyboard and value-text sections",
+      "governing_condition_or_default_or_exception": "Arrow keys change one step, Home/End choose range endpoints and Page Up/Down may make larger steps. APG warns some touch assistive-technology support varies and calls for testing.",
+      "applicability": "Supports an optional seek slider and proposed AT validation, not a complete comment editor or a claim of conformance."
+    },
+    {
+      "source_id": "ELAN-UI-02",
+      "title": "ELAN manual: Changing the boundaries of an existing selection and annotation (recovered official URL)",
+      "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_boundaries_of_an_existing_selection.html",
+      "version_or_commit": "Official online manual; page version not stated",
+      "locator": "Typed boundaries lines 49–53; tier conditions lines 44–47",
+      "accessed_utc": "2026-10-12T01:25:42Z",
+      "observed_operation": "Directly opened the recovered official ELAN manual URL and read typed-time and tier caveat sections; preserved the unavailable supplied URL separately as ELAN-UI-01",
+      "governing_condition_or_default_or_exception": "Precise begin/end entry is supported as hh:mm:ss:ms. Directly editable annotations depend on tier type; parent edits can update referring tiers or discard annotations outside parent bounds.",
+      "applicability": "Confirms typed-time and tier-dependent editing comparison. It does not require mouse use or prove an accessible workflow in this product."
+    }
+  ],
+  "executed_checks": [
+    "Activated the exact frozen native Goal before case/source reading; immediately passed the complete native response to the exact-goal-binding guard, which succeeded.",
+    "Read all predecessor artifacts and source indexes/maps named by input-map.json.",
+    "Directly reopened and checked the five primary-document pages recorded under reviewer_rechecks.",
+    "No app source, build, downloaded-code execution, media playback, assistive-technology session, network observation, or application test was run. Proposed checks are not reported as passed."
+  ],
+  "limitations": [
+    "No application repository source, caller, or product-test paths were supplied in input-map.json; no in-product compatibility conclusion is made.",
+    "The predecessor source maps report that the EAF 3.0 PDF could not be read directly; its tier comparison is bounded to the recorded official search extract.",
+    "Issue reports are historical reports, not generalized defect claims."
+  ]
+}

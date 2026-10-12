@@ -1,0 +1,563 @@
+{
+  "schema_version": 2,
+  "run_id": "B10-P02-treatment",
+  "stage": "reviser",
+  "source_id_policy": "Existing S-IDs retain their prior stage records, exact URLs, versions, locators, and conditions. New source S21 is the H5P repository Releases page. Reviser rechecks are separately attributed. The H5P guide timeout is not evidence.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Material for MkDocs — Built-in offline plugin",
+      "records": [
+        {
+          "title": "Material for MkDocs — Built-in offline plugin",
+          "url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+          "version_or_revision": "Documentation accessed 2026-10-12; page marks offline plugin built in since 9.0.0. Current docs are not commit-pinned.",
+          "locator": "How it works; Configuration (9.0.0); Limitations, lines 188-255.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official documentation page and read local-file behavior, setup, and limitation sections.",
+          "governing_condition_default_exception": "Offline plugin rewrites search for file protocol use and disables directory URLs. Full offline asset handling is split with privacy plugin. Limitations explicitly require disabling instant loading, analytics, versioning, and comment systems.",
+          "applicability": "Directly relevant to downloadable offline handbook and the conflict between built-in versioning and offline mode.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Material for MkDocs — Built-in offline plugin",
+          "url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+          "version_or_revision": "Current official documentation accessed 2026-10-12; not commit-pinned; plugin marked built in since 9.0.0.",
+          "locator": "How it works and plugin/privacy behavior, lines 183-228; limitations, lines 245-255.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened official documentation; checked local file protocol behavior, search index handling, external asset packaging, and stated limitations.",
+          "governing_condition_default_exception": "Offline output can be opened from the local file system and search uses a JavaScript index; when offline mode is enabled, the docs require disabling instant loading, analytics, versioning, and comment systems because file-protocol Fetch calls fail.",
+          "applicability": "Confirms a real offline/versioning conflict for the candidate; does not prove a separate archive package or custom solution works.",
+          "recorded_by_stage": "critic"
+        },
+        {
+          "title": "Material for MkDocs — Built-in offline plugin",
+          "url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+          "version_or_revision": "Current official documentation page observed 2026-10-12; not commit-pinned.",
+          "locator": "Local directory and JavaScript search lines 183-195; privacy asset packaging lines 199-204; required disabled settings lines 245-255.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Reopened official page and checked offline packaging, search, assets, and versioning conditions.",
+          "governing_condition_default_exception": "Docs describe local-file viewing and offline search via a JavaScript index; external asset bundling uses the privacy plugin. With offline enabled, docs instruct disabling versioning and other Fetch-dependent features.",
+          "applicability": "Establishes platform-level offline behavior and versioning trade-off only; it does not certify this handbook's content fidelity.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Material for MkDocs — Setting up site search",
+      "records": [
+        {
+          "title": "Material for MkDocs — Setting up site search",
+          "url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/",
+          "version_or_revision": "Documentation accessed 2026-10-12; page documents search from 0.1.0 and search suggestions/highlighting from 7.2.0; current docs not commit-pinned.",
+          "locator": "Built-in search plugin and search exclusion; lines 179-193 and search configuration sections.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official documentation page; checked client-side index, default behavior, and per-page exclusion.",
+          "governing_condition_default_exception": "Search uses a browser-side index without a third-party search service; it is enabled by default but must be re-added when other plugins are configured. Pages may be excluded from the index.",
+          "applicability": "Supports offline/local-search candidate and a possible active/archive index policy; it does not by itself solve visible version labels.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Material for MkDocs — Setting up site search",
+          "url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/",
+          "version_or_revision": "Current official documentation accessed 2026-10-12; not commit-pinned.",
+          "locator": "Client-side search and plugin configuration, lines 189-202; page exclusion, lines 269-282.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened official search documentation; checked client-side/offline statement, plugin default condition, and per-page exclusion.",
+          "governing_condition_default_exception": "Search is client-side and can work offline; it is enabled by default but must be re-added when other plugins are configured. Pages can be excluded from its index.",
+          "applicability": "Supports local search and an archive-index policy option, but not visible version labels or tested ranking.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Docusaurus — Versioning",
+      "records": [
+        {
+          "title": "Docusaurus — Versioning",
+          "url": "https://docusaurus.io/docs/versioning",
+          "version_or_revision": "Documentation identifies Docusaurus 3.10.2 at access; lines include current/latest distinctions and version management.",
+          "locator": "Version terminology and patterns, lines 272-346; options and warning near lines 348 onward; deleting versions at 281-303.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened versioned documentation, inspected version routes, maintainability warning, badges/banner options, and deletion steps.",
+          "governing_condition_default_exception": "Versioned docs preserve a snapshot and distinguish current from latest; defaults may label current as Next. The documentation warns that versioning increases maintenance/build complexity and permits deleting versions.",
+          "applicability": "Alternative when explicitly visible version/archive navigation matters more than a simple offline directory build.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Docusaurus — Versioning",
+          "url": "https://docusaurus.io/docs/versioning",
+          "version_or_revision": "Docusaurus documentation version 3.10.2; page updated 2026-07-10; accessed 2026-10-12.",
+          "locator": "Version snapshots and trade-offs, lines 74-84; current/latest distinction, lines 134-156; delete-version procedure, lines 281-304; archive guidance, lines 449-460.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened current versioning docs; checked preserved snapshots, complexity warning, labels/routes, removal steps, and archival options.",
+          "governing_condition_default_exception": "Versioning creates snapshots, but increases build time and code complexity and versions can be removed. Current and latest are distinct concepts; an immutable archived build is another documented pattern.",
+          "applicability": "Supports history affordances and owner retention policy; the versioning page does not prove the requested local offline search package.",
+          "recorded_by_stage": "critic"
+        },
+        {
+          "title": "Docusaurus — Versioning",
+          "url": "https://docusaurus.io/docs/versioning",
+          "version_or_revision": "Official documentation page labeled Docusaurus 3.10.2 at access; living page.",
+          "locator": "Version snapshot explanation and maintenance/build warning lines 74-84.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Reopened official versioning page and checked version label, preserved snapshots, and cost warning.",
+          "governing_condition_default_exception": "Docs describe preserved version snapshots and warn of increased build time and codebase complexity. No claim about this handbook's offline search or output fidelity.",
+          "applicability": "Supports a history alternative and its maintenance cost; archive retention and offline behavior require policy and testing.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Pandoc — User's Guide",
+      "records": [
+        {
+          "title": "Pandoc — User's Guide",
+          "url": "https://pandoc.org/MANUAL.html",
+          "version_or_revision": "Manual page dated 2026-09-26; relevant release listing is Pandoc 3.12.1 (2026-10-07), S05. The manual page itself is not linked to an immutable commit.",
+          "locator": "DOCX reader styles, lines 4750-4764; track-changes option, lines 376-377; tagged PDF via word processor, lines 4855-4857; test/docx/custom-style-reference.docx example.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official user guide; inspected DOCX style/track-changes behavior and the guide's named fixture example.",
+          "governing_condition_default_exception": "DOCX reader maps styles it can convert; styles extension emits custom style markers. Track-changes defaults to accept insertions/deletions and ignore comments; all preserves marked spans. Pandoc does not directly perform the Word-processor step for tagged PDF.",
+          "applicability": "Import review, predictable style subset, tracked-change/comment preflight, and separate print/PDF workflow.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Pandoc — User's Guide",
+          "url": "https://pandoc.org/MANUAL.html",
+          "version_or_revision": "Living official manual; page dated 2026-09-26 in the investigator record; accessed 2026-10-12.",
+          "locator": "DOCX track changes, lines 376-381; reader style handling, lines 4752-4780; word processor PDF workflow, lines 4855-4857.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the official manual and inspected DOCX style conversion, track-change modes, media extraction, and tagged-PDF workflow.",
+          "governing_condition_default_exception": "DOCX styles not mappable to Pandoc elements are only retained as custom-style markers when the styles extension is enabled. Track-changes accept is default and ignores comments; all wraps insertions, deletions and comments in marked spans. Pandoc does not directly drive Word-processor PDF conversion.",
+          "applicability": "Supports import preflight and separate PDF review; does not establish output fidelity for this handbook's proposed renderers.",
+          "recorded_by_stage": "critic"
+        },
+        {
+          "title": "Pandoc — User's Guide",
+          "url": "https://pandoc.org/MANUAL.html",
+          "version_or_revision": "Official living guide; page accessed 2026-10-12.",
+          "locator": "General conversion caveat lines 15-20; PDF paths lines 54-63 and 4826-4857; DOCX track changes lines 376-382; DOCX styles lines 4750-4780.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Reopened official manual to adjudicate output-fidelity criticism and rechecked DOCX/PDF conditions.",
+          "governing_condition_default_exception": "Pandoc says its intermediate representation is less expressive than some source formats, conversions may be lossy, and complex tables may not fit. WeasyPrint PDF/UA support is experimental; Word-processor PDF is a separate route. These statements describe Pandoc, not a selected handbook renderer.",
+          "applicability": "Supports explicit fidelity checks and separate HTML/offline and print/PDF testing; no converter or PDF was executed.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Pandoc — Releases",
+      "records": [
+        {
+          "title": "Pandoc — Releases",
+          "url": "https://pandoc.org/releases.html",
+          "version_or_revision": "Pandoc 3.12.1 dated 2026-10-07; release list includes 3.9.0.1 and 3.9.",
+          "locator": "Revision history entries for 3.12.1 and 3.9.0.1 DOCX reader fixes (media in textboxes, packaged-rooted paths, content preservation); 3.9 WASM limitations.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official release history and reviewed DOCX reader behavior fixes plus WASM conversion limitations.",
+          "governing_condition_default_exception": "Reader/export behavior evolves by release; WASM build cannot use HTTP/system commands and cannot create PDF because that requires external commands.",
+          "applicability": "Pin the chosen version and regression-test import/export fixtures instead of assuming converter output is invariant.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Pandoc — Releases",
+          "url": "https://pandoc.org/releases.html",
+          "version_or_revision": "Pandoc 3.12.1 released 2026-10-07; official release history accessed 2026-10-12.",
+          "locator": "3.12.1 heading, lines 18-21; DOCX reader changes in 3.9.0.1, lines 779-794.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened official release history; checked current version and the dated DOCX reader change notes.",
+          "governing_condition_default_exception": "DOCX media, paths, and content handling have changed across releases; the manual's behavior should be tested against a pinned version and controlled fixture.",
+          "applicability": "Supports version pinning and regression fixtures; no converter run was performed.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "W3C — Web Content Accessibility Guidelines (WCAG) 2.2",
+      "records": [
+        {
+          "title": "W3C — Web Content Accessibility Guidelines (WCAG) 2.2",
+          "url": "https://www.w3.org/TR/WCAG22/",
+          "version_or_revision": "W3C Recommendation, 12 December 2024; version URL https://www.w3.org/TR/2024/REC-WCAG22-20241212/.",
+          "locator": "SC 1.3.2 Meaningful Sequence, lines 405-412; 2.1.1 Keyboard, 4.1.2 Name, Role, Value, and 4.1.3 Status Messages elsewhere in the same Recommendation.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened the normative W3C Recommendation and located criteria relevant to reading order, keyboard use, named controls, and completion messages.",
+          "governing_condition_default_exception": "Criteria are testable and technology-neutral; WCAG 2.2 adds to, but does not supersede, WCAG 2.0/2.1. The Recommendation says it does not address every user need.",
+          "applicability": "Basis for a focused acceptance matrix; not proof that a generated theme or each content item conforms.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "W3C — Web Content Accessibility Guidelines (WCAG) 2.2",
+          "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+          "version_or_revision": "W3C Recommendation, 2024-12-12; fixed version URL.",
+          "locator": "Meaningful Sequence SC 1.3.2, lines 405-412; Keyboard SC 2.1.1, lines 700-708; scope qualification, line 35.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the normative Recommendation and checked sequence, keyboard and scope language.",
+          "governing_condition_default_exception": "Criteria are technology-neutral and testable; the Recommendation itself notes it does not address every user need.",
+          "applicability": "Supports focused acceptance criteria but is not evidence that an interface or content set conforms.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "W3C WAI — Images Tutorial",
+      "records": [
+        {
+          "title": "W3C WAI — Images Tutorial",
+          "url": "https://www.w3.org/WAI/tutorials/images/",
+          "version_or_revision": "W3C WAI tutorial; no software version; accessed 2026-10-12.",
+          "locator": "Informative, decorative, functional, text-in-image, and complex image guidance, lines 81-92.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened the W3C tutorial and inspected complex-image guidance.",
+          "governing_condition_default_exception": "Informative images need a context-appropriate text alternative; decorative images use null alt; complex diagrams need a complete text equivalent; text images are discouraged.",
+          "applicability": "Instructional diagrams and meaningful reading order are in scope; alt text must be authored and reviewed.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "W3C WAI — Images Tutorial",
+          "url": "https://www.w3.org/WAI/tutorials/images/",
+          "version_or_revision": "Official WAI tutorial accessed 2026-10-12; no software version stated.",
+          "locator": "Images of text and complex images, lines 86-88.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the image alternatives tutorial and checked guidance for text within images and complex diagrams.",
+          "governing_condition_default_exception": "Avoid images of text except where appropriate alternatives provide the same words; complex diagrams conveying detailed information need a complete text equivalent.",
+          "applicability": "Supports authored, reviewed text equivalents for repair diagrams; not a check of any actual diagram.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "MDN — Storage quotas and eviction criteria",
+      "records": [
+        {
+          "title": "MDN — Storage quotas and eviction criteria",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+          "version_or_revision": "Living MDN documentation accessed 2026-10-12; browser quota details can change.",
+          "locator": "Origin data/persistence sections, lines 194-217; quota/eviction sections, lines 226-312.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened reference and checked storage scope, best-effort default, persistence request, quotas, and eviction triggers.",
+          "governing_condition_default_exception": "Data is per-origin in ordinary cases. Browser storage is best-effort by default; users can clear it and browser/storage pressure can evict it. Persistent storage is a separate opt-in request with browser-specific approval behavior.",
+          "applicability": "A browser-local progress store avoids a server sync design but cannot promise permanent retention; provide warning and user-controlled backup/restore.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "MDN — Storage quotas and eviction criteria",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+          "version_or_revision": "Living MDN documentation accessed 2026-10-12; browser behavior may change.",
+          "locator": "Best-effort/persistent distinction and eviction conditions, lines 209-217; persistence request, lines 212-215.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the reference and checked default best-effort behavior, user deletion, eviction, and persistence API conditions.",
+          "governing_condition_default_exception": "Best-effort is default; data can be evicted under quota/storage pressure or deleted by the user. Persistent storage is a separate request with browser-dependent approval.",
+          "applicability": "Supports warning and optional user-controlled backup; it does not establish this application's storage durability.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "H5P — Importing and exporting",
+      "records": [
+        {
+          "title": "H5P — Importing and exporting",
+          "url": "https://h5p.org/documentation/for-authors/import-and-export",
+          "version_or_revision": "Official author documentation accessed 2026-10-12; no package version stated.",
+          "locator": "Download/upload H5P and reuse rules, lines 22-66.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened H5P author guide and inspected the package export/import and copy/paste conditions.",
+          "governing_condition_default_exception": "Download is exposed only when enabled in Display options. An H5P package cannot be opened directly on the user's computer; it must be uploaded to a site supporting H5P. Cross-site reuse is download/upload, while copy/paste is site-local.",
+          "applicability": "Useful reusable activity content, but the exported artifact alone is not an offline learner application.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "H5P — Importing and exporting",
+          "url": "https://h5p.org/documentation/for-authors/import-and-export?page=2",
+          "version_or_revision": "Official H5P author guide, accessed 2026-10-12; no package version stated.",
+          "locator": "Download and upload conditions, lines 22-47; cross-site reuse, lines 52-58.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the official author guide's paginated copy after the canonical page timed out; inspected the same article's download/upload and reuse sections.",
+          "governing_condition_default_exception": "An H5P file cannot be opened locally and must be uploaded to a supporting H5P site. Download is available only when enabled in Display options. Cross-site reuse uses download/upload; copy/paste is limited to one H5P site.",
+          "applicability": "Supports the host dependency and adds a configuration precondition to the draft's H5P comparison.",
+          "recorded_by_stage": "critic"
+        },
+        {
+          "title": "H5P — Importing and exporting",
+          "url": "https://h5p.org/documentation/for-authors/import-and-export",
+          "version_or_revision": "Official H5P author guide; direct reviser re-open attempt timed out on 2026-10-12. Critic's mapped primary-source observation remains recorded at the paginated URL.",
+          "locator": "Reviser attempt: article fetch timed out; no new page content observed.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Attempted to reopen the canonical H5P guide; request timed out. Critic's source record reports the guide's download/Display options and upload-to-supporting-site conditions.",
+          "governing_condition_default_exception": "This attempt establishes no new fact. The download condition is carried from the critic's separately recorded official-source observation; download must be enabled in Display options and the H5P file uploaded to a supporting site.",
+          "applicability": "Condition on the H5P alternative; no package was downloaded or run.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "title": "H5P — Content Type Accessibility",
+      "records": [
+        {
+          "title": "H5P — Content Type Accessibility",
+          "url": "https://h5p.org/documentation/installation/content-type-accessibility",
+          "version_or_revision": "Official H5P documentation accessed 2026-10-12; no content-type release/version included on page.",
+          "locator": "Page states H5P.com maintains an overview of accessibility of individual content types.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened H5P's accessibility documentation entry.",
+          "governing_condition_default_exception": "The page points to an external H5P.com overview rather than asserting that all content types conform.",
+          "applicability": "Any H5P activity choice needs per-type and per-version checks rather than platform-level accessibility assumptions.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "H5P — Content Type Accessibility",
+          "url": "https://h5p.org/documentation/installation/content-type-accessibility",
+          "version_or_revision": "Official H5P documentation accessed 2026-10-12; no content-type version stated.",
+          "locator": "Accessibility overview statement, lines 13-16.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the H5P accessibility documentation entry.",
+          "governing_condition_default_exception": "The page points to an overview of individual content types; it does not claim all H5P types conform.",
+          "applicability": "Supports per-type and per-version testing rather than platform-wide accessibility assumptions.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "H5P Multi Choice repository — Issue #186",
+      "records": [
+        {
+          "title": "H5P Multi Choice repository — Issue #186",
+          "url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+          "version_or_revision": "Issue opened 2026-03-25; state Open when accessed 2026-10-12. Issue status/activity are live. No fix/release attached.",
+          "locator": "Issue description, proposed affected files and assistive-technology checks, lines 130-182.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened upstream issue; checked status, repro/context, proposed affected renderer, and requested NVDA/Firefox and VoiceOver/Safari checks.",
+          "governing_condition_default_exception": "Issue author reports multiple-choice radio options without programmatic labels; issue remains open with no linked PR. It is evidence of a concrete report, not independent reproduction or maintainer confirmation.",
+          "applicability": "If adopting interactive quiz widgets, test labels and answer feedback with actual AT; do not rely on platform claims.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "H5P Multi Choice repository — Issue #186",
+          "url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+          "version_or_revision": "Issue opened 2026-03-25; checked 2026-10-12. Current content-type version is not stated in the issue; no formal GitHub release is listed on the repository Releases page.",
+          "locator": "Report and proposed tests, lines 151-182; non-reproduction/version question, comments dated 2026-09-22, lines 195-214; Waiting for Contributor status and no PR, lines 262-278.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened upstream issue and inspected its current activity/status; separately checked the repository Releases page.",
+          "governing_condition_default_exception": "Reporter alleges missing radio labels; a contributor says they cannot reproduce with NVDA on an exercise and asks for browser/reader and content-type version, while noting the report may predate an overhaul. The issue remains open and awaits contributor details; no independent reproduction or release-specific resolution is established.",
+          "applicability": "Retain a screen-reader test if this type is considered; do not treat the issue as a confirmed current defect or as resolved.",
+          "recorded_by_stage": "critic"
+        },
+        {
+          "title": "H5P Multi Choice repository — Issue #186",
+          "url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+          "version_or_revision": "Live issue opened 2026-03-25; page observed 2026-10-12; status Open / Waiting for Contributor.",
+          "locator": "Issue report lines 151-182; contributor 2026-09-22 non-reproduction/version questions lines 195-214; 2026-10-09 request lines 227-237; status/relationships lines 262-278.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Opened upstream issue directly; read current comments, project status, and relationship fields.",
+          "governing_condition_default_exception": "Contributor could not reproduce with NVDA on one simple exercise, asked for browser/screen-reader and installed content-type version, and said it may predate an overhaul. Issue remains open; no branch or pull request is linked. Affected installed version remains unknown.",
+          "applicability": "Primary context for an H5P accessibility report; use only to motivate testing a named host/content type/version.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "WordPress — Block Editor",
+      "records": [
+        {
+          "title": "WordPress — Block Editor",
+          "url": "https://wordpress.org/documentation/article/wordpress-block-editor/",
+          "version_or_revision": "Official WordPress documentation last updated 2026-09-14; editor version not pinned by page.",
+          "locator": "Block elements, draft save, preview and publish workflow, lines 64-71 and 117-132.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened current editor documentation and checked supported content blocks and draft/preview/publish controls.",
+          "governing_condition_default_exception": "Visual block editing supports common text/media structures, a saved draft and frontend preview, with publishing as a distinct action. Theme/template can affect rendered output.",
+          "applicability": "Lower-barrier authoring option, but author preview/review and generated accessible output still require a human check.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S13",
+      "title": "WordPress — Tools Export screen",
+      "records": [
+        {
+          "title": "WordPress — Tools Export screen",
+          "url": "https://wordpress.org/documentation/article/tools-export-screen/",
+          "version_or_revision": "Official WordPress documentation accessed 2026-10-12; software release not pinned.",
+          "locator": "Export format and intended import use, lines 63-69.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened export documentation and checked format and destination.",
+          "governing_condition_default_exception": "Export creates WordPress eXtended RSS XML containing posts/pages and other site data; documented destination is import into another WordPress site.",
+          "applicability": "Useful migration/backup alternative; do not equate this with standalone print/EPUB/offline application output.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "WordPress — Tools Export screen",
+          "url": "https://wordpress.org/documentation/article/tools-export-screen/",
+          "version_or_revision": "Official WordPress documentation accessed 2026-10-12; software release not pinned.",
+          "locator": "Export format and intended import destination, lines 65-69.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the official export documentation and checked the WXR format and import destination.",
+          "governing_condition_default_exception": "Export produces WXR XML containing site content and related fields; the documented workflow imports it into another WordPress site.",
+          "applicability": "Supports the draft's distinction between WXR migration and a standalone offline handbook.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "title": "GitHub Docs — Quickstart for reviewing pull requests",
+      "records": [
+        {
+          "title": "GitHub Docs — Quickstart for reviewing pull requests",
+          "url": "https://docs.github.com/en/pull-requests/get-started/reviewing-pull-requests-quickstart",
+          "version_or_revision": "Living GitHub documentation accessed 2026-10-12.",
+          "locator": "Comment, suggest, approve, or request changes, lines 32-64.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened current review workflow guidance.",
+          "governing_condition_default_exception": "Review can be comments/suggestions or a submitted approve/request-changes decision; enforcement requires repository rules and is not automatic from review UI alone.",
+          "applicability": "A modest second-person review can work for Git-backed sources if volunteer workflow skills and repository access are acceptable.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "title": "SQLite — SQLite is Transactional",
+      "records": [
+        {
+          "title": "SQLite — SQLite is Transactional",
+          "url": "https://www.sqlite.org/transactional.html",
+          "version_or_revision": "Official SQLite documentation accessed 2026-10-12; page does not specify a library version.",
+          "locator": "ACID/serializable transaction explanation and regression-test harness claim, lines 20-28.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official SQLite documentation and checked atomicity guarantee and stated test coverage.",
+          "governing_condition_default_exception": "Transactions are all-or-nothing under documented crash/power-failure cases; this is an integrity property, not a backup, encryption, or sync promise.",
+          "applicability": "Supports native local-database alternative for progress records, subject to app-level backup/update tests.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S16",
+      "title": "Material for MkDocs — search disable issue #8128",
+      "records": [
+        {
+          "title": "Material for MkDocs — search disable issue #8128",
+          "url": "https://github.com/squidfunk/mkdocs-material/issues/8128",
+          "version_or_revision": "Issue opened 2025-03-31; closed as completed 2025-04-01; fix reported in 9.6.11.",
+          "locator": "Issue reproduction and maintainer fix/release notes, lines 157-163 and 203-269.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened issue history and followed fix and release statement.",
+          "governing_condition_default_exception": "A search plugin configuration set disabled, yet templates still rendered search UI; maintainer said templates had not checked enabled state. Fixed and released as 9.6.11.",
+          "applicability": "Shows a config/template mismatch can affect search behavior; pin release and regression-test search disabled/active/archive cases.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S17",
+      "title": "Material for MkDocs — fix commit 64635ba",
+      "records": [
+        {
+          "title": "Material for MkDocs — fix commit 64635ba",
+          "url": "https://github.com/squidfunk/mkdocs-material/commit/64635ba",
+          "version_or_revision": "Commit 64635ba; released in Material for MkDocs 9.6.11 on 2025-04-01 per S16.",
+          "locator": "Diff in material/templates/partials/header.html and src/templates/partials/header.html.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Read upstream repository patch; inspected both template changes.",
+          "governing_condition_default_exception": "Patch reads material/search plugin config and renders the search button/interface only when search.enabled is true. The commit page lists two template files and no tests in the patch.",
+          "applicability": "Concrete implementation/release evidence; recommend a regression test for render/visibility and index behavior rather than assuming configuration is fully honored.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S18",
+      "title": "Pandoc release history — reader fixes and WASM",
+      "records": [
+        {
+          "title": "Pandoc release history — reader fixes and WASM",
+          "url": "https://pandoc.org/releases.html",
+          "version_or_revision": "Pandoc 3.12.1 (2026-10-07); relevant past entries 3.9.0.1 (2026-03-17) and 3.9 (2026-02-03).",
+          "locator": "3.9.0.1 DOCX reader fixes; WASM limitations in 3.9; latest release heading.",
+          "access_utc": "2026-10-12T00:41:49Z",
+          "observed_operation": "Opened official release list; inspected recent version entries and DOCX/WASM change notes.",
+          "governing_condition_default_exception": "DOCX media/path/textbox handling changed in specific releases. Browser WASM cannot run external commands or create PDF, and remote HTTP/resource behavior is constrained.",
+          "applicability": "Converter version pinning and import/output golden cases are needed if a browser-only converter is considered.",
+          "recorded_by_stage": "investigator"
+        }
+      ]
+    },
+    {
+      "id": "S19",
+      "title": "Material for MkDocs maintainers — Update on foundational work",
+      "records": [
+        {
+          "title": "Material for MkDocs maintainers — Update on foundational work",
+          "url": "https://github.com/squidfunk/mkdocs-material/discussions/8461",
+          "version_or_revision": "Maintainer discussion dated 2025-09-25; content accessed 2026-10-12. Discussion is fixed by number but describes status at its post date.",
+          "locator": "Maintainer statement on MkDocs upstream challenges, feature freeze, and ongoing bug fixes, lines 144-150.",
+          "access_utc": "2026-10-12T00:48:53Z",
+          "observed_operation": "Opened maintainer discussion and read its project status statement.",
+          "governing_condition_default_exception": "Maintainer reported technical/organizational challenges with MkDocs, postponed new feature releases and feature freeze while continuing bug fixes; the statement does not establish the project's status after its post date.",
+          "applicability": "A product's maintenance trajectory is a selection risk; verify current roadmap before choosing Material for a long-lived handbook.",
+          "recorded_by_stage": "investigator"
+        },
+        {
+          "title": "Material for MkDocs maintainers — Update on foundational work",
+          "url": "https://github.com/squidfunk/mkdocs-material/discussions/8461",
+          "version_or_revision": "Maintainer discussion dated 2025-09-25; fixed discussion page accessed 2026-10-12.",
+          "locator": "Maintainer statement on upstream challenges, postponing features and feature freeze, lines 144-150.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the dated maintainer discussion and confirmed that its statement describes status at its post date.",
+          "governing_condition_default_exception": "The maintainer reported postponing new features and a feature freeze while continuing bug fixes; the post does not establish later roadmap status.",
+          "applicability": "A historical maintenance signal only; current selection requires current roadmap evidence.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S20",
+      "title": "Material for MkDocs — release 9.7.7",
+      "records": [
+        {
+          "title": "Material for MkDocs — release 9.7.7",
+          "url": "https://github.com/squidfunk/mkdocs-material/releases/tag/9.7.7",
+          "version_or_revision": "Official GitHub release tag mkdocs-material-9.7.7; published 2026-07-17; page accessed 2026-10-12.",
+          "locator": "Release title, tag and publication date, lines 129-160.",
+          "access_utc": "2026-10-12T01:03:02Z",
+          "observed_operation": "Opened the repository's latest release page and confirmed the released tag/date.",
+          "governing_condition_default_exception": "A release after the 2025 discussion shows later maintenance/release activity, but by itself does not establish that new-feature development resumed or define the current roadmap.",
+          "applicability": "Adds current temporal context to S19 without silently rebinding or erasing that historical source.",
+          "recorded_by_stage": "critic"
+        }
+      ]
+    },
+    {
+      "id": "S21",
+      "title": "H5P Multi Choice repository — Releases",
+      "records": [
+        {
+          "title": "H5P Multi Choice repository — Releases",
+          "url": "https://github.com/h5p/h5p-multi-choice/releases",
+          "version_or_revision": "Live GitHub Releases page observed 2026-10-12; page reported no formal releases.",
+          "locator": "Releases page lines 135-145.",
+          "access_utc": "2026-10-12T01:25:21Z",
+          "observed_operation": "Opened the upstream repository Releases page.",
+          "governing_condition_default_exception": "The page lists no GitHub releases at access. It does not establish that there are no tags or identify the content type version installed by any host.",
+          "applicability": "Shows that the issue does not identify a formal release-specific resolution; do not infer installed version.",
+          "recorded_by_stage": "reviser"
+        }
+      ]
+    }
+  ]
+}

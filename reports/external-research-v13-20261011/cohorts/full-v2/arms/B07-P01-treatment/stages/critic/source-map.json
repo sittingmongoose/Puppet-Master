@@ -1,0 +1,280 @@
+{
+  "schema_version": "1.0",
+  "run_id": "B07-P01-treatment",
+  "stage": "critic",
+  "accessed_utc_capture": "2026-10-12T00:44:31Z",
+  "sources": [
+    {
+      "id": "SRC01",
+      "title": "Rust csv 1.4.0 Reader implementation",
+      "url": "https://docs.rs/csv/1.4.0/src/csv/reader.rs.html",
+      "version_commit": "csv crate 1.4.0; docs.rs release build; commit not identified on this page",
+      "locator": "reader.rs: default ReaderBuilder fields (around lines 47-55); delimiter/header/flexible methods (150-192, 316-319); record iterator (2079-2092); error policy docs (691-700)",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened versioned docs.rs source for ReaderBuilder defaults and record iteration; inspected source lines via the source view.",
+      "governing_conditions": "Default delimiter is comma, first record is a header, flexible record lengths are disabled, and iterator reads records incrementally. A custom delimiter is configured on the builder. Parser's general salvage-oriented parsing policy still requires application-level shape and type validation.",
+      "applicability": "Candidate low-memory parser for delimited text. Treat every field as raw text first; enable variable widths only to capture/report row-level shape errors, then compare width to the selected header.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Directly opened csv 1.4.0 source; confirmed comma/header/fixed-width defaults, configurable dialect, and record iteration. Application still owns row and field validation.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC02",
+      "title": "Rust csv 1.4.0 Position API",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Position.html",
+      "version_commit": "csv crate 1.4.0; docs.rs release build",
+      "locator": "Position description and byte(), line(), record() methods, lines 59-93",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened exact versioned Position API documentation.",
+      "governing_conditions": "Byte offsets and record indices start at zero; line numbers start at one; the reader associates a position with each record.",
+      "applicability": "Keep byte offset and logical record index as stable invalid-row references. Use displayed physical line as supplementary only because an upstream CRLF line-accounting report remains open (SRC04).",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened exact-version Position API; byte offset and record index start at zero, line number at one.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC03",
+      "title": "Rust csv 1.4.0 Reader and encoding/error behavior",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "version_commit": "csv crate 1.4.0; docs.rs release build",
+      "locator": "Reader record API, builder configuration, and error/UTF-8 discussion, lines 73-103 of the versioned page",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened versioned Reader documentation and checked the record-oriented API and errors.",
+      "governing_conditions": "Reader supports record-by-record raw fields. StringRecord parsing requires UTF-8; invalid UTF-8 errors. ByteRecord accepts raw bytes, while non-UTF-8 text requires explicit transcoding.",
+      "applicability": "Preserve source strings, avoid direct Serde coercion to quantity/code types, and make any alternate encoding an explicit supplier-profile or staff choice.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Checked csv 1.4.0 StringRecord/Reader docs: StringRecord enforces UTF-8; ByteRecord preserves arbitrary bytes; another encoding requires transcoding.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC04",
+      "title": "rust-csv issue #395: CRLF line position accounting",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/395",
+      "version_commit": "Upstream issue #395 opened 2025-04-02; Open at access; linked PR #433 is also Open and unmerged at 2026-10-12T00:44:31Z; no released fix was observed",
+      "locator": "Problem statement and minimal reproducer, lines 160-186; status Open at access",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened upstream issue and reviewed the reported reproduction and status.",
+      "governing_conditions": "The issue describes stale line positions for CRLF after record reads. A linked open PR proposes consuming complete CRLF terminators; it is not part of released csv 1.4.0 on evidence reviewed.",
+      "applicability": "Do not promise physical line numbers as the sole audit location. Store raw byte offset and logical record index and verify CRLF in proposed tests.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened issue #395: post-read CRLF line position can remain on the prior line; issue and linked PR #433 were Open.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC05",
+      "title": "rust-csv issue #377: duplicate header deserialization",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/377",
+      "version_commit": "Issue report against rust-csv repository; opened 2024-12-21; Open at access",
+      "locator": "Duplicate-field example and maintainer response, lines 156-184",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened upstream feature discussion about duplicate column headers.",
+      "governing_conditions": "Serde mapping of duplicate field names is ambiguous and no general vector-based deserializer solution was accepted in the response.",
+      "applicability": "Read supplier headers as a positional record, reject or require manual resolution for duplicate headers after the chosen normalization, and do not auto-map duplicate labels.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened issue #377: duplicate-header Serde discussion remains Open; maintainer says vector deserialization is uncertain and notes tail ambiguity.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC06",
+      "title": "rust_decimal 1.43.0 Decimal::from_str_exact",
+      "url": "https://docs.rs/rust_decimal/1.43.0/rust_decimal/struct.Decimal.html",
+      "version_commit": "rust_decimal crate 1.43.0; docs.rs release build",
+      "locator": "from_str_exact signature and underflow condition, lines 616-625",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened the current versioned Decimal API and its exact parsing method.",
+      "governing_conditions": "Exact parser converts a decimal string and returns an error when value cannot be represented at the given scale; it is not a locale detector.",
+      "applicability": "Candidate after an explicit supplier decimal/grouping convention is confirmed and validated. Keep original text; reject ambiguous forms before canonicalization.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened Decimal::from_str_exact docs at 1.43.0; it errors on underflow/unrepresentable scale and does not select locale separators.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC07",
+      "title": "encoding_rs 0.8.42 Encoding and strict decoding",
+      "url": "https://docs.rs/encoding_rs/0.8.42/encoding_rs/struct.Encoding.html",
+      "version_commit": "encoding_rs crate 0.8.42; docs.rs release build",
+      "locator": "Encoding::decode_without_bom_handling_and_without_replacement and UTF-8 decoder guidance",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Reviewed crate documentation on explicit encoding labels, streaming decoders, and no-replacement decoding.",
+      "governing_conditions": "The crate exposes explicit encodings and strict variants that signal malformed input instead of substituting replacement characters. Streaming inputs use decoder objects rather than whole-buffer helpers.",
+      "applicability": "Optional route for supplier encodings beyond UTF-8. Select a label explicitly and fail malformed sequences; do not silently replace bytes.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Checked encoding_rs 0.8.42 docs/search excerpts: no-replacement paths report malformed sequences; replacement paths substitute U+FFFD; Decoder supports streaming. Exact Encoding page did not render.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC08",
+      "title": "Polars 0.55.2 CSV read options",
+      "url": "https://docs.rs/polars-io/0.55.2/polars_io/csv/read/struct.CsvReadOptions.html",
+      "version_commit": "polars-io crate 0.55.2; docs.rs release build",
+      "locator": "with_schema, with_infer_schema_length, with_ignore_errors method docs, especially lines 254-271",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened versioned Polars CSV read configuration and checked schema inference and parser-error controls.",
+      "governing_conditions": "Schema inference defaults to 100 rows; a full scan is available but documented as slow; ignore_errors continues to the next batch after a ParserError.",
+      "applicability": "Viable dataframe alternative for bulk analytics, but type inference and error skipping can hide later-row code/quantity differences unless schema is forced to text and every skipped/error row is explicitly surfaced.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened polars-io 0.55.2 docs: inference defaults to 100 rows; with_ignore_errors continues after ParserError.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC09",
+      "title": "SQLite transaction semantics",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_commit": "Current SQLite online documentation; unversioned page, accessed 2026-10-12",
+      "locator": "Sections 2, 2.1, 2.2, and 3",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened SQLite's transaction, lock, busy, and transaction-error documentation.",
+      "governing_conditions": "Transactions are DEFERRED by default; IMMEDIATE reserves write intent earlier; SQLite supports only one simultaneous writer; some errors may roll back one statement or the whole transaction, so callers should explicitly restore/verify state.",
+      "applicability": "Conditional example only if the product database is SQLite. The proposal requires the actual database adapter's transaction, concurrency and rollback behavior to be verified before writes.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened SQLite transaction docs: default DEFERRED; read-to-write upgrade may return SQLITE_BUSY; some errors require explicit rollback/state verification.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC10",
+      "title": "SQLite atomic commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_commit": "Current SQLite online documentation; unversioned page, accessed 2026-10-12",
+      "locator": "Sections 1, 3, and 4",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Reviewed SQLite's stated atomic-commit and crash-recovery behavior.",
+      "governing_conditions": "One transaction appears all-or-none across a single database file; this page's detailed mechanism is for rollback-journal mode and WAL uses a different mechanism.",
+      "applicability": "Supports an atomic import-batch example only if inventory rows and idempotency ledger share one transactional database. Do not assume a filesystem write plus DB write is atomic.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened SQLite atomic-commit docs: conditional transaction atomicity; detailed mechanism is rollback mode and WAL uses another mechanism.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC11",
+      "title": "OWASP CSV Injection guidance",
+      "url": "https://community.owasp.org/attacks/CSV_Injection",
+      "version_commit": "Current OWASP Community page; unversioned, accessed 2026-10-12",
+      "locator": "Formula interpretation risk, lines 18-28; mitigation and data trade-off, lines 51-61",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Reviewed OWASP guidance on formula interpretation when untrusted CSV is opened by spreadsheet software.",
+      "governing_conditions": "Spreadsheet applications may interpret formula-leading cells; suggested prefix mitigations change stored cell content and can vary by application; there is no universal safe CSV sanitization strategy.",
+      "applicability": "The importer should parse and render values as inert text and must not pass supplier data through a formula engine. If a future export is added, it needs a separate explicit safe-export policy and tests.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened OWASP CSV Injection: formula-leading cells may be evaluated; mitigations vary and can change data; no universal sanitizer.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC12",
+      "title": "Calamine 0.36.0 release history",
+      "url": "https://github.com/tafia/calamine/releases/tag/v0.36.0",
+      "version_commit": "calamine 0.36.0 release; release page reports tag commit 2872ac1",
+      "locator": "v0.36.0 release notes: XLSX cell/formula streaming APIs, MSRV/dependency change, and fixes for formula expansion and custom number formats",
+      "access_utc": "2026-10-12T00:40:17Z",
+      "observed_operation": "Opened upstream release history to compare a true workbook-reader path and its version-specific changes.",
+      "governing_conditions": "This release adds a streaming API for XLSX cell/formula records; release changed minimum Rust version to 1.88 and fixed formula/name and number-format issues.",
+      "applicability": "Future alternative only if supplier inputs expand from delimited text to actual XLSX. Requires a separate formula, worksheet, memory, and workbook-semantics review; no actual spreadsheet files were opened.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened Calamine v0.36.0 notes: tag 2872ac1; XLSX cell/formula streaming added; MSRV raised from 1.83 to 1.88.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    },
+    {
+      "id": "SRC13",
+      "title": "rust-csv PR #433: proposed CRLF line-position fix",
+      "url": "https://github.com/BurntSushi/rust-csv/pull/433",
+      "version_commit": "Open pull request against master; commit 815ddab (2026-08-30) in the contributor branch; not merged/released at access",
+      "locator": "PR summary and commit/status lines 131-178; diff/test excerpts for CRLF and split-CRLF and high-level Position tests lines 257-359 and 415-489",
+      "access_utc": "2026-10-12T00:44:31Z",
+      "observed_operation": "Opened the pull request and diff after finding the PR linked from issue #395; checked status, commit identifier, changed code paths, and added test cases.",
+      "governing_conditions": "The proposed patch consumes CRLF as a complete terminator before returning a record and adds tests for CRLF and split-buffer CRLF. PR remained Open with no reviews displayed; tests listed by the contributor were not independently run here.",
+      "applicability": "Release-history evidence only. Do not rely on this behavior unless a released version includes the patch and the pinned dependency is verified.",
+      "critic_review": {
+        "status": "independently_rechecked",
+        "observed_operation": "Opened PR #433: still Open, no reviews displayed, commit 815ddab; proposed fix only, contributor tests not independently run.",
+        "review_access_utc_interval": [
+          "2026-10-12T00:57:41Z",
+          "2026-10-12T01:01:15Z"
+        ]
+      }
+    }
+  ],
+  "evidence_limits": [
+    "No supplier data was read or imported.",
+    "No production database was accessed or modified.",
+    "The input-map did not provide a product-repository path or local caller/test set; local product source was not inspected.",
+    "Candidate dependency source and upstream issue documentation were inspected through public primary documentation."
+  ],
+  "source_lineage": {
+    "parent_source_map": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/stages/investigator/source-map.json",
+    "parent_source_map_sha256": "48c4ec7bca3ea6403ebc62e50772e76d062ff9b7aff572db32fca4c1f152386e",
+    "parent_index": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/stages/investigator/sources/index.md",
+    "source_ids_preserved_without_rebinding": true
+  },
+  "critic_review": {
+    "independent_checks": "Public primary sources were checked in bounded batches during 2026-10-12T00:57Z–00:59Z. Original access_utc fields are preserved.",
+    "evidence_limits": [
+      "No supplier data, stock database, target application repository, callers, or local tests were provided.",
+      "No code, application, database operation, or validation suite was run.",
+      "The exact encoding_rs Encoding page failed to render; versioned docs.rs search results and Decoder docs supported the check."
+    ],
+    "review_access_utc_interval": [
+      "2026-10-12T00:57:41Z",
+      "2026-10-12T01:01:15Z"
+    ],
+    "map_written_utc_capture": "2026-10-12T01:01:46Z"
+  }
+}

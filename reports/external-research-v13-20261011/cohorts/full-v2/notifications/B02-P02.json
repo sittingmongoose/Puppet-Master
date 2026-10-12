@@ -1,0 +1,157 @@
+{
+  "schema": "er13.frozen_full_notification.v1",
+  "block_id": "B02-P02",
+  "scope": "FULL",
+  "failure_qualified": false,
+  "frozen_at": "2026-10-12T01:30:53.702004+00:00",
+  "source_assessed": false,
+  "all_actual_tasks_terminal_zero_pending": true,
+  "items": [
+    {
+      "arm_id": "B02-P02-control",
+      "scope": "FULL",
+      "t0_utc": "2026-10-12T00:35:35.684Z",
+      "whole_deadline_utc": "2026-10-12T01:35:35.684Z",
+      "timing_caveat": null,
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/final.md",
+      "final_missing": false,
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-control-eval-inputs/control-inputs/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-control-eval-inputs/control-inputs/plan.md",
+      "supplement_manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-control-eval-inputs/authored-manifest.json",
+      "supplement_manifest_sha256": "88a00f815f46d7b496dec8dd43a73a8eb004d96cdea2e374ee47eff3e3fd06f1",
+      "stages": [
+        {
+          "stage": "investigator",
+          "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/investigator/manifest.json",
+          "manifest_sha256": "c8938babfdb40a934b1173b89df05801f26b6959dd14b9a9fbee433229ac4a85",
+          "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/investigator/files",
+          "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-investigator-v1",
+          "terminal_status": "completed",
+          "hasPendingChildRuns": false,
+          "actual_status_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B02-P02-control/investigator-eval-ready-status.raw.json",
+          "actual_status_raw_sha256": "5288396de6236374c3446539e691290244a4f63aad8edb1c9deebd29cbdb2346",
+          "native_identity": {
+            "threadId": "01a12d89-545f-7791-94ea-2ed755d318f7",
+            "createdAt": 1791765349,
+            "objective": "ER13 investigator stage, run B02-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+          },
+          "native_same_birth_exact_objective": true,
+          "native_terminal_status": "complete",
+          "stage_deadline_utc": "2026-10-12T01:05:36.401Z",
+          "native_terminal_updatedAt": 1791766392,
+          "missing_required_outputs": []
+        },
+        {
+          "stage": "critic",
+          "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/manifest.json",
+          "manifest_sha256": "f7a5c6525011e0f087474ad6863d67fffab27dad4415ffa903ccdb1f8edafcbd",
+          "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/files",
+          "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-critic-v1",
+          "terminal_status": "completed",
+          "hasPendingChildRuns": false,
+          "actual_status_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B02-P02-control/critic-eval-ready-status.raw.json",
+          "actual_status_raw_sha256": "e2c2bfc08758df862e5df2a15ad64459678bbcf84914b673800609f79cb26c95",
+          "native_identity": {
+            "threadId": "01a12da6-de90-7893-8bd4-dd350e2958f2",
+            "createdAt": 1791767309,
+            "objective": "ER13 critic stage, run B02-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+          },
+          "native_same_birth_exact_objective": true,
+          "native_terminal_status": "complete",
+          "stage_deadline_utc": "2026-10-12T01:19:52.065Z",
+          "native_terminal_updatedAt": 1791767800,
+          "missing_required_outputs": []
+        },
+        {
+          "stage": "reviser",
+          "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/manifest.json",
+          "manifest_sha256": "6cdb1d49d472c91a080cd55975c650a4dcb117fb6aab23bf33258a8cae865c44",
+          "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files",
+          "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-reviser-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-control-reviser-v1",
+          "terminal_status": "completed",
+          "hasPendingChildRuns": false,
+          "actual_status_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B02-P02-control/reviser-eval-ready-status.raw.json",
+          "actual_status_raw_sha256": "95291df134adc8f739c6aaf53526848a60715d059c35f9780c42d84c6f06a954",
+          "native_identity": {
+            "threadId": "01a12db4-dfe1-7fb3-86c2-d67ed9e83f81",
+            "createdAt": 1791768200,
+            "objective": "ER13 reviser stage, run B02-P02-control: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+          },
+          "native_same_birth_exact_objective": true,
+          "native_terminal_status": "complete",
+          "stage_deadline_utc": "2026-10-12T01:35:35.684Z",
+          "native_terminal_updatedAt": 1791768351,
+          "missing_required_outputs": []
+        }
+      ],
+      "failure_records": [],
+      "source_assessed": false,
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "B02-P02-treatment",
+      "scope": "FULL",
+      "t0_utc": "2026-10-12T00:35:32.142Z",
+      "whole_deadline_utc": "2026-10-12T01:35:32.142Z",
+      "timing_caveat": null,
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/final.md",
+      "final_missing": false,
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-treatment-eval-inputs/control-inputs/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-treatment-eval-inputs/control-inputs/plan.md",
+      "supplement_manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P02-treatment-eval-inputs/authored-manifest.json",
+      "supplement_manifest_sha256": "23116cb3ea128e72457347b3adaeae9fd23e9708c0348197ca0674e9a1d5e150",
+      "stages": [
+        {
+          "stage": "investigator",
+          "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/manifest.json",
+          "manifest_sha256": "55aa2366b0e7d1c505e878504e19435b1280d4aba8c0b7bd7ab86a916604bf5b",
+          "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files",
+          "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-treatment-investigator-v1",
+          "terminal_status": "completed",
+          "hasPendingChildRuns": false,
+          "actual_status_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B02-P02-treatment/investigator-eval-ready-status.raw.json",
+          "actual_status_raw_sha256": "dc1deb03c49c96a7b415264dd19072390f07fc20c6ba4a0c3f52618a76ffa131",
+          "native_identity": {
+            "threadId": "01a12d89-462a-78d3-b700-972740afc213",
+            "createdAt": 1791765342,
+            "objective": "ER13 investigator stage, run B02-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+          },
+          "native_same_birth_exact_objective": true,
+          "native_terminal_status": "complete",
+          "stage_deadline_utc": "2026-10-12T01:05:32.896Z",
+          "native_terminal_updatedAt": 1791766065,
+          "missing_required_outputs": []
+        },
+        {
+          "stage": "critic",
+          "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/manifest.json",
+          "manifest_sha256": "bf02a5cb6da03ede5a83db729ef524b530cbad7a74b1ad31ac02c769b7be3f27",
+          "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files",
+          "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-treatment-critic-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B02-P02-treatment-critic-v1",
+          "terminal_status": "completed",
+          "hasPendingChildRuns": false,
+          "actual_status_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B02-P02-treatment/critic-eval-ready-status.raw.json",
+          "actual_status_raw_sha256": "83c2a562a9bdf779c664918e3ef454db7c0b813faa98e64d232a5b55d0cdc1f6",
+          "native_identity": {
+            "threadId": "01a12d95-22d7-7403-989d-3a90b0af6f7a",
+            "createdAt": 1791766134,
+            "objective": "ER13 critic stage, run B02-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+          },
+          "native_same_birth_exact_objective": true,
+          "native_terminal_status": "complete",
+          "stage_deadline_utc": "2026-10-12T01:18:29.948Z",
+          "native_terminal_updatedAt": 1791766920,
+          "missing_required_outputs": []
+        }
+      ],
+      "failure_records": [],
+      "source_assessed": false,
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    }
+  ]
+}

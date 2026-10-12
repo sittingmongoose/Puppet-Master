@@ -1,0 +1,435 @@
+{
+  "schema_version": "1",
+  "stage": "critic",
+  "run_id": "B09-P01-control",
+  "brief_scope": "Neighborhood lending inventory and returns; brief-only discovery before exact plan release.",
+  "evidence_scope": "Public primary product docs, official releases, repository code/tests, issue/fix history, and official database docs. No product was installed or tested.",
+  "sources": [
+    {
+      "id": "K01",
+      "title": "Koha official release/news index",
+      "url": "https://koha-community.org/news/",
+      "version_or_commit": "Koha 26.05.04; release notes dated 2026-10-01; posted 2026-10-06",
+      "locator": "News index lines 10–18",
+      "access_utc": "2026-10-12T00:43:39Z",
+      "observed_operation": "Lists Koha 26.05.04 release and dated release notes; also lists maintained 24.11/25.05/25.11 series.",
+      "governing_condition_default_exception": "News page reflects published release notices, not a guarantee of local support or maintenance.",
+      "applicability": "Pins current Koha comparison baseline; verify the selected package and security support before deployment.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "K02",
+      "title": "Koha Manual — Circulation",
+      "url": "https://koha-community.org/manual/latest/en/html/circulation.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "Check out lines 22–100; automatic check-in lines 495–499; Claim returned lines 614–631; bundle add/circulation/checkin/missing sections lines 697–785",
+      "access_utc": "2026-10-12T00:43:39Z; targeted finds 2026-10-12T00:44:26Z",
+      "observed_operation": "Checkout scans item barcode; optional keyword fallback. Automatic checkin requires item-type configuration and automatic_checkin.pl cron. Bundle return scans expected child barcodes; missing children are marked lost and tied to a claim. Claim-return entry accepts note and fee decision.",
+      "governing_condition_default_exception": "Item barcode fallback is a preference; automatic checkin is optional. Bundle verification can be skipped. Missing-as-lost is configurable. Claim returned is a patron report about a loan, not a general correction ledger.",
+      "applicability": "Strong kit/circulation fit; configure no automatic return and test atomic damage hold and durable correction history.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T00:58:48Z; 2026-10-12T01:00:28Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/circulation.html; checkout/check-in, optional automatic_checkin.pl, bundle records and scanned return verification (§§ 495–499, 667–712, 757–805), offline logs and ordered multi-computer replay (§§ 2160–2268).",
+        "critic_observation": "Confirmed that Koha bundles use existing barcode item records; bundled child items are not individually loanable; return verification can be skipped; missing contents are marked lost/claimed; automatic check-in is optional; offline state may be stale and multi-computer logs must be processed in transaction order."
+      }
+    },
+    {
+      "id": "K03",
+      "title": "Koha Manual — Cataloging",
+      "url": "https://koha-community.org/manual/latest/en/html/cataloging.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "Item records/barcodes; 952$3 Materials specified; barcode generator section around lines 2273–2317",
+      "access_utc": "2026-10-12T00:43:39Z; targeted find 2026-10-12T00:44:26Z",
+      "observed_operation": "Individual items have barcode identifiers; accompanying materials may be recorded and checked at circulation; barcode generator prints a supplied identifier.",
+      "governing_condition_default_exception": "Materials-specified is entered item-level text; it is not shown to be an enforced structured kit relation. Barcode generator does not itself establish non-reuse policy.",
+      "applicability": "Supports physical identity and a low-complexity parts checklist; richer alias and kit relations need configuration/prototype.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T00:58:48Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/cataloging.html; materials-specified field and item/barcode record sections.",
+        "critic_observation": "Used as context for the distinction between descriptive accompanying-materials text and the native barcode-linked bundle workflow."
+      }
+    },
+    {
+      "id": "K04",
+      "title": "Koha Manual — Circulation preferences",
+      "url": "https://koha-community.org/manual/latest/en/html/circulationpreferences.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "StoreLastBorrower lines 403–427; UpdateNotForLoanStatusOnCheckin lines 496–514; HidePersonalPatronDetail lines 310–325; RenewalSendNotice lines 1357–1375",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "StoreLastBorrower default is 0, but manual says last three borrowers still appear unless checkouts anonymized. Check-in mapping only maps an existing not-for-loan status to another configured value.",
+      "governing_condition_default_exception": "Last-borrower history may persist even when preference is zero. Mapping applies only to matching current status/item type; it does not map a free-standing damaged flag. Overrides may permit checkout unless denied.",
+      "applicability": "Privacy and maintenance-hold decisions require explicit configuration and a return-path test.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T00:58:48Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/circulationpreferences.html; StoreLastBorrower and AllowNotForLoanOverride sections.",
+        "critic_observation": "Confirmed StoreLastBorrower default 0, with a manual note that last three borrowers remain visible unless checkouts are anonymized; AllowNotForLoanOverride defaults to Allow."
+      }
+    },
+    {
+      "id": "K05",
+      "title": "Koha Manual — Tools",
+      "url": "https://koha-community.org/manual/latest/en/html/tools.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "Batch anonymization, around lines 1407–1473",
+      "access_utc": "2026-10-12T00:44:06Z; targeted find 2026-10-12T00:44:26Z",
+      "observed_operation": "Batch anonymization replaces borrower ID in history while preserving checkout counts; separate patron delete operation removes patron records.",
+      "governing_condition_default_exception": "Anonymization requires configured AnonymousPatron and a chosen date threshold; delete is materially different and permanent.",
+      "applicability": "Shows a retention mechanism, not a retention policy; owner must define whether five-year history includes personal identities.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "K06",
+      "title": "Koha Manual — offline circulation",
+      "url": "https://koha-community.org/manual/latest/en/html/circulation.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "Offline circulation section around lines 2160–2323; multi-computer replay lines 2244–2283",
+      "access_utc": "2026-10-12T00:44:26Z",
+      "observed_operation": "Manual describes Firefox add-on and Windows utility; offline computer stores transaction log; logs from multiple computers must be uploaded/grouped and applied in correct order.",
+      "governing_condition_default_exception": "Offline mode uses stale borrower/item state and may permit action the online system would block; ordered replay is required. Current manual does not establish multi-master conflict-free live writes.",
+      "applicability": "Internet loss with LAN intact is different from LAN/server loss. Avoid relying on laptop offline mode for immediate shared availability.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:00:28Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/circulation.html; offline circulation §§ 2160–2268.",
+        "critic_observation": "Confirmed local offline transaction logs, stale holds/account restrictions, all-machine log collection and checkout-before-check-in ordering example."
+      }
+    },
+    {
+      "id": "K07",
+      "title": "Koha source callers, item code, and tests (exploratory)",
+      "url": "https://github.com/Koha-Community/Koha/blob/main/Koha/Item.pm ; https://github.com/Koha-Community/Koha/blob/main/t/db_dependent/Koha/Item.t ; https://github.com/Koha-Community/Koha/blob/main/circ/circulation.pl ; https://github.com/Koha-Community/Koha/blob/main/circ/returns.pl",
+      "version_or_commit": "main branch as accessed in prior exploration; commit SHA not recorded, therefore unpinned",
+      "locator": "Item bundle operations; t/db_dependent/Koha/Item.t bundle tests; circulation.pl AddIssue and returns.pl AddReturn call sites",
+      "access_utc": "2026-10-12T00:52:16Z",
+      "observed_operation": "Inspected item bundle operations/tests and staff checkout/return caller files on GitHub main; release-tag URLs had failed to resolve. GitHub's returns.pl response was stale, so treat it as a locator only.",
+      "governing_condition_default_exception": "The attempted v26.05.04 code URLs could not be confirmed; branch main is mutable and is not evidence for a specific release.",
+      "applicability": "Exploratory leads only; before selection inspect a release tag/commit and the exact caller/test path.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "K08",
+      "title": "Koha 23.05.02 release notes",
+      "url": "https://koha-community.org/koha-23-05-02-released/",
+      "version_or_commit": "Release 23.05.02, posted 2023-08-08",
+      "locator": "Circulation bug list: 33817, 33961, around lines 103–118",
+      "access_utc": "2026-10-12T00:46:14Z",
+      "observed_operation": "Release notes report checked-out bundle composition defect and removal of built-in AllowOfflineCirculation; Firefox/Windows offline tools were not affected.",
+      "governing_condition_default_exception": "Historical 23.05.02 defects and removed path; not a claim that current 26.05.04 has the same defect. Current manual describes later offline tools.",
+      "applicability": "Use as regression-test motivation for bundled state and offline scope.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S01",
+      "title": "Snipe-IT releases",
+      "url": "https://github.com/grokability/snipe-it/releases",
+      "version_or_commit": "v8.8.0, commit 2c466fa, released 2026-09-30",
+      "locator": "v8.8.0 release entry; PHP requirement; v8.7.2 duplicate-checkout note",
+      "access_utc": "2026-10-12T00:43:32Z",
+      "observed_operation": "Release page identifies latest v8.8.0 and release requirements/history; v8.7.2 reports duplicate checkout requests no longer create duplicate rows.",
+      "governing_condition_default_exception": "Version requirements and prior fix are release-specific; current installation must pin patched release and follow its update/security guidance.",
+      "applicability": "Defines comparison version and concurrency/security review context.",
+      "critic_verification": {
+        "critic_status": "release page corroborated",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0.",
+        "critic_observation": "Release page identifies v8.8.0 and commit 2c466fa, consistent with carried source identity."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Snipe-IT Overview",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version_or_commit": "Official documentation, retrieved 2026-10-12; page not version-pinned",
+      "locator": "Assets, components, accessories, consumables, and status overview",
+      "access_utc": "2026-10-12T00:43:39Z",
+      "observed_operation": "Describes checkoutable assets and component/accessory/consumable concepts with status labels.",
+      "governing_condition_default_exception": "Components are commonly installed in assets and accessories can be assigned; this does not establish a native removable borrowing kit workflow.",
+      "applicability": "Candidate for identity/status and data-model fit comparison.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Snipe-IT Managing Assets",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version_or_commit": "Official documentation, retrieved 2026-10-12; page not version-pinned",
+      "locator": "Unique asset tag, barcode, serial and custom fields",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "Documents unique asset tags and custom fields.",
+      "governing_condition_default_exception": "Tag uniqueness is system-specific; ensure retired IDs cannot be reused and aliases are indexed/tested.",
+      "applicability": "Supports durable item identity, but does not prove alias behavior.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Snipe-IT Importing History",
+      "url": "https://snipe-it.readme.io/docs/importing-history",
+      "version_or_commit": "Official documentation, retrieved 2026-10-12; page not version-pinned",
+      "locator": "History CSV/import requirements",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "Imports past asset history using asset tag, person and date after assets/users exist; rows need chronological order.",
+      "governing_condition_default_exception": "Import requires matching identities and ordered records; source content/personal data requires a separate retention decision.",
+      "applicability": "Candidate five-year migration rehearsal and history integrity.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Snipe-IT Notifications",
+      "url": "https://snipe-it.readme.io/docs/notifications",
+      "version_or_commit": "Official documentation, retrieved 2026-10-12; page not version-pinned",
+      "locator": "Notification categories/channels and checkout/checkin notices",
+      "access_utc": "2026-10-12T00:43:39Z",
+      "observed_operation": "Describes configurable email/Slack notification settings and event notices.",
+      "governing_condition_default_exception": "Outbound messages depend on enabled category/channel and configured transport; disable until policy is approved.",
+      "applicability": "Meet no automatic messaging requirement during evaluation/pilot.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://snipe-it.readme.io/docs/notifications; email alert and category-level checkout/check-in notification statements.",
+        "critic_observation": "Confirmed notification transport depends on enabled email alerts and category-level check-in/check-out notice settings."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Snipe-IT Backup & Restore",
+      "url": "https://snipe-it.readme.io/docs/backups",
+      "version_or_commit": "Official documentation, retrieved 2026-10-12; page not version-pinned",
+      "locator": "Database, media/uploads, restore procedure, environment configuration note",
+      "access_utc": "2026-10-12T00:43:39Z",
+      "observed_operation": "Documents SQL and media backup/restore; restore does not replace .env and logs users out.",
+      "governing_condition_default_exception": "Backup must include media/configuration separately; a generated dump is not proof of a verified recovery.",
+      "applicability": "Assess staging/recovery requirements and operator effort.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://snipe-it.readme.io/docs/backups §§ 18–46.",
+        "critic_observation": "Confirmed SQL plus uploaded images/files in product backup, external .env settings need separate application on restore, and restore logs users out."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Snipe-IT Asset model",
+      "url": "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Models/Asset.php",
+      "version_or_commit": "v8.8.0 tag, release commit 2c466fa",
+      "locator": "availableForCheckout lines around 3124–3173; checkOut around 3200–3294",
+      "access_utc": "2026-10-12T00:44:26Z",
+      "observed_operation": "Model gates availability on not assigned, not deleted, status deployable and not archived; checkout stores expected check-in and optional note.",
+      "governing_condition_default_exception": "A checked-out asset may retain due date/note, but source does not guarantee general immutable correction history or damaged-return atomicity.",
+      "applicability": "Source-level confirmation of identity/status predicate; test check-in/status transitions in product.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:00:28Z",
+        "critic_locator": "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Models/Asset.php; availableForCheckout() around 3124–3173 and availableForCheckIn() around 3175–3198.",
+        "critic_observation": "Confirmed checkout availability requires unassigned/undeleted and deployable/non-archived status. Separately, check-in eligibility requires an assigned asset and, apart from the deleted-asset exception, a deployable/non-archived status. The caller/order was not independently traced; do not infer a product defect from the predicate alone."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Snipe-IT Asset importer concurrency guard",
+      "url": "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Importer/AssetImporter.php",
+      "version_or_commit": "v8.8.0 tag, release commit 2c466fa",
+      "locator": "row lock/recheck around lines 1528–1578",
+      "access_utc": "2026-10-12T00:44:26Z",
+      "observed_operation": "Importer re-fetches row with lockForUpdate and rechecks before event/write; skips if another operator claimed asset.",
+      "governing_condition_default_exception": "Protection is in importer flow; explicit comments refer to overlapping imports/UI checkout. Do not extrapolate to every checkout route.",
+      "applicability": "Shows concurrency risks and a tested design pattern to ask vendors about.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Snipe-IT security advisory GHSA-qffp-xpqv-gqr4",
+      "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+      "version_or_commit": "Affected <=8.6.3; patched 8.7.0; published 2026-08-24",
+      "locator": "Affected/patched versions and API target resolution details",
+      "access_utc": "2026-10-12T00:44:26Z",
+      "observed_operation": "API checkout path could bind live assets/components to soft-deleted target records; patched in 8.7.0.",
+      "governing_condition_default_exception": "Advisory concerns API target lifecycle validation, not ordinary checkout race or proof that current versions are affected.",
+      "applicability": "Include version pinning and soft-delete regression in acceptance review.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Snipe-IT API soft-deleted target regression test",
+      "url": "https://github.com/grokability/snipe-it/blob/v8.8.0/tests/Feature/Checkouts/Api/CheckoutToSoftDeletedTargetTest.php",
+      "version_or_commit": "v8.8.0 tag, release commit 2c466fa",
+      "locator": "API feature-test file",
+      "access_utc": "2026-10-12T00:46:14Z",
+      "observed_operation": "Tagged regression test covers checkout endpoint behavior against soft-deleted targets.",
+      "governing_condition_default_exception": "Test scope is a specific API lifecycle vulnerability; test was inspected read-only and not run here.",
+      "applicability": "Evidence of regression-test presence, not evidence of all races/flows.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "I01",
+      "title": "InvenTree 1.5.7 release",
+      "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.7",
+      "version_or_commit": "1.5.7, commit 2ca0d0e, released 2026-10-10",
+      "locator": "Release entry lines 152–171",
+      "access_utc": "2026-10-12T00:44:26Z",
+      "observed_operation": "Release page confirms signed 1.5.7 tag/commit and current release date.",
+      "governing_condition_default_exception": "Release page pins software version but does not validate local deployment readiness.",
+      "applicability": "Current InvenTree comparison version.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "I02",
+      "title": "InvenTree Stock Tracking",
+      "url": "https://docs.inventree.org/en/stable/stock/tracking/",
+      "version_or_commit": "Stable documentation accessed alongside 1.5.7 release; docs not commit-pinned",
+      "locator": "Stock item event history and stock tracking retention controls",
+      "access_utc": "2026-10-12T00:44:06Z; reopened 2026-10-12T00:46:14Z",
+      "observed_operation": "Docs describe tracked changes/events and history at stock/part level; optional deletion of old tracking data is configurable.",
+      "governing_condition_default_exception": "A tracking event history is not a borrower loan ledger; retention settings and item deletion can affect visibility.",
+      "applicability": "Useful for stock traceability and retention comparison, but lending workflow needs validation/customization.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "I03",
+      "title": "InvenTree Docker Setup",
+      "url": "https://docs.inventree.org/en/stable/start/docker/",
+      "version_or_commit": "Stable documentation accessed 2026-10-12; page not commit-pinned",
+      "locator": "Production Docker deployment and persistent data/backup context",
+      "access_utc": "2026-10-12T00:46:14Z",
+      "observed_operation": "Describes self-hosted service stack and persistent storage/backup practices.",
+      "governing_condition_default_exception": "Deployment involves service administration and restore validation; cloud hosting is optional, not required.",
+      "applicability": "Compare local-network hosting and operational burden.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    },
+    {
+      "id": "I04",
+      "title": "InvenTree PR #12719 — take_stock race fix",
+      "url": "https://github.com/inventree/InvenTree/pull/12719",
+      "version_or_commit": "Merged 2026-08-27 to 1.5.x as 2e77af2; cherry-pick 2dca27f; milestone 1.5.3",
+      "locator": "Merge summary and changed method; PR title identifies take_stock race",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "Backport PR merged a fix for race condition in stock-taking operation.",
+      "governing_condition_default_exception": "This race is product-internal stock counting; it is not evidence of lending/check-out conflict handling.",
+      "applicability": "Motivates scenario-based concurrency testing; keeps product role distinction honest.",
+      "critic_verification": {
+        "critic_status": "PR scope independently reopened",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://github.com/inventree/InvenTree/pull/12719; PR title, merge target and date.",
+        "critic_observation": "Confirmed the merged 1.5.x change is specifically a take_stock race fix, not lending checkout."
+      }
+    },
+    {
+      "id": "A01",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "SQLite official online docs, accessed 2026-10-12",
+      "locator": "WAL limitations, lines/paragraphs on network filesystems and one writer",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "WAL shared-memory index requires processes on same host; WAL does not work over a network filesystem; one writer at a time.",
+      "governing_condition_default_exception": "WAL-specific constraints; SQLite has other modes, but a shared file DB is still not the preferred two-host authority.",
+      "applicability": "Reject a naive shared SQLite file as the concurrent laptop deployment design.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://www.sqlite.org/wal.html, WAL index/shared-memory sections §§ 7–8.",
+        "critic_observation": "Confirmed WAL index access relies on a shared mapped file in the database directory and the documented no-shared-memory mode requires a single process; the draft scopes this as a constraint on shared/network use."
+      }
+    },
+    {
+      "id": "A02",
+      "title": "PostgreSQL 17 Explicit Locking",
+      "url": "https://www.postgresql.org/docs/17/explicit-locking.html",
+      "version_or_commit": "PostgreSQL 17 documentation",
+      "locator": "§13.3 row-level lock modes, FOR UPDATE",
+      "access_utc": "2026-10-12T00:44:06Z",
+      "observed_operation": "FOR UPDATE locks selected rows against conflicting writes/locks until transaction ends.",
+      "governing_condition_default_exception": "Application must use one transaction with revalidation/unique constraints and handle deadlocks; database row locks alone do not define product workflow.",
+      "applicability": "Basis for a local authoritative service/custom architecture candidate.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:00:28Z",
+        "critic_locator": "https://www.postgresql.org/docs/17/explicit-locking.html § 13.3.2, lines 94–103.",
+        "critic_observation": "Confirmed FOR UPDATE blocks conflicting writes and locks on the same row until transaction end."
+      }
+    },
+    {
+      "id": "K09",
+      "title": "Koha Manual — damaged and not-for-loan statuses",
+      "url": "https://koha-community.org/manual/latest/en/html/cataloging.html",
+      "version_or_commit": "Manual edition 20261011",
+      "locator": "Damaged status lines 3034–3078; not-for-loan status lines 3142–3200; AllowNotForLoanOverride preference lines 683–696 in circulationpreferences.html",
+      "access_utc": "2026-10-12T00:47:44Z",
+      "observed_operation": "Damaged status makes search results unavailable but does not stop checkout/check-in. Not-for-loan status blocks checkout unless staff override is permitted; override default is Allow. Positive values prevent checkout and holds; configured check-in mapping only updates existing not-for-loan state.",
+      "governing_condition_default_exception": "To make a hard hold, configure a not-for-loan status and disallow overrides; damaged flag by itself is not a hold. The status mapping is not a damage-to-hold workflow, so a status transition may need explicit staff action and must be race-tested.",
+      "applicability": "Critical fit limitation for the damaged-return requirement; do not accept Koha without a tested one-step hold workflow.",
+      "related_urls": [
+        "https://koha-community.org/manual/latest/en/html/circulationpreferences.html"
+      ],
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T00:58:48Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/cataloging.html §§ 3034–3078 and https://koha-community.org/manual/latest/en/html/circulationpreferences.html §§ 496–504, 683–696.",
+        "critic_observation": "Confirmed damaged flag does not block checkout/check-in, the not-for-loan override default is Allow, and check-in mapping applies to a matching existing not-for-loan value."
+      }
+    },
+    {
+      "id": "K10",
+      "title": "Koha Manual — Installing Koha",
+      "url": "https://koha-community.org/manual/latest/en/html/installation.html",
+      "version_or_commit": "Manual edition 20261010",
+      "locator": "Overview and skill requirements lines 72–109; server install stages lines 110–121",
+      "access_utc": "2026-10-12T00:52:36Z",
+      "observed_operation": "Koha is server-based GNU/Linux software; manual lists system/web/database/search/cache/message/email administration skills and states there is no production-ready Docker container at this time.",
+      "governing_condition_default_exception": "Manual distinguishes basic testing install from production/internet-accessible hardening; deployment guidance warns production security and skilled administration are required.",
+      "applicability": "Confirms local self-host path is possible without paid cloud, with meaningful volunteer operation burden.",
+      "critic_verification": {
+        "critic_status": "independently reopened",
+        "critic_access_utc": "2026-10-12T01:01:15Z",
+        "critic_locator": "https://koha-community.org/manual/latest/en/html/installation.html §§ 72–97.",
+        "critic_observation": "Confirmed server-based GNU/Linux deployment and specialist administration/security skills for production."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Snipe-IT Installation",
+      "url": "https://snipe-it.readme.io/docs/installation",
+      "version_or_commit": "Official installation documentation accessed 2026-10-12; page not release-pinned",
+      "locator": "Installation overview lines 15–39",
+      "access_utc": "2026-10-12T00:52:36Z",
+      "observed_operation": "Production self-host installation uses a database, local configuration, Composer dependencies and webserver; hosted plan is presented as an optional alternative.",
+      "governing_condition_default_exception": "Self-hosting requires a configured/maintained server; the optional hosted service is not required for the product path proposed here.",
+      "applicability": "Supports no-paid-cloud deployment option while making local administration burden explicit.",
+      "critic_verification": {
+        "critic_status": "carried from investigator source map; not independently reopened by critic"
+      }
+    }
+  ],
+  "source_lineage": {
+    "original_stage": "investigator",
+    "original_source_map": "../investigator/source-map.json",
+    "carried_source_index": "../investigator/sources/index.md",
+    "id_policy": "All carried source IDs and identity fields are preserved; critic verification is added without rebinding."
+  }
+}

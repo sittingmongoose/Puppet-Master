@@ -1,0 +1,141 @@
+{
+  "run_id": "B07-P02-control",
+  "stage": "investigator",
+  "discovery_file": "discovery.md",
+  "sources_index": "sources/index.md",
+  "source_count": 12,
+  "sources": [
+    {
+      "id": "SRC-001",
+      "title": "Media Fragments URI 1.0 (basic)",
+      "url": "https://www.w3.org/TR/media-frags/",
+      "released_version_or_commit": "W3C Recommendation, 2012-09-25",
+      "locator": "§4.2.1 Temporal Dimension, lines 221–240; §6.1.1 Valid temporal dimension",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Opened the official Recommendation and read the temporal range syntax and semantics.",
+      "governing_condition_default_exception": "t= encodes an interval; omitted begin defaults to 0 and omitted end to duration; intervals are half-open [begin,end); NPT uses seconds/fraction; hh:mm:ss is convenience and does not signal frame accuracy.",
+      "applicability": "Useful for exported time-fragment notation and interval boundary convention only. Does not identify a local file revision or promise decoder seek accuracy."
+    },
+    {
+      "id": "SRC-002",
+      "title": "Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "released_version_or_commit": "W3C Recommendation, 2017-02-23",
+      "locator": "Fragment Selector §4.2.2; Text Position Selector §4.2.10 (lines 980–1010); Target/Specific Resource and State sections",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Opened the official W3C Recommendation; inspected FragmentSelector and TextPositionSelector definitions and the stale-anchor warning.",
+      "governing_condition_default_exception": "Text positions are zero-based start-inclusive/end-exclusive. The model says they are brittle after edits and recommends a State to identify the correct representation; selectors describe target segments but do not create time synchronization.",
+      "applicability": "Can inform an optional interoperable annotation envelope and transcript text anchors. Must be extended with local asset revision identity and must not be treated as invented transcript timing."
+    },
+    {
+      "id": "SRC-003",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "released_version_or_commit": "W3C Recommendation, 2023-10-05",
+      "locator": "SC 1.3.1/1.3.2/1.3.3; 1.4.1 Use of Color; 2.1.1 Keyboard; 2.4.3 Focus Order; 2.4.7 Focus Visible",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Opened the Recommendation and inspected the normative keyboard, sensory-characteristics, and color criteria.",
+      "governing_condition_default_exception": "WCAG 2.2 is normative; keyboard operation applies to functionality unless the underlying function depends on path-of-movement rather than endpoints; color cannot be the only visual means.",
+      "applicability": "Reference requirements for a keyboard/screen-reader interface and non-color overlap identity; desktop applicability depends on the target shell/platform and should be evaluated with its accessibility API."
+    },
+    {
+      "id": "SRC-004",
+      "title": "WAI-ARIA Authoring Practices Guide: Slider Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+      "released_version_or_commit": "Current APG pattern page, unversioned; accessed 2026-10-12",
+      "locator": "About/Warning and Keyboard Interaction",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Opened the W3C APG slider pattern and reviewed its keyboard mapping, media seek example, and touch-assistive-technology warning.",
+      "governing_condition_default_exception": "APG is informative, not a normative WCAG standard. Standard slider keys adjust one step; Home/End select endpoints; Page Up/Down are optional. The guide warns some touch AT may not synthesize the expected key events and requires testing.",
+      "applicability": "Supports an optional labeled seek slider with named-value output and a separate direct time-field/button route; it does not justify making a slider the only review route."
+    },
+    {
+      "id": "SRC-005",
+      "title": "Peaks.js API Documentation",
+      "url": "https://github.com/bbc/peaks.js/blob/v3.4.2/doc/API.md",
+      "released_version_or_commit": "v3.4.2 stable, release commit 8144d61",
+      "locator": "Configuration keyboard options lines 573–581; Segments API § and player API; repo release list also shows v4.0.0-beta.2 as prerelease",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read documentation at the pinned tag and release list; identified seconds-based start/end, stable segment IDs/update operations, keyboard option, nudge increment, and waveform-data options.",
+      "governing_condition_default_exception": "keyboard defaults false; nudgeIncrement defaults 0.01 seconds; segment editable defaults false; labels and rendering options are configurable. A v4 beta exists but is not the stable API baseline.",
+      "applicability": "Visual detail/overview and segment API candidate. Component keyboard support must be assessed separately from host list editing, focus semantics, and screen-reader completeness."
+    },
+    {
+      "id": "SRC-006",
+      "title": "Peaks.js v3.4.2 demo caller",
+      "url": "https://github.com/bbc/peaks.js/blob/v3.4.2/demo/index.html",
+      "released_version_or_commit": "v3.4.2, release commit 8144d61",
+      "locator": "renderSegments and numeric start/end input handlers; Peaks.init options around keyboard:true and precomputed dataUri",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Inspected the tagged repository demo source as a caller of the public API.",
+      "governing_condition_default_exception": "The demo renders segment rows with label and numeric start/end inputs and calls segment.update; keyboard:true is opted into; precomputed waveform data URIs are shown. The demo is not an accessibility conformance claim.",
+      "applicability": "Concrete interaction pattern for list + numeric fields + waveform, and a local/precomputed waveform architecture. Use as evidence of a caller pattern only."
+    },
+    {
+      "id": "SRC-007",
+      "title": "WaveSurfer.js Regions plugin source",
+      "url": "https://github.com/katspaugh/wavesurfer.js/blob/8.0.0/src/plugins/regions.ts",
+      "released_version_or_commit": "8.0.0, release commit a1cdffd",
+      "locator": "RegionParams lines 2326–2376; pointer event stream near 2921–2941; public API lines 3605–3620",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read pinned plugin source and searched for pointer/drag and keyboard event handling.",
+      "governing_condition_default_exception": "Region IDs may be passed; start/end are seconds; end omitted defaults to start; drag/resize default true; min/max length are seconds. The inspected source binds pointer events and drag streams; no keydown match appeared in this file.",
+      "applicability": "Visual interval API candidate; host must provide accessible structured controls and persistent IDs. Absence of a keydown match in this file is limited evidence, not a claim about every host integration."
+    },
+    {
+      "id": "SRC-008",
+      "title": "WaveSurfer.js release history",
+      "url": "https://github.com/katspaugh/wavesurfer.js/releases",
+      "released_version_or_commit": "8.0.0 stable, release commit a1cdffd; 7.x maintenance releases remain listed",
+      "locator": "8.0.0 release section and notable fixes: issues #4353, #4348, #4359, #3631/#3658/#3781/#3866; tests/Cypress line in release notes",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read current upstream release page and compared the 8.0.0 notes with issue references.",
+      "governing_condition_default_exception": "Release history reports fixes for seeks made before metadata, wrong timeupdate after pause in WebAudio, region event race, false region-out at a region start, and related event duplication; release also notes a Cypress test for play/pause/finish event count.",
+      "applicability": "These are regression scenarios for a candidate integration, not evidence that the proposed app was tested. The release page does not claim accessibility or annotation-fidelity coverage."
+    },
+    {
+      "id": "SRC-009",
+      "title": "Audacity Manual: Label Tracks",
+      "url": "https://manual.audacityteam.org/man/label_tracks.html",
+      "released_version_or_commit": "Rolling online manual; page does not identify a release tag",
+      "locator": "Point/region labels; Navigating Labels; Label Editor; label file export; limitations",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read the official Audacity manual page and inspected keyboard navigation, table editor, export, and stated limits.",
+      "governing_condition_default_exception": "Tab/Shift+Tab cycles labels; Label Editor is described as keyboard-accessible and tabular. Text labels over 260 characters may not reload; hundreds/thousands can slow the app; Export Multiple uses labels from the uppermost label track.",
+      "applicability": "Interaction/export reference, not an embeddable component recommendation. Confirm any multi-track overlap and merge/export behavior in a product-specific prototype."
+    },
+    {
+      "id": "SRC-010",
+      "title": "GStreamer Seeking design documentation",
+      "url": "https://gstreamer.freedesktop.org/documentation/additional/design/seeking.html",
+      "released_version_or_commit": "Current unversioned GStreamer design documentation; runtime version not selected",
+      "locator": "GST_SEEK_FLAG_ACCURATE, KEY_UNIT, and their combinations",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read the official seeking design page for flag behavior and tradeoffs.",
+      "governing_condition_default_exception": "Without ACCURATE, demuxer/parser may approximate depending on implementation/index; ACCURATE requires exact positioning relative to stream origin and can require processing from the start; KEY_UNIT changes where the segment begins.",
+      "applicability": "Shows a local playback backend can expose different fast versus accurate seek modes. Adapter must report capabilities/actual position and benchmark selected formats."
+    },
+    {
+      "id": "SRC-011",
+      "title": "AVPlayer precise seek method",
+      "url": "https://developer.apple.com/documentation/avfoundation/avplayer/seek%28to%3Atolerancebefore%3Atoleranceafter%3Acompletionhandler%3A%29",
+      "released_version_or_commit": "Current Apple AVFoundation documentation; SDK/runtime version not pinned",
+      "locator": "Method discussion and parameters toleranceBefore/toleranceAfter",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read Apple API documentation for seek completion and tolerance behavior.",
+      "governing_condition_default_exception": "The landing may differ within the supplied tolerance. Zero tolerances request sample-accurate seek but may add decode delay; completion can return false when interrupted by a subsequent seek.",
+      "applicability": "An alternative engine contract example; favors explicit accuracy and completion state. Only applicable if target platforms and Apple runtime are selected."
+    },
+    {
+      "id": "SRC-012",
+      "title": "Web Audio API 1.1",
+      "url": "https://webaudio.github.io/web-audio-api/",
+      "released_version_or_commit": "Web Audio API 1.1 current editor's draft; accessed 2026-10-12",
+      "locator": "BaseAudioContext.decodeAudioData() algorithm and arguments",
+      "accessed_utc": "2026-10-12T00:46:53Z",
+      "observed_operation": "Read the W3C Web Audio specification's decodeAudioData algorithm.",
+      "governing_condition_default_exception": "decodeAudioData consumes an ArrayBuffer of encoded data and returns decoded PCM AudioBuffer; decoded data is resampled to BaseAudioContext sample rate if needed.",
+      "applicability": "Relevant if using a browser/WebAudio backend or client-side waveform generation; motivates memory/performance profiling for long stereo files and must not be treated as a guarantee that every codec is supported."
+    }
+  ]
+}

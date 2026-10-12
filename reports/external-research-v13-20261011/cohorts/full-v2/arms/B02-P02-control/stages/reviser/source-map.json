@@ -1,0 +1,420 @@
+{
+  "run_id": "B02-P02-control",
+  "stage": "reviser",
+  "generated_utc": "2026-10-12T01:24:22Z",
+  "source_id_rule": "S01–S23 retain investigator identities and are not rebound; C01–C11 retain critic identities and are separately observed; R01–R02 are independent reviser rechecks. Source IDs remain stable identifiers for their exact URL/version records.",
+  "source_map_inputs": [
+    {
+      "path": "../investigator/source-map.json",
+      "sha256": "e1cc779102b7211c702d7bd2c73c40612abeb8cb199264587ac004bfe6173fe1"
+    },
+    {
+      "path": "../critic/source-map.json",
+      "sha256": "3ef15c8d28c71687984f4f9a081c52faa12b446571acdd9be4c9303d62af51f6"
+    }
+  ],
+  "source_indexes": [
+    "sources/index.md",
+    "../investigator/sources/index.md",
+    "../critic/sources/index.md"
+  ],
+  "access_time_note": "Inherited access UTC values and their stated precision are preserved. R01/R02 record the clock immediately before each direct web open; exact fetch time is not separately exposed.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "SQLite transaction control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version": "Current SQLite documentation; no release pin",
+      "locator": "Transactions §2.1–2.2; DEFERRED/IMMEDIATE and SQLITE_BUSY",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened official transaction documentation; read writer concurrency, deferred upgrade, immediate-lock, and busy conditions.",
+      "condition": "Default transactions are DEFERRED; multiple readers are allowed but only one write transaction at a time. BEGIN IMMEDIATE begins a write transaction immediately and can return SQLITE_BUSY when another writer is active.",
+      "applicability": "Single-host booking authority; acquire the write reservation before availability check and handle busy/conflict outcomes."
+    },
+    {
+      "id": "S02",
+      "title": "SQLite write-ahead logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Current SQLite documentation; WAL-reset fix note current as accessed",
+      "locator": "§1–2, §4–6, §9, §11; network filesystem and WAL-reset bug",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened official WAL documentation; read host restriction, one-writer constraint, backup sidecar warning, checkpoint behavior, and WAL-reset fix note.",
+      "condition": "WAL allows reader/writer overlap but only one writer; all DB processes must run on same host and WAL does not work over network filesystems. WAL-reset corruption bug is described as fixed in 3.51.3 and backported to 3.50.7 and 3.44.6.",
+      "applicability": "Keep SQLite and its application on one host; use supported fixed runtime for WAL; do not share its DB file across LAN/NFS."
+    },
+    {
+      "id": "S03",
+      "title": "PostgreSQL 18 range types and exclusion constraints",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version": "PostgreSQL 18 documentation; supported version as accessed",
+      "locator": "§8.17.2, §8.17.10, lines on tsrange, overlap, btree_gist",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened official PostgreSQL 18 range type documentation and reviewed range examples and exclusion-constraint examples.",
+      "condition": "An exclusion constraint rejects overlapping time ranges; combining a scalar resource key and overlap operator uses btree_gist.",
+      "applicability": "Enforce no-overlap for exclusive tools, assigned people, and extractor resource allocations at database layer."
+    },
+    {
+      "id": "S04",
+      "title": "RFC 5545 iCalendar",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545, September 2009; updated by RFCs listed by RFC Editor",
+      "locator": "Abstract and recurrence sections (RRULE, RDATE, EXDATE)",
+      "access_utc": "2026-10-12T00:36:08Z–2026-10-12T00:38:52Z (bounded window for initial read; per-page fetch second not exposed)",
+      "observed_operation": "Opened the RFC Editor record; checked standard status, interchange scope, and update list.",
+      "condition": "Defines calendaring data interchange independent of a calendar service; does not define a resource booking transaction.",
+      "applicability": "Optional calendar exchange only; not the resource-capacity or maintenance-hold authority."
+    },
+    {
+      "id": "S05",
+      "title": "LibreBooking v7.0.0 README",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/README.md",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Features, install prerequisites, supported-release warning",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened README pinned to the v7.0.0 release commit.",
+      "condition": "Advertises multi-resource booking and role-based access; manual install documents PHP 8.2+, Apache 2.4, MySQL 8.0 or MariaDB 10.6+. README requires upgrade to 7.0+ because older releases have critical unauthenticated admin takeover flaw.",
+      "applicability": "Self-hosted candidate; deployment stack, support boundary, and security update timing are material fit factors."
+    },
+    {
+      "id": "S06",
+      "title": "LibreBooking installation and scheduled jobs",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/docs/source/INSTALLATION.rst",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Manual/Docker deployment and Scheduled Jobs",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened installation guide pinned to the release commit; inspected server dependencies and cron job descriptions.",
+      "condition": "Background jobs support reminders, auto-release, waitlist, and cleanup; cleanup deletion is conditional on settings.",
+      "applicability": "Estimate local operator setup and maintenance burden; do not assume all jobs are necessary for the core booking path."
+    },
+    {
+      "id": "S07",
+      "title": "LibreBooking reservation save presenter",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/Presenters/Reservation/ReservationSavePresenter.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "BuildReservation lines 61–124; HandleReservation lines 130–140",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened caller-side presenter; read resource, accessory, participant and reservation-series assembly and handoff to handler.",
+      "condition": "The presenter builds one reservation series with primary/additional resources, accessories, attributes and participants, then delegates handling.",
+      "applicability": "Evidence for the product's domain model and a candidate bundle workflow; not evidence of workshop certification enforcement."
+    },
+    {
+      "id": "S08",
+      "title": "LibreBooking reservation conflict identifier",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Reservation/ReservationConflictIdentifier.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "GetConflicts and AllowReservation; resource overlap logic",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened conflict evaluation code; read resource overlap checks, buffer rules, and concurrent quantity calculation.",
+      "condition": "A request is compared against existing items for selected resource IDs and buffer window; boundaries are treated as nonconflicting under the documented branch.",
+      "applicability": "Informs configurable overlap/buffer behavior and need to validate exact all-resource conflict handling."
+    },
+    {
+      "id": "S09",
+      "title": "LibreBooking resource availability rule",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Reservation/Validation/ResourceAvailabilityRule.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Validate, conflict error text, skip-conflicts retry parameter",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened resource validation code; read conflict message and skip-conflict path.",
+      "condition": "Conflict retry can remove conflicting occurrences when the skip-conflicts parameter is selected.",
+      "applicability": "A workshop should make partial recurring acceptance explicit and should not silently skip required resource allocations."
+    },
+    {
+      "id": "S10",
+      "title": "LibreBooking accessory availability rule",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Reservation/Validation/AccessoryAvailabilityRule.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Validate lines 28–102; limited quantities and overlap lookup",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened accessory validation; read capacity comparison for limited accessories across reservation instances.",
+      "condition": "Only accessories with finite quantities are checked; requested plus already reserved quantity greater than available is rejected.",
+      "applicability": "Possible shared extractor model as quantity 1, subject to verifying that product accessory scope matches a shared workshop resource and is enforced atomically."
+    },
+    {
+      "id": "S11",
+      "title": "LibreBooking recurring blackout service",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Reservation/ManageBlackoutsService.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Add/Update; termination date requirement; conflict evaluation and save",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened the blackout service and followed recurrence generation, overlap checks, and save condition.",
+      "condition": "Daily/weekly/monthly/yearly recurring holds require a termination date; custom dates are exempt. Conflicting reservation policy is injected into service.",
+      "applicability": "Strong maintenance-hold concept; test that member permissions cannot erase it and that recurrence edits preserve exceptions."
+    },
+    {
+      "id": "S12",
+      "title": "LibreBooking blackout conflict resolution",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Application/Reservation/ReservationConflictResolution.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Delete and BookAround handlers",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Opened the conflict handler; read deletion reason argument, notification, and blackout split/delete branches.",
+      "condition": "Delete applies to one instance and passes a generic reason string; BookAround splits or deletes overlapping blackout portions; Notify makes no mutation.",
+      "applicability": "Confirms multiple conflict policies exist; workshop needs a staff-controlled decision and a reason visible in retained history."
+    },
+    {
+      "id": "S13",
+      "title": "LibreBooking blackout conflict tests",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/tests/Application/Reservation/ReservationConflictResolutionTest.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "testDeletesReservation, testCanBlackoutAroundReservations, testIfTotallyConflictsThenDeleteOccurrence",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before the source batch)",
+      "observed_operation": "Read upstream unit tests; tests assert instance scope, notification, recurring hold splitting, and occurrence deletion.",
+      "condition": "These are unit-level tests of conflict-resolution logic, not concurrency, deployment, or member-permission end-to-end tests.",
+      "applicability": "Use test scope to define additional workshop acceptance checks; the upstream tests were inspected but not run."
+    },
+    {
+      "id": "S14",
+      "title": "LibreBooking v7.0.0 changelog",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/CHANGELOG.md",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "v7.0.0 and v6.1.0 sections; release dates and fix summaries",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened changelog at top and around latest release entries.",
+      "condition": "v7.0.0 dated 2026-10-06; v6.1.0 on 2026-10-03 adds an install-password requirement before install/upgrade and integration DB-test runner.",
+      "applicability": "Recent releases make version-pinned evaluation, update procedures and security checks material."
+    },
+    {
+      "id": "S15",
+      "title": "LibreBooking security policy",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/SECURITY.md",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "Supported Versions and Administrator Trust Model",
+      "access_utc": "2026-10-12T00:39:51Z (clock immediately before the open batch; page fetch followed in the same call)",
+      "observed_operation": "Opened security policy; read supported-version/backport policy and administrator privilege model.",
+      "condition": "Only latest release is supported; security fixes are released forward and not backported; administrators are trusted privileged operators.",
+      "applicability": "A local install still requires a named updater, least-privilege staff roles, and routine supported-version updates."
+    },
+    {
+      "id": "S16",
+      "title": "LibreBooking current develop README security notices",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/64335703927fc73160ab6ff543d02db8ac4014a3/README.md",
+      "version": "develop commit 64335703927fc73160ab6ff543d02db8ac4014a3 (commit date 2026-10-10)",
+      "locator": "Security notices at top; dependencies at lines 107–120",
+      "access_utc": "2026-10-12T00:42:32Z (clock immediately before open batch)",
+      "observed_operation": "Opened pinned current develop README and captured its stated security-release timing and supported deployment dependencies.",
+      "condition": "Maintainers announce a high-impact security release planned for 2026-10-13 and warn pre-7.0.0 versions have critical unauthenticated admin takeover; issue details withheld until release.",
+      "applicability": "Recheck after the planned release before any product selection or deployment."
+    },
+    {
+      "id": "S17",
+      "title": "LibreBooking open repeat-termination issue",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1536",
+      "version": "Issue #1536; issue body names develop commit add7ebfbe; status open as accessed",
+      "locator": "Description, reproduction, version and status",
+      "access_utc": "2026-10-12T00:42:32Z (clock immediately before open batch)",
+      "observed_operation": "Read issue status and timezone reproduction description; did not run its suggested reproduction.",
+      "condition": "Issue says YYYY-MM-DD parsing as UTC plus local date arithmetic moves repeat-until back by one day west of UTC; issue is marked Open.",
+      "applicability": "Treat as a candidate risk and independently verify against the pinned current recurrence code before relying on recurring maintenance."
+    },
+    {
+      "id": "S18",
+      "title": "LibreBooking current develop recurrence.js",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/64335703927fc73160ab6ff543d02db8ac4014a3/Web/scripts/recurrence.js",
+      "version": "develop commit 64335703927fc73160ab6ff543d02db8ac4014a3",
+      "locator": "AdjustTerminationDate lines 234–255",
+      "access_utc": "2026-10-12T00:42:32Z–2026-10-12T00:42:35Z (within the same source-read turn; exact per-fetch seconds unavailable)",
+      "observed_operation": "Read the raw recurrence implementation and checked issue-described constructor and local-time arithmetic.",
+      "condition": "Current commit still calls new Date on date-only inputs, applies local getters/setters, and passes result to flatpickr.",
+      "applicability": "Corroborates recurrence risk in issue #1536; recurring blackout date boundaries need a time-zone regression test."
+    },
+    {
+      "id": "S19",
+      "title": "MRBS current README documentation",
+      "url": "https://mrbs.sourceforge.io/view_text.php?file=README&section=Documentation",
+      "version": "Current documentation endpoint; page does not pin a release/commit",
+      "locator": "Project purpose, default DB authentication, area/room model, DB requirements",
+      "access_utc": "2026-10-12T00:38:52Z–2026-10-12T00:39:20Z (bounded window for docs reads)",
+      "observed_operation": "Opened official MRBS docs; read application purpose, DB auth behavior, areas/rooms and requirements.",
+      "condition": "Default auth is DB and creates admin first; data is organized as area and room; source doc lists MySQL/PostgreSQL.",
+      "applicability": "A plausible web-based room/tool calendar base with locally managed accounts; fit for composite resources is not established."
+    },
+    {
+      "id": "S20",
+      "title": "MRBS installation and custom field documentation",
+      "url": "https://mrbs.sourceforge.io/view_text.php?file=INSTALL&section=Documentation",
+      "version": "Current documentation endpoint; page does not pin a release/commit",
+      "locator": "Requirements, installation, custom fields, private field condition, timezone, backup",
+      "access_utc": "2026-10-12T00:38:52Z–2026-10-12T00:39:20Z (bounded window for docs reads)",
+      "observed_operation": "Opened official install docs; reviewed server/database operation, customization and booking privacy.",
+      "condition": "Private fields only supported for entries/users and depend on private bookings being enabled; system defaults apply to new areas only; backups are recommended; timezone should be room-local.",
+      "applicability": "Relevant to local hosting, per-area configuration drift, minimal private booking explanations and administration burden."
+    },
+    {
+      "id": "S21",
+      "title": "MRBS current simultaneous-booking defaults",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b/web/systemdefaults.inc.php",
+      "version": "MRBS main commit cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b (committer time 2026-10-11T14:28:25Z)",
+      "locator": "Calendar settings and booking policies; prevent_simultaneous_bookings, max_simultaneous_bookings, approved_bookings_cannot_be_changed",
+      "access_utc": "2026-10-12T00:39:20Z (clock immediately before source batch)",
+      "observed_operation": "Read pinned MRBS defaults around booking policies and simultaneous booking guard.",
+      "condition": "Simultaneous prevention default false; max default 1 when enabled; cross-area semantics depend on modes. Prevent editing approved bookings defaults false and only applies if approval is in force.",
+      "applicability": "Do not infer protections from product name; configure and test policy conditions and area semantics."
+    },
+    {
+      "id": "S22",
+      "title": "MRBS current NEWS and release/fix history",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b/NEWS",
+      "version": "MRBS main commit cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b; NEWS identifies v1.12.2, 2026-05-26",
+      "locator": "v1.12.2 lines 8–115; issue #3965 simultaneous-booking series-edit fix",
+      "access_utc": "2026-10-12T00:39:31Z (clock immediately before NEWS open)",
+      "observed_operation": "Read current NEWS release notes; followed issue reference #3965 to its issue page.",
+      "condition": "NEWS says v1.12.2 fixes editing a series when simultaneous-booking prevention is enabled and lists security fixes; issue #3965 is closed.",
+      "applicability": "Use the release line as candidate history and regression signal; update evaluation must pin supported version."
+    },
+    {
+      "id": "S23",
+      "title": "MRBS issue #3965",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/issues/3965",
+      "version": "Issue #3965; opened 2026-02-19; closed; NEWS maps it to v1.12.2",
+      "locator": "Issue report and expected series-edit behavior",
+      "access_utc": "2026-10-12T00:46:55Z (clock immediately before issue open)",
+      "observed_operation": "Read closed report; confirmed simultaneous prevention blocked edits of a recurring series before the NEWS-described fix.",
+      "condition": "Issue reproduction is reported on latest main at filing; release notes later claim fix in v1.12.2.",
+      "applicability": "Regression history illustrates why recurrence plus resource conflict rules need explicit test coverage."
+    },
+    {
+      "id": "C01",
+      "title": "SQLite write-ahead logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Current SQLite documentation, accessed 2026-10-12; no release pin",
+      "locator": "§1, §2.2, §11, especially host restriction, one-writer condition, and WAL-reset fix note",
+      "condition": "WAL requires all database processes on one host and is not supported over network filesystems; one writer at a time; fix in 3.51.3 and backports 3.50.7 / 3.44.6.",
+      "applicability": "Constrains a local SQLite architecture and the runtime requirement if WAL is selected.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C02",
+      "title": "SQLite transaction control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version": "Current SQLite documentation, accessed 2026-10-12; no release pin",
+      "locator": "§2.1–2.2, lines on one write transaction and DEFERRED/IMMEDIATE",
+      "condition": "SQLite allows multiple readers but one simultaneous writer; BEGIN IMMEDIATE starts the write immediately and may return SQLITE_BUSY.",
+      "applicability": "Supports acquiring the write reservation before checking availability and handling busy outcomes.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C03",
+      "title": "PostgreSQL 18 range types",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "version": "PostgreSQL 18 official documentation",
+      "locator": "§8.17.10, lines 191–229; range overlap and btree_gist example",
+      "condition": "An exclusion constraint with overlap prevents overlapping ranges; btree_gist permits combining equality on a resource key with range overlap.",
+      "applicability": "Supports exclusive-resource invariants; all-resource atomicity still requires the application transaction and complete validation.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C04",
+      "title": "RFC 5545 iCalendar",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "version": "RFC 5545 (September 2009), RFC Editor metadata lists updates",
+      "locator": "Abstract and §1; lines 85–88 and 317–334",
+      "condition": "Defines a format for representing and exchanging calendaring and scheduling information; other protocols/services define operations.",
+      "applicability": "Supports calendar interchange as a boundary format, not the workshop booking authority.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C05",
+      "title": "LibreBooking current develop README security notice and install requirements",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/64335703927fc73160ab6ff543d02db8ac4014a3/README.md",
+      "version": "Develop commit 64335703927fc73160ab6ff543d02db8ac4014a3",
+      "locator": "Lines 1–28 and 107–123",
+      "condition": "At access, a high-impact security release was announced for 2026-10-13; README warns pre-7.0.0 versions have a critical unauthenticated admin takeover; manual install requires PHP 8.2+, Apache 2.4 (other servers unsupported/untested), MySQL 8+ or MariaDB 10.6+.",
+      "applicability": "Recheck the supported release and security status before a fit decision; informs local operator burden.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C06",
+      "title": "LibreBooking repeat-termination issue #1536",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1536",
+      "version": "Issue #1536, opened 2026-07-10; status Open as accessed",
+      "locator": "Issue title, status, description and reproduction",
+      "condition": "Reports repeat-until date moving back a day west of UTC and a fallback-path drift.",
+      "applicability": "Candidate recurrence risk; not itself proof of all affected configurations.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C07",
+      "title": "LibreBooking current develop recurrence.js",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/64335703927fc73160ab6ff543d02db8ac4014a3/Web/scripts/recurrence.js",
+      "version": "Develop commit 64335703927fc73160ab6ff543d02db8ac4014a3",
+      "locator": "AdjustTerminationDate, lines 234–254",
+      "condition": "Constructs Date from date-field values and applies local setDate/setMonth/setFullYear arithmetic.",
+      "applicability": "Corroborates the class of timezone/date handling that should be regression-tested; not a workshop deployment test.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C08",
+      "title": "LibreBooking v7.0.0 reservation save presenter",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/Presenters/Reservation/ReservationSavePresenter.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "BuildReservation lines 61–83 and HandleReservation lines 130–140",
+      "condition": "Presenter builds a ReservationSeries, adds other selected resources and accessories, then passes the series to a handler.",
+      "applicability": "Shows product model/caller shape; does not prove atomic persistence, workshop qualifications, or extractor semantics.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C09",
+      "title": "LibreBooking v7.0.0 blackout conflict-resolution tests",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/tests/Application/Reservation/ReservationConflictResolutionTest.php",
+      "version": "v7.0.0 release commit 422b4b0223335d18c7d5f005ffcdd93719575c20",
+      "locator": "testDeletesReservation, testCanBlackoutAroundReservations, testIfTotallyConflictsThenDeleteOccurrence",
+      "condition": "Unit tests use repository/notification test doubles and exercise selected conflict-handler branches only; not executed in this review.",
+      "applicability": "Supports candidate acceptance-test questions but does not establish concurrency, full permissions, or real deployment behavior.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C10",
+      "title": "MRBS simultaneous-booking and edit defaults",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b/web/systemdefaults.inc.php",
+      "version": "MRBS main commit cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b",
+      "locator": "Lines 349–365",
+      "condition": "The multiple-room simultaneous-booking setting and approved-booking no-change setting default false; area/approval conditions apply.",
+      "applicability": "Do not infer hold/edit or resource-capacity enforcement from the product name.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "C11",
+      "title": "MRBS NEWS and series-edit fix",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b/NEWS",
+      "version": "MRBS main commit cb496dfc98eef1e1097bc7fed1c9daa31f2f8f2b; identifies v1.12.2 dated 2026-05-26",
+      "locator": "v1.12.2 entry lines 8–115, especially 114–115",
+      "condition": "Release notes describe a fix for editing a series when prevent_simultaneous_bookings is enabled and refer to issue #3965.",
+      "applicability": "Provides release-history/regression evidence; exact supported version must be rechecked at evaluation.",
+      "access_utc": "2026-10-12T01:08:48Z–2026-10-12T01:13:29Z (bounded research window; exact per-fetch seconds unavailable)",
+      "observed_operation": "Opened the exact URL, navigated to the locator, and checked the stated condition; no source code or tests were executed."
+    },
+    {
+      "id": "R01",
+      "title": "SQLite write-ahead logging — independent reviser recheck",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Current official SQLite documentation as accessed 2026-10-12; no release pin; WAL-reset section last updated 2026-08-25",
+      "locator": "§1, §2.2 and §11, especially lines 71–73, 97–100 and 191–197",
+      "access_utc": "2026-10-12T01:24:04Z",
+      "observed_operation": "Opened the official SQLite WAL documentation and read the host/network-filesystem restriction, one-writer condition, and WAL-reset version/fix note; no code was executed.",
+      "condition": "WAL requires database processes on the same host, does not work over network filesystems, and permits only one writer. The documented WAL-reset bug affects versions through 3.51.2, is fixed in 3.51.3 and later, and has backports in 3.50.7 and 3.44.6.",
+      "applicability": "Independently rechecks MI-01 and m-02. The one-application-service topology is a proposed architecture derived from these database constraints; runtime selection must recheck currently supported versions."
+    },
+    {
+      "id": "R02",
+      "title": "SQLite transaction control — independent reviser recheck",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version": "Current official SQLite documentation as accessed 2026-10-12; no release pin",
+      "locator": "§2.1–2.2, especially lines 38–51",
+      "access_utc": "2026-10-12T01:24:22Z",
+      "observed_operation": "Opened the official SQLite transaction page at the transaction sections and read writer concurrency, DEFERRED/IMMEDIATE behavior, and SQLITE_BUSY conditions; no code was executed.",
+      "condition": "SQLite supports multiple simultaneous readers but only one simultaneous writer. BEGIN IMMEDIATE starts a write transaction immediately and may return SQLITE_BUSY if another writer is active.",
+      "applicability": "Independently rechecks MI-01 and supports acquiring the write reservation before checking availability; it does not establish all-resource application atomicity by itself."
+    }
+  ]
+}

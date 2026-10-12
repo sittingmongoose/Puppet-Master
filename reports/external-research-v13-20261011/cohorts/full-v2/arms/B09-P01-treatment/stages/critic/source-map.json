@@ -1,0 +1,297 @@
+[
+  {
+    "source_id": "K1",
+    "title": "Koha Manual 24.05 — Circulation",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/circulation.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Check out/check in barcode fields, lines 76–83 and 530–533",
+      "Bundle checkout/checkin and scan verification, lines 744–795",
+      "Offline circulation multiple-computer transaction sorting/processing and limitations, lines 2239–2266"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed barcode checkout; bundle return prompts child-item scans but permits explicit skip/deferred verification; multi-computer offline replay requires collecting and ordering device logs, and offline processing misses some server checks. This is library workflow evidence, not this group's configuration.",
+    "governing_condition_default_exception": "Bundle content confirmation can be bypassed with a specific button; offline device logs must be combined and sorted to maintain issue-before-return order; offline rules may miss server-side patron checks.",
+    "applicability": "Useful mature alternative; informs kit and LAN-outage design. Not evidence that Koha is configured for this group.",
+    "investigator_observed_operation": "Barcode circulation; kit-like bundles; offline transactions from multiple computers are uploaded, sorted consistently, and replayed; skipped bundle verification can be completed later.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed barcode checkout; bundle return prompts child-item scans but permits explicit skip/deferred verification; multi-computer offline replay requires collecting and ordering device logs, and offline processing misses some server checks. This is library workflow evidence, not this group's configuration."
+  },
+  {
+    "source_id": "K2",
+    "title": "Koha Manual 24.05 — Cataloging",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/cataloging.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Damaged status field and circulation effect, lines 3034–3055",
+      "Withdrawn field and availability display, lines 2893–2910"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed damaged status is search-unavailable but does not itself block checkout/checkin; the separate restricted status blocks checkout; withdrawn items remain records and are unavailable. Long-overdue cron can mark lost. These states are not themselves evidence of a return.",
+    "governing_condition_default_exception": "Damaged status alone does not prevent checkout or check-in; circulation blocking requires another restriction/configuration.",
+    "applicability": "Do not equate a displayed damaged/unavailable label with a hard maintenance hold.",
+    "investigator_observed_operation": "Damaged status marks an item unavailable in search; withdrawn status is represented on the item record.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed damaged status is search-unavailable but does not itself block checkout/checkin; the separate restricted status blocks checkout; withdrawn items remain records and are unavailable. Long-overdue cron can mark lost. These states are not themselves evidence of a return."
+  },
+  {
+    "source_id": "K3",
+    "title": "Koha Manual 24.05 — Tools",
+    "exact_url": "https://koha-community.org/manual/24.05/en/html/tools.html",
+    "released_version_or_commit": "Koha Manual 24.05; rendered documentation build label 20261011",
+    "locator": [
+      "Log viewer and log system preferences, lines 2055–2070; actor/action/object details lines 2072–2111"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed actions are logged according to configured preferences and fields vary by module. This page does not establish reasoned corrections, reversals, or immutable loan history.",
+    "governing_condition_default_exception": "Some modules are not logged until preferences are enabled; values available vary by module.",
+    "applicability": "History/audit claims require enabling and testing relevant logs; reasoned correction events are not established by this page.",
+    "investigator_observed_operation": "Staff actions appear in the log viewer according to configured module logging preferences.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed actions are logged according to configured preferences and fields vary by module. This page does not establish reasoned corrections, reversals, or immutable loan history."
+  },
+  {
+    "source_id": "S1",
+    "title": "Snipe-IT — Managing Assets",
+    "exact_url": "https://snipe-it.readme.io/docs/managing-assets",
+    "released_version_or_commit": "Official online docs, no release version displayed; updated label says 6 months ago",
+    "locator": [
+      "Asset tag uniqueness and barcode recommendation, lines 15–20",
+      "Accountable target/person recommendation, lines 29–34"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed unique asset tags; barcode labels are recommended rather than required. Docs discourage assigning assets to non-person targets. General asset workflow only.",
+    "governing_condition_default_exception": "Labels are recommended but are not required by the software; docs discourage checkout to non-person targets.",
+    "applicability": "Supports unique physical identity; general IT asset workflow may not fit neighborhood tool lending.",
+    "investigator_observed_operation": "Every asset has a unique asset tag; barcode labels are recommended; custom fields can cover attributes.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed unique asset tags; barcode labels are recommended rather than required. Docs discourage assigning assets to non-person targets. General asset workflow only."
+  },
+  {
+    "source_id": "S2",
+    "title": "Snipe-IT — General Settings",
+    "exact_url": "https://snipe-it.readme.io/docs/general-settings",
+    "released_version_or_commit": "Official online docs, no release version displayed",
+    "locator": [
+      "Checkin Preferences, 'Require Notes on Checkin/Checkout', lines 131–138",
+      "Email preference section around lines 90–127"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed an administrator can require a note on every checkout/checkin. This does not establish distinct correction reasons, preserved prior values, or immutable history.",
+    "governing_condition_default_exception": "Setting is configurable and applies to every checkout/check-in; it does not establish immutable history, distinct correction reasons or a correction workflow.",
+    "applicability": "Candidate control for return explanations; must be tested for actor, retention and correction semantics.",
+    "investigator_observed_operation": "An administrator can require notes on all check-ins and checkouts.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed an administrator can require a note on every checkout/checkin. This does not establish distinct correction reasons, preserved prior values, or immutable history."
+  },
+  {
+    "source_id": "S3",
+    "title": "Snipe-IT release v8.7.2",
+    "exact_url": "https://github.com/grokability/snipe-it/releases/tag/v8.7.2",
+    "released_version_or_commit": "Release v8.7.2",
+    "locator": [
+      "Release notes: duplicate checkout requests on double-click no longer create duplicate rows; source release page around line 510"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "The cited v8.7.2 release page does not show a duplicate-checkout-on-double-click fix; it mentions double logging on restores and other changes. The investigator's carried statement is not supported by this exact citation.",
+    "governing_condition_default_exception": "Fix is claimed for v8.7.2; actual scanner/client retry behavior still requires testing against selected version.",
+    "applicability": "Regression history makes duplicate scan/retry testing consequential.",
+    "investigator_observed_operation": "Release notes identify and fix duplicate checkout rows from double-clicking.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "The cited v8.7.2 release page does not show a duplicate-checkout-on-double-click fix; it mentions double logging on restores and other changes. The investigator's carried statement is not supported by this exact citation."
+  },
+  {
+    "source_id": "S4",
+    "title": "Snipe-IT release v8.8.0",
+    "exact_url": "https://github.com/grokability/snipe-it/releases/tag/v8.8.0",
+    "released_version_or_commit": "Release v8.8.0, marked latest at access",
+    "locator": [
+      "Release heading and Latest badge, lines 130–134"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed the page labels v8.8.0 as Latest at this access. Latest status is time-sensitive; use a selected tag in any later validation.",
+    "governing_condition_default_exception": "Latest status may change; use an explicitly selected release/tag during procurement and validation.",
+    "applicability": "Anchors version comparison for Snipe-IT.",
+    "investigator_observed_operation": "Identifies v8.8.0 as latest release at the time of access.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed the page labels v8.8.0 as Latest at this access. Latest status is time-sensitive; use a selected tag in any later validation."
+  },
+  {
+    "source_id": "S5",
+    "title": "Snipe-IT v8.8.0 — Asset model",
+    "exact_url": "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Models/Asset.php",
+    "released_version_or_commit": "v8.8.0 tag",
+    "locator": [
+      "Searchable attributes and relations, lines 2575–2636",
+      "availableForCheckout(), lines 3124–3173",
+      "checkOut(), expected_checkin assignment, active assignee update and CheckoutableCheckedOut event, lines 3200–3311"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed tagged model assigns expected_checkin (if supplied), last_checkout and target, saves, emits a checkout event and increments a counter. Model-level checkout code does not establish an automatic return or correction workflow.",
+    "governing_condition_default_exception": "expected_checkin is a nullable expected date field, not an observed automatic return mechanism; the model method performs state assignment and dispatches an event, while complete API/UI transaction behavior requires separate testing.",
+    "applicability": "Code-level context for the general asset-manager alternative.",
+    "investigator_observed_operation": "At v8.8.0 tag, asset search includes name/tag/serial and status/model/category relations; checkout stores expected_checkin and last_checkout, associates an assignee, saves, then emits a checkout event and increments the counter. Availability checks require no current assignee, no deletion, and deployable status.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed tagged model assigns expected_checkin (if supplied), last_checkout and target, saves, emits a checkout event and increments a counter. Model-level checkout code does not establish an automatic return or correction workflow."
+  },
+  {
+    "source_id": "W1",
+    "title": "SpaceWorks commit d3cd13 — individual asset fix moves",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a",
+    "released_version_or_commit": "Immutable commit d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a; release tag relation not established",
+    "locator": [
+      "Commit title and changed files; backend/apps/admin_api/views_assets.py fix-shelf endpoint; backend/tests/test_handover_broken_reject.py test_individual_asset_can_move_to_fix_and_back"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed immutable commit adds individual-asset fix-status action, requires individual tracking and staff edit permission, locks/transitions/audits the row, and tests state/count outcomes. Commit-to-release relationship is not established; tests were inspected, not executed.",
+    "governing_condition_default_exception": "Applies to individually tracked products and requires staff edit permission; release tag for this commit was not identified.",
+    "applicability": "Strong evidence of a direct repair-hold feature, but check exact deployed release and regression behavior.",
+    "investigator_observed_operation": "Adds a staff action to move an individually tracked asset to/from a fix shelf, permission checks, transactional state changes and audit logging; tests assert maintenance/available states and quantity counters.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed immutable commit adds individual-asset fix-status action, requires individual tracking and staff edit permission, locks/transitions/audits the row, and tests state/count outcomes. Commit-to-release relationship is not established; tests were inspected, not executed."
+  },
+  {
+    "source_id": "W2",
+    "title": "SpaceWorks commit 6707d60 — reconcile fix counts",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/6707d60b2bd680288d45785e94af52bc347f1897",
+    "released_version_or_commit": "Immutable commit 6707d60b2bd680288d45785e94af52bc347f1897; release tag relation not established",
+    "locator": [
+      "Commit title/diff and test for stale individual asset fix counts"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed immutable commit reconciles individual asset status buckets before product counts and adds a regression test for stale counts. Test was inspected, not run.",
+    "governing_condition_default_exception": "A later fix shows the feature’s summary counts required correction; no execution of that test was performed for this assignment.",
+    "applicability": "Availability counts should be independently reconciled in any candidate pilot.",
+    "investigator_observed_operation": "Fixes stale repair-shelf quantity reconciliation and adds regression coverage.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed immutable commit reconciles individual asset status buckets before product counts and adds a regression test for stale counts. Test was inspected, not run."
+  },
+  {
+    "source_id": "W3",
+    "title": "SpaceWorks commit c371d6 — broken rejection and fix shelf",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/commit/c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+    "released_version_or_commit": "Immutable commit c371d6e25f7dc618e3d100ded56fa02a3e84261b; release tag relation not established",
+    "locator": [
+      "Commit title, individual-asset limitation and quantity-mode tests in backend/tests/test_handover_broken_reject.py"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed this earlier change supports quantity-mode reject-broken handling and explicitly blocks that flow for individually tracked items pending per-unit status handling; later W1 adds an individual fix action. Release mapping remains unknown.",
+    "governing_condition_default_exception": "Early behavior supported quantity tracking but deferred individual tracked damage flow; subsequent commit W1 adds an individual asset fix action.",
+    "applicability": "Shows feature evolution and need to verify exact build/tracking mode.",
+    "investigator_observed_operation": "Introduces reject-broken and needs-fix shelf behavior; individual-asset route was added later in W1.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed this earlier change supports quantity-mode reject-broken handling and explicitly blocks that flow for individually tracked items pending per-unit status handling; later W1 adds an individual fix action. Release mapping remains unknown."
+  },
+  {
+    "source_id": "W4",
+    "title": "SpaceWorks self-hosting guide at commit d3cd13",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a/docs/self-hosting.md",
+    "released_version_or_commit": "Immutable commit d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a",
+    "locator": [
+      "Production Compose stack, upgrade and backup instructions; PostgreSQL dump and MinIO volume backup, around lines 280–395"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed pinned self-host guide uses a Docker Compose stack with PostgreSQL and MinIO, documents backing up/restoring both, and includes an optional scheduled send_return_reminders command for overdue issued/partial requests. Scheduling/configuration is conditional; pinning this guide does not prove every release behaves the same.",
+    "governing_condition_default_exception": "Database dump does not include MinIO objects; restore/recovery remains operator responsibility.",
+    "applicability": "Directly informs no-paid-cloud and recovery burden; indicates a heavier stack than this small group may need.",
+    "investigator_observed_operation": "Describes a self-host deployment with PostgreSQL and separate object storage; backup instructions require both DB and MinIO data.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed pinned self-host guide uses a Docker Compose stack with PostgreSQL and MinIO, documents backing up/restoring both, and includes an optional scheduled send_return_reminders command for overdue issued/partial requests. Scheduling/configuration is conditional; pinning this guide does not prove every release behaves the same."
+  },
+  {
+    "source_id": "W5",
+    "title": "SpaceWorks modules documentation",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/docs/MODULES.md",
+    "released_version_or_commit": "Moving main branch; rendered page does not expose exact commit SHA; not a released build identity",
+    "locator": [
+      "Core evidence module and mandatory issue/return photos plus return remark, lines 191–199 and 244–250"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed mutable main documentation makes evidence_uploads and QR scanning core: issue photo, return photo plus remark, and box QR scan are mandatory; the page also describes per-unit asset tracking. Not a release-pinned guarantee; verify exact candidate build.",
+    "governing_condition_default_exception": "This is mutable main-branch documentation, not a release guarantee; verify against a pinned candidate build before relying on it.",
+    "applicability": "Identifies a meaningful privacy/operational fit risk to test.",
+    "investigator_observed_operation": "States evidence upload is core and each issue/return requires a photo; return also requires a remark; photo objects may expire while event metadata remains.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed mutable main documentation makes evidence_uploads and QR scanning core: issue photo, return photo plus remark, and box QR scan are mandatory; the page also describes per-unit asset tracking. Not a release-pinned guarantee; verify exact candidate build."
+  },
+  {
+    "source_id": "W6",
+    "title": "SpaceWorks changelog",
+    "exact_url": "https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/CHANGELOG.md",
+    "released_version_or_commit": "Moving main branch; latest recorded changelog section observed is 0.7.5 (2026-08-11); main not pinned",
+    "locator": [
+      "Release process/versioning and changelog caveat lines 189–195; latest recorded release lines 192–195"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed moving changelog says releases are built from main with generated build tags, records gaps in 0.3.0–0.5.1, and its latest visible section is 0.7.5 dated 2026-08-11. This does not establish the current latest installable release.",
+    "governing_condition_default_exception": "This changelog snapshot alone does not establish that 0.7.5 is the current latest installable release.",
+    "applicability": "Maturity and release/version identification must be verified before adoption.",
+    "investigator_observed_operation": "Explains release tags derive from main and states changelog gaps for versions 0.3.0–0.5.1; latest visible section is 0.7.5.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed moving changelog says releases are built from main with generated build tags, records gaps in 0.3.0–0.5.1, and its latest visible section is 0.7.5 dated 2026-08-11. This does not establish the current latest installable release."
+  },
+  {
+    "source_id": "D1",
+    "title": "SQLite — Appropriate Uses For SQLite",
+    "exact_url": "https://www.sqlite.org/whentouse.html",
+    "released_version_or_commit": "Official online documentation; page updated 2025-05-31",
+    "locator": [
+      "SQLite client/server and network-filesystem use cases, especially server-style app and many-writer discussion"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed SQLite can sit behind one application server that serializes requests, but docs recommend client/server DB for direct simultaneous access by many computers over a network and note one writer at a time.",
+    "governing_condition_default_exception": "A single server process may serialize high-level access; simultaneous writers may warrant a client-server DB.",
+    "applicability": "Rules out sharing one SQLite DB file directly between volunteer laptops; single-host app remains a possible lightweight architecture.",
+    "investigator_observed_operation": "Distinguishes local embedded DB from server-mediated access and discourages direct multi-host access over network filesystems.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed SQLite can sit behind one application server that serializes requests, but docs recommend client/server DB for direct simultaneous access by many computers over a network and note one writer at a time."
+  },
+  {
+    "source_id": "D2",
+    "title": "SQLite — Write-Ahead Logging",
+    "exact_url": "https://www.sqlite.org/wal.html",
+    "released_version_or_commit": "Official online documentation; page updated 2026-08-25",
+    "locator": [
+      "WAL multi-process host constraint, lines 70–73; concurrency and release caveat around lines 70–90"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed WAL needs participating processes on one host, and upstream records the WAL-reset corruption fix in 3.51.3+ plus some backports; earlier versions can be affected under specific concurrent write/checkpoint conditions.",
+    "governing_condition_default_exception": "Use patched SQLite releases; the documented WAL-reset issue affected earlier versions and has fixed versions/backports.",
+    "applicability": "SQLite-on-server can be considered only with a pinned supported version and local storage.",
+    "investigator_observed_operation": "WAL supports concurrent readers with one writer and requires all participating processes on the same host; it does not work over a network filesystem.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed WAL needs participating processes on one host, and upstream records the WAL-reset corruption fix in 3.51.3+ plus some backports; earlier versions can be affected under specific concurrent write/checkpoint conditions."
+  },
+  {
+    "source_id": "D3",
+    "title": "PostgreSQL 18 — Constraints",
+    "exact_url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+    "released_version_or_commit": "PostgreSQL 18 documentation",
+    "locator": [
+      "Unique constraints and partial indexes, lines 177–198"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed unique constraints and partial unique indexes; unique permanent item identity and uniqueness only among active loans are separate constraints.",
+    "governing_condition_default_exception": "Null behavior matters; require non-null item IDs and model any active-loan uniqueness explicitly.",
+    "applicability": "Basis for enforcing a unique physical-item identity and, where suitable, one-active-loan rule.",
+    "investigator_observed_operation": "Database-level unique constraints prevent duplicate identifiers; partial unique indexes can express uniqueness over selected rows.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed unique constraints and partial unique indexes; unique permanent item identity and uniqueness only among active loans are separate constraints."
+  },
+  {
+    "source_id": "D4",
+    "title": "PostgreSQL 18 — Explicit Locking",
+    "exact_url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+    "released_version_or_commit": "PostgreSQL 18 documentation",
+    "locator": [
+      "Row-level FOR UPDATE locking behavior, lines 101–113"
+    ],
+    "access_utc": "2026-10-12T01:00:12Z batch-start; web tool did not expose per-page completion",
+    "observed_operation": "Confirmed FOR UPDATE blocks competing writers/lockers on the same row until transaction end. Correctness still depends on consistently locking and rechecking state within the transaction.",
+    "governing_condition_default_exception": "Locks must be held within a transaction with appropriate validation; locking alone does not replace unique constraints or idempotency checks.",
+    "applicability": "Supports serialized checkouts and damage transitions under two-client concurrency.",
+    "investigator_observed_operation": "A transaction using FOR UPDATE blocks competing updates/locks to the same rows until its transaction ends.",
+    "critic_assessment": "independently opened the exact URL in the carried bounded source index; see critic_review",
+    "critic_review": "Confirmed FOR UPDATE blocks competing writers/lockers on the same row until transaction end. Correctness still depends on consistently locking and rechecking state within the transaction."
+  }
+]

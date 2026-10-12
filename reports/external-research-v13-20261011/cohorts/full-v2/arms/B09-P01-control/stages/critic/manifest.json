@@ -1,0 +1,62 @@
+{
+  "version": "er13.immutable-stage-handoff.v1",
+  "stage": "critic",
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-B09-P01-control-critic-v1",
+  "status": "completed",
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "files": [
+    {
+      "relative_path": "critique.md",
+      "sha256": "9aa1737f4f6e018b12e66e2ca90da4b4debbc92a64eda9fb8033719e7ba5d769",
+      "bytes": 13019
+    },
+    {
+      "relative_path": "source-map.json",
+      "sha256": "c2677e7350c6b207156465ed21e29d9e6a6842ecc559ddc3f249daf427975a8b",
+      "bytes": 32230
+    },
+    {
+      "relative_path": "assignment.md",
+      "sha256": "384d2ac12d90a27169a4bcb96c379eac068096c9e7b5dda518008444365e757c",
+      "bytes": 9747
+    },
+    {
+      "relative_path": "input-map.json",
+      "sha256": "7b91c71805c3e2553892d6f4bb8a7d65c48b7f9f75d6e40d3a35d3a874d406f6",
+      "bytes": 1985
+    },
+    {
+      "relative_path": "freeze.json",
+      "sha256": "d8931b8f10dae62fc1e24bfd99d4e24c13bec8d5ca7f2a8d118a22cf9cc0e9c1",
+      "bytes": 4397
+    },
+    {
+      "relative_path": "request.json",
+      "sha256": "c10315db6dc0c41b8aa351ae7af5fe1a405d62496064f58870f08b7f789d4529",
+      "bytes": 7258
+    },
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "b09de0e45fdd05a2a8de7c8a66037b43a2690935bc480084943ef3acb5571496",
+      "bytes": 10516
+    },
+    {
+      "relative_path": "status.json",
+      "sha256": "1f9498bc9128d99d43854f181087a63a52ece940e54d53c982e915a9a65c7b18",
+      "bytes": 3966
+    },
+    {
+      "relative_path": "native-goal-active.json",
+      "sha256": "053cd1a67f374514ce91ac8877ac864f9f5d38f90ce2e3ef9ed134b6ad937c92",
+      "bytes": 513
+    },
+    {
+      "relative_path": "native-goal-terminal.json",
+      "sha256": "739cf8f0f110c442585b58eed32ccf7b463c1231a8b743a2eb868fc111c7e982",
+      "bytes": 842
+    }
+  ],
+  "source_inventory": [],
+  "enrichment": "Separate records only; never edit this terminal manifest or frozen members"
+}

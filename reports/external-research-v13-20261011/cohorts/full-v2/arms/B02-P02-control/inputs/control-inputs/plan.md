@@ -1,0 +1,11 @@
+# Draft plan: Shared workshop booking and equipment readiness
+
+The draft proposes a local service with a staff interface and a member browser form on the workshop network. A booking is an interval plus tool, supervisor and extraction-unit identifiers. One transaction checks overlaps and stores all required resources together. The daily view joins bookings with fault and maintenance records. Member edits can cancel their bookings but cannot alter maintenance holds. No payment or identity-document collection is included.
+
+Recurring maintenance is expanded one month ahead. A later fault marks affected bookings as needs review; staff then cancel or move them and record a reason. The draft assumes every tool has capacity one and a supervisor can supervise only one job at a time. It has not established whether those assumptions match actual classes and paired operations. Browser forms cache unsubmitted drafts during outages, but the proposal leaves unclear whether an offline member sees a reliable availability view or can receive a confirmed booking.
+
+Staff can export a dated booking-history report, with names visible only to staff. Retention duration and the policy for urgent displacement remain open. A single staff machine is initially responsible for backup and recovery; remote hosting is an alternative to investigate, not selected. Proposed checks cover competing reservations, partial resource assignment, maintenance horizon rollover, daylight-saving changes and fault handling after acceptance. No live system or data has been used. Adoption should start with staff shadow use before exposing a member booking route.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.
