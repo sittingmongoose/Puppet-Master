@@ -48,52 +48,73 @@
      128 = no shift, scale = twice the largest shift. The specular map is the rim lit by L = (-0.55, -0.83), a sharp
      line in the outer 1.5 px and a soft glow across the bevel, plus a fainter exit light on the far side. The rim map
      (alpha only) is where the pointer's shine may show. */
-  var mapCache = new Map();
-  function sdf(px, py, hx, hy, R) {
+  var mapCache = new Map(), mapBytes = 0, MAP_BYTES = 64 * 1024 * 1024, MAP_COUNT = 80;
+  function cachedMap(key) {
+    var rec = mapCache.get(key); if (!rec) return null;
+    mapCache.delete(key); mapCache.set(key, rec); return rec.value;
+  }
+  function keepMap(key, value) {
+    var bytes = 0;
+    ['disp', 'spec', 'rim'].forEach(function (name) { if (value[name]) bytes += value[name].length * 2; });
+    if (value.maps) value.maps.forEach(function (url) { bytes += url.length * 2; });
+    if (value.raw) Object.keys(value.raw).forEach(function (name) { bytes += value.raw[name].byteLength || 0; });
+    if (bytes > MAP_BYTES) return value;
+    while (mapCache.size && (mapBytes + bytes > MAP_BYTES || mapCache.size >= MAP_COUNT)) {
+      var oldest = mapCache.keys().next().value; mapBytes -= mapCache.get(oldest).bytes; mapCache.delete(oldest);
+    }
+    mapCache.set(key, { value: value, bytes: bytes }); mapBytes += bytes; return value;
+  }
+  function sdf(px, py, hx, hy, R, out) {
     var qx = Math.abs(px) - hx, qy = Math.abs(py) - hy, d, nx, ny;
     if (qx > 0 && qy > 0) { var l = Math.hypot(qx, qy); d = R - l; nx = Math.sign(px) * qx / l; ny = Math.sign(py) * qy / l; }
     else if (qx > qy) { d = R - qx; nx = Math.sign(px) || 1; ny = 0; } else { d = R - qy; nx = 0; ny = Math.sign(py) || 1; }
-    return [d, nx, ny];
+    out = out || [0, 0, 0]; out[0] = d; out[1] = nx; out[2] = ny; return out;
   }
   function profile(t) { return Math.pow(1 - Math.pow(1 - t, 4), 0.25); }
-  function buildMaps(W, H, R, B, T, mag, lightK, ring) {
+  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
     ring = ring || [3, 8];
-    var key = [W, H, R, B, T, mag, lightK, ring].join('|');
-    if (mapCache.has(key)) return mapCache.get(key);
-    var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), rim = new Float32Array(n), edge = new Float32Array(n);
+    var key = [W, H, R, B, T, mag, lightK, ring, !!specOnly].join('|'), hit = cachedMap(key);
+    if (hit) return hit;
+    var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), edge = new Float32Array(n), active = [];
     var hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
+    var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R), d = s[0];
+      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R, scratch), d = s[0];
       if (d <= 0) continue;
       /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
       var sharp = Math.min(ring[0], B * 0.3), soft = Math.min(ring[1], B * 0.8), u = Math.min(1, Math.max(0, (d - sharp) / (soft - sharp)));
       edge[i] = 1 - u * u * (3 - 2 * u);
+      if (edge[i] >= 0.004) active.push(i);
       var vx = 0, vy = 0;
       if (mag > 1) { vx = -px * (1 - 1 / mag); vy = -py * (1 - 1 / mag); }
       if (d < B) {
-        var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
-        var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = T * Math.tan(a - b);
-        /* keep the bend physical for any size: content is pulled in from at most half a bevel deeper than the rim
-           band, and never from past the centre (a small lens would otherwise mirror its label) */
-        m = Math.max(0, Math.min(m, 1.55 * B - d, (mag > 1 ? 0.45 : 0.78) * (Math.min(W, H) / 2 - d)));
-        vx -= s[1] * m; vy -= s[2] * m;
-        var face = s[1] * L0 + s[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
-        var line = Math.exp(-d / 1.25), glow = Math.exp(-d / Math.min(6, B * 0.22)) * 0.10;
-        sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.10);
-        rim[i] = Math.min(1, Math.exp(-d / 2.2) + Math.exp(-d / (B * 0.5)) * 0.35);
+        var bend = bends.get(d);
+        if (!bend) {
+          var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
+          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = T * Math.tan(a - b);
+          /* keep the bend physical for any size: content is pulled in from at most half a bevel deeper than the rim
+             band, and never from past the centre (a small lens would otherwise mirror its label) */
+          m = Math.max(0, Math.min(m, 1.55 * B - d, (mag > 1 ? 0.45 : 0.78) * (Math.min(W, H) / 2 - d)));
+          bend = [m, Math.exp(-d / 1.25), Math.exp(-d / Math.min(6, B * 0.22)) * 0.10]; bends.set(d, bend);
+        }
+        vx -= s[1] * bend[0]; vy -= s[2] * bend[0];
+        var face = s[1] * L0 + s[2] * L1, lighting = lights.get(face);
+        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.4) + Math.pow(Math.max(0, -face), 2.0) * 0.62; lights.set(face, lighting); }
+        var line = bend[1], glow = bend[2];
+        sp[i] = Math.min(1, lighting * (line + glow) * lightK + line * 0.10);
       }
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
-    function img(fill) { var c = document.createElement('canvas'); c.width = W; c.height = H; var g = c.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return c.toDataURL('image/png'); }
+    var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
-      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge },
-      disp: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
+      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge, active: new Uint32Array(active) },
+      disp: specOnly ? null : img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
-    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
-    mapCache.set(key, res);
-    return res;
+    return keepMap(key, res);
   }
 
   /* ---- optics: filters ------------------------------------------------------------------------------------------ */
@@ -114,28 +135,36 @@
        - the bevel band is softened by a sub-pixel blur, so the compressed surroundings at the rim read as a smooth
          reflection rather than as broken letters. */
   function buildLensMaps(W, H, R, B, T, mag, ca, lightK) {
-    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|');
-    if (mapCache.has(key)) return mapCache.get(key);
+    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|'), hit = cachedMap(key);
+    if (hit) return hit;
     var n = W * H, ch = [new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n)];
     var rimA = new Float32Array(n), sp = new Float32Array(n), hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
     var cap = Math.min(3.5, B * 0.8), kR = 1 - ca, kB = 1 + ca;
+    var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R), d = s0[0];
+      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R, scratch), d = s0[0];
       if (d <= 0) continue;
       var mx = -px * (1 - 1 / mag), my = -py * (1 - 1 / mag), bx = 0, by = 0;
       if (d < B) {
-        var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
-        var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
-        bx = -s0[1] * m; by = -s0[2] * m;
-        var face = s0[1] * L0 + s0[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
-        var line = Math.exp(-d / 1.1), glow = Math.exp(-d / Math.min(5, B * 0.5)) * 0.18;
-        sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.12);
+        var bend = bends.get(d);
+        if (!bend) {
+          var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
+          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
+          bend = [m, Math.exp(-d / 1.1), Math.exp(-d / Math.min(5, B * 0.5)) * 0.18]; bends.set(d, bend);
+        }
+        bx = -s0[1] * bend[0]; by = -s0[2] * bend[0];
+        var face = s0[1] * L0 + s0[2] * L1, lighting = lights.get(face);
+        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.4) + Math.pow(Math.max(0, -face), 2.0) * 0.62; lights.set(face, lighting); }
+        var line = bend[1], glow = bend[2];
+        sp[i] = Math.min(1, lighting * (line + glow) * lightK + line * 0.12);
       }
       var u = Math.min(1, Math.max(0, (d - 0.6) / 2.2)); rimA[i] = 1 - u * u * (3 - 2 * u);
       ch[0][i] = mx + bx * kR; ch[1][i] = my + by * kR; ch[2][i] = mx + bx; ch[3][i] = my + by; ch[4][i] = mx + bx * kB; ch[5][i] = my + by * kB;
       for (var c = 0; c < 6; c++) { var v = Math.abs(ch[c][i]); if (v > max) max = v; }
     }
-    function img(fill) { var cv = document.createElement('canvas'); cv.width = W; cv.height = H; var g = cv.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return cv.toDataURL('image/png'); }
+    var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     function dmap(cx2, cy2) { return img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(cx2[i] / k * 127); D[o + 1] = 128 + Math.round(cy2[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }); }
     var res = {
@@ -143,9 +172,7 @@
       rim: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(rimA[i] * 255); } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
-    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
-    mapCache.set(key, res);
-    return res;
+    return keepMap(key, res);
   }
   function lensFilter(W, H, m, rimBlur, id) {
     var key = id || (m.maps[1].length + ':' + W + 'x' + H + ':' + m.scale.toFixed(2) + ':' + rimBlur);
@@ -203,15 +230,42 @@
          sharp, with a slight red-blue split; a ring image, transparent inside.
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
-  var wallImg = null, wallUrl = '', frosts = {}, frostKey = '', bakeQ = new Set(), bakeT = 0;
-  function currentWallUrl() {
+  var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
+  var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeFlight = null, bakeEpoch = 0;
+  function currentWallUrl(refresh) {
+    /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
+       surface signature and resolve the computed variable once per choice, with a fresh read before loading it. */
+    var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+    if (!refresh && key === wallSourceKey) return wallSourceUrl;
     var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
-    return m ? m[1] : '';
+    var u = m ? m[1] : '';
+    if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
+    wallSourceKey = key; return u;
   }
   function withWall(cb) {
-    var u = currentWallUrl(); if (!u) return;
-    if (wallImg && wallUrl === u && wallImg.complete) { cb(wallImg); return; }
-    var im = new Image(); im.decoding = 'async'; im.onload = function () { wallImg = im; wallUrl = u; cb(im); }; im.src = u;
+    var u = currentWallUrl(true); if (!u) { cb(null); return; }
+    var rec = wallSources.get(u);
+    if (rec) {
+      wallSources.delete(u); wallSources.set(u, rec);
+      if (rec.ready) { wallUrl = u; cb(rec.im); } else rec.waiters.push(cb);
+      return;
+    }
+    var im = new Image(); im.decoding = 'async'; im.__lgWallUrl = u;
+    rec = { im: im, ready: false, waiters: [cb] }; wallSources.set(u, rec);
+    function finish(ok) {
+      im.onload = im.onerror = null; rec.ready = ok;
+      if (!ok) wallSources.delete(u);
+      else {
+        if (u === currentWallUrl()) wallUrl = u;
+        /* Two decoded stills are enough for returning to the previous look; pending loads stay single-flight. */
+        var ready = Array.from(wallSources.keys()).filter(function (key) { return wallSources.get(key).ready; });
+        while (ready.length > 2) wallSources.delete(ready.shift());
+      }
+      var waiters = rec.waiters; rec.waiters = []; waiters.forEach(function (done) { done(ok ? im : null); });
+    }
+    im.onload = function () { finish(im.naturalWidth > 0 && im.naturalHeight > 0); };
+    im.onerror = function () { finish(false); }; im.src = u;
   }
   /* where an element sits when nothing is moving it: its layout position from the offset chain, which ignores
      transforms (a board sliding in, a card leaning toward the pointer, a lifted card). The frost and the rim are
@@ -238,11 +292,47 @@
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } };
+  function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
+  function applyFrost(rec) {
+    if (frostKey === rec.key) return;
+    frosts = rec.urls; frostKey = rec.key;
+    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+  }
   function makeFrosts(im, done) {
-    var c = cover(im), key = wallUrl.length + ':' + c.vw + 'x' + c.vh + ':' + root.getAttribute('data-theme');
-    if (frostKey === key) { done(); return; }
-    var pending = 0;
-    Object.keys(FROST).forEach(function (name) {
+    var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
+    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (frostKey === key) { done(true); return; }
+    var cached = frostCache.get(key);
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    var job = frostJobs.get(key);
+    if (job && job.epoch === epoch) { job.waiters.push(done); return; }
+    var names = Object.keys(FROST);
+    job = { key: key, epoch: epoch, pending: names.length, blobs: {}, waiters: [done] }; frostJobs.set(key, job);
+    function finish(name, blob) {
+      job.blobs[name] = blob;
+      if (--job.pending) return;
+      if (frostJobs.get(key) === job) frostJobs.delete(key);
+      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      valid = valid && names.every(function (n) { return !!job.blobs[n]; });
+      if (valid) {
+        var rec = { key: key, urls: {}, bytes: 0 };
+        names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
+        /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
+        var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
+        applyFrost(rec);
+        while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
+          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
+        }
+        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
+        if (previous !== rec.urls && previousUncached) {
+          Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
+        }
+      }
+      var waiters = job.waiters; job.waiters = []; waiters.forEach(function (cb) { cb(valid); });
+    }
+    names.forEach(function (name) {
       var F = FROST[name], pad = F.blur * 3, W = c.vw + pad * 2, H = c.vh + pad * 2;
       var src = document.createElement('canvas'); src.width = W; src.height = H; var g = src.getContext('2d');
       /* fill the margin with a slightly larger copy, so the blur has real colour to pull from at the window's edges */
@@ -250,20 +340,21 @@
       g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
       var out = document.createElement('canvas'); out.width = c.vw; out.height = c.vh; var o = out.getContext('2d');
       o.filter = 'blur(' + F.blur + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad, -pad); o.filter = 'none';
-      pending++;
-      out.toBlob(function (b) {
-        if (frosts[name]) URL.revokeObjectURL(frosts[name]);
-        frosts[name] = URL.createObjectURL(b); root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')');
-        if (--pending === 0) { frostKey = key; done(); }
-      }, 'image/png');
+      out.toBlob(function (b) { finish(name, b); }, 'image/png');
     });
   }
-  function bakeRing(e, kind, im) {
+  function currentBake(job, im) {
+    return job && job.epoch === bakeEpoch && isGlass() && job.e.isConnected && job.e.__lgBake === job && job.e.__lgSig === job.sig &&
+      job.e.getAttribute('data-lg-kind') === job.kind && job.wall === wallSourceId && job.theme === root.getAttribute('data-theme') &&
+      job.vw === innerWidth && job.vh === innerHeight && (!im || im.__lgWallUrl === currentWallUrl());
+  }
+  function bakeRing(e, kind, im, job) {
+    if (!currentBake(job, im)) return;
     var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
     if (W < 4 || H < 4) return;
     var r = anchor(e); r = { left: r.x, top: r.y };
     var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
-    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring), raw = m.raw, c = cover(im);
+    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring, true), raw = m.raw, c = cover(im);
     var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
     var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d');
     g.filter = 'saturate(' + k.sat + ')';
@@ -274,29 +365,59 @@
       var x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0, i00 = (y0 * SW + x0) * 4 + ch, i10 = i00 + 4, i01 = i00 + SW * 4, i11 = i01 + 4;
       return (S[i00] * (1 - fx) + S[i10] * fx) * (1 - fy) + (S[i01] * (1 - fx) + S[i11] * fx) * fy;
     }
-    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, a = raw.edge[i]; if (a < 0.004) continue;
+    for (var j = 0; j < raw.active.length; j++) {
+      var i = raw.active[j], x = i % W, y = (i / W) | 0, a = raw.edge[i];
       var vx = raw.dx[i], vy = raw.dy[i], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
       O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
     }
     var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d').putImageData(out, 0, 0);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     oc.toBlob(function (b) {
-      if (!e.isConnected) return;
+      if (!currentBake(job, im)) return;
+      if (!b) { e.__lgSig = null; return; }
+      var lp = layoutPos(e);
+      if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
+        e.__lgSig = null; mount(e, kind); return;
+      }
       if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
       e.__lgRing = URL.createObjectURL(b); e.style.setProperty('--lg-ring', 'url(' + e.__lgRing + ')');
     }, 'image/png');
   }
+  function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
-    bakeT = 0; if (!isGlass() || !bakeQ.size) return;
+    bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
+    var flight = { epoch: bakeEpoch }; bakeFlight = flight;
+    function finish(failed) {
+      if (bakeFlight !== flight) return;
+      bakeFlight = null;
+      if (failed) { bakeQ.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeQ.clear(); }
+      scheduleBakes();
+    }
     withWall(function (im) {
-      makeFrosts(im, function () {
-        var list = Array.from(bakeQ); bakeQ.clear();
-        (function step() { var t0 = performance.now(); while (list.length && performance.now() - t0 < 12) { var it = list.shift(); if (it[0].isConnected) bakeRing(it[0], it[1], im); } if (list.length) requestAnimationFrame(step); })();
+      if (bakeFlight !== flight) return;
+      if (!im || flight.epoch !== bakeEpoch || !isGlass()) { finish(true); return; }
+      if (im.__lgWallUrl !== currentWallUrl()) { finish(false); return; }
+      bakeQ.forEach(function (job, e) { if (!currentBake(job, im)) bakeQ.delete(e); });
+      if (!bakeQ.size) { finish(false); return; }
+      flight.vw = innerWidth; flight.vh = innerHeight;
+      makeFrosts(im, function (ok) {
+        if (bakeFlight !== flight) return;
+        if (!ok) { finish(im.__lgWallUrl === currentWallUrl() && innerWidth === flight.vw && innerHeight === flight.vh); return; }
+        var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
+        (function step() {
+          bakeFrame = 0;
+          if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
+          var t0 = performance.now();
+          while (next < list.length && performance.now() - t0 < 12) { var job = list[next++]; if (currentBake(job, im)) bakeRing(job.e, job.kind, im, job); }
+          if (next < list.length) bakeFrame = requestAnimationFrame(step); else finish(false);
+        })();
       });
     });
   }
-  function queueBake(e, kind) { bakeQ.add([e, kind]); if (!bakeT) bakeT = setTimeout(flushBakes, 60); }
+  function queueBake(e, kind) {
+    var job = { e: e, kind: kind, sig: e.__lgSig, epoch: bakeEpoch, wall: wallSourceId, theme: root.getAttribute('data-theme'), vw: innerWidth, vh: innerHeight };
+    e.__lgBake = job; bakeQ.set(e, job); scheduleBakes();
+  }
 
   /* mount or refresh one glass element; sheets bake, menus blur live (fast CSS blur), lenses refract live */
   function mount(e, kind) {
@@ -310,7 +431,8 @@
     var R = radiusOf(e, W, H);
     if (k.bake) {
       var lp = anchor(e);
-      var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + currentWallUrl().length + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
+      currentWallUrl();
+      var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + wallSourceId + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
       if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
       return null;
     }
@@ -327,8 +449,27 @@
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
   }
+  function unmount(e) {
+    bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
+    if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
+    if (e.__lgRing) { URL.revokeObjectURL(e.__lgRing); e.__lgRing = null; }
+    ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
+    if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
+  }
   function unmountAll() {
-    glassSet.forEach(function (e) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgSig = null; });
+    if (typeof suspendLensMotion === 'function') suspendLensMotion();
+    bakeEpoch++; bakeFlight = null; bakeQ.clear();
+    if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
+    if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
+    /* Keep connected sheets' finished images, as before: returning to Glass paints immediately while a changed
+       sheet is rebaked. Removed surfaces release their images through unmount; shared frost remains bounded. */
+    glassSet.forEach(function (e) {
+      if (!e.isConnected) { unmount(e); return; }
+      e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
+      e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter');
+    });
+    frostJobs.clear();
+    if (typeof pruneLensFilters === 'function') pruneLensFilters();
   }
   /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
   var scrollQ = false;
