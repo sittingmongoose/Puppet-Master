@@ -1,0 +1,396 @@
+{
+  "schema_version": 1,
+  "worker": "codex-pm7-glyph-compose",
+  "task": "P4 ONLY existingRMmovie bounded hardware samples",
+  "status": "COMPLETED_FOR_REVIEW; CONTINUOUS_ACCEPTANCE_UNVERIFIED/HOLD",
+  "analysis_checkpoint": "c0874b6435fb8e14d529bfca4aac39c39f63d373",
+  "required_sole_commit_parent": "c0874b6435fb8e14d529bfca4aac39c39f63d373",
+  "case_ids": [
+    "NEW-NARROW-glass-light-RM"
+  ],
+  "old_capture_binding": {
+    "actual_tested_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+    "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "page_bytes": 18866028,
+    "helper_sha256": "2694f969617718f1146372d4601fd4aa4ec14ed860738b22e95c52f442bf9c93",
+    "frozen_driver_sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+    "browser_session": "bccf248bcd89",
+    "browser_default_codec_not_this_movie": "hevc",
+    "H264_recorder": {
+      "id": "00b268f3dab6",
+      "unit": "p1000-record-00b268f3dab6",
+      "source": "window",
+      "window_id": "0x2c00003",
+      "codec": "h264",
+      "resolution": "1920x1080",
+      "fps": 60,
+      "encoder": "h264_nvenc",
+      "status": "complete"
+    },
+    "actual_renderer_and_viewport": {
+      "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+      "viewport": {
+        "width": 700,
+        "height": 900
+      },
+      "DPR": 1,
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
+    },
+    "before_recording_viewport": {
+      "utc_ms": 1791800605042,
+      "width": 700,
+      "height": 900,
+      "DPR": 1,
+      "layout": "narrow",
+      "tab_width": 20
+    },
+    "source_movie": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n3-narrow-source816-focus-route/n3-narrow-new.mp4",
+      "bytes": 7078752,
+      "sha256": "76a8a206591dccd5368ced9d0c86f123e58fd7605f77e3108a78d13971341d4d"
+    },
+    "new_capture": false,
+    "old_recorded_case_status": "MEASURED_PENDING_FRAME_REVIEW",
+    "old_visual_row_status": "ACT_OBSERVED; CONTINUOUS_VISUAL_CRITERION_UNVERIFIED/HOLD"
+  },
+  "authorization": {
+    "only_movie_sha256": "76a8a206591dccd5368ced9d0c86f123e58fd7605f77e3108a78d13971341d4d",
+    "interval_seconds_including_margins": [
+      8.947507080078125,
+      11.769507080078125
+    ],
+    "maximum_full_exports": 24,
+    "maximum_crop_counterparts": 24,
+    "new_recordings_authorized_or_started": 0,
+    "new_browsers_authorized_or_started": 0
+  },
+  "hardware_extraction": {
+    "host": "192.168.50.179",
+    "decoder": "h264_cuvid/CUDA",
+    "installed_FFmpeg_version": "9.0.2",
+    "fallback": false,
+    "stream_codec": "h264",
+    "source_avg_frame_rate": "5669000/94483",
+    "source_time_base": "1/16000",
+    "full_frame_dimensions": [
+      1920,
+      1080
+    ],
+    "actual_full_exports": 24,
+    "actual_crop_counterparts": 24,
+    "actual_sheet": 1,
+    "source_pts_bounds": [
+      8.95,
+      11.767
+    ],
+    "eligible_original_packets_in_window": 170,
+    "one_hardware_decode_job_total": 1,
+    "hardware_decoded_frames_including_keyframe_seek_dependencies": 231,
+    "decode_errors": 0,
+    "exported_outside_interval": 0,
+    "sampling_gap_ms_bounds": [
+      116.0,
+      134.0
+    ],
+    "decoder_commands": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/cuda-extraction-command.json",
+      "bytes": 1815,
+      "sha256": "3d75a62c8f47b1f989305317dd2e4dd733fe017b66099d596b3baf7f86075ec2"
+    },
+    "decoder_log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/cuda-extraction.stderr",
+      "bytes": 15729,
+      "sha256": "44493bce35416e7a4726db177788389c60d0e1aac4575849379166f91ba048ed"
+    },
+    "demux_metadata_command": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/bounded-packet-metadata-command.json",
+      "bytes": 603,
+      "sha256": "1338bc49e99127585a1c3217680d086ae708328eba5d70ef5a91e6db75ec1870"
+    },
+    "sample_plan": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/sample-plan.json",
+      "bytes": 7567,
+      "sha256": "a30257d830c68b2b8c8a0d121817caf77a4e8669e0e309bcc2c75f6c3d1f9522"
+    }
+  },
+  "time_mapping": {
+    "exact_old_trace_UTC_ms": [
+      1791800616233,
+      1791800618055
+    ],
+    "actual_exposure_UTC_calibration": null,
+    "legacy_estimated_first_frame_UTC_ms": 1791800606785.493,
+    "legacy_video_zero_estimate_UTC_ms": 1791800605543.355,
+    "legacy_fields_differ_ms": 1242.137939,
+    "legacy_formula": "unitStopping UTC minus94.483s movie duration minus100ms; +/-500ms unvalidated heuristic",
+    "legacy_claimed_uncertainty_ms": 500,
+    "note": "Exact source PTS retained. Per-frame nominal heuristic UTC values are NOT exposure timestamps or a calibrated uncertainty bound. No old timing field corrected.",
+    "old_timing_binding": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/timing.json",
+      "bytes": 53035,
+      "sha256": "6e0c0c990ac64fd47b6780f21ca7da33f69885224693181f3bde0d4b4f8e51e1"
+    }
+  },
+  "sampled_mechanical_findings": {
+    "all24_target_visible": true,
+    "targetless_or_blank_scene_samples": 0,
+    "rest_samples": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "dark_lit_samples": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "violet_return_samples": [
+      21,
+      22,
+      23,
+      24
+    ],
+    "observed_glyph": "14px sparkles, three visible parts; actualconcept role/direct own-button host, neverhistory/spark substitution",
+    "lit_and_still": "Dark native lit paint and unchanged sampled three-part arrangement observed. Nativecrop decoded RGB is byte-identical in05-09 and separately10-20; no part movement is apparent at sampledPTS. This is sparse observation, not continuous certification.",
+    "available_postleave_return": "Violet three-part paint is visible again21-24 at the same matched position. It resembles the initialviolet rest pose, but its decoded RGB differs from01-04; exact baseline pixel/CSS identity is UNVERIFIED.",
+    "clipping": "No visibly missing/cut sparkle part in these24matched fullframes/crops. Source14px/H2644:2:0 compression limits tiny-edge assessment; no source/look approval inferred.",
+    "native_crop_pixel_groups": [
+      {
+        "samples": [
+          1
+        ],
+        "RGB_sha256": "606326e5bab7e1a770abda87dece2e1f379fae88526d9aa38b66c8b0ed0b445a"
+      },
+      {
+        "samples": [
+          2,
+          3,
+          4
+        ],
+        "RGB_sha256": "67c76deb75666f08c119547c840d670d82f18391d77e4dacfa53f85a691db437"
+      },
+      {
+        "samples": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "RGB_sha256": "3c57f2f7de327c30d072a423ae888c9eaf431900d34e68a08ee0cf79e01aa5fe"
+      },
+      {
+        "samples": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "RGB_sha256": "74adcdf74db4bee699076a4dd6998b94703a5f5e18fc0f18970eb8cfb71a9eb0"
+      },
+      {
+        "samples": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "RGB_sha256": "86becebb43294052544679eb9da474d04c3101764ae7a18afdd862e88bbb1b92"
+      }
+    ],
+    "sheet": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/target-contact-sheet.png",
+      "bytes": 38992,
+      "sha256": "ddf86bedc4d0056dbbca1e445c751422807fff1f22d28dd0a366ab4693703a73"
+    },
+    "review_method": "All24fullframes inspected first, then native28x52crops atx0,y424;6xnearest-neighbor sheet fordisplay only. Actual full and native crop pixels retained."
+  },
+  "supporting_old_probe_summary": {
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/old-rm-case-support.json",
+      "bytes": 501275,
+      "sha256": "a7ecd7c8135b10fc81d2df25d953133ff43e29b4b669c718a22ebd8d29704790"
+    },
+    "trace_rows": 111,
+    "invisible_samples": 0,
+    "own_hover_true_samples": 104,
+    "own_hover_false_samples": 7,
+    "paired_hide": false,
+    "probe_lit": true,
+    "probe_still": true,
+    "late700ms_rows": 42,
+    "late_parts_shapes": 1,
+    "late_running_animations": 0,
+    "before_ink": "rgb(95, 63, 186)",
+    "active_ink": "rgb(23, 34, 42)",
+    "halo_alpha_before_and_active": 0,
+    "halo_stroke_opacity_before_and_active": 0,
+    "trusted_hover_UTC_ms": 1791800616341,
+    "trusted_leave_UTC_ms": 1791800618272,
+    "after_leave_native_sample": null,
+    "after_leave_RM_state": "Helper immediately resets no-preference after trustedleave; no postleave native sample. Do not claim allreturn samples remainunderRM.",
+    "probe_only_acceptance": false
+  },
+  "cause_certainty": {
+    "proven": "The correct700x900scene and20x44tab/SVG14 are present in these24movie samples, at the old probe/screenshot coordinates. The fixed0,435crop would contain this glyph for THESE samples, but does not cover wholehost.",
+    "old_blank_or_fragment_surface_cause": "UNKNOWN; nothing inP4 proves a recorder/page cause for earlier cells or othercases.",
+    "nineteen_other_paired_hide_causes_transferred_to_RM": false,
+    "RM_has_zero_invisible_or_pairedhide_samples": true,
+    "timing_issue": "Originalact plan began592ms beforeRMtrace under an uncalibrated mapping; this newbounded selection supplies matched sampledposes, without correcting originals.",
+    "prior_raw_or_verdict_changed": false
+  },
+  "remaining_P4_gaps": [
+    "Uninterrupted/no-flicker/continuous paint between selected samples remainsUNVERIFIED: only24of170eligiblePTS exported,116..134ms gaps.",
+    "Movie exposure UTC/input sync remainsuncalibrated; +/-500ms is heuristic, not established accuracy.",
+    "Exact native baseline paint identity afterleave and postleave RM state have no old probe binding.",
+    "Root/source owner must decide how these specific sampled facts bear on retained criteria; Code grants no look/source/fullcriterion approval."
+  ],
+  "conditional_minimum_plan": {
+    "execution_authorized": false,
+    "case_ids": [
+      "NEW-NARROW-glass-light-RM"
+    ],
+    "trigger": "Only if root/source owner requires stronger uninterrupted continuity or an RM-after-leave binding than these24samples can establish. No missing static pose requires an immediate new recording.",
+    "minimum_recording_request": {
+      "normal_host": "P1000 192.168.50.179, ordinary installed global helper admission, one owned session, hardware H264",
+      "frozen_artifact": "Same approved source816/publication0a8 appbb87, with actual then-current authorized head/hash verified; never relabel olde6f movie.",
+      "viewport_before_recording": {
+        "CSS_width": 700,
+        "CSS_height": 900,
+        "DPR": 1
+      },
+      "published_setup": "Use the same supported O55 narrow window route and trusted published header look-menu to select GlassLight; show the same Welcome window and actual20x44demo tab. Establish setup and reducedMotion BEFORE recording. No forced geometry/alternate target.",
+      "target": ".o55-demopill > svg.nx.nx-r-concept.o55-sg[data-nx=\"sparkles\"]",
+      "native_host": ".o55-demopill",
+      "bounded_sequence": [
+        {
+          "pose": "rest",
+          "trusted_pointer": [
+            680,
+            870
+          ],
+          "hold_ms": 700
+        },
+        {
+          "pose": "own-button hover / lit and still under RM",
+          "trusted_pointer": [
+            10,
+            450
+          ],
+          "hold_ms": 1400
+        },
+        {
+          "pose": "leave / return to rest with RM retained through final observation",
+          "trusted_pointer": [
+            680,
+            870
+          ],
+          "hold_ms": 700
+        }
+      ],
+      "maximum_new_recording_seconds": 5,
+      "capture_constraints": "Start and stop through normal installed helper; profile/runtime/output local on P1000, normal global caps/admission honored, no exclusive FPS claim. Read actual renderer/DPR/viewport and bind exact head/page/session/H264 receipts. Record full scene, then source-owner/root reviews actual film.",
+      "support_probes": "Only the existing unchanged native identity/paint/host/parts/animation observations and trusted event log; no eligibility/predicate/threshold change, no opacity hide/contrast/screenshot inside motion window, no old pill or source driver execution.",
+      "missing_facts_to_bind": "Visible uninterrupted same-target rest/hover/return, actual RM state after leave, and defensible movie/input mapping. Native probe facts alone cannot pass the visual criterion.",
+      "excluded": "Any other look/pose/movie,15normal narrow/P3,4chips/83STOP poses,other5focus,RMmenu replay,source/colour/geometry/bridge/driver/predicate repair.",
+      "approval_required": "Separate same-channel root GO; this packet executes none of this request."
+    }
+  },
+  "verdict": {
+    "execution": "P4_BOUNDED_EXISTING_MOVIE_CHECK_COMPLETED_FOR_REVIEW",
+    "sampled_poses": "OBSERVED_REST_DARK_LIT_STILL_VIOLET_RETURN_AT_SELECTED_PTS",
+    "continuous_acceptance": "UNVERIFIED/HOLD",
+    "root_or_source_criterion_discharge": false,
+    "all20_continuity_rows": "HOLD unchanged:4chips+16narrow includingthisRM; this packet changes no immutable verdict."
+  },
+  "retained_external_holds": [
+    "N1NOELIGIBLE and originalmistakenresume-spark row",
+    "BasicLight realHOST2.49; Jared/NoPills pairingchoice;83remainingchipposes/bothlabels/RM STOP",
+    "N2strictzero15:53exact,6missingafter,9nonzeroWH; original68>=3/min3.14 and<.1flags unchanged",
+    "N4fourrealinputs/staticstubs/no producer;UNVERIFIED/HOLD",
+    "R1heldGD_RMmenu causeUNDETERMINED; no replay",
+    "Originalglyph2272CRLF findings/15paths FAILEDexit2; no normalization/exemption/bypass",
+    "MandatoryWindowsrail/GLY4/fullsource-root/landing; no source/canon/look orFPS/performance approval",
+    "P1/P2/P3/P5 NOTGO; other5normalnarrowfocus unrun/excluded"
+  ],
+  "sealed_raw": {
+    "manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/SHA256SUMS",
+      "bytes": 12516,
+      "sha256": "4a2ec4286df5bc969af403c8759cbdb1132b59107e3e17171b0128aa0bcaf1a9"
+    },
+    "entry_count": 76,
+    "observations": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/observations.json",
+      "bytes": 17832,
+      "sha256": "c6966fed610524cfad3cdea0225670cec59ac371f76fcabcbc9cc62ffb5c527f"
+    },
+    "input_bindings": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/input-bindings.json",
+      "bytes": 2125,
+      "sha256": "2d1b49b97cbbeaf423fbf242e19295f1ae96f2185d15208baae30241352778d4"
+    },
+    "full_frame_index": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/extraction-result.json",
+      "bytes": 14483,
+      "sha256": "b0a1be13b5b6570cb0a27f34f66b66b946174fe0c5a35c6a43137f100fc7e33b"
+    },
+    "crop_index": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/crop-bindings.json",
+      "bytes": 15123,
+      "sha256": "e9e5c2d2b5567bdbd2be8eb03324959fb68f037ea4e32e07937ee42a49d46265"
+    },
+    "surface_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/surface-and-target-match.json",
+      "bytes": 2565,
+      "sha256": "910ff1076962c0953210352edf779e5061958916eac87f8a8e647abb8c8bb09e"
+    },
+    "owned_GPU_cleanup": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/p1000-runtime-cleanup.json",
+      "bytes": 1070,
+      "sha256": "7b87474f94358b5cd15a0da903a9f135ce6afbc1dee581b23cdb1f0cdb9fd2ef"
+    }
+  },
+  "frozen_source_and_pages": {
+    "main": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "source": "81617137658b89ace8af7eeac2baf8c5918364f8",
+    "publication": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+    "current_app_bytes": 18866028,
+    "current_app_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "current_rail_bytes": 19500575,
+    "current_rail_sha256": "454cc7ef4ce3f28a337585a1654f39dfc5e227399f03acb25cb65740a3ca30e9",
+    "initial_frozen_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-rm-existing-movie-20261012/local-frozen-preflight.json",
+      "bytes": 3974,
+      "sha256": "d4afaba0f16c331ccd4d16a7e42f7ffad0acb4700ebc8f803f0e41b99bbb244f"
+    },
+    "original519_559_PhaseA_and_owner_packets": "unchanged; no global969/passedchecks rerun"
+  },
+  "authorized_repo_paths": [
+    "reports/pm7-glyph-rm-existing-movie-20261012/NOTES.md",
+    "reports/pm7-glyph-rm-existing-movie-20261012/result.json"
+  ],
+  "completion_receipt": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-rm-existing-movie-review/completion/completion.json",
+  "final_resources": "P1000localruntime/movie removed;0ownedGPUjobs/browsers/recorders/profiles/servers/forwarders/children. Localmailwaiter disarmed at final closure; exactall0counts and dualrefs in completion receipt."
+}
