@@ -1,0 +1,148 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "B04-P01-control",
+  "scope": "COMPONENT",
+  "frozen_at_utc": "2026-10-12T01:08:58.016436+00:00",
+  "comparison_started": false,
+  "exclude_self": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 6485,
+      "sha256": "8ab9f36a09b7cb8db10f5798e82d84dc78e8f5171e6172f107591f8d4e1e1119"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 4474,
+      "sha256": "7969cda26b695fb7a1ebf029520854b52b93e9cb8da88017a640ad7ad2f45f44"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 6670,
+      "sha256": "6bdc382cae968174e502dfb2b6bfc2a82a337d007302c5c3e36a9a51c9b0cd86"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 2805,
+      "sha256": "4662f552229488881e9c14a9f2336d541cbe7146d6de1735a67480af60a9a483"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L1-primary-context.json",
+      "relative_path": "evidence/L1-primary-context.json",
+      "bytes": 15308,
+      "sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L2-primary-context.json",
+      "relative_path": "evidence/L2-primary-context.json",
+      "bytes": 6978,
+      "sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P1-Doc-library-shutil.rst.json",
+      "relative_path": "evidence/P1-Doc-library-shutil.rst.json",
+      "bytes": 13964,
+      "sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P10-primary-context.json",
+      "relative_path": "evidence/P10-primary-context.json",
+      "bytes": 3052,
+      "sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P2-Lib-shutil.py.json",
+      "relative_path": "evidence/P2-Lib-shutil.py.json",
+      "bytes": 25654,
+      "sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P3-Lib-test-test_shutil.py.json",
+      "relative_path": "evidence/P3-Lib-test-test_shutil.py.json",
+      "bytes": 30895,
+      "sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P4-Doc-library-os.rst.json",
+      "relative_path": "evidence/P4-Doc-library-os.rst.json",
+      "bytes": 4524,
+      "sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P5-Modules-_winapi.c.json",
+      "relative_path": "evidence/P5-Modules-_winapi.c.json",
+      "bytes": 4078,
+      "sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P6-Modules-posixmodule.c.json",
+      "relative_path": "evidence/P6-Modules-posixmodule.c.json",
+      "bytes": 6294,
+      "sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P7-LICENSE.json",
+      "relative_path": "evidence/P7-LICENSE.json",
+      "bytes": 14542,
+      "sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P8-primary-context.json",
+      "relative_path": "evidence/P8-primary-context.json",
+      "bytes": 760,
+      "sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P9-primary-context.json",
+      "relative_path": "evidence/P9-primary-context.json",
+      "bytes": 7752,
+      "sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W1-retrieval.json",
+      "relative_path": "evidence/W1-retrieval.json",
+      "bytes": 494,
+      "sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W2-retrieval.json",
+      "relative_path": "evidence/W2-retrieval.json",
+      "bytes": 514,
+      "sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W3-retrieval.json",
+      "relative_path": "evidence/W3-retrieval.json",
+      "bytes": 496,
+      "sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W4-retrieval.json",
+      "relative_path": "evidence/W4-retrieval.json",
+      "bytes": 497,
+      "sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/governing-instructions.json",
+      "relative_path": "evidence/governing-instructions.json",
+      "bytes": 5671,
+      "sha256": "513b676d33312bcd915c2fa949229914c826ff34c62fd49aa77b56ca086926f3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 9683,
+      "sha256": "3e1ab6cdc5c6fd16e7ceb067353d8a867696355c43fade8614a1dc451cf6c4bf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 15868,
+      "sha256": "f7da89de36b5e9296a1741f8b40f9af50f40682452beb372f8eb21053cd560fe"
+    }
+  ]
+}

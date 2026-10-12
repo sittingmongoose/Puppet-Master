@@ -1,0 +1,233 @@
+{
+  "schema": "er13.independent_input_verification.v1",
+  "arm_id": "B01-P02-control",
+  "packet_sha256": "72dc6ed10bdf823d24defb3e8ae49da1d8216b9c180d3bb4fd244c50732c0082",
+  "input_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/authored-manifest.json",
+    "bytes": 5366,
+    "sha256": "228409391aaafef8df9e095df2697f49bd0fd0d56ab8f59e16edc5de8d52b33c"
+  },
+  "verified_at_utc": "2026-10-12T01:19:11.308405+00:00",
+  "files": [
+    {
+      "path": "final.md",
+      "bytes": 19775,
+      "sha256": "952c02e024c29327fef60b22ff9f76f3e7a917f785aa18ee44b67646d01b570b",
+      "verified": true
+    },
+    {
+      "path": "criticism-dispositions.md",
+      "bytes": 7195,
+      "sha256": "e3af0c32ee271c8906771e3905257ea78a9a9b4a44882150cd78145f76372942",
+      "verified": true
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 11491,
+      "sha256": "2972650f8628b94b154243ae74047fa981c80809dd78d1d2fab9cc44c2b79c68",
+      "verified": true
+    },
+    {
+      "path": "native-goal-create.json",
+      "bytes": 593,
+      "sha256": "7edd2238e14f253f66ead5baf81f99749e5008a842ff55d920c08ffcbd6a7b0d",
+      "verified": true
+    },
+    {
+      "path": "native-goal-terminal.json",
+      "bytes": 923,
+      "sha256": "0452393b600869f91e8ed9f2592a09c60b720f9f532f77a95195092407c83535",
+      "verified": true
+    },
+    {
+      "path": "assignment.md",
+      "bytes": 8164,
+      "sha256": "979b1818e7a9265fa89a0a334d2688100e15bcb680412c908db8057d3fa30088",
+      "verified": true
+    },
+    {
+      "path": "input-map.json",
+      "bytes": 5091,
+      "sha256": "2a6a27cc3715cb1b5d535aea670761dc0981ee9fd0fc8c3c174ef323f135e9fd",
+      "verified": true
+    },
+    {
+      "path": "freeze.json",
+      "bytes": 8478,
+      "sha256": "145b5038096b466ef9669becccf4730f9574dfe91be006bd22543b583aed8a7a",
+      "verified": true
+    },
+    {
+      "path": "request.json",
+      "bytes": 8858,
+      "sha256": "b32d3e1edbfae08645fef1891856bb82b5635b14746c8233693c124c9f331a09",
+      "verified": true
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 12074,
+      "sha256": "5028fa7903f86dc63928043cfd386635eebc1551a374d2c4cf720a9111b723a4",
+      "verified": true
+    },
+    {
+      "path": "selection.json",
+      "bytes": 3660,
+      "sha256": "ba4b7cbdab0ab9234a6b2aea165935fda05c67ebeaea9c28c6d382243af1e246",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/brief.md",
+      "bytes": 755,
+      "sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/plan.md",
+      "bytes": 631,
+      "sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/draft.md",
+      "bytes": 3764,
+      "sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-index.json",
+      "bytes": 8938,
+      "sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/critique.md",
+      "bytes": 2584,
+      "sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "bytes": 35432,
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "bytes": 154639,
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "bytes": 89132,
+      "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "bytes": 4553,
+      "sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "bytes": 3659,
+      "sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "bytes": 1647,
+      "sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "bytes": 4576,
+      "sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "bytes": 4532,
+      "sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "bytes": 4522,
+      "sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "bytes": 4293,
+      "sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "bytes": 4250,
+      "sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "bytes": 4754,
+      "sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "verified": true
+    },
+    {
+      "path": "witnesses/assemble.stdout.txt",
+      "bytes": 2155,
+      "sha256": "1db81b0078254b5c97074558e33e2eb2a024469fc3a19e67d34c005f0d0f27a1",
+      "verified": true
+    },
+    {
+      "path": "witnesses/assemble.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "verified": true
+    },
+    {
+      "path": "witnesses/activation-context.json",
+      "bytes": 658,
+      "sha256": "6f3a670e0211407ef137b0ebfa5f45c544b49938f768f1c465e72f821efaaa86",
+      "verified": true
+    }
+  ],
+  "task_terminal_receipt": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P02-control/component-terminal-task.raw.json",
+    "bytes": 11557,
+    "sha256": "9101b098b08435f7210075d45af3acf49db96f01d73c6f2f7dd9f02453641925",
+    "task_identity_matches_assignment": true,
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "latestTerminalStatus": "completed"
+  },
+  "workspace_AGENTS": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "bytes": 20950,
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "evaluation_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "bytes": 3800,
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "bytes": 43132,
+    "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+    "sections_read": [
+      10,
+      12
+    ]
+  },
+  "coordinator_verification": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-input-verification.json",
+    "bytes": 1513,
+    "sha256": "66bf08fc5bd05b310dd0e614c735e52d0e6a48175e28adc5298a00b579ecb431"
+  },
+  "boundary": "Only assigned frozen inputs, the exact notified terminal receipts, workspace AGENTS, contract, handoff sections 10 and 12, bounded filename discovery and independent public primary sources. No active/admitted candidate path was opened or candidate witness script run."
+}

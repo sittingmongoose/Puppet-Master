@@ -1,0 +1,19 @@
+{
+  "schema": "er13.semantic_preservation_check.v1",
+  "arm_id": "B01-P01-treatment",
+  "preparation": {
+    "shared_scientific_inputs_identical": true,
+    "every_present_manifest_file_size_and_sha256_verified": true,
+    "cache_body_matches_independent_cpython3139_and_sqlite_retrieval": true,
+    "package_integrity_is_not_semantic_truth": true,
+    "cold_preparation_cost": "UNKNOWN in assigned packet",
+    "discovery_effectiveness": "NOT_ASSESSED_COMPONENT"
+  },
+  "semantic_inspection": {
+    "C1": "Both correction and governing BUSY/LOCKED branch checked; no successful-step throttle promise survives.",
+    "C2": "Counter/restart qualification and callback cancellation retained; no application execution inferred from upstream test source.",
+    "C3": "False external-file snapshot removed; immutable generation retention, copied-DB reference enumeration, fail-on-missing and restore checks inspected.",
+    "C4": "Online backup, ownership, bounded-memory intent, collision, cleanup, privacy, new workspace, closed-app copy, SQL dump and retired open-main copy survive."
+  },
+  "method_preservation_separate": "Semantic inspection of all partial final text is independent of byte-retention counts. Exact retention and replacement intervals reconstruct the partial final; they cannot qualify complete delivery."
+}

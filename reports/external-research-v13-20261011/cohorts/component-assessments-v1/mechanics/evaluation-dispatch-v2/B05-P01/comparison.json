@@ -1,0 +1,102 @@
+{
+  "schema": "er13.paired_comparison.v2",
+  "case_id": "B05-P01",
+  "scope": "COMPONENT",
+  "comparison_started_at_utc": "2026-10-12T01:08:01.039498+00:00",
+  "originals_frozen_before_comparison": true,
+  "original_manifests": [
+    {
+      "arm_id": "B05-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/manifest.json",
+      "manifest_sha256": "540e51b406c51fbbd3ea51ebc7ec34c19630b4545d102fb982ebced6f937159b",
+      "frozen_at_utc": "2026-10-12T01:07:00.898294+00:00"
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/manifest.json",
+      "manifest_sha256": "a69a671f189ffd2de9b0c32acc2f68699be1b9d03b6039a72783f2f453c1b97a",
+      "frozen_at_utc": "2026-10-12T01:07:00.899811+00:00"
+    }
+  ],
+  "arms": [
+    {
+      "arm_id": "B05-P01-control",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "native_reported_elapsed_seconds": 863,
+      "admission_to_native_terminal_seconds": 880.360231,
+      "admission_to_authored_snapshot_upper_bound_seconds": 953.481224,
+      "method_observability": "PARTIAL",
+      "native_linkage": "UNKNOWN beyond verified assigned objective/capture",
+      "billing": "UNKNOWN",
+      "terminal_task_pending_child_runs_observed": false
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "native_reported_elapsed_seconds": 869,
+      "admission_to_native_terminal_seconds": 896.691288,
+      "admission_to_authored_snapshot_upper_bound_seconds": 953.366064,
+      "method_observability": "PARTIAL",
+      "native_linkage": "UNKNOWN beyond verified assigned objective/capture",
+      "billing": "UNKNOWN",
+      "terminal_task_pending_child_runs_observed": false
+    }
+  ],
+  "matched_inputs": "Exact common brief/plan/draft/source-index bytes and CPython 3.13.9 target. Treatment has five exact public-body caches and fourteen navigable neighborhoods; control ordinary independent lookup. Both may expand research. Operational routes were assigned alike, but exact backend linkage/tier is not independently established.",
+  "finite_quality_signal": "Control receives finite source PASS, with nonmaterial locator/optional-test limits. Treatment receives source FAIL for omission of the Windows .bat/.cmd implicit-shell condition. Both correct the draft core errors and deliver complete proposals. This is a scoped original finding, not universal quality/reliability and not causal proof that cache use produced the omission.",
+  "defects": {
+    "control_material": [],
+    "treatment_material": [
+      "T01"
+    ],
+    "nonmaterial": [
+      "C01",
+      "C02",
+      "T02"
+    ],
+    "scientific_axes_assessed": 6,
+    "coverage_equal_for_declared_planning_review": true,
+    "source_quality_equivalent": false
+  },
+  "latency_observations": {
+    "treatment_minus_control_native_reported_seconds": 6,
+    "treatment_minus_control_admission_to_native_terminal_seconds": 16.331057,
+    "treatment_minus_control_admission_to_authored_snapshot_upper_bound_seconds": -0.11516,
+    "interpretation": "These are separate recorded observations. Last-write and final request-to-quiet times, queue splits, provider activity and occupancy are unknown. Immutable snapshot includes custody delay. The tiny snapshot difference is not a demonstrated speed benefit. Non-equivalent source grades preclude an equal-quality saving claim."
+  },
+  "preservation_and_method": "Cache creation/source-byte preservation is shared preparation, verified independently here. Both arms semantic/correction preservation reviewed separately. Byte hashes do not establish source coverage or semantic quality; treatment misses an available exception in a source it could independently expand. Actual read sequence/isolation and native assertion execution remain partially observable.",
+  "assigned_denominator": {
+    "arms": 2,
+    "delivered_complete": 2,
+    "source_passes": 1,
+    "source_failures": 1,
+    "time_eligible": 2,
+    "discarded_attempts": 0,
+    "treatment_consumption_per_passing_final": "UNDEFINED: zero treatment source passes; no complete billable-cost numerator.",
+    "complete_cost_per_pass": "UNKNOWN: one total source pass but complete candidate/preparation cost unavailable."
+  },
+  "resource_accounting": {
+    "candidate_product_cost": "UNKNOWN complete activity/context/billing; observed native elapsed is not a billing rate. Private cumulative counters are not republished or added.",
+    "preparation_cost": "UNKNOWN standalone cold package cost; warm prepared-component inputs disclosed.",
+    "independent_evaluation_cost": "Separate independent_evaluation; evaluator-owned primary lookup reused across this pair, not supplied to authors. Actual billing/provider activity unknown.",
+    "coordinator_v1_idle_costs": "UNCHANGED",
+    "publication_support_root_costs": "UNKNOWN; not reassigned to product",
+    "affordability_or_equal_quality_economy_claim": false
+  },
+  "provenance": "Verified native active/complete receipts match their exact assigned objectives and creation identities; frozen terminal task receipts report completed, hasPendingChildRuns=false for both. Independent native-session-to-delegation linkage, actual effort/service tier and full access-isolation telemetry remain UNKNOWN.",
+  "selection": null,
+  "selection_owner": "root only",
+  "promotion": "No campaign recipe selected or promoted. COMPONENT quality is an integration hypothesis only. No discovery effectiveness, cold full-pipeline success, repeatability/non-inferiority, or combined optimizer multiplication claim.",
+  "limits": [
+    "Imperfect blinding from names, paths/cache and prose.",
+    "One matched component case; no held-out inputs revealed.",
+    "No application caller code or executed product tests: external behavior UNASSESSED, not demanded for proposal delivery.",
+    "No repeated grader or repair cycle; these original findings cannot be revised. Any disputed finding requires a new separate adjudication preserving the original brief/findings/responses/objections."
+  ]
+}

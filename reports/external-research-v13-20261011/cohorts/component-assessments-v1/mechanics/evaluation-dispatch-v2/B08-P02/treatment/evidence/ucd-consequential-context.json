@@ -1,0 +1,178 @@
+[
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      189,
+      189
+    ],
+    "text": "00BC;VULGAR FRACTION ONE QUARTER;No;0;ON;<fraction> 0031 2044 0034;;;1/4;N;FRACTION ONE QUARTER;;;;\n"
+  },
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      224,
+      224
+    ],
+    "text": "00DF;LATIN SMALL LETTER SHARP S;Ll;0;L;;;;;N;;;;;\n"
+  },
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      305,
+      305
+    ],
+    "text": "0130;LATIN CAPITAL LETTER I WITH DOT ABOVE;Lu;0;L;0049 0307;;;;N;LATIN CAPITAL LETTER I DOT;;;0069;\n"
+  },
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      905,
+      905
+    ],
+    "text": "0390;GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS;Ll;0;L;03CA 0301;;;;N;GREEK SMALL LETTER IOTA DIAERESIS TONOS;;;;\n"
+  },
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      16421,
+      16421
+    ],
+    "text": "FDFA;ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM;Lo;0;AL;<isolated> 0635 0644 0649 0020 0627 0644 0644 0647 0020 0639 0644 064A 0647 0020 0648 0633 0644 0645;;;;N;ARABIC LETTER SALLALLAHOU ALAYHE WASALLAM;;;;\n"
+  },
+  {
+    "source_id": "UCD-DATA",
+    "line_range_1based": [
+      16700,
+      16700
+    ],
+    "text": "FF21;FULLWIDTH LATIN CAPITAL LETTER A;Lu;0;L;<wide> 0041;;;;N;;;;FF41;\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      1,
+      55
+    ],
+    "text": "# CaseFolding-15.1.0.txt\n# Date: 2023-05-12, 21:53:10 GMT\n# © 2023 Unicode®, Inc.\n# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.\n# For terms of use, see https://www.unicode.org/terms_of_use.html\n#\n# Unicode Character Database\n#   For documentation, see https://www.unicode.org/reports/tr44/\n#\n# Case Folding Properties\n#\n# This file is a supplement to the UnicodeData file.\n# It provides a case folding mapping generated from the Unicode Character Database.\n# If all characters are mapped according to the full mapping below, then\n# case differences (according to UnicodeData.txt and SpecialCasing.txt)\n# are eliminated.\n#\n# The data supports both implementations that require simple case foldings\n# (where string lengths don't change), and implementations that allow full case folding\n# (where string lengths may grow). Note that where they can be supported, the\n# full case foldings are superior: for example, they allow \"MASSE\" and \"Maße\" to match.\n#\n# All code points not listed in this file map to themselves.\n#\n# NOTE: case folding does not preserve normalization formats!\n#\n# For information on case folding, including how to have case folding\n# preserve normalization formats, see Section 3.13 Default Case Algorithms in\n# The Unicode Standard.\n#\n# ================================================================================\n# Format\n# ================================================================================\n# The entries in this file are in the following machine-readable format:\n#\n# <code>; <status>; <mapping>; # <name>\n#\n# The status field is:\n# C: common case folding, common mappings shared by both simple and full mappings.\n# F: full case folding, mappings that cause strings to grow in length. Multiple characters are separated by spaces.\n# S: simple case folding, mappings to single characters where different from F.\n# T: special case for uppercase I and dotted uppercase I\n#    - For non-Turkic languages, this mapping is normally not used.\n#    - For Turkic languages (tr, az), this mapping can be used instead of the normal mapping for these characters.\n#      Note that the Turkic mappings do not maintain canonical equivalence without additional processing.\n#      See the discussions of case mapping in the Unicode Standard for more information.\n#\n# Usage:\n#  A. To do a simple case folding, use the mappings with status C + S.\n#  B. To do a full case folding, use the mappings with status C + F.\n#\n#    The mappings with status T can be used or omitted depending on the desired case-folding\n#    behavior. (The default option is to exclude them.)\n#\n# =================================================================\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      63,
+      63
+    ],
+    "text": "0041; C; 0061; # LATIN CAPITAL LETTER A\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      71,
+      71
+    ],
+    "text": "0049; C; 0069; # LATIN CAPITAL LETTER I\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      72,
+      72
+    ],
+    "text": "0049; T; 0131; # LATIN CAPITAL LETTER I\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      121,
+      121
+    ],
+    "text": "00DF; F; 0073 0073; # LATIN SMALL LETTER SHARP S\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      146,
+      146
+    ],
+    "text": "0130; F; 0069 0307; # LATIN CAPITAL LETTER I WITH DOT ABOVE\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      147,
+      147
+    ],
+    "text": "0130; T; 0069; # LATIN CAPITAL LETTER I WITH DOT ABOVE\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      308,
+      308
+    ],
+    "text": "0390; F; 03B9 0308 0301; # GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS\n"
+  },
+  {
+    "source_id": "UCD-FOLD",
+    "line_range_1based": [
+      1340,
+      1340
+    ],
+    "text": "FF21; C; FF41; # FULLWIDTH LATIN CAPITAL LETTER A\n"
+  },
+  {
+    "source_id": "UCD-DERIVED-NORMALIZE",
+    "line_range_1based": [
+      1,
+      8
+    ],
+    "text": "# DerivedNormalizationProps-15.1.0.txt\n# Date: 2023-05-02, 13:20:58 GMT\n# © 2023 Unicode®, Inc.\n# Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.\n# For terms of use, see https://www.unicode.org/terms_of_use.html\n#\n# Unicode Character Database\n#   For documentation, see https://www.unicode.org/reports/tr44/\n"
+  },
+  {
+    "source_id": "UCD-DERIVED-NORMALIZE",
+    "line_range_1based": [
+      2941,
+      2941
+    ],
+    "text": "00AD          ; NFKC_CF;                # Cf       SOFT HYPHEN\n"
+  },
+  {
+    "source_id": "UCD-DERIVED-NORMALIZE",
+    "line_range_1based": [
+      2899,
+      2912
+    ],
+    "text": "# Derived Property:   NFKC_Casefold (NFKC_CF)\n#   This property removes certain variations from characters: case, compatibility, and default-ignorables.\n#   It is used for loose matching and certain types of identifiers.\n#   It is constructed by applying NFKC, CaseFolding, and removal of Default_Ignorable_Code_Points.\n#   The process of applying these transformations is repeated until a stable result is produced.\n#   WARNING: Application to STRINGS must apply NFC after mapping each character, because characters may interact.\n#            For more information, see [https://www.unicode.org/reports/tr44/]\n# Omitted code points are unchanged by this mapping.\n# @missing: 0000..10FFFF; NFKC_CF; <code point>\n\n#  All code points not explicitly listed for NFKC_Casefold\n#  have the value <code point>.\n\n0041          ; NFKC_CF; 0061           # L&       LATIN CAPITAL LETTER A\n"
+  },
+  {
+    "source_id": "UCD-NORMALIZATION-TEST",
+    "line_range_1based": [
+      84,
+      84
+    ],
+    "text": "00BC;00BC;00BC;0031 2044 0034;0031 2044 0034; # (¼; ¼; ¼; 1⁄4; 1⁄4; ) VULGAR FRACTION ONE QUARTER\n"
+  },
+  {
+    "source_id": "UCD-NORMALIZATION-TEST",
+    "line_range_1based": [
+      394,
+      394
+    ],
+    "text": "0390;0390;03B9 0308 0301;0390;03B9 0308 0301; # (ΐ; ΐ; ι◌̈◌́; ΐ; ι◌̈◌́; ) GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS\n"
+  },
+  {
+    "source_id": "UCD-NORMALIZATION-TEST",
+    "line_range_1based": [
+      14700,
+      14700
+    ],
+    "text": "FDFA;FDFA;FDFA;0635 0644 0649 0020 0627 0644 0644 0647 0020 0639 0644 064A 0647 0020 0648 0633 0644 0645;0635 0644 0649 0020 0627 0644 0644 0647 0020 0639 0644 064A 0647 0020 0648 0633 0644 0645; # (ﷺ; ﷺ; ﷺ; صلى الله عليه وسلم; صلى الله عليه وسلم; ) ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM\n"
+  },
+  {
+    "source_id": "UCD-NORMALIZATION-TEST",
+    "line_range_1based": [
+      14940,
+      14940
+    ],
+    "text": "FF21;FF21;FF21;0041;0041; # (Ａ; Ａ; Ａ; A; A; ) FULLWIDTH LATIN CAPITAL LETTER A\n"
+  }
+]

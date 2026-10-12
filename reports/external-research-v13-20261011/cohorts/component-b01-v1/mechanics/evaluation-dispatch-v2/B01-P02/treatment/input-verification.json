@@ -1,0 +1,251 @@
+{
+  "schema": "er13.independent_input_verification.v1",
+  "arm_id": "B01-P02-treatment",
+  "packet_sha256": "72dc6ed10bdf823d24defb3e8ae49da1d8216b9c180d3bb4fd244c50732c0082",
+  "input_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/authored-manifest.json",
+    "bytes": 5825,
+    "sha256": "2d2f7c728a56deac4ac820700f5819b881f34cda01ee4c22ac0900339f7517ff"
+  },
+  "verified_at_utc": "2026-10-12T01:19:11.310304+00:00",
+  "files": [
+    {
+      "path": "final.md",
+      "bytes": 23694,
+      "sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+      "verified": true
+    },
+    {
+      "path": "criticism-dispositions.md",
+      "bytes": 11071,
+      "sha256": "f5d35c55dcaf8b74a3fff5d21f7102cc6541b2f33edcba27e6e45878d0f24845",
+      "verified": true
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 18053,
+      "sha256": "505a294f8493193669c58dd410ed6cdd93255ae9a1b371d680b47582c7810292",
+      "verified": true
+    },
+    {
+      "path": "native-goal-create.json",
+      "bytes": 599,
+      "sha256": "d5595d4d52b0c4c6b088699f58d6ab36226a91a0c61189e963e4614b870b59dc",
+      "verified": true
+    },
+    {
+      "path": "amendments.json",
+      "bytes": 27292,
+      "sha256": "a3203a503ddffac593cddf5e700a598c966d142f89953a32d25ccda72fbae02c",
+      "verified": true
+    },
+    {
+      "path": "assemble.py",
+      "bytes": 8366,
+      "sha256": "95e73354fd8d64ba511e88ad067fd0cb9064e71f56753b740dba48d6451772c0",
+      "verified": true
+    },
+    {
+      "path": "assembly-results.json",
+      "bytes": 35363,
+      "sha256": "57944d3500a9650e5c4bb7c1338f3165e0a590599388293d249cbbc2553dcaa3",
+      "verified": true
+    },
+    {
+      "path": "assignment.md",
+      "bytes": 8531,
+      "sha256": "32752406b7a90940bd26f36c7f6d6b52fd2d03c50ab1d773a6fbacee5ac12a1d",
+      "verified": true
+    },
+    {
+      "path": "input-map.json",
+      "bytes": 5131,
+      "sha256": "2d5ec49012ae49c75161bd83440271e2c2546441d1053e3194b4318c636f37cf",
+      "verified": true
+    },
+    {
+      "path": "freeze.json",
+      "bytes": 8883,
+      "sha256": "1857d0d9c09a010e52b0841963ea92a32f3ef0075ca10cb36d21520e088c5b5c",
+      "verified": true
+    },
+    {
+      "path": "request.json",
+      "bytes": 9235,
+      "sha256": "af2657e6b9c4bcd3c788cb5d1a3a530f35bd9f0225e1580b791b73c225d9c1b2",
+      "verified": true
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 12475,
+      "sha256": "5b710607eec069c21bf32c19ccb31e2bf5e79a742475010e7d9afb0fbc54c71e",
+      "verified": true
+    },
+    {
+      "path": "selection.json",
+      "bytes": 3662,
+      "sha256": "4e07f333aaa191557008f9ee6390b111619b3f51dbc092345e2047d6d4a5895b",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/brief.md",
+      "bytes": 755,
+      "sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/plan.md",
+      "bytes": 631,
+      "sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/draft.md",
+      "bytes": 3764,
+      "sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-index.json",
+      "bytes": 8938,
+      "sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/critique.md",
+      "bytes": 2584,
+      "sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "bytes": 35432,
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "bytes": 154639,
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "bytes": 89132,
+      "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "bytes": 4553,
+      "sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "bytes": 3659,
+      "sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "bytes": 1647,
+      "sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "bytes": 4576,
+      "sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "bytes": 4532,
+      "sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "bytes": 4522,
+      "sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "bytes": 4293,
+      "sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "bytes": 4250,
+      "sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "verified": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "bytes": 4754,
+      "sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "verified": true
+    },
+    {
+      "path": "witnesses/source_reader.py",
+      "bytes": 1527,
+      "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "verified": true
+    },
+    {
+      "path": "witnesses/source-reader-results.json",
+      "bytes": 41551,
+      "sha256": "6c065c17b7a0d55704c27632fb78a9aec60be7cfec2f6324d24c6e77a1a28168",
+      "verified": true
+    },
+    {
+      "path": "witnesses/README.md",
+      "bytes": 433,
+      "sha256": "1816df969a28d462c96fb6405b6fee0dae2db1058288eb694374109635b5a459",
+      "verified": true
+    },
+    {
+      "path": "witnesses/capture-source-reader.py",
+      "bytes": 4205,
+      "sha256": "254d142b1d7b696a8e51e61d16d1f2ded5c8d36a93544bdf231950d2fff3c2dc",
+      "verified": true
+    }
+  ],
+  "task_terminal_receipt": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P02-treatment/component-terminal-task.raw.json",
+    "bytes": 4965,
+    "sha256": "6629f9d35c99db6e9a8a6c60419195079d10962df43a49e415c979440137a7cd",
+    "task_identity_matches_assignment": true,
+    "status": "interrupted",
+    "hasPendingChildRuns": false,
+    "latestTerminalStatus": "interrupted"
+  },
+  "workspace_AGENTS": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "bytes": 20950,
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "evaluation_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "bytes": 3800,
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "bytes": 43132,
+    "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+    "sections_read": [
+      10,
+      12
+    ]
+  },
+  "coordinator_verification": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-input-verification.json",
+    "bytes": 1513,
+    "sha256": "66bf08fc5bd05b310dd0e614c735e52d0e6a48175e28adc5298a00b579ecb431"
+  },
+  "boundary": "Only assigned frozen inputs, the exact notified terminal receipts, workspace AGENTS, contract, handoff sections 10 and 12, bounded filename discovery and independent public primary sources. No active/admitted candidate path was opened or candidate witness script run."
+}

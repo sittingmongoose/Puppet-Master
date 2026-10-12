@@ -1,0 +1,294 @@
+{
+  "purpose": "Permitted primary-source excerpt retrieval only; not an importer or security witness.",
+  "runner_command": "python3 -B ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/witnesses/capture-source-reader.py",
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "source_reader_copy": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/witnesses/source_reader.py",
+  "source_reader_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+  "interpretation": "Stdout is the actual line excerpt returned by the admitted helper for each listed source range. Source hashes are also in source-map.json. No importer was executed.",
+  "limits": [
+    "Excerpt retrieval validates neither product behavior nor app implementation.",
+    "The helper reads only the source IDs and ranges listed in its commands."
+  ],
+  "calls": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "14",
+        "--end",
+        "24"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [14, 24], \"full_lines\": 1023}\n14: The ZIP file format is a common archive and compression standard. This module\n15: provides tools to create, read, write, append, and list a ZIP file.  Any\n16: advanced use of this module will require an understanding of the format, as\n17: defined in `PKZIP Application Note`_.\n18: \n19: This module does not currently handle multi-disk ZIP files.\n20: It can handle ZIP files that use the ZIP64 extensions\n21: (that is ZIP files that are more than 4 GiB in size).  It supports\n22: decryption of encrypted files in ZIP archives, but it currently cannot\n23: create an encrypted file.  Decryption is extremely slow as it is\n24: implemented in native Python rather than C.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "96",
+        "--end",
+        "127"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [96, 127], \"full_lines\": 1023}\n96: .. data:: ZIP_STORED\n97: \n98:    The numeric constant for an uncompressed archive member.\n99: \n100: \n101: .. data:: ZIP_DEFLATED\n102: \n103:    The numeric constant for the usual ZIP compression method.  This requires the\n104:    :mod:`zlib` module.\n105: \n106: \n107: .. data:: ZIP_BZIP2\n108: \n109:    The numeric constant for the BZIP2 compression method.  This requires the\n110:    :mod:`bz2` module.\n111: \n112:    .. versionadded:: 3.3\n113: \n114: .. data:: ZIP_LZMA\n115: \n116:    The numeric constant for the LZMA compression method.  This requires the\n117:    :mod:`lzma` module.\n118: \n119:    .. versionadded:: 3.3\n120: \n121:    .. note::\n122: \n123:       The ZIP file format specification has included support for bzip2 compression\n124:       since 2001, and for LZMA compression since 2006. However, some tools\n125:       (including older Python releases) do not support these compression\n126:       methods, and may either refuse to process the ZIP file altogether,\n127:       or fail to extract individual files.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "193",
+        "--end",
+        "219"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [193, 219], \"full_lines\": 1023}\n193:    When mode is ``'r'``, *metadata_encoding* may be set to the name of a codec,\n194:    which will be used to decode metadata such as the names of members and ZIP\n195:    comments.\n196: \n197:    If the file is created with mode ``'w'``, ``'x'`` or ``'a'`` and then\n198:    :meth:`closed <close>` without adding any files to the archive, the appropriate\n199:    ZIP structures for an empty archive will be written to the file.\n200: \n201:    ZipFile is also a context manager and therefore supports the\n202:    :keyword:`with` statement.  In the example, *myzip* is closed after the\n203:    :keyword:`!with` statement's suite is finished---even if an exception occurs::\n204: \n205:       with ZipFile('spam.zip', 'w') as myzip:\n206:           myzip.write('eggs.txt')\n207: \n208:    .. note::\n209: \n210:       *metadata_encoding* is an instance-wide setting for the ZipFile.\n211:       It is not currently possible to set this on a per-member basis.\n212: \n213:       This attribute is a workaround for legacy implementations which produce\n214:       archives with names in the current locale encoding or code page (mostly\n215:       on Windows).  According to the .ZIP standard, the encoding of metadata\n216:       may be specified to be either IBM code page (default) or UTF-8 by a flag\n217:       in the archive header.\n218:       That flag takes precedence over *metadata_encoding*, which is\n219:       a Python-specific extension.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "339",
+        "--end",
+        "380"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [339, 380], \"full_lines\": 1023}\n339: .. method:: ZipFile.extract(member, path=None, pwd=None)\n340: \n341:    Extract a member from the archive to the current working directory; *member*\n342:    must be its full name or a :class:`ZipInfo` object.  Its file information is\n343:    extracted as accurately as possible.  *path* specifies a different directory\n344:    to extract to.  *member* can be a filename or a :class:`ZipInfo` object.\n345:    *pwd* is the password used for encrypted files as a :class:`bytes` object.\n346: \n347:    Returns the normalized path created (a directory or new file).\n348: \n349:    .. note::\n350: \n351:       If a member filename is an absolute path, a drive/UNC sharepoint and\n352:       leading (back)slashes will be stripped, e.g.: ``///foo/bar`` becomes\n353:       ``foo/bar`` on Unix, and ``C:\\foo\\bar`` becomes ``foo\\bar`` on Windows.\n354:       And all ``\"..\"`` components in a member filename will be removed, e.g.:\n355:       ``../../foo../../ba..r`` becomes ``foo../ba..r``.  On Windows illegal\n356:       characters (``:``, ``<``, ``>``, ``|``, ``\"``, ``?``, and ``*``)\n357:       replaced by underscore (``_``).\n358: \n359:    .. versionchanged:: 3.6\n360:       Calling :meth:`extract` on a closed ZipFile will raise a\n361:       :exc:`ValueError`.  Previously, a :exc:`RuntimeError` was raised.\n362: \n363:    .. versionchanged:: 3.6.2\n364:       The *path* parameter accepts a :term:`path-like object`.\n365: \n366: \n367: .. method:: ZipFile.extractall(path=None, members=None, pwd=None)\n368: \n369:    Extract all members from the archive to the current working directory.  *path*\n370:    specifies a different directory to extract to.  *members* is optional and must\n371:    be a subset of the list returned by :meth:`namelist`.  *pwd* is the password\n372:    used for encrypted files as a :class:`bytes` object.\n373: \n374:    .. warning::\n375: \n376:       Never extract archives from untrusted sources without prior inspection.\n377:       It is possible that files are created outside of *path*, e.g. members\n378:       that have absolute filenames starting with ``\"/\"`` or filenames with two\n379:       dots ``\"..\"``.  This module attempts to prevent that.\n380:       See :meth:`extract` note.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "536",
+        "--end",
+        "553"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [536, 553], \"full_lines\": 1023}\n536: .. class:: Path(root, at='')\n537: \n538:    Construct a Path object from a ``root`` zipfile (which may be a\n539:    :class:`ZipFile` instance or ``file`` suitable for passing to\n540:    the :class:`ZipFile` constructor).\n541: \n542:    ``at`` specifies the location of this Path within the zipfile,\n543:    e.g. 'dir/file.txt', 'dir/', or ''. Defaults to the empty string,\n544:    indicating the root.\n545: \n546:    .. note::\n547:       The :class:`Path` class does not sanitize filenames within the ZIP archive. Unlike\n548:       the :meth:`ZipFile.extract` and :meth:`ZipFile.extractall` methods, it is the\n549:       caller's responsibility to validate or sanitize filenames to prevent path traversal\n550:       vulnerabilities (e.g., filenames containing \"..\" or absolute paths). When handling\n551:       untrusted archives, consider resolving filenames using :func:`os.path.abspath`\n552:       and checking against the target directory with :func:`os.path.commonpath`.\n553: \n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S1",
+        "--start",
+        "980",
+        "--end",
+        "1019"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S1\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst\", \"sha256\": \"75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd\", \"range_1based\": [980, 1019], \"full_lines\": 1023}\n980: Decompression pitfalls\n981: ----------------------\n982: \n983: The extraction in zipfile module might fail due to some pitfalls listed below.\n984: \n985: From file itself\n986: ~~~~~~~~~~~~~~~~\n987: \n988: Decompression may fail due to incorrect password / CRC checksum / ZIP format or\n989: unsupported compression method / decryption.\n990: \n991: File System limitations\n992: ~~~~~~~~~~~~~~~~~~~~~~~\n993: \n994: Exceeding limitations on different file systems can cause decompression failed.\n995: Such as allowable characters in the directory entries, length of the file name,\n996: length of the pathname, size of a single file, and number of files, etc.\n997: \n998: .. _zipfile-resources-limitations:\n999: \n1000: Resources limitations\n1001: ~~~~~~~~~~~~~~~~~~~~~\n1002: \n1003: The lack of memory or disk volume would lead to decompression\n1004: failed. For example, decompression bombs (aka `ZIP bomb`_)\n1005: apply to zipfile library that can cause disk volume exhaustion.\n1006: \n1007: Interruption\n1008: ~~~~~~~~~~~~\n1009: \n1010: Interruption during the decompression, such as pressing control-C or killing the\n1011: decompression process may result in incomplete decompression of the archive.\n1012: \n1013: Default behaviors of extraction\n1014: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1015: \n1016: Not knowing the default extraction behaviors\n1017: can cause unexpected decompression results.\n1018: For example, when extracting the same archive twice,\n1019: it overwrites files without asking.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "355",
+        "--end",
+        "408"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [355, 408], \"full_lines\": 2362}\n355: def _sanitize_filename(filename):\n356:     \"\"\"Terminate the file name at the first null byte and\n357:     ensure paths always use forward slashes as the directory separator.\"\"\"\n358: \n359:     # Terminate the file name at the first null byte.  Null bytes in file\n360:     # names are used as tricks by viruses in archives.\n361:     null_byte = filename.find(chr(0))\n362:     if null_byte >= 0:\n363:         filename = filename[0:null_byte]\n364:     # This is used to ensure paths in generated ZIP files always use\n365:     # forward slashes as the directory separator, as required by the\n366:     # ZIP format specification.\n367:     if os.sep != \"/\" and os.sep in filename:\n368:         filename = filename.replace(os.sep, \"/\")\n369:     if os.altsep and os.altsep != \"/\" and os.altsep in filename:\n370:         filename = filename.replace(os.altsep, \"/\")\n371:     return filename\n372: \n373: \n374: class ZipInfo:\n375:     \"\"\"Class with attributes describing each file in the ZIP archive.\"\"\"\n376: \n377:     __slots__ = (\n378:         'orig_filename',\n379:         'filename',\n380:         'date_time',\n381:         'compress_type',\n382:         'compress_level',\n383:         'comment',\n384:         'extra',\n385:         'create_system',\n386:         'create_version',\n387:         'extract_version',\n388:         'reserved',\n389:         'flag_bits',\n390:         'volume',\n391:         'internal_attr',\n392:         'external_attr',\n393:         'header_offset',\n394:         'CRC',\n395:         'compress_size',\n396:         'file_size',\n397:         '_raw_time',\n398:         '_end_offset',\n399:     )\n400: \n401:     def __init__(self, filename=\"NoName\", date_time=(1980,1,1,0,0,0)):\n402:         self.orig_filename = filename   # Original file name in archive\n403: \n404:         # Terminate the file name at the first null byte and\n405:         # ensure paths always use forward slashes as the directory separator.\n406:         filename = _sanitize_filename(filename)\n407: \n408:         self.filename = filename        # Normalized file name\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "1025",
+        "--end",
+        "1106"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [1025, 1106], \"full_lines\": 2362}\n1025:     def _update_crc(self, newdata):\n1026:         # Update the CRC using the given data.\n1027:         if self._expected_crc is None:\n1028:             # No need to compute the CRC if we don't have a reference value\n1029:             return\n1030:         self._running_crc = crc32(newdata, self._running_crc)\n1031:         # Check the CRC if we're at the end of the file\n1032:         if self._eof and self._running_crc != self._expected_crc:\n1033:             raise BadZipFile(\"Bad CRC-32 for file %r\" % self.name)\n1034: \n1035:     def read1(self, n):\n1036:         \"\"\"Read up to n bytes with at most one read() system call.\"\"\"\n1037: \n1038:         if n is None or n < 0:\n1039:             buf = self._readbuffer[self._offset:]\n1040:             self._readbuffer = b''\n1041:             self._offset = 0\n1042:             while not self._eof:\n1043:                 data = self._read1(self.MAX_N)\n1044:                 if data:\n1045:                     buf += data\n1046:                     break\n1047:             return buf\n1048: \n1049:         end = n + self._offset\n1050:         if end < len(self._readbuffer):\n1051:             buf = self._readbuffer[self._offset:end]\n1052:             self._offset = end\n1053:             return buf\n1054: \n1055:         n = end - len(self._readbuffer)\n1056:         buf = self._readbuffer[self._offset:]\n1057:         self._readbuffer = b''\n1058:         self._offset = 0\n1059:         if n > 0:\n1060:             while not self._eof:\n1061:                 data = self._read1(n)\n1062:                 if n < len(data):\n1063:                     self._readbuffer = data\n1064:                     self._offset = n\n1065:                     buf += data[:n]\n1066:                     break\n1067:                 if data:\n1068:                     buf += data\n1069:                     break\n1070:         return buf\n1071: \n1072:     def _read1(self, n):\n1073:         # Read up to n compressed bytes with at most one read() system call,\n1074:         # decrypt and decompress them.\n1075:         if self._eof or n <= 0:\n1076:             return b''\n1077: \n1078:         # Read from file.\n1079:         if self._compress_type == ZIP_DEFLATED:\n1080:             ## Handle unconsumed data.\n1081:             data = self._decompressor.unconsumed_tail\n1082:             if n > len(data):\n1083:                 data += self._read2(n - len(data))\n1084:         else:\n1085:             data = self._read2(n)\n1086: \n1087:         if self._compress_type == ZIP_STORED:\n1088:             self._eof = self._compress_left <= 0\n1089:         elif self._compress_type == ZIP_DEFLATED:\n1090:             n = max(n, self.MIN_READ_SIZE)\n1091:             data = self._decompressor.decompress(data, n)\n1092:             self._eof = (self._decompressor.eof or\n1093:                          self._compress_left <= 0 and\n1094:                          not self._decompressor.unconsumed_tail)\n1095:             if self._eof:\n1096:                 data += self._decompressor.flush()\n1097:         else:\n1098:             data = self._decompressor.decompress(data)\n1099:             self._eof = self._decompressor.eof or self._compress_left <= 0\n1100: \n1101:         data = data[:self._left]\n1102:         self._left -= len(data)\n1103:         if self._left <= 0:\n1104:             self._eof = True\n1105:         self._update_crc(data)\n1106:         return data\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "1444",
+        "--end",
+        "1518"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [1444, 1518], \"full_lines\": 2362}\n1444:     def _RealGetContents(self):\n1445:         \"\"\"Read in the table of contents for the ZIP file.\"\"\"\n1446:         fp = self.fp\n1447:         try:\n1448:             endrec = _EndRecData(fp)\n1449:         except OSError:\n1450:             raise BadZipFile(\"File is not a zip file\")\n1451:         if not endrec:\n1452:             raise BadZipFile(\"File is not a zip file\")\n1453:         if self.debug > 1:\n1454:             print(endrec)\n1455:         size_cd = endrec[_ECD_SIZE]             # bytes in central directory\n1456:         offset_cd = endrec[_ECD_OFFSET]         # offset of central directory\n1457:         self._comment = endrec[_ECD_COMMENT]    # archive comment\n1458: \n1459:         # \"concat\" is zero, unless zip was concatenated to another file\n1460:         concat = endrec[_ECD_LOCATION] - size_cd - offset_cd\n1461:         if endrec[_ECD_SIGNATURE] == stringEndArchive64:\n1462:             # If Zip64 extension structures are present, account for them\n1463:             concat -= (sizeEndCentDir64 + sizeEndCentDir64Locator)\n1464: \n1465:         if self.debug > 2:\n1466:             inferred = concat + offset_cd\n1467:             print(\"given, inferred, offset\", offset_cd, inferred, concat)\n1468:         # self.start_dir:  Position of start of central directory\n1469:         self.start_dir = offset_cd + concat\n1470:         if self.start_dir < 0:\n1471:             raise BadZipFile(\"Bad offset for central directory\")\n1472:         fp.seek(self.start_dir, 0)\n1473:         data = fp.read(size_cd)\n1474:         fp = io.BytesIO(data)\n1475:         total = 0\n1476:         while total < size_cd:\n1477:             centdir = fp.read(sizeCentralDir)\n1478:             if len(centdir) != sizeCentralDir:\n1479:                 raise BadZipFile(\"Truncated central directory\")\n1480:             centdir = struct.unpack(structCentralDir, centdir)\n1481:             if centdir[_CD_SIGNATURE] != stringCentralDir:\n1482:                 raise BadZipFile(\"Bad magic number for central directory\")\n1483:             if self.debug > 2:\n1484:                 print(centdir)\n1485:             filename = fp.read(centdir[_CD_FILENAME_LENGTH])\n1486:             orig_filename_crc = crc32(filename)\n1487:             flags = centdir[_CD_FLAG_BITS]\n1488:             if flags & _MASK_UTF_FILENAME:\n1489:                 # UTF-8 file names extension\n1490:                 filename = filename.decode('utf-8')\n1491:             else:\n1492:                 # Historical ZIP filename encoding\n1493:                 filename = filename.decode(self.metadata_encoding or 'cp437')\n1494:             # Create ZipInfo instance to store file information\n1495:             x = ZipInfo(filename)\n1496:             x.extra = fp.read(centdir[_CD_EXTRA_FIELD_LENGTH])\n1497:             x.comment = fp.read(centdir[_CD_COMMENT_LENGTH])\n1498:             x.header_offset = centdir[_CD_LOCAL_HEADER_OFFSET]\n1499:             (x.create_version, x.create_system, x.extract_version, x.reserved,\n1500:              x.flag_bits, x.compress_type, t, d,\n1501:              x.CRC, x.compress_size, x.file_size) = centdir[1:12]\n1502:             if x.extract_version > MAX_EXTRACT_VERSION:\n1503:                 raise NotImplementedError(\"zip file version %.1f\" %\n1504:                                           (x.extract_version / 10))\n1505:             x.volume, x.internal_attr, x.external_attr = centdir[15:18]\n1506:             # Convert date/time code to (year, month, day, hour, min, sec)\n1507:             x._raw_time = t\n1508:             x.date_time = ( (d>>9)+1980, (d>>5)&0xF, d&0x1F,\n1509:                             t>>11, (t>>5)&0x3F, (t&0x1F) * 2 )\n1510:             x._decodeExtra(orig_filename_crc)\n1511:             x.header_offset = x.header_offset + concat\n1512:             self.filelist.append(x)\n1513:             self.NameToInfo[x.filename] = x\n1514: \n1515:             # update total bytes read from central directory\n1516:             total = (total + sizeCentralDir + centdir[_CD_FILENAME_LENGTH]\n1517:                      + centdir[_CD_EXTRA_FIELD_LENGTH]\n1518:                      + centdir[_CD_COMMENT_LENGTH])\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "1605",
+        "--end",
+        "1639"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [1605, 1639], \"full_lines\": 2362}\n1605:     def open(self, name, mode=\"r\", pwd=None, *, force_zip64=False):\n1606:         \"\"\"Return file-like object for 'name'.\n1607: \n1608:         name is a string for the file name within the ZIP file, or a ZipInfo\n1609:         object.\n1610: \n1611:         mode should be 'r' to read a file already in the ZIP file, or 'w' to\n1612:         write to a file newly added to the archive.\n1613: \n1614:         pwd is the password to decrypt files (only used for reading).\n1615: \n1616:         When writing, if the file size is not known in advance but may exceed\n1617:         2 GiB, pass force_zip64 to use the ZIP64 format, which can handle large\n1618:         files.  If the size is known in advance, it is best to pass a ZipInfo\n1619:         instance for name, with zinfo.file_size set.\n1620:         \"\"\"\n1621:         if mode not in {\"r\", \"w\"}:\n1622:             raise ValueError('open() requires mode \"r\" or \"w\"')\n1623:         if pwd and (mode == \"w\"):\n1624:             raise ValueError(\"pwd is only supported for reading files\")\n1625:         if not self.fp:\n1626:             raise ValueError(\n1627:                 \"Attempt to use ZIP archive that was already closed\")\n1628: \n1629:         # Make sure we have an info object\n1630:         if isinstance(name, ZipInfo):\n1631:             # 'name' is already an info object\n1632:             zinfo = name\n1633:         elif mode == 'w':\n1634:             zinfo = ZipInfo(name)\n1635:             zinfo.compress_type = self.compression\n1636:             zinfo.compress_level = self.compresslevel\n1637:         else:\n1638:             # Get info object for name\n1639:             zinfo = self.getinfo(name)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "1666",
+        "--end",
+        "1711"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [1666, 1711], \"full_lines\": 2362}\n1666:             if zinfo.flag_bits & _MASK_COMPRESSED_PATCH:\n1667:                 # Zip 2.7: compressed patched data\n1668:                 raise NotImplementedError(\"compressed patched data (flag bit 5)\")\n1669: \n1670:             if zinfo.flag_bits & _MASK_STRONG_ENCRYPTION:\n1671:                 # strong encryption\n1672:                 raise NotImplementedError(\"strong encryption (flag bit 6)\")\n1673: \n1674:             if fheader[_FH_GENERAL_PURPOSE_FLAG_BITS] & _MASK_UTF_FILENAME:\n1675:                 # UTF-8 filename\n1676:                 fname_str = fname.decode(\"utf-8\")\n1677:             else:\n1678:                 fname_str = fname.decode(self.metadata_encoding or \"cp437\")\n1679: \n1680:             if fname_str != zinfo.orig_filename:\n1681:                 raise BadZipFile(\n1682:                     'File name in directory %r and header %r differ.'\n1683:                     % (zinfo.orig_filename, fname))\n1684: \n1685:             if (zinfo._end_offset is not None and\n1686:                 zef_file.tell() + zinfo.compress_size > zinfo._end_offset):\n1687:                 if zinfo._end_offset == zinfo.header_offset:\n1688:                     import warnings\n1689:                     warnings.warn(\n1690:                         f\"Overlapped entries: {zinfo.orig_filename!r} \"\n1691:                         f\"(possible zip bomb)\",\n1692:                         skip_file_prefixes=(os.path.dirname(__file__),))\n1693:                 else:\n1694:                     raise BadZipFile(\n1695:                         f\"Overlapped entries: {zinfo.orig_filename!r} \"\n1696:                         f\"(possible zip bomb)\")\n1697: \n1698:             # check for encrypted flag & handle password\n1699:             is_encrypted = zinfo.flag_bits & _MASK_ENCRYPTED\n1700:             if is_encrypted:\n1701:                 if not pwd:\n1702:                     pwd = self.pwd\n1703:                 if pwd and not isinstance(pwd, bytes):\n1704:                     raise TypeError(\"pwd: expected bytes, got %s\" % type(pwd).__name__)\n1705:                 if not pwd:\n1706:                     raise RuntimeError(\"File %r is encrypted, password \"\n1707:                                        \"required for extraction\" % name)\n1708:             else:\n1709:                 pwd = None\n1710: \n1711:             return ZipExtFile(zef_file, mode + 'b', zinfo, pwd, True)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S2",
+        "--start",
+        "1791",
+        "--end",
+        "1852"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S2\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py\", \"sha256\": \"6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44\", \"range_1based\": [1791, 1852], \"full_lines\": 2362}\n1791:     def _sanitize_windows_name(cls, arcname, pathsep):\n1792:         \"\"\"Replace bad characters and remove trailing dots from parts.\"\"\"\n1793:         table = cls._windows_illegal_name_trans_table\n1794:         if not table:\n1795:             illegal = ':<>|\"?*'\n1796:             table = str.maketrans(illegal, '_' * len(illegal))\n1797:             cls._windows_illegal_name_trans_table = table\n1798:         arcname = arcname.translate(table)\n1799:         # remove trailing dots and spaces\n1800:         arcname = (x.rstrip(' .') for x in arcname.split(pathsep))\n1801:         # rejoin, removing empty parts.\n1802:         arcname = pathsep.join(x for x in arcname if x)\n1803:         return arcname\n1804: \n1805:     def _extract_member(self, member, targetpath, pwd):\n1806:         \"\"\"Extract the ZipInfo object 'member' to a physical\n1807:            file on the path targetpath.\n1808:         \"\"\"\n1809:         if not isinstance(member, ZipInfo):\n1810:             member = self.getinfo(member)\n1811: \n1812:         # build the destination pathname, replacing\n1813:         # forward slashes to platform specific separators.\n1814:         arcname = member.filename.replace('/', os.path.sep)\n1815: \n1816:         if os.path.altsep:\n1817:             arcname = arcname.replace(os.path.altsep, os.path.sep)\n1818:         # interpret absolute pathname as relative, remove drive letter or\n1819:         # UNC path, redundant separators, \".\" and \"..\" components.\n1820:         arcname = os.path.splitdrive(arcname)[1]\n1821:         invalid_path_parts = ('', os.path.curdir, os.path.pardir)\n1822:         arcname = os.path.sep.join(x for x in arcname.split(os.path.sep)\n1823:                                    if x not in invalid_path_parts)\n1824:         if os.path.sep == '\\\\':\n1825:             # filter illegal characters on Windows\n1826:             arcname = self._sanitize_windows_name(arcname, os.path.sep)\n1827: \n1828:         if not arcname and not member.is_dir():\n1829:             raise ValueError(\"Empty filename.\")\n1830: \n1831:         targetpath = os.path.join(targetpath, arcname)\n1832:         targetpath = os.path.normpath(targetpath)\n1833: \n1834:         # Create all upper directories if necessary.\n1835:         upperdirs = os.path.dirname(targetpath)\n1836:         if upperdirs and not os.path.exists(upperdirs):\n1837:             os.makedirs(upperdirs, exist_ok=True)\n1838: \n1839:         if member.is_dir():\n1840:             if not os.path.isdir(targetpath):\n1841:                 try:\n1842:                     os.mkdir(targetpath)\n1843:                 except FileExistsError:\n1844:                     if not os.path.isdir(targetpath):\n1845:                         raise\n1846:             return targetpath\n1847: \n1848:         with self.open(member, pwd=pwd) as source, \\\n1849:              open(targetpath, \"wb\") as target:\n1850:             shutil.copyfileobj(source, target)\n1851: \n1852:         return targetpath\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S3",
+        "--start",
+        "1628",
+        "--end",
+        "1683"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S3\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py\", \"sha256\": \"b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802\", \"range_1based\": [1628, 1683], \"full_lines\": 3645}\n1628:     def test_sanitize_windows_name(self):\n1629:         san = zipfile.ZipFile._sanitize_windows_name\n1630:         # Passing pathsep in allows this test to work regardless of platform.\n1631:         self.assertEqual(san(r',,?,C:,foo,bar/z', ','), r'_,C_,foo,bar/z')\n1632:         self.assertEqual(san(r'a\\b,c<d>e|f\"g?h*i', ','), r'a\\b,c_d_e_f_g_h_i')\n1633:         self.assertEqual(san('../../foo../../ba..r', '/'), r'foo/ba..r')\n1634:         self.assertEqual(san('  /  /foo  /  /ba  r', '/'), r'foo/ba  r')\n1635:         self.assertEqual(san(' . /. /foo ./ . /. ./ba .r', '/'), r'foo/ba .r')\n1636: \n1637:     def test_extract_hackers_arcnames_common_cases(self):\n1638:         common_hacknames = [\n1639:             ('../foo/bar', 'foo/bar'),\n1640:             ('foo/../bar', 'foo/bar'),\n1641:             ('foo/../../bar', 'foo/bar'),\n1642:             ('foo/bar/..', 'foo/bar'),\n1643:             ('./../foo/bar', 'foo/bar'),\n1644:             ('/foo/bar', 'foo/bar'),\n1645:             ('/foo/../bar', 'foo/bar'),\n1646:             ('/foo/../../bar', 'foo/bar'),\n1647:         ]\n1648:         self._test_extract_hackers_arcnames(common_hacknames)\n1649: \n1650:     @unittest.skipIf(os.path.sep != '\\\\', 'Requires \\\\ as path separator.')\n1651:     def test_extract_hackers_arcnames_windows_only(self):\n1652:         \"\"\"Test combination of path fixing and windows name sanitization.\"\"\"\n1653:         windows_hacknames = [\n1654:             (r'..\\foo\\bar', 'foo/bar'),\n1655:             (r'..\\/foo\\/bar', 'foo/bar'),\n1656:             (r'foo/\\..\\/bar', 'foo/bar'),\n1657:             (r'foo\\/../\\bar', 'foo/bar'),\n1658:             (r'C:foo/bar', 'foo/bar'),\n1659:             (r'C:/foo/bar', 'foo/bar'),\n1660:             (r'C://foo/bar', 'foo/bar'),\n1661:             (r'C:\\foo\\bar', 'foo/bar'),\n1662:             (r'//conky/mountpoint/foo/bar', 'foo/bar'),\n1663:             (r'\\\\conky\\mountpoint\\foo\\bar', 'foo/bar'),\n1664:             (r'///conky/mountpoint/foo/bar', 'mountpoint/foo/bar'),\n1665:             (r'\\\\\\conky\\mountpoint\\foo\\bar', 'mountpoint/foo/bar'),\n1666:             (r'//conky//mountpoint/foo/bar', 'mountpoint/foo/bar'),\n1667:             (r'\\\\conky\\\\mountpoint\\foo\\bar', 'mountpoint/foo/bar'),\n1668:             (r'//?/C:/foo/bar', 'foo/bar'),\n1669:             (r'\\\\?\\C:\\foo\\bar', 'foo/bar'),\n1670:             (r'C:/../C:/foo/bar', 'C_/foo/bar'),\n1671:             (r'a:b\\c<d>e|f\"g?h*i', 'b/c_d_e_f_g_h_i'),\n1672:             ('../../foo../../ba..r', 'foo/ba..r'),\n1673:         ]\n1674:         self._test_extract_hackers_arcnames(windows_hacknames)\n1675: \n1676:     @unittest.skipIf(os.path.sep != '/', r'Requires / as path separator.')\n1677:     def test_extract_hackers_arcnames_posix_only(self):\n1678:         posix_hacknames = [\n1679:             ('//foo/bar', 'foo/bar'),\n1680:             ('../../foo../../ba..r', 'foo../ba..r'),\n1681:             (r'foo/..\\bar', r'foo/..\\bar'),\n1682:         ]\n1683:         self._test_extract_hackers_arcnames(posix_hacknames)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+        "--case",
+        "B01-P02",
+        "--arm",
+        "treatment",
+        "--source",
+        "S3",
+        "--start",
+        "2522",
+        "--end",
+        "2550"
+      ],
+      "returncode": 0,
+      "stdout": "{\"case\": \"B01-P02\", \"source\": \"S3\", \"url\": \"https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py\", \"sha256\": \"b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802\", \"range_1based\": [2522, 2550], \"full_lines\": 3645}\n2522: class AbstractBadCrcTests:\n2523:     def test_testzip_with_bad_crc(self):\n2524:         \"\"\"Tests that files with bad CRCs return their name from testzip.\"\"\"\n2525:         zipdata = self.zip_with_bad_crc\n2526: \n2527:         with zipfile.ZipFile(io.BytesIO(zipdata), mode=\"r\") as zipf:\n2528:             # testzip returns the name of the first corrupt file, or None\n2529:             self.assertEqual('afile', zipf.testzip())\n2530: \n2531:     def test_read_with_bad_crc(self):\n2532:         \"\"\"Tests that files with bad CRCs raise a BadZipFile exception when read.\"\"\"\n2533:         zipdata = self.zip_with_bad_crc\n2534: \n2535:         # Using ZipFile.read()\n2536:         with zipfile.ZipFile(io.BytesIO(zipdata), mode=\"r\") as zipf:\n2537:             self.assertRaises(zipfile.BadZipFile, zipf.read, 'afile')\n2538: \n2539:         # Using ZipExtFile.read()\n2540:         with zipfile.ZipFile(io.BytesIO(zipdata), mode=\"r\") as zipf:\n2541:             with zipf.open('afile', 'r') as corrupt_file:\n2542:                 self.assertRaises(zipfile.BadZipFile, corrupt_file.read)\n2543: \n2544:         # Same with small reads (in order to exercise the buffering logic)\n2545:         with zipfile.ZipFile(io.BytesIO(zipdata), mode=\"r\") as zipf:\n2546:             with zipf.open('afile', 'r') as corrupt_file:\n2547:                 corrupt_file.MIN_READ_SIZE = 2\n2548:                 with self.assertRaises(zipfile.BadZipFile):\n2549:                     while corrupt_file.read(2):\n2550:                         pass\n",
+      "stderr": ""
+    }
+  ]
+}

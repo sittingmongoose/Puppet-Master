@@ -1,0 +1,221 @@
+Source: https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/streams.py
+Full retrieved body SHA256: d1753bc21667afe914390623be181ebb31776845d7c7f2f50805cae972f0189b
+Full retrieved body bytes: 28481
+License notice: ../LICENSE (PSF/Python license).
+Ranges below use original raw-file 1-based lines.
+
+--- ORIGINAL LINES 416-541 ---
+    def __init__(self, limit=_DEFAULT_LIMIT, loop=None):
+        # The line length limit is  a security feature;
+        # it also doubles as half the buffer limit.
+
+        if limit <= 0:
+            raise ValueError('Limit cannot be <= 0')
+
+        self._limit = limit
+        if loop is None:
+            self._loop = events.get_event_loop()
+        else:
+            self._loop = loop
+        self._buffer = bytearray()
+        self._eof = False    # Whether we're done.
+        self._waiter = None  # A future used by _wait_for_data()
+        self._exception = None
+        self._transport = None
+        self._paused = False
+        if self._loop.get_debug():
+            self._source_traceback = format_helpers.extract_stack(
+                sys._getframe(1))
+
+    def __repr__(self):
+        info = ['StreamReader']
+        if self._buffer:
+            info.append(f'{len(self._buffer)} bytes')
+        if self._eof:
+            info.append('eof')
+        if self._limit != _DEFAULT_LIMIT:
+            info.append(f'limit={self._limit}')
+        if self._waiter:
+            info.append(f'waiter={self._waiter!r}')
+        if self._exception:
+            info.append(f'exception={self._exception!r}')
+        if self._transport:
+            info.append(f'transport={self._transport!r}')
+        if self._paused:
+            info.append('paused')
+        return '<{}>'.format(' '.join(info))
+
+    def exception(self):
+        return self._exception
+
+    def set_exception(self, exc):
+        self._exception = exc
+
+        waiter = self._waiter
+        if waiter is not None:
+            self._waiter = None
+            if not waiter.cancelled():
+                waiter.set_exception(exc)
+
+    def _wakeup_waiter(self):
+        """Wakeup read*() functions waiting for data or EOF."""
+        waiter = self._waiter
+        if waiter is not None:
+            self._waiter = None
+            if not waiter.cancelled():
+                waiter.set_result(None)
+
+    def set_transport(self, transport):
+        assert self._transport is None, 'Transport already set'
+        self._transport = transport
+
+    def _maybe_resume_transport(self):
+        if self._paused and len(self._buffer) <= self._limit:
+            self._paused = False
+            self._transport.resume_reading()
+
+    def feed_eof(self):
+        self._eof = True
+        self._wakeup_waiter()
+
+    def at_eof(self):
+        """Return True if the buffer is empty and 'feed_eof' was called."""
+        return self._eof and not self._buffer
+
+    def feed_data(self, data):
+        assert not self._eof, 'feed_data after feed_eof'
+
+        if not data:
+            return
+
+        self._buffer.extend(data)
+        self._wakeup_waiter()
+
+        if (self._transport is not None and
+                not self._paused and
+                len(self._buffer) > 2 * self._limit):
+            try:
+                self._transport.pause_reading()
+            except NotImplementedError:
+                # The transport can't be paused.
+                # We'll just have to buffer all data.
+                # Forget the transport so we don't keep trying.
+                self._transport = None
+            else:
+                self._paused = True
+
+    async def _wait_for_data(self, func_name):
+        """Wait until feed_data() or feed_eof() is called.
+
+        If stream was paused, automatically resume it.
+        """
+        # StreamReader uses a future to link the protocol feed_data() method
+        # to a read coroutine. Running two read coroutines at the same time
+        # would have an unexpected behaviour. It would not possible to know
+        # which coroutine would get the next data.
+        if self._waiter is not None:
+            raise RuntimeError(
+                f'{func_name}() called while another coroutine is '
+                f'already waiting for incoming data')
+
+        assert not self._eof, '_wait_for_data after EOF'
+
+        # Waiting for data while paused will make deadlock, so prevent it.
+        # This is essential for readexactly(n) for case when n > self._limit.
+        if self._paused:
+            self._paused = False
+            self._transport.resume_reading()
+
+        self._waiter = self._loop.create_future()
+        try:
+            await self._waiter
+        finally:
+            self._waiter = None
+
+--- ORIGINAL LINES 543-576 ---
+    async def readline(self):
+        """Read chunk of data from the stream until newline (b'\n') is found.
+
+        On success, return chunk that ends with newline. If only partial
+        line can be read due to EOF, return incomplete line without
+        terminating newline. When EOF was reached while no bytes read, empty
+        bytes object is returned.
+
+        If limit is reached, ValueError will be raised. In that case, if
+        newline was found, complete line including newline will be removed
+        from internal buffer. Else, internal buffer will be cleared. Limit is
+        compared against part of the line without newline.
+
+        If stream was paused, this function will automatically resume it if
+        needed.
+        """
+        sep = b'\n'
+        seplen = len(sep)
+        try:
+            line = await self.readuntil(sep)
+        except exceptions.IncompleteReadError as e:
+            return e.partial
+        except exceptions.LimitOverrunError as e:
+            if self._buffer.startswith(sep, e.consumed):
+                del self._buffer[:e.consumed + seplen]
+            else:
+                self._buffer.clear()
+            self._maybe_resume_transport()
+            raise ValueError(e.args[0])
+        return line
+
+    async def readuntil(self, separator=b'\n'):
+        """Read data from the stream until ``separator`` is found.
+
+
+--- ORIGINAL LINES 688-737 ---
+    async def read(self, n=-1):
+        """Read up to `n` bytes from the stream.
+
+        If `n` is not provided or set to -1,
+        read until EOF, then return all read bytes.
+        If EOF was received and the internal buffer is empty,
+        return an empty bytes object.
+
+        If `n` is 0, return an empty bytes object immediately.
+
+        If `n` is positive, return at most `n` available bytes
+        as soon as at least 1 byte is available in the internal buffer.
+        If EOF is received before any byte is read, return an empty
+        bytes object.
+
+        Returned value is not limited with limit, configured at stream
+        creation.
+
+        If stream was paused, this function will automatically resume it if
+        needed.
+        """
+
+        if self._exception is not None:
+            raise self._exception
+
+        if n == 0:
+            return b''
+
+        if n < 0:
+            # This used to just loop creating a new waiter hoping to
+            # collect everything in self._buffer, but that would
+            # deadlock if the subprocess sends more than self.limit
+            # bytes.  So just call self.read(self._limit) until EOF.
+            blocks = []
+            while True:
+                block = await self.read(self._limit)
+                if not block:
+                    break
+                blocks.append(block)
+            return b''.join(blocks)
+
+        if not self._buffer and not self._eof:
+            await self._wait_for_data('read')
+
+        # This will work right even if buffer is less than n bytes
+        data = bytes(memoryview(self._buffer)[:n])
+        del self._buffer[:n]
+
+        self._maybe_resume_transport()
+        return data

@@ -1,0 +1,157 @@
+{
+  "schema": "er13.evaluator_input_verification.v1",
+  "arm_id": "B05-P01-control",
+  "verified_at_utc": "2026-10-12T01:02:51.211971+00:00",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B05-P01.json",
+    "sha256": "f3fcc61d262bb4b7a76f51845d3a82e9178429e220844bb610a58ce3d19cb994",
+    "expected_sha256": "f3fcc61d262bb4b7a76f51845d3a82e9178429e220844bb610a58ce3d19cb994",
+    "match": true
+  },
+  "authored_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/authored-manifest.json",
+    "sha256": "a3517f416246750720b1dd9c20124b083a875a5a0440f39f5a3619a0145526a5",
+    "match": true
+  },
+  "file_count": 16,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/final.md",
+      "bytes": 15021,
+      "sha256": "c82a06a107110aed408a23aa0f71340dce1fcd624a542eb3fea1492950e89f6a",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/criticism-dispositions.md",
+      "bytes": 8895,
+      "sha256": "67304f368f408aca2964ccf4995747e8fdf6df52d19152f10ca868320bd3a0ed",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/source-map.json",
+      "bytes": 14758,
+      "sha256": "31125774f83e1b56878e1c9e2f07673314ae664bdc293d0af305a35cab68b264",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/native-goal-create.json",
+      "bytes": 593,
+      "sha256": "6787d086fc7c9fa3e8bb3db2a1f44260ae8f174edf992b9f482f208c7262a143",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/native-goal-terminal.json",
+      "bytes": 922,
+      "sha256": "26a5e618e249a882876cbd3748e5a060a79ab65ab8524ffbff02b903602bb573",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/critique.md",
+      "bytes": 5531,
+      "sha256": "ea2f6759eefa15bf70c65b4a5ecc25db98db25669cc58d39799b971a8bc15274",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/assignment.md",
+      "bytes": 8354,
+      "sha256": "c59d55dcc43cc77a5323e565daecd04960979200116943a1d9cf52c3df303c96",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/input-map.json",
+      "bytes": 1259,
+      "sha256": "ff23229d7bf5a253b3bce179aff6109871b113eaa1172db47cb7c8d2d799b915",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/freeze.json",
+      "bytes": 4760,
+      "sha256": "0e9a36e90acf18ee9ae1cbc0375c1932dbacda3917d98a58888028da79c1daf5",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/request.json",
+      "bytes": 9050,
+      "sha256": "da2fd856aa6f14eb335b84229902136a1b3df2492cacd20805f9a2dc975329b9",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/dispatch.json",
+      "bytes": 12266,
+      "sha256": "c13d37fb12277a7e74fc041b8c91f20fc9ba2e912266697b2f33c7bc893f9a69",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/selection.json",
+      "bytes": 3134,
+      "sha256": "f8226bc91822053d8d32bffa3e0aa0a1274486c3d7e57bca1d01f615b6fe625d",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/inputs/B05-P01/brief.md",
+      "bytes": 771,
+      "sha256": "e2a39533df9487ecf9921581abd9c076adaa2026795123538c37dfec20cd9d9f",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/inputs/B05-P01/plan.md",
+      "bytes": 649,
+      "sha256": "de16e22b83b168248720670a6466e5af39d15b5bfa5b9125c91ef7d68b59a394",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/inputs/B05-P01/draft.md",
+      "bytes": 3591,
+      "sha256": "4dd448da655d824aec355147cfe71d501a4152552c3126e6548d98d03d106f55",
+      "verification": "MATCH",
+      "read": true
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/inputs/B05-P01/source-index.json",
+      "bytes": 5290,
+      "sha256": "e13aeaa162af8d84836217ac1def412d73872fbe8c72a3ebd85507e29f5218bb",
+      "verification": "MATCH",
+      "read": true
+    }
+  ],
+  "terminal_receipt": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B05-P01-control/component-terminal-task.raw.json",
+    "sha256": "d2db0b60067febe56d7f3922b057b2c31f28d0ee69adc53d7524b2aaa79a16dd",
+    "match": true,
+    "native_frozen_terminal_matches_verification_receipt": true
+  },
+  "governance_read": {
+    "workspace_agents": {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+    },
+    "evaluation_contract": {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    "handoff": {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "sections_read": [
+        10,
+        12
+      ]
+    }
+  },
+  "scope": "Only exact frozen assigned inputs and specifically named custody records were read. Manifest request/dispatch embedded assignment texts were verified equal to the fully read assignment. All five cache bodies were read completely; all neighborhood slices verified byte-equivalent to their source-body ranges. No admitted/active files, held-out materials, preparer findings, full transcripts, repository canon or Git history accessed.",
+  "privacy": "Custody records referenced by path/hash only; private routing identities and cumulative counters are not copied."
+}

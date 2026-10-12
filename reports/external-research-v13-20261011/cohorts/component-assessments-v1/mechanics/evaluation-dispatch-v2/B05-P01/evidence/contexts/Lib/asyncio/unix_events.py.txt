@@ -1,0 +1,150 @@
+Source: https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/unix_events.py
+Full retrieved body SHA256: e5a7c5d415d37ea56207b9c2081da400934c5b915d450a130c9f53026ec450dd
+Full retrieved body bytes: 54416
+License notice: ../LICENSE (PSF/Python license).
+Ranges below use original raw-file 1-based lines.
+
+--- ORIGINAL LINES 197-232 ---
+    async def _make_subprocess_transport(self, protocol, args, shell,
+                                         stdin, stdout, stderr, bufsize,
+                                         extra=None, **kwargs):
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            watcher = events.get_child_watcher()
+
+        with watcher:
+            if not watcher.is_active():
+                # Check early.
+                # Raising exception before process creation
+                # prevents subprocess execution if the watcher
+                # is not ready to handle it.
+                raise RuntimeError("asyncio.get_child_watcher() is not activated, "
+                                "subprocess support is not installed.")
+            waiter = self.create_future()
+            transp = _UnixSubprocessTransport(self, protocol, args, shell,
+                                            stdin, stdout, stderr, bufsize,
+                                            waiter=waiter, extra=extra,
+                                            **kwargs)
+            watcher.add_child_handler(transp.get_pid(),
+                                    self._child_watcher_callback, transp)
+            try:
+                await waiter
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except BaseException:
+                transp.close()
+                await transp._wait()
+                raise
+
+        return transp
+
+    def _child_watcher_callback(self, pid, returncode, transp):
+        self.call_soon_threadsafe(transp._process_exited, returncode)
+
+
+--- ORIGINAL LINES 844-866 ---
+class _UnixSubprocessTransport(base_subprocess.BaseSubprocessTransport):
+
+    def _start(self, args, shell, stdin, stdout, stderr, bufsize, **kwargs):
+        stdin_w = None
+        if stdin == subprocess.PIPE and sys.platform.startswith('aix'):
+            # Use a socket pair for stdin on AIX, since it does not
+            # support selecting read events on the write end of a
+            # socket (which we use in order to detect closing of the
+            # other end).
+            stdin, stdin_w = socket.socketpair()
+        try:
+            self._proc = subprocess.Popen(
+                args, shell=shell, stdin=stdin, stdout=stdout, stderr=stderr,
+                universal_newlines=False, bufsize=bufsize, **kwargs)
+            if stdin_w is not None:
+                stdin.close()
+                self._proc.stdin = open(stdin_w.detach(), 'wb', buffering=bufsize)
+                stdin_w = None
+        finally:
+            if stdin_w is not None:
+                stdin.close()
+                stdin_w.close()
+
+
+--- ORIGINAL LINES 1384-1463 ---
+class ThreadedChildWatcher(AbstractChildWatcher):
+    """Threaded child watcher implementation.
+
+    The watcher uses a thread per process
+    for waiting for the process finish.
+
+    It doesn't require subscription on POSIX signal
+    but a thread creation is not free.
+
+    The watcher has O(1) complexity, its performance doesn't depend
+    on amount of spawn processes.
+    """
+
+    def __init__(self):
+        self._pid_counter = itertools.count(0)
+        self._threads = {}
+
+    def is_active(self):
+        return True
+
+    def close(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+    def __del__(self, _warn=warnings.warn):
+        threads = [thread for thread in list(self._threads.values())
+                   if thread.is_alive()]
+        if threads:
+            _warn(f"{self.__class__} has registered but not finished child processes",
+                  ResourceWarning,
+                  source=self)
+
+    def add_child_handler(self, pid, callback, *args):
+        loop = events.get_running_loop()
+        thread = threading.Thread(target=self._do_waitpid,
+                                  name=f"asyncio-waitpid-{next(self._pid_counter)}",
+                                  args=(loop, pid, callback, args),
+                                  daemon=True)
+        self._threads[pid] = thread
+        thread.start()
+
+    def remove_child_handler(self, pid):
+        # asyncio never calls remove_child_handler() !!!
+        # The method is no-op but is implemented because
+        # abstract base classes require it.
+        return True
+
+    def attach_loop(self, loop):
+        pass
+
+    def _do_waitpid(self, loop, expected_pid, callback, args):
+        assert expected_pid > 0
+
+        try:
+            pid, status = os.waitpid(expected_pid, 0)
+        except ChildProcessError:
+            # The child process is already reaped
+            # (may happen if waitpid() is called elsewhere).
+            pid = expected_pid
+            returncode = 255
+            logger.warning(
+                "Unknown child process pid %d, will report returncode 255",
+                pid)
+        else:
+            returncode = waitstatus_to_exitcode(status)
+            if loop.get_debug():
+                logger.debug('process %s exited with returncode %s',
+                             expected_pid, returncode)
+
+        if loop.is_closed():
+            logger.warning("Loop %r that handles pid %r is closed", loop, pid)
+        else:
+            loop.call_soon_threadsafe(callback, pid, returncode, *args)
+
+        self._threads.pop(expected_pid)

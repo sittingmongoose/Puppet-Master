@@ -1,0 +1,102 @@
+{
+  "schema": "er13.defects.original.v2",
+  "arm_id": "B01-P01-treatment",
+  "defects": [
+    {
+      "id": "T-D01",
+      "severity": "MATERIAL_DELIVERY_FAILURE",
+      "dimension": "delivery/time/method",
+      "axes": [],
+      "kind": "ORIGINAL_CAPPED_INTERRUPTED_PARTIAL_ATTEMPT",
+      "finding": "Exact notification and terminal receipt classify the original attempt as capped/interrupted. criticism-dispositions.md, source-map.json and native-goal-terminal.json are absent from the notified freeze. final.md is available partial authored science, not a qualified complete final.",
+      "consequence": "Complete-final source judgment UNASSESSED; incomplete delivery and original deadline failure retained in the assigned denominator. Native completion, missing dispositions and missing map stay UNASSESSED. No comparable complete source grade is manufactured.",
+      "input_evidence": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+          "sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c"
+        },
+        {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+          "sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d"
+        }
+      ],
+      "coverage": "COMPLETE for the notified original failure and present/missing manifest selections; missing science/native records UNASSESSED."
+    },
+    {
+      "id": "T-N01",
+      "severity": "NONMATERIAL",
+      "dimension": "source_traceability",
+      "axes": [
+        2
+      ],
+      "kind": "INCORRECT_EXACT_CPYTHON_LOCATORS",
+      "location": "partial final.md Evidence inspected bullets S1/S2/S3",
+      "finding": "The cited v3.13.9 raw bodies match the frozen CPython hashes, but important line ranges are wrong. backup is Doc/library/sqlite3.rst1149-1218 and connection.c2031-2128, not1048-1079 and1890-1980. check_same_thread is305-312, not277-283. The test link ending130 omits test_failing_progress135-142. Independent whole-body inspection supports the pacing/progress/callback-error semantic claims despite poor locators.",
+      "consequence": "Traceability limitation in the assessable partial science, not evidence that the supported mechanism facts are false.",
+      "primary_evidence": [
+        "cpython3139-doc",
+        "cpython3139-connection",
+        "cpython3139-tests"
+      ],
+      "coverage": "COMPLETE for specified locator errors; absent formal map UNASSESSED."
+    }
+  ],
+  "nonmaterial_and_conditional_observations": [
+    {
+      "id": "N-ALT",
+      "severity": "NONMATERIAL_LIMIT",
+      "axes": [
+        1,
+        3
+      ],
+      "finding": "The required online API/open-file copy/logical-dump comparisons and costs survive. This arm's available text does not discuss VACUUM INTO, although full S4 lists it and its governing docs identify reduced size and purging deleted bytes at higher CPU cost with nonincremental execution and ROWID/transaction/durability constraints. This is a useful available privacy/space opportunity missed. The brief does not require a deletion-sanitized export or an exhaustive alternatives catalog, so this omission alone is not declared a material failure. sqlite3_rsync remote transport is outside the brief.",
+      "primary_evidence": [
+        "sqlite-backup",
+        "sqlite-vacuum"
+      ]
+    },
+    {
+      "id": "N-WAL",
+      "severity": "CONDITIONAL_CONTEXT_LIMIT",
+      "axes": [
+        2,
+        3
+      ],
+      "finding": "The full frozen WAL body includes section11's corruption race and fixed release families (3.51.3+, backports3.44.6/3.50.7). This arm's available text omits that history. The trigger requires distinct threads/processes and concurrent writing/checkpointing on the same WAL file; control's single DB owner serializes its source operations, while the partial treatment leaves writer/checkpointer topology unresolved. No unsafe installed target is inferred from an unknown linked engine. The reported local interpreter/library is not the proposed target. Patch implementation and actual target applicability remain UNASSESSED; documentation/release conditions were assessed.",
+      "primary_evidence": [
+        "sqlite-wal",
+        "sqlite-release3513"
+      ]
+    },
+    {
+      "id": "N-RESTORE",
+      "severity": "CONDITIONAL_CONTEXT_LIMIT",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "finding": "Privacy/path/digest/new-workspace checks are specified. Hashes are not authenticity, and opening a DB with custom SQL functions or virtual tables can require trusted-schema controls under a hostile-schema model. The user has not specified custom functions or a hostile trust boundary; primary security guidance is conditional. No unconditional vulnerability is asserted.",
+      "primary_evidence": [
+        "sqlite-security"
+      ]
+    },
+    {
+      "id": "N-BOUNDARIES",
+      "severity": "NONMATERIAL_DESIGN_LIMIT",
+      "axes": [
+        1,
+        2,
+        6
+      ],
+      "finding": "Concrete transaction-mode selection, destination-outside-transaction invariant, status-aware final callback writes, reclaim recovery and platform durability remain implementation details to validate. Fresh legacy-default destination connections support the presented backup approach; autocommit=False on a target would need care. The available proposal distinguishes protocols/tests from application evidence.",
+      "primary_evidence": [
+        "cpython3139-doc",
+        "cpython3139-connection",
+        "sqlite-backup-api",
+        "cpython3139-tests"
+      ]
+    }
+  ],
+  "no_repairs_or_feedback": true
+}

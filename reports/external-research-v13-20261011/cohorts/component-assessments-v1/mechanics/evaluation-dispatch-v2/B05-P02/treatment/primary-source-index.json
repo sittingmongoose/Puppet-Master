@@ -1,0 +1,375 @@
+{
+  "schema": "er13.primary_source_index.v1",
+  "independent_lookup": true,
+  "lookup_shared_across_matched_arms": true,
+  "whole_body_hashes_are_of_independent_public_bytes": true,
+  "target_release_confirmed": {
+    "tag": "v3.13.9",
+    "tag_object": "8f61118196ba00747076def18ea7ad2c43a1dc05",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  "sources": [
+    {
+      "id": "csv-doc",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+      "bytes": 23749,
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "coverage": "COMPLETE",
+      "applicability": "Target release source; independently matches the supplied frozen body where supplied.",
+      "body_inspection": "Full supplied body read; repeated cached neighborhoods/stdout verified as identical excerpts.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            56,
+            104
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            142,
+            174
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            273,
+            304
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            331,
+            376
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            419,
+            478
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            488,
+            506
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            597,
+            609
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            638,
+            644
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "csv-py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+      "bytes": 19178,
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "coverage": "COMPLETE",
+      "applicability": "Target release source; independently matches the supplied frozen body where supplied.",
+      "body_inspection": "Full supplied body read; repeated cached neighborhoods/stdout verified as identical excerpts.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            145,
+            194
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            244,
+            270
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            452,
+            513
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "csv-c",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+      "bytes": 51448,
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "coverage": "COMPLETE",
+      "applicability": "Target release source; independently matches the supplied frozen body where supplied.",
+      "body_inspection": "Full supplied body read; repeated cached neighborhoods/stdout verified as identical excerpts.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            32,
+            50
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            83,
+            137
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            507,
+            552
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            644,
+            978
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            1300,
+            1401
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            1634,
+            1664
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "csv-tests",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+      "bytes": 65633,
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "coverage": "COMPLETE",
+      "applicability": "Target release source; independently matches the supplied frozen body where supplied.",
+      "body_inspection": "Full supplied body read; repeated cached neighborhoods/stdout verified as identical excerpts.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            1,
+            2
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            213,
+            228
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            316,
+            356
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            369,
+            400
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            426,
+            553
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            974,
+            1036
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            1333,
+            1402
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "codecs",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/codecs.rst",
+      "bytes": 81602,
+      "sha256": "4d937cb38ed3df9821c39acc308283036a2b243e3dcddd61616cb70cb01534c0",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            1023,
+            1051
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/codecs.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "csv312-c",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.0/Modules/_csv.c",
+      "bytes": 52175,
+      "sha256": "18355e6eca091f2a7f4387bcebc98003af9ffafa48d14176a623afc394a0a818",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            611,
+            637
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        },
+        {
+          "range_1based_inclusive": [
+            686,
+            721
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.0/Modules/_csv.c",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "csv312-current",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.12/Doc/library/csv.rst",
+      "bytes": 22850,
+      "sha256": "f1b1ae4ac16e984733e454789eb1b18dd7ee2078c22b7e6a1fcd0bff85887587",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage.",
+      "locators": [
+        {
+          "range_1based_inclusive": [
+            348,
+            372
+          ],
+          "url": "https://raw.githubusercontent.com/python/cpython/3.12/Doc/library/csv.rst",
+          "purpose": "Consequential definitions, conditions, callers or regression context"
+        }
+      ]
+    },
+    {
+      "id": "release-ref",
+      "url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.13.9",
+      "bytes": 333,
+      "sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    },
+    {
+      "id": "release-tag",
+      "url": "https://api.github.com/repos/python/cpython/git/tags/8f61118196ba00747076def18ea7ad2c43a1dc05",
+      "bytes": 2782,
+      "sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    },
+    {
+      "id": "quote-issue",
+      "url": "https://api.github.com/repos/python/cpython/issues/113732",
+      "bytes": 4614,
+      "sha256": "edae2f22010eb18084e4e2894f6e95e7553b923fbff5a8b68f1fd56417ffbf79",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    },
+    {
+      "id": "quote-fix-correct",
+      "url": "https://api.github.com/repos/python/cpython/pulls/113738",
+      "bytes": 19211,
+      "sha256": "88b59f708a586f6185b81e4bab772202e4809f11e011d8ad6ef163b04f3e1b5a",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    },
+    {
+      "id": "quote-fix-files",
+      "url": "https://api.github.com/repos/python/cpython/pulls/113738/files",
+      "bytes": 8526,
+      "sha256": "20ac6ba45d4e59a4e2ef68aa1b9b3ac34353f1de8eed7c876a1eee49f6b27ce7",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    },
+    {
+      "id": "cpython-license",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "coverage": "COMPLETE",
+      "applicability": "Version boundary, decoding context, release binding or licensing; see context evidence.",
+      "body_inspection": "Consequential definitions and context inspected; no claim of exhaustive unrelated source coverage."
+    }
+  ],
+  "context_evidence": "evidence/primary-context.json",
+  "limitations": [
+    "Current 3.12 branch documentation is a timestamped hash-bound lookup, not an immutable tag; v3.12.0 implementation independently establishes the early counterexample.",
+    "No behavioral test, importer, storage backend, vendor fixture or DataFrame package was executed. Qualitative loading/schema comparisons do not claim measured performance or a specific third-party API.",
+    "No account, routing identity, raw native transcript or numeric token counters are republished."
+  ],
+  "arm_id": "B05-P02-treatment"
+}

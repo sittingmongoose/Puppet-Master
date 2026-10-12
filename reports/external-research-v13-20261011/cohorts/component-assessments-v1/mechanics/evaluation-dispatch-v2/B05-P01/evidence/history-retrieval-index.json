@@ -1,0 +1,51 @@
+[
+  {
+    "id": "issue67329",
+    "url": "https://api.github.com/repos/python/cpython/issues/67329",
+    "full_retrieved_bytes": 6083,
+    "full_retrieved_sha256": "8787ed2b41f927b3b0e64cecbb19d43d2b64d55e40cfcd961634f1d87c8a6073",
+    "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue67329.json",
+    "observed_at_utc": "2026-10-12T00:57:02.574326+00:00"
+  },
+  {
+    "id": "issue88050",
+    "url": "https://api.github.com/repos/python/cpython/issues/88050",
+    "full_retrieved_bytes": 8383,
+    "full_retrieved_sha256": "4e607760f11a6171d77c6489beeeaca4d14c8bd8bcaa37f5bdd647463e554651",
+    "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue88050.json",
+    "observed_at_utc": "2026-10-12T00:57:02.753070+00:00"
+  },
+  {
+    "id": "issue114539",
+    "url": "https://api.github.com/repos/python/cpython/issues/114539",
+    "full_retrieved_bytes": 6397,
+    "full_retrieved_sha256": "7e20e9bc4f9bf62552e3d9c6bcba378b883894ef67f658cc041f13dc3024c1e1",
+    "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue114539.json",
+    "observed_at_utc": "2026-10-12T00:57:02.923544+00:00"
+  },
+  {
+    "id": "fix117996",
+    "url": "https://patch-diff.githubusercontent.com/raw/python/cpython/pull/117996.patch",
+    "full_retrieved_bytes": 2796,
+    "full_retrieved_sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d",
+    "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+    "observed_at_utc": "2026-10-12T00:57:03.112215+00:00"
+  },
+  {
+    "id": "fix32073",
+    "url": "https://patch-diff.githubusercontent.com/raw/python/cpython/pull/32073.patch",
+    "full_retrieved_bytes": 96923,
+    "full_retrieved_sha256": "6446983bb7855b0355b3b996528de027b6a0f605e082ec3917d9bc4b30e850a6",
+    "evidence_path": null,
+    "observed_at_utc": "2026-10-12T00:57:03.349701+00:00",
+    "retention_note": "Unmerged intermediate patch series discarded; exact merged API context retained separately. Current 3.13.9 pin governs."
+  },
+  {
+    "id": "python3139-release",
+    "url": "https://www.python.org/downloads/release/python-3139/",
+    "full_retrieved_bytes": 10612,
+    "full_retrieved_sha256": "43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65",
+    "evidence_path": null,
+    "observed_at_utc": "2026-10-12T00:57:03.394653+00:00"
+  }
+]

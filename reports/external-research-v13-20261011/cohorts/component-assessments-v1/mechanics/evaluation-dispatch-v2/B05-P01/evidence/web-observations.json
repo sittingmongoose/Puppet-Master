@@ -1,0 +1,41 @@
+[
+  {
+    "id": "release",
+    "url": "https://www.python.org/downloads/release/python-3139/",
+    "retrieved_at_utc": "2026-10-12T01:01:40.323185+00:00",
+    "retrieved_bytes": 10612,
+    "retrieved_sha256": "43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65",
+    "scope": "release identity, mutable page",
+    "observed_facts": {
+      "version": "3.13.9",
+      "release_date": "2025-10-14",
+      "observed_superseded_by": "3.13.16",
+      "release_specific_change": "inspect.getsourcelines regression fix; no other changes relative to 3.13.8"
+    }
+  },
+  {
+    "id": "job-objects",
+    "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+    "retrieved_at_utc": "2026-10-12T01:01:40.419720+00:00",
+    "retrieved_bytes": 61310,
+    "retrieved_sha256": "401c0442e6a1cb9dc0acab05b1133c43b94ceb906fe894ba4e08202cad822785",
+    "scope": "optional future Windows process-grouping mechanism, outside current scope",
+    "observed_facts": {
+      "mechanism": "groups assigned processes; TerminateJobObject stops associated processes",
+      "conditions": "association, inheritance, breakaway settings and nested-job version constraints govern coverage; not a security sandbox",
+      "crash_option": "KILL_ON_JOB_CLOSE acts when last job handle closes, subject to actual association/handle lifecycle"
+    }
+  },
+  {
+    "id": "current-python-platform-docs",
+    "url": "https://docs.python.org/3.13/library/asyncio-platforms.html",
+    "retrieved_at_utc": "2026-10-12T01:01:40.474826+00:00",
+    "retrieved_bytes": 27157,
+    "retrieved_sha256": "c7d9720b5c859a05c39b2becfead1f259046d88d73a997a2579dc804dd505b52",
+    "scope": "secondary mutable confirmation only",
+    "observed_facts": {
+      "page_edition": "3.13.16",
+      "windows": "default Proactor supports subprocesses; Selector does not"
+    }
+  }
+]

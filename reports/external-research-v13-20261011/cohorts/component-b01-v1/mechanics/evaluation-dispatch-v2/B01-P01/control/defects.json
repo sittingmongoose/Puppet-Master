@@ -1,0 +1,92 @@
+{
+  "schema": "er13.defects.original.v2",
+  "arm_id": "B01-P01-control",
+  "defects": [
+    {
+      "id": "C-F01",
+      "severity": "MATERIAL",
+      "dimension": "source_assessment/validation_truthfulness",
+      "axes": [
+        6
+      ],
+      "kind": "UNSUPPORTED_EXECUTED_ASSEMBLY_RECORD_CLAIM",
+      "location": "final.md section8 (Execution and uncertainty); exact delegated terminal summary",
+      "finding": "The final states a local assembly program generated the text and that command, interpreter, stdout/stderr, intervals and hashes are in assembly-results.json. The exact task summary also links amendments.json, assemble.py and actual assembly-results.json. None of those files is in this arm's 33-file authored freeze. The original packet therefore does not substantiate the asserted executed assembly or its claimed accessible results.",
+      "consequence": "The complete final cannot receive a source PASS under axis6. This does not demonstrate fabricated execution, invalidate the online-backup source facts, or turn the application test matrix into executed work.",
+      "input_evidence": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+          "sha256": "8303591f65ed299a21d39a24577fd29a35c11ce49840c6658e79e0e7b930c993"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+          "sha256": "1e1d64552b5d10f8b66cb715ade6a50b8d859ddcc5a6136a913e08d6cdde8af3"
+        },
+        {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-control/component-terminal-task.raw.json",
+          "sha256": "0a1565f27d3be3016779054b6c56d5f8f8571884e088c4bfa9176384fb196af0"
+        }
+      ],
+      "coverage": "COMPLETE for the manifest omission and asserted evidence pointer; UNASSESSED for whether the unprovided assembly actually executed.",
+      "adjudication_boundary": "Original grade immutable. Any dispute needs a new separate adjudication preserving this brief, finding, response and unresolved objection; no repair or regrade here."
+    }
+  ],
+  "nonmaterial_and_conditional_observations": [
+    {
+      "id": "N-ALT",
+      "severity": "NONMATERIAL_LIMIT",
+      "axes": [
+        1,
+        3
+      ],
+      "finding": "The required online API/open-file copy/logical-dump comparisons and costs survive. This arm's available text does not discuss VACUUM INTO, although full S4 lists it and its governing docs identify reduced size and purging deleted bytes at higher CPU cost with nonincremental execution and ROWID/transaction/durability constraints. This is a useful available privacy/space opportunity missed. The brief does not require a deletion-sanitized export or an exhaustive alternatives catalog, so this omission alone is not declared a material failure. sqlite3_rsync remote transport is outside the brief.",
+      "primary_evidence": [
+        "sqlite-backup",
+        "sqlite-vacuum"
+      ]
+    },
+    {
+      "id": "N-WAL",
+      "severity": "CONDITIONAL_CONTEXT_LIMIT",
+      "axes": [
+        2,
+        3
+      ],
+      "finding": "The full frozen WAL body includes section11's corruption race and fixed release families (3.51.3+, backports3.44.6/3.50.7). This arm's available text omits that history. The trigger requires distinct threads/processes and concurrent writing/checkpointing on the same WAL file; control's single DB owner serializes its source operations, while the partial treatment leaves writer/checkpointer topology unresolved. No unsafe installed target is inferred from an unknown linked engine. The actual target linked engine is unknown. Patch implementation and actual target applicability remain UNASSESSED; documentation/release conditions were assessed.",
+      "primary_evidence": [
+        "sqlite-wal",
+        "sqlite-release3513"
+      ]
+    },
+    {
+      "id": "N-RESTORE",
+      "severity": "CONDITIONAL_CONTEXT_LIMIT",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "finding": "Privacy/path/digest/new-workspace checks are specified. Hashes are not authenticity, and opening a DB with custom SQL functions or virtual tables can require trusted-schema controls under a hostile-schema model. The user has not specified custom functions or a hostile trust boundary; primary security guidance is conditional. No unconditional vulnerability is asserted.",
+      "primary_evidence": [
+        "sqlite-security"
+      ]
+    },
+    {
+      "id": "N-BOUNDARIES",
+      "severity": "NONMATERIAL_DESIGN_LIMIT",
+      "axes": [
+        1,
+        2,
+        6
+      ],
+      "finding": "Concrete transaction-mode selection, destination-outside-transaction invariant, status-aware final callback writes, reclaim recovery and platform durability remain implementation details to validate. Fresh legacy-default destination connections support the presented backup approach; autocommit=False on a target would need care. The available proposal distinguishes protocols/tests from application evidence.",
+      "primary_evidence": [
+        "cpython3139-doc",
+        "cpython3139-connection",
+        "sqlite-backup-api",
+        "cpython3139-tests"
+      ]
+    }
+  ],
+  "no_repairs_or_feedback": true
+}

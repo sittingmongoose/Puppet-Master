@@ -1,0 +1,94 @@
+{
+  "schema": "er13.original_paired_comparison.v1",
+  "block_id": "B05-P02",
+  "scope": "COMPONENT",
+  "arm_count": 2,
+  "comparison_started_at_utc": "2026-10-12T01:06:20.114088+00:00",
+  "both_original_manifests_verified_before_comparison": true,
+  "original_grades_altered": false,
+  "arms": [
+    {
+      "arm_id": "B05-P02-control",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/manifest.json",
+      "manifest_sha256": "e171e6c8775190288b02cca8a7b1f0b1a8a9959284fbdca7c20b37ab4576af47",
+      "frozen_at_utc": "2026-10-12T01:05:22.510851+00:00",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "material_defects": 1,
+      "nonmaterial_defects": 2,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "t0_to_native_terminal_s": 628.271766,
+      "t0_to_authored_freeze_upper_bound_proxy_s": 679.370407,
+      "assessment_paths": [
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.md",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/coverage.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/defects.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/primary-source-index.json"
+      ],
+      "pending_child_runs_in_exact_terminal_receipt": false,
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_billing_coverage": "PARTIAL"
+    },
+    {
+      "arm_id": "B05-P02-treatment",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/manifest.json",
+      "manifest_sha256": "b6a0a4570059c4b6036aca3416d6e11e223be5bce02cde4fe4fd0150fb652793",
+      "frozen_at_utc": "2026-10-12T01:05:22.520233+00:00",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "material_defects": 0,
+      "nonmaterial_defects": 1,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "t0_to_native_terminal_s": 958.917933,
+      "t0_to_authored_freeze_upper_bound_proxy_s": 1145.916252,
+      "assessment_paths": [
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.md",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/coverage.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/defects.json",
+        "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/primary-source-index.json"
+      ],
+      "pending_child_runs_in_exact_terminal_receipt": false,
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_billing_coverage": "PARTIAL"
+    }
+  ],
+  "finite_quality_signal": "Treatment has the assessed source PASS; control has a material false cross-version null-reader condition. This is an uncertain finite signal for this assigned component only.",
+  "paired_preference": "Treatment for assessed proposal quality on this case; no campaign recipe selected.",
+  "delivery_signal": "Both complete and eligible before their unchanged 25-minute deadline. Exact last artifact-write/quiet-final time is unknown.",
+  "latency_observations": {
+    "treatment_minus_control_native_terminal_proxy_s": 330.646167,
+    "treatment_minus_control_authored_freeze_upper_bound_proxy_s": 466.545845,
+    "meaning": "Treatment has later observed proxies. Neither is a separated provider-active time or exact complete scientific artifact duration; freeze includes capture/polling lag."
+  },
+  "equal_quality_saving_established": false,
+  "reason": "A FAIL/PASS pair cannot establish an equal-quality saving; treatment is also later on both observed proxies. Actual cost, context occupancy and phase activity are unknown.",
+  "resource_comparison": {
+    "billing": "UNKNOWN",
+    "subscription_consumption": "UNKNOWN",
+    "context_occupancy": "UNKNOWN",
+    "provider_active_time": "UNKNOWN",
+    "input_cached_output_reasoning_breakdowns": "UNKNOWN",
+    "numeric_token_counters": "Not public; cumulative native counters are not billing and are not summed with overlapping metrics.",
+    "independent_evaluation": "Separate cost category; shared primary research is evaluation efficiency, not candidate assistance.",
+    "v1_coordinator_idle_costs": "Unchanged"
+  },
+  "method_and_provenance": "Each supplied native create/complete receipt pair matches the assigned packet, and exact task terminals report completed with no pending children. Transport labels are not proof of independent execution identity; tier, session linkage and exact call ordering remain unknown. Originals record these dimensions separately.",
+  "cache_component_preservation": "Four frozen full cache bodies independently match public pinned bytes; all 16 neighborhoods and 17 source-reader extracts preserve exact text. This supports byte preservation, not discovery effectiveness or cold full-pipeline success.",
+  "coverage_limits": {
+    "six_axes": "COMPLETE for each original finite proposal assessment",
+    "all_material_dispositions": "COMPLETE",
+    "source_families": "COMPLETE for consequential target sources/conditions and version/fix context",
+    "method_and_process_provenance": "PARTIAL",
+    "resource_and_billing": "PARTIAL with monetary consumption unknown",
+    "execution_vendor_backend_cold_integration": "UNASSESSED; not required for this research proposal",
+    "universal_correctness": "Not established"
+  },
+  "blinding": "Imperfect: cache-bearing paths and method instructions reveal the treatment. Shared lookup was independent and originals were frozen separately before this comparison.",
+  "root_selection_authority": "Root alone chooses campaign recipes; a component signal requires prospective integration. No candidate feedback, repair or further graders requested."
+}

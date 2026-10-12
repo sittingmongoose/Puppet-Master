@@ -1,0 +1,165 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "block_id": "B01-P02",
+  "scope": "COMPONENT",
+  "original": true,
+  "arm_count_in_this_file": 1,
+  "arms": [
+    {
+      "arm_id": "B01-P02-control",
+      "source_judgment": {
+        "complete_final": "FAIL",
+        "available_partial_science": null,
+        "material_defect_ids": [
+          "C-S01",
+          "C-S02"
+        ],
+        "assessment_coverage": "PARTIAL",
+        "source_PASS": false,
+        "finite_not_universal": true,
+        "no_complete_grade_fabricated": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "complete_final": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          }
+        ],
+        "artifact": "coverage.json",
+        "unassessed_remainder": "Detailed native-codec/OS implementation guarantees, broader upstream test suite, absent witness/terminal records."
+      },
+      "defects": {
+        "path": "defects.json",
+        "count": 4
+      },
+      "delivery": {
+        "judgment": "COMPLETE_SCIENTIFIC_PROSE_PRESENT",
+        "notification_status": "COMPLETE_REQUIRED_OUTPUTS_PRESENT",
+        "final_sha256": "952c02e024c29327fef60b22ff9f76f3e7a917f785aa18ee44b67646d01b570b",
+        "required_core_outputs_present": true,
+        "task_terminal_status": "completed",
+        "witness_package_coverage": "PARTIAL: assembly code/template/amendments/detailed results claimed by terminal summary are not manifest-listed; no files outside the packet were consulted."
+      },
+      "time_eligibility": {
+        "maximum_seconds": 1500,
+        "frozen_T0_utc": "2026-10-12T00:35:54.295724Z",
+        "frozen_deadline_utc": "2026-10-12T01:00:54.295724Z",
+        "dispatch_captured_at_utc": "2026-10-12T00:35:55.349Z",
+        "native_create_utc": "2026-10-12T00:36:23+00:00",
+        "last_complete_scientific_artifact_time_utc": null,
+        "last_artifact_reason": "Frozen input hashes establish content, not author-write time. Filesystem freeze timestamps are not substituted for candidate completion.",
+        "provider_first_activity_time_utc": null,
+        "stage_breakdown": "Single component finalizer after common prepared draft/critique; detailed active/idle/handoff phases unknown.",
+        "judgment": "ELIGIBLE_AT_NATIVE_TERMINAL_PROXY",
+        "native_terminal_utc": "2026-10-12T01:00:04+00:00",
+        "T0_to_native_terminal_seconds": 1449.704276,
+        "deadline_margin_seconds": 50.295724,
+        "native_reported_elapsed_seconds": 1420,
+        "strict_scientific_artifact_deadline_verification": "UNASSESSED: no timestamp of the last complete scientific artifact; native terminal is the observed completion proxy, not a proof that no later file changed."
+      },
+      "method_compliance": {
+        "judgment": "PARTIAL_OBSERVED_COMPLIANCE",
+        "coverage": "PARTIAL",
+        "facts": [
+          "Complete fresh self-contained rewrite present and C1-C4 resolved in prose.",
+          "Six retained literal anchors appear inside otherwise rewritten prose; assembly is compatible with producing a fresh rewrite.",
+          "Assembly stdout final hash matches the frozen final; missing assembly source/details limit execution witness and author-process verification."
+        ],
+        "shared_preparation": "Identical package supplied; neither package creation nor component result proves discovery effectiveness.",
+        "semantic_preservation": "Assessed separately from cache hash equality; see defects/coverage.",
+        "boundary_isolation": "Instruction contract, not independently proven sandbox isolation."
+      },
+      "native_identity_provenance": {
+        "create_receipt_present": true,
+        "exact_frozen_objective_matches": true,
+        "terminal_task_status": "completed",
+        "hasPendingChildRuns": false,
+        "task_terminal_receipt_hash": "9101b098b08435f7210075d45af3acf49db96f01d73c6f2f7dd9f02453641925",
+        "requested_model_matches_task_metadata": true,
+        "provider_instance_metadata_present_but_private_identity_redacted": true,
+        "native_goal_to_task_linkage": "UNKNOWN beyond frozen packet/file custody and matching objective; native receipt does not attest the T3 delegated task identity.",
+        "service_tier": "UNKNOWN; requested options are not returned-tier proof.",
+        "effort": "Control harness-context witness reports requested effort; independent actual activity/options unverified.",
+        "native_transcripts": "Not accessed or published.",
+        "native_terminal_receipt_present": true,
+        "native_terminal_status": "complete",
+        "same_goal_thread_birth_and_objective": true,
+        "same_birth_as_packet": true,
+        "native_status_coverage": "COMPLETE for exact receipts; freshness beyond them UNKNOWN"
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "observable_native_cumulative_counter_present": true,
+          "counter_values": "Not published under artifact privacy rule; retained only in exact input receipts.",
+          "counter_semantics_and_billing_linkage": "UNKNOWN",
+          "provider_active_seconds": null,
+          "created_or_started_context_occupancy": null,
+          "overlap": null,
+          "input_cached_output_reasoning_subsets": null,
+          "subscription_consumption": null,
+          "billing_amount": null,
+          "currency": null,
+          "affordability": "UNKNOWN"
+        },
+        "preparation": {
+          "shared_package": "Campaign preparation separate from each finalizer; standalone cold preparation amount UNKNOWN here.",
+          "arm_specific_setup_and_queue": "Included in frozen T0 clock; active/idle breakdown UNKNOWN."
+        },
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "started_at_utc": null,
+          "activity": "One evaluator, shared independent lookup and one in-memory mechanism witness; no extra graders.",
+          "billing_amount": null,
+          "resource_activity_counters": null,
+          "first_confirmed_clock_observation_utc": "2026-10-12T01:12:51Z",
+          "time_note": "Exact harness start and provider-active duration are unavailable; no candidate clock is changed."
+        },
+        "other_campaign_costs": "v1 coordinator idle/support/publication totals not read or changed; UNKNOWN here.",
+        "unknown_is_zero": false,
+        "counter_addition": "No overlapping counters added and no billing inferred."
+      }
+    }
+  ],
+  "blinding": "Imperfect: technique-bearing paths, prompts and output expose method. Separate original judgment frozen before comparative analysis.",
+  "governing_packet_sha256": "72dc6ed10bdf823d24defb3e8ae49da1d8216b9c180d3bb4fd244c50732c0082",
+  "prohibited_access_and_actions": "No admitted/active files, full history/tree scan, held-out cases, Git, canon, WorkNodes, shared server/provider changes, candidate feedback or additional scientific candidates.",
+  "limitations": [
+    "Technique-bearing paths, prompts and outputs reveal arm methods; blinding is imperfect.",
+    "All available original prose, dispositions, maps and method records were examined; source bodies were hash-verified and consequential regions inspected. This is not exhaustive review of every test or every native codec/OS implementation.",
+    "Decisive name-pipeline defects preclude source PASS; remaining expensive platform/native-code guarantees are UNASSESSED.",
+    "A planning proposal is the deliverable. No deployment, importer execution, Windows run or future software execution is required for this evaluation.",
+    "Unknown workload, supported content list and numeric thresholds may remain owner decisions; available source-mechanism research is assessed separately.",
+    "Independent evaluation costs are separate from candidate product and shared package preparation; no billing or activity total is inferred.",
+    "No candidate assistance, author feedback, repair, extra graders, held-out access, Git/canon modification, provider change, or scientific-candidate launch occurred."
+  ]
+}

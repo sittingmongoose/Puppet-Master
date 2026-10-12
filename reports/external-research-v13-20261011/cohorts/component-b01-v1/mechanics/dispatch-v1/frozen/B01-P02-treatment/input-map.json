@@ -1,0 +1,89 @@
+{
+  "case": "B01-P02",
+  "arm": "treatment",
+  "inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08"
+    }
+  ],
+  "independent_lookup_allowed": true,
+  "cache_access": true,
+  "semantic_conclusions_shared": true,
+  "excluded": [
+    "rubric.json",
+    "findings.json",
+    "metadata.json",
+    "preparer scripts/source pool",
+    "other arms/evaluators"
+  ],
+  "reader": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+    "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+    "usage": "python3 -B <reader> --case B01-P02 --arm treatment --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+  }
+}

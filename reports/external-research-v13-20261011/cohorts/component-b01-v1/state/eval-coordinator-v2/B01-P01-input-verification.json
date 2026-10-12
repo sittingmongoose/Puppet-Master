@@ -1,0 +1,40 @@
+{
+  "packet": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B01-P01.json",
+  "packet_sha256": "e85b2b458c47a3d12808ccf7b583da94c0b082aafb413c1f486ec81481e4d64a",
+  "arms": [
+    {
+      "arm_id": "B01-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "sha256": "1e1d64552b5d10f8b66cb715ade6a50b8d859ddcc5a6136a913e08d6cdde8af3",
+      "file_count": 33,
+      "all_file_hashes_verified": true,
+      "terminal_status": "completed",
+      "hasPendingChildRuns": false,
+      "missing_required_outputs": [],
+      "delivery": "COMPLETE_REQUIRED_OUTPUTS_PRESENT",
+      "native_binding": {
+        "same_native_birth": true,
+        "exact_frozen_objective": true,
+        "terminal_native_status": "complete"
+      }
+    },
+    {
+      "arm_id": "B01-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c",
+      "file_count": 33,
+      "all_file_hashes_verified": true,
+      "terminal_status": "interrupted",
+      "hasPendingChildRuns": false,
+      "missing_required_outputs": [
+        "criticism-dispositions.md",
+        "source-map.json",
+        "native-goal-terminal.json"
+      ],
+      "delivery": "ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+      "native_binding": null
+    }
+  ],
+  "failure_qualified": true,
+  "mail_id": "1012011125-d2aa"
+}

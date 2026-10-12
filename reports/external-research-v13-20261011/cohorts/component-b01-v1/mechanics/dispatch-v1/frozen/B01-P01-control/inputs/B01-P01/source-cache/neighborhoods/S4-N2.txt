@@ -1,0 +1,112 @@
+  The <a href="c3ref/backup_finish.html#sqlite3backupinit">Online Backup API</a> was created to 
+  address these concerns. The online backup API allows the contents of
+  one database to be copied into another database file, replacing any 
+  original contents of the target database. The copy operation may be 
+  done incrementally, in which case the source database does not need
+  to be locked for the duration of the copy, only for the brief periods
+  of time when it is actually being read from. This allows other database
+  users to continue without excessive delays while a backup of an online
+  database is made.
+</p><p>
+  The effect of completing the backup call sequence is to make the
+  destination a bit-wise identical copy of the source database as it
+  was when the copying commenced. (The destination becomes a "snapshot.")
+
+</p><p>
+  The online backup API is <a href="c3ref/backup_finish.html#sqlite3backupinit">documented here</a>.
+  The remainder of this page contains two C language examples illustrating 
+  common uses of the API and discussions thereof. Reading these examples
+  is no substitute for reading the API documentation!
+
+</p><h2 id="other_backup_techniques"><span>1.1. </span>Other Backup Techniques</h2>
+
+  <p>The Online Backup API is the original method for making backups of a
+  live SQLite databases.  Other more recent techniques for accomplishing
+  the same thing include:
+
+  </p><ul>
+  <li><p>
+  The <a href="lang_vacuum.html#vacuuminto">VACUUM INTO</a> command will make a vacuumed copy of a live
+  SQLite database into a separate file.
+
+  </p></li><li><p>
+  The <a href="rsync.html">sqlite3_rsync</a> program makes a copy of a live SQLite database
+  to or from a remote system using an SSH connection.
+  </p></li></ul>
+
+<h1 id="example_1_loading_and_saving_in_memory_databases"><span>2. </span>Example 1: Loading and Saving In-Memory Databases</h1>
+
+<pre style='margin-left:10ex;'>
+<span style="color:blue;font-style:italic;">/*</span>
+<span style="color:blue;font-style:italic;">** This function is used to load the contents of a database file on disk </span>
+<span style="color:blue;font-style:italic;">** into the "main" database of open database connection pInMemory, or</span>
+<span style="color:blue;font-style:italic;">** to save the current contents of the database opened by pInMemory into</span>
+<span style="color:blue;font-style:italic;">** a database file on disk. pInMemory is probably an in-memory database, </span>
+<span style="color:blue;font-style:italic;">** but this function will also work fine if it is not.</span>
+<span style="color:blue;font-style:italic;">**</span>
+<span style="color:blue;font-style:italic;">** Parameter zFilename points to a nul-terminated string containing the</span>
+<span style="color:blue;font-style:italic;">** name of the database file on disk to load from or save to. If parameter</span>
+<span style="color:blue;font-style:italic;">** isSave is non-zero, then the contents of the file zFilename are </span>
+<span style="color:blue;font-style:italic;">** overwritten with the contents of the database opened by pInMemory. If</span>
+<span style="color:blue;font-style:italic;">** parameter isSave is zero, then the contents of the database opened by</span>
+<span style="color:blue;font-style:italic;">** pInMemory are replaced by data loaded from the file zFilename.</span>
+<span style="color:blue;font-style:italic;">**</span>
+<span style="color:blue;font-style:italic;">** If the operation is successful, SQLITE_OK is returned. Otherwise, if</span>
+<span style="color:blue;font-style:italic;">** an error occurs, an SQLite error code is returned.</span>
+<span style="color:blue;font-style:italic;">*/</span>
+int loadOrSaveDb(<a href="c3ref/sqlite3.html">sqlite3</a> *pInMemory, const char *zFilename, int isSave){
+  int rc;                   <span style="color:blue;font-style:italic;">/* Function return code */</span>
+  <a href="c3ref/sqlite3.html">sqlite3</a> *pFile;           <span style="color:blue;font-style:italic;">/* Database connection opened on zFilename */</span>
+  <a href="c3ref/backup.html">sqlite3_backup</a> *pBackup;  <span style="color:blue;font-style:italic;">/* Backup object used to copy data */</span>
+  <a href="c3ref/sqlite3.html">sqlite3</a> *pTo;             <span style="color:blue;font-style:italic;">/* Database to copy to (pFile or pInMemory) */</span>
+  <a href="c3ref/sqlite3.html">sqlite3</a> *pFrom;           <span style="color:blue;font-style:italic;">/* Database to copy from (pFile or pInMemory) */</span>
+
+  <span style="color:blue;font-style:italic;">/* Open the database file identified by zFilename. Exit early if this fails</span>
+  <span style="color:blue;font-style:italic;">** for any reason. */</span>
+  rc = <a href="c3ref/open.html">sqlite3_open</a>(zFilename, &pFile);
+  if( rc==SQLITE_OK ){
+
+    <span style="color:blue;font-style:italic;">/* If this is a 'load' operation (isSave==0), then data is copied</span>
+    <span style="color:blue;font-style:italic;">** from the database file just opened to database pInMemory. </span>
+    <span style="color:blue;font-style:italic;">** Otherwise, if this is a 'save' operation (isSave==1), then data</span>
+    <span style="color:blue;font-style:italic;">** is copied from pInMemory to pFile.  Set the variables pFrom and</span>
+    <span style="color:blue;font-style:italic;">** pTo accordingly. */</span>
+    pFrom = (isSave ? pInMemory : pFile);
+    pTo   = (isSave ? pFile     : pInMemory);
+
+    <span style="color:blue;font-style:italic;">/* Set up the backup procedure to copy from the "main" database of </span>
+    <span style="color:blue;font-style:italic;">** connection pFile to the main database of connection pInMemory.</span>
+    <span style="color:blue;font-style:italic;">** If something goes wrong, pBackup will be set to NULL and an error</span>
+    <span style="color:blue;font-style:italic;">** code and message left in connection pTo.</span>
+    <span style="color:blue;font-style:italic;">**</span>
+    <span style="color:blue;font-style:italic;">** If the backup object is successfully created, call backup_step()</span>
+    <span style="color:blue;font-style:italic;">** to copy data from pFile to pInMemory. Then call backup_finish()</span>
+    <span style="color:blue;font-style:italic;">** to release resources associated with the pBackup object.  If an</span>
+    <span style="color:blue;font-style:italic;">** error occurred, then an error code and message will be left in</span>
+    <span style="color:blue;font-style:italic;">** connection pTo. If no error occurred, then the error code belonging</span>
+    <span style="color:blue;font-style:italic;">** to pTo is set to SQLITE_OK.</span>
+    <span style="color:blue;font-style:italic;">*/</span>
+    pBackup = <a href="c3ref/backup_finish.html#sqlite3backupinit">sqlite3_backup_init</a>(pTo, "main", pFrom, "main");
+    if( pBackup ){
+      (void)<a href="c3ref/backup_finish.html#sqlite3backupstep">sqlite3_backup_step</a>(pBackup, -1);
+      (void)<a href="c3ref/backup_finish.html#sqlite3backupfinish">sqlite3_backup_finish</a>(pBackup);
+    }
+    rc = <a href="c3ref/errcode.html">sqlite3_errcode</a>(pTo);
+  }
+
+  <span style="color:blue;font-style:italic;">/* Close the database connection opened on database file zFilename</span>
+  <span style="color:blue;font-style:italic;">** and return the result of this function. */</span>
+  (void)<a href="c3ref/close.html">sqlite3_close</a>(pFile);
+  return rc;
+}
+</pre>
+
+
+<p>
+  The C function above demonstrates one of the simplest,
+  and most common, uses of the backup API: loading and saving the contents
+  of an in-memory database to a file on disk. The backup API is used as
+  follows in this example:
+
+  </p><ol>
+    <li>Function <a href="c3ref/backup_finish.html#sqlite3backupinit">sqlite3_backup_init()</a> is called to create an <a href="c3ref/backup.html">sqlite3_backup</a>

@@ -1,0 +1,77 @@
+{
+  "schema": "er13.defects.original.v1",
+  "arm_id": "B08-P02-treatment",
+  "material_defects": [
+    {
+      "id": "T-COMPARE-MODES",
+      "material": true,
+      "kind": "required_comparison_omission",
+      "axes": [
+        1,
+        3
+      ],
+      "confidence": "HIGH for absence of a separate comparison; MEDIUM for materiality classification",
+      "input_locator": "brief.md:1 requires comparison of literal, normalized and casefolded matching with storage/index trade-offs",
+      "final_locators": [
+        "final.md:18–21 two-mode table",
+        "final.md:54–61 Alternatives and boundaries"
+      ],
+      "finding": "The complete final compares literal search against NFKC-then-casefold and mentions NFC-plus-casefold, but does not compare normalization-only matching with casefold-only matching or their separate storage/index trade-offs. Both nonliteral alternatives combine folding with normalization.",
+      "consequence": "The mandatory planning comparison remains incomplete: readers cannot assess a normalization-only policy against default casefold alone, which preserve and collapse different distinctions and may require different derived-key/index strategies. The composed chosen mode does not substitute for this comparison.",
+      "evidence": [
+        "Complete brief and final",
+        "CPY-UNICODEDATA-DOC normalization definition",
+        "CPY-STRTYPES-DOC casefold definition",
+        "UCD-NORMALIZATION-TEST U+FF21",
+        "UCD-FOLD U+0041/U+00DF/U+FF21",
+        "evidence/independent-oracle.stdout.json"
+      ],
+      "governing_requirement": "The complete brief expressly asks for literal, normalized and casefolded matching comparison with storage/index trade-offs; the distinct requested choices must be assessed, without requiring that all modes ship.",
+      "boundary": "The final correctly preserves the NFC-plus-casefold alternative and corrects the dangerous draft assumptions. This defect concerns proposal coverage, not unexecuted deployment or future test results; no repair is supplied."
+    }
+  ],
+  "nonmaterial_limitations": [
+    "No target runtime or application behavior was executed; both arms state this honestly and propose meaningful future checks.",
+    "Candidate web sources often lack captured body hashes; independent evaluator retrieved governing sources and hashed them.",
+    "No universal mapping-table or arbitrary-string correctness inferred from finite evidence."
+  ],
+  "not_defects": [
+    "Bounded counterexamples on a separately disclosed runtime",
+    "Explicit conditional or visible partial-search overflow policy",
+    "No deployment or future software execution in a planning deliverable"
+  ],
+  "preservation_and_dispositions": {
+    "retained": [
+      "original note authority and no-drop/no-truncate",
+      "exact one-pass selected transform and query symmetry",
+      "literal mode",
+      "versioned index rebuild and atomic switch",
+      "NFC-plus-casefold and future locale alternatives",
+      "locale/accent/confusable/security constraints",
+      "examples, preservation and validation scope"
+    ],
+    "corrected": [
+      "false byte monotonicity and input-length proxy",
+      "direct offsets and nearest-character rule",
+      "honest visible unindexed overflow status and no truncated keys"
+    ],
+    "lost": [],
+    "critic_dispositions_examined": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8",
+      "C9",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14"
+    ],
+    "disposition_result": "All 14 dispositions reviewed. Critique findings are supported; no material false rejection or unreported loss found. Independent brief comparison requirement remains omitted from final."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "html_url": "https://github.com/python/cpython/issues/88050",
+  "number": 88050,
+  "title": "Cannot cleanly kill a subprocess using high-level asyncio APIs",
+  "state": "closed",
+  "created_at": "2021-04-19T02:47:38Z",
+  "closed_at": "2022-10-05T18:27:03Z",
+  "updated_at": "2023-04-03T15:13:49Z",
+  "body": "BPO | [43884](https://bugs.python.org/issue43884)\n--- | :---\nNosy | @asvetlov, @1st1, @sweeneyde, @kumaraditya303, @skeggse\nPRs | <li>python/cpython#31611</li><li>python/cpython#32073</li>\nFiles | <li>[kill_subprocess.py](https://bugs.python.org/file49965/kill_subprocess.py \"Uploaded as text/plain at 2021-04-19.02:47:37 by rabraham\"): Kill subprocess using the high-level asyncio subprocess APIs</li>\n\n<sup>*Note: these values reflect the state of the issue at the time it was migrated and might not reflect the current state.*</sup>\n\n<details><summary>Show more details</summary><p>\n\nGitHub fields:\n```python\nassignee = None\nclosed_at = None\ncreated_at = <Date 2021-04-19.02:47:38.245>\nlabels = ['3.11', 'type-bug', 'expert-asyncio']\ntitle = 'Cannot cleanly kill a subprocess using high-level asyncio APIs'\nupdated_at = <Date 2022-03-23.09:08:45.631>\nuser = 'https://bugs.python.org/rabraham'\n```\n\nbugs.python.org fields:\n```python\nactivity = <Date 2022-03-23.09:08:45.631>\nactor = 'kumaraditya'\nassignee = 'none'\nclosed = False\nclosed_date = None\ncloser = None\ncomponents = ['asyncio']\ncreation = <Date 2021-04-19.02:47:38.245>\ncreator = 'rabraham'\ndependencies = []\nfiles = ['49965']\nhgrepos = []\nissue_num = 43884\nkeywords = ['patch']\nmessage_count = 6.0\nmessages = ['391349', '391350', '391369', '391379', '399937', '415859']\nnosy_count = 6.0\nnosy_names = ['asvetlov', 'yselivanov', 'rabraham', 'Dennis Sweeney', 'kumaraditya', 'skeggse']\npr_nums = ['31611', '32073']\npriority = 'normal'\nresolution = None\nstage = 'patch review'\nstatus = 'open'\nsuperseder = None\ntype = 'behavior'\nurl = 'https://bugs.python.org/issue43884'\nversions = ['Python 3.11']\n```\n\n</p></details>\n"
+}

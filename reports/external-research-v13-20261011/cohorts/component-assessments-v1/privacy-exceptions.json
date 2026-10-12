@@ -1,0 +1,153 @@
+{
+  "scope": "These exact files/hashes only; private route/account/home/host literals never exempt",
+  "exceptions": [
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+      "sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d",
+      "literals": [
+        "steve.dower@python.org"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L1-primary-context.json",
+      "sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "literals": [
+        "faith@cs.unc.edu",
+        "aeb@cwi.nl",
+        "michael@moria.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L2-primary-context.json",
+      "sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "literals": [
+        "faith@cs.unc.edu",
+        "mtk.manpages@gmail.com",
+        "mec@shell.portal.com",
+        "mskuhn@cip.informatik.uni-erlangen.de",
+        "esr@thyrsus.com",
+        "hch@lst.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P1-Doc-library-shutil.rst.json",
+      "sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "literals": [
+        "fdrake@acm.org"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P5-Modules-_winapi.c.json",
+      "sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "literals": [
+        "fredrik@pythonware.com",
+        "astrand@lysator.liu.se"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L1-primary-context.json",
+      "sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "literals": [
+        "faith@cs.unc.edu",
+        "aeb@cwi.nl",
+        "michael@moria.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L2-primary-context.json",
+      "sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "literals": [
+        "faith@cs.unc.edu",
+        "mtk.manpages@gmail.com",
+        "mec@shell.portal.com",
+        "mskuhn@cip.informatik.uni-erlangen.de",
+        "esr@thyrsus.com",
+        "hch@lst.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P1-Doc-library-shutil.rst.json",
+      "sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "literals": [
+        "fdrake@acm.org"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P5-Modules-_winapi.c.json",
+      "sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "literals": [
+        "fredrik@pythonware.com",
+        "astrand@lysator.liu.se"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/tempfile.rst",
+      "sha256": "487aeabf01be281fd1e2534b326c33cca4d9fab4db1c04d32e58439c9f6346bc",
+      "literals": [
+        "zack@codesourcery.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104228.json",
+      "sha256": "5319eab22131da5f7d07112c4a0efca0e5eb42b6e9bc29e9792b7422b1009bec",
+      "literals": [
+        "git@github.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104750.json",
+      "sha256": "9452e080635ad18f2b08e8b812585019a83f863c3f480a4fc570004356ccfe70",
+      "literals": [
+        "git@github.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-117532.json",
+      "sha256": "27d41c26872471d0035a7796d4db3ce40f48fb9bea242ef1724ee1f62ab20011",
+      "literals": [
+        "git@github.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-object.json",
+      "sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "literals": [
+        "thomas@python.org"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+      "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "literals": [
+        "mal@lemburg.com",
+        "martin@v.loewis.de",
+        "fredrik@pythonware.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/cpython-consequential-context.json",
+      "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "literals": [
+        "mal@lemburg.com",
+        "martin@v.loewis.de",
+        "fredrik@pythonware.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    }
+  ]
+}

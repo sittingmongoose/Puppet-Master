@@ -1,0 +1,141 @@
+{
+  "scope": "exact first six paired original COMPONENT assessments only",
+  "source_pass": 4,
+  "source_fail": 8,
+  "coverage_complete": 10,
+  "coverage_partial": 2,
+  "rows": [
+    {
+      "arm_id": "B05-P01-control",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIALLY_VERIFIABLE",
+      "native_provenance": "OBSERVED_RECEIPTS_WITH_UNKNOWN_LINKAGE",
+      "resource_coverage": "PARTIAL_OBSERVATION_UNKNOWN_BILLING",
+      "material_defects": 0
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIALLY_VERIFIABLE",
+      "native_provenance": "OBSERVED_RECEIPTS_WITH_UNKNOWN_LINKAGE",
+      "resource_coverage": "PARTIAL_OBSERVATION_UNKNOWN_BILLING",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B05-P02-control",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B05-P02-treatment",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 0
+    },
+    {
+      "arm_id": "B04-P01-control",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_SUPPLIED_FROZEN_CUSTODY",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B04-P01-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_SUPPLIED_FROZEN_CUSTODY",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 2
+    },
+    {
+      "arm_id": "B04-P02-control",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B08-P01-control",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY_BOUND",
+      "method_compliance": "METHOD_DELTA_SUPPORTED; FULL_PROCEDURAL_COMPLIANCE_UNKNOWN",
+      "native_provenance": "MATCHED_FROZEN_RECEIPTS; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+      "resource_coverage": "PARTIAL_OBSERVATIONS; BILLING_UNKNOWN",
+      "material_defects": 0
+    },
+    {
+      "arm_id": "B08-P01-treatment",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY_BOUND",
+      "method_compliance": "METHOD_DELTA_SUPPORTED; FULL_PROCEDURAL_COMPLIANCE_UNKNOWN",
+      "native_provenance": "MATCHED_FROZEN_RECEIPTS; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+      "resource_coverage": "PARTIAL_OBSERVATIONS; BILLING_UNKNOWN",
+      "material_defects": 0
+    },
+    {
+      "arm_id": "B08-P02-control",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "method_compliance": "PARTIAL_VERIFIABLE",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 1
+    },
+    {
+      "arm_id": "B08-P02-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "method_compliance": "PARTIAL_VERIFIABLE",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "material_defects": 1
+    }
+  ]
+}

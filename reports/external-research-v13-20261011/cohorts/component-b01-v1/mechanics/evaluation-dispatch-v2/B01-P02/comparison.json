@@ -1,0 +1,383 @@
+{
+  "schema": "er13.original_paired_comparison.v1",
+  "block_id": "B01-P02",
+  "scope": "COMPONENT",
+  "written_after_both_originals_frozen": true,
+  "created_at_utc": "2026-10-12T01:25:21.527118+00:00",
+  "arm_count": 2,
+  "assigned_denominator": 2,
+  "originals": [
+    {
+      "arm_id": "B01-P02-control",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/manifest.json",
+      "manifest_bytes": 5101,
+      "manifest_sha256": "bf488cb62ae55cda582dd25fd9be13486e402b8b59e1e673fd73c784146272bb",
+      "original_frozen_at_utc": "2026-10-12T01:24:33.916641+00:00",
+      "source_judgment": {
+        "complete_final": "FAIL",
+        "available_partial_science": null,
+        "material_defect_ids": [
+          "C-S01",
+          "C-S02"
+        ],
+        "assessment_coverage": "PARTIAL",
+        "source_PASS": false,
+        "finite_not_universal": true,
+        "no_complete_grade_fabricated": true
+      },
+      "delivery": "COMPLETE_SCIENTIFIC_PROSE_PRESENT",
+      "time_eligibility": "ELIGIBLE_AT_NATIVE_TERMINAL_PROXY",
+      "coverage": {
+        "overall": "PARTIAL",
+        "complete_final": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE"
+          }
+        ],
+        "artifact": "coverage.json",
+        "unassessed_remainder": "Detailed native-codec/OS implementation guarantees, broader upstream test suite, absent witness/terminal records."
+      },
+      "method_compliance": "PARTIAL_OBSERVED_COMPLIANCE",
+      "task_terminal_status": "completed",
+      "hasPendingChildRuns": false,
+      "frozen_output_catalog": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+          "relative_path": "assessment.json",
+          "bytes": 8856,
+          "sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.md",
+          "relative_path": "assessment.md",
+          "bytes": 5264,
+          "sha256": "ad3f74fbd69369a6772731544af1d96b93eb92eb6993524c1697e395ee66c0fb"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+          "relative_path": "coverage.json",
+          "bytes": 12148,
+          "sha256": "18a82613b29dfbcf59ef841f84f19d9354fbe82777015f92470d6389a5de17fd"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/defects.json",
+          "relative_path": "defects.json",
+          "bytes": 5698,
+          "sha256": "577ae6df974ed50838eb200127cd1b1d38c9d5e0278f821d27683168c2edb13a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/CPython-LICENSE.txt",
+          "relative_path": "evidence/CPython-LICENSE.txt",
+          "bytes": 13809,
+          "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-__init__.py",
+          "relative_path": "evidence/commit-__init__.py",
+          "bytes": 89132,
+          "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-test_core.py.context.txt",
+          "relative_path": "evidence/commit-test_core.py.context.txt",
+          "bytes": 22678,
+          "sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-zipfile.rst.context.txt",
+          "relative_path": "evidence/commit-zipfile.rst.context.txt",
+          "bytes": 10841,
+          "sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+          "relative_path": "evidence/name-pipeline-witness.py",
+          "bytes": 2524,
+          "sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stderr.txt",
+          "relative_path": "evidence/name-pipeline-witness.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stdout.json",
+          "relative_path": "evidence/name-pipeline-witness.stdout.json",
+          "bytes": 1448,
+          "sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/public-authorities.json",
+          "relative_path": "evidence/public-authorities.json",
+          "bytes": 3373,
+          "sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/source-body-retrieval.json",
+          "relative_path": "evidence/source-body-retrieval.json",
+          "bytes": 1607,
+          "sha256": "5162566f44913577992f65c13c07fb28635335eed3d8367508b07b5b59cea00b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/input-verification.json",
+          "relative_path": "input-verification.json",
+          "bytes": 8170,
+          "sha256": "e8793f2c62f12a7ef2c085f65c845998659d5e3090eb9b6e4177d284474a7072"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+          "relative_path": "primary-source-index.json",
+          "bytes": 13157,
+          "sha256": "8adc5e59f45a8f94d7cbff36fe331f7246730de91784f308f59fe1166774b611"
+        }
+      ]
+    },
+    {
+      "arm_id": "B01-P02-treatment",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/manifest.json",
+      "manifest_bytes": 5453,
+      "manifest_sha256": "34dc384442fd68bf7ae469967e311e9a0f48d218b6abce3f84deaa2349a07483",
+      "original_frozen_at_utc": "2026-10-12T01:24:33.921900+00:00",
+      "source_judgment": {
+        "complete_final": "UNASSESSED",
+        "available_partial_science": "FAIL",
+        "material_defect_ids": [
+          "T-S01",
+          "T-P01"
+        ],
+        "assessment_coverage": "PARTIAL",
+        "source_PASS": false,
+        "finite_not_universal": true,
+        "no_complete_grade_fabricated": true
+      },
+      "delivery": "INCOMPLETE_ORIGINAL_CAPPED_ATTEMPT",
+      "time_eligibility": "ORIGINAL_DEADLINE_FAILURE",
+      "coverage": {
+        "overall": "PARTIAL",
+        "complete_final": "UNASSESSED",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          }
+        ],
+        "artifact": "coverage.json",
+        "unassessed_remainder": "Detailed native-codec/OS implementation guarantees, broader upstream test suite, absent witness/terminal records."
+      },
+      "method_compliance": "FAIL_FROZEN_ASSEMBLY_CONSISTENCY",
+      "task_terminal_status": "interrupted",
+      "hasPendingChildRuns": false,
+      "frozen_output_catalog": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+          "relative_path": "assessment.json",
+          "bytes": 8940,
+          "sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.md",
+          "relative_path": "assessment.md",
+          "bytes": 5676,
+          "sha256": "9b3e6de179aa2b44e51a38730065f93709368a16cd081cc12d4541c722e0dc0c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/coverage.json",
+          "relative_path": "coverage.json",
+          "bytes": 12755,
+          "sha256": "2c3c9bb6463fc2b3684e8803ceaa47ab3617cb63974372e5cfa10dc38bfb4a39"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/defects.json",
+          "relative_path": "defects.json",
+          "bytes": 6140,
+          "sha256": "e3e3bf5cebf2c5e16081033eb2f4e8acdd400d3c20043755fb387f3eaf34b4a3"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/CPython-LICENSE.txt",
+          "relative_path": "evidence/CPython-LICENSE.txt",
+          "bytes": 13809,
+          "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/artifact-audit.json",
+          "relative_path": "evidence/artifact-audit.json",
+          "bytes": 1565,
+          "sha256": "d16769324550c5a65d59af7f2faa0e8e8f10d8ccc571d9c30d55fc317dff913a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-__init__.py",
+          "relative_path": "evidence/commit-__init__.py",
+          "bytes": 89132,
+          "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-test_core.py.context.txt",
+          "relative_path": "evidence/commit-test_core.py.context.txt",
+          "bytes": 22678,
+          "sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-zipfile.rst.context.txt",
+          "relative_path": "evidence/commit-zipfile.rst.context.txt",
+          "bytes": 10841,
+          "sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.py",
+          "relative_path": "evidence/name-pipeline-witness.py",
+          "bytes": 2524,
+          "sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stderr.txt",
+          "relative_path": "evidence/name-pipeline-witness.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stdout.json",
+          "relative_path": "evidence/name-pipeline-witness.stdout.json",
+          "bytes": 1448,
+          "sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/public-authorities.json",
+          "relative_path": "evidence/public-authorities.json",
+          "bytes": 3373,
+          "sha256": "684b9b9115b59591238ee794673b1ae66494be15ed5bd3be0c4c63ab1dd28005"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/source-body-retrieval.json",
+          "relative_path": "evidence/source-body-retrieval.json",
+          "bytes": 1607,
+          "sha256": "e5f5da55d3e5d84fc2e97f96c6783a3fcae88ba9ea77770ad8d567698f0b722a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/input-verification.json",
+          "relative_path": "input-verification.json",
+          "bytes": 8710,
+          "sha256": "97b62ce1507f0916b1efd855030a76f0bcc945c24e6632bb8c64ea8fdb652f4e"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/primary-source-index.json",
+          "relative_path": "primary-source-index.json",
+          "bytes": 13159,
+          "sha256": "2691a2a1a9705e915ff699e3cd6c9d62da6fed31e3888ed2df6c9603ccb3fc4e"
+        }
+      ]
+    }
+  ],
+  "source_PASS_count": 0,
+  "complete_final_source_FAIL_count": 1,
+  "complete_final_UNASSESSED_count": 1,
+  "available_partial_science_FAIL_count": 1,
+  "comparability": "One complete final with source FAIL and one incomplete final with complete-source UNASSESSED plus assessable partial defects. They are not two comparable complete source grades.",
+  "findings": [
+    "The governing 0x7075 effective-name branch is omitted in each available plan. Shared independent primary lookup supports distinct original judgments; the control additionally rejects safe supported Unicode overrides.",
+    "Treatment has a separately recorded supported-content rejection loss and stale assembly consistency. Its retained intervals contain no substantive unchanged draft prose.",
+    "Both available texts retain useful corrections to extraction/Path, ZipInfo identity, resource awareness, alternatives/history, nonexecution and existing-project protection. These benefits do not erase material defects.",
+    "Control has observed native completion within the original COMPONENT cap; treatment remains the original capped/interrupted failure. Missing finalization/native records are not rescued."
+  ],
+  "latency": {
+    "control_T0_to_native_terminal_proxy_seconds": 1449.704276,
+    "control_native_elapsed_counter_seconds": 1420,
+    "control_last_complete_scientific_artifact_time": null,
+    "treatment_completed_final_latency_seconds": null,
+    "treatment_original_cap_seconds": 1500,
+    "paired_equal_quality_delta_seconds": null,
+    "equal_quality_savings_claim": false,
+    "reason": "No source PASS and no treatment complete-final latency. Frozen clocks unchanged; missing completion is not zero."
+  },
+  "resources": {
+    "candidate_product_total": null,
+    "complete_experiment_total": null,
+    "preparation_total": null,
+    "independent_evaluation_billing": null,
+    "observable_provider_activity": null,
+    "passing_final_consumption_quotient": null,
+    "quotient_status": "UNDEFINED: zero observed source PASS finals",
+    "context_or_billing_savings_claim": false,
+    "evaluation_first_confirmed_clock_utc": "2026-10-12T01:12:51+00:00",
+    "comparison_write_observed_utc": "2026-10-12T01:25:21.527118+00:00",
+    "elapsed_since_first_confirmed_evaluation_clock_seconds": 750.527118,
+    "exact_evaluator_harness_start_and_provider_active_duration": null,
+    "cost_class": "independent_evaluation",
+    "v1_coordinator_idle_costs": "UNCHANGED; not reattributed",
+    "unknown_is_zero": false
+  },
+  "promotion": {
+    "recipe_selected": false,
+    "selection_owner": "root only",
+    "finite_signal": "This original pair yields no qualified source-quality lead. Completion favors control on observed delivery only; mechanism rankings/general effectiveness remain uncertain.",
+    "COMPONENT_integration_requirement": "Any component hypothesis requires integration and cold full-pipeline confirmation; package preparation is distinct from semantic preservation/discovery.",
+    "no_future_execution_demand": true
+  },
+  "coverage_limits": [
+    "All original available authored prose, maps, dispositions and frozen method records examined; all 65 manifest inputs hash/size verified.",
+    "Source cache/downloads were verified and governing consequential contexts researched; not every upstream test or native/OS implementation was exhaustively evaluated.",
+    "All six axes and consequential obligations/source families have explicit COMPLETE/PARTIAL/UNASSESSED records. Treatment complete-final coverage remains UNASSESSED on every axis.",
+    "Detailed native codec and OS hardening/worker/race/durability guarantees and absent receipts/execution code remain UNASSESSED.",
+    "Imperfect technique blinding; no candidate authors received findings; no additional scientific candidate, grader or native Goal launched."
+  ],
+  "pending": {
+    "assigned_terminal_receipts_with_pending_children": 0,
+    "extra_evaluation_child_jobs_created": 0,
+    "all_assigned_task_receipts_terminal": true
+  },
+  "original_immutability": "Per-arm files are read-only and exact manifests exclude themselves. No grade edited after freeze. Any dispute requires a NEW separate adjudication; no repair/re-score/restart."
+}

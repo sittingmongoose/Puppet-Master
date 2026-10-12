@@ -1,0 +1,89 @@
+{
+  "scope": "These exact files/hashes only; private route/account/home/host literals never exempt",
+  "exceptions": [
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "literals": [
+        "gh@ghaering.de",
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "literals": [
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+      "sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "literals": [
+        "gh@ghaering.de",
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+      "sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "literals": [
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "literals": [
+        "gh@ghaering.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "literals": [
+        "gh@ghaering.de",
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "literals": [
+        "gh@ghaering.de"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "literals": [
+        "gh@ghaering.de",
+        "kippesp@gmail.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "literals": [
+        "jim@interet.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "literals": [
+        "jim@interet.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    }
+  ]
+}

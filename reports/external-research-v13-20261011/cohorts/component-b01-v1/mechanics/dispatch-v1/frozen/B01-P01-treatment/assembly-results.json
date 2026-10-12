@@ -1,0 +1,221 @@
+{
+  "status": "assembled",
+  "final_file": "final.md",
+  "final_sha256": "81f0680f6ca71edf76443c77016d4b8ca1f38cdec1a28b7cfcb1b824b0c8e4c7",
+  "final_characters": 10571,
+  "retained_intervals": 5,
+  "replacements": 7,
+  "assembly_command": "python3 -B assemble.py",
+  "runtime": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "exit_code": 0,
+  "stdout": "{\"status\":\"assembled\",\"final_file\":\"final.md\",\"final_sha256\":\"81f0680f6ca71edf76443c77016d4b8ca1f38cdec1a28b7cfcb1b824b0c8e4c7\",\"final_characters\":10571,\"retained_intervals\":5,\"replacements\":7}",
+  "stderr": "",
+  "base_input": "inputs/B01-P01/draft.md",
+  "base_sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+  "amendments_file": "amendments.json",
+  "amendments_sha256": "b6084336fbdae4eb6b287f1e57068f011b2acacea3c9a9c6cc8964e904b3a270",
+  "assembly_script": "assemble.py",
+  "assembly_script_sha256": "f8dbaeda1aca14944e32c53ce779c93fb666cae216090bbb848f3895c5e5a411",
+  "final_lines": 46,
+  "retained_text_intervals": [
+    {
+      "source_char_range_half_open": [
+        47,
+        593
+      ],
+      "final_char_range_half_open": [
+        50,
+        596
+      ],
+      "sha256": "85f1c5a1ee16e73ed95cf75210f81b5eadb503600c00058b5c445032f7147fcd",
+      "characters": 546
+    },
+    {
+      "source_char_range_half_open": [
+        593,
+        595
+      ],
+      "final_char_range_half_open": [
+        1317,
+        1319
+      ],
+      "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+      "characters": 2
+    },
+    {
+      "source_char_range_half_open": [
+        1365,
+        1401
+      ],
+      "final_char_range_half_open": [
+        3582,
+        3618
+      ],
+      "sha256": "08f1f02c06c577ea99f86e559051247a115a8f296e77eb607c29d0b6868fb538",
+      "characters": 36
+    },
+    {
+      "source_char_range_half_open": [
+        2136,
+        3478
+      ],
+      "final_char_range_half_open": [
+        6581,
+        7923
+      ],
+      "sha256": "cace66add32f9869a55af8562fec8147e8c6c7915be234b4ae583fccf6e4524f",
+      "characters": 1342
+    },
+    {
+      "source_char_range_half_open": [
+        3478,
+        3479
+      ],
+      "final_char_range_half_open": [
+        10570,
+        10571
+      ],
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "characters": 1
+    }
+  ],
+  "replacements_detail": [
+    {
+      "id": "TITLE",
+      "mode": "replace_exact",
+      "criticism": [],
+      "source_char_range_half_open": [
+        0,
+        47
+      ],
+      "source_sha256": "435ece0433b2a03cfcd3eb816dce782ec1e36c4d1bfb3816f479a1e8e6b25162",
+      "final_char_range_half_open": [
+        0,
+        50
+      ],
+      "replacement_sha256": "5bda9aa9f3398ce77c5272d68efa22e5d93d1a58f2fcc35a728f878b53b789b7",
+      "replacement_characters": 50,
+      "anchor": "# Notebook backup proposal — investigator draft"
+    },
+    {
+      "id": "LOCAL-BUNDLE-PUBLICATION",
+      "mode": "insert_after",
+      "criticism": [
+        "C4"
+      ],
+      "source_char_range_half_open": [
+        593,
+        593
+      ],
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final_char_range_half_open": [
+        596,
+        1317
+      ],
+      "replacement_sha256": "fc8c23dba5e4885bf5a6c2ee69f0eccc4dee6d38fd90c7bcdb10d4d3be426c99",
+      "replacement_characters": 721,
+      "anchor": "Use SQLite's online backup through `Connection.backup` rather than copying an open main file. CPython's documented API supports concurrent access, a page batch and a progress callback [S1]. A dedicated worker creates and closes its own connections, reports progress to the GUI and writes a staged database. Editing remains enabled. Do not load the full database into memory. Never overwrite a previously published bundle; create a fresh generation directory and ask the user to choose another name if occupied."
+    },
+    {
+      "id": "C1-C2-PACING-CANCEL",
+      "mode": "replace_exact",
+      "criticism": [
+        "C1",
+        "C2"
+      ],
+      "source_char_range_half_open": [
+        595,
+        1365
+      ],
+      "source_sha256": "688bfc2d53348a620069c06c1c26006293549c69c2595bb20cd61dbf2472f580",
+      "final_char_range_half_open": [
+        1319,
+        3582
+      ],
+      "replacement_sha256": "ec0104d1a7eb80727ca23fdae8bccf5ecdcba98fbf014661d60a61cb9b18666b",
+      "replacement_characters": 2263,
+      "anchor": "For predictable pacing, call `src.backup(dst, pages=64, sleep=0.050)`: the 50ms sleep spaces every successful page batch, so the UI can promise a fixed upper copying rate. `total - remaining` is the progress display and should grow monotonically from zero to the initial page count. Cancel sets a flag checked by the progress callback; raising a dedicated exception unwinds the backup. Catch that exception in the worker, close both connections and remove only this operation's staging directory. The callback stays short and never mutates the source database. Source-backed callback failure cleanup is visible in the governing C implementation [S2]; upstream tests cover callback failure and modification during progress [S3], but were not executed in this preparation."
+    },
+    {
+      "id": "C3-ATTACHMENT-CONSISTENCY",
+      "mode": "replace_exact",
+      "criticism": [
+        "C3"
+      ],
+      "source_char_range_half_open": [
+        1401,
+        1806
+      ],
+      "source_sha256": "9bc0801ae81a8bb26d6ad650511c6368a4aeca8c35568d14c0d3690c03a62205",
+      "final_char_range_half_open": [
+        3618,
+        5412
+      ],
+      "replacement_sha256": "6a2a0bc186dfe37c4a63ec7e4ca4e7724885653cf0b03978e17e87a80c8142ff",
+      "replacement_characters": 1794,
+      "anchor": "Once the database backup finishes, enumerate its attachment rows and copy each referenced file into the bundle. The database snapshot therefore makes the external attachments consistent automatically, even if the editor replaces an attachment during copying. Store a manifest of content digests, relative names and schema version. Missing files produce a failed bundle, not a success with dropped content."
+    },
+    {
+      "id": "BUNDLE-PARAGRAPH-SEPARATOR",
+      "mode": "replace_exact",
+      "criticism": [
+        "C3",
+        "C4"
+      ],
+      "source_char_range_half_open": [
+        1806,
+        2136
+      ],
+      "source_sha256": "7f0f3ab1ed9f8134eb54f5680a5b690fe731c3bab0426e5734d59f8405592001",
+      "final_char_range_half_open": [
+        5412,
+        5743
+      ],
+      "replacement_sha256": "ca7b6dffa591474eb5c5ce1ae16e16ae4641fb169dac656790d46dfe28729ea2",
+      "replacement_characters": 331,
+      "anchor": " Restore into a new workspace, compare digests and run SQLite integrity and application referential checks before switching the UI. Keep the original database and bundles intact on restore failure. Exclude credentials and redact local paths from diagnostics; attachment contents are private even when the database itself is small."
+    },
+    {
+      "id": "C3-C4-RESTORE-SECURITY",
+      "mode": "insert_after",
+      "criticism": [
+        "C3",
+        "C4"
+      ],
+      "source_char_range_half_open": [
+        2136,
+        2136
+      ],
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final_char_range_half_open": [
+        5743,
+        6581
+      ],
+      "replacement_sha256": "fc9b87c96a09cdcb3ce5dca0da790f6d767f1430c4e99a847a40a866f4bd5854",
+      "replacement_characters": 838,
+      "anchor": "Restore into a new workspace, compare digests and run SQLite integrity and application referential checks before switching the UI. Keep the original database and bundles intact on restore failure. Exclude credentials and redact local paths from diagnostics; attachment contents are private even when the database itself is small."
+    },
+    {
+      "id": "VALIDATION-AND-SOURCE-RECORD",
+      "mode": "insert_after",
+      "criticism": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "source_char_range_half_open": [
+        3478,
+        3478
+      ],
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "final_char_range_half_open": [
+        7923,
+        10570
+      ],
+      "replacement_sha256": "db552802bb0d9cd7b058845989717e4be5199fc0fa9d1b8f54915ee6e10a7db9",
+      "replacement_characters": 2647,
+      "anchor": "Documentation, implementation and named upstream tests have been inspected; no application backup, cancellation, durability or restore test has run. Propose concurrent note edits during backup, repeated page-count changes, callback cancellation, destination permission/disk exhaustion, occupied names and restore with attachment deletion/replacement. Measure GUI responsiveness and throughput on representative GiB bundles. Checksums detect byte mismatches, not semantic snapshot consistency or crash durability. Shipping should wait for a tested attachment-generation protocol and interruption-safe staging cleanup."
+    }
+  ]
+}

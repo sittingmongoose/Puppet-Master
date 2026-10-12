@@ -1,0 +1,75 @@
+{
+  "schema": "er13.frozen_pair_notification.v1",
+  "block_id": "B01-P01",
+  "scope": "COMPONENT",
+  "frozen_at": "2026-10-12T01:11:25.694178+00:00",
+  "source_assessed": false,
+  "failure_qualified": true,
+  "assessment_instruction": "Assess originals independently against available immutable science; explicitly UNASSESSED for absent material/coverage. Partial final presence is not complete delivery/native/time qualification. No replacement or rescoring of capped attempt.",
+  "items": [
+    {
+      "arm_id": "B01-P01-control",
+      "scope": "COMPONENT",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "manifest_sha256": "1e1d64552b5d10f8b66cb715ade6a50b8d859ddcc5a6136a913e08d6cdde8af3",
+      "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control",
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/plan.md",
+      "draft": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/draft.md",
+      "critique": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/critique.md",
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "criticism_dispositions": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/criticism-dispositions.md",
+      "source_map": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/source-map.json",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-control-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-control-v1",
+      "actual_task_terminal_status": "completed",
+      "task_terminal_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-control/component-terminal-task.raw.json",
+      "native_identity": {
+        "threadId": "01a12d88-2cd4-7501-941b-fe379436beab",
+        "createdAt": 1791765275,
+        "objective": "ER13 COMPONENT B01-P01-control: complete only B01-P01 control under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal."
+      },
+      "missing_required_outputs": [],
+      "native_binding": {
+        "same_native_birth": true,
+        "exact_frozen_objective": true,
+        "terminal_native_status": "complete"
+      },
+      "delivery": "COMPLETE_REQUIRED_OUTPUTS_PRESENT",
+      "time_eligibility": "INDEPENDENT_MEASUREMENT_REQUIRED",
+      "source_assessed": false
+    },
+    {
+      "arm_id": "B01-P01-treatment",
+      "scope": "COMPONENT",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "manifest_sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c",
+      "frozen_directory": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment",
+      "brief": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "plan": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "draft": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "critique": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "final": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/final.md",
+      "criticism_dispositions": null,
+      "source_map": null,
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-treatment-v1",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-treatment-v1",
+      "actual_task_terminal_status": "interrupted",
+      "task_terminal_raw": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+      "native_identity": {
+        "threadId": "01a12d88-2fb6-75d0-abbc-3dfd0916ec74",
+        "createdAt": 1791765279,
+        "objective": "ER13 COMPONENT B01-P01-treatment: complete only B01-P01 treatment under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal."
+      },
+      "missing_required_outputs": [
+        "criticism-dispositions.md",
+        "source-map.json",
+        "native-goal-terminal.json"
+      ],
+      "native_binding": null,
+      "delivery": "ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+      "time_eligibility": "ORIGINAL_DEADLINE_FAILURE",
+      "source_assessed": false
+    }
+  ]
+}

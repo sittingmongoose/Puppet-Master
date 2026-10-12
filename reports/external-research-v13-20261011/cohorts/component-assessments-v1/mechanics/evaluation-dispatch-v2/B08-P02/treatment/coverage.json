@@ -1,0 +1,156 @@
+{
+  "schema": "er13.coverage.original.v1",
+  "arm_id": "B08-P02-treatment",
+  "overall_declared_assessment": "COMPLETE",
+  "coverage_is_not_correctness": true,
+  "axes": [
+    {
+      "axis_id": 1,
+      "axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "REQUIRED_COMPARISON_OMITTED"
+    },
+    {
+      "axis_id": 2,
+      "axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "axis_id": 3,
+      "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "COMPARISON_INCOMPLETE; useful alternatives otherwise retained"
+    },
+    {
+      "axis_id": 4,
+      "axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "axis_id": 5,
+      "axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED"
+    },
+    {
+      "axis_id": 6,
+      "axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED"
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "id": "O1",
+      "obligation": "Original unchanged for display/editing and no silent note loss",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O2",
+      "obligation": "Exact compatibility-caseless mode, note/query symmetry and substring scope",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O3",
+      "obligation": "4096 strict UTF-8 stored-key bytes after complete transform, overflow policy",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O4",
+      "obligation": "Expansion/composition/reordering and renderer-safe highlights",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED with implementation and renderer behavior unexecuted"
+    },
+    {
+      "id": "O5",
+      "obligation": "Pinned CPython/UCD version, metadata and deliberate migrations",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O6",
+      "obligation": "Locale expectations, accents, visual confusables, security negatives",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED as explicitly scoped non-goals"
+    },
+    {
+      "id": "O7",
+      "obligation": "Literal/normalized/casefolded comparison and storage/index trade-offs",
+      "coverage": "COMPLETE",
+      "finding": "FAIL"
+    },
+    {
+      "id": "O8",
+      "obligation": "Useful narrower NFC-plus-casefold and future locale alternatives",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O9",
+      "obligation": "Independent domain/unit/version-bound counterexamples, no universal proof",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O10",
+      "obligation": "All draft propositions and criticism dispositions into complete final",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    },
+    {
+      "id": "O11",
+      "obligation": "Proposed validation distinct from actual executed witness",
+      "coverage": "COMPLETE",
+      "finding": "SUPPORTED"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Pinned CPython API/docs/definitions and source release identity",
+      "coverage": "COMPLETE",
+      "scope": "Relevant normalization, casefold, encoding, scalar/index units and version definitions."
+    },
+    {
+      "family": "Governing normalization/full-fold code, helper/caller/data context and error paths",
+      "coverage": "COMPLETE",
+      "scope": "Complete consequential functions retained; generated lookup tables linked and sampled, not a global table audit."
+    },
+    {
+      "family": "Upstream tests and regression/fix/release context",
+      "coverage": "COMPLETE",
+      "scope": "Relevant casefold, normalization, overflow, resource/skip decorators, issue regressions and CLDR version correction."
+    },
+    {
+      "family": "Unicode 15.1 governing mappings and normalization/folding oracles",
+      "coverage": "COMPLETE",
+      "scope": "All consequential rows/definitions behind asserted corrections, modes and independent arithmetic."
+    },
+    {
+      "family": "Grapheme boundary, confusable, formal NFKC_Casefold and locale-collation mechanisms",
+      "coverage": "COMPLETE",
+      "scope": "Relevant governing definitions, limits and conditional alternatives."
+    },
+    {
+      "family": "Unrelated whole-library code, entire generated tables, all historical issues",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_proposal": false
+    },
+    {
+      "family": "Deployed note UI/index/migration execution and full conformance suite results",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_proposal": false,
+      "reason": "Future execution is proposed, explicitly not claimed; not required for this planning deliverable."
+    }
+  ],
+  "limitations": [
+    "Finite assessment of this exact frozen proposal; not exhaustive Unicode or future implementation correctness.",
+    "Arm identity/technique visible in paths/prompts/output: imperfect blinding.",
+    "No held-out case contents or active candidate files inspected.",
+    "No expensive-screen early termination; all six axes and submitted dispositions assessed."
+  ]
+}

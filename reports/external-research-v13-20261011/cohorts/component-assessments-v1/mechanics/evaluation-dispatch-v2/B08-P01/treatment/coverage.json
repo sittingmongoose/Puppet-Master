@@ -1,0 +1,243 @@
+{
+  "schema": "er13.axis-coverage.v2",
+  "arm_id": "B08-P01-treatment",
+  "overall": "COMPLETE",
+  "meaning": "Complete finite semantic review of the planning deliverable, including all scientific inputs and criticism; not universal correctness or executed application validation.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "All material brief/plan requirements represented, including acceptance receipts, cumulative versus outstanding counts, lifecycle atomicity and truthful cancellation-pending reporting. Output ownership and the separate child-process layer are retained."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+      "reason": "Pin maps to the signed official 3.13.9 tag; queue facts, cancellation scope, secure temp and replace constraints agree with primary context. Execution on 3.14.4 is explicitly separate. N1 records wrong filesystem/thread-safety citation ranges."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Includes blocking submitter memory beyond the queue cap, no-await ledger transitions, cancellation-pending state, secure destination-local staging and conditional thread/process execution alternatives. Scoped history confirms shutdown introduction; thread-queue bugs are not imported into asyncio."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+      "reason": "The entire generated critique and C01-C16 dispositions checked. Force-stop success/double-count reasoning correctly rejected; conditional arithmetic and older-version sentinel capability retained. No material false rejection found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "reason": "Complete self-contained final retains all supported draft mechanisms, ownership, uncertainty and original validation status while integrating the critical force-stop correction. No material preservation loss found."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+      "reason": "Actual preserved witness code/results and evaluator replay support queue/accounting counterexamples and independent ideal scheduling model. Target mismatch is disclosed. N2 narrows the cancellation/worker wording: ledger labels are simulated and no worker task was cancelled. Proposed application/cleanup/OS/load tests remain future checks."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "obligation": "CPython 3.13.9; Queue(maxsize=20); four one-job workers; descriptor ownership; conditional 24 outstanding bound and excluded producer/history memory",
+      "coverage": "COMPLETE",
+      "candidate_context": "Recommendation; capacity estimates",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE"
+      ]
+    },
+    {
+      "id": "O2",
+      "obligation": "Successful-put acceptance, per-ID in-session ledger, queued versus running versus terminal progress and thread confinement",
+      "coverage": "COMPLETE",
+      "candidate_context": "State/progress and admission lifecycle",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE",
+        "DEV",
+        "TASK"
+      ]
+    },
+    {
+      "id": "O3",
+      "obligation": "Graceful admission closure, non-immediate shutdown, drain/acknowledge accepted work, await workers and retain results",
+      "coverage": "COMPLETE",
+      "candidate_context": "Graceful stop",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE",
+        "QTEST"
+      ]
+    },
+    {
+      "id": "O4",
+      "obligation": "Force-stop abandonment versus active cancellation; no success from qsize/join; no extra acknowledgment of drained jobs",
+      "coverage": "COMPLETE",
+      "candidate_context": "Force stop and accounting",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE",
+        "QTEST"
+      ]
+    },
+    {
+      "id": "O5",
+      "obligation": "Failure/cancellation never counted as conversion success; exactly one task_done per retrieved item; cancellation before get has none; cooperative stop and external-layer boundary",
+      "coverage": "COMPLETE",
+      "candidate_context": "Worker/force-stop contract",
+      "primary_evidence_ids": [
+        "QCODE",
+        "QTEST",
+        "TASK",
+        "DEV"
+      ]
+    },
+    {
+      "id": "O6",
+      "obligation": "Component-owned temporary/output paths, validation and publish success gate, cleanup failures, completed-output retention and unspecified destination policy",
+      "coverage": "COMPLETE",
+      "candidate_context": "Output contract",
+      "primary_evidence_ids": [
+        "OS",
+        "TEMP",
+        "TEMPCODE"
+      ]
+    },
+    {
+      "id": "O7",
+      "obligation": "Retain 12 equal ready jobs, four workers, two seconds: six-second makespan; ideal saturated two jobs/second; no arbitrary-workload or measured-throughput inference",
+      "coverage": "COMPLETE",
+      "candidate_context": "Estimates",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE"
+      ]
+    },
+    {
+      "id": "O8",
+      "obligation": "Native shutdown versus conditional older-runtime sentinels; sequential/more workers and CPU execution alternatives",
+      "coverage": "COMPLETE",
+      "candidate_context": "Alternatives",
+      "primary_evidence_ids": [
+        "QDOC",
+        "DEV"
+      ]
+    },
+    {
+      "id": "O9",
+      "obligation": "Full draft, all generated criticism and dispositions, preserved supported meaning, legitimate rejections and unresolved questions",
+      "coverage": "COMPLETE",
+      "candidate_context": "History and dispositions",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE",
+        "QTEST",
+        "TASK",
+        "DEV"
+      ]
+    },
+    {
+      "id": "O10",
+      "obligation": "Discriminating planned queue/application tests; separate actual execution, upstream test inspection, target version and model measurements",
+      "coverage": "COMPLETE",
+      "candidate_context": "Validation",
+      "primary_evidence_ids": [
+        "QTEST",
+        "TASK"
+      ]
+    }
+  ],
+  "consequential_source_families": [
+    {
+      "family": "Queue API, full implementation/dependencies/caller and regression tests",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "QDOC",
+        "QCODE",
+        "QTEST",
+        "EVENT",
+        "LOOP"
+      ]
+    },
+    {
+      "family": "Target release identity and scoped introduction/fix/documentation context",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "TAG_REF",
+        "TAG_OBJECT",
+        "INTRO",
+        "MOTIVE",
+        "THREAD_DESIGN",
+        "THREAD_BUG",
+        "THREAD_FIX",
+        "DOC_HISTORY"
+      ]
+    },
+    {
+      "family": "Cancellation, loop/thread ownership, CPU/executor alternatives",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "TASK",
+        "DEV"
+      ]
+    },
+    {
+      "family": "Output staging, success gate and cleanup proposal / claimed API scope",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "OS",
+        "TEMP",
+        "TEMPCODE"
+      ],
+      "qualification": "Control leaves publish primitive/policy unselected; treatment proposes conditional replace and secure named-temp mechanisms. Neither claims measured platform or crash guarantees."
+    },
+    {
+      "family": "Conditional capacity and ideal scheduling derivation",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "QDOC",
+        "QCODE"
+      ],
+      "independent_check": "Twelve two-second jobs require 24 worker-seconds, so four workers require at least six seconds; three simultaneous equal waves attain it. Under homogeneous saturation, four completions per two seconds gives two jobs/second."
+    },
+    {
+      "family": "Critique/disposition/draft-to-final preservation",
+      "coverage": "COMPLETE",
+      "dispositions_checked": 16
+    },
+    {
+      "family": "Executed-evidence truth and future-validation discrimination",
+      "coverage": "COMPLETE",
+      "qualification": "Control reports no executed witness; treatment observed frozen execution record and independently replayed bounded code. No application execution is inferred."
+    }
+  ],
+  "outside_declared_assessment": [
+    {
+      "family": "Real converter deployment/performance, physical user environment, supported filesystem/OS behavior, child-process adapter and crash recovery execution",
+      "coverage": "UNASSESSED",
+      "reason": "Unavailable or future validation; not requested proposal-delivery proof."
+    },
+    {
+      "family": "Complete upstream history/all unrelated APIs and cold discovery recall",
+      "coverage": "UNASSESSED",
+      "reason": "Not part of this frozen component assessment."
+    },
+    {
+      "family": "Full procedural traces, independent provider-session linkage and comprehensive billing/activity telemetry",
+      "coverage": "UNASSESSED",
+      "reason": "Not supplied/permitted; dimensions explicitly retain unknowns."
+    }
+  ]
+}

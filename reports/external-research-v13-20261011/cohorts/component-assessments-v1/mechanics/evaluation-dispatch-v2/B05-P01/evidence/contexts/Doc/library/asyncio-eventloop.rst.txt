@@ -1,0 +1,98 @@
+Source: https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-eventloop.rst
+Full retrieved body SHA256: d3af1b68a8fa52e3c2806deeca324e771b23e929e48adbfad975550bd8b7bc2d
+Full retrieved body bytes: 69169
+License notice: ../LICENSE (PSF/Python license).
+Ranges below use original raw-file 1-based lines.
+
+--- ORIGINAL LINES 1520-1610 ---
+
+   On Windows, the default event loop :class:`ProactorEventLoop` supports
+   subprocesses, whereas :class:`SelectorEventLoop` does not. See
+   :ref:`Subprocess Support on Windows <asyncio-windows-subprocess>` for
+   details.
+
+.. _loop_subprocess_exec:
+
+.. method:: loop.subprocess_exec(protocol_factory, *args, \
+             stdin=subprocess.PIPE, stdout=subprocess.PIPE, \
+             stderr=subprocess.PIPE, **kwargs)
+   :async:
+
+   Create a subprocess from one or more string arguments specified by
+   *args*.
+
+   *args* must be a list of strings represented by:
+
+   * :class:`str`;
+   * or :class:`bytes`, encoded to the
+     :ref:`filesystem encoding <filesystem-encoding>`.
+
+   The first string specifies the program executable,
+   and the remaining strings specify the arguments.  Together, string
+   arguments form the ``argv`` of the program.
+
+   This is similar to the standard library :class:`subprocess.Popen`
+   class called with ``shell=False`` and the list of strings passed as
+   the first argument; however, where :class:`~subprocess.Popen` takes
+   a single argument which is list of strings, *subprocess_exec*
+   takes multiple string arguments.
+
+   The *protocol_factory* must be a callable returning a subclass of the
+   :class:`asyncio.SubprocessProtocol` class.
+
+   Other parameters:
+
+   * *stdin* can be any of these:
+
+     * a file-like object
+     * an existing file descriptor (a positive integer), for example those created with :meth:`os.pipe`
+     * the :const:`subprocess.PIPE` constant (default) which will create a new
+       pipe and connect it,
+     * the value ``None`` which will make the subprocess inherit the file
+       descriptor from this process
+     * the :const:`subprocess.DEVNULL` constant which indicates that the
+       special :data:`os.devnull` file will be used
+
+   * *stdout* can be any of these:
+
+     * a file-like object
+     * the :const:`subprocess.PIPE` constant (default) which will create a new
+       pipe and connect it,
+     * the value ``None`` which will make the subprocess inherit the file
+       descriptor from this process
+     * the :const:`subprocess.DEVNULL` constant which indicates that the
+       special :data:`os.devnull` file will be used
+
+   * *stderr* can be any of these:
+
+     * a file-like object
+     * the :const:`subprocess.PIPE` constant (default) which will create a new
+       pipe and connect it,
+     * the value ``None`` which will make the subprocess inherit the file
+       descriptor from this process
+     * the :const:`subprocess.DEVNULL` constant which indicates that the
+       special :data:`os.devnull` file will be used
+     * the :const:`subprocess.STDOUT` constant which will connect the standard
+       error stream to the process' standard output stream
+
+   * All other keyword arguments are passed to :class:`subprocess.Popen`
+     without interpretation, except for *bufsize*, *universal_newlines*,
+     *shell*, *text*, *encoding* and *errors*, which should not be specified
+     at all.
+
+     The ``asyncio`` subprocess API does not support decoding the streams
+     as text. :func:`bytes.decode` can be used to convert the bytes returned
+     from the stream to text.
+
+   If a file-like object passed as *stdin*, *stdout* or *stderr* represents a
+   pipe, then the other side of this pipe should be registered with
+   :meth:`~loop.connect_write_pipe` or :meth:`~loop.connect_read_pipe` for use
+   with the event loop.
+
+   See the constructor of the :class:`subprocess.Popen` class
+   for documentation on other arguments.
+
+   Returns a pair of ``(transport, protocol)``, where *transport*
+   conforms to the :class:`asyncio.SubprocessTransport` base class and
+   *protocol* is an object instantiated by the *protocol_factory*.
+

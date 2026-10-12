@@ -1,0 +1,63 @@
+{
+  "block_id": "B04-P01",
+  "originals": [
+    {
+      "arm_id": "B04-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/manifest.json",
+      "manifest_sha256": "04b8cd88f5f994c072a0e05056546e48bf52f3b3ac0213a2eea31a9dcd89317a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/assessment.json",
+      "assessment_sha256": "8ab9f36a09b7cb8db10f5798e82d84dc78e8f5171e6172f107591f8d4e1e1119",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "axis_coverage": [
+        "COMPLETE",
+        "PARTIAL",
+        "PARTIAL",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "material_defects": 1,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_SUPPLIED_FROZEN_CUSTODY",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 23,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B04-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/manifest.json",
+      "manifest_sha256": "7539808ddd1f301d68842959c203d87a20e6139a6e677f2611bdb520b6b4ea7f",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/assessment.json",
+      "assessment_sha256": "f47d445a2d227d3c20ded7b22c8a2113f6867c59d2fd05330b7bb7e322a69b88",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "axis_coverage": [
+        "COMPLETE",
+        "PARTIAL",
+        "PARTIAL",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "material_defects": 2,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_SUPPLIED_FROZEN_CUSTODY",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 23,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/comparison.json",
+  "comparison_sha256": "e6f1819a82c215e538ebbc169feb56272bd8769631e220ea00bb76ca8b6ed022",
+  "verified_at_utc": "2026-10-12T01:11:21.901007+00:00",
+  "mechanics_note": "Originals unchanged. Coordinator normalization reads this grader verdict/coverage/severity field names explicitly; no scientific record repair."
+}

@@ -1,0 +1,470 @@
+{
+  "schema": "er13.original-assessment.v2",
+  "block_id": "B08-P01",
+  "scope": "COMPONENT",
+  "original_judgment": true,
+  "judged_at_utc": "2026-10-12T01:06:59.352122+00:00",
+  "comparison_performed": false,
+  "arms": [
+    {
+      "arm_id": "B08-P01-treatment",
+      "source_judgment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defects_found": 0,
+        "nonmaterial_defects_found": 2,
+        "meaning": "No material unsupported claim, required omission, false rejection or preservation loss found under the complete declared finite semantic assessment. Not universal correctness.",
+        "basis": "Brief and exact revealed plan; full frozen draft/critique/dispositions/final/source map; verified input hashes; independently obtained governing primary bodies and scoped release/history context.",
+        "claim_of_application_execution": false
+      },
+      "coverage": {
+        "schema": "er13.axis-coverage.v2",
+        "arm_id": "B08-P01-treatment",
+        "overall": "COMPLETE",
+        "meaning": "Complete finite semantic review of the planning deliverable, including all scientific inputs and criticism; not universal correctness or executed application validation.",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "reason": "All material brief/plan requirements represented, including acceptance receipts, cumulative versus outstanding counts, lifecycle atomicity and truthful cancellation-pending reporting. Output ownership and the separate child-process layer are retained."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+            "reason": "Pin maps to the signed official 3.13.9 tag; queue facts, cancellation scope, secure temp and replace constraints agree with primary context. Execution on 3.14.4 is explicitly separate. N1 records wrong filesystem/thread-safety citation ranges."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "reason": "Includes blocking submitter memory beyond the queue cap, no-await ledger transitions, cancellation-pending state, secure destination-local staging and conditional thread/process execution alternatives. Scoped history confirms shutdown introduction; thread-queue bugs are not imported into asyncio."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+            "reason": "The entire generated critique and C01-C16 dispositions checked. Force-stop success/double-count reasoning correctly rejected; conditional arithmetic and older-version sentinel capability retained. No material false rejection found."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "reason": "Complete self-contained final retains all supported draft mechanisms, ownership, uncertainty and original validation status while integrating the critical force-stop correction. No material preservation loss found."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_NONMATERIAL_LIMITS",
+            "reason": "Actual preserved witness code/results and evaluator replay support queue/accounting counterexamples and independent ideal scheduling model. Target mismatch is disclosed. N2 narrows the cancellation/worker wording: ledger labels are simulated and no worker task was cancelled. Proposed application/cleanup/OS/load tests remain future checks."
+          }
+        ],
+        "obligations": [
+          {
+            "id": "O1",
+            "obligation": "CPython 3.13.9; Queue(maxsize=20); four one-job workers; descriptor ownership; conditional 24 outstanding bound and excluded producer/history memory",
+            "coverage": "COMPLETE",
+            "candidate_context": "Recommendation; capacity estimates",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE"
+            ]
+          },
+          {
+            "id": "O2",
+            "obligation": "Successful-put acceptance, per-ID in-session ledger, queued versus running versus terminal progress and thread confinement",
+            "coverage": "COMPLETE",
+            "candidate_context": "State/progress and admission lifecycle",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE",
+              "DEV",
+              "TASK"
+            ]
+          },
+          {
+            "id": "O3",
+            "obligation": "Graceful admission closure, non-immediate shutdown, drain/acknowledge accepted work, await workers and retain results",
+            "coverage": "COMPLETE",
+            "candidate_context": "Graceful stop",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE",
+              "QTEST"
+            ]
+          },
+          {
+            "id": "O4",
+            "obligation": "Force-stop abandonment versus active cancellation; no success from qsize/join; no extra acknowledgment of drained jobs",
+            "coverage": "COMPLETE",
+            "candidate_context": "Force stop and accounting",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE",
+              "QTEST"
+            ]
+          },
+          {
+            "id": "O5",
+            "obligation": "Failure/cancellation never counted as conversion success; exactly one task_done per retrieved item; cancellation before get has none; cooperative stop and external-layer boundary",
+            "coverage": "COMPLETE",
+            "candidate_context": "Worker/force-stop contract",
+            "primary_evidence_ids": [
+              "QCODE",
+              "QTEST",
+              "TASK",
+              "DEV"
+            ]
+          },
+          {
+            "id": "O6",
+            "obligation": "Component-owned temporary/output paths, validation and publish success gate, cleanup failures, completed-output retention and unspecified destination policy",
+            "coverage": "COMPLETE",
+            "candidate_context": "Output contract",
+            "primary_evidence_ids": [
+              "OS",
+              "TEMP",
+              "TEMPCODE"
+            ]
+          },
+          {
+            "id": "O7",
+            "obligation": "Retain 12 equal ready jobs, four workers, two seconds: six-second makespan; ideal saturated two jobs/second; no arbitrary-workload or measured-throughput inference",
+            "coverage": "COMPLETE",
+            "candidate_context": "Estimates",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE"
+            ]
+          },
+          {
+            "id": "O8",
+            "obligation": "Native shutdown versus conditional older-runtime sentinels; sequential/more workers and CPU execution alternatives",
+            "coverage": "COMPLETE",
+            "candidate_context": "Alternatives",
+            "primary_evidence_ids": [
+              "QDOC",
+              "DEV"
+            ]
+          },
+          {
+            "id": "O9",
+            "obligation": "Full draft, all generated criticism and dispositions, preserved supported meaning, legitimate rejections and unresolved questions",
+            "coverage": "COMPLETE",
+            "candidate_context": "History and dispositions",
+            "primary_evidence_ids": [
+              "QDOC",
+              "QCODE",
+              "QTEST",
+              "TASK",
+              "DEV"
+            ]
+          },
+          {
+            "id": "O10",
+            "obligation": "Discriminating planned queue/application tests; separate actual execution, upstream test inspection, target version and model measurements",
+            "coverage": "COMPLETE",
+            "candidate_context": "Validation",
+            "primary_evidence_ids": [
+              "QTEST",
+              "TASK"
+            ]
+          }
+        ],
+        "consequential_source_families": [
+          {
+            "family": "Queue API, full implementation/dependencies/caller and regression tests",
+            "coverage": "COMPLETE",
+            "source_ids": [
+              "QDOC",
+              "QCODE",
+              "QTEST",
+              "EVENT",
+              "LOOP"
+            ]
+          },
+          {
+            "family": "Target release identity and scoped introduction/fix/documentation context",
+            "coverage": "COMPLETE",
+            "source_ids": [
+              "TAG_REF",
+              "TAG_OBJECT",
+              "INTRO",
+              "MOTIVE",
+              "THREAD_DESIGN",
+              "THREAD_BUG",
+              "THREAD_FIX",
+              "DOC_HISTORY"
+            ]
+          },
+          {
+            "family": "Cancellation, loop/thread ownership, CPU/executor alternatives",
+            "coverage": "COMPLETE",
+            "source_ids": [
+              "TASK",
+              "DEV"
+            ]
+          },
+          {
+            "family": "Output staging, success gate and cleanup proposal / claimed API scope",
+            "coverage": "COMPLETE",
+            "source_ids": [
+              "OS",
+              "TEMP",
+              "TEMPCODE"
+            ],
+            "qualification": "Control leaves publish primitive/policy unselected; treatment proposes conditional replace and secure named-temp mechanisms. Neither claims measured platform or crash guarantees."
+          },
+          {
+            "family": "Conditional capacity and ideal scheduling derivation",
+            "coverage": "COMPLETE",
+            "source_ids": [
+              "QDOC",
+              "QCODE"
+            ],
+            "independent_check": "Twelve two-second jobs require 24 worker-seconds, so four workers require at least six seconds; three simultaneous equal waves attain it. Under homogeneous saturation, four completions per two seconds gives two jobs/second."
+          },
+          {
+            "family": "Critique/disposition/draft-to-final preservation",
+            "coverage": "COMPLETE",
+            "dispositions_checked": 16
+          },
+          {
+            "family": "Executed-evidence truth and future-validation discrimination",
+            "coverage": "COMPLETE",
+            "qualification": "Control reports no executed witness; treatment observed frozen execution record and independently replayed bounded code. No application execution is inferred."
+          }
+        ],
+        "outside_declared_assessment": [
+          {
+            "family": "Real converter deployment/performance, physical user environment, supported filesystem/OS behavior, child-process adapter and crash recovery execution",
+            "coverage": "UNASSESSED",
+            "reason": "Unavailable or future validation; not requested proposal-delivery proof."
+          },
+          {
+            "family": "Complete upstream history/all unrelated APIs and cold discovery recall",
+            "coverage": "UNASSESSED",
+            "reason": "Not part of this frozen component assessment."
+          },
+          {
+            "family": "Full procedural traces, independent provider-session linkage and comprehensive billing/activity telemetry",
+            "coverage": "UNASSESSED",
+            "reason": "Not supplied/permitted; dimensions explicitly retain unknowns."
+          }
+        ]
+      },
+      "defects": [
+        {
+          "id": "B08-T-N1",
+          "severity": "NONMATERIAL",
+          "axes": [
+            2,
+            4
+          ],
+          "kind": "citation_locator_inaccuracy",
+          "candidate_locations": [
+            "source-map.json S1 thread safety, S7 and S8 locators",
+            "criticism-dispositions.md C03/C08",
+            "final.md thread-safety and output links"
+          ],
+          "finding": "Thread safety is stated at queue-doc lines 13-15/43, not 201-216 (the worker example). os.replace is at 2726-2742, not 2884-2899 (DirEntry). NamedTemporaryFile is at 78-143, not 257-289 (mkstemp/mkdtemp); secure mkstemp creation is at 221-229, not 325-331 (directory search).",
+          "primary_evidence_ids": [
+            "QDOC",
+            "OS",
+            "TEMP"
+          ],
+          "materiality_reason": "The source files/pin are correct and independently support the actual claims elsewhere. Atomicity/overwrite/platform scope is properly qualified. Incorrect exact links reduce traceability without creating a material false filesystem guarantee."
+        },
+        {
+          "id": "B08-T-N2",
+          "severity": "NONMATERIAL",
+          "axes": [
+            6
+          ],
+          "kind": "executed_witness_description_imprecision",
+          "candidate_locations": [
+            "critique.md force-stop findings",
+            "final.md Validation status and next checks",
+            "witnesses/queue_and_capacity_witness.py bounded_admission and immediate_shutdown_counterexample",
+            "source-map.json executed_witness"
+          ],
+          "finding": "The witness retrieves four items sequentially and sets a retrieved item ledger state to cancelled directly; it creates no four worker tasks and calls no Task.cancel. Its outcome label is a simulated application disposition.",
+          "primary_evidence_ids": [
+            "QCODE",
+            "QTEST",
+            "TASK",
+            "WITNESS_REPLAY"
+          ],
+          "materiality_reason": "It still decisively demonstrates immediate drain/join with no processing and a retrieved item remaining unfinished until acknowledgment. Final says four retrieved jobs, labels target-version/application cleanup tests as future, and disclaims a converter run. It is not counted as evidence that worker cancellation/cleanup executed."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "coverage": "COMPLETE",
+        "final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/final.md",
+          "bytes": 17175,
+          "sha256": "139831a76a656c6ce30c5003ea40047212e57a7016e4498045885e12ddd50e24"
+        },
+        "critique": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/critique.md",
+          "bytes": 4198,
+          "sha256": "7cdb0348348558dc295b28152e0bd6f9c34e82ad727de53897cda565e260aa58"
+        },
+        "criticism_dispositions": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/criticism-dispositions.md",
+          "bytes": 13581,
+          "sha256": "652532d83663d8ebb9e429509e4f3a9e250475435f7b395b5238667c2523309f"
+        },
+        "source_map": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/source-map.json",
+          "bytes": 16266,
+          "sha256": "003572d4a7b94cfb81b21b2c216bef506fff110e30c58f34cedece2a024d0e48"
+        },
+        "scientific_input_count": 33,
+        "required_outputs_present": true,
+        "witness_code_results_when_used_present": true,
+        "missing_final": false,
+        "no_deployment_required": true
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_ON_FROZEN_CUSTODY_BOUND",
+        "coverage": "PARTIAL",
+        "maximum_elapsed_seconds": 1500,
+        "frozen_t0_utc": "2026-10-12T00:34:25.076916+00:00",
+        "prepared_at_utc": "2026-10-12T00:34:25.145749Z",
+        "dispatch_capture_utc": "2026-10-12T00:34:25.611Z",
+        "native_activation_utc": "2026-10-12T00:34:50+00:00",
+        "native_terminal_utc": "2026-10-12T00:46:07+00:00",
+        "native_goal_elapsed_seconds": 677,
+        "t0_to_native_terminal_proxy_seconds": 701.923084,
+        "authored_freeze_utc": "2026-10-12T00:47:16.458665+00:00",
+        "t0_to_authored_freeze_upper_bound_seconds": 771.381749,
+        "absolute_deadline_utc": "2026-10-12T00:59:25.076916+00:00",
+        "all_frozen_outputs_exist_by_before_deadline_freeze": true,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "request_to_quiet_final_time": "UNKNOWN",
+        "provider_queue_start_end_active_phase_times": "UNKNOWN",
+        "stage_topology": "One admitted critic+finalizer native Goal; internal critique/finalization phase times UNKNOWN.",
+        "limit": "Native-terminal timestamp is a named proxy, not a directly observed final-write time or provider-active duration. File mtimes not used; original clocks unchanged."
+      },
+      "method_compliance": {
+        "status": "METHOD_DELTA_SUPPORTED; FULL_PROCEDURAL_COMPLIANCE_UNKNOWN",
+        "coverage": "PARTIAL",
+        "method_delta_observed": "Domain/version/units bound; queue proposition challenged against governing implementation/tests and discriminating drain/join counterexamples; separate earliest-free-worker schedule rather than repeating the formula.",
+        "semantic_preservation": "COMPLETE_ASSESSED_WITH_RECORDED_NONMATERIAL_LIMITS",
+        "shared_package_preparation": "Identical brief/plan/draft/index, complete bodies and exact neighborhoods supplied. Warm component preparation is separate from this arm method/meaning.",
+        "fresh_native_goal_receipts_present": true,
+        "limitations": [
+          "Exact activation/checker invocation, freshness and prohibited-access absence cannot be proven without unavailable/permitted-excluded full traces.",
+          "Filesystem access boundaries are instructions, not proven sandbox enforcement.",
+          "COMPONENT cannot establish discovery effectiveness, cold preparation-inclusive success or a complete research recipe."
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "MATCHED_FROZEN_RECEIPTS; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+        "coverage": "PARTIAL",
+        "create_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/native-goal-create.json",
+          "bytes": 599,
+          "sha256": "8ad0af081ec6f204a4f7e82f475ce1d3ff6cd113496b4851733524b0fb823a99"
+        },
+        "terminal_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/native-goal-terminal.json",
+          "bytes": 928,
+          "sha256": "f4142487a5bb452c1da5731ca1e80490e1c211850af4789bb57c8fee8f012567"
+        },
+        "task_terminal_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B08-P01-treatment/component-terminal-task.raw.json",
+          "bytes": 12375,
+          "sha256": "b6982a787463697214ae5cbf0c8e35318153abf60b831210da70753511e9143a"
+        },
+        "receipt_goal_status_transition": [
+          "active",
+          "complete"
+        ],
+        "same_thread_objective_and_creation_time": true,
+        "matches_exact_packet_binding": true,
+        "task_status": "completed",
+        "hasPendingChildRuns": false,
+        "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "routing_observation": "Returned task metadata contains provider/model fields. Native receipts contain no provider/model/tier fields. Requested route is operational private provenance, not source evidence; account identity and observed actual tier/effort linkage UNKNOWN and not republished.",
+        "freshness_and_one_goal_only": "UNKNOWN beyond exact supplied binding/custody; no full native transcript read."
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVATIONS; BILLING_UNKNOWN",
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_goal_elapsed_observed": 677,
+          "goal_cumulative_counter_fields": "PRESENT in private receipts; numerical values excluded from public scientific artifacts and not treated as disjoint/billed counters.",
+          "input_cached_input_output_reasoning_tokens": "UNKNOWN separate categories",
+          "provider_active_time": "UNKNOWN",
+          "context_occupancy_union_overlap": "UNKNOWN",
+          "subscription_consumption_billing_currency": "UNKNOWN",
+          "cost_total": "UNKNOWN",
+          "assigned_attempts_in_this_arm": 1,
+          "reported_frozen_terminal_runs": 1,
+          "earlier_hidden_attempts": "UNKNOWN; no denominator exclusions inferred"
+        },
+        "shared_preparation": {
+          "component_fixture_ready_utc": "2026-10-12T00:20:45.618207+00:00",
+          "cold_standalone_time_resources": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "accounting_rule": "Common preparation separately charged once by campaign; no discovery conclusions imported and no unrelated medians summed."
+        },
+        "independent_evaluation": {
+          "cost_role": "independent_evaluation",
+          "provider_activity_tokens_billing_total": "UNKNOWN; evaluator cost not candidate product cost",
+          "first_explicit_review_clock_utc": "2026-10-12T00:58:33.096857+00:00",
+          "earlier_evaluator_start": "UNKNOWN",
+          "witness_replay_seconds": 0.060318,
+          "primary_source_lookup": "Shared evaluator research across the matched pair, not candidate assistance."
+        },
+        "v1_coordinator_idle_costs": "UNCHANGED; not reattributed, measured or zeroed",
+        "unknown_is_not_zero": true
+      }
+    }
+  ],
+  "limitations": [
+    "Finite assessment of this queue planning proposal; no discovery-effectiveness or cold full-pipeline claim.",
+    "Blinding imperfect: arm labels, method instructions, technique-bearing paths and witness presence visible.",
+    "Unknown workload, platforms, output policy and crash-persistence requirements remain unknown. Their uncertainty does not substitute for queue mechanism research.",
+    "No converter deployment, target-interpreter experiment, application state-machine execution, GUI, filesystem publish test or child-process termination test is required to pass this proposal review. Those outcomes remain unvalidated.",
+    "All six semantic axes and consequential obligation/source families assessed; unrelated upstream APIs, complete historical recall and future application performance are outside declared coverage.",
+    "Private native IDs, routing/account identity, cumulative counter values and interpreter build details are excluded from scientific outputs. Exact original receipts remain linked by path/hash."
+  ],
+  "governing_records": {
+    "packet": {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B08-P01.json",
+      "bytes": 5140,
+      "sha256": "310c41c4b5435d9a349bb881e1685e874a3708341cd889bbc10fba8584e7db3d"
+    },
+    "contract": {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "bytes": 3800,
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    "handoff": {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "bytes": 43132,
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "sections": [
+        "10",
+        "12"
+      ]
+    },
+    "input_verification": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/input-verification.json",
+      "bytes": 21055,
+      "sha256": "5c90e51e9943a85c6815e8b56a6e616587cf736d736c67e4f149aea5b703d700"
+    }
+  },
+  "immutability": "Original assessment and evidence frozen before comparison. Any future dispute requires a new separate adjudication preserving original brief/findings/responses/unresolved objections; no original regrade or repair."
+}

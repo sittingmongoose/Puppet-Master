@@ -1,0 +1,78 @@
+{
+  "schema": "er13.paired_original_comparison.v2",
+  "block_id": "B01-P01",
+  "scope": "COMPONENT",
+  "comparison_written_utc": "2026-10-12T01:25:59.903126+00:00",
+  "originals_verified_before_comparison": true,
+  "originals_frozen_before_comparison": true,
+  "originals": [
+    {
+      "arm_id": "B01-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "manifest_sha256": "10f58fa8d559e76bb301ebc728e7e18c5b7fa19cf56ce94292dcf6df496656b9",
+      "original_frozen_utc": "2026-10-12T01:24:50.411795+00:00",
+      "source_judgment": "FAIL",
+      "complete_final_coverage": "PARTIAL",
+      "available_science_coverage": "PARTIAL",
+      "delivery": "COMPLETE_CORE_REQUIRED_OUTPUTS_PRESENT",
+      "time_eligibility": "ELIGIBLE_FROZEN_CORE_DELIVERY",
+      "method_compliance": "PARTIAL_WITH_EXECUTION_RECORD_GAP",
+      "native_terminal_status": "complete",
+      "task_terminal_status": "completed",
+      "hasPendingChildRuns": false
+    },
+    {
+      "arm_id": "B01-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "manifest_sha256": "3c6eac772395f6bff217a0b819f81102f54ff4b86101f1c5852db2cc7e2bdf14",
+      "original_frozen_utc": "2026-10-12T01:24:50.413778+00:00",
+      "source_judgment": "UNASSESSED",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "delivery": "INCOMPLETE_ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+      "time_eligibility": "ORIGINAL_DEADLINE_FAILURE",
+      "method_compliance": "INCOMPLETE_METHOD",
+      "native_terminal_status": "UNASSESSED_MISSING_RECEIPT",
+      "task_terminal_status": "interrupted",
+      "hasPendingChildRuns": false
+    }
+  ],
+  "arm_count": 2,
+  "failure_inclusive_denominator": 2,
+  "complete_source_pass_count": 0,
+  "complete_qualified_recipe_pass_count": 0,
+  "candidate_consumption_per_passing_final": null,
+  "quotient_status": "UNDEFINED_ZERO_SOURCE_PASSES",
+  "equal_quality_savings_status": "NOT_ESTABLISHED",
+  "recipe_selected": null,
+  "selection_authority": "ROOT_ONLY",
+  "preference": "NO_COMPARABLE_COMPLETE_SOURCE_PASS; no recipe preference selected",
+  "research_findings": "Core C1-C4 corrections supported in assessable text; control executed-assembly evidence omission; treatment partial/missing records; nonmaterial/conditional opportunity/version limits in frozen originals.",
+  "coverage_limits": [
+    "Control complete-final coverage PARTIAL because claimed assembly execution unprovided.",
+    "Treatment complete-final/dispositions/map/native terminal UNASSESSED; available science PARTIAL.",
+    "Installed target/OS/durability/patch-code/native linkage/billing unavailable.",
+    "COMPONENT excludes discovery effectiveness and cold full-pipeline claims."
+  ],
+  "native_task_pending_observation": {
+    "control": false,
+    "treatment": false,
+    "source": "Exact assigned terminal task receipts, not a new live server observation."
+  },
+  "resource_billing": {
+    "candidate_product": "UNKNOWN",
+    "independent_evaluation": "UNKNOWN cost; separate category",
+    "shared_preparation": "UNKNOWN, separate category",
+    "v1_coordinator_idle": "UNCHANGED",
+    "actual_service_tier": "UNKNOWN",
+    "private_identity_and_numeric_token_counters": "NOT_PUBLISHED"
+  },
+  "evaluator_method_limitation": "Filename-only recursive locator search boundary lapse disclosed; no admitted/held-out contents read. Imperfect blinding disclosed.",
+  "comparison_md": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.md",
+    "bytes": 4190,
+    "sha256": "fef04f773cfb5915649b60ec7b8ccd504696bdb375b6bbac5091bfd5509c3f12"
+  },
+  "original_grades_modified": false,
+  "future_adjudication": "Must be NEW and separate; no repeat-until-pass or original edits."
+}

@@ -1,0 +1,563 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "B05-P01-treatment",
+  "source_research_reuse": "Own independent publisher research shared across matched arms; no candidate conclusions adopted as authority.",
+  "governing_pin": "CPython 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 (3.13.9)",
+  "evidence_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/manifest.json",
+    "sha256": "b71db0b378e43f499f39a799d0f05f43a5bb62829995c54381ebf7405e87d40b"
+  },
+  "pin_specific_sources": [
+    {
+      "path": "Doc/library/asyncio-subprocess.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+      "bytes": 11955,
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "retrieved_at_utc": "2026-10-12T00:54:25.708476+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-subprocess.rst.txt",
+      "evidence_sha256": "7da45efaff0b1223dd2a8b4b75859c232a80829b9821547078b5916b85dd4eb1",
+      "evidence_bytes": 12343,
+      "context_ranges_1based": [
+        [
+          1,
+          381
+        ]
+      ]
+    },
+    {
+      "path": "Doc/library/asyncio-task.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "bytes": 48620,
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "retrieved_at_utc": "2026-10-12T00:54:25.712198+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-task.rst.txt",
+      "evidence_sha256": "62b60d31d575041c2101ed87cf7c980a99515fbeb665614857b794884083ddb5",
+      "evidence_bytes": 23302,
+      "context_ranges_1based": [
+        [
+          257,
+          375
+        ],
+        [
+          523,
+          546
+        ],
+        [
+          658,
+          705
+        ],
+        [
+          709,
+          941
+        ],
+        [
+          1030,
+          1075
+        ],
+        [
+          1190,
+          1239
+        ],
+        [
+          1336,
+          1472
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+      "bytes": 7737,
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "retrieved_at_utc": "2026-10-12T00:54:25.690865+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/subprocess.py.txt",
+      "evidence_sha256": "15b356061057ff942e06b19ad1cc2ec6d5d7a27b61f7b5ef02cc87f8d5bdcd17",
+      "evidence_bytes": 8115,
+      "context_ranges_1based": [
+        [
+          1,
+          229
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/tasks.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+      "bytes": 39757,
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "retrieved_at_utc": "2026-10-12T00:54:25.713776+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/tasks.py.txt",
+      "evidence_sha256": "f254f8d1e7ec7c15c7275bdf077bc8004019c3531c6c7b5120b87630c99d91c2",
+      "evidence_bytes": 14260,
+      "context_ranges_1based": [
+        [
+          202,
+          281
+        ],
+        [
+          414,
+          568
+        ],
+        [
+          765,
+          868
+        ],
+        [
+          908,
+          961
+        ]
+      ]
+    },
+    {
+      "path": "Lib/test/test_asyncio/test_subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+      "bytes": 38293,
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "retrieved_at_utc": "2026-10-12T00:54:25.724647+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/test/test_asyncio/test_subprocess.py.txt",
+      "evidence_sha256": "a648b41a04742d5aaa3918b7e2b61cd7a0dc291761c31c31ac27f87873fb0018",
+      "evidence_bytes": 30900,
+      "context_ranges_1based": [
+        [
+          1,
+          177
+        ],
+        [
+          197,
+          245
+        ],
+        [
+          285,
+          425
+        ],
+        [
+          504,
+          634
+        ],
+        [
+          660,
+          805
+        ],
+        [
+          823,
+          938
+        ],
+        [
+          970,
+          1086
+        ]
+      ]
+    },
+    {
+      "path": "Doc/library/subprocess.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/subprocess.rst",
+      "bytes": 63430,
+      "sha256": "abd7bdcee7fac48ef71bf51a26fb47793d2de39a6d2591e21bd2be5ef4517472",
+      "retrieved_at_utc": "2026-10-12T00:54:25.708287+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/subprocess.rst.txt",
+      "evidence_sha256": "29067b3c6799e991dfb8716206c9ba080d08538930228737f41168e0a8619d9e",
+      "evidence_bytes": 17786,
+      "context_ranges_1based": [
+        [
+          40,
+          83
+        ],
+        [
+          359,
+          440
+        ],
+        [
+          442,
+          465
+        ],
+        [
+          512,
+          563
+        ],
+        [
+          645,
+          655
+        ],
+        [
+          752,
+          773
+        ],
+        [
+          788,
+          856
+        ],
+        [
+          858,
+          881
+        ],
+        [
+          1612,
+          1658
+        ]
+      ]
+    },
+    {
+      "path": "Doc/library/asyncio-platforms.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-platforms.rst",
+      "bytes": 3117,
+      "sha256": "10208e8733adc4f0c1933e770b1fa3405225468fdb2b02cedd6b89403b0a1236",
+      "retrieved_at_utc": "2026-10-12T00:54:25.794479+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-platforms.rst.txt",
+      "evidence_sha256": "fb090603b1a005250eec9ad1a2c9f10244c93bfc8f47e5340b578d6980954807",
+      "evidence_bytes": 2888,
+      "context_ranges_1based": [
+        [
+          1,
+          83
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/streams.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/streams.py",
+      "bytes": 28481,
+      "sha256": "d1753bc21667afe914390623be181ebb31776845d7c7f2f50805cae972f0189b",
+      "retrieved_at_utc": "2026-10-12T00:54:25.801607+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/streams.py.txt",
+      "evidence_sha256": "89880473e6293919a8bce112a5083a0553fa463c6530895ed7b03df19eaec2d2",
+      "evidence_bytes": 7830,
+      "context_ranges_1based": [
+        [
+          416,
+          541
+        ],
+        [
+          543,
+          576
+        ],
+        [
+          688,
+          737
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/base_subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/base_subprocess.py",
+      "bytes": 9677,
+      "sha256": "13628aa092b36c676ae4bfdebee418f8c75fa5c098be193ebfc7b12b92884629",
+      "retrieved_at_utc": "2026-10-12T00:54:25.822462+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_subprocess.py.txt",
+      "evidence_sha256": "cee75b2f860fd50d678db7c0602b52b5f99ef256e754055c23679795693b7d45",
+      "evidence_bytes": 10060,
+      "context_ranges_1based": [
+        [
+          1,
+          308
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/unix_events.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/unix_events.py",
+      "bytes": 54416,
+      "sha256": "e5a7c5d415d37ea56207b9c2081da400934c5b915d450a130c9f53026ec450dd",
+      "retrieved_at_utc": "2026-10-12T00:54:25.848747+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/unix_events.py.txt",
+      "evidence_sha256": "0e0073452856953d947c2db0b340b852bcfa23f42d7ad91e3a4606046e1fcc72",
+      "evidence_bytes": 5741,
+      "context_ranges_1based": [
+        [
+          197,
+          232
+        ],
+        [
+          844,
+          866
+        ],
+        [
+          1384,
+          1463
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/windows_events.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/windows_events.py",
+      "bytes": 32630,
+      "sha256": "a17ebab22bd32f8ac9b33004f9de6aa811cbf43b47b41d96a8a1b9e1fef67839",
+      "retrieved_at_utc": "2026-10-12T00:54:25.827964+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_events.py.txt",
+      "evidence_sha256": "094b939f224ea210b0847fec87e16ab8f9226cf2fa02407808dedf454c5fe20e",
+      "evidence_bytes": 2074,
+      "context_ranges_1based": [
+        [
+          397,
+          414
+        ],
+        [
+          876,
+          903
+        ]
+      ]
+    },
+    {
+      "path": "Lib/subprocess.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/subprocess.py",
+      "bytes": 89486,
+      "sha256": "21ecc4c8f4fcf641974fc0d9cc28e97b07670ed1cef7e9d96769b31bb8345586",
+      "retrieved_at_utc": "2026-10-12T00:54:25.871302+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.txt",
+      "evidence_sha256": "96c4b8f644ebdee41d08ec3bb7dfc72a59191f437a3266a791c3c8fbb828b3b3",
+      "evidence_bytes": 10495,
+      "context_ranges_1based": [
+        [
+          582,
+          649
+        ],
+        [
+          1452,
+          1584
+        ],
+        [
+          1655,
+          1698
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/transports.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/transports.py",
+      "bytes": 10808,
+      "sha256": "bfd414b25979e07b74081140bf91332957a9bf8b5aa5a0c7ff0d779d93eada21",
+      "retrieved_at_utc": "2026-10-12T00:54:25.912547+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/transports.py.txt",
+      "evidence_sha256": "a24abcb1fd8c985214b0aad13780dbc16b78a7e08797e1e4bc84aafda901778c",
+      "evidence_bytes": 3695,
+      "context_ranges_1based": [
+        [
+          1,
+          69
+        ],
+        [
+          199,
+          250
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/timeouts.py",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/timeouts.py",
+      "bytes": 6062,
+      "sha256": "c0ab9937b1c126a5a45fb1657784e1e0d73e6e3803cfaa0f7423ec0ee1c46ec3",
+      "retrieved_at_utc": "2026-10-12T00:54:25.939605+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/timeouts.py.txt",
+      "evidence_sha256": "bfc82e3421caa86dc08c466fedf81dbd48e8f40948a4c84b393f9aed3556e871",
+      "evidence_bytes": 6438,
+      "context_ranges_1based": [
+        [
+          1,
+          184
+        ]
+      ]
+    },
+    {
+      "path": "Include/patchlevel.h",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Include/patchlevel.h",
+      "bytes": 1299,
+      "sha256": "a503e9b8769b2dc861238f497f1b8f0999d479380bf2ad7f53b5085717e04b52",
+      "retrieved_at_utc": "2026-10-12T00:54:25.940745+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Include/patchlevel.h.txt",
+      "evidence_sha256": "98e21d97a3dc2e98cc17d312905ab6d882227122218e70cd40120ca5507d6dad",
+      "evidence_bytes": 1671,
+      "context_ranges_1based": [
+        [
+          1,
+          35
+        ]
+      ]
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "retrieved_at_utc": "2026-10-12T00:54:25.934262+00:00",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/LICENSE",
+      "evidence_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+    },
+    {
+      "path": "Doc/library/asyncio-protocol.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-protocol.rst",
+      "bytes": 33189,
+      "sha256": "ec9e630d83539b25544d95c98aad7749a73b72474f89c28dc7df99cc3e4a0e93",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-protocol.rst.txt",
+      "evidence_sha256": "95976dc86816113560e0a13d0f10a96e9c4e9f8c526830d0daedf03f1587496a",
+      "evidence_bytes": 5617,
+      "context_ranges_1based": [
+        [
+          379,
+          436
+        ],
+        [
+          687,
+          717
+        ],
+        [
+          998,
+          1066
+        ]
+      ]
+    },
+    {
+      "path": "Doc/library/asyncio-eventloop.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-eventloop.rst",
+      "bytes": 69169,
+      "sha256": "d3af1b68a8fa52e3c2806deeca324e771b23e929e48adbfad975550bd8b7bc2d",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-eventloop.rst.txt",
+      "evidence_sha256": "b233905d93e342bd0f1cde5e8418f4c3fe1ee6e063fa18bffaa507f02d5e2dc3",
+      "evidence_bytes": 4136,
+      "context_ranges_1based": [
+        [
+          1520,
+          1610
+        ]
+      ]
+    },
+    {
+      "path": "Lib/asyncio/base_events.py",
+      "context_id": "complete-callers",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/base_events.py",
+      "bytes": 80760,
+      "sha256": "47491496144e8248f4aebd62aba40b586b6e711f92435b4ca71092ead6eda5b9",
+      "context_ranges_1based": [
+        [
+          1739,
+          1773
+        ],
+        [
+          1775,
+          1807
+        ]
+      ],
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_events.py.complete-callers.txt",
+      "evidence_sha256": "7cf766cd0072abcca318c3c14fdd4cf23f2ba38a5f1beaafef769b475fdc13da",
+      "evidence_bytes": 3533
+    },
+    {
+      "path": "Lib/asyncio/windows_utils.py",
+      "context_id": "complete-callers",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/windows_utils.py",
+      "bytes": 5060,
+      "sha256": "e6fcffefa2521666bc2aed0f5caf8e862c1c1014ad12d2ab5fbce09c2df9c6f0",
+      "context_ranges_1based": [
+        [
+          125,
+          173
+        ]
+      ],
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_utils.py.complete-callers.txt",
+      "evidence_sha256": "c0969e223498f2da5c8f0a36a3cdf3758687a295f77123528170fbe9d04b297c",
+      "evidence_bytes": 2246
+    },
+    {
+      "path": "Lib/subprocess.py",
+      "context_id": "complete-callers",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/subprocess.py",
+      "bytes": 89486,
+      "sha256": "21ecc4c8f4fcf641974fc0d9cc28e97b07670ed1cef7e9d96769b31bb8345586",
+      "context_ranges_1based": [
+        [
+          1452,
+          1577
+        ]
+      ],
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.complete-callers.txt",
+      "evidence_sha256": "042cecb4609851c95ba9b806864ae224b171cdbb2108693ab30deefb4252b601",
+      "evidence_bytes": 6206
+    }
+  ],
+  "additional_public_context": [
+    {
+      "id": "release",
+      "url": "https://www.python.org/downloads/release/python-3139/",
+      "retrieved_at_utc": "2026-10-12T01:01:40.323185+00:00",
+      "retrieved_bytes": 10612,
+      "retrieved_sha256": "43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65",
+      "scope": "release identity, mutable page",
+      "observed_facts": {
+        "version": "3.13.9",
+        "release_date": "2025-10-14",
+        "observed_superseded_by": "3.13.16",
+        "release_specific_change": "inspect.getsourcelines regression fix; no other changes relative to 3.13.8"
+      }
+    },
+    {
+      "id": "job-objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "retrieved_at_utc": "2026-10-12T01:01:40.419720+00:00",
+      "retrieved_bytes": 61310,
+      "retrieved_sha256": "401c0442e6a1cb9dc0acab05b1133c43b94ceb906fe894ba4e08202cad822785",
+      "scope": "optional future Windows process-grouping mechanism, outside current scope",
+      "observed_facts": {
+        "mechanism": "groups assigned processes; TerminateJobObject stops associated processes",
+        "conditions": "association, inheritance, breakaway settings and nested-job version constraints govern coverage; not a security sandbox",
+        "crash_option": "KILL_ON_JOB_CLOSE acts when last job handle closes, subject to actual association/handle lifecycle"
+      }
+    },
+    {
+      "id": "current-python-platform-docs",
+      "url": "https://docs.python.org/3.13/library/asyncio-platforms.html",
+      "retrieved_at_utc": "2026-10-12T01:01:40.474826+00:00",
+      "retrieved_bytes": 27157,
+      "retrieved_sha256": "c7d9720b5c859a05c39b2becfead1f259046d88d73a997a2579dc804dd505b52",
+      "scope": "secondary mutable confirmation only",
+      "observed_facts": {
+        "page_edition": "3.13.16",
+        "windows": "default Proactor supports subprocesses; Selector does not"
+      }
+    }
+  ],
+  "issue_fix_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue114539.json",
+      "sha256": "f46dddea5976ea8ae937b88190042dd9cdd1dd9a52b43529b4a63625c6cf1f57"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue67329.json",
+      "sha256": "de1530431565cdecce28021779bd82c715c758d0b8d69263c4d742dd69fe7198"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue88050.json",
+      "sha256": "b8a7f0d4c46a1c61b7fbb8a648e12117b6fdbf0849e96e77aacfd97eb7e92b8d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+      "sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-context.json",
+      "sha256": "0e0ed89a502cc2950e2e907da228f7c148269a5b5bb4c63486522d74afa0fe1e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-record.json",
+      "sha256": "fddd3a434c9c097e1277c34efe4e5675c6ba849caa0546791d1b0090c280d4d2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix97951-merged-context.json",
+      "sha256": "5a8ac65ca75d33a11c7481561d75bcfa1d5536d82abc08b33b4491196df21805"
+    }
+  ],
+  "semantic_findings": [
+    "communicate gathers both complete streams in memory; StreamReader limit does not cap returned output.",
+    "Concurrent bounded reads/spooling is compatible with arbitrary output; storage caps are application rules, not CPython guarantees.",
+    "wait_for cancels awaitable, not the OS process. wait timeout leaves pending tasks; use an explicit supervisor and platform stop/reap.",
+    "Pre-exit BaseSubprocessTransport._wait waiter is completed through connection_lost after pipe disconnect, while returncode can be set earlier. No general public high-level per-pipe close method is exposed.",
+    "On Windows Proactor is required; terminate uses TerminateProcess and kill aliases it.",
+    "Windows argv is encoded for CreateProcess; batch-file implicit shell is a consequential exception independent of structured argv syntax.",
+    "Raw bytes, quota truncation versus I/O failure and nonzero validation failure remain distinct.",
+    "Public transport/protocol and Job Object facilities are conditional future opportunities; they do not demonstrate this component or universal descendant containment."
+  ],
+  "history_interpretation": "23140/67329 concerns cancellation-safe waiter completion, not automatic child killing. Old clean-shutdown fixes 32073/97951 are context only; pinned current base_subprocess.py governs pipe completion, not an intermediate patch that closed pipes on process exit. 114539/117996 documents the Windows implicit shell exception present in the governing pin.",
+  "lookup_limitations": [
+    "One web fetch of bugs.python.org/issue43884 failed; migrated official issue 88050 and exact merged fix contexts were retrieved instead.",
+    "Current docs/release pages are mutable and secondary; immutable code/version pin governs.",
+    "Full raw public bodies were independently hashed; only necessary original-line contexts retained. Full-source hashes and retained-evidence hashes are distinct.",
+    "No proprietary caller/validator code or execution witness inspected."
+  ]
+}

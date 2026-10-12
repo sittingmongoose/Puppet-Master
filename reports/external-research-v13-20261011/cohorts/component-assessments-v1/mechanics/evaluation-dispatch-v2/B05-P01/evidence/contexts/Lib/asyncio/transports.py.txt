@@ -1,0 +1,130 @@
+Source: https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/transports.py
+Full retrieved body SHA256: bfd414b25979e07b74081140bf91332957a9bf8b5aa5a0c7ff0d779d93eada21
+Full retrieved body bytes: 10808
+License notice: ../LICENSE (PSF/Python license).
+Ranges below use original raw-file 1-based lines.
+
+--- ORIGINAL LINES 1-69 ---
+"""Abstract Transport class."""
+
+__all__ = (
+    'BaseTransport', 'ReadTransport', 'WriteTransport',
+    'Transport', 'DatagramTransport', 'SubprocessTransport',
+)
+
+
+class BaseTransport:
+    """Base class for transports."""
+
+    __slots__ = ('_extra',)
+
+    def __init__(self, extra=None):
+        if extra is None:
+            extra = {}
+        self._extra = extra
+
+    def get_extra_info(self, name, default=None):
+        """Get optional transport information."""
+        return self._extra.get(name, default)
+
+    def is_closing(self):
+        """Return True if the transport is closing or closed."""
+        raise NotImplementedError
+
+    def close(self):
+        """Close the transport.
+
+        Buffered data will be flushed asynchronously.  No more data
+        will be received.  After all buffered data is flushed, the
+        protocol's connection_lost() method will (eventually) be
+        called with None as its argument.
+        """
+        raise NotImplementedError
+
+    def set_protocol(self, protocol):
+        """Set a new protocol."""
+        raise NotImplementedError
+
+    def get_protocol(self):
+        """Return the current protocol."""
+        raise NotImplementedError
+
+
+class ReadTransport(BaseTransport):
+    """Interface for read-only transports."""
+
+    __slots__ = ()
+
+    def is_reading(self):
+        """Return True if the transport is receiving."""
+        raise NotImplementedError
+
+    def pause_reading(self):
+        """Pause the receiving end.
+
+        No data will be passed to the protocol's data_received()
+        method until resume_reading() is called.
+        """
+        raise NotImplementedError
+
+    def resume_reading(self):
+        """Resume the receiving end.
+
+        Data received will once again be passed to the protocol's
+        data_received() method.
+        """
+        raise NotImplementedError
+
+--- ORIGINAL LINES 199-250 ---
+class SubprocessTransport(BaseTransport):
+
+    __slots__ = ()
+
+    def get_pid(self):
+        """Get subprocess id."""
+        raise NotImplementedError
+
+    def get_returncode(self):
+        """Get subprocess returncode.
+
+        See also
+        http://docs.python.org/3/library/subprocess#subprocess.Popen.returncode
+        """
+        raise NotImplementedError
+
+    def get_pipe_transport(self, fd):
+        """Get transport for pipe with number fd."""
+        raise NotImplementedError
+
+    def send_signal(self, signal):
+        """Send signal to subprocess.
+
+        See also:
+        docs.python.org/3/library/subprocess#subprocess.Popen.send_signal
+        """
+        raise NotImplementedError
+
+    def terminate(self):
+        """Stop the subprocess.
+
+        Alias for close() method.
+
+        On Posix OSs the method sends SIGTERM to the subprocess.
+        On Windows the Win32 API function TerminateProcess()
+         is called to stop the subprocess.
+
+        See also:
+        http://docs.python.org/3/library/subprocess#subprocess.Popen.terminate
+        """
+        raise NotImplementedError
+
+    def kill(self):
+        """Kill the subprocess.
+
+        On Posix OSs the function sends SIGKILL to the subprocess.
+        On Windows kill() is an alias for terminate().
+
+        See also:
+        http://docs.python.org/3/library/subprocess#subprocess.Popen.kill
+        """
+        raise NotImplementedError

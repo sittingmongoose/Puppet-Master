@@ -1,0 +1,147 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B04-P01-treatment",
+  "overall": "PARTIAL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "DEFECT_FOUND",
+      "finding": "Source preservation has the concrete identical-path gap D2; remaining required flow is present.",
+      "unassessed_remainder": null
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "judgment": "DEFECT_FOUND",
+      "finding": "D1: pinned docs/code conflict and actual Windows native branch omitted. Supplied release binding independently verified. Exact filesystem behaviors remain future work.",
+      "unassessed_remainder": "Exhaustive unrelated APIs/tests, every historical issue, and target-specific filesystem/security exception matrix."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "judgment": "DEFECT_FOUND",
+      "finding": "Destination-local staging, no-clobber, streaming/fast modes, conditional archival backend, original rejection history retained; D1 misses a useful native Windows route and metadata capability.",
+      "unassessed_remainder": "Exhaustive unrelated APIs/tests, every historical issue, and target-specific filesystem/security exception matrix."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "DEFECT_FOUND",
+      "finding": "F1\u2013F4 and keeps/conditions/uncertainties all dispositioned; F2/F3 corrections supported. F1 needs code/native qualification D1.",
+      "unassessed_remainder": null
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "DEFECT_FOUND",
+      "finding": "Ordinary brief/draft meaning retained, but D1 loses route-specific meaning and D2 leaves original preservation insufficiently specified.",
+      "unassessed_remainder": null
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "DEFECT_FOUND",
+      "finding": "Meaningful bytes/metadata/cancel/race/error/cross-volume/durability/performance tests proposed and correctly declared unexecuted. Same-source final-path case omitted (D2).",
+      "unassessed_remainder": null
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "name": "Original source and byte preservation",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "D2"
+    },
+    {
+      "name": "GiB bounded memory, worker UI, progress/cancel",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Retained; blocked I/O and optional mode latency conditioned"
+    },
+    {
+      "name": "Cross-volume export and destination-local stage",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Retained without cross-volume move publication"
+    },
+    {
+      "name": "Confirmation, no-clobber and replacement races",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Directory/cooperation assumptions and residual race explicit"
+    },
+    {
+      "name": "Useful timestamps and metadata disclosure",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Ordinary useful metadata kept; route-specific conflict D1"
+    },
+    {
+      "name": "Actual CPython fast-copy/fallback paths",
+      "coverage": "PARTIAL",
+      "finding_or_boundary": "D1; native Windows branch/fallback not represented"
+    },
+    {
+      "name": "Visibility, sync policy and truthful completion",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Separated; no universal crash guarantee"
+    },
+    {
+      "name": "Owned cleanup and diagnostic outcomes",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "Proposed; ambiguous platform failure states remain future tests"
+    },
+    {
+      "name": "Alternatives and supported rejection history",
+      "coverage": "PARTIAL",
+      "finding_or_boundary": "Normal history kept; conditional native opportunity absent D1"
+    },
+    {
+      "name": "Critique F1\u2013F4 and disposition preservation",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "All material supplied findings considered; code conflict D1 remains"
+    },
+    {
+      "name": "Proposed versus executed validation",
+      "coverage": "COMPLETE",
+      "finding_or_boundary": "No behavior witnesses claimed; meaningful future test matrix"
+    },
+    {
+      "name": "Deployment/full-pipeline integration",
+      "coverage": "UNASSESSED",
+      "finding_or_boundary": "Outside assigned COMPONENT proposal deliverable"
+    }
+  ],
+  "source_families": [
+    {
+      "name": "CPython docs/code/tests/release and relevant copy history",
+      "coverage": "COMPLETE",
+      "boundary": "Consequential copy/metadata/rename/sync context independently researched; unrelated API corpus UNASSESSED"
+    },
+    {
+      "name": "Windows native copy and publication APIs",
+      "coverage": "COMPLETE",
+      "boundary": "Caller and native metadata/flag/failure context inspected; no empirical platform result"
+    },
+    {
+      "name": "Linux no-replace and fsync",
+      "coverage": "PARTIAL",
+      "boundary": "Scoped semantics supported by maintainer 2021 snapshot; exact live manual edition retrieval failed"
+    },
+    {
+      "name": "Concrete archival utility implementation",
+      "coverage": "UNASSESSED",
+      "boundary": "Conditional alternative; no named backend chosen by either arm"
+    },
+    {
+      "name": "Actual certified filesystem/hardware behavior",
+      "coverage": "UNASSESSED",
+      "boundary": "Future validation; not required execution for this planning task"
+    }
+  ],
+  "input_read_scope": "All 32 manifest files byte-read and hash-verified per arm; full brief, revealed plan, draft, critique, final, dispositions and source-map reviewed. All 12 neighborhood captures read in full; complete consequential definitions and adjacent callers/tests expanded from larger cache bodies. Unrelated sections of broad os/shutil/test files not exhaustively semantically assessed.",
+  "failure_stop_rule": "All six axes were assessed; no unexamined axis is labeled complete. Expensive comprehensive platform/history extensions stopped after decisive D1, with remainder explicitly UNASSESSED.",
+  "finite_assessment": "No universal correctness or discovery-recall claim"
+}

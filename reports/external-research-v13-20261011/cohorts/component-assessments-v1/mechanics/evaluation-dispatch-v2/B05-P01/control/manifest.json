@@ -1,0 +1,205 @@
+{
+  "schema": "er13.original_arm_output_freeze.v2",
+  "arm_id": "B05-P01-control",
+  "scope": "COMPONENT",
+  "frozen_at_utc": "2026-10-12T01:07:00.898294+00:00",
+  "original_judgment": true,
+  "comparison_started": false,
+  "exclude_self": true,
+  "own_file_count": 6,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.json",
+      "bytes": 10160,
+      "sha256": "2bcedd10be03f8587646ba5b22f1104369241c664c1cfa90baf0c4a2aca35bd8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.md",
+      "bytes": 5243,
+      "sha256": "b0f8e51e3a194321cc4773999f36a377b25b04faa7050f6c5bc36b4a8d63d4da"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/coverage.json",
+      "bytes": 13492,
+      "sha256": "b2c7957fe4c14d23171554ecfbfaae8c586f33a79618f2195b57b2279f74554b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/defects.json",
+      "bytes": 2973,
+      "sha256": "3e9513d2005ee00289580a091e37137a86b1da582ddffb71ed309a6bb95bb356"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/input-verification.json",
+      "bytes": 7195,
+      "sha256": "9df071b6659a53e41d73f8604df3c09a382d6c337d1ce84c734cc3a2f05d1a59"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/primary-source-index.json",
+      "bytes": 23184,
+      "sha256": "bb4e24fba444b044de747b52567cbb8f7add52bfa00357cbf0a3cf40c4fb6895"
+    }
+  ],
+  "shared_independent_source_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/LICENSE",
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-eventloop.rst.txt",
+      "bytes": 4136,
+      "sha256": "b233905d93e342bd0f1cde5e8418f4c3fe1ee6e063fa18bffaa507f02d5e2dc3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-platforms.rst.txt",
+      "bytes": 2888,
+      "sha256": "fb090603b1a005250eec9ad1a2c9f10244c93bfc8f47e5340b578d6980954807"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-protocol.rst.txt",
+      "bytes": 5617,
+      "sha256": "95976dc86816113560e0a13d0f10a96e9c4e9f8c526830d0daedf03f1587496a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-subprocess.rst.txt",
+      "bytes": 12343,
+      "sha256": "7da45efaff0b1223dd2a8b4b75859c232a80829b9821547078b5916b85dd4eb1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-task.rst.txt",
+      "bytes": 23302,
+      "sha256": "62b60d31d575041c2101ed87cf7c980a99515fbeb665614857b794884083ddb5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/subprocess.rst.txt",
+      "bytes": 17786,
+      "sha256": "29067b3c6799e991dfb8716206c9ba080d08538930228737f41168e0a8619d9e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Include/patchlevel.h.txt",
+      "bytes": 1671,
+      "sha256": "98e21d97a3dc2e98cc17d312905ab6d882227122218e70cd40120ca5507d6dad"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_events.py.complete-callers.txt",
+      "bytes": 3533,
+      "sha256": "7cf766cd0072abcca318c3c14fdd4cf23f2ba38a5f1beaafef769b475fdc13da"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_subprocess.py.txt",
+      "bytes": 10060,
+      "sha256": "cee75b2f860fd50d678db7c0602b52b5f99ef256e754055c23679795693b7d45"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/streams.py.txt",
+      "bytes": 7830,
+      "sha256": "89880473e6293919a8bce112a5083a0553fa463c6530895ed7b03df19eaec2d2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/subprocess.py.txt",
+      "bytes": 8115,
+      "sha256": "15b356061057ff942e06b19ad1cc2ec6d5d7a27b61f7b5ef02cc87f8d5bdcd17"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/tasks.py.txt",
+      "bytes": 14260,
+      "sha256": "f254f8d1e7ec7c15c7275bdf077bc8004019c3531c6c7b5120b87630c99d91c2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/timeouts.py.txt",
+      "bytes": 6438,
+      "sha256": "bfc82e3421caa86dc08c466fedf81dbd48e8f40948a4c84b393f9aed3556e871"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/transports.py.txt",
+      "bytes": 3695,
+      "sha256": "a24abcb1fd8c985214b0aad13780dbc16b78a7e08797e1e4bc84aafda901778c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/unix_events.py.txt",
+      "bytes": 5741,
+      "sha256": "0e0073452856953d947c2db0b340b852bcfa23f42d7ad91e3a4606046e1fcc72"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_events.py.txt",
+      "bytes": 2074,
+      "sha256": "094b939f224ea210b0847fec87e16ab8f9226cf2fa02407808dedf454c5fe20e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_utils.py.complete-callers.txt",
+      "bytes": 2246,
+      "sha256": "c0969e223498f2da5c8f0a36a3cdf3758687a295f77123528170fbe9d04b297c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.complete-callers.txt",
+      "bytes": 6206,
+      "sha256": "042cecb4609851c95ba9b806864ae224b171cdbb2108693ab30deefb4252b601"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.txt",
+      "bytes": 10495,
+      "sha256": "96c4b8f644ebdee41d08ec3bb7dfc72a59191f437a3266a791c3c8fbb828b3b3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/test/test_asyncio/test_subprocess.py.txt",
+      "bytes": 30900,
+      "sha256": "a648b41a04742d5aaa3918b7e2b61cd7a0dc291761c31c31ac27f87873fb0018"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+      "bytes": 2796,
+      "sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-context.json",
+      "bytes": 3699,
+      "sha256": "0e0ed89a502cc2950e2e907da228f7c148269a5b5bb4c63486522d74afa0fe1e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-record.json",
+      "bytes": 639,
+      "sha256": "fddd3a434c9c097e1277c34efe4e5675c6ba849caa0546791d1b0090c280d4d2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix97951-merged-context.json",
+      "bytes": 808,
+      "sha256": "5a8ac65ca75d33a11c7481561d75bcfa1d5536d82abc08b33b4491196df21805"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/history-retrieval-index.json",
+      "bytes": 2572,
+      "sha256": "650440dc7fe40e43deb3684969dde0f8291a0d73c76e457c24b9c7da27e62cf0"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue114539.json",
+      "bytes": 1564,
+      "sha256": "f46dddea5976ea8ae937b88190042dd9cdd1dd9a52b43529b4a63625c6cf1f57"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue67329.json",
+      "bytes": 2303,
+      "sha256": "de1530431565cdecce28021779bd82c715c758d0b8d69263c4d742dd69fe7198"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue88050.json",
+      "bytes": 2050,
+      "sha256": "b8a7f0d4c46a1c61b7fbb8a648e12117b6fdbf0849e96e77aacfd97eb7e92b8d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/retrieval-index.json",
+      "bytes": 15991,
+      "sha256": "85f868372f45e8b6b7b84bffdcc5a646e172001636f1cf19bb9c9a9b9ff0b2a3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/web-observations.json",
+      "bytes": 1857,
+      "sha256": "f5cd0f95285b266642a7d76e4192ffc9b5645ff1f51b3d1da05d643824d5bf0a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/manifest.json",
+      "bytes": 8735,
+      "sha256": "b71db0b378e43f499f39a799d0f05f43a5bb62829995c54381ebf7405e87d40b"
+    }
+  ],
+  "policy": "Original assessments and evidence remain unchanged after this manifest; comparison and any later adjudication are separate artifacts."
+}

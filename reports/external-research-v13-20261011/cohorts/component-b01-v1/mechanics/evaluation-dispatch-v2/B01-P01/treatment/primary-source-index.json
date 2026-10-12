@@ -1,0 +1,454 @@
+{
+  "schema": "er13.primary_source_index.v2",
+  "arm_id": "B01-P01-treatment",
+  "independent_primary_lookup": true,
+  "reuse_scope": "Own independent primary lookup reused across matched arms; no candidate assistance.",
+  "sources": [
+    {
+      "id": "cpython3139-tests",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/test/test_sqlite3/test_backup.py",
+      "retrieved_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/test/test_sqlite3/test_backup.py",
+      "body_sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "body_bytes": 5605,
+      "evidence_name": "cpython3139-tests.txt",
+      "selected_lines": [
+        [
+          1,
+          164
+        ]
+      ],
+      "evidence_sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7",
+      "version_context": "v3.13.9 exact body",
+      "locator": "whole164-line test module; modifying112-133; failing135-142",
+      "applicability": "Inspected upstream setup/oracles, not executed",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tests.txt",
+        "bytes": 6866,
+        "sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-dump",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/sqlite3/dump.py",
+      "retrieved_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/sqlite3/dump.py",
+      "body_sha256": "9ece8ae1b063152df37235379177f7693adea77048f238038677edeab5d51c6f",
+      "body_bytes": 4240,
+      "evidence_name": "cpython3139-dump.txt",
+      "selected_lines": [
+        [
+          1,
+          113
+        ]
+      ],
+      "evidence_sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "version_context": "v3.13.9",
+      "locator": "whole _iterdump plus helper definitions",
+      "applicability": "SQL reconstruction, source read boundary not provided by emitted BEGIN; object/encoding costs",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+        "bytes": 5212,
+        "sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-osdoc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/os.rst",
+      "retrieved_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/os.rst",
+      "body_sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "body_bytes": 202500,
+      "evidence_name": "cpython3139-osdoc.txt",
+      "selected_lines": [
+        [
+          2415,
+          2508
+        ],
+        [
+          2672,
+          2775
+        ],
+        [
+          1082,
+          1125
+        ]
+      ],
+      "evidence_sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf",
+      "version_context": "v3.13.9",
+      "locator": "mkdir2419+, rename2676+, fsync1086+",
+      "applicability": "Exclusive allocation, Unix rename replacement, file flush/fsync limits",
+      "coverage": "PARTIAL",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-osdoc.txt",
+        "bytes": 10954,
+        "sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython-pin-meta",
+      "url": "https://api.github.com/repos/python/cpython/commits/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "retrieved_url": "https://api.github.com/repos/python/cpython/commits/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "body_sha256": "44ad32680f6f8b8003ddff90734aedc1a586310f7fc02f01d3f4bb217558f5a4",
+      "body_bytes": 7272,
+      "evidence_name": "cpython-pin-meta.txt",
+      "selected_lines": [
+        [
+          1,
+          6
+        ]
+      ],
+      "evidence_sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f",
+      "version_context": "public commit metadata",
+      "locator": "commit message/date",
+      "applicability": "Release pin correspondence",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-pin-meta.txt",
+        "bytes": 669,
+        "sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-tag",
+      "url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.13.9",
+      "retrieved_url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.13.9",
+      "body_sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1",
+      "body_bytes": 333,
+      "evidence_name": "cpython3139-tag.txt",
+      "selected_lines": [
+        [
+          1,
+          1
+        ]
+      ],
+      "evidence_sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26",
+      "version_context": "public annotated tag reference",
+      "locator": "object sha",
+      "applicability": "Tag indirection",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag.txt",
+        "bytes": 706,
+        "sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython-license",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/LICENSE",
+      "retrieved_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/LICENSE",
+      "body_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "body_bytes": 13809,
+      "evidence_name": "cpython-license.txt",
+      "selected_lines": [
+        [
+          1,
+          277
+        ]
+      ],
+      "evidence_sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7",
+      "version_context": "v3.13.9 LICENSE",
+      "locator": "copyright/license notices",
+      "applicability": "Permitted source reproduction; no product execution",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-license.txt",
+        "bytes": 15457,
+        "sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-connection",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Modules/_sqlite/connection.c",
+      "body_sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "body_bytes": 79296,
+      "evidence_name": "cpython3139-connection.txt",
+      "selected_lines": [
+        [
+          1,
+          22
+        ],
+        [
+          212,
+          349
+        ],
+        [
+          450,
+          476
+        ],
+        [
+          702,
+          768
+        ],
+        [
+          1711,
+          1724
+        ],
+        [
+          1987,
+          2128
+        ]
+      ],
+      "evidence_sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "version_context": "v3.13.9 /8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locator": "connection.c2031-2128, ownership/commit/close, iterdump caller",
+      "applicability": "C1/C2, worker ownership, callback failure; source-only",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+        "bytes": 15507,
+        "sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-doc",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/sqlite3.rst",
+      "body_sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "body_bytes": 94329,
+      "evidence_name": "cpython3139-doc.txt",
+      "selected_lines": [
+        [
+          25,
+          34
+        ],
+        [
+          262,
+          362
+        ],
+        [
+          504,
+          548
+        ],
+        [
+          670,
+          694
+        ],
+        [
+          1118,
+          1218
+        ],
+        [
+          2652,
+          2756
+        ]
+      ],
+      "evidence_sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c",
+      "version_context": "v3.13.9 exact body",
+      "locator": "connect305-312; backup1149-1218; autocommit2652-2756",
+      "applicability": "Target API, thread/transaction modes, linked-library distinction",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-doc.txt",
+        "bytes": 18608,
+        "sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-backup-api",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "body_sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "body_bytes": 15852,
+      "evidence_name": "sqlite-backup-api.txt",
+      "selected_lines": null,
+      "evidence_sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c",
+      "version_context": "live exact response hash",
+      "locator": "whole API init/step/finish/counters/concurrent usage",
+      "applicability": "Governing preconditions, error/cleanup/read/write boundaries",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup-api.txt",
+        "bytes": 10178,
+        "sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-backup",
+      "url": "https://www.sqlite.org/backup.html",
+      "body_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "body_bytes": 28195,
+      "evidence_name": "sqlite-backup.txt",
+      "selected_lines": null,
+      "evidence_sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1",
+      "version_context": "live exact hash identical frozen; updated2025-11-13",
+      "locator": "whole page examples;sections1,1.1,3.1,3.2",
+      "applicability": "Dynamic snapshot/restart and optional mechanisms; no external attachment transaction",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup.txt",
+        "bytes": 15794,
+        "sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-vacuum",
+      "url": "https://www.sqlite.org/lang_vacuum.html",
+      "body_sha256": "740f02ade00626f50c7a71ded2615995362fedfc30e09aa22dbe4535b7615c54",
+      "body_bytes": 15215,
+      "evidence_name": "sqlite-vacuum.txt",
+      "selected_lines": null,
+      "evidence_sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc",
+      "version_context": "live exact hash; updated2025-07-12",
+      "locator": "sections2,2.1,3",
+      "applicability": "Useful alternative, privacy/space/CPU/incremental/ROWID/durability tradeoffs",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-vacuum.txt",
+        "bytes": 6749,
+        "sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-pragma",
+      "url": "https://www.sqlite.org/pragma.html",
+      "body_sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034",
+      "body_bytes": 139936,
+      "evidence_name": "sqlite-pragma.txt",
+      "selected_lines": null,
+      "evidence_sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00",
+      "version_context": "live exact response hash",
+      "locator": "integrity_check and foreign_key_check whole sections",
+      "applicability": "Structural integrity is distinct from FK/app consistency",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-pragma.txt",
+        "bytes": 3044,
+        "sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "python3139-release",
+      "url": "https://www.python.org/downloads/release/python-3139/",
+      "body_sha256": "43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65",
+      "body_bytes": 10612,
+      "evidence_name": "python3139-release.txt",
+      "selected_lines": null,
+      "evidence_sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf",
+      "version_context": "Python3.13.9 release record",
+      "locator": "expedited specific regression only",
+      "applicability": "No SQLite-specific change inferred for this patch release",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/python3139-release.txt",
+        "bytes": 2057,
+        "sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "cpython3139-tag-object",
+      "url": "https://api.github.com/repos/python/cpython/git/tags/8f61118196ba00747076def18ea7ad2c43a1dc05",
+      "body_sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "body_bytes": 2782,
+      "evidence_name": "cpython3139-tag-object.txt",
+      "selected_lines": null,
+      "evidence_sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1",
+      "version_context": "public tag dereference",
+      "locator": "object commit sha",
+      "applicability": "v3.13.9→frozen pin",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag-object.txt",
+        "bytes": 767,
+        "sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "body_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "body_bytes": 42143,
+      "evidence_name": "sqlite-wal.txt",
+      "evidence_sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42",
+      "selected_context": "wal",
+      "version_context": "live exact hash identical frozen; updated2026-08-25",
+      "locator": "sections2.2/2.3,4,11",
+      "applicability": "WAL persistent state, checkpointing and narrowly triggered corruption history",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-wal.txt",
+        "bytes": 12142,
+        "sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-release3513",
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "body_sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8",
+      "body_bytes": 9857,
+      "evidence_name": "sqlite-release3513.txt",
+      "evidence_sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62",
+      "selected_context": "release",
+      "version_context": "SQLite3.51.3 release2026-03-13",
+      "locator": "specific patch release changes",
+      "applicability": "WAL-reset fix release; not installed-engine proof",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-release3513.txt",
+        "bytes": 792,
+        "sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62"
+      },
+      "executed_application_validation": false
+    },
+    {
+      "id": "sqlite-security",
+      "url": "https://www.sqlite.org/security.html",
+      "body_sha256": "b9034bba326f3984cf9e8d018445d9b2551c2f19141e1ae807cb56d1da881ebd",
+      "body_bytes": 15359,
+      "evidence_name": "sqlite-security.txt",
+      "evidence_sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2",
+      "selected_context": "security",
+      "version_context": "live exact response hash; updated2026-07-10",
+      "locator": "section1.2 and summary",
+      "applicability": "Conditional custom-function/virtual-table hostile-schema controls",
+      "coverage": "COMPLETE",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-security.txt",
+        "bytes": 3007,
+        "sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2"
+      },
+      "executed_application_validation": false
+    }
+  ],
+  "unavailable_primary_lookup": [
+    {
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "observation": "Web open returned400 Timeout fetching; bounded alternate acquisition yielded no saved permitted evidence. Exact target no-replace implementation UNASSESSED."
+    }
+  ],
+  "governing_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "handoff_sections_read": [
+    10,
+    12
+  ],
+  "handoff_source": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+    "only_sections10_and12_exposed": true
+  },
+  "workspace_instructions": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "not_read": [
+    "active/admitted candidate contents",
+    "held-out case contents",
+    "full native transcripts",
+    "Git/history/canon"
+  ]
+}

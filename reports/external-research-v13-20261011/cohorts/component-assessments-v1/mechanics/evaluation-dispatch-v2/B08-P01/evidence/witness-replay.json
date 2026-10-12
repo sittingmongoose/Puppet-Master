@@ -1,0 +1,94 @@
+{
+  "cost_role": "independent_evaluation",
+  "start_utc": "2026-10-12T01:01:53.160781+00:00",
+  "finish_utc": "2026-10-12T01:01:53.221099+00:00",
+  "duration_seconds": 0.060318,
+  "command": [
+    "python3",
+    "-B",
+    "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/witnesses/queue_and_capacity_witness.py"
+  ],
+  "code_sha256": "0928e692fe7be260eff7d22bf2d070510ccadb97d39cce433c114da3809eeeab",
+  "exit_code": 0,
+  "raw_stdout_sha256": "eea96066d95e2c9322e4f7ce356db5d29ba18506de8ec72c40894a45f9f47cc1",
+  "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "runtime_semantic_version": "3.14.4",
+  "implementation": "CPython",
+  "matches_frozen_results_excluding_build_string": true,
+  "results": {
+    "bounded_admission": {
+      "accepted_queue_plus_workers": 24,
+      "active_ids": [
+        "J00",
+        "J01",
+        "J02",
+        "J03"
+      ],
+      "active_workers": 4,
+      "join_after_every_item_acknowledged": true,
+      "next_put_after_graceful_shutdown": "rejected by shutdown; not accepted",
+      "next_put_blocked_before_close": true,
+      "queue_maxsize": 20,
+      "queue_waiting_before_close": 20,
+      "waiting_drained_normally": 20
+    },
+    "immediate_shutdown_counterexample": {
+      "active_cancelled_and_waiting_abandoned": {
+        "interpretation": "join returned after the active job was acknowledged as cancelled; no job succeeded",
+        "join_done_after_active_ack": true,
+        "join_done_before_active_ack": false,
+        "ledger": {
+          "active-1": "cancelled",
+          "waiting-1": "abandoned"
+        },
+        "queue_size_after_immediate_shutdown": 0,
+        "success_count": 0
+      },
+      "only_waiting_items": {
+        "join_returned_without_processing": true,
+        "ledger": {
+          "only-waiting-1": "abandoned",
+          "only-waiting-2": "abandoned"
+        },
+        "queue_size_after_immediate_shutdown": 0,
+        "success_count": 0
+      }
+    },
+    "independent_discrete_worker_schedule": {
+      "assumptions": {
+        "all_jobs_ready_at_time_zero": true,
+        "identical_independent_jobs": true,
+        "jobs": 12,
+        "overhead_retries_contention": "excluded",
+        "service_seconds_per_job": 2.0,
+        "workers": 4
+      },
+      "long_run_schedule_check": {
+        "jobs": 120,
+        "makespan_seconds": 60.0,
+        "simulated_rate_jobs_per_second": 2.0
+      },
+      "makespan_seconds": 6.0,
+      "simulated_completion_times_seconds": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        4.0,
+        4.0,
+        4.0,
+        4.0,
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ]
+    }
+  },
+  "limitations": [
+    "Retrieved items are simulated worker-held jobs; no four worker tasks are created.",
+    "Cancellation is a direct ledger label assignment; no Task.cancel or converter cleanup ran.",
+    "This reproduces queue accounting and an ideal scheduling model; no target-version interpreter or application pipeline ran.",
+    "Raw interpreter build string omitted from public evidence."
+  ]
+}

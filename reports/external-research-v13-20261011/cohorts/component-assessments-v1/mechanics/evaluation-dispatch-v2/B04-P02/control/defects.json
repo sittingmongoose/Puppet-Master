@@ -1,0 +1,87 @@
+{
+  "schema": "er13.original_defects.v2",
+  "arm_id": "B04-P02-control",
+  "source_judgment": "FAIL",
+  "material_defects": [
+    {
+      "id": "B04-P02-control-D1",
+      "severity": "MATERIAL",
+      "kind": "required_protocol_omission",
+      "axes": [
+        1,
+        2,
+        6
+      ],
+      "title": "Forwarded unsafe requests have no target-cache invalidation obligation",
+      "artifact": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/final.md",
+        "sha256": "d3ee64560e833d1a269b7ddb120f92d3e5da56ddb5fe35ed99102327acc8b220",
+        "locators": [
+          "section 1 Request and response boundary, line 13",
+          "section 6 Request path, step 2",
+          "section 8 Validation plan"
+        ]
+      },
+      "observed": "The complete final passes non-GET requests through and does not cache their responses. It never specifies invalidation of existing GET entries on receiving a successful response to an unsafe/unknown-safety method, and its proposed tests omit that transition.",
+      "authority": {
+        "url": "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.4",
+        "locator": "RFC 9111 section 4.4, pinned text lines 1020-1049; adjacent section 4 write-through rule and RFC 9110 section 9.2.1",
+        "source_sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+      },
+      "governing_condition": "The cache receives a 2xx or 3xx response to a forwarded unsafe request (including unknown-safety methods). It must invalidate the target URI; optional additional Location/Content-Location invalidation has a same-origin limit. GET-only storage does not remove this rule.",
+      "consequence": "A fresh stored GET can continue satisfying later reads after a successful state-changing request through this component. Omitting the transition leaves the proposed cache coherent only by an unstated assumption about callers.",
+      "planning_example": "An eligible GET /doc is stored with a positive freshness lifetime. DELETE /doc is forwarded through the stated pass-through path and returns 204. The proposal leaves no stated mandatory-validation/removal transition for /doc before a later cached GET.",
+      "example_status": "Static source-based reasoning; no HTTP client, server fixture or implementation was executed.",
+      "applicability_limit": "The brief chiefly describes GET browsing. The omission is graded on the final itself explicitly forwarding non-GET/unsafe requests, rather than requiring the reader to add write features or build a whole client. A truly separate enforced GET-only API would require a different stated boundary; it is not assumed from this artifact.",
+      "confidence": "HIGH for the normative rule and omission; explicit applicability boundary retained for any separate adjudication",
+      "original_grade_effect": "source FAIL; no prospective execution or deployment demanded"
+    }
+  ],
+  "nonmaterial_findings_and_limits": [
+    {
+      "id": "B04-P02-control-L1",
+      "severity": "LIMITATION",
+      "coverage": "UNASSESSED",
+      "text": "Library suitability, client integration, OS key/storage guarantees and real offline/performance behavior remain unknown. These are proposed validations, not reasons to invent an execution failure."
+    },
+    {
+      "id": "B04-P02-control-L2",
+      "severity": "LIMITATION",
+      "coverage": "PARTIAL",
+      "text": "Exact artifact write completion, queue/start/provider-active phases, full context occupancy and billed resource breakdown are unavailable in the assigned frozen records. No native transcript was opened."
+    }
+  ],
+  "all_supplied_criticism_dispositions": [
+    {
+      "finding": "F1",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_CORE_CORRECTION",
+      "reason": "no-cache storage/reuse distinction, qualified no-cache conservative whole-response policy, private-user-agent storage, must-understand/status/no-store exception and unimplemented status gate retained."
+    },
+    {
+      "finding": "F2",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_CORRECTION",
+      "reason": "Vary star/absence/normalization rules and full corrected age replace the false draft rules; fresh reuse and conservative unreliable-clock handling retained."
+    },
+    {
+      "finding": "F3",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_CORE_CORRECTION",
+      "reason": "No offline bypass for no-cache/stale must-revalidate; eligible stale use, error states and separately governed export remain."
+    },
+    {
+      "finding": "F4",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_CORRECTION",
+      "reason": "Eligible 304 candidate set and strong/weak/absent-validator selection; supplied metadata, Content-Length/processing exceptions, body ownership and unconditional fallback retained."
+    },
+    {
+      "finding": "F5",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_CORE_PRESERVATION",
+      "reason": "Single-user GET cache, accounts/sign-out/redaction, bytes/encoding, bounded LRU/atomic generations, library/custom/live alternatives and retired URL-only history retained. No implementation/audit/witness is fabricated."
+    }
+  ],
+  "no_candidate_repairs": true
+}

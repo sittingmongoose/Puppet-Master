@@ -1,0 +1,103 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B04-P01-treatment",
+  "defects": [
+    {
+      "id": "D1",
+      "severity": "MATERIAL",
+      "kind": "required_mechanism_omission_and_unresolved_primary_source_conflict",
+      "axes": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "candidate_locators": [
+        "final.md:23\u201329 and criticism-dispositions.md:F1,F4"
+      ],
+      "finding": "The required investigation of actual CPython 3.13.9 fast-copy/fallback and metadata behavior omits the Windows copy2 -> _winapi.CopyFile2 branch. The result uses the stale documentation warning/copystat account without resolving its conflict with the supplied code.",
+      "source_basis": [
+        "P2:Lib/shutil.py:432\u2013470",
+        "P5:Modules/_winapi.c:2893\u20132950",
+        "W1:CopyFile2 Remarks",
+        "W2:dwCopyFlags,pfCancel,pProgressRoutine",
+        "P9:PR 105055 shutil/native/NEWS change",
+        "P8:release tag binding"
+      ],
+      "consequence": "Windows backend selection and metadata disclosures are not source-complete: the native success branch can preserve alternate streams and bypass copystat; only particular access/privilege errors fall back. The conditional useful mechanism and route-specific metadata behavior are lost from the proposal.",
+      "counterevidence_and_limits": "Both arms accurately attribute the literal warning to CPython documentation, keep useful copy2 timestamps, and correctly reject universal archival fidelity. A conservative product guarantee that excludes ADS is permissible. This defect is the missing required actual-code investigation and unresolved doc/code conflict, not the mere decision to withhold an archival guarantee. The Python wrapper exposes neither progress callback nor cancellation, so the indeterminate-progress decision remains valid.",
+      "confidence": "HIGH",
+      "execution_status": "Static code and governing native documentation; no Windows witness run"
+    },
+    {
+      "id": "D2",
+      "severity": "MATERIAL",
+      "kind": "source_preservation_guard_omission",
+      "axes": [
+        1,
+        5,
+        6
+      ],
+      "candidate_locators": [
+        "final.md:Contract and scope",
+        "final.md:Publication, collisions, and races, confirmed-replace steps 1\u20133",
+        "final.md:Validation plan items 1,4,5"
+      ],
+      "finding": "The confirmed-replace flow never excludes the selected original source path as final destination. Its identity checks check for change, not equality between source and destination.",
+      "source_basis": [
+        "brief.md:Source data must remain intact",
+        "draft.md:keep source unchanged and moving original forbidden",
+        "P4:os.replace:2726\u20132735",
+        "P6:internal_rename and os_replace callers",
+        "P2:copyfile same-file guard applies to source/stage, not final publication",
+        "P3:same-file preservation tests"
+      ],
+      "counterexample": "Choose the source directory and original filename as destination, affirm replacement, copy to a distinct stage, and leave identities unchanged. All stated checks pass, then os.replace(stage, original_source_path) replaces the selected original. The copy operation does not protect the final path because its destination is the different stage. No external writer or violation of source immutability is needed.",
+      "consequence": "The proposal permits replacing the selected original file and losing its original identity/unsupported metadata, contrary to its own never-delete/alter-source rule. A future test plan without a same-source destination case leaves this concrete guard unspecified.",
+      "counterevidence_and_limits": "The primary stream could remain byte-identical, but that does not make replacement of the original an export that preserves the selected original. Symlink/reparse rejection does not exclude the ordinary identical-path case. This is a planning counterexample, not a claim that candidate software was executed.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "N1",
+      "severity": "NONMATERIAL",
+      "kind": "source_map_hash_error",
+      "axes": [
+        2
+      ],
+      "candidate_locator": "source-map.json:sources[S2].sha256",
+      "finding": "The S2 digest is 63 hexadecimal characters and omits the final b. The frozen input and independent retrieval identify the actual 64-character hash ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b.",
+      "consequence": "The authored source-map integrity value is invalid, although the correct immutable source remains identifiable from the assigned manifest and raw URL. Original is not repaired.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "N2",
+      "severity": "NONMATERIAL",
+      "kind": "source_map_locator_mismatch",
+      "axes": [
+        2
+      ],
+      "candidate_locator": "source-map.json:last claim_mappings evidence[S3] for test_copy2",
+      "finding": "The exact_locator names lines 1392\u20131406 but its line_url points to 2755\u20132763 (move tests). The dispositions contain a correct copy2 link.",
+      "consequence": "One claim-map link cannot substantiate its stated test claim; the separate valid evidence prevents a material semantic loss. Original is unchanged.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "N3",
+      "severity": "NONMATERIAL",
+      "kind": "mode_contract_ambiguity",
+      "axes": [
+        1,
+        2
+      ],
+      "candidate_locator": "final.md:Contract and scope versus optional copy2 mode",
+      "finding": "The global promise to copy from one opened source handle is implemented naturally by streaming, whereas copy2 accepts paths and opens the source independently. The optional mode is not reconciled with that handle policy.",
+      "consequence": "Remaining design ambiguity under the stated immutable-source assumption; not treated as an executed race or a separate decisive failure.",
+      "source_basis": [
+        "P2:copy2 and copyfile",
+        "P5:CopyFile2 wrapper"
+      ],
+      "confidence": "HIGH"
+    }
+  ],
+  "not_candidate_feedback": true
+}

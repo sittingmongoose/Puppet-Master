@@ -1,0 +1,453 @@
+{
+  "schema": "er13.original_assessment.v2",
+  "block_id": "B01-P01",
+  "original_immutable": true,
+  "assessment_written_utc": "2026-10-12T01:23:21.688068+00:00",
+  "packet_sha256": "e85b2b458c47a3d12808ccf7b583da94c0b082aafb413c1f486ec81481e4d64a",
+  "arms": [
+    {
+      "arm_id": "B01-P01-treatment",
+      "source_judgment": {
+        "status": "UNASSESSED",
+        "scope": "Complete final unavailable; original partial science assessed separately",
+        "reason": "Incomplete capped original cannot receive a comparable complete-final source grade. Missing dispositions/map/native completion remain UNASSESSED.",
+        "partial_science_status": "PARTIAL_NO_MATERIAL_SEMANTIC_DEFECT_CONFIRMED_IN_ASSESSED_TEXT",
+        "material_scientific_defect_ids": [],
+        "source_pass": false,
+        "universal_correctness_claim": false
+      },
+      "coverage": {
+        "schema": "er13.coverage.original.v2",
+        "arm_id": "B01-P01-treatment",
+        "scope": "COMPONENT",
+        "overall": "PARTIAL",
+        "complete_final_coverage": "UNASSESSED",
+        "available_science_coverage": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "UNASSESSED",
+            "finding": "Available partial text preserves original scope/negatives and core obligations; complete delivery unavailable.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "UNASSESSED",
+            "finding": "Available pacing/progress/cancel and snapshot facts supported by independent exact-version research; locator errors and unresolved engine/platform constraints recorded.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "UNASSESSED",
+            "finding": "Available required comparisons/history retained; VACUUM INTO and WAL issue history omitted; complete final assessment unavailable.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "UNASSESSED",
+            "finding": "Available text and amendments address C1-C4, but full required dispositions document is absent and UNASSESSED.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "UNASSESSED",
+            "finding": "Available assembly reproduces whole partial text and all retained intervals; semantic retention separately inspected, not inferred from counts.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "UNASSESSED",
+            "finding": "Available matrix and no-app/upstream-run statements are useful; assembly record covers document generation only; complete delivery unavailable.",
+            "partial_science_coverage": "PARTIAL",
+            "complete_final_judgment": "UNASSESSED"
+          }
+        ],
+        "obligations": [
+          {
+            "id": "scope_and_target",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "One user; CPython3.13.9; SQLite local disk; remote sync/server excluded"
+          },
+          {
+            "id": "live_editing",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Worker ownership; commits/save boundary; edit availability and contention"
+          },
+          {
+            "id": "database_snapshot",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Incremental API and copied-DB reference enumeration"
+          },
+          {
+            "id": "attachment_lifecycle",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Immutable versions, retention before snapshot, GC/crash/deletion conditions"
+          },
+          {
+            "id": "large_payload_memory",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "File-backed DB, streaming payloads and bounded queues/working memory intent"
+          },
+          {
+            "id": "progress_and_cancel",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Provisional counters, cooperative callback cancel and attachment checks"
+          },
+          {
+            "id": "collision_and_publication",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "No overwrite; exclusive allocation or conditional no-replace; staged publication"
+          },
+          {
+            "id": "failure_cleanup",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Distinct failure/cancel outcomes and stage-only cleanup"
+          },
+          {
+            "id": "restore",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "New workspace; digest/reference/schema/path checks; source preserved"
+          },
+          {
+            "id": "privacy",
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Permissions/log redaction; optional key management; no whole-data logging"
+          },
+          {
+            "id": "required_alternatives",
+            "axis": 3,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "API, open/closed-app filesystem copy, logical dump; costs and history"
+          },
+          {
+            "id": "unfamiliar_opportunities",
+            "axis": 3,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "VACUUM INTO/privacy/space, same-handle writes, runtime controls"
+          },
+          {
+            "id": "C1",
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "BUSY/LOCKED sleep correction"
+          },
+          {
+            "id": "C2",
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Changing progress and source-backed callback exception semantics"
+          },
+          {
+            "id": "C3",
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Independent external generation retention and restorable bundle"
+          },
+          {
+            "id": "C4",
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Supported decisions, conditional alternatives, negatives/history retained"
+          },
+          {
+            "id": "semantic_preservation",
+            "axis": 5,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "All supported draft meaning checked; false claims replaced"
+          },
+          {
+            "id": "proposal_validation",
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Representative GiB/races/restore/cancel/crash/failure/privacy test matrix"
+          },
+          {
+            "id": "upstream_test_truth",
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Sources inspected; upstream tests not presented as application runs"
+          },
+          {
+            "id": "candidate_assembly_execution",
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "PARTIAL",
+            "scope": "Exact code/results and actual execution claim linkage"
+          },
+          {
+            "id": "actual_application_execution",
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "available_partial_science_coverage": "UNASSESSED",
+            "scope": "Not required or claimed; not performed"
+          }
+        ],
+        "source_families": [
+          {
+            "family": "cpython3139_api_version",
+            "coverage": "PARTIAL",
+            "scope": "Pin/tag dereference and independently fetched bodies; thread/transaction/default/runtime-version definitions."
+          },
+          {
+            "family": "cpython3139_backup_wrapper",
+            "coverage": "PARTIAL",
+            "scope": "Whole cached connection.c read; complete consequential function, preconditions, error cleanup and retry loop independently fetched."
+          },
+          {
+            "family": "cpython_backup_tests_callers",
+            "coverage": "PARTIAL",
+            "scope": "Whole test_backup.py inspected, including setup, modifying callback, failing callback, transaction-target and source-name tests. No test executed."
+          },
+          {
+            "family": "sqlite_online_backup_c_api",
+            "coverage": "PARTIAL",
+            "scope": "Init/step/finish/counters and concurrent source/destination restrictions; sample C caller context read."
+          },
+          {
+            "family": "sqlite_wal_docs_release",
+            "coverage": "PARTIAL",
+            "scope": "Whole frozen WAL body read; sidecar, checkpoint, concurrency, bug trigger and release conditions independently checked."
+          },
+          {
+            "family": "sqlite_wal_fix_implementation_target",
+            "coverage": "UNASSESSED",
+            "scope": "No patch-code proof or installed target specified; actual trigger/build unknown; no deployment claim."
+          },
+          {
+            "family": "sql_dump_mechanism",
+            "coverage": "PARTIAL",
+            "scope": "Docs, C caller and whole Lib/sqlite3/dump.py; reconstruction/transaction/encoding costs; optional status."
+          },
+          {
+            "family": "vacuum_into_alternative",
+            "coverage": "PARTIAL",
+            "scope": "Full governing VACUUM docs read; useful omitted opportunity assessed without mandating new product scope."
+          },
+          {
+            "family": "restore_pragma_security",
+            "coverage": "PARTIAL",
+            "scope": "Integrity/FK differences and conditional hostile-schema defenses; no assumed custom SQL functions."
+          },
+          {
+            "family": "os_mkdir_rename_fsync",
+            "coverage": "PARTIAL",
+            "scope": "CPython3.13.9 docs independently inspected; Unix overwrite behavior and exclusive mkdir confirmed. Supported platform and exact no-replace/durability implementation remain unknown; bounded Linux lookup unavailable."
+          },
+          {
+            "family": "attachment_and_bundle_protocol",
+            "coverage": "PARTIAL",
+            "scope": "Assessed as engineering proposal/inference; no SQLite cross-system guarantee. Lease/interlock, copy references, validation and crash limitations inspected."
+          },
+          {
+            "family": "native_custody_execution",
+            "coverage": "PARTIAL",
+            "scope": "Exact terminal task receipts and native receipts inspected; native-thread linkage/provider/backend identity and execution witnesses limited."
+          },
+          {
+            "family": "resource_billing",
+            "coverage": "UNASSESSED",
+            "scope": "No billable request telemetry, subscription data, active-time or context-occupancy evidence supplied; not zero."
+          }
+        ],
+        "missing_material": [
+          "criticism-dispositions.md",
+          "source-map.json",
+          "native-goal-terminal.json"
+        ],
+        "remaining_unassessed": [
+          "Complete final, missing dispositions/map and native terminal receipt.",
+          "Actual target build/topology/durability, billing and full method completion."
+        ],
+        "assessment_stopped_on_decisive_failure": false,
+        "limits": [
+          "Original evaluator; no repairs, extra graders, candidates, native Goal, Git, canon, held-out contents, provider changes or candidate-author feedback.",
+          "Technique-bearing paths, method cards and final structures reveal arm assignment. Blinding is imperfect.",
+          "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse.",
+          "All 66 present manifest files verified first. Identical common bodies inspected once and reused independently for the matched arms. Preparation integrity is distinct from semantic preservation.",
+          "Assessment is finite research-proposal quality. No deployment, software execution, current user schema, actual disk workload or future tests are required. No application or upstream tests were run by this evaluator.",
+          "Linked SQLite build, supported OS/filesystem set, user attachment ownership, custom SQL functions and trust model remain unknown. Known available mechanism research was performed; unknowns are not zero.",
+          "Complete billing, per-request activity, context occupancy and total evaluator wall time are unavailable in the assigned packet. Evaluation cost is independent_evaluation; candidate product, shared preparation and coordinator idle costs are separate and unchanged."
+        ]
+      },
+      "defects": [
+        {
+          "id": "T-D01",
+          "severity": "MATERIAL_DELIVERY_FAILURE",
+          "dimension": "delivery/time/method",
+          "axes": [],
+          "kind": "ORIGINAL_CAPPED_INTERRUPTED_PARTIAL_ATTEMPT",
+          "finding": "Exact notification and terminal receipt classify the original attempt as capped/interrupted. criticism-dispositions.md, source-map.json and native-goal-terminal.json are absent from the notified freeze. final.md is available partial authored science, not a qualified complete final.",
+          "consequence": "Complete-final source judgment UNASSESSED; incomplete delivery and original deadline failure retained in the assigned denominator. Native completion, missing dispositions and missing map stay UNASSESSED. No comparable complete source grade is manufactured.",
+          "input_evidence": [
+            {
+              "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+              "sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c"
+            },
+            {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+              "sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d"
+            }
+          ],
+          "coverage": "COMPLETE for the notified original failure and present/missing manifest selections; missing science/native records UNASSESSED."
+        },
+        {
+          "id": "T-N01",
+          "severity": "NONMATERIAL",
+          "dimension": "source_traceability",
+          "axes": [
+            2
+          ],
+          "kind": "INCORRECT_EXACT_CPYTHON_LOCATORS",
+          "location": "partial final.md Evidence inspected bullets S1/S2/S3",
+          "finding": "The cited v3.13.9 raw bodies match the frozen CPython hashes, but important line ranges are wrong. backup is Doc/library/sqlite3.rst1149-1218 and connection.c2031-2128, not1048-1079 and1890-1980. check_same_thread is305-312, not277-283. The test link ending130 omits test_failing_progress135-142. Independent whole-body inspection supports the pacing/progress/callback-error semantic claims despite poor locators.",
+          "consequence": "Traceability limitation in the assessable partial science, not evidence that the supported mechanism facts are false.",
+          "primary_evidence": [
+            "cpython3139-doc",
+            "cpython3139-connection",
+            "cpython3139-tests"
+          ],
+          "coverage": "COMPLETE for specified locator errors; absent formal map UNASSESSED."
+        }
+      ],
+      "delivery": {
+        "status": "INCOMPLETE_ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+        "final_present": true,
+        "complete_final": false,
+        "present_manifest_file_count": 33,
+        "base_required_outputs_present": false,
+        "missing_required_outputs": [
+          "criticism-dispositions.md",
+          "source-map.json",
+          "native-goal-terminal.json"
+        ],
+        "conditional_execution_record_gap": null,
+        "exact_task_terminal_status": "interrupted",
+        "assigned_denominator_included": true,
+        "rescued_or_replaced": false
+      },
+      "time_eligibility": {
+        "status": "ORIGINAL_DEADLINE_FAILURE",
+        "maximum_elapsed_seconds": 1500,
+        "t0_utc": "2026-10-12T00:34:21.619415Z",
+        "deadline_utc": "2026-10-12T00:59:21.619415Z",
+        "dispatch_capture_utc": "2026-10-12T00:34:22.252Z",
+        "native_activation_utc": "2026-10-12T00:34:39+00:00",
+        "native_terminal_utc": null,
+        "t0_to_native_terminal_seconds": null,
+        "native_reported_elapsed_seconds": null,
+        "authored_freeze_utc": "2026-10-12T01:02:51.962265+00:00",
+        "last_complete_scientific_artifact_time": "UNKNOWN; no file-write boundary witness",
+        "request_to_quiet_final_proxy_seconds": null,
+        "proxy_status": "No successful-delivery proxy manufactured from a partial freeze. Capped original stays a deadline failure.",
+        "frozen_clock_unchanged": true,
+        "scientific_grade_independent_of_time": true
+      },
+      "method_compliance": {
+        "status": "INCOMPLETE_METHOD",
+        "coverage": "PARTIAL",
+        "frozen_method": "targeted amendments plus deterministic retention/assembly into complete final",
+        "observable_result": "Amendments, assembly code and results present; in-memory evaluator reconstruction matches final and retained intervals; missing required companions/native completion.",
+        "semantic_preservation": "Independently inspected, distinct from preparation and byte-retention counts.",
+        "no_discovery_or_cold_pipeline_claim": true,
+        "actual_hidden_execution": "UNASSESSED; no full transcript inspected",
+        "evaluator_boundary_lapse": "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "exact_terminal_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+          "sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d",
+          "task_identity_matches_notification": true,
+          "status": "interrupted",
+          "hasPendingChildRuns": false
+        },
+        "returned_model": "gpt-6-luna",
+        "requested_private_route": "REDACTED; operational provenance, not source authority",
+        "provider_account_identity": "NOT_PUBLISHED",
+        "native_activation_objective_matches_frozen": true,
+        "native_creation_receipt_sha256": "b7e61d60bbadd4fbb317b882612ac27b54097456c8f2249a7b17e4416b2ea4be",
+        "native_terminal_status": "UNASSESSED_MISSING_RECEIPT",
+        "same_native_birth": null,
+        "native_terminal_receipt_sha256": null,
+        "native_to_delegated_thread_linkage": "UNKNOWN",
+        "actual_service_tier": "UNKNOWN",
+        "effort": "UNKNOWN beyond requested dispatch metadata",
+        "full_native_transcript": "Not accessed or published",
+        "recipe_native_qualification": "NOT_QUALIFIED; missing completion receipt and interrupted original"
+      },
+      "resource_billing_coverage": {
+        "coverage": "UNASSESSED",
+        "candidate_product_cost": {
+          "billing": "UNKNOWN",
+          "per_request_usage": "UNKNOWN",
+          "active_provider_time": "UNKNOWN",
+          "context_occupancy": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "native_cumulative_counter": "terminal cumulative counter unavailable"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "wall_time_total": "UNKNOWN; evaluator total start boundary not captured",
+          "earliest_saved_primary_lookup_utc": "2026-10-12T01:14:14.210195+00:00",
+          "original_assessment_written_utc": "2026-10-12T01:23:21.688068+00:00",
+          "billable_cost": "UNKNOWN",
+          "usage": "NOT_PUBLISHED/UNKNOWN request-level accounting",
+          "shared_primary_lookup_reused_for_matched_arms": true
+        },
+        "shared_package_preparation_cost": "UNKNOWN; separate from this component product and evaluation",
+        "v1_coordinator_idle_costs": "UNCHANGED; not reassigned or inferred",
+        "unknown_is_zero": false
+      },
+      "limitations": [
+        "Original evaluator; no repairs, extra graders, candidates, native Goal, Git, canon, held-out contents, provider changes or candidate-author feedback.",
+        "Technique-bearing paths, method cards and final structures reveal arm assignment. Blinding is imperfect.",
+        "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse.",
+        "All 66 present manifest files verified first. Identical common bodies inspected once and reused independently for the matched arms. Preparation integrity is distinct from semantic preservation.",
+        "Assessment is finite research-proposal quality. No deployment, software execution, current user schema, actual disk workload or future tests are required. No application or upstream tests were run by this evaluator.",
+        "Linked SQLite build, supported OS/filesystem set, user attachment ownership, custom SQL functions and trust model remain unknown. Known available mechanism research was performed; unknowns are not zero.",
+        "Complete billing, per-request activity, context occupancy and total evaluator wall time are unavailable in the assigned packet. Evaluation cost is independent_evaluation; candidate product, shared preparation and coordinator idle costs are separate and unchanged."
+      ]
+    }
+  ],
+  "comparative_analysis_performed_before_freeze": false
+}

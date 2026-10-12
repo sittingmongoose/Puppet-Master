@@ -1,0 +1,30 @@
+# Original B01-P01 Control assessment
+
+Source judgment **FAIL** under **PARTIAL** overall coverage, due to C-F01. Core complete-final delivery is present; scientific mechanism corrections are supported. The final claims an executed document assembly and an accessible results file, but its exact 33-file freeze contains neither the code nor those results. This is a material evidence omission; it is not a finding that execution was fabricated. Complete application execution is neither required nor credited.
+
+All present input sizes/hashes match the assigned manifests. The independent v3.13.9 tag dereferences to the frozen pin and all three fetched CPython bodies match. [Complete governing backup wrapper](https://github.com/python/cpython/blob/v3.13.9/Modules/_sqlite/connection.c#L2031-L2128) and [whole upstream backup tests](https://github.com/python/cpython/blob/v3.13.9/Lib/test/test_sqlite3/test_backup.py) support retry-only sleep, provisional progress and callback exception propagation. SQLite's [C API](https://www.sqlite.org/c3ref/backup_finish.html) supports the live-copy and source/destination restrictions. No upstream or application test was executed here. Exact contexts and evidence body hashes are in primary-source-index.json.
+
+C1/C2/C3 corrections preserve online backup/cancellation while removing timing, monotonic-progress and external-file-snapshot errors. C4's ownership, memory intent, collision protection, failure cleanup, privacy, new-workspace restore, SQL export and conditional closed-app copy survive. Immutable attachment retention is proposed application engineering, not an SQLite guarantee. The proposed same-handle write policy has primary support and was assessed as proposed engineering.
+
+The required three-way comparison is present. [VACUUM INTO](https://www.sqlite.org/lang_vacuum.html#vacuuminto) is an omitted useful space/privacy option; deletion-sanitized export was not explicitly required, so this is recorded as nonmaterial. [WAL section 11](https://www.sqlite.org/wal.html#the_wal_reset_bug) and the [3.51.3 fix release](https://www.sqlite.org/releaselog/3_51_3.html) establish a narrowly triggered corruption issue, not an inferred installed-engine failure. The serialized source topology reduces the issue's trigger applicability. Exact patch-code and actual target applicability are UNASSESSED. Restore integrity/FK distinctions were checked; platform-specific no-replace/durability and conditional hostile-schema controls remain explicit limits.
+
+Coverage by axis (complete final / available partial science):
+
+- 1. Material original obligations and negative constraints: **COMPLETE**. Scope, negatives and all original product obligations preserved in a coherent proposal.
+- 2. Consequential source facts, governing conditions, versions and applicability: **COMPLETE**. Governing CPython3.13.9 source facts and SQLite conditions independently checked; deployed engine/platform are unknown.
+- 3. Useful unfamiliar mechanisms, alternatives and implementation/failure history: **COMPLETE**. Required alternatives/history preserved; useful available opportunities and version history omissions are explicit nonmaterial/conditional limits.
+- 4. Valid corrections, rejections and exact plan dispositions: **COMPLETE**. C1/C2/C3 accepted and amended; C4 retained conditionally; no material false rejection found.
+- 5. Supported meaning retained from draft and criticism into the complete final: **COMPLETE**. Supported worker/cancel/memory/restore/privacy/collision/history meaning retained; same-handle callback design change is source-supported.
+- 6. Meaningful proposed validation, with executed work distinguished: **PARTIAL**. Meaningful proposed validation is explicit; claimed actual assembly evidence missing, so execution record coverage is PARTIAL.
+
+Every consequential obligation and source family has COMPLETE/PARTIAL/UNASSESSED coverage in coverage.json. Missing records and future physical execution are not inferred. No material false rejection or supported draft-to-final meaning loss was confirmed outside the recorded execution-evidence defect.
+
+Frozen T0 is 00:34:21.101095Z; deadline 00:59:21.101095Z. The same-birth/objective native receipt reports completion at 00:52:03Z: **1061.898905 seconds (17m41.9s) from frozen T0**, while its own elapsed field is 1047 seconds (17m27s). Core outputs were frozen at 00:55:00.383391Z, before the deadline. Exact last scientific write/request-to-quiet boundary is unavailable. These timing observations do not rescue the source FAIL.
+
+The exact task terminal receipt reports completed and **hasPendingChildRuns=false**. Returned model metadata is gpt-6-luna; actual service tier and native-to-delegated/backend linkage are unknown. Native creation/objective equality is observed; same native birth/objective and a complete terminal receipt are observed. Requested private routing identity is withheld and cannot establish source truth. Full native transcripts were not accessed.
+
+Candidate billing, request activity, context occupancy and evaluator total resource cost are unknown, not zero. Native cumulative usage is not billing and numeric token counters are not published. This grader is **independent_evaluation**; package preparation, candidate product and coordinator idle costs remain separate and unchanged. COMPONENT cannot establish discovery effectiveness or cold full-pipeline success.
+
+Blinding is imperfect because methods/paths reveal assignment. One early filename-only recursive locator search crossed campaign subdirectories; no admitted/held-out contents were read, and subsequent reads were allowlisted. This evaluator method lapse is disclosed. No candidate feedback/repairs, Git/canon changes, new Goals, additional graders or candidates occurred.
+
+These are immutable original judgments. Future disputes require a new separate adjudication; prospective schema fixes must not rewrite this grade. The per-arm exact manifest is frozen before any paired comparison.

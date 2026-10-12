@@ -1,0 +1,298 @@
+{
+  "schema": "er13.paired-comparison.v1",
+  "block_id": "B08-P02",
+  "scope": "COMPONENT",
+  "arm_count": 2,
+  "comparison_started_after_both_original_freezes": true,
+  "written_at_utc": "2026-10-12T01:07:14.737134+00:00",
+  "original_outputs": [
+    {
+      "arm_id": "B08-P02-control",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/manifest.json",
+      "manifest_sha256": "bcc9e24478f93b648ea9d088373e79e6c5d4bccc46b7e3e42ce22a34c9b28e2a",
+      "manifest_bytes": 4703,
+      "frozen_at_utc": "2026-10-12T01:06:31.059269+00:00",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "all_original_files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.json",
+          "relative_path": "assessment.json",
+          "bytes": 5727,
+          "sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.md",
+          "relative_path": "assessment.md",
+          "bytes": 4817,
+          "sha256": "c8be52dcd4bc0e9184a09cc90e4782c31c4eca86629c7ad429171f153c134888"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/coverage.json",
+          "relative_path": "coverage.json",
+          "bytes": 5601,
+          "sha256": "c7fb8e1fa96c98f0b80d83d5a048c9449862f2677dcc70cee3b9913388795ceb"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/defects.json",
+          "relative_path": "defects.json",
+          "bytes": 3909,
+          "sha256": "2fe1ebe51026171e6c48c374a01a2765aae43c4e99737f813302f9cc57e03d67"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/SOURCE-LICENSES.txt",
+          "relative_path": "evidence/SOURCE-LICENSES.txt",
+          "bytes": 13926,
+          "sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+          "relative_path": "evidence/cpython-consequential-context.json",
+          "bytes": 34435,
+          "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/execution-record.json",
+          "relative_path": "evidence/execution-record.json",
+          "bytes": 827,
+          "sha256": "8d2a01396f5be4c5781b4d32c2bdaf81c8effe58b9b9a65b83697723d718617b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+          "relative_path": "evidence/independent-oracle.py",
+          "bytes": 2333,
+          "sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stderr.txt",
+          "relative_path": "evidence/independent-oracle.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stdout.json",
+          "relative_path": "evidence/independent-oracle.stdout.json",
+          "bytes": 1022,
+          "sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/input-verification.json",
+          "relative_path": "evidence/input-verification.json",
+          "bytes": 2056,
+          "sha256": "40fe32a93ca4b066380bb37ceb10d40a747e23e4114e232cd4e2c05786c633b7"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/oracle-input.json",
+          "relative_path": "evidence/oracle-input.json",
+          "bytes": 1738,
+          "sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/ucd-consequential-context.json",
+          "relative_path": "evidence/ucd-consequential-context.json",
+          "bytes": 8328,
+          "sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/primary-source-index.json",
+          "relative_path": "primary-source-index.json",
+          "bytes": 20775,
+          "sha256": "703cb9ff3eb0ff46b8ef40764f58af6397480207b93f5334d1ae90277a6498e4"
+        }
+      ]
+    },
+    {
+      "arm_id": "B08-P02-treatment",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/manifest.json",
+      "manifest_sha256": "d28a56387ae525ce29f664019698f0223d58088dcb5c2ae9fa905cc13f5f2f64",
+      "manifest_bytes": 4733,
+      "frozen_at_utc": "2026-10-12T01:06:31.060338+00:00",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "all_original_files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.json",
+          "relative_path": "assessment.json",
+          "bytes": 5773,
+          "sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.md",
+          "relative_path": "assessment.md",
+          "bytes": 4832,
+          "sha256": "6b8142ccb93eba8e0e40cd0133b1df0d7f23eade8e24a568475bb1e1617e8ec6"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/coverage.json",
+          "relative_path": "coverage.json",
+          "bytes": 5558,
+          "sha256": "a917d1dd5e2a768cc3e6ccf4164b58c24d7482d7660b7b108289452fd255a4a4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/defects.json",
+          "relative_path": "defects.json",
+          "bytes": 3767,
+          "sha256": "019afe16c55af6dd5edee635886e3edcb771da944492039e3363f95c4a212547"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/SOURCE-LICENSES.txt",
+          "relative_path": "evidence/SOURCE-LICENSES.txt",
+          "bytes": 13926,
+          "sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/cpython-consequential-context.json",
+          "relative_path": "evidence/cpython-consequential-context.json",
+          "bytes": 34435,
+          "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/execution-record.json",
+          "relative_path": "evidence/execution-record.json",
+          "bytes": 829,
+          "sha256": "28837e9723052aa1014bbf5a8545336c980cd059d4d242e4d6b0c90cc150d3fd"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.py",
+          "relative_path": "evidence/independent-oracle.py",
+          "bytes": 2333,
+          "sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stderr.txt",
+          "relative_path": "evidence/independent-oracle.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stdout.json",
+          "relative_path": "evidence/independent-oracle.stdout.json",
+          "bytes": 1022,
+          "sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/input-verification.json",
+          "relative_path": "evidence/input-verification.json",
+          "bytes": 2060,
+          "sha256": "8be5d8a20b4a0b632f3dc28fba1cd62963756bb9138d808b715330be13280a9f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/oracle-input.json",
+          "relative_path": "evidence/oracle-input.json",
+          "bytes": 1738,
+          "sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/ucd-consequential-context.json",
+          "relative_path": "evidence/ucd-consequential-context.json",
+          "bytes": 8328,
+          "sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/primary-source-index.json",
+          "relative_path": "primary-source-index.json",
+          "bytes": 20795,
+          "sha256": "f12a0b03750a9dbef1ec700628c4e0a3e7987633b093c891f58814fe3f2ae282"
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "control": "FAIL: supported explicit NFC-plus-casefold alternative not retained in complete final.",
+    "treatment": "FAIL: required separate normalized/casefolded comparison and associated storage/index trade-offs absent.",
+    "corrected_claims": "Both independently supported against public primary Unicode 15.1 data: derived-byte expansions, original-size proxy failure, and transformed/source offset mismatch.",
+    "shared_strengths": [
+      "original text retained",
+      "precise selected one-pass pipeline",
+      "post-transform UTF-8 storage check",
+      "versioned migration",
+      "safe transformed-highlight fallback",
+      "bounded witnesses with disclosed runtime",
+      "proposed future validation distinguished from execution"
+    ],
+    "differences": [
+      "Control specifies more standalone mode comparisons and transient overflow search, but loses the precise NFC-plus-casefold alternative.",
+      "Treatment retains the precise NFC-plus-casefold alternative and explicitly distinguishes formal NFKC_Casefold, but does not complete the requested standalone comparison.",
+      "Overflow policies differ: complete transient scan with visible partial failure versus visible unindexed omissions with an optional future scan. Neither is judged to silently lose originals."
+    ],
+    "equal_quality_savings_established": false,
+    "preference": null,
+    "reason": "Distinct material failures preclude a source-pass or equal-quality efficiency finding. Faster FAIL is not an optimization win."
+  },
+  "timing_observations": {
+    "control": {
+      "status": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "max_elapsed_seconds": 1500,
+      "frozen_t0_utc": "2026-10-12T00:35:58.350716Z",
+      "frozen_deadline_utc": "2026-10-12T01:00:58.350716Z",
+      "native_goal_created_utc": "2026-10-12T00:36:18+00:00",
+      "native_goal_terminal_utc": "2026-10-12T00:50:15+00:00",
+      "native_goal_reported_elapsed_seconds": 836,
+      "t0_to_native_terminal_seconds": 856.649284,
+      "t0_to_authored_freeze_delivery_upper_bound_seconds": 1145.056467,
+      "last_complete_scientific_write_utc": null,
+      "named_proxy": "T0-to-authored-freeze upper bound; native Goal terminal is separate, not final-write timestamp.",
+      "phase_topology": "One admitted critic+finalizer COMPONENT with prepared common draft/cache.",
+      "unknown": [
+        "exact last artifact write time",
+        "active provider stage time",
+        "queue/provider start",
+        "separate critique/finalization duration"
+      ],
+      "clocks_reset": false
+    },
+    "treatment": {
+      "status": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "max_elapsed_seconds": 1500,
+      "frozen_t0_utc": "2026-10-12T00:35:58.903486Z",
+      "frozen_deadline_utc": "2026-10-12T01:00:58.903486Z",
+      "native_goal_created_utc": "2026-10-12T00:36:12+00:00",
+      "native_goal_terminal_utc": "2026-10-12T00:47:10+00:00",
+      "native_goal_reported_elapsed_seconds": 658,
+      "t0_to_native_terminal_seconds": 671.096514,
+      "t0_to_authored_freeze_delivery_upper_bound_seconds": 775.842114,
+      "last_complete_scientific_write_utc": null,
+      "named_proxy": "T0-to-authored-freeze upper bound; native Goal terminal is separate, not final-write timestamp.",
+      "phase_topology": "One admitted critic+finalizer COMPONENT with prepared common draft/cache.",
+      "unknown": [
+        "exact last artifact write time",
+        "active provider stage time",
+        "queue/provider start",
+        "separate critique/finalization duration"
+      ],
+      "clocks_reset": false
+    },
+    "native_t0_to_terminal_difference_treatment_minus_control_seconds": -185.55277,
+    "native_t0_to_terminal_relative_difference": -0.21660295930393847,
+    "native_goal_reported_elapsed_difference_seconds": -178,
+    "authored_freeze_upper_bound_difference_seconds": -369.2143530000001,
+    "interpretation": "Descriptive matched COMPONENT observations only. Native terminal and authored freeze are different boundaries; goal elapsed is not full T0 latency or billed activity. No exact scientific-write timestamp or cold complete-pipeline latency.",
+    "time_eligible_arm_count": 2
+  },
+  "coverage_limits": [
+    "All six axes and consequential proposal obligations assessed for both arms; all submitted critique dispositions reviewed.",
+    "Entire generated tables, unrelated source history and future application/conformance execution UNASSESSED.",
+    "Finite proposal assessment, not universal correctness.",
+    "Technique-bearing paths and prompts prevent perfect blinding."
+  ],
+  "provenance": {
+    "both_exact_verified_task_receipts_completed": true,
+    "both_receipts_hasPendingChildRuns": false,
+    "both_native_goal_receipts_same_goal_identity_and_objective": true,
+    "independent_native_session_linkage": "UNKNOWN beyond assigned capture/objective custody",
+    "actual_backend_identity_effort_tier_attestation": "UNKNOWN; private requested/returned operational routing fields excluded.",
+    "public_routing_identity_in_artifacts": false
+  },
+  "resource": {
+    "full_candidate_cost_or_billing_comparison": null,
+    "provider_activity_or_occupancy_comparison": null,
+    "cold_common_package_preparation_cost": null,
+    "passing_original_finals": 0,
+    "failure_inclusive_consumption_per_passing_final": "UNDEFINED: zero source passes; consumption/billing totals also unknown.",
+    "independent_evaluation": "Separate from candidate product; primary-source lookup reused across matched arms.",
+    "v1_coordinator_idle_costs": "Unchanged.",
+    "unknown_is_not_zero": true
+  },
+  "selection": "No recipe selected or promoted; root alone selects. COMPONENT needs prospective integration and cannot establish discovery effectiveness or cold full-pipeline success.",
+  "adjudication": "Original judgments immutable. A material dispute requires a separate new adjudication preserving original brief, findings, responses and unresolved objections; no repeat-until-pass grading."
+}

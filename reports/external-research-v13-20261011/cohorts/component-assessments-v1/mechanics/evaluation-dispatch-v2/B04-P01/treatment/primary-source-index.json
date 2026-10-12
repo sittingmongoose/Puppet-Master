@@ -1,0 +1,287 @@
+{
+  "schema": "er13.original-primary-source-index.v1",
+  "arm_id": "B04-P01-treatment",
+  "independent_lookup": true,
+  "shared_reviewer_lookup_reused": true,
+  "scope": "Only assigned pair and public governing primary sources; no held-out or active candidate inputs",
+  "sources": [
+    {
+      "id": "P1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+      "full_source_sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "file": "evidence/P1-Doc-library-shutil.rst.json",
+      "evidence_sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "ranges_1based": [
+        [
+          1,
+          230
+        ],
+        [
+          372,
+          405
+        ],
+        [
+          515,
+          540
+        ]
+      ],
+      "title": "CPython 3.13.9 shutil documentation",
+      "assessment_context": "copyfileobj/copyfile/copystat/copy2/move and efficient-copy section; literal documentation warning conflicts with native Windows copy2 branch",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+      "full_source_sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "file": "evidence/P2-Lib-shutil.py.json",
+      "evidence_sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686",
+      "ranges_1based": [
+        [
+          1,
+          470
+        ],
+        [
+          484,
+          542
+        ],
+        [
+          814,
+          878
+        ]
+      ],
+      "title": "CPython 3.13.9 shutil implementation",
+      "assessment_context": "complete copy helpers, same-file check, fast-copy fallbacks, copystat, copy2, relevant copytree callers, and move. copy2 lines 446\u2013466 can return through CopyFile2 before lines 468\u2013469",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+      "full_source_sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "file": "evidence/P3-Lib-test-test_shutil.py.json",
+      "evidence_sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7",
+      "ranges_1based": [
+        [
+          1,
+          72
+        ],
+        [
+          1320,
+          1454
+        ],
+        [
+          1493,
+          1582
+        ],
+        [
+          2713,
+          2763
+        ],
+        [
+          3060,
+          3378
+        ]
+      ],
+      "title": "CPython 3.13.9 shutil tests",
+      "assessment_context": "test fixtures; copy2 selected timestamp/mode/flag and xattr checks; same-file/symlink tests; mock_rename definition and caller move tests; bounded-copy and sendfile error tests. Inspected, not run",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "full_source_sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "file": "evidence/P4-Doc-library-os.rst.json",
+      "evidence_sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2",
+      "ranges_1based": [
+        [
+          1086,
+          1096
+        ],
+        [
+          2676,
+          2746
+        ]
+      ],
+      "title": "CPython 3.13.9 os documentation",
+      "assessment_context": "flush before fsync; platform-dependent rename and replace semantics; does not establish universal power-loss persistence",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_winapi.c",
+      "full_source_sha256": "aed98024897e923a3a2842bc84401ac2056a48964d8e7402deab5eafa06aceb5",
+      "file": "evidence/P5-Modules-_winapi.c.json",
+      "evidence_sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "ranges_1based": [
+        [
+          1,
+          25
+        ],
+        [
+          2893,
+          2950
+        ]
+      ],
+      "title": "CPython 3.13.9 native CopyFile2 wrapper",
+      "assessment_context": "entire consequential wrapper at 2893\u20132950; native API invoked, HRESULT mapped; progress argument ignored; cancellation/progress pointers remain zero",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P6",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/posixmodule.c",
+      "full_source_sha256": "b0af81a21496778f4404bdd29b2a357f4c50690d2b7517c77a619fd47eabfa3e",
+      "file": "evidence/P6-Modules-posixmodule.c.json",
+      "evidence_sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03",
+      "ranges_1based": [
+        [
+          1,
+          25
+        ],
+        [
+          5801,
+          5928
+        ]
+      ],
+      "title": "CPython 3.13.9 rename/replace implementation",
+      "assessment_context": "internal_rename plus rename/replace callers: Windows MoveFileExW flags 0 versus MOVEFILE_REPLACE_EXISTING; POSIX rename/renameat",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P7",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "full_source_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "file": "evidence/P7-LICENSE.json",
+      "evidence_sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305",
+      "ranges_1based": null,
+      "title": "CPython license",
+      "assessment_context": "License companion for retained licensed source excerpts",
+      "version_context": "CPython 3.13.9 / supplied immutable commit",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P8",
+      "url": "https://api.github.com/repos/python/cpython/git/tags/8f61118196ba00747076def18ea7ad2c43a1dc05",
+      "full_source_sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "file": "evidence/P8-primary-context.json",
+      "evidence_sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e",
+      "title": "CPython 3.13.9 release binding",
+      "assessment_context": "Annotated v3.13.9 tag object 8f61118196ba00747076def18ea7ad2c43a1dc05 targets supplied commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; all four independently retrieved bodies also match v3.13.9 bytes",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P9",
+      "url": "https://api.github.com/repos/python/cpython/pulls/105055/files",
+      "full_source_sha256": "467f42ff926e9eca09221571d88596fa0d7176765d1feb305ba16c540cea8178",
+      "file": "evidence/P9-primary-context.json",
+      "evidence_sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628",
+      "title": "CPython native copy change context",
+      "assessment_context": "PR 105055 merged 2023-05-30; source and NEWS patch for gh-88745 adds native copy2 route and explicitly anticipates metadata differences; not a measured performance proof",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "P10",
+      "url": "https://api.github.com/repos/python/cpython/issues/88745/comments",
+      "full_source_sha256": "73602e39c582a21dea6ab5cecfa34103e8bc05f41a05604540b20b893da0fe07",
+      "file": "evidence/P10-primary-context.json",
+      "evidence_sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30",
+      "title": "CPython native copy issue context",
+      "assessment_context": "Issue 88745 comments distinguish native API from guaranteed kernel-only copying and discuss semantics; corroborating implementation history, not a performance oracle",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Consequential function/doc/history context only; unrelated source corpus UNASSESSED"
+    },
+    {
+      "id": "L1",
+      "url": "https://raw.githubusercontent.com/mkerrisk/man-pages/master/man2/rename.2",
+      "full_source_sha256": "3e8a2b6e24934ed1ce6379b803f263136cd68f6df395437e55dfa06e5f5cf90a",
+      "file": "evidence/L1-primary-context.json",
+      "evidence_sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "title": "Linux rename/renameat2 manual",
+      "assessment_context": "RENAME_NOREPLACE refuses existing name; requires filesystem support. Error and version sections checked. Captured maintainer snapshot dated 2021-08-27; live man7 retrieval timed out",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "PARTIAL",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    },
+    {
+      "id": "L2",
+      "url": "https://raw.githubusercontent.com/mkerrisk/man-pages/master/man2/fsync.2",
+      "full_source_sha256": "01522de115daf5d189eb89abd0f13d44204e73a6c118851bf95e4cb9bd64aa90",
+      "file": "evidence/L2-primary-context.json",
+      "evidence_sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "title": "Linux fsync manual",
+      "assessment_context": "File fsync and directory-entry fsync are distinct; errors and cache caveats checked. Captured maintainer snapshot dated 2021-03-22; live man7 retrieval timed out",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "PARTIAL",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    },
+    {
+      "id": "W1",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-copyfile2",
+      "full_source_sha256": "1e55e4f0f3aeebdebfb96c0f68e00b5da2863ef8f305d673dba0b327699f754d",
+      "file": "evidence/W1-retrieval.json",
+      "evidence_sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac",
+      "title": "Microsoft CopyFile2",
+      "assessment_context": "Remarks: native copying includes NTFS alternate streams and other metadata while excluding source security attributes. This establishes a useful conditional capability, not archival fidelity on every filesystem",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    },
+    {
+      "id": "W2",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-copyfile2_extended_parameters",
+      "full_source_sha256": "c4f83cff52362604b0bc7c58298e436429a5760c8bbc02ff0c364913bedc5d16",
+      "file": "evidence/W2-retrieval.json",
+      "evidence_sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8",
+      "title": "Microsoft COPYFILE2_EXTENDED_PARAMETERS",
+      "assessment_context": "Flags include skip-alternate-streams, progress callback, and cancellation pointer; pinned Python passes neither callback nor cancellation. Native adapter is a research opportunity, not executed candidate functionality",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    },
+    {
+      "id": "W3",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "full_source_sha256": "2177bce27264c543b1767d2d9eb8914fe53485b37a53e9159a87d3894dcf78cd",
+      "file": "evidence/W3-retrieval.json",
+      "evidence_sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee",
+      "title": "Microsoft MoveFileExW",
+      "assessment_context": "Replacement flag, copy/delete cross-volume fallback, write-through language and access requirements. Explicit flushing guarantee covers copy/delete; documentation does not prove universal same-volume crash persistence",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    },
+    {
+      "id": "W4",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew",
+      "full_source_sha256": "35fe77beaf32afa93c02068ade74c7363aa4ee7c0318cdadf5947cf7050eb3f7",
+      "file": "evidence/W4-retrieval.json",
+      "evidence_sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3",
+      "title": "Microsoft ReplaceFileW",
+      "assessment_context": "Unsupported write-through flag, same-volume requirement, inherited target attributes/streams, and partial failure states. Alternative is consequentially different from MoveFileExW",
+      "version_context": "retrieved public API/release/history context; snapshot hash identifies exact evidence",
+      "coverage": "COMPLETE",
+      "coverage_boundary": "Scoped documented API semantics; behavior on future supported filesystem matrix UNASSESSED"
+    }
+  ],
+  "limitations": [
+    "All assigned source files were byte-read and verified. All scientific prose and every source neighborhood were read completely. Broad cached API bodies were semantically reviewed in consequential sections; unrelated APIs and unrelated test bodies were not exhaustively evaluated.",
+    "No application or upstream behavior tests were executed. Live Linux manual edition could not be retrieved; old maintainer source and current primary search excerpt agree on the scoped semantics.",
+    "No specific archival backend was selected or benchmarked; the brief permits a conditional future alternative."
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "schema": "er13.independent-primary-source-index.v2",
+  "arm_id": "B08-P01-treatment",
+  "independently_researched": true,
+  "matched_pair_reuse": "Evaluator lookup reused; no arm judgment imported from the other.",
+  "version_mapping": "Annotated v3.13.9 tag resolves to exact scientific pin; GitHub reports its signature verified. No local cryptographic verification claimed.",
+  "sources": [
+    {
+      "id": "QDOC",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-queue.rst",
+        "bytes": 7477,
+        "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+      },
+      "exact_locator_1based": "13-47; 60-150; 202-250",
+      "governing_scope": "FIFO/maxsize, non-thread-safety, put/get, shutdown added in 3.13, accounting and the multi-worker caller example",
+      "inspection_extent": "FULL body read",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "QCODE",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/queues.py",
+        "bytes": 10152,
+        "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+      },
+      "exact_locator_1based": "33-77; 101-278",
+      "governing_scope": "Definitions, deque, wakeup, successful insertion/removal, cancellation races, unfinished-task accounting, shutdown",
+      "inspection_extent": "FULL body read",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "QTEST",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/test/test_asyncio/test_queues.py",
+        "bytes": 21060,
+        "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+      },
+      "exact_locator_1based": "1-432; 457-725",
+      "governing_scope": "Bounds and cancelled-put/get races; task_done underflow; normal/empty joins; full graceful and both immediate shutdown regression cases",
+      "inspection_extent": "FULL body read",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "TASK",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-task.rst",
+        "bytes": 48620,
+        "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79"
+      },
+      "exact_locator_1based": "294-314; 1143-1172; 1336-1360",
+      "governing_scope": "Cooperative single-task scheduling, BaseException cancellation, cleanup and propagation, cancel request versus actual cancellation",
+      "inspection_extent": "Consequential sections and adjacent definitions read; unrelated task APIs not exhaustively assessed",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "DEV",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-dev.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-dev.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-dev.rst",
+        "bytes": 7306,
+        "sha256": "2c7f23299fcf920382e9fabe4975c0e3a276465557d453856b47585a898baab0"
+      },
+      "exact_locator_1based": "61-130",
+      "governing_scope": "Loop ownership, cross-thread handoff, blocking-work and thread/process executor guidance",
+      "inspection_extent": "Consequential threading/blocking sections read",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "OS",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/os.rst",
+        "bytes": 202500,
+        "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15"
+      },
+      "exact_locator_1based": "2726-2742",
+      "governing_scope": "replace overwrite, cross-filesystem failure and successful rename atomicity; no no-overwrite or crash-durability guarantee",
+      "inspection_extent": "replace and adjacent API context read; unrelated OS APIs not assessed",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "TEMP",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/tempfile.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/tempfile.rst",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/tempfile.rst",
+        "bytes": 19891,
+        "sha256": "487aeabf01be281fd1e2534b326c33cca4d9fab4db1c04d32e58439c9f6346bc"
+      },
+      "exact_locator_1based": "17-28; 78-143; 221-273",
+      "governing_scope": "Visible secure temporary names, explicit deletion, Windows reopen/delete constraints, POSIX abrupt-exit limit and dir selection",
+      "inspection_extent": "Consequential APIs read with adjacent cited-but-wrong ranges",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "TEMPCODE",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/tempfile.py",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/tempfile.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/tempfile.py",
+        "bytes": 32406,
+        "sha256": "7149355dfc2ccbd82a9b3614c7710f2c92bc7ab06440e7f427766481638a1528"
+      },
+      "exact_locator_1based": "244-271; 433-598",
+      "governing_scope": "Secure creation helper, closer/wrapper, NamedTemporaryFile caller and platform deletion flags",
+      "inspection_extent": "Complete consequential helper/caller bodies read; unrelated functions not assessed",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "EVENT",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/locks.py",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/locks.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/locks.py",
+        "bytes": 20580,
+        "sha256": "30d7fefb52f26494dd9e98fb2595205ae0a8aef0ef53e11b17b2c59f06c6b861"
+      },
+      "exact_locator_1based": "158-216",
+      "governing_scope": "Event.set/clear/wait used by queue join",
+      "inspection_extent": "Complete Event body read; unrelated lock classes not assessed",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "LOOP",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/mixins.py",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/mixins.py",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/mixins.py",
+        "bytes": 481,
+        "sha256": "8f4a3e16eca845ebfba422550cbcee7340ec8166d2bff6b750a8ed0de6b9ae3c"
+      },
+      "exact_locator_1based": "1-21",
+      "governing_scope": "Queue/event loop binding",
+      "inspection_extent": "FULL body read",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "LICENSE",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "version": "CPython 3.13.9",
+      "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/LICENSE",
+        "bytes": 13809,
+        "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+      },
+      "exact_locator_1based": "full",
+      "governing_scope": "PSF and source license notices retained",
+      "inspection_extent": "License evidence retained",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Complete for the consequential claim family listed, not every API in the saved upstream file."
+    },
+    {
+      "id": "TAG_REF",
+      "url": "https://api.github.com/repos/python/cpython/git/ref/tags/v3.13.9",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-ref.json",
+        "bytes": 333,
+        "sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1"
+      },
+      "exact_locator": "object.type/object.sha: annotated release tag",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "TAG_OBJECT",
+      "url": "https://api.github.com/repos/python/cpython/git/tags/8f61118196ba00747076def18ea7ad2c43a1dc05",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-object.json",
+        "bytes": 2782,
+        "sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e"
+      },
+      "exact_locator": "object.sha equals the scientific source pin; verification.verified true; verification.reason valid. GitHub verification observed, no independent local GPG operation.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "INTRO",
+      "url": "https://github.com/python/cpython/pull/104228",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104228.json",
+        "bytes": 17858,
+        "sha256": "5319eab22131da5f7d07112c4a0efca0e5eb42b6e9bc29e9792b7422b1009bec"
+      },
+      "exact_locator": "body/merged_at/merge_commit_sha: asyncio-specific introduction, merged 2024-04-06; matches threading API design rather than treating thread code as asyncio implementation.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "MOTIVE",
+      "url": "https://github.com/python/cpython/issues/96471",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-96471.json",
+        "bytes": 3928,
+        "sha256": "df4fd3c30e48ab1f6cba8081b284bc5f2dcd0be62aefa6961372ae0b6cfb22a1"
+      },
+      "exact_locator": "body: stop producers/consumers blocked on queue; initial proposed exception spelling is history, not governing API.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "THREAD_DESIGN",
+      "url": "https://github.com/python/cpython/pull/104750",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104750.json",
+        "bytes": 17240,
+        "sha256": "9452e080635ad18f2b08e8b812585019a83f863c3f480a4fc570004356ccfe70"
+      },
+      "exact_locator": "body: threading immediate-consume API context, not the governing asyncio implementation.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "THREAD_BUG",
+      "url": "https://github.com/python/cpython/issues/117531",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-117531.json",
+        "bytes": 4155,
+        "sha256": "177c0d97eab26f7465c50585072f8664e2bce96610b2304ba4508db674611ede"
+      },
+      "exact_locator": "body reproducer: queue.Queue/threading wakeup bug, not asyncio.Queue proof.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "THREAD_FIX",
+      "url": "https://github.com/python/cpython/pull/117532",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-117532.json",
+        "bytes": 16616,
+        "sha256": "27d41c26872471d0035a7796d4db3ce40f48fb9bea242ef1724ee1f62ab20011"
+      },
+      "exact_locator": "title/merged_at: associated thread-queue wakeup fix. Target asyncio behavior separately verified in QCODE/QTEST.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    },
+    {
+      "id": "DOC_HISTORY",
+      "url": "https://github.com/python/cpython/issues/152614",
+      "evidence": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-152614.json",
+        "bytes": 4761,
+        "sha256": "fc6ca0e9ca0735412bb63aee38f5faba0038496186d637a627488e31f9945e71"
+      },
+      "exact_locator": "body: later missing nowait exception documentation; reinforces use of target implementation rather than assuming docs completeness.",
+      "coverage": "COMPLETE",
+      "governing_scope": "Focused version/implementation/history applicability only; no full history scan or reliance on newer source behavior."
+    }
+  ],
+  "candidate_source_map": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/source-map.json",
+    "bytes": 16266,
+    "sha256": "003572d4a7b94cfb81b21b2c216bef506fff110e30c58f34cedece2a024d0e48"
+  },
+  "evaluator_witness_replay": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/witness-replay.json",
+    "bytes": 3134,
+    "sha256": "2d76a67a2fab97ae4721ab7a9b3dd222eed8234f8d3ef0e5041dbdc106ec5c7c"
+  },
+  "uncertainties": [
+    "No target-interpreter or application execution inferred from source/tests.",
+    "Later issue evidence used only for context; target pin controls behavior.",
+    "Numeric candidate citation defects listed in defects.json; evaluator indexes use raw one-based source coordinates."
+  ],
+  "license_evidence": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/LICENSE",
+    "bytes": 13809,
+    "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+  }
+}

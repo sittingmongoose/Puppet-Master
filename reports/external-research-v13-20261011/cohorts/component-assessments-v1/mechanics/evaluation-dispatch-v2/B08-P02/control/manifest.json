@@ -1,0 +1,95 @@
+{
+  "schema": "er13.original-output-freeze.v1",
+  "block_id": "B08-P02",
+  "arm_id": "B08-P02-control",
+  "frozen_at_utc": "2026-10-12T01:06:31.059269+00:00",
+  "original_immutable": true,
+  "comparison_not_yet_written": true,
+  "self_excluded": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 5727,
+      "sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 4817,
+      "sha256": "c8be52dcd4bc0e9184a09cc90e4782c31c4eca86629c7ad429171f153c134888"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 5601,
+      "sha256": "c7fb8e1fa96c98f0b80d83d5a048c9449862f2677dcc70cee3b9913388795ceb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 3909,
+      "sha256": "2fe1ebe51026171e6c48c374a01a2765aae43c4e99737f813302f9cc57e03d67"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/SOURCE-LICENSES.txt",
+      "relative_path": "evidence/SOURCE-LICENSES.txt",
+      "bytes": 13926,
+      "sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+      "relative_path": "evidence/cpython-consequential-context.json",
+      "bytes": 34435,
+      "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/execution-record.json",
+      "relative_path": "evidence/execution-record.json",
+      "bytes": 827,
+      "sha256": "8d2a01396f5be4c5781b4d32c2bdaf81c8effe58b9b9a65b83697723d718617b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+      "relative_path": "evidence/independent-oracle.py",
+      "bytes": 2333,
+      "sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stderr.txt",
+      "relative_path": "evidence/independent-oracle.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stdout.json",
+      "relative_path": "evidence/independent-oracle.stdout.json",
+      "bytes": 1022,
+      "sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 2056,
+      "sha256": "40fe32a93ca4b066380bb37ceb10d40a747e23e4114e232cd4e2c05786c633b7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/oracle-input.json",
+      "relative_path": "evidence/oracle-input.json",
+      "bytes": 1738,
+      "sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/ucd-consequential-context.json",
+      "relative_path": "evidence/ucd-consequential-context.json",
+      "bytes": 8328,
+      "sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 20775,
+      "sha256": "703cb9ff3eb0ff46b8ef40764f58af6397480207b93f5334d1ae90277a6498e4"
+    }
+  ]
+}

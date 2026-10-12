@@ -1,0 +1,13 @@
+{
+  "cost_class": "independent_evaluation",
+  "command": "python3 -B ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+  "exit_code": 0,
+  "code_sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570",
+  "stdout_sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "computation": "Strict UTF-8 arithmetic from separately retrieved Unicode 15.1 oracle rows and C/F mappings; no normalize/casefold runtime called.",
+  "limits": [
+    "Finite selected data rows; no target-interpreter or application execution.",
+    "The shared independent lookup was reused for both arms; it was not candidate assistance."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "literal_normalization": [
+    "Private runtime root => ER13_RUNTIME",
+    "Private worktree root => ER13_WORKTREE",
+    "Private provider route => AUTHORIZED_PROVIDER_INSTANCE",
+    "Private account => privacy placeholder"
+  ],
+  "structured_extractions": [
+    {
+      "path": "evaluators/B05-P01/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "8629bcf20cc96502b741464b65bb75f5e2e1de7c18c13cbe4406158f0316ae28",
+      "terminal_original_sha256": "1f9b619ebd375cd2b263c2b3534ec28c48c9920ea5fadba0f824954879c34060"
+    },
+    {
+      "path": "evaluators/B05-P02/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "09467c9ebe102888c077f84e4911dfdb277a0d9a7796b9b8a4385e84761f4948",
+      "terminal_original_sha256": "cdf83ad5e29243a4e27f37c13c93103ba99293035f6851aa0dd4f4c46c1d0d54"
+    },
+    {
+      "path": "evaluators/B04-P01/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "d8c6a7ce1b5633b989f5be4c90aae0fa35f86f829259f901b2e4c5ff580fe53b",
+      "terminal_original_sha256": "81c7f1522668cc2946fd6516d77a6009cebad451bbfa435d534047f43dcdab26"
+    },
+    {
+      "path": "evaluators/B04-P02/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "46c6e74555d87773f0add4e9150a351aa777b324fbbf5d766a3299232633e59e",
+      "terminal_original_sha256": "13d0be6840a49cb45d4370124662370b6ed0fdc23554a87881564dae3334fde2"
+    },
+    {
+      "path": "evaluators/B08-P01/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "6a04078b2e8ec1d7c8df264a2f753e001e8b2b5182efc56c10aaa82e89f70f08",
+      "terminal_original_sha256": "a0888a08457e916d34104c1c86888e6c613db553432fef06542e65ef15e361dc"
+    },
+    {
+      "path": "evaluators/B08-P02/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "69b4b1a12ec1b1ebc3002aa6b3b814ba884082e4cc17cdb7906a2d59481948c5",
+      "terminal_original_sha256": "abd366fd460185619d686fab52eeb19df3f7609abe87fc1838162fe734183b3b"
+    }
+  ],
+  "judgment_changes": 0,
+  "papers": "Only original authored capsules and locators; no additional paper bodies admitted."
+}

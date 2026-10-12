@@ -1,0 +1,659 @@
+{
+  "case": "B01-P01",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/sqlite3.rst",
+      "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": ".. method:: backup(",
+          "matching_lines_1based": [
+            1149
+          ],
+          "range_1based": [
+            1137,
+            1248
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. method:: iterdump(",
+          "matching_lines_1based": [
+            1118
+          ],
+          "range_1based": [
+            1106,
+            1217
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "Transaction control via the ``autocommit`` attribute",
+          "matching_lines_1based": [
+            2666
+          ],
+          "range_1based": [
+            2654,
+            2764
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/sqlite3.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": ".. method:: backup(",
+          "matching_lines_1based": [
+            1149
+          ],
+          "range_1based": [
+            1137,
+            1248
+          ],
+          "path": "source-cache/neighborhoods/S1-N1.txt",
+          "sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": ".. method:: iterdump(",
+          "matching_lines_1based": [
+            1118
+          ],
+          "range_1based": [
+            1106,
+            1217
+          ],
+          "path": "source-cache/neighborhoods/S1-N2.txt",
+          "sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "Transaction control via the ``autocommit`` attribute",
+          "matching_lines_1based": [
+            2666
+          ],
+          "range_1based": [
+            2654,
+            2764
+          ],
+          "path": "source-cache/neighborhoods/S1-N3.txt",
+          "sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_sqlite/connection.c",
+      "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "pysqlite_connection_backup_impl",
+          "matching_lines_1based": [
+            2045
+          ],
+          "range_1based": [
+            2033,
+            2144
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "/* Sleep for a while",
+          "matching_lines_1based": [
+            2109
+          ],
+          "range_1based": [
+            2097,
+            2208
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Modules/_sqlite/connection.c",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "pysqlite_connection_backup_impl",
+          "matching_lines_1based": [
+            2045
+          ],
+          "range_1based": [
+            2033,
+            2144
+          ],
+          "path": "source-cache/neighborhoods/S2-N1.txt",
+          "sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "/* Sleep for a while",
+          "matching_lines_1based": [
+            2109
+          ],
+          "range_1based": [
+            2097,
+            2208
+          ],
+          "path": "source-cache/neighborhoods/S2-N2.txt",
+          "sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_sqlite3/test_backup.py",
+      "sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_progress(",
+          "matching_lines_1based": [
+            66
+          ],
+          "range_1based": [
+            54,
+            164
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_modifying_progress(",
+          "matching_lines_1based": [
+            112
+          ],
+          "range_1based": [
+            100,
+            164
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_failing_progress(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            164
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_progress(",
+          "matching_lines_1based": [
+            66
+          ],
+          "range_1based": [
+            54,
+            164
+          ],
+          "path": "source-cache/neighborhoods/S3-N1.txt",
+          "sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "def test_modifying_progress(",
+          "matching_lines_1based": [
+            112
+          ],
+          "range_1based": [
+            100,
+            164
+          ],
+          "path": "source-cache/neighborhoods/S3-N2.txt",
+          "sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "def test_failing_progress(",
+          "matching_lines_1based": [
+            135
+          ],
+          "range_1based": [
+            123,
+            164
+          ],
+          "path": "source-cache/neighborhoods/S3-N3.txt",
+          "sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://www.sqlite.org/backup.html",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "Using the SQLite Online Backup API",
+          "matching_lines_1based": [
+            125,
+            143
+          ],
+          "range_1based": [
+            113,
+            224
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "snapshot",
+          "matching_lines_1based": [
+            186,
+            471
+          ],
+          "range_1based": [
+            174,
+            285
+          ]
+        }
+      ],
+      "cached_body": "source-cache/sqlite/backup.html",
+      "neighborhoods": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "Using the SQLite Online Backup API",
+          "matching_lines_1based": [
+            125,
+            143
+          ],
+          "range_1based": [
+            113,
+            224
+          ],
+          "path": "source-cache/neighborhoods/S4-N1.txt",
+          "sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "snapshot",
+          "matching_lines_1based": [
+            186,
+            471
+          ],
+          "range_1based": [
+            174,
+            285
+          ],
+          "path": "source-cache/neighborhoods/S4-N2.txt",
+          "sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "url": "https://www.sqlite.org/wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "WAL file",
+          "matching_lines_1based": [
+            134,
+            136,
+            233,
+            238,
+            245,
+            246,
+            256,
+            284,
+            293,
+            296,
+            299,
+            333,
+            334,
+            335,
+            336,
+            337,
+            338,
+            339,
+            416,
+            470,
+            473,
+            478,
+            479,
+            483,
+            485,
+            487,
+            490,
+            494,
+            524,
+            526,
+            527,
+            528,
+            529,
+            531,
+            538,
+            539,
+            547,
+            548,
+            551,
+            556,
+            557,
+            559,
+            569,
+            584,
+            586,
+            591,
+            593,
+            595,
+            712,
+            779,
+            788,
+            789,
+            793,
+            795,
+            800
+          ],
+          "range_1based": [
+            122,
+            233
+          ]
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "checkpoint",
+          "matching_lines_1based": [
+            127,
+            131,
+            132,
+            205,
+            242,
+            247,
+            254,
+            256,
+            258,
+            260,
+            261,
+            262,
+            263,
+            285,
+            299,
+            301,
+            303,
+            305,
+            309,
+            311,
+            314,
+            340,
+            342,
+            347,
+            348,
+            352,
+            357,
+            358,
+            362,
+            363,
+            364,
+            366,
+            369,
+            372,
+            382,
+            384,
+            385,
+            387,
+            390,
+            412,
+            413,
+            415,
+            419,
+            420,
+            421,
+            422,
+            423,
+            424,
+            427,
+            428,
+            431,
+            433,
+            435,
+            436,
+            437,
+            441,
+            442,
+            443,
+            444,
+            445,
+            446,
+            528,
+            529,
+            534,
+            546,
+            547,
+            550,
+            551,
+            555,
+            556,
+            559,
+            561,
+            563,
+            564,
+            568,
+            573,
+            575,
+            576,
+            578,
+            579,
+            583,
+            586,
+            759,
+            777,
+            778,
+            783,
+            787,
+            792,
+            794,
+            796,
+            800,
+            804,
+            818
+          ],
+          "range_1based": [
+            115,
+            226
+          ]
+        }
+      ],
+      "cached_body": "source-cache/sqlite/wal.html",
+      "neighborhoods": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "WAL file",
+          "matching_lines_1based": [
+            134,
+            136,
+            233,
+            238,
+            245,
+            246,
+            256,
+            284,
+            293,
+            296,
+            299,
+            333,
+            334,
+            335,
+            336,
+            337,
+            338,
+            339,
+            416,
+            470,
+            473,
+            478,
+            479,
+            483,
+            485,
+            487,
+            490,
+            494,
+            524,
+            526,
+            527,
+            528,
+            529,
+            531,
+            538,
+            539,
+            547,
+            548,
+            551,
+            556,
+            557,
+            559,
+            569,
+            584,
+            586,
+            591,
+            593,
+            595,
+            712,
+            779,
+            788,
+            789,
+            793,
+            795,
+            800
+          ],
+          "range_1based": [
+            122,
+            233
+          ],
+          "path": "source-cache/neighborhoods/S5-N1.txt",
+          "sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "checkpoint",
+          "matching_lines_1based": [
+            127,
+            131,
+            132,
+            205,
+            242,
+            247,
+            254,
+            256,
+            258,
+            260,
+            261,
+            262,
+            263,
+            285,
+            299,
+            301,
+            303,
+            305,
+            309,
+            311,
+            314,
+            340,
+            342,
+            347,
+            348,
+            352,
+            357,
+            358,
+            362,
+            363,
+            364,
+            366,
+            369,
+            372,
+            382,
+            384,
+            385,
+            387,
+            390,
+            412,
+            413,
+            415,
+            419,
+            420,
+            421,
+            422,
+            423,
+            424,
+            427,
+            428,
+            431,
+            433,
+            435,
+            436,
+            437,
+            441,
+            442,
+            443,
+            444,
+            445,
+            446,
+            528,
+            529,
+            534,
+            546,
+            547,
+            550,
+            551,
+            555,
+            556,
+            559,
+            561,
+            563,
+            564,
+            568,
+            573,
+            575,
+            576,
+            578,
+            579,
+            583,
+            586,
+            759,
+            777,
+            778,
+            783,
+            787,
+            792,
+            794,
+            796,
+            800,
+            804,
+            818
+          ],
+          "range_1based": [
+            115,
+            226
+          ],
+          "path": "source-cache/neighborhoods/S5-N2.txt",
+          "sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "access": "Identical cache, full bodies and adjacent source expansion available to both arms.",
+  "semantic_conclusions_shared": false
+}

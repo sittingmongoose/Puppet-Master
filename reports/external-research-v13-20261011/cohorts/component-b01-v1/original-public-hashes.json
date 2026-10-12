@@ -1,0 +1,1862 @@
+{
+  "schema": "er13.original_private_to_public_hash_mapping.v1",
+  "policy": "Public hashes identify normalized bytes; embedded original pins retain immutable original semantics. No edited regrades.",
+  "files": [
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-output-verification.json",
+      "original_private_sha256": "67c8b8d0a3d628f40b1ae2cfaa6338baee7cab710a29ef896419e2fb0bace6bb",
+      "public_sha256": "5fa18584400f9aaaef4675cdd2d791f2e104e455f803b12f801684e4cdd945e3",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+      "original_private_sha256": "06ec93c059942cda3e2e4da2552e1050e17483a9e43ab153d180ec4d8559493d",
+      "public_sha256": "fabd6029d2312af5a31470fd8920aa6e894203aae33865414ef045f6b0e53b55",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/comparison.md",
+      "original_private_sha256": "fef04f773cfb5915649b60ec7b8ccd504696bdb375b6bbac5091bfd5509c3f12",
+      "public_sha256": "fef04f773cfb5915649b60ec7b8ccd504696bdb375b6bbac5091bfd5509c3f12",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "original_private_sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e",
+      "public_sha256": "621692fec76e8dd3eda7c6d69abd8216e6e54785045568e2204c659deda4ea7b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.md",
+      "original_private_sha256": "07a431ddb1fbfcbaf7e0b6ec8ee07b0330bb1f3a08b310af5c5c2947e44dda31",
+      "public_sha256": "07a431ddb1fbfcbaf7e0b6ec8ee07b0330bb1f3a08b310af5c5c2947e44dda31",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "original_private_sha256": "4f9c7cb187db311937bf6ae40f73335f9223bb2bee991ead977209204d2d1b70",
+      "public_sha256": "4f9c7cb187db311937bf6ae40f73335f9223bb2bee991ead977209204d2d1b70",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/defects.json",
+      "original_private_sha256": "67aee35cf2e98c4ec4342578effd4ba63f752b56868e5d1ebaddc41cf6211014",
+      "public_sha256": "ef510065dac59a785016de22f3b3ca0d78e5dccb12d6a20398d1f5c48de13e11",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-license.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-license.txt",
+      "original_private_sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7",
+      "public_sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-pin-meta.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-pin-meta.txt",
+      "original_private_sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f",
+      "public_sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "original_private_sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "public_sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-doc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-doc.txt",
+      "original_private_sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c",
+      "public_sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "original_private_sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "public_sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-osdoc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-osdoc.txt",
+      "original_private_sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf",
+      "public_sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag-object.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag-object.txt",
+      "original_private_sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1",
+      "public_sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag.txt",
+      "original_private_sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26",
+      "public_sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tests.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tests.txt",
+      "original_private_sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7",
+      "public_sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/input-and-custody-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/input-and-custody-verification.json",
+      "original_private_sha256": "56efbf606ee8d3fb63d4031f00d463d4ae6884aa8d0fff12ae3a57a53a901e37",
+      "public_sha256": "d23a7932d7d5b24b68071878528394fc14b91eaca59fb805a137584a3bc3785b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/preservation-review.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/preservation-review.json",
+      "original_private_sha256": "ad37c7ae1fa80d20db43e1cf01220fce39ba74da123390085ac7f5f95644ed69",
+      "public_sha256": "ad37c7ae1fa80d20db43e1cf01220fce39ba74da123390085ac7f5f95644ed69",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/python3139-release.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/python3139-release.txt",
+      "original_private_sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf",
+      "public_sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/retrieval-index.json",
+      "original_private_sha256": "27f19070d8709cf8c99f74b33011900b2ccf22a9340bfece55006ac2c724a476",
+      "public_sha256": "27f19070d8709cf8c99f74b33011900b2ccf22a9340bfece55006ac2c724a476",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup-api.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup-api.txt",
+      "original_private_sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c",
+      "public_sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup.txt",
+      "original_private_sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1",
+      "public_sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-pragma.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-pragma.txt",
+      "original_private_sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00",
+      "public_sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-release3513.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-release3513.txt",
+      "original_private_sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62",
+      "public_sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-security.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-security.txt",
+      "original_private_sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2",
+      "public_sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-vacuum.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-vacuum.txt",
+      "original_private_sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc",
+      "public_sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-wal.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-wal.txt",
+      "original_private_sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42",
+      "public_sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "original_private_sha256": "10f58fa8d559e76bb301ebc728e7e18c5b7fa19cf56ce94292dcf6df496656b9",
+      "public_sha256": "86a29a4d0abdb9f2e89f2eea26c80f0dc1b0696713d8d0e12e5749c5e8e90280",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "original_private_sha256": "08fa050d35af1899d299860dc3235bdcc399949aca4ed274edbc25275586880c",
+      "public_sha256": "0a06c0543ea34b6506d8dfdecffb97f339490806c618737a1561490cbd1c702a",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "original_private_sha256": "443bf74726593c9db9fdc459005255c4e2b04bae084b2dd1b59b4b3436723cab",
+      "public_sha256": "af849406ed554dcd969a1d5a5bef355f5f49a9f3c17c01bfc709b2be8400a589",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.md",
+      "original_private_sha256": "99a4bc9c9eefa302ab93a10fc3fdcc132d817948340750da6776f63232f402e3",
+      "public_sha256": "99a4bc9c9eefa302ab93a10fc3fdcc132d817948340750da6776f63232f402e3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/coverage.json",
+      "original_private_sha256": "6ccf17445939e53856c3ddfbce17e6aadf73ca740024695674fd7ed7d0a32a6d",
+      "public_sha256": "6ccf17445939e53856c3ddfbce17e6aadf73ca740024695674fd7ed7d0a32a6d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/defects.json",
+      "original_private_sha256": "be68d9d6ab82eec42419bc3359202a683c71ca9e8e9226335380aaaf3b1764fe",
+      "public_sha256": "5520be1a2a374f65271965a35c3cbdc491b3b991b2381aa87d64a3cea159a1dc",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-license.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-license.txt",
+      "original_private_sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7",
+      "public_sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-pin-meta.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-pin-meta.txt",
+      "original_private_sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f",
+      "public_sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+      "original_private_sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "public_sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-doc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-doc.txt",
+      "original_private_sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c",
+      "public_sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+      "original_private_sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "public_sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-osdoc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-osdoc.txt",
+      "original_private_sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf",
+      "public_sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag-object.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag-object.txt",
+      "original_private_sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1",
+      "public_sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag.txt",
+      "original_private_sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26",
+      "public_sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tests.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tests.txt",
+      "original_private_sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7",
+      "public_sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/input-and-custody-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/input-and-custody-verification.json",
+      "original_private_sha256": "cdad1a72232ec38cdaabf174e973ffc98827d1e113c6b0c7f9b06846d7ffbfd6",
+      "public_sha256": "d97a4cae8b0e5f9e93ab704af0caf885da6fbcf46d4fdcd63d7b9c4fd814bdff",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/preservation-review.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/preservation-review.json",
+      "original_private_sha256": "211ebb77723f9486452dc6d46a8dd8b0b64f416f6fca1f8fb0f72c0137633441",
+      "public_sha256": "211ebb77723f9486452dc6d46a8dd8b0b64f416f6fca1f8fb0f72c0137633441",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/python3139-release.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/python3139-release.txt",
+      "original_private_sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf",
+      "public_sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/retrieval-index.json",
+      "original_private_sha256": "27f19070d8709cf8c99f74b33011900b2ccf22a9340bfece55006ac2c724a476",
+      "public_sha256": "27f19070d8709cf8c99f74b33011900b2ccf22a9340bfece55006ac2c724a476",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup-api.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup-api.txt",
+      "original_private_sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c",
+      "public_sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup.txt",
+      "original_private_sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1",
+      "public_sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-pragma.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-pragma.txt",
+      "original_private_sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00",
+      "public_sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-release3513.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-release3513.txt",
+      "original_private_sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62",
+      "public_sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-security.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-security.txt",
+      "original_private_sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2",
+      "public_sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-vacuum.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-vacuum.txt",
+      "original_private_sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc",
+      "public_sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-wal.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-wal.txt",
+      "original_private_sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42",
+      "public_sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "original_private_sha256": "3c6eac772395f6bff217a0b819f81102f54ff4b86101f1c5852db2cc7e2bdf14",
+      "public_sha256": "e4ca487d8ce472ad35d61df0fc6756e1342f683d14b2894e3313f6efe18aa480",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "d1191411c29154acc7c59a39fa98754cba81938bb9495631b31806dbf9a85133",
+      "public_sha256": "ad36067c656de26667bdfb0f47beccaf4bd84526485bad343fb77a166ca63577",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-request.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-request.json",
+      "original_private_sha256": "b55f1007fd4cfeb129a47dc9ec6f3981fbcc61282bfc5ef0ef784905dfcf31c8",
+      "public_sha256": "a822b8d4526c61e94b780365a137543fdac4217946d3002820b5e6bed4ba3946",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-output-verification.json",
+      "original_private_sha256": "5caa5eb8e27e515f96e434e8d2c99eaf17f0492a52a5236cd9c0b0c20c4eb871",
+      "public_sha256": "28b115fa66bed10e6f4f273d1cde2954bcf3b7c66ce9ae3f4ed0b652d22a5517",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/comparison.json",
+      "original_private_sha256": "42692e8629ed40fa1846261c600d2411d1bb35361a0d96e821047dac29fcf446",
+      "public_sha256": "2800641e17cb2237805fdc82909d98a496fac6bd8fa5812718d0c6537a1154f4",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/comparison.md",
+      "original_private_sha256": "92325e8a7636ead3a8c7200ec403cea059284220824f3dbc0c5114ed17a254dd",
+      "public_sha256": "92325e8a7636ead3a8c7200ec403cea059284220824f3dbc0c5114ed17a254dd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "original_private_sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09",
+      "public_sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.md",
+      "original_private_sha256": "ad3f74fbd69369a6772731544af1d96b93eb92eb6993524c1697e395ee66c0fb",
+      "public_sha256": "ad3f74fbd69369a6772731544af1d96b93eb92eb6993524c1697e395ee66c0fb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "original_private_sha256": "18a82613b29dfbcf59ef841f84f19d9354fbe82777015f92470d6389a5de17fd",
+      "public_sha256": "18a82613b29dfbcf59ef841f84f19d9354fbe82777015f92470d6389a5de17fd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/defects.json",
+      "original_private_sha256": "577ae6df974ed50838eb200127cd1b1d38c9d5e0278f821d27683168c2edb13a",
+      "public_sha256": "577ae6df974ed50838eb200127cd1b1d38c9d5e0278f821d27683168c2edb13a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/CPython-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/CPython-LICENSE.txt",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-__init__.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-__init__.py",
+      "original_private_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "public_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-test_core.py.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-test_core.py.context.txt",
+      "original_private_sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29",
+      "public_sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-zipfile.rst.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-zipfile.rst.context.txt",
+      "original_private_sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66",
+      "public_sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+      "original_private_sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b",
+      "public_sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stderr.txt",
+      "original_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stdout.json",
+      "original_private_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b",
+      "public_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/public-authorities.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/public-authorities.json",
+      "original_private_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc",
+      "public_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/source-body-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/source-body-retrieval.json",
+      "original_private_sha256": "5162566f44913577992f65c13c07fb28635335eed3d8367508b07b5b59cea00b",
+      "public_sha256": "5162566f44913577992f65c13c07fb28635335eed3d8367508b07b5b59cea00b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/input-verification.json",
+      "original_private_sha256": "e8793f2c62f12a7ef2c085f65c845998659d5e3090eb9b6e4177d284474a7072",
+      "public_sha256": "bd686a40c706f410e78c6e8912e2b0ab92fabca7914b69dc90ccba886fbc29ae",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/manifest.json",
+      "original_private_sha256": "bf488cb62ae55cda582dd25fd9be13486e402b8b59e1e673fd73c784146272bb",
+      "public_sha256": "fa8f2f25a2e13ec0156f18a393469197b59bef563d0645d5c70fd783e6b8bfe1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+      "original_private_sha256": "8adc5e59f45a8f94d7cbff36fe331f7246730de91784f308f59fe1166774b611",
+      "public_sha256": "775d6881e33c0b3cf78a8de25bc334883114f25f700a4f23505163f41c2e64fa",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "original_private_sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147",
+      "public_sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.md",
+      "original_private_sha256": "9b3e6de179aa2b44e51a38730065f93709368a16cd081cc12d4541c722e0dc0c",
+      "public_sha256": "9b3e6de179aa2b44e51a38730065f93709368a16cd081cc12d4541c722e0dc0c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/coverage.json",
+      "original_private_sha256": "2c3c9bb6463fc2b3684e8803ceaa47ab3617cb63974372e5cfa10dc38bfb4a39",
+      "public_sha256": "2c3c9bb6463fc2b3684e8803ceaa47ab3617cb63974372e5cfa10dc38bfb4a39",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/defects.json",
+      "original_private_sha256": "e3e3bf5cebf2c5e16081033eb2f4e8acdd400d3c20043755fb387f3eaf34b4a3",
+      "public_sha256": "e3e3bf5cebf2c5e16081033eb2f4e8acdd400d3c20043755fb387f3eaf34b4a3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/CPython-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/CPython-LICENSE.txt",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/artifact-audit.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/artifact-audit.json",
+      "original_private_sha256": "d16769324550c5a65d59af7f2faa0e8e8f10d8ccc571d9c30d55fc317dff913a",
+      "public_sha256": "d16769324550c5a65d59af7f2faa0e8e8f10d8ccc571d9c30d55fc317dff913a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-__init__.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-__init__.py",
+      "original_private_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "public_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-test_core.py.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-test_core.py.context.txt",
+      "original_private_sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29",
+      "public_sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-zipfile.rst.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-zipfile.rst.context.txt",
+      "original_private_sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66",
+      "public_sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.py",
+      "original_private_sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b",
+      "public_sha256": "81c359a8fe9c2a47077805dfe5a8590d600460dabf45eda79f21f3b70636740b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stderr.txt",
+      "original_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stdout.json",
+      "original_private_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b",
+      "public_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/public-authorities.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/public-authorities.json",
+      "original_private_sha256": "684b9b9115b59591238ee794673b1ae66494be15ed5bd3be0c4c63ab1dd28005",
+      "public_sha256": "684b9b9115b59591238ee794673b1ae66494be15ed5bd3be0c4c63ab1dd28005",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/source-body-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/source-body-retrieval.json",
+      "original_private_sha256": "e5f5da55d3e5d84fc2e97f96c6783a3fcae88ba9ea77770ad8d567698f0b722a",
+      "public_sha256": "e5f5da55d3e5d84fc2e97f96c6783a3fcae88ba9ea77770ad8d567698f0b722a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/input-verification.json",
+      "original_private_sha256": "97b62ce1507f0916b1efd855030a76f0bcc945c24e6632bb8c64ea8fdb652f4e",
+      "public_sha256": "722dcc0a7485c58e62ddb616c957a2169f9a1872eda75ec23a8f78b0ec4a7267",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/manifest.json",
+      "original_private_sha256": "34dc384442fd68bf7ae469967e311e9a0f48d218b6abce3f84deaa2349a07483",
+      "public_sha256": "0e6977e4c54987a28d7cb02f2aaaa21fc774a5a1daefd43a2dbe652322d98104",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "2691a2a1a9705e915ff699e3cd6c9d62da6fed31e3888ed2df6c9603ccb3fc4e",
+      "public_sha256": "1d4bada7b50e99f37e8ae6070b228bdba07a860193b225dcd9fa7f2335be3b3f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-request.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-request.json",
+      "original_private_sha256": "2eaf1e2f69f3e580bc44f92bf1ee0822a7b13ddc997dcdd41369936e5d503c45",
+      "public_sha256": "4a8592da3236e854533c76cd3fec1caa9a5af0b816301bc6e319686fe1607551",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-input-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-input-verification.json",
+      "original_private_sha256": "78183e284fcb5fd41ff6b62a59f365ee52b6d95b8276e713cbaa34e733870c38",
+      "public_sha256": "c643fdea7a1b0b6e3cb064030bc107d40b78b86bbec05712a94f78a084c8197f",
+      "sanitized": true,
+      "kind": "frozen_packet_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B01-P01.json",
+      "public_path": "state/dispatcher-v1/eval-ready/B01-P01.json",
+      "original_private_sha256": "e85b2b458c47a3d12808ccf7b583da94c0b082aafb413c1f486ec81481e4d64a",
+      "public_sha256": "9e2db2c7a09eff99b77a56c2a363341c5abc2f47dcab5494b9c26c6043914afe",
+      "sanitized": true,
+      "kind": "exact_failure_qualified_pair_packet"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "original_private_sha256": "1e1d64552b5d10f8b66cb715ade6a50b8d859ddcc5a6136a913e08d6cdde8af3",
+      "public_sha256": "1e1d64552b5d10f8b66cb715ade6a50b8d859ddcc5a6136a913e08d6cdde8af3",
+      "sanitized": false,
+      "kind": "original_science_freeze_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "original_private_sha256": "8303591f65ed299a21d39a24577fd29a35c11ce49840c6658e79e0e7b930c993",
+      "public_sha256": "8303591f65ed299a21d39a24577fd29a35c11ce49840c6658e79e0e7b930c993",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/criticism-dispositions.md",
+      "original_private_sha256": "e59794d32dedff2dc1c8d71344221ab26d735b1152d3b18269c32dbb8371223d",
+      "public_sha256": "e59794d32dedff2dc1c8d71344221ab26d735b1152d3b18269c32dbb8371223d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/source-map.json",
+      "original_private_sha256": "dbfe5bf7d5b98cdb95c4ee7612b5867ae8b2c2a5ea8966ae81ef4bb3e51c8ff5",
+      "public_sha256": "dbfe5bf7d5b98cdb95c4ee7612b5867ae8b2c2a5ea8966ae81ef4bb3e51c8ff5",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-create.json",
+      "original_private_sha256": "efb7276faea418c49d3a4121e24a1121f79990c08a44fb0ac89db94619fa4735",
+      "public_sha256": "f6e5b6932082e2f1ce03b1c433719156e28af70145b6837cd7a1b274c1a70a9c",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-terminal.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-terminal.json",
+      "original_private_sha256": "91ecb029c5bc05441ec4a5b1afb0498de15a8daac160079546ef206bb6be8d3a",
+      "public_sha256": "5a663094a4e2169d7ba04d799837627443bb8eac3ad429f1796c8c209dd9450f",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/assignment.md",
+      "original_private_sha256": "78dab20ec0c349ea5de52bd02f6dac4950a66de62bd8c14a54151a12a8d0aedf",
+      "public_sha256": "3111ed3d4528ab4b27041798c0ae82b39461f833960a722e7600b586ee5600e7",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/input-map.json",
+      "original_private_sha256": "73b56a3e57eacb8f171bf622362bd1dfaba34061f19d6f62804ee45ff28d6242",
+      "public_sha256": "c6960df5f96266d6aeb8a5f4bc834100eed0e739f014d2d691a6be94891b8abd",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/freeze.json",
+      "original_private_sha256": "3a20e6d97fa65250d60f2d0138fa840447cc7ac762e4b90224fdfe14c9e43c25",
+      "public_sha256": "36c7fd487a8e80657d6b7fa005f103234cd79ad4e7c08f86b7d68a460df2f3dd",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/request.json",
+      "original_private_sha256": "f5150616ca2833301cfe390b6eb16823e64a4870ed8c856a5bcef2d1d0dd71a8",
+      "public_sha256": "b1b4453c6b74db125586b852a4fa4cddc357cf737ef88fcb53e98221ca80b53e",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/dispatch.json",
+      "original_private_sha256": "0efdb9bb0711eede11e190494bd91d02787596555d63db79257bed0c91b9f92a",
+      "public_sha256": "225fe6df919525813608d63315cf45f22e1d9f952c4a930a50377a6bcd58c18f",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/selection.json",
+      "original_private_sha256": "cf462ca6ece1b0660b533a11bc118011241b7ebbd01beb919fd571e17c431de2",
+      "public_sha256": "934645690d789151ea73ee62784e923981e3184ec0ab5e2e7e1b947c69c5098e",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/brief.md",
+      "original_private_sha256": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+      "public_sha256": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/plan.md",
+      "original_private_sha256": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+      "public_sha256": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/draft.md",
+      "original_private_sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+      "public_sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-index.json",
+      "original_private_sha256": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843",
+      "public_sha256": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/critique.md",
+      "original_private_sha256": "6f7163f310833b6ff24be5fe260c1fcdd9896e74e06e4f3006fba6adc88ce22f",
+      "public_sha256": "6f7163f310833b6ff24be5fe260c1fcdd9896e74e06e4f3006fba6adc88ce22f",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "original_private_sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "public_sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "original_private_sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "public_sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "original_private_sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "public_sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "original_private_sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+      "public_sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "original_private_sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+      "public_sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "original_private_sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+      "public_sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "original_private_sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+      "public_sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "original_private_sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+      "public_sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "original_private_sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+      "public_sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "original_private_sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+      "public_sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "original_private_sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+      "public_sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "original_private_sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+      "public_sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "original_private_sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+      "public_sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "original_private_sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+      "public_sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "original_private_sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+      "public_sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "original_private_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "public_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "original_private_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "public_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "original_private_sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c",
+      "public_sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c",
+      "sanitized": false,
+      "kind": "original_science_freeze_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/final.md",
+      "original_private_sha256": "81f0680f6ca71edf76443c77016d4b8ca1f38cdec1a28b7cfcb1b824b0c8e4c7",
+      "public_sha256": "81f0680f6ca71edf76443c77016d4b8ca1f38cdec1a28b7cfcb1b824b0c8e4c7",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/native-goal-create.json",
+      "original_private_sha256": "b7e61d60bbadd4fbb317b882612ac27b54097456c8f2249a7b17e4416b2ea4be",
+      "public_sha256": "581ffcba26a38870d87c8396edf5ba93098e7e94af6428229574d0369a8cfa49",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/amendments.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/amendments.json",
+      "original_private_sha256": "b6084336fbdae4eb6b287f1e57068f011b2acacea3c9a9c6cc8964e904b3a270",
+      "public_sha256": "b6084336fbdae4eb6b287f1e57068f011b2acacea3c9a9c6cc8964e904b3a270",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assemble.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assemble.py",
+      "original_private_sha256": "f8dbaeda1aca14944e32c53ce779c93fb666cae216090bbb848f3895c5e5a411",
+      "public_sha256": "f8dbaeda1aca14944e32c53ce779c93fb666cae216090bbb848f3895c5e5a411",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assembly-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assembly-results.json",
+      "original_private_sha256": "b419d0ca6a202372342a40363e9ccac7ee183c5d8c1808695c296deda41dad73",
+      "public_sha256": "b419d0ca6a202372342a40363e9ccac7ee183c5d8c1808695c296deda41dad73",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assignment.md",
+      "original_private_sha256": "4aa70952448ee83d89091a257d17f2201a67f156699eeee71477772e61f70c38",
+      "public_sha256": "e3b698e52fab9436406af42ad7de654a0d0b8516913a0009f2c564a33148cb70",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/input-map.json",
+      "original_private_sha256": "eb73c658398965b1f0cedcea599aaabe7331e3e8c1bff54c2a32c61fe86cff3a",
+      "public_sha256": "7a2abb8e1b994a0f06c13b0963427aec77b9fd0626d2479ce83468597efa96b7",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/freeze.json",
+      "original_private_sha256": "2711aca05c25e2f8140228d6465b268b92092b3f879e9e06ee1e6060ede168c7",
+      "public_sha256": "a55ab19226a3680973971640817e299cb487956f98bd08a42f964397ac369d4a",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/request.json",
+      "original_private_sha256": "e503828ae20933b43ccbba1e0408280d1ecba46af12f42b83fff15d8ab6a1f4c",
+      "public_sha256": "4920f1a5704d15613dbd7a40dfa90f54db1ceeda06b253ea652ce4712d0f60a7",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/dispatch.json",
+      "original_private_sha256": "5eb9bea7e7a68f5efd4a1448fa584b18432db9d01b66c24cb809dbd77e6f9619",
+      "public_sha256": "4f507f58b36f37b948d88b52f39e9c5dc662e1971c64f0fad7d0f86fe827a7d0",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/selection.json",
+      "original_private_sha256": "66440afff57bf0b321bc0087527f1c0c4dcb3e23509d349a94bd0151b884af5b",
+      "public_sha256": "b718c880c0eb1314bb30b220bcf1c8a51b113af2441e6cc3208fca302af30726",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "original_private_sha256": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+      "public_sha256": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "original_private_sha256": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+      "public_sha256": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "original_private_sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+      "public_sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-index.json",
+      "original_private_sha256": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843",
+      "public_sha256": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "original_private_sha256": "6f7163f310833b6ff24be5fe260c1fcdd9896e74e06e4f3006fba6adc88ce22f",
+      "public_sha256": "6f7163f310833b6ff24be5fe260c1fcdd9896e74e06e4f3006fba6adc88ce22f",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "original_private_sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "public_sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "original_private_sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "public_sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "original_private_sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "public_sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "original_private_sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+      "public_sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "original_private_sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+      "public_sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "original_private_sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+      "public_sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "original_private_sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+      "public_sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "original_private_sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+      "public_sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "original_private_sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+      "public_sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "original_private_sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+      "public_sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "original_private_sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+      "public_sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "original_private_sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+      "public_sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "original_private_sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+      "public_sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "original_private_sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+      "public_sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "original_private_sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+      "public_sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "original_private_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "public_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "original_private_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "public_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-input-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-input-verification.json",
+      "original_private_sha256": "66bf08fc5bd05b310dd0e614c735e52d0e6a48175e28adc5298a00b579ecb431",
+      "public_sha256": "42e18afca7d5876c0c2c158cdc705b62c806271dbb8be17e1518994015877bd2",
+      "sanitized": true,
+      "kind": "frozen_packet_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B01-P02.json",
+      "public_path": "state/dispatcher-v1/eval-ready/B01-P02.json",
+      "original_private_sha256": "72dc6ed10bdf823d24defb3e8ae49da1d8216b9c180d3bb4fd244c50732c0082",
+      "public_sha256": "b4ec0d39709780e68f999332c6ddae5f672bfe98603b3bbcb821061999928b79",
+      "sanitized": true,
+      "kind": "exact_failure_qualified_pair_packet"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/authored-manifest.json",
+      "original_private_sha256": "228409391aaafef8df9e095df2697f49bd0fd0d56ab8f59e16edc5de8d52b33c",
+      "public_sha256": "228409391aaafef8df9e095df2697f49bd0fd0d56ab8f59e16edc5de8d52b33c",
+      "sanitized": false,
+      "kind": "original_science_freeze_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/final.md",
+      "original_private_sha256": "952c02e024c29327fef60b22ff9f76f3e7a917f785aa18ee44b67646d01b570b",
+      "public_sha256": "952c02e024c29327fef60b22ff9f76f3e7a917f785aa18ee44b67646d01b570b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/criticism-dispositions.md",
+      "original_private_sha256": "e3af0c32ee271c8906771e3905257ea78a9a9b4a44882150cd78145f76372942",
+      "public_sha256": "e3af0c32ee271c8906771e3905257ea78a9a9b4a44882150cd78145f76372942",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/source-map.json",
+      "original_private_sha256": "2972650f8628b94b154243ae74047fa981c80809dd78d1d2fab9cc44c2b79c68",
+      "public_sha256": "2972650f8628b94b154243ae74047fa981c80809dd78d1d2fab9cc44c2b79c68",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-create.json",
+      "original_private_sha256": "7edd2238e14f253f66ead5baf81f99749e5008a842ff55d920c08ffcbd6a7b0d",
+      "public_sha256": "780e26304d9378caeb324256ae673a789991cf5f59de77d97898cf3231d5ee76",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-terminal.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-terminal.json",
+      "original_private_sha256": "0452393b600869f91e8ed9f2592a09c60b720f9f532f77a95195092407c83535",
+      "public_sha256": "f357379fe361b9f91be56a63bd453c688e652c6b650a0e451d98a9629c7b12f2",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/assignment.md",
+      "original_private_sha256": "979b1818e7a9265fa89a0a334d2688100e15bcb680412c908db8057d3fa30088",
+      "public_sha256": "e8dc01477a60df7d38fbf93681c36b839b8ded92ae2526a0a051badd6e57580a",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/input-map.json",
+      "original_private_sha256": "2a6a27cc3715cb1b5d535aea670761dc0981ee9fd0fc8c3c174ef323f135e9fd",
+      "public_sha256": "3be97ad521154f46bc96a64c3bdd0bddecc917d51aefdef4aa6ba7b6b59025fa",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/freeze.json",
+      "original_private_sha256": "145b5038096b466ef9669becccf4730f9574dfe91be006bd22543b583aed8a7a",
+      "public_sha256": "b1363fb17bde004db00ff7ecfd3fb194e19be19fba253d3b780699858693f988",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/request.json",
+      "original_private_sha256": "b32d3e1edbfae08645fef1891856bb82b5635b14746c8233693c124c9f331a09",
+      "public_sha256": "4d1e783f3dae466a6c36ba2882864943d5838391c3ca09316e5efa29f49cfbf8",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/dispatch.json",
+      "original_private_sha256": "5028fa7903f86dc63928043cfd386635eebc1551a374d2c4cf720a9111b723a4",
+      "public_sha256": "67aec22dc8215c4a108c4b046c305463a236526e0b794eed6f7e724d18479e85",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/selection.json",
+      "original_private_sha256": "ba4b7cbdab0ab9234a6b2aea165935fda05c67ebeaea9c28c6d382243af1e246",
+      "public_sha256": "3dcd4903898699ab5873eb9704f022541890090874cd2918d75ebd5db09acc22",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/brief.md",
+      "original_private_sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "public_sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/plan.md",
+      "original_private_sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "public_sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/draft.md",
+      "original_private_sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "public_sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-index.json",
+      "original_private_sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "public_sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/critique.md",
+      "original_private_sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "public_sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "original_private_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "public_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "original_private_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "public_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "original_private_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "public_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "original_private_sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "public_sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "original_private_sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "public_sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "original_private_sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "public_sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "original_private_sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "public_sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "original_private_sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "public_sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "original_private_sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "public_sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "original_private_sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "public_sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "original_private_sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "public_sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "original_private_sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "public_sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stdout.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stdout.txt",
+      "original_private_sha256": "1db81b0078254b5c97074558e33e2eb2a024469fc3a19e67d34c005f0d0f27a1",
+      "public_sha256": "1db81b0078254b5c97074558e33e2eb2a024469fc3a19e67d34c005f0d0f27a1",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stderr.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stderr.txt",
+      "original_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/activation-context.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/activation-context.json",
+      "original_private_sha256": "6f3a670e0211407ef137b0ebfa5f45c544b49938f768f1c465e72f821efaaa86",
+      "public_sha256": "6f3a670e0211407ef137b0ebfa5f45c544b49938f768f1c465e72f821efaaa86",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/authored-manifest.json",
+      "original_private_sha256": "2d2f7c728a56deac4ac820700f5819b881f34cda01ee4c22ac0900339f7517ff",
+      "public_sha256": "2d2f7c728a56deac4ac820700f5819b881f34cda01ee4c22ac0900339f7517ff",
+      "sanitized": false,
+      "kind": "original_science_freeze_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/final.md",
+      "original_private_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+      "public_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/criticism-dispositions.md",
+      "original_private_sha256": "f5d35c55dcaf8b74a3fff5d21f7102cc6541b2f33edcba27e6e45878d0f24845",
+      "public_sha256": "f5d35c55dcaf8b74a3fff5d21f7102cc6541b2f33edcba27e6e45878d0f24845",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/source-map.json",
+      "original_private_sha256": "505a294f8493193669c58dd410ed6cdd93255ae9a1b371d680b47582c7810292",
+      "public_sha256": "f584bfc2400f3cf6c4f820ed1b7eca9ed56856dd7f98fd3614c8268b319f867d",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/native-goal-create.json",
+      "original_private_sha256": "d5595d4d52b0c4c6b088699f58d6ab36226a91a0c61189e963e4614b870b59dc",
+      "public_sha256": "a52ffe8d63fa3f27c7bfdcb5a5c64c7108714b7a5a4abaa7dadc605508f61158",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/amendments.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/amendments.json",
+      "original_private_sha256": "a3203a503ddffac593cddf5e700a598c966d142f89953a32d25ccda72fbae02c",
+      "public_sha256": "5228f97c82a5e7f387bc2f9f2fd04bc31da114f1a3cf4d792d759f6596503989",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assemble.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assemble.py",
+      "original_private_sha256": "95e73354fd8d64ba511e88ad067fd0cb9064e71f56753b740dba48d6451772c0",
+      "public_sha256": "6b752c1f2ad0013fafa4eadbf58cf9fa42b5e737eed964af28045f9a9ab9e1a1",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assembly-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assembly-results.json",
+      "original_private_sha256": "57944d3500a9650e5c4bb7c1338f3165e0a590599388293d249cbbc2553dcaa3",
+      "public_sha256": "bed2c31182c6d24c0fc8d3acb8149670f6a7698148443ca98924ffcd3d8f28f3",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assignment.md",
+      "original_private_sha256": "32752406b7a90940bd26f36c7f6d6b52fd2d03c50ab1d773a6fbacee5ac12a1d",
+      "public_sha256": "c6b065c8fcf97d0154b15c8604113fe802146f5f83e7f1f18746946ddddc55ca",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/input-map.json",
+      "original_private_sha256": "2d5ec49012ae49c75161bd83440271e2c2546441d1053e3194b4318c636f37cf",
+      "public_sha256": "2716a1f1dd73022e90e7a40e97cf32f51722c09375d9da1828ccd943de7e2030",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/freeze.json",
+      "original_private_sha256": "1857d0d9c09a010e52b0841963ea92a32f3ef0075ca10cb36d21520e088c5b5c",
+      "public_sha256": "c9cbdcef718ba2daf1fa790a14d9deaca6614d8dcaaa9fe5735a88522acd505c",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/request.json",
+      "original_private_sha256": "af2657e6b9c4bcd3c788cb5d1a3a530f35bd9f0225e1580b791b73c225d9c1b2",
+      "public_sha256": "a9fd7447269b988e3f89d09cbf6e678a4ff8a35a7070a60ca934563b76c41050",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/dispatch.json",
+      "original_private_sha256": "5b710607eec069c21bf32c19ccb31e2bf5e79a742475010e7d9afb0fbc54c71e",
+      "public_sha256": "9d044ffc29f946f799576b5bbd497993e8b53580f3d39acbcbaccdfc94bba86a",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/selection.json",
+      "original_private_sha256": "4e07f333aaa191557008f9ee6390b111619b3f51dbc092345e2047d6d4a5895b",
+      "public_sha256": "96b868bd367886fd284cee8afabae7f4a7028e7a58aadefbd9dab9f356cf7844",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "original_private_sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "public_sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "original_private_sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "public_sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "original_private_sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "public_sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "original_private_sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "public_sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "original_private_sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "public_sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "original_private_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "public_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "original_private_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "public_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "original_private_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "public_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "original_private_sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "public_sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "original_private_sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "public_sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "original_private_sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "public_sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "original_private_sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "public_sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "original_private_sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "public_sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "original_private_sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "public_sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "original_private_sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "public_sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "original_private_sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "public_sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "original_private_sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "public_sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source_reader.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source_reader.py",
+      "original_private_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "public_sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source-reader-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source-reader-results.json",
+      "original_private_sha256": "6c065c17b7a0d55704c27632fb78a9aec60be7cfec2f6324d24c6e77a1a28168",
+      "public_sha256": "c5fd878361c7f08de36dca171517e7a899d420d75ba2442eec58644e7a52103a",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/README.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/README.md",
+      "original_private_sha256": "1816df969a28d462c96fb6405b6fee0dae2db1058288eb694374109635b5a459",
+      "public_sha256": "1816df969a28d462c96fb6405b6fee0dae2db1058288eb694374109635b5a459",
+      "sanitized": false,
+      "kind": "frozen_science_or_input"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/capture-source-reader.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/capture-source-reader.py",
+      "original_private_sha256": "254d142b1d7b696a8e51e61d16d1f2ded5c8d36a93544bdf231950d2fff3c2dc",
+      "public_sha256": "66396663fbb0f1e0d4f5cabfa7aaec037394e363bb65d0a32420478d4ba8ee25",
+      "sanitized": true,
+      "kind": "frozen_science_or_input"
+    }
+  ]
+}

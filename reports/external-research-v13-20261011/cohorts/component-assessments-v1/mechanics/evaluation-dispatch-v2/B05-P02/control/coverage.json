@@ -1,0 +1,319 @@
+{
+  "schema": "er13.coverage.v1",
+  "arm_id": "B05-P02-control",
+  "overall": "COMPLETE",
+  "meaning": "Complete finite assessment of assigned proposal obligations and consequential claims; not exhaustive application correctness. Coverage labels describe evaluator inspection, not candidate success or executed validation.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "All material brief/plan obligations and negative constraints retained; application guarantees remain proposals.",
+      "defect_ids": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "finding": "All consequential target facts, conditions, source locators and release/fix context assessed; see defects. Independent lookup confirms the pin is v3.13.9.",
+      "defect_ids": [
+        "C-D01",
+        "C-D02",
+        "C-D03"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "finding": "Useful quote-based null option, marker/sidecar, DictReader, strictness and loading/inference alternatives examined; direct-write history retained.",
+      "defect_ids": [
+        "C-D01"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "C01-C14 and all 11 critique points examined; principal rejections justified, with version/locator/empty-field defects recorded.",
+      "defect_ids": [
+        "C-D02",
+        "C-D03"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Full draft-to-final and critique/disposition-to-final preservation reviewed. No material supported mechanism, constraint, privacy rule, history or useful alternative lost.",
+      "defect_ids": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "finding": "Proposed tests have exact-value, row/line, resource boundary, cancellation, cleanup and unchanged-prior-state oracles. No product or upstream suite execution claimed.",
+      "defect_ids": [
+        "C-D02"
+      ]
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "CPython 3.13.9 target and governing versions",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Source-map target; final scope; independently resolved tag and quoting fix history",
+      "axes": [
+        2
+      ],
+      "defect_ids": [
+        "C-D01"
+      ]
+    },
+    {
+      "id": "O02",
+      "obligation": "Large vendor files, bounded preview and explicit strict decoding",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Final preview/import flow; truncated multibyte/multiline samples and visible errors",
+      "axes": [
+        1,
+        2
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O03",
+      "obligation": "User confirms encoding, delimiter, quoting, header and mapping",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Full confirmed profile; Sniffer remains a suggestion; first data row preserved",
+      "axes": [
+        1,
+        2,
+        4
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O04",
+      "obligation": "Leading-zero SKU, large identifiers and exact text",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Text-first parser; explicit schema conversions; no automatic identifier inference",
+      "axes": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O05",
+      "obligation": "Empty, missing and user-selected null policy",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Distinct missing state; no automatic inverse of writer None; conditional quote/marker/sidecar alternatives",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "defect_ids": [
+        "C-D01"
+      ]
+    },
+    {
+      "id": "O06",
+      "obligation": "Quoted newlines, ragged and blank rows, useful diagnostics",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "newline opening; DictReader conditions; logical record versus source lines",
+      "axes": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O07",
+      "obligation": "Bounded resources in correct units and before materialization",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "File/sample bytes; field code points; row/column/count/staging limits; preallocation caveat",
+      "axes": [
+        1,
+        2,
+        4
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O08",
+      "obligation": "Cancellation and owned cleanup",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Snapshot/hash and records/staging; failures preserve current inventory",
+      "axes": [
+        1,
+        5
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O09",
+      "obligation": "Validation before atomic publication; no partial mutation",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Isolated staging plus transaction/version swap as future storage obligation",
+      "axes": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O10",
+      "obligation": "Source/profile consistency and changed-file reconfirmation",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Digest/profile identity; source change fixtures",
+      "axes": [
+        1,
+        5,
+        6
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O11",
+      "obligation": "Compare inference/configuration, streaming/whole file, null alternatives",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Conditional alternatives retained; no numerical benchmark asserted",
+      "axes": [
+        1,
+        3,
+        5
+      ],
+      "defect_ids": [
+        "C-D01"
+      ]
+    },
+    {
+      "id": "O12",
+      "obligation": "Preserve privacy and retired direct-write history",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Optional authorized archive, no routine row-content logs; direct writes remain retired",
+      "axes": [
+        1,
+        3,
+        5
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O13",
+      "obligation": "All material criticism and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "All independent critique/disposition entries reconciled against draft and final",
+      "axes": [
+        4,
+        5
+      ],
+      "defect_ids": []
+    },
+    {
+      "id": "O14",
+      "obligation": "Meaningful proposed validation and actual execution truth",
+      "coverage": "COMPLETE",
+      "evidence_and_disposition": "Exact values and prior-state oracles; tests only inspected, source extraction distinguished",
+      "axes": [
+        6
+      ],
+      "defect_ids": []
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Public csv API and dialect conditions",
+      "coverage": "COMPLETE",
+      "scope": "Default strings, null/writer behavior, modes, strictness, newline and line counter."
+    },
+    {
+      "family": "Python-level callers",
+      "coverage": "COMPLETE",
+      "scope": "Complete DictReader and Sniffer bodies, width/blank behavior and sample voting."
+    },
+    {
+      "family": "C parser and memory",
+      "coverage": "COMPLETE",
+      "scope": "Field buffer/limit, list materialization, per-character state transitions and iterator/EOF caller."
+    },
+    {
+      "family": "C writer null-mode exceptions",
+      "coverage": "COMPLETE",
+      "scope": "Quoting switch, singleton null record rejection and space/skipinitialspace interaction."
+    },
+    {
+      "family": "Upstream regression source",
+      "coverage": "COMPLETE",
+      "scope": "Full frozen test body; relevant helpers/tests linked; no execution claimed."
+    },
+    {
+      "family": "Release and issue/fix history",
+      "coverage": "COMPLETE",
+      "scope": "Tag ref and peeled release commit, 3.12 reader gap and merged fix, target implementation."
+    },
+    {
+      "family": "Encoding/BOM context",
+      "coverage": "COMPLETE",
+      "scope": "Explicit decoding, UTF-8-sig optional BOM skip and incomplete multibyte sample."
+    },
+    {
+      "family": "Application integrity and alternatives",
+      "coverage": "COMPLETE",
+      "scope": "Qualitative proposal evaluated against brief; backend/vendor facts remain unknown."
+    }
+  ],
+  "outside_declared_scientific_scope": [
+    {
+      "item": "Importer/vendor/storage execution",
+      "coverage": "UNASSESSED",
+      "reason": "Research proposal requested; none executed or required for source pass."
+    },
+    {
+      "item": "Cold discovery/full-pipeline integration",
+      "coverage": "UNASSESSED",
+      "reason": "COMPONENT consumes shared inputs; no discovery-effectiveness or integration claim."
+    },
+    {
+      "item": "Unspecified vendor contracts and target-device budgets",
+      "coverage": "UNASSESSED",
+      "reason": "User facts absent; candidate appropriately declares future decisions."
+    },
+    {
+      "item": "Actual billing and provider activity",
+      "coverage": "UNASSESSED",
+      "reason": "No reconciled telemetry in assigned packet."
+    },
+    {
+      "item": "Full native transcript/process isolation",
+      "coverage": "UNASSESSED",
+      "reason": "Access prohibited; receipts give limited custody only."
+    }
+  ],
+  "early_failure_shortcut_used": false,
+  "limitations": [
+    "This is finite assessment of the assigned research proposal and supplied draft, not universal parser correctness or a deployed component.",
+    "Unknown vendor schemas, encodings, null conventions, storage transactions and numeric device budgets legitimately remain product decisions. Their future execution is UNASSESSED, not failed.",
+    "QUOTE_NOTNULL is conditional: a singleton None record cannot be emitted by its writer; delimiter=space plus skipinitialspace excludes unquoted empties. These adjacent exceptions were checked in C:1227-1267/1300-1401, docs:468-472 and tests:316-356. Neither final promises an unrestricted one-column round-trip; the import proposals retain explicit blank/ragged policy and alternative null encodings. This bounds the alternative rather than imposing an export feature.",
+    "Source integrity, byte-aware line limits and atomic publication are proposed application obligations. No candidate execution demonstrates these guarantees; both require meaningful future tests.",
+    "Preparation of the shared component package and cold full-pipeline discovery are outside this pair; no discovery recall/effectiveness or cold end-to-end success is inferred.",
+    "Filesystem access rules are not sandbox isolation. Without full native transcripts, exact operation ordering, exclusive original lookup, absence of unseen delegates and actual provider execution cannot be proven.",
+    "Private transport route fields are observed but not public source authority; service tier and independent native-session linkage remain unknown.",
+    "No billing, subscription cost, cache/output/reasoning breakdown, context occupancy or phase-specific provider activity can be derived from cumulative Goal counters."
+  ]
+}

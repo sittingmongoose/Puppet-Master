@@ -1,0 +1,381 @@
+{
+  "schema": "er13.immutable_original_assessment.v2",
+  "evaluation_version": "ORIGINAL",
+  "block_id": "B04-P02",
+  "scope": "COMPONENT",
+  "assigned_arm_count": 2,
+  "arm_record_count": 1,
+  "written_at_utc": "2026-10-12T01:05:17.557131+00:00",
+  "arms": [
+    {
+      "arm_id": "B04-P02-control",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE_FOR_DECLARED_PROPOSAL",
+        "reason": "Material omitted target invalidation for forwarded unsafe requests under RFC 9111 section 4.4. Published F1-F5 core corrections are substantially sound. Finite assessment, not universal correctness.",
+        "material_defect_ids": [
+          "B04-P02-control-D1"
+        ]
+      },
+      "coverage": {
+        "schema": "er13.original_coverage.v2",
+        "arm_id": "B04-P02-control",
+        "scope": "COMPONENT",
+        "declared_assessment_domain": "The entire frozen research proposal, common complete brief/plan/draft, all F1-F5 criticisms/dispositions/source map, all manifest-listed custody documents and eleven source neighborhoods; independent RFC target/adjacent definitions and consequential issue/fix/errata context.",
+        "proposal_axis_coverage": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "reason": "Private/GET/account/offline/UI/storage scope is retained, but the explicitly forwarded unsafe-method path lacks a consequential required cache-coherence rule.",
+            "defect_ids": [
+              "B04-P02-control-D1"
+            ]
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "reason": "Published RFC corrections are substantially sound. Applicable section 4.4 invalidation is omitted; exact governing RFC hashes and current scoped context were independently checked.",
+            "defect_ids": [
+              "B04-P02-control-D1"
+            ]
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_LIMITS",
+            "reason": "Qualified no-cache, must-understand exception, variant/validator mechanisms, mature-library/custom/live alternatives and URL-only rejection remain. No chosen library implementation is claimed.",
+            "defect_ids": []
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_LIMITS",
+            "reason": "All F1-F5 material criticisms have explicit supported dispositions. No supplied valid criticism is falsely rejected; incorrect draft propositions are rejected instead.",
+            "defect_ids": []
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS_WITH_LIMITS",
+            "reason": "Supported account, storage, variant, representation, export, alternatives/history and validation meaning is retained while false protocol claims are corrected.",
+            "defect_ids": []
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "reason": "Protocol/disk/network/UI fixture plans are meaningful and explicitly unexecuted. They omit the unsafe-response cache-invalidation transition associated with the material proposal omission.",
+            "defect_ids": [
+              "B04-P02-control-D1"
+            ]
+          }
+        ],
+        "consequential_obligations": [
+          {
+            "id": "O-private-account",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "Private single-user/anonymous versus account partitions, auth redaction and sign-out exclusion; proposed platform mechanisms remain untested."
+          },
+          {
+            "id": "O-GET-boundary",
+            "coverage": "COMPLETE",
+            "judgment": "DEFECT_FOUND",
+            "reason": "Complete 200 GET-only storage is legitimate optional narrowing; non-GET pass-through additionally triggers D1."
+          },
+          {
+            "id": "O-variants-age",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "Named Vary fields/absence/star; correct age/max-age/Expires and stale clock policy."
+          },
+          {
+            "id": "O-directives-exceptions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_LIMITS",
+            "reason": "no-cache/no-store/private/must-revalidate and must-understand status exception; qualified no-cache retained. Treatment qualified-private explanation limit recorded."
+          },
+          {
+            "id": "O-offline-failure-UI",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "Fresh/checking/stale-permitted/unavailable states, graceful network/5xx failure, no prohibited silent offline reuse."
+          },
+          {
+            "id": "O-conditional-metadata",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "ETag/Last-Modified, 304 selection, field merge/representation integrity, missing-body full GET."
+          },
+          {
+            "id": "O-bounded-body-ownership",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "Quota/LRU/atomic complete entries/corruption/interruption/encoded bytes."
+          },
+          {
+            "id": "O-alternatives-history-export",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_LIMITS",
+            "reason": "Library versus custom, live fallback, separately governed export, rejected URL-only history retained."
+          },
+          {
+            "id": "O-valid-criticism",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "reason": "Every F1-F5 disposition, correction, keep and uncertainty examined; compact critique shares core meaning."
+          },
+          {
+            "id": "O-validation-honesty",
+            "coverage": "COMPLETE",
+            "judgment": "DEFECT_FOUND",
+            "reason": "No execution invented. Useful proposed oracles exist; D1 transition has no stated fixture."
+          },
+          {
+            "id": "O-unsafe-invalidation",
+            "coverage": "COMPLETE",
+            "judgment": "DEFECT_FOUND",
+            "reason": "RFC 9111 section 4.4 applies to the final explicit non-GET forwarding path; exact narrow applicability documented."
+          },
+          {
+            "id": "O-real-deployment",
+            "coverage": "UNASSESSED",
+            "judgment": "NOT_REQUIRED",
+            "reason": "No implementation/deployment deliverable required; unknown client/platform/library facts stay unknown."
+          }
+        ],
+        "source_families": [
+          {
+            "id": "SF-storage",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Private/shared definition, optional storage, understood status subset, storage bases, header/trailer fields, authenticated-request scope."
+          },
+          {
+            "id": "SF-directives",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Unqualified/qualified no-cache and private; no-store and must-understand/status exception; request versus response scope; private exclusions for shared-only directives; extension handling."
+          },
+          {
+            "id": "SF-variants-age",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Vary absence/star/multiple matches, max-age/Expires, no heuristic policy, age variables and alternative formulas, malformed/timing context, Date fallback."
+          },
+          {
+            "id": "SF-revalidation",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Strong/weak/absent validators; Last-Modified strength and tag comparison; conditional precedence; 304 bodylessness, field update exceptions and candidate set."
+          },
+          {
+            "id": "SF-invalidation",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Unsafe/unknown-safety methods, required target invalidation after 2xx/3xx; meaning of invalidation; optional other-URI invalidation and same-origin boundary. Applies to forwarded unsafe methods even when only GET responses are stored."
+          },
+          {
+            "id": "SF-offline-app-security",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Disconnected definition, stale prohibitions/permission, application history/export boundary, private is not confidentiality, representation bytes/encoding."
+          },
+          {
+            "id": "SF-versions-history",
+            "coverage": "COMPLETE",
+            "scope_or_limit": "Pinned June 2022 normative bodies, former RFC 7234 changes, scoped errata screening and consequential 304 definition/fix history. This does not certify all future HTTP updates."
+          },
+          {
+            "id": "SF-concrete-library-code",
+            "coverage": "UNASSESSED",
+            "scope_or_limit": "Neither final selects a library/client/version or asserts implemented conformance. Concrete library internals/callers/tests/releases cannot be graded as executed behavior; version audit is an honest future planning gate."
+          },
+          {
+            "id": "SF-whole-HTTP-transport",
+            "coverage": "PARTIAL",
+            "scope_or_limit": "Both 9110/9111 source bodies were independently retrieved and hash-verified. Applicable caching/representation/validator/method chapters and all eleven frozen source neighborhoods were inspected through shared identical source text; unrelated transport, TLS and general client chapters are outside the proposal assessment."
+          }
+        ],
+        "criticism_coverage": [
+          {
+            "finding": "F1",
+            "coverage": "COMPLETE",
+            "judgment": "SUPPORTED_CORE_CORRECTION",
+            "reason": "no-cache storage/reuse distinction, qualified no-cache conservative whole-response policy, private-user-agent storage, must-understand/status/no-store exception and unimplemented status gate retained."
+          },
+          {
+            "finding": "F2",
+            "coverage": "COMPLETE",
+            "judgment": "SUPPORTED_CORRECTION",
+            "reason": "Vary star/absence/normalization rules and full corrected age replace the false draft rules; fresh reuse and conservative unreliable-clock handling retained."
+          },
+          {
+            "finding": "F3",
+            "coverage": "COMPLETE",
+            "judgment": "SUPPORTED_CORE_CORRECTION",
+            "reason": "No offline bypass for no-cache/stale must-revalidate; eligible stale use, error states and separately governed export remain."
+          },
+          {
+            "finding": "F4",
+            "coverage": "COMPLETE",
+            "judgment": "SUPPORTED_CORRECTION",
+            "reason": "Eligible 304 candidate set and strong/weak/absent-validator selection; supplied metadata, Content-Length/processing exceptions, body ownership and unconditional fallback retained."
+          },
+          {
+            "finding": "F5",
+            "coverage": "COMPLETE",
+            "judgment": "SUPPORTED_CORE_PRESERVATION",
+            "reason": "Single-user GET cache, accounts/sign-out/redaction, bytes/encoding, bounded LRU/atomic generations, library/custom/live alternatives and retired URL-only history retained. No implementation/audit/witness is fabricated."
+          }
+        ],
+        "material_defect_early_stop": false,
+        "source_reading_limit": "All listed files were opened/verified. Full author scientific documents were read. Large RFC bodies were researched at applicable chapters/adjacent definitions rather than claiming every unrelated HTTP clause was semantically adjudicated. Identical common scientific content was reused across the matched arms.",
+        "not_inferred": [
+          "Discovery effectiveness",
+          "Cold full-pipeline completion",
+          "Implemented protocol conformance",
+          "Secure deletion guarantees",
+          "Universal correctness"
+        ],
+        "unassessed_runtime": "Future library/code/callers/tests and real software execution; no implementation selection or execution claim exists to verify."
+      },
+      "defects": {
+        "material_count": 1,
+        "ids": [
+          "B04-P02-control-D1"
+        ],
+        "nonmaterial_limits_count": 2
+      },
+      "delivery": {
+        "judgment": "DELIVERED",
+        "coverage": "COMPLETE",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/final.md",
+        "final_sha256": "d3ee64560e833d1a269b7ddb120f92d3e5da56ddb5fe35ed99102327acc8b220",
+        "required_scientific_artifacts_present": true,
+        "self_contained_final": true,
+        "no_missing_final_grade_fabricated": true
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE",
+        "coverage": "COMPLETE_FOR_FROZEN_MAXIMUM_BOUND",
+        "scope": "COMPONENT",
+        "maximum_elapsed_seconds": 1500,
+        "minimum_elapsed_seconds": 0,
+        "t0_utc": "2026-10-12T00:35:55.464810Z",
+        "absolute_deadline_utc": "2026-10-12T01:00:55.464810Z",
+        "prepared_at_utc": "2026-10-12T00:35:55.504084Z",
+        "dispatch_receipt_capture_utc": "2026-10-12T00:35:56.137Z",
+        "native_create_receipt_utc": "2026-10-12T00:36:12+00:00",
+        "native_terminal_receipt_utc": "2026-10-12T00:45:07+00:00",
+        "native_elapsed_seconds_observed": 535,
+        "t0_to_native_terminal_seconds": 551.53519,
+        "authored_freeze_utc": "2026-10-12T00:47:15.332726+00:00",
+        "t0_to_authored_freeze_seconds": 679.867916,
+        "complete_frozen_artifact_availability_before_deadline": true,
+        "last_complete_scientific_artifact_write_time_utc": null,
+        "request_to_quiet_final_proxy_seconds": null,
+        "limits": "Freeze time is a verified upper bound for frozen output availability, not a reconstructed actual final-write or user-visible quiet time. Native elapsed is Goal residency, not active/billed work. Original clocks unchanged."
+      },
+      "method_compliance": {
+        "judgment": "PARTIAL_VERIFICATION",
+        "coverage": "PARTIAL",
+        "assigned_method": "conventional full critique finalization",
+        "observed_outputs": "Complete self-contained final, full dispositions and source map delivered; no executable witness claimed or manifested.",
+        "core_critique_semantic_preservation": "COMPLETE: all five findings retain corrections, qualified no-cache, must-understand, account safety, 304 rules, supported scope and uncertainty; shortening input is presentation only.",
+        "complete_rewrite_requirement_met": true,
+        "scope_truncation_claim": false,
+        "shared_package_preparation": "Already prepared common draft/critique/source material is campaign preparation. Neither source reading nor criticism finalization demonstrates discovery recall.",
+        "unverified": "No full native transcript was opened. Actual pinned checker invocation, all tool choices, absence of unrecorded retries/other file reads and enforcement of the instruction boundary cannot be proved from these receipts alone.",
+        "custody_notes": [
+          "Verified authored manifest names the full conventional critique.",
+          "input-map states semantic_conclusions_shared=true; common source-index states false. Actual shared draft/critique content is available and was assessed; the conflicting metadata flag is disclosed without changing an arm grade."
+        ],
+        "grader_independence": "No candidate directory access, author contact, repair, extra candidate, subagent, Git/canon mutation, provider/account change or held-out material access. Techniques visible in paths/prompts; blinding imperfect."
+      },
+      "native_identity_provenance": {
+        "judgment": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+        "coverage": "PARTIAL",
+        "native_creation_terminal_identity_match": true,
+        "native_objective_and_created_at_match": true,
+        "native_status_transition": "active -> complete",
+        "native_receipt_paths_and_hashes": [
+          {
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/native-goal-create.json",
+            "sha256": "9fe34ba9045c48fb791708afa14ae07a1d477b5ceda70c0e9d3632413f02e152"
+          },
+          {
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/native-goal-terminal.json",
+            "sha256": "6081f34c50bd34f72a27acaff023bccc9e4931e6cf56efc16e2898744c279487"
+          }
+        ],
+        "exact_terminal_task_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B04-P02-control/component-terminal-task.raw.json",
+          "sha256": "cf9e590e7a947f80dcb06f50ed355f3aca127bc13bbd44a5d8a3843251f3ba44",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed"
+        },
+        "independent_native_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "operational_route": "Requested and returned model/option metadata was inspected privately; it is operational provenance and does not establish source truth. Public scientific artifact omits routing/account identities.",
+        "actual_service_tier": "UNKNOWN; requested options are not proof of actual execution tier",
+        "freshness_or_one_goal_only": "UNKNOWN beyond receipt binding and assigned manifest; no native full transcript inspected"
+      },
+      "resource_billing_coverage": {
+        "judgment": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+        "coverage": "PARTIAL",
+        "candidate_product": "A native cumulative usage counter is present in terminal receipts; it is not a provider billing meter. Numeric token values are not published under the privacy contract.",
+        "native_aggregate_counter_observed": true,
+        "provider_input_cached_output_reasoning_breakdown": null,
+        "provider_active_time_seconds": null,
+        "context_occupancy_seconds": null,
+        "subscription_consumption": null,
+        "billing": null,
+        "observed_residency_seconds": 535,
+        "counter_summing": "No overlapping counters added; no residency-to-cost conversion.",
+        "preparation": "Common shared package preparation separately allocated by root; exact cold acquisition cost unavailable here. Arm-specific setup/queue remains inside original T0 clock.",
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "primary_lookup_reused_across_assigned_arms": true,
+          "billing": null,
+          "active_provider_work": null,
+          "elapsed_complete_evaluation": null,
+          "allocation": "Independent grading and research are separate from candidate product. No free assistance or cold total inferred."
+        },
+        "coordinator_idle_costs": "v1 coordinator idle costs unchanged; no retrospective reallocation",
+        "unknown_is_not_zero": true
+      }
+    }
+  ],
+  "input_packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B04-P02.json",
+    "sha256": "29f52472cdaa611d1828edf6ef049a33f8bcea5048619fa93696f17b7d933670"
+  },
+  "input_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/authored-manifest.json",
+    "sha256": "3adf191e36ed6ba7d4729655d64bb68161e8b9cf9860515419373bfc3e350ec4",
+    "files_verified": 29
+  },
+  "governing_records": [
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+      "read_scope": "complete"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+      "read_scope": "complete"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "read_scope": "sections 10 and 12 only"
+    }
+  ],
+  "imperfect_blinding": "Paths, full/compact critique text and arm labels reveal technique. No candidate authored or repaired; judgments frozen before comparative analysis.",
+  "immutability": "Original grade will not be revised. Any dispute needs new separately labeled adjudication retaining brief, original findings, responses and unresolved objections."
+}

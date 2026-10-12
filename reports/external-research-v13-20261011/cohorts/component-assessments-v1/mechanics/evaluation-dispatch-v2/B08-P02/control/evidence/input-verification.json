@@ -1,0 +1,29 @@
+{
+  "packet_path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B08-P02.json",
+  "packet_sha256": "608e914eb732bacefdb7e4c29aa7b8d237af6ce1990888213c2007e2074217bf",
+  "input_manifest_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P02-control/authored-manifest.json",
+  "input_manifest_sha256": "d3a0dd4f66784d7f845795e6a6a4fdcf2d610638306017036d367ca968afa8b3",
+  "manifest_file_count": 34,
+  "all_listed_hashes_and_sizes_verified_before_scientific_review": true,
+  "terminal_task_receipt_path": "ER13_RUNTIME/state/dispatcher-v1/arms/B08-P02-control/component-terminal-task.raw.json",
+  "terminal_task_receipt_sha256": "7bd79bc5383dc0d3111b7b6f1104e038d210f729de1e3287d913ce657ed28d5c",
+  "task_status": "completed",
+  "hasPendingChildRuns": false,
+  "governing_files": [
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "read_scope": "Sections 10 and 12 only, plus headings to locate them."
+    }
+  ],
+  "read_scope": "Complete submitted brief, plan, investigator draft, critique, every criticism disposition, final, source map, and frozen method/custody records; all eight neighborhoods; relevant expanded primary code/docs/tests. Identical matched common scientific inputs reused after verifying both arm copies.",
+  "excluded_access": "No admitted/active candidate directory, held-out case contents, full tree/history scan, native full transcript, or Git/canon/server setting operation."
+}

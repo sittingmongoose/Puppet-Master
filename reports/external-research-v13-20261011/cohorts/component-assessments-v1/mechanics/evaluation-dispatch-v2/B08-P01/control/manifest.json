@@ -1,0 +1,143 @@
+{
+  "schema": "er13.original-arm-output-manifest.v2",
+  "arm_id": "B08-P01-control",
+  "frozen_at_utc": "2026-10-12T01:07:44.332595+00:00",
+  "original_judgment": "PASS",
+  "scope": "COMPONENT",
+  "comparison_performed": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.json",
+      "bytes": 24152,
+      "sha256": "e063a469efbacceb77cc4cbd74ddf1a65b9ea9ffee086ad94eb800b2dc647ac6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.md",
+      "bytes": 7393,
+      "sha256": "1121102749926cc2e96d4f84c7b515d027d233ccdebc1a45a729e49714f71115"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/coverage.json",
+      "bytes": 9733,
+      "sha256": "c06e5bc60372c4135598e4f53e52d03434a58af2d42499b62eb9be8da1a19527"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/defects.json",
+      "bytes": 2195,
+      "sha256": "6864e78e62fabe48da0f27ebb1aa1efe5dcf99c790f18dc63b2da0bf8792e8a8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/primary-source-index.json",
+      "bytes": 18499,
+      "sha256": "239d09e14d5f79709a109dd52a1281665117fb12a95e79747946762d8f1fbce3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-dev.rst",
+      "bytes": 7306,
+      "sha256": "2c7f23299fcf920382e9fabe4975c0e3a276465557d453856b47585a898baab0"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-queue.rst",
+      "bytes": 7477,
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-task.rst",
+      "bytes": 48620,
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/os.rst",
+      "bytes": 202500,
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/tempfile.rst",
+      "bytes": 19891,
+      "sha256": "487aeabf01be281fd1e2534b326c33cca4d9fab4db1c04d32e58439c9f6346bc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/LICENSE",
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/locks.py",
+      "bytes": 20580,
+      "sha256": "30d7fefb52f26494dd9e98fb2595205ae0a8aef0ef53e11b17b2c59f06c6b861"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/mixins.py",
+      "bytes": 481,
+      "sha256": "8f4a3e16eca845ebfba422550cbcee7340ec8166d2bff6b750a8ed0de6b9ae3c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/queues.py",
+      "bytes": 10152,
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/tempfile.py",
+      "bytes": 32406,
+      "sha256": "7149355dfc2ccbd82a9b3614c7710f2c92bc7ab06440e7f427766481638a1528"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/test/test_asyncio/test_queues.py",
+      "bytes": 21060,
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/input-verification.json",
+      "bytes": 21055,
+      "sha256": "5c90e51e9943a85c6815e8b56a6e616587cf736d736c67e4f149aea5b703d700"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-117531.json",
+      "bytes": 4155,
+      "sha256": "177c0d97eab26f7465c50585072f8664e2bce96610b2304ba4508db674611ede"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-152614.json",
+      "bytes": 4761,
+      "sha256": "fc6ca0e9ca0735412bb63aee38f5faba0038496186d637a627488e31f9945e71"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-96471.json",
+      "bytes": 3928,
+      "sha256": "df4fd3c30e48ab1f6cba8081b284bc5f2dcd0be62aefa6961372ae0b6cfb22a1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104228.json",
+      "bytes": 17858,
+      "sha256": "5319eab22131da5f7d07112c4a0efca0e5eb42b6e9bc29e9792b7422b1009bec"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104750.json",
+      "bytes": 17240,
+      "sha256": "9452e080635ad18f2b08e8b812585019a83f863c3f480a4fc570004356ccfe70"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-117532.json",
+      "bytes": 16616,
+      "sha256": "27d41c26872471d0035a7796d4db3ce40f48fb9bea242ef1724ee1f62ab20011"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/retrieval-index.json",
+      "bytes": 6768,
+      "sha256": "ab7b5fc37646c1c71c79baa34d42aba6cb3acfca1ed073ae8c2d3459757f6d83"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-object.json",
+      "bytes": 2782,
+      "sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-ref.json",
+      "bytes": 333,
+      "sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1"
+    }
+  ],
+  "excludes_self": true,
+  "shared_evidence": "Exact same independently obtained primary evidence may be referenced in both arm manifests; do not double-count evaluator work.",
+  "immutability": "Original grades/output bytes frozen; later comparison or separate adjudication cannot replace them."
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B04-P01-control",
+  "defects": [
+    {
+      "id": "D1",
+      "severity": "MATERIAL",
+      "kind": "required_mechanism_omission_and_unresolved_primary_source_conflict",
+      "axes": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "candidate_locators": [
+        "final.md:36\u201350 and criticism-dispositions.md:F1"
+      ],
+      "finding": "The required investigation of actual CPython 3.13.9 fast-copy/fallback and metadata behavior omits the Windows copy2 -> _winapi.CopyFile2 branch. The result uses the stale documentation warning/copystat account without resolving its conflict with the supplied code.",
+      "source_basis": [
+        "P2:Lib/shutil.py:432\u2013470",
+        "P5:Modules/_winapi.c:2893\u20132950",
+        "W1:CopyFile2 Remarks",
+        "W2:dwCopyFlags,pfCancel,pProgressRoutine",
+        "P9:PR 105055 shutil/native/NEWS change",
+        "P8:release tag binding"
+      ],
+      "consequence": "Windows backend selection and metadata disclosures are not source-complete: the native success branch can preserve alternate streams and bypass copystat; only particular access/privilege errors fall back. The conditional useful mechanism and route-specific metadata behavior are lost from the proposal.",
+      "counterevidence_and_limits": "Both arms accurately attribute the literal warning to CPython documentation, keep useful copy2 timestamps, and correctly reject universal archival fidelity. A conservative product guarantee that excludes ADS is permissible. This defect is the missing required actual-code investigation and unresolved doc/code conflict, not the mere decision to withhold an archival guarantee. The Python wrapper exposes neither progress callback nor cancellation, so the indeterminate-progress decision remains valid.",
+      "confidence": "HIGH",
+      "execution_status": "Static code and governing native documentation; no Windows witness run"
+    },
+    {
+      "id": "N1",
+      "severity": "NONMATERIAL",
+      "kind": "write_through_wording_overstatement",
+      "axes": [
+        2,
+        4
+      ],
+      "candidate_locator": "criticism-dispositions.md:F3.4",
+      "finding": "The disposition says Microsoft limits MOVEFILE_WRITE_THROUGH to copy/delete moves. The API text contains a broader moved-on-disk statement and explicitly guarantees flushing for copy/delete; it does not say the flag has no effect on every same-volume move.",
+      "consequence": "That wording is too categorical. The final correctly refrains from promising Windows power-loss durability, and no universal durability guarantee follows from the API text.",
+      "source_basis": [
+        "W3:MOVEFILE_WRITE_THROUGH"
+      ],
+      "confidence": "HIGH"
+    }
+  ],
+  "not_candidate_feedback": true
+}

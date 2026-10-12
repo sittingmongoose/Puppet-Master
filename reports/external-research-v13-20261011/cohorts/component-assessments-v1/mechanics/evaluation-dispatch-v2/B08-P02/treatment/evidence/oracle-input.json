@@ -1,0 +1,40 @@
+{
+  "unicode_version": "15.1.0",
+  "normalization_rows": [
+    {
+      "source_id": "UCD-NORMALIZATION-TEST",
+      "line_1based": 84,
+      "row": "00BC;00BC;00BC;0031 2044 0034;0031 2044 0034; # (¼; ¼; ¼; 1⁄4; 1⁄4; ) VULGAR FRACTION ONE QUARTER"
+    },
+    {
+      "source_id": "UCD-NORMALIZATION-TEST",
+      "line_1based": 394,
+      "row": "0390;0390;03B9 0308 0301;0390;03B9 0308 0301; # (ΐ; ΐ; ι◌̈◌́; ΐ; ι◌̈◌́; ) GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS"
+    },
+    {
+      "source_id": "UCD-NORMALIZATION-TEST",
+      "line_1based": 14700,
+      "row": "FDFA;FDFA;FDFA;0635 0644 0649 0020 0627 0644 0644 0647 0020 0639 0644 064A 0647 0020 0648 0633 0644 0645;0635 0644 0649 0020 0627 0644 0644 0647 0020 0639 0644 064A 0647 0020 0648 0633 0644 0645; # (ﷺ; ﷺ; ﷺ; صلى الله عليه وسلم; صلى الله عليه وسلم; ) ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM"
+    },
+    {
+      "source_id": "UCD-NORMALIZATION-TEST",
+      "line_1based": 14940,
+      "row": "FF21;FF21;FF21;0041;0041; # (Ａ; Ａ; Ａ; A; A; ) FULLWIDTH LATIN CAPITAL LETTER A"
+    }
+  ],
+  "full_fold_C_F": {
+    "65": "a",
+    "73": "i",
+    "223": "ss",
+    "304": "i̇",
+    "912": "ΐ",
+    "65313": "ａ"
+  },
+  "mapping_default": "Unlisted code points remain unchanged; Turkic T mappings excluded.",
+  "source_body_hashes": {
+    "UCD-DATA": "2fc713e6a31a87c4850a37fe2caffa4218180fadb5de86b43a143ddb4581fb86",
+    "UCD-FOLD": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf",
+    "UCD-NORMALIZATION-TEST": "871238e37e3be0696ec2bd0891119a041b052da1a84485eda05a5438724b223e",
+    "UCD-DERIVED-NORMALIZE": "8875dccee2bc1a7c1fe568a3b502a9e78c9e0495afd96b6568b4294d0ed1f7e1"
+  }
+}

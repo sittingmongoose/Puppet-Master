@@ -1,0 +1,68 @@
+{
+  "block_id": "B05-P02",
+  "verified_at_utc": "2026-10-12T01:07:50.105726+00:00",
+  "grader_taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B05-P02-001",
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "originals": [
+    {
+      "arm_id": "B05-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/manifest.json",
+      "manifest_sha256": "e171e6c8775190288b02cca8a7b1f0b1a8a9959284fbdca7c20b37ab4576af47",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.json",
+      "assessment_sha256": "a0552e29be7bf653c3d897d69df492b1973bcf72d5a53bce8d08895c672ee6dc",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 14,
+      "source_families_count": 8,
+      "material_defects": 1,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 8,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B05-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/manifest.json",
+      "manifest_sha256": "b6a0a4570059c4b6036aca3416d6e11e223be5bce02cde4fe4fd0150fb652793",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.json",
+      "assessment_sha256": "92674df2fee04625c88297257b59709a9f0a41c15cd11fc279b92a984f06ba12",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 14,
+      "source_families_count": 8,
+      "material_defects": 0,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 8,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/comparison.json",
+  "comparison_sha256": "9d859508a0281a28180352aab5ab6bf1ed6fcb74b2771430810e20afe16b1d8c",
+  "meaning": "Mechanical verification and faithful report of original evaluator judgments; no regrade or campaign selection"
+}

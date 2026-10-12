@@ -1,0 +1,30 @@
+# Original B01-P01 Treatment assessment
+
+Complete-final source judgment **UNASSESSED**. The assigned capped/interrupted original remains incomplete delivery and an original deadline failure. The entire available partial final, amendments, assembly code/results and common science were inspected. Core corrections are supported under **PARTIAL** science coverage; no material semantic defect was confirmed in that assessed text. This is not a complete source PASS. Missing dispositions, source map and native completion remain UNASSESSED.
+
+All present input sizes/hashes match the assigned manifests. The independent v3.13.9 tag dereferences to the frozen pin and all three fetched CPython bodies match. [Complete governing backup wrapper](https://github.com/python/cpython/blob/v3.13.9/Modules/_sqlite/connection.c#L2031-L2128) and [whole upstream backup tests](https://github.com/python/cpython/blob/v3.13.9/Lib/test/test_sqlite3/test_backup.py) support retry-only sleep, provisional progress and callback exception propagation. SQLite's [C API](https://www.sqlite.org/c3ref/backup_finish.html) supports the live-copy and source/destination restrictions. No upstream or application test was executed here. Exact contexts and evidence body hashes are in primary-source-index.json.
+
+C1/C2/C3 corrections preserve online backup/cancellation while removing timing, monotonic-progress and external-file-snapshot errors. C4's ownership, memory intent, collision protection, failure cleanup, privacy, new-workspace restore, SQL export and conditional closed-app copy survive. Immutable attachment retention is proposed application engineering, not an SQLite guarantee. Deterministic retention reproduces the available partial text but does not prove semantics or full completion.
+
+The required three-way comparison is present. [VACUUM INTO](https://www.sqlite.org/lang_vacuum.html#vacuuminto) is an omitted useful space/privacy option; deletion-sanitized export was not explicitly required, so this is recorded as nonmaterial. [WAL section 11](https://www.sqlite.org/wal.html#the_wal_reset_bug) and the [3.51.3 fix release](https://www.sqlite.org/releaselog/3_51_3.html) establish a narrowly triggered corruption issue, not an inferred installed-engine failure. The available writer/checkpointer topology is unresolved; no installed-engine failure is inferred. Exact patch-code and actual target applicability are UNASSESSED. Restore integrity/FK distinctions were checked; platform-specific no-replace/durability and conditional hostile-schema controls remain explicit limits.
+
+Coverage by axis (complete final / available partial science):
+
+- 1. Material original obligations and negative constraints: **UNASSESSED** / **PARTIAL**. Available partial text preserves original scope/negatives and core obligations; complete delivery unavailable.
+- 2. Consequential source facts, governing conditions, versions and applicability: **UNASSESSED** / **PARTIAL**. Available pacing/progress/cancel and snapshot facts supported by independent exact-version research; locator errors and unresolved engine/platform constraints recorded.
+- 3. Useful unfamiliar mechanisms, alternatives and implementation/failure history: **UNASSESSED** / **PARTIAL**. Available required comparisons/history retained; VACUUM INTO and WAL issue history omitted; complete final assessment unavailable.
+- 4. Valid corrections, rejections and exact plan dispositions: **UNASSESSED** / **PARTIAL**. Available text and amendments address C1-C4, but full required dispositions document is absent and UNASSESSED.
+- 5. Supported meaning retained from draft and criticism into the complete final: **UNASSESSED** / **PARTIAL**. Available assembly reproduces whole partial text and all retained intervals; semantic retention separately inspected, not inferred from counts.
+- 6. Meaningful proposed validation, with executed work distinguished: **UNASSESSED** / **PARTIAL**. Available matrix and no-app/upstream-run statements are useful; assembly record covers document generation only; complete delivery unavailable.
+
+Every consequential obligation and source family has COMPLETE/PARTIAL/UNASSESSED coverage in coverage.json. Missing records and future physical execution are not inferred. No material false rejection or supported draft-to-final meaning loss was confirmed outside the recorded execution-evidence defect.
+
+Frozen T0 is 00:34:21.619415Z; deadline 00:59:21.619415Z. Activation is 00:34:39Z; partial freeze is 01:02:51.962265Z. No successful complete-final finish is observable. The assigned interruption/deadline failure remains unchanged; no replacement clock or completion proxy is manufactured.
+
+The exact task terminal receipt reports interrupted and **hasPendingChildRuns=false**. Returned model metadata is gpt-6-luna; actual service tier and native-to-delegated/backend linkage are unknown. Native creation/objective equality is observed; the terminal native receipt is missing and UNASSESSED. Requested private routing identity is withheld and cannot establish source truth. Full native transcripts were not accessed.
+
+Candidate billing, request activity, context occupancy and evaluator total resource cost are unknown, not zero. Native cumulative usage is not billing and numeric token counters are not published. This grader is **independent_evaluation**; package preparation, candidate product and coordinator idle costs remain separate and unchanged. COMPONENT cannot establish discovery effectiveness or cold full-pipeline success.
+
+Blinding is imperfect because methods/paths reveal assignment. One early filename-only recursive locator search crossed campaign subdirectories; no admitted/held-out contents were read, and subsequent reads were allowlisted. This evaluator method lapse is disclosed. No candidate feedback/repairs, Git/canon changes, new Goals, additional graders or candidates occurred.
+
+These are immutable original judgments. Future disputes require a new separate adjudication; prospective schema fixes must not rewrite this grade. The per-arm exact manifest is frozen before any paired comparison.

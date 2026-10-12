@@ -1,0 +1,112 @@
+
+    target: object(type='pysqlite_Connection *', subclass_of='clinic_state()->ConnectionType')
+    *
+    pages: int = -1
+    progress: object = None
+    name: str = "main"
+    sleep: double = 0.250
+
+Makes a backup of the database.
+[clinic start generated code]*/
+
+static PyObject *
+pysqlite_connection_backup_impl(pysqlite_Connection *self,
+                                pysqlite_Connection *target, int pages,
+                                PyObject *progress, const char *name,
+                                double sleep)
+/*[clinic end generated code: output=306a3e6a38c36334 input=c6519d0f59d0fd7f]*/
+{
+    int rc;
+    int sleep_ms = (int)(sleep * 1000.0);
+    sqlite3 *bck_conn;
+    sqlite3_backup *bck_handle;
+
+    if (!pysqlite_check_thread(self) || !pysqlite_check_connection(self)) {
+        return NULL;
+    }
+
+    if (!pysqlite_check_connection(target)) {
+        return NULL;
+    }
+
+    if (target == self) {
+        PyErr_SetString(PyExc_ValueError, "target cannot be the same connection instance");
+        return NULL;
+    }
+
+    if (progress != Py_None && !PyCallable_Check(progress)) {
+        PyErr_SetString(PyExc_TypeError, "progress argument must be a callable");
+        return NULL;
+    }
+
+    if (pages == 0) {
+        pages = -1;
+    }
+
+    bck_conn = target->db;
+
+    Py_BEGIN_ALLOW_THREADS
+    bck_handle = sqlite3_backup_init(bck_conn, "main", self->db, name);
+    Py_END_ALLOW_THREADS
+
+    if (bck_handle == NULL) {
+        _pysqlite_seterror(self->state, bck_conn);
+        return NULL;
+    }
+
+    do {
+        Py_BEGIN_ALLOW_THREADS
+        rc = sqlite3_backup_step(bck_handle, pages);
+        Py_END_ALLOW_THREADS
+
+        if (progress != Py_None) {
+            int remaining = sqlite3_backup_remaining(bck_handle);
+            int pagecount = sqlite3_backup_pagecount(bck_handle);
+            PyObject *res = PyObject_CallFunction(progress, "iii", rc,
+                                                  remaining, pagecount);
+            if (res == NULL) {
+                /* Callback failed: abort backup and bail. */
+                Py_BEGIN_ALLOW_THREADS
+                sqlite3_backup_finish(bck_handle);
+                Py_END_ALLOW_THREADS
+                return NULL;
+            }
+            Py_DECREF(res);
+        }
+
+        /* Sleep for a while if there are still further pages to copy and
+           the engine could not make any progress */
+        if (rc == SQLITE_BUSY || rc == SQLITE_LOCKED) {
+            Py_BEGIN_ALLOW_THREADS
+            sqlite3_sleep(sleep_ms);
+            Py_END_ALLOW_THREADS
+        }
+    } while (rc == SQLITE_OK || rc == SQLITE_BUSY || rc == SQLITE_LOCKED);
+
+    Py_BEGIN_ALLOW_THREADS
+    rc = sqlite3_backup_finish(bck_handle);
+    Py_END_ALLOW_THREADS
+
+    if (rc != SQLITE_OK) {
+        _pysqlite_seterror(self->state, bck_conn);
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+/*[clinic input]
+_sqlite3.Connection.create_collation as pysqlite_connection_create_collation
+
+    cls: defining_class
+    name: str
+    callback as callable: object
+    /
+
+Creates a collation function.
+[clinic start generated code]*/
+
+static PyObject *
+pysqlite_connection_create_collation_impl(pysqlite_Connection *self,
+                                          PyTypeObject *cls,
+                                          const char *name,

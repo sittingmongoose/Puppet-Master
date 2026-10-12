@@ -1,0 +1,52 @@
+{
+  "schema": "er13.original_output_manifest.v2",
+  "arm_id": "B04-P02-control",
+  "phase": "ORIGINAL_FROZEN_BEFORE_COMPARISON",
+  "frozen_at_utc": "2026-10-12T01:05:17.558654+00:00",
+  "exclude_self": true,
+  "source_judgment": "FAIL",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 21434,
+      "sha256": "6ffc521c60e939fc14c2c690c04d7b6ca6d4d09fba09ca14487f5b63b19ff240"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 5904,
+      "sha256": "58c8d9dc2825611953876990b54b5c92957fafa34719f5b3549e404895e81f85"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 10845,
+      "sha256": "7a5a4020c9df310cc710bce65915529e6de443404b19a583129866c317ff65fe"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 5278,
+      "sha256": "38b3e6014ee780483c79d700246c1e15efb159a4ca2e5f9f09568aef9c5cb87d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 9616,
+      "sha256": "4b588e1f904aad5e21f84635f2f45903ea52af155586f7a17616a98f2410c09d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/primary-verification.json",
+      "relative_path": "evidence/primary-verification.json",
+      "bytes": 9901,
+      "sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 19014,
+      "sha256": "06f7e0ce702bfd1847ad62153bdb1be008b745f5e7035f5d1d7f40d583c1153b"
+    }
+  ]
+}

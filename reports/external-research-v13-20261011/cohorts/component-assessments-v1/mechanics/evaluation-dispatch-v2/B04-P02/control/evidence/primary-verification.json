@@ -1,0 +1,235 @@
+{
+  "independent_retrievals": [
+    {
+      "id": "R9111",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "retrieved_at_utc": "2026-10-12T01:05:16.414753+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "R9110",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "retrieved_at_utc": "2026-10-12T01:05:16.538742+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "E9111",
+      "requested_url": "https://errata.rfc-editor.org/search/?rfc_number=9111&presentation=records",
+      "resolved_url": "https://errata.rfc-editor.org/search/?rfc_number=9111&presentation=records",
+      "bytes": 40383,
+      "sha256": "1df394f9c04e33e74bf69360e3b7d3bbdeccbe80e27caaa18fdace216ccb54a4",
+      "retrieved_at_utc": "2026-10-12T01:05:16.697129+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "E9110",
+      "requested_url": "https://errata.rfc-editor.org/search/?rfc_number=9110&presentation=records",
+      "resolved_url": "https://errata.rfc-editor.org/search/?rfc_number=9110&presentation=records",
+      "bytes": 97750,
+      "sha256": "cec32fd170146656d933f627b512f2e027ae5c3592f5ec7760c3627493b30505",
+      "retrieved_at_utc": "2026-10-12T01:05:16.862944+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H839",
+      "requested_url": "https://api.github.com/repos/httpwg/http-core/issues/839",
+      "resolved_url": "https://api.github.com/repos/httpwg/http-core/issues/839",
+      "bytes": 7478,
+      "sha256": "a89064721009151e46fecac220c5e222fd3b28b2654a394601a8b18c23d91c52",
+      "retrieved_at_utc": "2026-10-12T01:05:17.083050+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H839-comments",
+      "requested_url": "https://api.github.com/repos/httpwg/http-core/issues/839/comments",
+      "resolved_url": "https://api.github.com/repos/httpwg/http-core/issues/839/comments",
+      "bytes": 2225,
+      "sha256": "f678181be9696000d5b2bfd83ff6bac21ca58db8d9f480612af62539258ad0c7",
+      "retrieved_at_utc": "2026-10-12T01:05:17.217227+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H892",
+      "requested_url": "https://github.com/httpwg/http-core/pull/892.patch",
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/httpwg/http-core/pull/892.patch",
+      "bytes": 4906,
+      "sha256": "4e95dc9f9d041c70639d7e7a789610e00bf15db7a23c610dcfa1bb0a7b3e54cc",
+      "retrieved_at_utc": "2026-10-12T01:05:17.541323+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    }
+  ],
+  "source_context_findings": [
+    {
+      "id": "CTX-304",
+      "source_ids": [
+        "R9111",
+        "R9110",
+        "E9111",
+        "H839",
+        "H839-comments",
+        "H892"
+      ],
+      "judgment": "Both finals follow the published RFC 9111 selectable-candidate filter and strong/weak/absent-validator update rules. Reported erratum 9185 proposes broader strong-ETag selection across Vary mismatches; it is not verified and is not used to mark the pinned-RFC policy wrong. Issue 839 and merged PR 892 explain the concern about timestamp-driven cross-variant updates. The full two-commit patch was inspected. No implementation code, caller or test conformance claim is inferred."
+    },
+    {
+      "id": "CTX-EXT",
+      "source_ids": [
+        "R9111",
+        "E9111"
+      ],
+      "judgment": "Erratum 9166 is held for document update and clarifies other HTTP extension mechanisms. Neither final claims its initial cache implements every future extension; the target remains RFC 9110/9111."
+    },
+    {
+      "id": "CTX-REQ",
+      "source_ids": [
+        "R9111"
+      ],
+      "judgment": "RFC 9111 section 5.2.1 request directives are advisory generally; lack of treatment discussion of max-age/min-fresh/only-if-cached is not graded as a universal protocol violation. Request no-store has its explicit storage rule and preexisting-entry exception; treatment states both."
+    },
+    {
+      "id": "CTX-AGE",
+      "source_ids": [
+        "R9111"
+      ],
+      "judgment": "The conservative max(apparent_age, corrected_age_value) calculation is permitted; RFC 9111 also permits corrected_age_value alone in the stated path context. Both conservative formulas are acceptable. Control treats bad timing as stale; treatment states invalid Age is ignored before deciding remaining timing is unreliable."
+    },
+    {
+      "id": "CTX-ERRATA9110",
+      "source_ids": [
+        "R9110",
+        "E9110"
+      ],
+      "judgment": "Verified errata 7138, 7306, 7419, 7105, 7109 and 8268 were screened for applicability. No final relies on the corrected Accept ranking example, range grammar, charset field example, CN-ID history, 308 method-change omission or misplaced historical note to make a contrary material claim. Reported/rejected records are not automatically normative replacements."
+    }
+  ],
+  "errata_record_index": {
+    "E9111": [
+      {
+        "id": "9004",
+        "status": "Reported",
+        "section": "3.5",
+        "url": "https://www.rfc-editor.org/errata/eid9004"
+      },
+      {
+        "id": "9185",
+        "status": "Reported",
+        "section": "4.3.4",
+        "url": "https://www.rfc-editor.org/errata/eid9185"
+      },
+      {
+        "id": "9166",
+        "status": "Held for Document Update",
+        "section": "5.2.3",
+        "url": "https://www.rfc-editor.org/errata/eid9166"
+      },
+      {
+        "id": "7695",
+        "status": "Rejected",
+        "section": "4.3.2",
+        "url": "https://www.rfc-editor.org/errata/eid7695"
+      }
+    ],
+    "E9110": [
+      {
+        "id": "7138",
+        "status": "Verified",
+        "section": "12.5.1",
+        "url": "https://www.rfc-editor.org/errata/eid7138"
+      },
+      {
+        "id": "7306",
+        "status": "Verified",
+        "section": "14.1.1",
+        "url": "https://www.rfc-editor.org/errata/eid7306"
+      },
+      {
+        "id": "7419",
+        "status": "Verified",
+        "section": "8.3.2",
+        "url": "https://www.rfc-editor.org/errata/eid7419"
+      },
+      {
+        "id": "7105",
+        "status": "Verified",
+        "section": "B.1.",
+        "url": "https://www.rfc-editor.org/errata/eid7105"
+      },
+      {
+        "id": "7109",
+        "status": "Verified",
+        "section": "15.4.9",
+        "url": "https://www.rfc-editor.org/errata/eid7109"
+      },
+      {
+        "id": "8268",
+        "status": "Verified",
+        "section": "B.2",
+        "url": "https://www.rfc-editor.org/errata/eid8268"
+      },
+      {
+        "id": "9162",
+        "status": "Reported",
+        "section": "5.2",
+        "url": "https://www.rfc-editor.org/errata/eid9162"
+      },
+      {
+        "id": "9164",
+        "status": "Reported",
+        "section": "Appendix A",
+        "url": "https://www.rfc-editor.org/errata/eid9164"
+      },
+      {
+        "id": "7107",
+        "status": "Rejected",
+        "section": "6.5.1",
+        "url": "https://www.rfc-editor.org/errata/eid7107"
+      },
+      {
+        "id": "7599",
+        "status": "Rejected",
+        "section": "6.4.1",
+        "url": "https://www.rfc-editor.org/errata/eid7599"
+      },
+      {
+        "id": "7870",
+        "status": "Rejected",
+        "section": "8.6",
+        "url": "https://www.rfc-editor.org/errata/eid7870"
+      },
+      {
+        "id": "8138",
+        "status": "Rejected",
+        "section": "15.4",
+        "url": "https://www.rfc-editor.org/errata/eid8138"
+      },
+      {
+        "id": "8459",
+        "status": "Rejected",
+        "section": "15",
+        "url": "https://www.rfc-editor.org/errata/eid8459"
+      },
+      {
+        "id": "7530",
+        "status": "Rejected",
+        "section": "15.5.2.",
+        "url": "https://www.rfc-editor.org/errata/eid7530"
+      }
+    ]
+  },
+  "copyright_and_license_notice": "Copyright (c) 2022 IETF Trust and the persons identified as the RFC authors. All rights reserved. The RFCs are subject to BCP 78 and the IETF Trust Legal Provisions Relating to IETF Documents in effect on publication: https://trustee.ietf.org/license-info. Code Components extracted from these documents must include Revised BSD License text as described in Section 4.e of those provisions. Governing original notices remain in the cited hash-verified RFC bodies; no RFC code component is copied into these outputs.",
+  "cost_category": "independent_evaluation",
+  "browser_tool_limit": "Web tool errata9111 redirect was unavailable; direct public-authority HTTP retrieval succeeded. No authenticated/private browser or account used."
+}

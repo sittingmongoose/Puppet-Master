@@ -1,0 +1,250 @@
+
+commit-zipfile.rst 14-24
+14: The ZIP file format is a common archive and compression standard. This module
+15: provides tools to create, read, write, append, and list a ZIP file.  Any
+16: advanced use of this module will require an understanding of the format, as
+17: defined in `PKZIP Application Note`_.
+18: 
+19: This module does not currently handle multi-disk ZIP files.
+20: It can handle ZIP files that use the ZIP64 extensions
+21: (that is ZIP files that are more than 4 GiB in size).  It supports
+22: decryption of encrypted files in ZIP archives, but it currently cannot
+23: create an encrypted file.  Decryption is extremely slow as it is
+24: implemented in native Python rather than C.
+
+commit-zipfile.rst 96-127
+96: .. data:: ZIP_STORED
+97: 
+98:    The numeric constant for an uncompressed archive member.
+99: 
+100: 
+101: .. data:: ZIP_DEFLATED
+102: 
+103:    The numeric constant for the usual ZIP compression method.  This requires the
+104:    :mod:`zlib` module.
+105: 
+106: 
+107: .. data:: ZIP_BZIP2
+108: 
+109:    The numeric constant for the BZIP2 compression method.  This requires the
+110:    :mod:`bz2` module.
+111: 
+112:    .. versionadded:: 3.3
+113: 
+114: .. data:: ZIP_LZMA
+115: 
+116:    The numeric constant for the LZMA compression method.  This requires the
+117:    :mod:`lzma` module.
+118: 
+119:    .. versionadded:: 3.3
+120: 
+121:    .. note::
+122: 
+123:       The ZIP file format specification has included support for bzip2 compression
+124:       since 2001, and for LZMA compression since 2006. However, some tools
+125:       (including older Python releases) do not support these compression
+126:       methods, and may either refuse to process the ZIP file altogether,
+127:       or fail to extract individual files.
+
+commit-zipfile.rst 193-219
+193:    When mode is ``'r'``, *metadata_encoding* may be set to the name of a codec,
+194:    which will be used to decode metadata such as the names of members and ZIP
+195:    comments.
+196: 
+197:    If the file is created with mode ``'w'``, ``'x'`` or ``'a'`` and then
+198:    :meth:`closed <close>` without adding any files to the archive, the appropriate
+199:    ZIP structures for an empty archive will be written to the file.
+200: 
+201:    ZipFile is also a context manager and therefore supports the
+202:    :keyword:`with` statement.  In the example, *myzip* is closed after the
+203:    :keyword:`!with` statement's suite is finished---even if an exception occurs::
+204: 
+205:       with ZipFile('spam.zip', 'w') as myzip:
+206:           myzip.write('eggs.txt')
+207: 
+208:    .. note::
+209: 
+210:       *metadata_encoding* is an instance-wide setting for the ZipFile.
+211:       It is not currently possible to set this on a per-member basis.
+212: 
+213:       This attribute is a workaround for legacy implementations which produce
+214:       archives with names in the current locale encoding or code page (mostly
+215:       on Windows).  According to the .ZIP standard, the encoding of metadata
+216:       may be specified to be either IBM code page (default) or UTF-8 by a flag
+217:       in the archive header.
+218:       That flag takes precedence over *metadata_encoding*, which is
+219:       a Python-specific extension.
+
+commit-zipfile.rst 253-306
+253: 
+254:    Close the archive file.  You must call :meth:`close` before exiting your program
+255:    or essential records will not be written.
+256: 
+257: 
+258: .. method:: ZipFile.getinfo(name)
+259: 
+260:    Return a :class:`ZipInfo` object with information about the archive member
+261:    *name*.  Calling :meth:`getinfo` for a name not currently contained in the
+262:    archive will raise a :exc:`KeyError`.
+263: 
+264: 
+265: .. method:: ZipFile.infolist()
+266: 
+267:    Return a list containing a :class:`ZipInfo` object for each member of the
+268:    archive.  The objects are in the same order as their entries in the actual ZIP
+269:    file on disk if an existing archive was opened.
+270: 
+271: 
+272: .. method:: ZipFile.namelist()
+273: 
+274:    Return a list of archive members by name.
+275: 
+276: 
+277: .. method:: ZipFile.open(name, mode='r', pwd=None, *, force_zip64=False)
+278: 
+279:    Access a member of the archive as a binary file-like object.  *name*
+280:    can be either the name of a file within the archive or a :class:`ZipInfo`
+281:    object.  The *mode* parameter, if included, must be ``'r'`` (the default)
+282:    or ``'w'``.  *pwd* is the password used to decrypt encrypted ZIP files as a
+283:    :class:`bytes` object.
+284: 
+285:    :meth:`~ZipFile.open` is also a context manager and therefore supports the
+286:    :keyword:`with` statement::
+287: 
+288:       with ZipFile('spam.zip') as myzip:
+289:           with myzip.open('eggs.txt') as myfile:
+290:               print(myfile.read())
+291: 
+292:    With *mode* ``'r'`` the file-like object
+293:    (``ZipExtFile``) is read-only and provides the following methods:
+294:    :meth:`~io.BufferedIOBase.read`, :meth:`~io.IOBase.readline`,
+295:    :meth:`~io.IOBase.readlines`, :meth:`~io.IOBase.seek`,
+296:    :meth:`~io.IOBase.tell`, :meth:`~container.__iter__`, :meth:`~iterator.__next__`.
+297:    These objects can operate independently of the ZipFile.
+298: 
+299:    With ``mode='w'``, a writable file handle is returned, which supports the
+300:    :meth:`~io.BufferedIOBase.write` method.  While a writable file handle is open,
+301:    attempting to read or write other files in the ZIP file will raise a
+302:    :exc:`ValueError`.
+303: 
+304:    In both cases the file-like object has also attributes :attr:`!name`,
+305:    which is equivalent to the name of a file within the archive, and
+306:    :attr:`!mode`, which is ``'rb'`` or ``'wb'`` depending on the input mode.
+
+commit-zipfile.rst 339-380
+339: .. method:: ZipFile.extract(member, path=None, pwd=None)
+340: 
+341:    Extract a member from the archive to the current working directory; *member*
+342:    must be its full name or a :class:`ZipInfo` object.  Its file information is
+343:    extracted as accurately as possible.  *path* specifies a different directory
+344:    to extract to.  *member* can be a filename or a :class:`ZipInfo` object.
+345:    *pwd* is the password used for encrypted files as a :class:`bytes` object.
+346: 
+347:    Returns the normalized path created (a directory or new file).
+348: 
+349:    .. note::
+350: 
+351:       If a member filename is an absolute path, a drive/UNC sharepoint and
+352:       leading (back)slashes will be stripped, e.g.: ``///foo/bar`` becomes
+353:       ``foo/bar`` on Unix, and ``C:\foo\bar`` becomes ``foo\bar`` on Windows.
+354:       And all ``".."`` components in a member filename will be removed, e.g.:
+355:       ``../../foo../../ba..r`` becomes ``foo../ba..r``.  On Windows illegal
+356:       characters (``:``, ``<``, ``>``, ``|``, ``"``, ``?``, and ``*``)
+357:       replaced by underscore (``_``).
+358: 
+359:    .. versionchanged:: 3.6
+360:       Calling :meth:`extract` on a closed ZipFile will raise a
+361:       :exc:`ValueError`.  Previously, a :exc:`RuntimeError` was raised.
+362: 
+363:    .. versionchanged:: 3.6.2
+364:       The *path* parameter accepts a :term:`path-like object`.
+365: 
+366: 
+367: .. method:: ZipFile.extractall(path=None, members=None, pwd=None)
+368: 
+369:    Extract all members from the archive to the current working directory.  *path*
+370:    specifies a different directory to extract to.  *members* is optional and must
+371:    be a subset of the list returned by :meth:`namelist`.  *pwd* is the password
+372:    used for encrypted files as a :class:`bytes` object.
+373: 
+374:    .. warning::
+375: 
+376:       Never extract archives from untrusted sources without prior inspection.
+377:       It is possible that files are created outside of *path*, e.g. members
+378:       that have absolute filenames starting with ``"/"`` or filenames with two
+379:       dots ``".."``.  This module attempts to prevent that.
+380:       See :meth:`extract` note.
+
+commit-zipfile.rst 536-553
+536: .. class:: Path(root, at='')
+537: 
+538:    Construct a Path object from a ``root`` zipfile (which may be a
+539:    :class:`ZipFile` instance or ``file`` suitable for passing to
+540:    the :class:`ZipFile` constructor).
+541: 
+542:    ``at`` specifies the location of this Path within the zipfile,
+543:    e.g. 'dir/file.txt', 'dir/', or ''. Defaults to the empty string,
+544:    indicating the root.
+545: 
+546:    .. note::
+547:       The :class:`Path` class does not sanitize filenames within the ZIP archive. Unlike
+548:       the :meth:`ZipFile.extract` and :meth:`ZipFile.extractall` methods, it is the
+549:       caller's responsibility to validate or sanitize filenames to prevent path traversal
+550:       vulnerabilities (e.g., filenames containing ".." or absolute paths). When handling
+551:       untrusted archives, consider resolving filenames using :func:`os.path.abspath`
+552:       and checking against the target directory with :func:`os.path.commonpath`.
+553: 
+
+commit-zipfile.rst 785-790
+785: .. method:: ZipInfo.is_dir()
+786: 
+787:    Return ``True`` if this archive member is a directory.
+788: 
+789:    This uses the entry's name: directories should always end with ``/``.
+790: 
+
+commit-zipfile.rst 980-1023
+980: Decompression pitfalls
+981: ----------------------
+982: 
+983: The extraction in zipfile module might fail due to some pitfalls listed below.
+984: 
+985: From file itself
+986: ~~~~~~~~~~~~~~~~
+987: 
+988: Decompression may fail due to incorrect password / CRC checksum / ZIP format or
+989: unsupported compression method / decryption.
+990: 
+991: File System limitations
+992: ~~~~~~~~~~~~~~~~~~~~~~~
+993: 
+994: Exceeding limitations on different file systems can cause decompression failed.
+995: Such as allowable characters in the directory entries, length of the file name,
+996: length of the pathname, size of a single file, and number of files, etc.
+997: 
+998: .. _zipfile-resources-limitations:
+999: 
+1000: Resources limitations
+1001: ~~~~~~~~~~~~~~~~~~~~~
+1002: 
+1003: The lack of memory or disk volume would lead to decompression
+1004: failed. For example, decompression bombs (aka `ZIP bomb`_)
+1005: apply to zipfile library that can cause disk volume exhaustion.
+1006: 
+1007: Interruption
+1008: ~~~~~~~~~~~~
+1009: 
+1010: Interruption during the decompression, such as pressing control-C or killing the
+1011: decompression process may result in incomplete decompression of the archive.
+1012: 
+1013: Default behaviors of extraction
+1014: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1015: 
+1016: Not knowing the default extraction behaviors
+1017: can cause unexpected decompression results.
+1018: For example, when extracting the same archive twice,
+1019: it overwrites files without asking.
+1020: 
+1021: 
+1022: .. _ZIP bomb: https://en.wikipedia.org/wiki/Zip_bomb
+1023: .. _PKZIP Application Note: https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT

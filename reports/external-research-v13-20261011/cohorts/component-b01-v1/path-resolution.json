@@ -1,0 +1,1790 @@
+{
+  "normalization": "ER13_RUNTIME is a privacy placeholder; resolve retained suffix relative to this edition or restored destination",
+  "locators": [
+    {
+      "locator": "ER13_RUNTIME/helpers/component-admit-v1",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/luna-core-v1",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/inputs",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/assignment.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/helpers/component-fixtures-v1/source_reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/brief.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/critique.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/draft.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/plan.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/inputs/B01-P01/source-index.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/native-goal-terminal.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/native/assert-active-goal.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-control/native/verify-runtime.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/assignment.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/helpers/component-fixtures-v1/source_reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-index.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/native-goal-terminal.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/native/assert-active-goal.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/native/verify-runtime.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/assignment.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/helpers/component-fixtures-v1/source_reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/brief.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/critique.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/draft.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/plan.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/inputs/B01-P02/source-index.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/native-goal-terminal.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/native/assert-active-goal.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-control/native/verify-runtime.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/amendments.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/assemble.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/assignment.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/final.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/helpers/component-fixtures-v1/source_reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/native-goal-terminal.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/native/assert-active-goal.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/native/verify-runtime.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/witnesses/capture-source-reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/witnesses/source_reader.py",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/assignment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/authored-manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/criticism-dispositions.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/dispatch.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/final.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/freeze.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/input-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/brief.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/critique.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/draft.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/plan.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/inputs/B01-P01/source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-create.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-terminal.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/native-goal-terminal.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/selection.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-control/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-control/source-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/amendments.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/amendments.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assemble.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assemble.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assembly-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assembly-results.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/assignment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/authored-manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/dispatch.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/final.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/freeze.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/input-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/brief.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/critique.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/draft.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/plan.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/inputs/B01-P01/source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/native-goal-create.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P01-treatment/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/selection.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/assignment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/authored-manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/criticism-dispositions.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/dispatch.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/final.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/freeze.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/input-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/brief.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/critique.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/draft.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/plan.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/inputs/B01-P02/source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-create.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-terminal.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/native-goal-terminal.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/selection.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/source-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/activation-context.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/activation-context.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stderr.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stderr.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stdout.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-control/witnesses/assemble.stdout.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/amendments.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/amendments.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assemble.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assemble.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assembly-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assembly-results.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/assignment.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/assignment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/authored-manifest.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/authored-manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/criticism-dispositions.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/criticism-dispositions.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/dispatch.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/dispatch.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/final.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/final.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/freeze.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/freeze.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/input-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/input-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/native-goal-create.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/native-goal-create.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/request.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/selection.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/selection.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/source-map.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/source-map.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/README.md",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/README.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/capture-source-reader.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/capture-source-reader.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source-reader-results.json",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source-reader-results.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source_reader.py",
+      "public_path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/witnesses/source_reader.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/comparison.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/defects.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-license.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-license.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-pin-meta.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-pin-meta.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-doc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-doc.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-osdoc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-osdoc.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag-object.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag-object.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tests.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tests.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/input-and-custody-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/input-and-custody-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/preservation-review.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/preservation-review.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/python3139-release.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/python3139-release.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/retrieval-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup-api.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup-api.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-pragma.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-pragma.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-release3513.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-release3513.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-security.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-security.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-vacuum.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-vacuum.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-wal.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-wal.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/coverage.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/defects.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-license.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-license.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-pin-meta.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython-pin-meta.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-connection.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-doc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-doc.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-dump.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-osdoc.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-osdoc.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag-object.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag-object.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tag.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tests.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/cpython3139-tests.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/input-and-custody-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/input-and-custody-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/preservation-review.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/preservation-review.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/python3139-release.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/python3139-release.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/retrieval-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup-api.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup-api.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-backup.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-pragma.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-pragma.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-release3513.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-release3513.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-security.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-security.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-vacuum.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-vacuum.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-wal.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/evidence/sqlite-wal.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P01/treatment/primary-source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/comparison.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/comparison.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/coverage.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/defects.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/CPython-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/CPython-LICENSE.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-__init__.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-__init__.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-test_core.py.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-test_core.py.context.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-zipfile.rst.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/commit-zipfile.rst.context.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stderr.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.stdout.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/public-authorities.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/public-authorities.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/source-body-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/source-body-retrieval.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/input-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/control/primary-source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.md",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/coverage.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/defects.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/CPython-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/CPython-LICENSE.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/artifact-audit.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/artifact-audit.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-__init__.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-__init__.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-test_core.py.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-test_core.py.context.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-zipfile.rst.context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/commit-zipfile.rst.context.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.py",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stderr.txt",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/name-pipeline-witness.stdout.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/public-authorities.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/public-authorities.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/source-body-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/evidence/source-body-retrieval.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/input-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/manifest.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B01-P02/treatment/primary-source-index.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-control/component-terminal-task.raw.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P02-control/component-terminal-task.raw.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P02-treatment/component-terminal-task.raw.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B01-P01.json",
+      "public_path": "state/dispatcher-v1/eval-ready/B01-P01.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B01-P02.json",
+      "public_path": "state/dispatcher-v1/eval-ready/B01-P02.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-input-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-input-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-output-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P01-request.json",
+      "public_path": "state/eval-coordinator-v2/B01-P01-request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-input-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-input-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-output-verification.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/eval-coordinator-v2/B01-P02-request.json",
+      "public_path": "state/eval-coordinator-v2/B01-P02-request.json",
+      "status": "RETAINED"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/first-setup-blocker.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    },
+    {
+      "locator": "ER13_RUNTIME/state/route-reallocation-v1.json",
+      "public_path": null,
+      "status": "EXTERNAL_HISTORICAL_INPUT_OR_RUNTIME_REFERENCE"
+    }
+  ]
+}

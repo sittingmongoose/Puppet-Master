@@ -1,0 +1,142 @@
+{
+  "block_id": "B08-P02",
+  "verified_at_utc": "2026-10-12T01:10:00.533409+00:00",
+  "grader_taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B08-P02-001",
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "originals": [
+    {
+      "arm_id": "B08-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/manifest.json",
+      "manifest_sha256": "bcc9e24478f93b648ea9d088373e79e6c5d4bccc46b7e3e42ce22a34c9b28e2a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.json",
+      "assessment_sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 11,
+      "source_families_count": 7,
+      "source_family_coverage": [
+        {
+          "id": null,
+          "family": "Pinned CPython API/docs/definitions and source release identity",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Governing normalization/full-fold code, helper/caller/data context and error paths",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Upstream tests and regression/fix/release context",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Unicode 15.1 governing mappings and normalization/folding oracles",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Grapheme boundary, confusable, formal NFKC_Casefold and locale-collation mechanisms",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Unrelated whole-library code, entire generated tables, all historical issues",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "Deployed note UI/index/migration execution and full conformance suite results",
+          "coverage": "UNASSESSED"
+        }
+      ],
+      "material_defects": 1,
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "method_compliance": "PARTIAL_VERIFIABLE",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 14,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B08-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/manifest.json",
+      "manifest_sha256": "d28a56387ae525ce29f664019698f0223d58088dcb5c2ae9fa905cc13f5f2f64",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.json",
+      "assessment_sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 11,
+      "source_families_count": 7,
+      "source_family_coverage": [
+        {
+          "id": null,
+          "family": "Pinned CPython API/docs/definitions and source release identity",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Governing normalization/full-fold code, helper/caller/data context and error paths",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Upstream tests and regression/fix/release context",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Unicode 15.1 governing mappings and normalization/folding oracles",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Grapheme boundary, confusable, formal NFKC_Casefold and locale-collation mechanisms",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Unrelated whole-library code, entire generated tables, all historical issues",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "Deployed note UI/index/migration execution and full conformance suite results",
+          "coverage": "UNASSESSED"
+        }
+      ],
+      "material_defects": 1,
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE_WITH_OBSERVABILITY_LIMITS",
+      "method_compliance": "PARTIAL_VERIFIABLE",
+      "native_provenance": "PARTIAL",
+      "resource_coverage": "PARTIAL",
+      "frozen_files_verified": 14,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/comparison.json",
+  "comparison_sha256": "f5079bfff5afa81420f5242f457845caa4b9d6ac3e74850fda132c327aacdae8",
+  "meaning": "Mechanical verification and faithful report of original evaluator judgments; no regrade or campaign selection"
+}

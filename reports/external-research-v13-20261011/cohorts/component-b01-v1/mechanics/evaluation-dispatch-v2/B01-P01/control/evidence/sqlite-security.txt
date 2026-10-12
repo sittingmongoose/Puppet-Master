@@ -1,0 +1,54 @@
+URL: https://www.sqlite.org/security.html
+Full response SHA256: b9034bba326f3984cf9e8d018445d9b2551c2f19141e1ae807cb56d1da881ebd
+Retrieved UTC: 2026-10-12T01:18:41.667041+00:00
+Representation: scoped normalized HTML excerpts; strikeouts marked; original full body hash retained.
+
+1.2. Untrusted SQLite Database Files
+Applications that read or write SQLite database files of uncertain
+provenance should take precautions enumerated below.
+Even if the application does not deliberately accept database files
+from untrusted sources, beware of attacks in which a local
+database file is altered.  For best security, any database file which
+might have ever been writable by an agent in a different security domain
+should be treated as suspect.
+If the application includes any custom SQL functions or
+custom virtual tables that have side effects or that might leak
+privileged information, then the application should use one or more
+of the techniques below to prevent a maliciously crafted database
+schema from surreptitiously running those SQL functions and/or
+virtual tables for nefarious purposes:
+Invoke sqlite3_db_config(db,SQLITE_DBCONFIG_TRUSTED_SCHEMA,0,0)
+on each database connection as soon as it is opened.
+Run the PRAGMA trusted_schema=OFF statement on each database connection
+as soon as it is opened.
+Compile SQLite using the -DSQLITE_TRUSTED_SCHEMA=0 compile-time option.
+Disable the surreptitious use of custom SQL functions and virtual tables
+by setting the SQLITE_DIRECTONLY flag on all custom SQL functions and
+the SQLITE_VTAB_DIRECTONLY flag on all custom virtual tables.
+Ensure that custom virtual tables that run SQL statements based
+on arguments to the CREATE VIRTUAL TABLE statement in the database
+schema use sqlite3_prepare_v3() with the SQLITE_PREPARE_FROM_DDL
+option to prevent bypass of the SQLITE_DBCONFIG_TRUSTED_SCHEMA
+setting in item (9a) above.
+If the application does not use triggers or views, consider disabling the
+unused capabilities with:
+sqlite3_db_config(db,SQLITE_DBCONFIG_ENABLE_TRIGGER,0,0);
+sqlite3_db_config(db,SQLITE_DBCONFIG_ENABLE_VIEW,0,0);
+If an application is particularly security sensitive, then
+the following extra layers of defense might be justified.
+These extra defenses come with performance costs,
+however, and so may not be appropriate in every situation:
+Run PRAGMA integrity_check or PRAGMA quick_check on the database
+as the first SQL statement after opening the database files and
+prior to running any other SQL statements.  Reject and refuse to
+process any database file containing errors.
+Enable the PRAGMA cell_size_check=ON setting.
+Do not enable memory-mapped I/O.
+In other words, make sure that PRAGMA mmap_size=0.
+2. Summary
+The precautions above are not required in order to use SQLite safely
+with potentially hostile inputs.
+However, they do provide an extra layer of defense against zero-day
+exploits and are encouraged for applications that pass data from
+untrusted sources into SQLite.
+This page was last updated on 2026-07-10 16:44:46Z

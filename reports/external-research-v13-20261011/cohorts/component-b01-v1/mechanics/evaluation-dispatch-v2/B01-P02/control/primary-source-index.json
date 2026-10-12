@@ -1,0 +1,327 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "B01-P02-control",
+  "independence": "Evaluator independently fetched public authorities; the same evaluator lookup and mechanism witness are reused across matched arms. No candidate-authored source conclusions were treated as primary authority.",
+  "sources": [
+    {
+      "id": "CP-doc",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst",
+      "version": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 / CPython 3.13.9",
+      "full_body_bytes": 35432,
+      "full_body_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "context_evidence": "evidence/commit-zipfile.rst.context.txt",
+      "locators_1based": [
+        [
+          14,
+          24
+        ],
+        [
+          96,
+          127
+        ],
+        [
+          193,
+          219
+        ],
+        [
+          253,
+          306
+        ],
+        [
+          339,
+          380
+        ],
+        [
+          536,
+          553
+        ],
+        [
+          785,
+          790
+        ],
+        [
+          980,
+          1023
+        ]
+      ],
+      "context": "Documented methods, encoding, extraction/Path distinction and pitfalls. High-level metadata decoding docs do not describe the whole later extra-field override path.",
+      "coverage": "COMPLETE",
+      "coverage_scope": "The listed API facts, not the entire library.",
+      "context_evidence_sha256": "1500c6783c7d0c7e9d1d5ead3757522c179cd953155213bac97fa5b302d82c66"
+    },
+    {
+      "id": "CP-code",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py",
+      "version": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 / CPython 3.13.9",
+      "full_body_bytes": 89132,
+      "full_body_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "evidence": "evidence/commit-__init__.py",
+      "locators_1based": [
+        [
+          252,
+          354
+        ],
+        [
+          355,
+          432
+        ],
+        [
+          523,
+          566
+        ],
+        [
+          595,
+          616
+        ],
+        [
+          700,
+          794
+        ],
+        [
+          865,
+          1129
+        ],
+        [
+          1276,
+          1530
+        ],
+        [
+          1599,
+          1714
+        ],
+        [
+          1758,
+          1852
+        ]
+      ],
+      "context": "The caller constructs ZipInfo, then _decodeExtra may replace filename from CRC-matching version-1 0x7075 data. orig_filename stays the header-derived value; open compares the local header against that original.",
+      "coverage": "PARTIAL",
+      "unassessed": "Unrelated write/CLI machinery and native codec implementations; no application or OS guarantees.",
+      "evidence_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44"
+    },
+    {
+      "id": "CP-tests",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py",
+      "version": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 / CPython 3.13.9",
+      "full_body_bytes": 154639,
+      "full_body_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "context_evidence": "evidence/commit-test_core.py.context.txt",
+      "locators_1based": [
+        [
+          292,
+          403
+        ],
+        [
+          1523,
+          1641
+        ],
+        [
+          1628,
+          1730
+        ],
+        [
+          1820,
+          1875
+        ],
+        [
+          2522,
+          2557
+        ],
+        [
+          3040,
+          3185
+        ],
+        [
+          3350,
+          3454
+        ]
+      ],
+      "context": "Path transformations, supported Unicode-extra handling including malformed/empty extras, selected CRC checks, directory and legacy encoding cases were inspected. Upstream tests were not executed.",
+      "coverage": "PARTIAL",
+      "unassessed": "The rest of the upstream test suite and platform execution.",
+      "context_evidence_sha256": "7b50fe514da59da7ef33335fafc8e8266cadddfee986e8f719535458db1d1c29"
+    },
+    {
+      "id": "CP-release",
+      "url": "https://www.python.org/downloads/release/python-3139/",
+      "version": "3.13.9 released 2025-10-14",
+      "context": "The requested release is retained; later current releases are not substituted. Independent commit API identifies the frozen pin as Python 3.13.9, and all three tag bodies match commit/cache hashes.",
+      "coverage": "COMPLETE",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "CP-Unicode-history",
+      "urls": [
+        "https://github.com/python/cpython/issues/86094",
+        "https://github.com/python/cpython/pull/102566"
+      ],
+      "version": "Merged 2023-04-05; implemented in the pinned 3.13.9 source",
+      "context": "Unicode Path support is a real implemented capability. Historical issue title describes the earlier deficiency, not the frozen release behavior.",
+      "coverage": "COMPLETE",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "ZIP-spec",
+      "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "version": "APPNOTE 6.3.10, revised 2022-11-01",
+      "exact_locators": [
+        "4.6.9 Unicode Path Extra Field (0x7075)",
+        "4.4.4 flag 11",
+        "4.4.17 file name"
+      ],
+      "context": "4.6.9 defines the UTF-8 path override, version and CRC of header-name bytes; UTF-8-flag decoding is not the only possible effective name mechanism.",
+      "coverage": "PARTIAL",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "Windows-naming",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions",
+      "version": "Live page independently retrieved 2026-10-12 UTC",
+      "exact_locators": [
+        "Naming Conventions",
+        "Short vs. Long Names",
+        "Paths",
+        "Namespaces"
+      ],
+      "context": "Default case behavior, reserved characters/devices (including extensions and superscript COM/LPT digits), trailing dot/space, 8.3 aliases and namespace/path limits. Neither generic Unicode casefold nor source inspection proves every filesystem equivalence.",
+      "coverage": "PARTIAL",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "Windows-publication",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "version": "Live page independently retrieved 2026-10-12 UTC",
+      "exact_locators": [
+        "lpNewFileName",
+        "MOVEFILE_COPY_ALLOWED",
+        "MOVEFILE_REPLACE_EXISTING",
+        "MOVEFILE_WRITE_THROUGH"
+      ],
+      "context": "Directory moves are constrained to one drive. Copy/delete and replace flags have distinct behavior; this documentation does not establish the proposal's full crash, ACL or atomic-publication protocol.",
+      "coverage": "PARTIAL",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "Linux-publication",
+      "url": "https://www.kernel.org/doc/html/v6.12/filesystems/vfs.html",
+      "version": "Linux v6.12 documentation; actual target kernel/filesystem unknown",
+      "exact_locator": "inode_operations rename",
+      "context": "RENAME_NOREPLACE documents failure for an existing target and unsupported flag handling; filesystem-specific correctness and power-loss durability remain outside this assessment. The man7 fetch failed; kernel primary documentation was consulted instead.",
+      "coverage": "PARTIAL",
+      "evidence": "evidence/public-authorities.json",
+      "evidence_sha256": "27c877f69b2d84691464a08f31266b99ee6c95449747fa947167c60e10f00ecc"
+    },
+    {
+      "id": "OS-hardening-and-native-codec",
+      "coverage": "UNASSESSED",
+      "source_families": [
+        "Native zlib/bzip2/lzma allocation and stream edge cases",
+        "Target ACL/reparse/no-follow/handle-relative implementation",
+        "Worker hard memory/time limit mechanisms on both platforms",
+        "Durability, stale-stage ownership and recovery across filesystems"
+      ],
+      "reason": "Expensive exhaustive mechanism review stopped after decisive source defect; no correctness grade inferred for this remainder."
+    }
+  ],
+  "authority_body_hashes": [
+    {
+      "id": "zip_spec",
+      "url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "bytes": 174585,
+      "body_sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+      "reviewed_sections": [
+        "4.6.9 Unicode Path extra field",
+        "4.4.4 general purpose flag 11",
+        "4.4.17 file name"
+      ],
+      "version": "APPNOTE 6.3.10; revised 2022-11-01",
+      "copyright_notice": "Copyright (c) 1989 - 2014, 2018, 2019, 2020, 2022 PKWARE Inc., All Rights Reserved."
+    },
+    {
+      "id": "release",
+      "url": "https://www.python.org/downloads/release/python-3139/",
+      "bytes": 10612,
+      "body_sha256": "43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65"
+    },
+    {
+      "id": "windows_naming",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "bytes": 68284,
+      "body_sha256": "88545db9932fc99f717912a3e0d9e02f009241f8afa6891bf92ef72e27ca156a"
+    },
+    {
+      "id": "windows_move",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexw",
+      "bytes": 63000,
+      "body_sha256": "2177bce27264c543b1767d2d9eb8914fe53485b37a53e9159a87d3894dcf78cd"
+    },
+    {
+      "id": "unicode_issue",
+      "url": "https://api.github.com/repos/python/cpython/issues/86094",
+      "bytes": 6011,
+      "body_sha256": "4f8ad482d6e9d9b7ce34267d7536e38e08c30974bb90c918af6a35b9f38e5b34",
+      "public_context": {
+        "number": 86094,
+        "title": "ZipFile does not supports Unicode Path Extra Field (0x7075) zip header field",
+        "state": "closed",
+        "created_at": "2020-10-04T11:21:41Z",
+        "closed_at": "2023-04-05T11:55:05Z",
+        "html_url": "https://github.com/python/cpython/issues/86094"
+      }
+    },
+    {
+      "id": "unicode_pr",
+      "url": "https://api.github.com/repos/python/cpython/pulls/102566",
+      "bytes": 19353,
+      "body_sha256": "25ab7ca72b071e4a336b58244dff80f442675d445432b313adebca2986f489c0",
+      "public_context": {
+        "number": 102566,
+        "title": "gh-86094 Add support for Unicode Path Extra Field in ZipFile",
+        "state": "closed",
+        "merged": true,
+        "merged_at": "2023-04-05T11:54:48Z",
+        "merge_commit_sha": "8f70b16e3397ad32757ddbabd5180cbef0036a4b",
+        "html_url": "https://github.com/python/cpython/pull/102566"
+      }
+    },
+    {
+      "id": "release_commit",
+      "url": "https://api.github.com/repos/python/cpython/commits/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "bytes": 7272,
+      "body_sha256": "44ad32680f6f8b8003ddff90734aedc1a586310f7fc02f01d3f4bb217558f5a4",
+      "public_context": {
+        "sha": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+        "message": "Python 3.13.9",
+        "commit_time": "2025-10-14T13:52:31Z",
+        "html_url": "https://github.com/python/cpython/commit/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+      }
+    },
+    {
+      "id": "linux_vfs",
+      "url": "https://www.kernel.org/doc/html/v6.12/filesystems/vfs.html",
+      "bytes": 159675,
+      "body_sha256": "d5f20a55b350f450eeff2a7fee2d2b4bdae881640510e9b24d31453b06cfaa0e"
+    }
+  ],
+  "source_license": {
+    "path": "evidence/CPython-LICENSE.txt",
+    "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+  },
+  "witness": {
+    "code": "evidence/name-pipeline-witness.py",
+    "stdout": "evidence/name-pipeline-witness.stdout.json",
+    "stderr": "evidence/name-pipeline-witness.stderr.txt",
+    "returncode": 0,
+    "executed_at": "Exact start/end not separately captured; execution occurred during this evaluation after the first confirmed clock observation at 2026-10-12T01:12:51Z.",
+    "command": "python3 -B ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/evidence/name-pipeline-witness.py",
+    "runtime": "Python 3.14.4 executing public CPython 3.13.9 ZIP core; final Path export import omitted",
+    "shared_execution": true,
+    "oracle": "Observe decoded original/effective fields and exact payload read from two in-memory STORED archives",
+    "limitations": "Not a full 3.13.9 interpreter, candidate importer, deployment, Windows, filesystem or security test."
+  }
+}

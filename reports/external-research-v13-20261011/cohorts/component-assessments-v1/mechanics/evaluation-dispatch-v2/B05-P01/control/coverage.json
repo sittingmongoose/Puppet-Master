@@ -1,0 +1,302 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "B05-P01-control",
+  "scope": "COMPONENT",
+  "overall": "COMPLETE",
+  "definition": "Complete finite coverage of consequential research-planning obligations and all six axes; external implementation/telemetry limits explicitly recorded. Coverage is not a correctness verdict.",
+  "early_stop": false,
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Checked the entire brief/plan/draft and final for argv/input policy, two-stream streaming, arbitrary output, aggregate 1 MiB tail, quota behavior, cancel/timeout/direct child, outcomes, diagnostics, Linux/Windows and explicit sandbox/tree exclusions."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Independently anchored the release pin in patchlevel.h; inspected docs, full consequential functions/callers, buffer/read definitions, timeout implementation, tests and relevant public issue/fix context. Design policies distinguished from CPython guarantees."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Checked communicate, concurrent bounded pumps and file redirection; considered transport/protocol closure, Windows process events/Job Objects as conditional future mechanisms, quota/backpressure and cancellation history. No deployment or application discovery score required."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Examined every criticism and disposition against the original draft, governing source and final, including legitimate rejections and retained alternatives, scope limits and unresolved product choices."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Mapped all supported draft meanings, corrections, negative constraints, history, useful alternatives and uncertainty into the self-contained final. Rejection of false draft claims is not preservation loss."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Checked proposed oracles for large simultaneous writes, quotas/tails, disk failure, abnormal/zero exits, cleanup, encoding, cancellation and Windows. No claimed product execution, executable witness or observed performance result; all future tests remain proposed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "CPython 3.13.9, Linux and Windows; version applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Runtime/scope and Windows sections"
+    },
+    {
+      "id": "O02",
+      "obligation": "Configured executable with separate argv, inputs/cwd/env/stdin",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Launch/input sections"
+    },
+    {
+      "id": "O03",
+      "obligation": "Stream stdout and stderr concurrently; preserve channels",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Launch/drain/storage sections"
+    },
+    {
+      "id": "O04",
+      "obligation": "Arbitrarily large output, aggregate 1 MiB retained tail",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Bounded output sections"
+    },
+    {
+      "id": "O05",
+      "obligation": "Complete raw logs through quota; visible truncation; bounded staging",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Storage/quota sections"
+    },
+    {
+      "id": "O06",
+      "obligation": "Cancel/timeout, explicit platform stop and direct-child ownership",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Supervisor/cancellation sections"
+    },
+    {
+      "id": "O07",
+      "obligation": "Clear terminal outcome; nonzero never validation success",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Supported contract/terminal sections"
+    },
+    {
+      "id": "O08",
+      "obligation": "Process/pipe/sink lifecycle, descendants holding pipes and EOF",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Scope and lifecycle sections"
+    },
+    {
+      "id": "O09",
+      "obligation": "Windows Proactor and argv/termination caveats",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Windows/input sections"
+    },
+    {
+      "id": "O10",
+      "obligation": "No sandbox/isolation or arbitrary process-tree claim",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Explicit scope exclusions"
+    },
+    {
+      "id": "O11",
+      "obligation": "Diagnostics, raw-byte decoding, private outputs/owned recovery",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Diagnostics/storage/publication sections"
+    },
+    {
+      "id": "O12",
+      "obligation": "Communicate small-output, concurrent pumps, file-redirection alternatives",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Alternatives sections"
+    },
+    {
+      "id": "O13",
+      "obligation": "Preserve history, valid rejections, criticism and uncertainty",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Dispositions and decision history"
+    },
+    {
+      "id": "O14",
+      "obligation": "Meaningful realistic tests; proposed versus executed truth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "Validation sections"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "release/version",
+      "coverage": "COMPLETE",
+      "basis": "Exact pin and patchlevel.h identify 3.13.9; release page contextualizes supersession without upgrading the requested version."
+    },
+    {
+      "family": "high-level Process/communicate/wait",
+      "coverage": "COMPLETE",
+      "basis": "Whole pinned asyncio/subprocess.py and high-level API docs inspected; full-byte output collection and concurrent communicate reads distinguished from streaming."
+    },
+    {
+      "family": "StreamReader buffering/read/backpressure",
+      "coverage": "COMPLETE",
+      "basis": "Reader constructor, feed_data pause/resume, bounded read(n) and accumulating read(-1) examined; limit is not an output/RSS hard cap."
+    },
+    {
+      "family": "waiting/cancellation/strong references",
+      "coverage": "COMPLETE",
+      "basis": "Whole frozen task docs/code read; wait, wait_for, Task.cancel, shield and timeout governing context inspected."
+    },
+    {
+      "family": "transport process exit vs pipe completion",
+      "coverage": "COMPLETE",
+      "basis": "Full BaseSubprocessTransport plus high-level protocol: early returncode and pending waiter/pipe completion are distinct; future closure design not treated as executed."
+    },
+    {
+      "family": "CPython Linux/Windows callers",
+      "coverage": "COMPLETE",
+      "basis": "Base loop wrappers, Unix transport/watcher and Windows overlapped Popen/Proactor callers checked; actual application callers unavailable."
+    },
+    {
+      "family": "Windows argv, executable resolution, batch exception",
+      "coverage": "COMPLETE",
+      "basis": "Pinned Popen security, resolution and conversion docs; complete Windows _execute_child and list2cmdline context; issue 114539 and documentation fix 117996."
+    },
+    {
+      "family": "termination/escalation and races",
+      "coverage": "COMPLETE",
+      "basis": "POSIX signals and Windows TerminateProcess/kill alias; already-exited races; direct-child scope not tree containment."
+    },
+    {
+      "family": "upstream regression tests",
+      "coverage": "COMPLETE",
+      "basis": "Entire frozen test_subprocess.py read, including communicate/no-input, broken stdin, pause/resume, canceled waiter/spawn, kill, post-exit reads, loop/watcher/env and protocol event-order tests. Inspected source only."
+    },
+    {
+      "family": "consequential issue/fix history",
+      "coverage": "COMPLETE",
+      "basis": "23140/67329 cancellation state fix; 88050/43884 clean shutdown and merged 32073/97951 context; 114539/117996 Windows shell exception. Pinned code controls over old patches."
+    },
+    {
+      "family": "low-level alternatives/optional Job Objects",
+      "coverage": "COMPLETE",
+      "basis": "Pinned protocol/transport public methods and process_exited-vs-pipe event order; Microsoft Job Objects association/breakaway and last-handle caveats. Future scope extension only."
+    },
+    {
+      "family": "storage/tail/outcomes/publication policies",
+      "coverage": "COMPLETE",
+      "basis": "Application design feasibility reviewed against bounded reads, concurrent drains and quota/error distinctions; no unsupported CPython storage enforcement guarantee accepted."
+    },
+    {
+      "family": "actual desktop caller code",
+      "coverage": "UNASSESSED",
+      "basis": "No caller code in assigned manifest; no tree scan authorized. Future integration is a planning limit, not a fabricated audit."
+    },
+    {
+      "family": "executed component tests/actual validators",
+      "coverage": "UNASSESSED",
+      "basis": "No witness artifacts and no such execution claimed. The deliverable is a proposal; application execution not demanded."
+    },
+    {
+      "family": "private backend/billing/full read isolation",
+      "coverage": "PARTIAL",
+      "basis": "Terminal/custody artifacts only; no full transcripts, account evidence or provider billing. This is an operational observation family, not governing source truth."
+    }
+  ],
+  "preservation_and_dispositions": {
+    "coverage": "COMPLETE",
+    "critique_count": 7,
+    "disposition_count": 25,
+    "all_material_items_examined": true,
+    "groups": [
+      {
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "judgment": "Retained/amended argv, ownership, platform/scope and nonzero/result constraints; no false rejection."
+      },
+      {
+        "items": [
+          8,
+          9,
+          10,
+          12,
+          17,
+          18
+        ],
+        "judgment": "Valid rejection of output-memory cap, per-stream tail doubling, sequential draining, auto-kill and premature terminalization."
+      },
+      {
+        "items": [
+          11,
+          13,
+          14,
+          15,
+          16
+        ],
+        "judgment": "Retained raw-byte display, deadlock warning and alternatives with bounded streaming/quota caveats."
+      },
+      {
+        "items": [
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "judgment": "Platform escalation amended, regression evidence bounded, private outputs and ownership cleanup retained; inherited-handle behavior excluded/low-level review deferred."
+      },
+      {
+        "items": [
+          24,
+          25
+        ],
+        "judgment": "Tests expanded and no-execution honesty kept; optional broken-stdin final omission is C02."
+      }
+    ],
+    "history": "Original shell rejection and corrected memory/draining/cancellation claims retained; communicate small-output and redirected-file alternatives retained.",
+    "cache_semantic_preservation": {
+      "coverage": "UNASSESSED",
+      "applicable": false,
+      "finding": "No cache assigned to control. Evaluator may read matched treatment inputs; this does not imply control cache access."
+    }
+  },
+  "limits": [
+    "Finite original planning assessment of this exact COMPONENT arm; no discovery-recall or cold full-pipeline conclusion.",
+    "Application caller code and implementation do not occur in the assigned frozen inputs. Their behavior, Linux/Windows product execution, memory/RSS, throughput, leak/crash behavior and arbitrary descendants remain UNASSESSED; none is required to have executed for a research proposal.",
+    "Source completeness refers to consequential claims and obligations of the given brief/plan, not every possible asyncio feature, historical issue or operating-system failure.",
+    "Numeric quotas, grace periods, actual validator parser, output-check predicates, sensitive-output policy and Windows version remain product facts/choices. They may stay unknown at this planning stage.",
+    "Technique-bearing control/treatment paths, cache and prose disclosed arm identities; blinding is imperfect. Own independent public-source research was reused across arms, with originals frozen separately before comparison.",
+    "Method observability is partial: frozen artifacts and exact receipts cannot establish all actual reads, absence of other activity, backend identity, freshness beyond recorded custody, independent native-session linkage or complete resource/billing coverage.",
+    "All candidate clocks remain unchanged. Preparation cold costs and coordinator-v1 idle/support costs are neither reassigned nor reconstructed here."
+  ]
+}

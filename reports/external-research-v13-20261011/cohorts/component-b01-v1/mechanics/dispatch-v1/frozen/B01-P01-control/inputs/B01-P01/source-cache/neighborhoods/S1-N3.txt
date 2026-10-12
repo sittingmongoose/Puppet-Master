@@ -1,0 +1,111 @@
+
+Transaction control
+^^^^^^^^^^^^^^^^^^^
+
+:mod:`!sqlite3` offers multiple methods of controlling whether,
+when and how database transactions are opened and closed.
+:ref:`sqlite3-transaction-control-autocommit` is recommended,
+while :ref:`sqlite3-transaction-control-isolation-level`
+retains the pre-Python 3.12 behaviour.
+
+.. _sqlite3-transaction-control-autocommit:
+
+Transaction control via the ``autocommit`` attribute
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+The recommended way of controlling transaction behaviour is through
+the :attr:`Connection.autocommit` attribute,
+which should preferably be set using the *autocommit* parameter
+of :func:`connect`.
+
+It is suggested to set *autocommit* to ``False``,
+which implies :pep:`249`-compliant transaction control.
+This means:
+
+* :mod:`!sqlite3` ensures that a transaction is always open,
+  so :func:`connect`, :meth:`Connection.commit`, and :meth:`Connection.rollback`
+  will implicitly open a new transaction
+  (immediately after closing the pending one, for the latter two).
+  :mod:`!sqlite3` uses ``BEGIN DEFERRED`` statements when opening transactions.
+* Transactions should be committed explicitly using :meth:`!commit`.
+* Transactions should be rolled back explicitly using :meth:`!rollback`.
+* An implicit rollback is performed if the database is
+  :meth:`~Connection.close`-ed with pending changes.
+
+Set *autocommit* to ``True`` to enable SQLite's `autocommit mode`_.
+In this mode, :meth:`Connection.commit` and :meth:`Connection.rollback`
+have no effect.
+Note that SQLite's autocommit mode is distinct from
+the :pep:`249`-compliant :attr:`Connection.autocommit` attribute;
+use :attr:`Connection.in_transaction` to query
+the low-level SQLite autocommit mode.
+
+Set *autocommit* to :data:`LEGACY_TRANSACTION_CONTROL`
+to leave transaction control behaviour to the
+:attr:`Connection.isolation_level` attribute.
+See :ref:`sqlite3-transaction-control-isolation-level` for more information.
+
+
+.. _sqlite3-transaction-control-isolation-level:
+
+Transaction control via the ``isolation_level`` attribute
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. note::
+
+   The recommended way of controlling transactions is via the
+   :attr:`~Connection.autocommit` attribute.
+   See :ref:`sqlite3-transaction-control-autocommit`.
+
+If :attr:`Connection.autocommit` is set to
+:data:`LEGACY_TRANSACTION_CONTROL` (the default),
+transaction behaviour is controlled using
+the :attr:`Connection.isolation_level` attribute.
+Otherwise, :attr:`!isolation_level` has no effect.
+
+If the connection attribute :attr:`~Connection.isolation_level`
+is not ``None``,
+new transactions are implicitly opened before
+:meth:`~Cursor.execute` and :meth:`~Cursor.executemany` executes
+``INSERT``, ``UPDATE``, ``DELETE``, or ``REPLACE`` statements;
+for other statements, no implicit transaction handling is performed.
+Use the :meth:`~Connection.commit` and :meth:`~Connection.rollback` methods
+to respectively commit and roll back pending transactions.
+You can choose the underlying `SQLite transaction behaviour`_ —
+that is, whether and what type of ``BEGIN`` statements :mod:`!sqlite3`
+implicitly executes –
+via the :attr:`~Connection.isolation_level` attribute.
+
+If :attr:`~Connection.isolation_level` is set to ``None``,
+no transactions are implicitly opened at all.
+This leaves the underlying SQLite library in `autocommit mode`_,
+but also allows the user to perform their own transaction handling
+using explicit SQL statements.
+The underlying SQLite library autocommit mode can be queried using the
+:attr:`~Connection.in_transaction` attribute.
+
+The :meth:`~Cursor.executescript` method implicitly commits
+any pending transaction before execution of the given SQL script,
+regardless of the value of :attr:`~Connection.isolation_level`.
+
+.. versionchanged:: 3.6
+   :mod:`!sqlite3` used to implicitly commit an open transaction before DDL
+   statements.  This is no longer the case.
+
+.. versionchanged:: 3.12
+   The recommended way of controlling transactions is now via the
+   :attr:`~Connection.autocommit` attribute.
+
+.. _autocommit mode:
+   https://www.sqlite.org/lang_transaction.html#implicit_versus_explicit_transactions
+
+.. _SQLite transaction behaviour:
+   https://www.sqlite.org/lang_transaction.html#deferred_immediate_and_exclusive_transactions
+
+.. testcleanup::
+
+   import os
+   os.remove("backup.db")
+   os.remove("dump.sql")
+   os.remove("example.db")
+   os.remove("tutorial.db")

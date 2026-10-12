@@ -1,0 +1,52 @@
+{
+  "arm_id": "B08-P01-control",
+  "material_defects": [],
+  "nonmaterial_defects": [
+    {
+      "id": "B08-C-N1",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2,
+        4,
+        6
+      ],
+      "kind": "citation_locator_inaccuracy",
+      "candidate_locations": [
+        "source-map.json S1-S5 exact_locators",
+        "critique.md findings 4-8",
+        "criticism-dispositions.md C04/C08/C11",
+        "final.md queue/cancellation/test links"
+      ],
+      "finding": "Several numeric anchors appear to use blank-line-collapsed text positions. The target raw/tag files have different real line numbers: task cancellation is 294-314, not 276-294; the retrieved-item immediate test is 662-703, outside 583-655. qsize is 101-103 and join 239-248.",
+      "primary_evidence_ids": [
+        "QDOC",
+        "QCODE",
+        "QTEST",
+        "TASK",
+        "DEV"
+      ],
+      "materiality_reason": "The identified mechanism facts are true in the exact named files and independently verified in full governing context. This impairs traceability but does not change a lifecycle decision or manufacture successful execution."
+    },
+    {
+      "id": "B08-C-N2",
+      "severity": "NONMATERIAL",
+      "axes": [
+        3,
+        5
+      ],
+      "kind": "alternative_specificity_loss",
+      "candidate_locations": [
+        "criticism-dispositions.md C15",
+        "final.md Throughput and capacity estimates; Alternatives"
+      ],
+      "finding": "The draft explicitly names a process-based layer for CPU-bound Python work; C15 keeps it, but the final generalizes to assessing a separate execution mechanism without naming processes.",
+      "primary_evidence_ids": [
+        "DEV"
+      ],
+      "materiality_reason": "The final retains the event-loop/CPU limitation and execution-layer assessment, and does not rule out the process option. The concrete option remains explicit in the delivered disposition and primary citation. Lower standalone specificity is recorded; no material capability reversal or required queue obligation lost."
+    }
+  ],
+  "criticism_dispositions_examined": "C01-C19",
+  "all_original_findings_reported": true,
+  "not_author_feedback": true
+}

@@ -1,0 +1,112 @@
+           using its full name. Its file information is extracted as accurately
+           as possible. `member' may be a filename or a ZipInfo object. You can
+           specify a different directory using `path'. You can specify the
+           password to decrypt the file using 'pwd'.
+        """
+        if path is None:
+            path = os.getcwd()
+        else:
+            path = os.fspath(path)
+
+        return self._extract_member(member, path, pwd)
+
+    def extractall(self, path=None, members=None, pwd=None):
+        """Extract all members from the archive to the current working
+           directory. `path' specifies a different directory to extract to.
+           `members' is optional and must be a subset of the list returned
+           by namelist(). You can specify the password to decrypt all files
+           using 'pwd'.
+        """
+        if members is None:
+            members = self.namelist()
+
+        if path is None:
+            path = os.getcwd()
+        else:
+            path = os.fspath(path)
+
+        for zipinfo in members:
+            self._extract_member(zipinfo, path, pwd)
+
+    @classmethod
+    def _sanitize_windows_name(cls, arcname, pathsep):
+        """Replace bad characters and remove trailing dots from parts."""
+        table = cls._windows_illegal_name_trans_table
+        if not table:
+            illegal = ':<>|"?*'
+            table = str.maketrans(illegal, '_' * len(illegal))
+            cls._windows_illegal_name_trans_table = table
+        arcname = arcname.translate(table)
+        # remove trailing dots and spaces
+        arcname = (x.rstrip(' .') for x in arcname.split(pathsep))
+        # rejoin, removing empty parts.
+        arcname = pathsep.join(x for x in arcname if x)
+        return arcname
+
+    def _extract_member(self, member, targetpath, pwd):
+        """Extract the ZipInfo object 'member' to a physical
+           file on the path targetpath.
+        """
+        if not isinstance(member, ZipInfo):
+            member = self.getinfo(member)
+
+        # build the destination pathname, replacing
+        # forward slashes to platform specific separators.
+        arcname = member.filename.replace('/', os.path.sep)
+
+        if os.path.altsep:
+            arcname = arcname.replace(os.path.altsep, os.path.sep)
+        # interpret absolute pathname as relative, remove drive letter or
+        # UNC path, redundant separators, "." and ".." components.
+        arcname = os.path.splitdrive(arcname)[1]
+        invalid_path_parts = ('', os.path.curdir, os.path.pardir)
+        arcname = os.path.sep.join(x for x in arcname.split(os.path.sep)
+                                   if x not in invalid_path_parts)
+        if os.path.sep == '\\':
+            # filter illegal characters on Windows
+            arcname = self._sanitize_windows_name(arcname, os.path.sep)
+
+        if not arcname and not member.is_dir():
+            raise ValueError("Empty filename.")
+
+        targetpath = os.path.join(targetpath, arcname)
+        targetpath = os.path.normpath(targetpath)
+
+        # Create all upper directories if necessary.
+        upperdirs = os.path.dirname(targetpath)
+        if upperdirs and not os.path.exists(upperdirs):
+            os.makedirs(upperdirs, exist_ok=True)
+
+        if member.is_dir():
+            if not os.path.isdir(targetpath):
+                try:
+                    os.mkdir(targetpath)
+                except FileExistsError:
+                    if not os.path.isdir(targetpath):
+                        raise
+            return targetpath
+
+        with self.open(member, pwd=pwd) as source, \
+             open(targetpath, "wb") as target:
+            shutil.copyfileobj(source, target)
+
+        return targetpath
+
+    def _writecheck(self, zinfo):
+        """Check for errors before writing a file to the archive."""
+        if zinfo.filename in self.NameToInfo:
+            import warnings
+            warnings.warn('Duplicate name: %r' % zinfo.filename, stacklevel=3)
+        if self.mode not in ('w', 'x', 'a'):
+            raise ValueError("write() requires mode 'w', 'x', or 'a'")
+        if not self.fp:
+            raise ValueError(
+                "Attempt to write ZIP archive that was already closed")
+        _check_compression(zinfo.compress_type)
+        if not self._allowZip64:
+            requires_zip64 = None
+            if len(self.filelist) >= ZIP_FILECOUNT_LIMIT:
+                requires_zip64 = "Files count"
+            elif zinfo.file_size > ZIP64_LIMIT:
+                requires_zip64 = "Filesize"
+            elif zinfo.header_offset > ZIP64_LIMIT:

@@ -1,0 +1,467 @@
+{
+  "schema": "er13.original_primary_source_index.v2",
+  "arm_id": "B04-P02-control",
+  "cost_category": "independent_evaluation",
+  "independent_retrievals": [
+    {
+      "id": "R9111",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "bytes": 84477,
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "retrieved_at_utc": "2026-10-12T01:05:16.414753+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "R9110",
+      "requested_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "retrieved_at_utc": "2026-10-12T01:05:16.538742+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "E9111",
+      "requested_url": "https://errata.rfc-editor.org/search/?rfc_number=9111&presentation=records",
+      "resolved_url": "https://errata.rfc-editor.org/search/?rfc_number=9111&presentation=records",
+      "bytes": 40383,
+      "sha256": "1df394f9c04e33e74bf69360e3b7d3bbdeccbe80e27caaa18fdace216ccb54a4",
+      "retrieved_at_utc": "2026-10-12T01:05:16.697129+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "E9110",
+      "requested_url": "https://errata.rfc-editor.org/search/?rfc_number=9110&presentation=records",
+      "resolved_url": "https://errata.rfc-editor.org/search/?rfc_number=9110&presentation=records",
+      "bytes": 97750,
+      "sha256": "cec32fd170146656d933f627b512f2e027ae5c3592f5ec7760c3627493b30505",
+      "retrieved_at_utc": "2026-10-12T01:05:16.862944+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H839",
+      "requested_url": "https://api.github.com/repos/httpwg/http-core/issues/839",
+      "resolved_url": "https://api.github.com/repos/httpwg/http-core/issues/839",
+      "bytes": 7478,
+      "sha256": "a89064721009151e46fecac220c5e222fd3b28b2654a394601a8b18c23d91c52",
+      "retrieved_at_utc": "2026-10-12T01:05:17.083050+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H839-comments",
+      "requested_url": "https://api.github.com/repos/httpwg/http-core/issues/839/comments",
+      "resolved_url": "https://api.github.com/repos/httpwg/http-core/issues/839/comments",
+      "bytes": 2225,
+      "sha256": "f678181be9696000d5b2bfd83ff6bac21ca58db8d9f480612af62539258ad0c7",
+      "retrieved_at_utc": "2026-10-12T01:05:17.217227+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    },
+    {
+      "id": "H892",
+      "requested_url": "https://github.com/httpwg/http-core/pull/892.patch",
+      "resolved_url": "https://patch-diff.githubusercontent.com/raw/httpwg/http-core/pull/892.patch",
+      "bytes": 4906,
+      "sha256": "4e95dc9f9d041c70639d7e7a789610e00bf15db7a23c610dcfa1bb0a7b3e54cc",
+      "retrieved_at_utc": "2026-10-12T01:05:17.541323+00:00",
+      "cost_category": "independent_evaluation",
+      "body_retention": "RFC bodies match assigned frozen source copies; dynamic context summarized here, not copied as a corpus"
+    }
+  ],
+  "rfc_excerpt_hashes": [
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        1,
+        171
+      ],
+      "sha256_utf8_excerpt": "c7668ee1acf854054e64ba651807c19e4ec39f0a5a40e58b21fd27a2272834bf",
+      "bytes": 7032,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        172,
+        280
+      ],
+      "sha256_utf8_excerpt": "5b64e6daa0d350c875bb88387bbd577446435352447d2e08f8adc1acc9d81bc5",
+      "bytes": 5085,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        282,
+        579
+      ],
+      "sha256_utf8_excerpt": "ce0c7407ba8d9d0581f289a4376dda11c20784ec70dd0850eb36ed5c385e90ca",
+      "bytes": 13585,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        581,
+        1054
+      ],
+      "sha256_utf8_excerpt": "648e883e569c689e0ec21f40f644ad02acd9b566ad4235db571747bb9c158e92",
+      "bytes": 23036,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        1055,
+        1639
+      ],
+      "sha256_utf8_excerpt": "75870c14e18362944441c001964cbac3b1c53fc7b39a33657629abee25303438",
+      "bytes": 24907,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9111",
+      "range_1based": [
+        1860,
+        1940
+      ],
+      "sha256_utf8_excerpt": "e7616fa6af9bd6de07a4d0e2212a071b940cb7d0bf0e7047dc72c63224a26f94",
+      "bytes": 2225,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        1838,
+        1939
+      ],
+      "sha256_utf8_excerpt": "86808dfc88eae0a9cba30f2144422d8dacd835c0b3f8b9fa11e27e19c66c6f8c",
+      "bytes": 4068,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        2225,
+        2330
+      ],
+      "sha256_utf8_excerpt": "06c15c97f487f77d302a06facb66465becf6ebb99442bfc1680cd11e1c4b0009",
+      "bytes": 5021,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        2898,
+        3083
+      ],
+      "sha256_utf8_excerpt": "85f7997635903e93048dc4d4e6b30f3bf0e192c8a7a92a921fec942e47b7078b",
+      "bytes": 8849,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        3362,
+        3725
+      ],
+      "sha256_utf8_excerpt": "a752cf31d4d8a9d830dbde808cd2511076f4b0d30023dd850a6781c2c18c9965",
+      "bytes": 16802,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        3813,
+        3880
+      ],
+      "sha256_utf8_excerpt": "ef3c07d5111ff014bfc7a080d4373efbdf130a347e7c37c5817860dc4a3c8744",
+      "bytes": 3768,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        5855,
+        6022
+      ],
+      "sha256_utf8_excerpt": "2739f4ad244df1a28bbfce12da24c833bfc5d381737c0ba171a03ad7b9f7e546",
+      "bytes": 7937,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    },
+    {
+      "source_id": "R9110",
+      "range_1based": [
+        7432,
+        7543
+      ],
+      "sha256_utf8_excerpt": "59852ba12d056880e9e4689f5c3d7aa81f6aceaf7c295574d9f0aa238fa7469b",
+      "bytes": 5353,
+      "inspection": "Governing/adjacent text inspected; line range is not a behavioral test"
+    }
+  ],
+  "copyright_and_license_notice": "Copyright (c) 2022 IETF Trust and the persons identified as the RFC authors. All rights reserved. The RFCs are subject to BCP 78 and the IETF Trust Legal Provisions Relating to IETF Documents in effect on publication: https://trustee.ietf.org/license-info. Code Components extracted from these documents must include Revised BSD License text as described in Section 4.e of those provisions. Governing original notices remain in the cited hash-verified RFC bodies; no RFC code component is copied into these outputs.",
+  "governing_source_families": [
+    {
+      "id": "SF-storage",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-1",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-3"
+      ],
+      "context": "Private/shared definition, optional storage, understood status subset, storage bases, header/trailer fields, authenticated-request scope."
+    },
+    {
+      "id": "SF-directives",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2"
+      ],
+      "context": "Unqualified/qualified no-cache and private; no-store and must-understand/status exception; request versus response scope; private exclusions for shared-only directives; extension handling."
+    },
+    {
+      "id": "SF-variants-age",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.1",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.1",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-6.6.1"
+      ],
+      "context": "Vary absence/star/multiple matches, max-age/Expires, no heuristic policy, age variables and alternative formulas, malformed/timing context, Date fallback."
+    },
+    {
+      "id": "SF-revalidation",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-3.2",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.3",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.2",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.5"
+      ],
+      "context": "Strong/weak/absent validators; Last-Modified strength and tag comparison; conditional precedence; 304 bodylessness, field update exceptions and candidate set."
+    },
+    {
+      "id": "SF-invalidation",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.4",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1"
+      ],
+      "context": "Unsafe/unknown-safety methods, required target invalidation after 2xx/3xx; meaning of invalidation; optional other-URI invalidation and same-origin boundary. Applies to forwarded unsafe methods even when only GET responses are stored."
+    },
+    {
+      "id": "SF-offline-app-security",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2.4",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-6",
+        "https://www.rfc-editor.org/rfc/rfc9111.html#section-7.3",
+        "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.4"
+      ],
+      "context": "Disconnected definition, stale prohibitions/permission, application history/export boundary, private is not confidentiality, representation bytes/encoding."
+    },
+    {
+      "id": "SF-versions-history",
+      "coverage": "COMPLETE",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9111.html#appendix-B",
+        "https://errata.rfc-editor.org/search/?rfc_number=9111&presentation=records",
+        "https://errata.rfc-editor.org/search/?rfc_number=9110&presentation=records",
+        "https://github.com/httpwg/http-core/issues/839",
+        "https://github.com/httpwg/http-core/pull/892"
+      ],
+      "context": "Pinned June 2022 normative bodies, former RFC 7234 changes, scoped errata screening and consequential 304 definition/fix history. This does not certify all future HTTP updates."
+    },
+    {
+      "id": "SF-concrete-library-code",
+      "coverage": "UNASSESSED",
+      "reason": "Neither final selects a library/client/version or asserts implemented conformance. Concrete library internals/callers/tests/releases cannot be graded as executed behavior; version audit is an honest future planning gate."
+    },
+    {
+      "id": "SF-whole-HTTP-transport",
+      "coverage": "PARTIAL",
+      "reason": "Both 9110/9111 source bodies were independently retrieved and hash-verified. Applicable caching/representation/validator/method chapters and all eleven frozen source neighborhoods were inspected through shared identical source text; unrelated transport, TLS and general client chapters are outside the proposal assessment."
+    }
+  ],
+  "source_context_findings": [
+    {
+      "id": "CTX-304",
+      "source_ids": [
+        "R9111",
+        "R9110",
+        "E9111",
+        "H839",
+        "H839-comments",
+        "H892"
+      ],
+      "judgment": "Both finals follow the published RFC 9111 selectable-candidate filter and strong/weak/absent-validator update rules. Reported erratum 9185 proposes broader strong-ETag selection across Vary mismatches; it is not verified and is not used to mark the pinned-RFC policy wrong. Issue 839 and merged PR 892 explain the concern about timestamp-driven cross-variant updates. The full two-commit patch was inspected. No implementation code, caller or test conformance claim is inferred."
+    },
+    {
+      "id": "CTX-EXT",
+      "source_ids": [
+        "R9111",
+        "E9111"
+      ],
+      "judgment": "Erratum 9166 is held for document update and clarifies other HTTP extension mechanisms. Neither final claims its initial cache implements every future extension; the target remains RFC 9110/9111."
+    },
+    {
+      "id": "CTX-REQ",
+      "source_ids": [
+        "R9111"
+      ],
+      "judgment": "RFC 9111 section 5.2.1 request directives are advisory generally; lack of treatment discussion of max-age/min-fresh/only-if-cached is not graded as a universal protocol violation. Request no-store has its explicit storage rule and preexisting-entry exception; treatment states both."
+    },
+    {
+      "id": "CTX-AGE",
+      "source_ids": [
+        "R9111"
+      ],
+      "judgment": "The conservative max(apparent_age, corrected_age_value) calculation is permitted; RFC 9111 also permits corrected_age_value alone in the stated path context. Both conservative formulas are acceptable. Control treats bad timing as stale; treatment states invalid Age is ignored before deciding remaining timing is unreliable."
+    },
+    {
+      "id": "CTX-ERRATA9110",
+      "source_ids": [
+        "R9110",
+        "E9110"
+      ],
+      "judgment": "Verified errata 7138, 7306, 7419, 7105, 7109 and 8268 were screened for applicability. No final relies on the corrected Accept ranking example, range grammar, charset field example, CN-ID history, 308 method-change omission or misplaced historical note to make a contrary material claim. Reported/rejected records are not automatically normative replacements."
+    }
+  ],
+  "source_body_evidence": [
+    {
+      "source_id": "R9111",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "independent_copy_matches": true
+    },
+    {
+      "source_id": "R9110",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P02-control/inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "independent_copy_matches": true
+    }
+  ],
+  "errata_record_index": {
+    "E9111": [
+      {
+        "id": "9004",
+        "status": "Reported",
+        "section": "3.5",
+        "url": "https://www.rfc-editor.org/errata/eid9004"
+      },
+      {
+        "id": "9185",
+        "status": "Reported",
+        "section": "4.3.4",
+        "url": "https://www.rfc-editor.org/errata/eid9185"
+      },
+      {
+        "id": "9166",
+        "status": "Held for Document Update",
+        "section": "5.2.3",
+        "url": "https://www.rfc-editor.org/errata/eid9166"
+      },
+      {
+        "id": "7695",
+        "status": "Rejected",
+        "section": "4.3.2",
+        "url": "https://www.rfc-editor.org/errata/eid7695"
+      }
+    ],
+    "E9110": [
+      {
+        "id": "7138",
+        "status": "Verified",
+        "section": "12.5.1",
+        "url": "https://www.rfc-editor.org/errata/eid7138"
+      },
+      {
+        "id": "7306",
+        "status": "Verified",
+        "section": "14.1.1",
+        "url": "https://www.rfc-editor.org/errata/eid7306"
+      },
+      {
+        "id": "7419",
+        "status": "Verified",
+        "section": "8.3.2",
+        "url": "https://www.rfc-editor.org/errata/eid7419"
+      },
+      {
+        "id": "7105",
+        "status": "Verified",
+        "section": "B.1.",
+        "url": "https://www.rfc-editor.org/errata/eid7105"
+      },
+      {
+        "id": "7109",
+        "status": "Verified",
+        "section": "15.4.9",
+        "url": "https://www.rfc-editor.org/errata/eid7109"
+      },
+      {
+        "id": "8268",
+        "status": "Verified",
+        "section": "B.2",
+        "url": "https://www.rfc-editor.org/errata/eid8268"
+      },
+      {
+        "id": "9162",
+        "status": "Reported",
+        "section": "5.2",
+        "url": "https://www.rfc-editor.org/errata/eid9162"
+      },
+      {
+        "id": "9164",
+        "status": "Reported",
+        "section": "Appendix A",
+        "url": "https://www.rfc-editor.org/errata/eid9164"
+      },
+      {
+        "id": "7107",
+        "status": "Rejected",
+        "section": "6.5.1",
+        "url": "https://www.rfc-editor.org/errata/eid7107"
+      },
+      {
+        "id": "7599",
+        "status": "Rejected",
+        "section": "6.4.1",
+        "url": "https://www.rfc-editor.org/errata/eid7599"
+      },
+      {
+        "id": "7870",
+        "status": "Rejected",
+        "section": "8.6",
+        "url": "https://www.rfc-editor.org/errata/eid7870"
+      },
+      {
+        "id": "8138",
+        "status": "Rejected",
+        "section": "15.4",
+        "url": "https://www.rfc-editor.org/errata/eid8138"
+      },
+      {
+        "id": "8459",
+        "status": "Rejected",
+        "section": "15",
+        "url": "https://www.rfc-editor.org/errata/eid8459"
+      },
+      {
+        "id": "7530",
+        "status": "Rejected",
+        "section": "15.5.2.",
+        "url": "https://www.rfc-editor.org/errata/eid7530"
+      }
+    ]
+  },
+  "public_source_links_are_evidence_not_candidate_feedback": true
+}

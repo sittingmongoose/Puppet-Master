@@ -1,0 +1,207 @@
+URL: https://www.sqlite.org/wal.html
+Full response SHA256: f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e
+Retrieved UTC: 2026-10-12T01:18:41.422218+00:00
+Representation: scoped normalized HTML excerpts; strikeouts marked; original full body hash retained.
+
+2.2. Concurrency
+When a read operation begins on a WAL-mode database, it first
+remembers the location of the last valid commit record in the WAL.
+Call this point the "end mark".  Because the WAL can be growing and
+adding new commit records while various readers connect to the database,
+each reader can potentially have its own end mark.  But for any
+particular reader, the end mark is unchanged for the duration of the
+transaction, thus ensuring that a single read transaction only sees
+the database content as it existed at a single point in time.
+When a reader needs a page of content, it first checks the WAL to
+see if that page appears there, and if so it pulls in the last copy
+of the page that occurs in the WAL prior to the reader's end mark.
+If no copy of the page exists in the WAL prior to the reader's end mark,
+then the page is read from the original database file.  Readers can
+exist in separate processes, so to avoid forcing every reader to scan
+the entire WAL looking for pages (the WAL file can grow to
+multiple megabytes, depending on how often checkpoints are run), a
+data structure called the "wal-index" is maintained in shared memory
+which helps readers locate pages in the WAL quickly and with a minimum
+of I/O.  The wal-index greatly improves the performance of readers,
+but the use of shared memory means that all readers must exist on the
+same machine.  This is why the write-ahead log implementation will not
+work on a network filesystem.
+Writers merely append new content to the end of the WAL file.
+Because writers do nothing that would interfere with the actions of
+readers, writers and readers can run at the same time.  However,
+since there is only one WAL file, there can only be one writer at
+a time.
+A checkpoint operation takes content from the WAL file
+and transfers it back into the original database file.
+A checkpoint can run concurrently with readers, however the checkpoint
+must stop when it reaches a page in the WAL that is past the end mark
+of any current reader.  The checkpoint has to stop at that point because
+otherwise it might overwrite part of the database file that the reader
+is actively using.  The checkpoint remembers (in the wal-index) how far
+it got and will resume transferring content from the WAL to the database
+from where it left off on the next invocation.
+Thus a long-running read transaction can prevent a checkpointer from
+making progress.  But presumably every read transaction will eventually
+end and the checkpointer will be able to continue.
+Whenever a write operation occurs, the writer checks how much progress
+the checkpointer has made, and if the entire WAL has been transferred into
+the database and synced and if no readers are making use of the WAL, then
+the writer will rewind the WAL back to the beginning and start putting new
+transactions at the beginning of the WAL.  This mechanism prevents a WAL
+file from growing without bound.
+2.3. Performance Considerations
+Write transactions are very fast since they only involve writing
+the content once (versus twice for rollback-journal transactions)
+and because the writes are all sequential.  Further, syncing the
+content to the disk is not required, as long as the application is
+willing to sacrifice durability following a power loss or hard reboot.
+(Writers sync the WAL on every transaction commit if
+PRAGMA synchronous is set to FULL but omit this sync if
+PRAGMA synchronous is set to NORMAL.)
+On the other hand, read performance deteriorates as the WAL file
+grows in size since each reader must check the WAL file for the content
+and the time needed to check the WAL file is proportional
+to the size of the WAL file.  The wal-index helps find content
+in the WAL file much faster, but performance still falls off with
+increasing WAL file size.  Hence, to maintain good read performance
+it is important to keep the WAL file size down by
+running checkpoints at regular intervals.
+Checkpointing does require sync operations in order to avoid
+the possibility of database corruption following a power loss
+or hard reboot.  The WAL must be synced to persistent storage
+prior to moving content from the WAL into the database and the
+database file must be synced prior to resetting the WAL.
+Checkpoint also requires more seeking.
+The checkpointer makes an effort to
+do as many sequential page writes to the database as it can (the pages
+are transferred from WAL to database in ascending order) but even
+then there will typically be many seek operations interspersed among
+the page writes.  These factors combine to make checkpoints slower than
+write transactions.
+The default strategy is to allow successive write transactions to
+grow the WAL until the WAL becomes about 1000 pages in size, then to
+run a checkpoint operation for each subsequent COMMIT until the WAL
+is reset to be smaller than 1000 pages.  By default, the checkpoint will be
+run automatically by the same thread that does the COMMIT that pushes
+the WAL over its size limit.  This has the effect of causing most
+COMMIT operations to be very fast but an occasional COMMIT (those that trigger
+a checkpoint) to be much slower.  If that effect is undesirable, then
+the application can disable automatic checkpointing and run the
+periodic checkpoints in a separate thread, or separate process.
+(Links to commands and interfaces to accomplish this are
+shown below.)
+Note that with PRAGMA synchronous set to NORMAL, the checkpoint
+is the only operation to issue an I/O barrier or sync operation
+(fsync() on unix or FlushFileBuffers() on windows).  If an application
+therefore runs checkpoint in a separate thread or process, the main
+thread or process that is doing database queries and updates will never
+block on a sync operation.  This helps to prevent "latch-up" in applications
+running on a busy disk drive.  The downside to
+this configuration is that transactions are no longer durable and
+might rollback following a power failure or hard reset.
+Notice too that there is a tradeoff between average read performance
+and average write performance.  To maximize the read performance,
+one wants to keep the WAL as small as possible and hence run checkpoints
+frequently, perhaps as often as every COMMIT.  To maximize
+write performance, one wants to amortize the cost of each checkpoint
+over as many writes as possible, meaning that one wants to run checkpoints
+infrequently and let the WAL grow as large as possible before each
+checkpoint.  The decision of how often to run checkpoints may therefore
+vary from one application to another depending on the relative read
+and write performance requirements of the application.
+The default strategy is to run a checkpoint once the WAL
+reaches 1000 pages and this strategy seems to work well in test applications on
+workstations, but other strategies might work better on different
+platforms or for different workloads.
+
+4. The WAL File
+While a database connection is open on a WAL-mode database, SQLite
+maintains an extra journal file called a "Write Ahead Log" or "WAL File".
+The name of this file on disk is usually the name of the database file
+with an extra "-wal" suffix, though different naming rules may
+apply if SQLite is compiled with SQLITE_ENABLE_8_3_NAMES.
+The WAL file exists for as long as any database connection has the
+database open.  Usually, the WAL file is deleted automatically when the
+last connection to the database closes.  However, if the last process to
+have the database open exits without cleanly
+shutting down the database connection, or if the
+SQLITE_FCNTL_PERSIST_WAL file control is used, then the WAL file
+might be retained on disk after all connections to the database have
+been closed.  The WAL file is part of the persistent state of the
+database and should be kept with the database if the database is copied
+or moved.  If a database file is separated from its WAL file, then
+transactions that were previously committed to the database might be lost,
+or the database file might become corrupted.
+The only safe way to remove a WAL file is
+to open the database file using one of the sqlite3_open() interfaces
+then immediately close the database using sqlite3_close().
+The WAL file format is precisely defined and is cross-platform.
+
+11. The WAL-Reset Bug
+On 2026-03-03, one of the SQLite developers (Dan) found and fixed
+a bug that could, in rare cases, lead to database corruption.  We call
+this the "WAL-reset bug".
+Key points:
+The bug is likely present in all version of SQLite from
+3.7.0 (2010-07-21) through 3.51.2 (2026-01-09).  It is
+fixed in version 3.51.3 (2026-03-13) and later.  Backports of the fix
+are available for some earlier releases:
+3.44.6 and
+3.50.7.
+The bug only affects databases in WAL mode when there are two or more
+database connections open on the same file, in separate threads or processes,
+and when those two connections attempt to write or checkpoint at the
+same instant.
+The bug is a data race with tight timing constraints and that requires
+an unusual usage pattern.  It is unlikely
+to occur in common use.  The developers were unable to reproduce
+the bug organically and had to add special testing logic to SQLite
+that deliberately triggers the circumstances of the the bug in order
+to verify that the issue has been fixed.
+11.1. Bug Details
+This is what happens:
+One connection does a checkpoint.  This first checkpoint must be
+complete.  In other words, the checkpoint must successfully copy all
+content from the WAL file back into the database and leave the WAL file
+in a state where it can potentially be reset.
+Shortly after the first checkpoint completes, a second checkpoint
+is started.
+While the second checkpoint from step 2 is starting up, another database
+connection commits a transaction that resets the WAL file and writes new
+content into the beginning of the WAL file.
+Due to a data race, the second checkpoint from step 2 does not realize
+that the WAL file has been reset by the transaction commit in step 3.
+The second checkpoint leaves a field in the header of the WAL-Index set
+incorrectly.  That field indicates that part of the WAL file has already
+been checkpointed, when in fact it has not been.
+Additional transactions are committed to increase the number of pages
+in the WAL file to be more than were present for the first checkpoint
+from step 1.
+Later when a third checkpoint occurs, the third checkpoint skips all
+or part of the transaction that was written in step 3.  Thus parts of
+the transaction from step 3 never reach the database file, and the
+database file goes corrupt.
+11.2. Low Probability Of Occurrence
+In order for this bug to happen, many details must align at just
+the right moment.  So much so that the SQLite developers were unable
+to reproduce the bug organically in the lab.  The only way the developers
+have been able to cause the malfunction was to modify the SQLite sources
+to invoke a callback controlled by sqlite3_test_control()
+that enables a test program or script to trigger the write transaction
+of step 3 at just the right moment during the second checkpoint.
+Without that code hack, the problem has never been observed during
+development and testing.
+UPDATE: 2026-08-24 →  Phil Eaton has devised
+a reproducer that does not involve using the special testing code hack.
+See Another look at SQLite's WAL-Reset bug
+for details.
+This bug, though rare, does have serious consequences, and so
+application developers should upgrade to a version of SQLite
+that fixes the problem.
+However, this is not an emergency.
+Based on available telemetry, the occurrence rate of this problem in the
+wild appears to be less than or equal to the expected occurrence rate of
+SSD malfunctions and/or cosmic-ray hits.  So even if you are running an
+unpatched version of SQLite, and unless you are doing something really
+unusual, you are unlikely to ever encounter this problem.
+This page was last updated on 2026-08-25 19:42:39Z

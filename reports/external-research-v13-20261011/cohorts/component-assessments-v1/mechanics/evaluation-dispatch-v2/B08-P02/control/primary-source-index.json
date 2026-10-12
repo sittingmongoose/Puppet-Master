@@ -1,0 +1,433 @@
+{
+  "schema": "er13.primary-source-index.original.v1",
+  "arm_id": "B08-P02-control",
+  "sources": [
+    {
+      "id": "CPY-UNICODEDATA-DOC",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "error": null,
+      "bytes": 7508,
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "locators": [
+        "18–21",
+        "145–216"
+      ],
+      "scope": "UCD 15.1 module identity, normalization forms, legacy UCD object, unidata_version.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "CPY-STRTYPES-DOC",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "error": null,
+      "bytes": 222836,
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "locators": [
+        "str/string indexing definition",
+        "1699–1714",
+        "1751–1772"
+      ],
+      "scope": "Casefold API; strict UTF-8 encoding, distinct units.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "CPY-STR-TEST",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "error": null,
+      "bytes": 129386,
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "locators": [
+        "888–922",
+        "1009–1021"
+      ],
+      "scope": "Casefold regression examples and issue-22643 overflow test; source inspection, not execution.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-UNICODE-TEST",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "error": null,
+      "bytes": 18125,
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "locators": [
+        "214–242",
+        "372–470"
+      ],
+      "scope": "Normalization regression/fix context, version checks, network/cpu decorators, skip paths, conformance loop.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-CASEFOLD",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "error": null,
+      "bytes": 474671,
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "locators": [
+        "9572–9589",
+        "9714–9730",
+        "9758–9814",
+        "10675–10689"
+      ],
+      "scope": "ASCII fast path, full-fold caller, allocation/error handling, public casefold dispatch.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-FOLD-MAPPING",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodectype.c",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodectype.c",
+      "error": null,
+      "bytes": 7236,
+      "sha256": "9d7a35ac40018ad087c5d2d15f8214d5831456947d858e5b5c0cd9d529e4ce61",
+      "locators": [
+        "1–55",
+        "201–215",
+        "249–262"
+      ],
+      "scope": "Full-fold helper and lower-full fallback with generated table access.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-NORMALIZE",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/unicodedata.c",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/unicodedata.c",
+      "error": null,
+      "bytes": 51782,
+      "sha256": "c7d84f6a7e945f4ae2baf09b10a358a54540d062442ebac16ff06544895f61df",
+      "locators": [
+        "1–93",
+        "455–844",
+        "914–969",
+        "1635–1645"
+      ],
+      "scope": "Complete decomposition/order/composition and quickcheck path, normalization dispatch, empty/invalid/error paths, exported UCD version.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-VERSION",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Include/patchlevel.h",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Include/patchlevel.h",
+      "error": null,
+      "bytes": 1299,
+      "sha256": "a503e9b8769b2dc861238f497f1b8f0999d479380bf2ad7f53b5085717e04b52",
+      "locators": [
+        "18–26"
+      ],
+      "scope": "Source pin identifies CPython 3.13.9 final.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-UCD-VERSION",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/unicodedata_db.h",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/unicodedata_db.h",
+      "error": null,
+      "bytes": 572370,
+      "sha256": "24b06d3a0ea1aa63bcef4df8bb71ab1380abc2cf6570f2c17296b3a23654efe4",
+      "locators": [
+        "1–4"
+      ],
+      "scope": "Generated database version 15.1.0.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/cpython-consequential-context.json"
+    },
+    {
+      "id": "CPY-CASE-DATA",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodetype_db.h",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodetype_db.h",
+      "error": null,
+      "bytes": 264799,
+      "sha256": "2fde2fb04f57e6ebb8d9391d6d1ccfc01c321f26156d9f95203ee660ef3a1373",
+      "locators": [
+        "generated header/table linkage only"
+      ],
+      "scope": "Table body retrieved and hashed; not exhaustively audited, and no global mapping-table correctness claim made.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "PARTIAL",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "CPY-LICENSE",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "resolved_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+      "error": null,
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "locators": [
+        "whole license"
+      ],
+      "scope": "License retained for reproduced code context.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "UAX15",
+      "url": "https://www.unicode.org/reports/tr15/tr15-54.html",
+      "resolved_url": "https://www.unicode.org/reports/tr15/tr15-54.html",
+      "error": null,
+      "bytes": 136124,
+      "sha256": "01cf994cda71449fff3c23dbde1b08ad99e3f0ca4f42560e8aeb0201fef1ebe3",
+      "locators": [
+        "§§1.1–1.4",
+        "§3",
+        "§4 C3"
+      ],
+      "scope": "Canonical/compatibility behavior, boundary interactions, stability and conformance.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "UAX29",
+      "url": "https://www.unicode.org/reports/tr29/tr29-43.html",
+      "resolved_url": "https://www.unicode.org/reports/tr29/tr29-43.html",
+      "error": null,
+      "bytes": 135846,
+      "sha256": "086f6152d971488920651524539d5464bfeb8f4e130c50064b4720c5cf2c6781",
+      "locators": [
+        "§§2–3",
+        "§6.1"
+      ],
+      "scope": "Grapheme versus code-point boundary and renderer/font limits.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "UTS39",
+      "url": "https://www.unicode.org/reports/tr39/tr39-28.html",
+      "resolved_url": "https://www.unicode.org/reports/tr39/tr39-28.html",
+      "error": null,
+      "bytes": 129578,
+      "sha256": "3e789b1c30284d04177211336b6415b2a134fd9e7ba099626c0ba6747d49fc6b",
+      "locators": [
+        "§4 skeleton definition and notes",
+        "mixed-script paypal example"
+      ],
+      "scope": "Confusables are a separate mechanism; search-key non-goal supported.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "UCD-DATA",
+      "url": "https://www.unicode.org/Public/15.1.0/ucd/UnicodeData.txt",
+      "resolved_url": "https://www.unicode.org/Public/15.1.0/ucd/UnicodeData.txt",
+      "error": null,
+      "bytes": 1914200,
+      "sha256": "2fc713e6a31a87c4850a37fe2caffa4218180fadb5de86b43a143ddb4581fb86",
+      "locators": [
+        "U+00BC",
+        "U+00DF",
+        "U+0130",
+        "U+0390",
+        "U+FDFA",
+        "U+FF21"
+      ],
+      "scope": "Exact decomposition records governing counterexamples.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/ucd-consequential-context.json"
+    },
+    {
+      "id": "UCD-FOLD",
+      "url": "https://www.unicode.org/Public/15.1.0/ucd/CaseFolding.txt",
+      "resolved_url": "https://www.unicode.org/Public/15.1.0/ucd/CaseFolding.txt",
+      "error": null,
+      "bytes": 84870,
+      "sha256": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf",
+      "locators": [
+        "header status/default rules",
+        "U+0041/U+0049/U+00DF/U+0130/U+0390/U+FF21"
+      ],
+      "scope": "Default full folding C+F; Turkic T excluded; normalization not preserved.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/ucd-consequential-context.json"
+    },
+    {
+      "id": "UCD-NORMALIZATION-TEST",
+      "url": "https://www.unicode.org/Public/15.1.0/ucd/NormalizationTest.txt",
+      "resolved_url": "https://www.unicode.org/Public/15.1.0/ucd/NormalizationTest.txt",
+      "error": null,
+      "bytes": 2625136,
+      "sha256": "871238e37e3be0696ec2bd0891119a041b052da1a84485eda05a5438724b223e",
+      "locators": [
+        "header/conformance",
+        "rows 84,394,14700,14940"
+      ],
+      "scope": "Normative NFKC rows used as independent finite arithmetic oracle; full suite not run.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/ucd-consequential-context.json"
+    },
+    {
+      "id": "UCD-DERIVED-NORMALIZE",
+      "url": "https://www.unicode.org/Public/15.1.0/ucd/DerivedNormalizationProps.txt",
+      "resolved_url": "https://www.unicode.org/Public/15.1.0/ucd/DerivedNormalizationProps.txt",
+      "error": null,
+      "bytes": 1355530,
+      "sha256": "8875dccee2bc1a7c1fe568a3b502a9e78c9e0495afd96b6568b4294d0ed1f7e1",
+      "locators": [
+        "NFKC_Casefold definition at line 2899 onward"
+      ],
+      "scope": "Formal operation removes default ignorables, stabilizes transforms and uses final NFC; distinct from one-pass product key.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus.",
+      "retained_context": "evidence/ucd-consequential-context.json"
+    },
+    {
+      "id": "CLDR44-FALLBACK",
+      "url": "https://unicode.org/cldr/charts/44/supplemental/character_fallback_substitutions.html",
+      "resolved_url": "https://unicode.org/cldr/charts/44/supplemental/character_fallback_substitutions.html",
+      "error": null,
+      "bytes": 1298048,
+      "sha256": "63a304ad812084da392faaf7ab1738b63d2945ee5dd1b37407b2c4f097dc9825",
+      "locators": [
+        "U+FDFA NFKC row (web line 2749)"
+      ],
+      "scope": "Secondary chart from primary publisher; independently corroborated against normative UCD 15.1 rows.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "CLDR44-RELEASE",
+      "url": "https://cldr.unicode.org/downloads/cldr-44",
+      "resolved_url": "https://cldr.unicode.org/downloads/cldr-44",
+      "error": null,
+      "bytes": 25651,
+      "sha256": "e66f50f5b2fe3a1e9c2bafef28e6d13290f0954d93f8e13d9e87a04563720462",
+      "locators": [
+        "Version 44.1 changes",
+        "Known Issues: CLDR-17225"
+      ],
+      "scope": "unicodeVersion metadata correction is release context, not the governing normalization mapping.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    },
+    {
+      "id": "UCA",
+      "url": "https://www.unicode.org/reports/tr10/tr10-49.html",
+      "resolved_url": "https://www.unicode.org/reports/tr10/tr10-49.html",
+      "error": null,
+      "bytes": 291649,
+      "sha256": "672fd964e5e1bb40ac85f09ff9e36970611524342fe513e2701b70fa5e53cf9b",
+      "locators": [
+        "§1",
+        "§8",
+        "§11"
+      ],
+      "scope": "Locale tailoring and collation-based searching are different mechanisms, acknowledged as future alternatives.",
+      "retrieved_independently": true,
+      "retrieved_at_utc": "2026-10-12T01:05:56.250934+00:00",
+      "coverage": "COMPLETE",
+      "coverage_definition": "Consequential context specified by locators; not the unrelated complete corpus."
+    }
+  ],
+  "source_body_hash_meaning": "SHA256 of full independently fetched public response bytes. Only consequential code/data excerpts and license notices retained; unrelated retrieval scratch removed before freeze.",
+  "evidence_files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/SOURCE-LICENSES.txt",
+      "bytes": 13926,
+      "sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+      "bytes": 34435,
+      "sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/execution-record.json",
+      "bytes": 827,
+      "sha256": "8d2a01396f5be4c5781b4d32c2bdaf81c8effe58b9b9a65b83697723d718617b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+      "bytes": 2333,
+      "sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stdout.json",
+      "bytes": 1022,
+      "sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/input-verification.json",
+      "bytes": 2056,
+      "sha256": "40fe32a93ca4b066380bb37ceb10d40a747e23e4114e232cd4e2c05786c633b7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/oracle-input.json",
+      "bytes": 1738,
+      "sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/ucd-consequential-context.json",
+      "bytes": 8328,
+      "sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838"
+    }
+  ],
+  "not_executed": [
+    "CPython 3.13.9 target interpreter",
+    "Full Unicode 15.1 normalization/casefold suite",
+    "Note browser, persistence, renderer or migration tests"
+  ]
+}

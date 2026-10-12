@@ -1,0 +1,162 @@
+{
+  "schema": "er13.original_output_manifest.v2",
+  "block_id": "B01-P01",
+  "arm_id": "B01-P01-control",
+  "scope": "COMPONENT",
+  "original_outputs_frozen_utc": "2026-10-12T01:24:50.411795+00:00",
+  "comparison_has_not_been_written": true,
+  "exclude_self": "manifest.json",
+  "file_count": 25,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 23518,
+      "sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 6002,
+      "sha256": "07a431ddb1fbfcbaf7e0b6ec8ee07b0330bb1f3a08b310af5c5c2947e44dda31"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 12028,
+      "sha256": "4f9c7cb187db311937bf6ae40f73335f9223bb2bee991ead977209204d2d1b70"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 5338,
+      "sha256": "67aee35cf2e98c4ec4342578effd4ba63f752b56868e5d1ebaddc41cf6211014"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-license.txt",
+      "relative_path": "evidence/cpython-license.txt",
+      "bytes": 15457,
+      "sha256": "153677255a0fcf70aad8d4351bfcbea2f583087d4a0079572bcf278848dc7cc7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython-pin-meta.txt",
+      "relative_path": "evidence/cpython-pin-meta.txt",
+      "bytes": 669,
+      "sha256": "a9a231f77d06cec83664a71c64842af7a8537e3d3b0f6a5bf37321b6d54ac75f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-connection.txt",
+      "relative_path": "evidence/cpython3139-connection.txt",
+      "bytes": 15507,
+      "sha256": "80d6a9b6bfc5f7e5ac8e77e55992e1fd8ed7a158edd59b6eb914ed8f3cad8a4d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-doc.txt",
+      "relative_path": "evidence/cpython3139-doc.txt",
+      "bytes": 18608,
+      "sha256": "302b40e05be3b1f7c1ca14b4b0a128cba2898fd98e326cb4f1d1805d5fbe489c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-dump.txt",
+      "relative_path": "evidence/cpython3139-dump.txt",
+      "bytes": 5212,
+      "sha256": "b3c24b2b09aefda41a5ce398699ce9613bd09f76630fbe0f6823934cfdddf3a1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-osdoc.txt",
+      "relative_path": "evidence/cpython3139-osdoc.txt",
+      "bytes": 10954,
+      "sha256": "57ec485d064bef9ee0d527d85ed2c7c87df7323176c136ff710dd0c1c62697bf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag-object.txt",
+      "relative_path": "evidence/cpython3139-tag-object.txt",
+      "bytes": 767,
+      "sha256": "ed65644e95df74c0a49ee5d5004292e00cc9aea273695ca3bd54591fe9cfaaa1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tag.txt",
+      "relative_path": "evidence/cpython3139-tag.txt",
+      "bytes": 706,
+      "sha256": "41427b244938d42d5f36fdd5436439e03d120585e392890245424e150c19ca26"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/cpython3139-tests.txt",
+      "relative_path": "evidence/cpython3139-tests.txt",
+      "bytes": 6866,
+      "sha256": "fd442b3b09debba88380966fda29209b6cfdfe099a01059e2846784d26b118b7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/input-and-custody-verification.json",
+      "relative_path": "evidence/input-and-custody-verification.json",
+      "bytes": 2218,
+      "sha256": "56efbf606ee8d3fb63d4031f00d463d4ae6884aa8d0fff12ae3a57a53a901e37"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/preservation-review.json",
+      "relative_path": "evidence/preservation-review.json",
+      "bytes": 1410,
+      "sha256": "ad37c7ae1fa80d20db43e1cf01220fce39ba74da123390085ac7f5f95644ed69"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/python3139-release.txt",
+      "relative_path": "evidence/python3139-release.txt",
+      "bytes": 2057,
+      "sha256": "1d30205147965f57534cd7bc3dcc5cf40916e137785d3e2e97a7553f966daedf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/retrieval-index.json",
+      "relative_path": "evidence/retrieval-index.json",
+      "bytes": 8115,
+      "sha256": "27f19070d8709cf8c99f74b33011900b2ccf22a9340bfece55006ac2c724a476"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup-api.txt",
+      "relative_path": "evidence/sqlite-backup-api.txt",
+      "bytes": 10178,
+      "sha256": "ad9157eba3493b523449429b3225545d7b96dadedcdfc81b3297af3164c9269c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-backup.txt",
+      "relative_path": "evidence/sqlite-backup.txt",
+      "bytes": 15794,
+      "sha256": "0f106c0f4e4640baea4832d8ed3a958d6dd405d57bc5c0701b5ed98eb6b039d1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-pragma.txt",
+      "relative_path": "evidence/sqlite-pragma.txt",
+      "bytes": 3044,
+      "sha256": "09ea5f063987721ae13caf0631354e16b43516c8532e121cb29833d46db66d00"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-release3513.txt",
+      "relative_path": "evidence/sqlite-release3513.txt",
+      "bytes": 792,
+      "sha256": "93abd5b17c7d83a6dd49b3f60e38f29786128c666fec9c86d402fce0a349db62"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-security.txt",
+      "relative_path": "evidence/sqlite-security.txt",
+      "bytes": 3007,
+      "sha256": "a640f01d7c7777b8699c3c708f7c476fb548b1315df5903751bdfa3d84a274b2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-vacuum.txt",
+      "relative_path": "evidence/sqlite-vacuum.txt",
+      "bytes": 6749,
+      "sha256": "614df8fd6ce36fe6bcb3f5f0591d5feaa7dce84753280c90a3fb16d01bf662dc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/evidence/sqlite-wal.txt",
+      "relative_path": "evidence/sqlite-wal.txt",
+      "bytes": 12142,
+      "sha256": "095add37543367409fb048da8c8f553fdf57ffa76cd6c7e69233b1ca2d4cbf42"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 19532,
+      "sha256": "08fa050d35af1899d299860dc3235bdcc399949aca4ed274edbc25275586880c"
+    }
+  ]
+}

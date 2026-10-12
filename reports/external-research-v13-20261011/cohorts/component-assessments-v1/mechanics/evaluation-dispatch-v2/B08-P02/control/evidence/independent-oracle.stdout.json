@@ -1,0 +1,34 @@
+{
+  "arithmetic": [
+    {
+      "repeated_key_bytes": 4100,
+      "repeated_original_bytes": 1640,
+      "repetitions": 820,
+      "single_key_bytes": 5,
+      "single_key_codepoints": 3,
+      "single_original_bytes": 2,
+      "source_codepoint": "U+00BC"
+    },
+    {
+      "repeated_key_bytes": 45045,
+      "repeated_original_bytes": 4095,
+      "repetitions": 1365,
+      "single_key_bytes": 33,
+      "single_key_codepoints": 18,
+      "single_original_bytes": 3,
+      "source_codepoint": "U+FDFA"
+    }
+  ],
+  "limits": [
+    "Selected normative rows only; not arbitrary-sequence conformance.",
+    "No candidate code was executed.",
+    "No CPython 3.13.9 executable, UI, persistence, or migration was tested."
+  ],
+  "mode_distinctions": {
+    "ASCII_A_a_NFC_only_equal": false,
+    "ASCII_A_a_NFC_then_full_fold_equal": true,
+    "fullwidth_A_NFC_then_full_fold_key": "ａ",
+    "fullwidth_A_NFKC_then_full_fold_key": "a"
+  },
+  "oracle": "Unicode 15.1.0 NormalizationTest rows plus C/F CaseFolding mappings"
+}

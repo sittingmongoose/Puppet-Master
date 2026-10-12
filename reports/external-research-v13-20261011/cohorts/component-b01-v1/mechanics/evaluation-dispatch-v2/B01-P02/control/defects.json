@@ -1,0 +1,90 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B01-P02-control",
+  "original": true,
+  "defects": [
+    {
+      "id": "C-S01",
+      "dimension": "source_assessment",
+      "severity": "MATERIAL",
+      "family": "extra_field_name_pipeline",
+      "axes": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "finding": "The asserted original-versus-sanitized name model omits the later Unicode Path extra-field override, making the proposed NUL check incomplete.",
+      "candidate_locator": "final.md: Preview and name decoding, paragraph starting CPython preserves; criticism-dispositions.md: A1; source-map.json: P2 name sanitation",
+      "reason": "_RealGetContents calls _decodeExtra after ZipInfo construction. A CRC-valid version-1 Unicode extra containing safe.txt\\u0000hidden is sanitized to safe.txt while orig_filename also remains safe.txt. Comparing those fields and validating their characters finds neither the NUL nor a difference. The promised rejection of unsafe original names and disappearance prevention are therefore unsupported for this available governing case.",
+      "sources": [
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L355-L408",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L523-L566",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1485-L1518",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1605-L1714",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L1838-L1874"
+      ],
+      "evidence": "evidence/name-pipeline-witness.stdout.json",
+      "decisive": true,
+      "limit": "A source-mechanism counterexample to the written plan; no deployed importer exploit is claimed.",
+      "evidence_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b"
+    },
+    {
+      "id": "C-S02",
+      "dimension": "source_assessment",
+      "severity": "MATERIAL",
+      "family": "extra_field_name_pipeline",
+      "axes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "Rejecting every orig_filename/filename difference falsely rejects supported Unicode Path overrides without an evidence-backed product reason.",
+      "candidate_locator": "final.md: Preview and name decoding; criticism-dispositions.md: A1",
+      "reason": "The valid legacy-name example has original cafΘ.txt and effective café.txt, both safe and with the exact ordinary payload readable. This is a supported override, not NUL truncation or separator rewriting. The plan conflates a legitimate decoding mechanism with sanitization and demands rejection; an encoding chooser does not account for or justify that blanket rule.",
+      "sources": [
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L523-L566",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1485-L1518",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L1838-L1874",
+        "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+        "https://github.com/python/cpython/pull/102566"
+      ],
+      "evidence": "evidence/name-pipeline-witness.stdout.json",
+      "decisive": true,
+      "limit": "Same underlying defect family as C-S01; not counted as an independent mechanism failure.",
+      "evidence_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b"
+    },
+    {
+      "id": "C-T01",
+      "dimension": "source_assessment",
+      "severity": "NONMATERIAL_TRACEABILITY",
+      "axes": [
+        2
+      ],
+      "finding": "Several P1 source_lines_1based are not raw-source line coordinates for the named claims.",
+      "candidate_locator": "source-map.json: P1 locators",
+      "reason": "Path warning is at raw lines 536-553 (not 485-499); decompression pitfalls are 980-1023 (not 897-934); extraction transformations are 351-380, outside much of declared 308-350. Named symbols and correct public URLs still permit recovery; this does not itself invalidate the corrected C1/C2 facts.",
+      "sources": [
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst"
+      ],
+      "decisive": false
+    },
+    {
+      "id": "C-M01",
+      "dimension": "method_compliance",
+      "severity": "EVIDENCE_GAP",
+      "finding": "Assembly code and the detailed execution result/template/amendment files claimed by the terminal summary are absent from the assigned frozen manifest.",
+      "candidate_locator": "witnesses/assemble.stdout.txt and exact completed task receipt",
+      "reason": "The logged hashes and final hash are observable, but code execution and claimed reproducibility cannot be independently reconstructed from the frozen stdout/stderr alone. No active path was followed.",
+      "coverage": "UNASSESSED for absent code/result detail",
+      "decisive": false
+    }
+  ],
+  "not_findings": [
+    "No blanket ZIP ban, future test nonexecution, unchosen numeric limits or unknown user workload is itself a defect.",
+    "No grade inferred from citation counts, byte retention counts or route labels."
+  ],
+  "dispute_rule": "A dispute requires a NEW separate adjudication preserving this original, the brief, findings, responses and unresolved objections; no repairs or repeated graders until PASS."
+}

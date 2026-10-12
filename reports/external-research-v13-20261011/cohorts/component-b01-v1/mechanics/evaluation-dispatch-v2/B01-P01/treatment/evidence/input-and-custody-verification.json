@@ -1,0 +1,39 @@
+{
+  "schema": "er13.evaluator_checks.v1",
+  "packet_sha256": "e85b2b458c47a3d12808ccf7b583da94c0b082aafb413c1f486ec81481e4d64a",
+  "checks": {
+    "treatment": {
+      "manifest_sha256": "5fb717c3b5dc44b637ba06f86f44f3828be622587c1f0f16f7d696ba7e12c44c",
+      "files_verified": 33,
+      "freeze_time_utc": "2026-10-12T01:02:51.962265+00:00",
+      "t0_utc": "2026-10-12T00:34:21.619415Z",
+      "deadline_utc": "2026-10-12T00:59:21.619415Z",
+      "dispatch_time_utc": "2026-10-12T00:34:22.252Z",
+      "activation_time_utc": "2026-10-12T00:34:39+00:00",
+      "objective_matches_frozen": true,
+      "terminal_receipt_path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+      "terminal_receipt_sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d",
+      "terminal_status": "interrupted",
+      "hasPendingChildRuns": false,
+      "returned_model": "gpt-6-luna",
+      "private_route_redacted": true,
+      "exact_task_identity_matches_packet": true,
+      "missing_required_outputs": [
+        "criticism-dispositions.md",
+        "source-map.json",
+        "native-goal-terminal.json"
+      ],
+      "native_terminal_status": "UNASSESSED_MISSING_RECEIPT",
+      "independent_assembly_reconstruction": {
+        "exact_literal_operation_match": true,
+        "normalized_newline_operation_match": true,
+        "final_sha_matches_report": true,
+        "retained_intervals_valid": true,
+        "candidate_execution_record": "self-authored results report command and exit0; exact execution linkage not independently witnessed; application execution absent",
+        "verifier_domain": "Text reconstruction and retained intervals only"
+      }
+    }
+  },
+  "read_scope": "Scientific/custody file contents restricted to exact frozen manifests and named receipts, actual workspace AGENTS.md, contract, handoff sections10/12, and independent public primary sources. Duplicate identical bodies inspected once for the matched arms.",
+  "evaluator_boundary_lapse": "An early recursive filename-only lookup crossed campaign subdirectories including admitted names. No candidate/held-out contents were read. The lookup stopped; subsequent local reads were allowlisted. This violates the no-full-tree-search instruction at filename level and limits evaluator method compliance."
+}

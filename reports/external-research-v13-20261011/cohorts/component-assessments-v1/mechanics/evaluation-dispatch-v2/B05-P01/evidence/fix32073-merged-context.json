@@ -1,0 +1,24 @@
+{
+  "url": "https://api.github.com/repos/python/cpython/commits/7015e1379791cbf19908cd1a7c668a5d6e7165d5",
+  "html_url": "https://github.com/python/cpython/commit/7015e1379791cbf19908cd1a7c668a5d6e7165d5",
+  "sha": "7015e1379791cbf19908cd1a7c668a5d6e7165d5",
+  "message": "gh-88050: Fix asyncio subprocess to kill process cleanly when process is blocked (#32073)",
+  "response_sha256": "00ef2f67695c7b677d144cdf7e96ebbff858d3eebaf32d7eac490e42b3362ade",
+  "files": [
+    {
+      "filename": "Lib/asyncio/base_subprocess.py",
+      "status": "modified",
+      "patch": "@@ -215,14 +215,10 @@ def _process_exited(self, returncode):\n             # object. On Python 3.6, it is required to avoid a ResourceWarning.\n             self._proc.returncode = returncode\n         self._call(self._protocol.process_exited)\n+        for p in self._pipes.values():\n+            p.pipe.close()\n         self._try_finish()\n \n-        # wake up futures waiting for wait()\n-        for waiter in self._exit_waiters:\n-            if not waiter.cancelled():\n-                waiter.set_result(returncode)\n-        self._exit_waiters = None\n-\n     async def _wait(self):\n         \"\"\"Wait until the process exit and return the process return code.\n \n@@ -247,6 +243,11 @@ def _call_connection_lost(self, exc):\n         try:\n             self._protocol.connection_lost(exc)\n         finally:\n+            # wake up futures waiting for wait()\n+            for waiter in self._exit_waiters:\n+                if not waiter.cancelled():\n+                    waiter.set_result(self._returncode)\n+            self._exit_waiters = None\n             self._loop = None\n             self._proc = None\n             self._protocol = None"
+    },
+    {
+      "filename": "Lib/test/test_asyncio/test_subprocess.py",
+      "status": "modified",
+      "patch": "@@ -1,4 +1,5 @@\n import os\n+import shutil\n import signal\n import sys\n import unittest\n@@ -182,6 +183,30 @@ def test_kill(self):\n         else:\n             self.assertEqual(-signal.SIGKILL, returncode)\n \n+    def test_kill_issue43884(self):\n+        blocking_shell_command = f'{sys.executable} -c \"import time; time.sleep(100000000)\"'\n+        creationflags = 0\n+        if sys.platform == 'win32':\n+            from subprocess import CREATE_NEW_PROCESS_GROUP\n+            # On windows create a new process group so that killing process\n+            # kills the process and all its children.\n+            creationflags = CREATE_NEW_PROCESS_GROUP\n+        proc = self.loop.run_until_complete(\n+            asyncio.create_subprocess_shell(blocking_shell_command, stdout=asyncio.subprocess.PIPE,\n+            creationflags=creationflags)\n+        )\n+        self.loop.run_until_complete(asyncio.sleep(1))\n+        if sys.platform == 'win32':\n+            proc.send_signal(signal.CTRL_BREAK_EVENT)\n+        # On windows it is an alias of terminate which sets the return code\n+        proc.kill()\n+        returncode = self.loop.run_until_complete(proc.wait())\n+        if sys.platform == 'win32':\n+            self.assertIsInstance(returncode, int)\n+            # expect 1 but sometimes get 0\n+        else:\n+            self.assertEqual(-signal.SIGKILL, returncode)\n+\n     def test_terminate(self):\n         args = PROGRAM_BLOCKED\n         proc = self.loop.run_until_complete("
+    },
+    {
+      "filename": "Misc/NEWS.d/next/Library/2022-07-08-08-39-35.gh-issue-88050.0aOC_m.rst",
+      "status": "added",
+      "patch": "@@ -0,0 +1 @@\n+Fix :mod:`asyncio` subprocess transport to kill process cleanly when process is blocked and avoid ``RuntimeError`` when loop is closed. Patch by Kumar Aditya."
+    }
+  ]
+}

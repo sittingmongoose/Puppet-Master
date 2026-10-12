@@ -1,0 +1,57 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B05-P01-control",
+  "material_defect_count": 0,
+  "nonmaterial_defect_count": 2,
+  "defects": [
+    {
+      "id": "C01",
+      "severity": "NONMATERIAL",
+      "kind": "inaccurate_exact_source_locators",
+      "axes": [
+        2,
+        4
+      ],
+      "finding": "Several exact locators point to adjacent or different sections of the correct pinned source. In source-map S4-L1 the stated 761-780 range is Timeout context, not wait_for (823-878); S4-L2 816-856 is not wait (884-941). S2-L1 157-188 stops before gather/wait/return at 188-203; S2-L2 201-212 is not create_subprocess_exec (218-229). S8-L2 631-676 is readuntil, not read (688-737). S1-L4 222-249 omits terminate/kill at 252-269.",
+      "candidate_locations": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/source-map.json",
+          "locator": "sources S1-L4, S2-L1/L2, S4-L1/L2, S8-L2"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/critique.md",
+          "locator": "Critical corrections 1-3,6"
+        }
+      ],
+      "authority": "Independent pinned bodies and retained contexts in primary-source-index.json.",
+      "consequence": "Traceability and exact-locator compliance are imperfect. The material API conclusions themselves are independently supported by the linked exact source bodies; no materially false semantic correction found. This is not used as proof of candidate lookup behavior."
+    },
+    {
+      "id": "C02",
+      "severity": "NONMATERIAL",
+      "kind": "conditional_test_not_carried_into_final",
+      "axes": [
+        5,
+        6
+      ],
+      "finding": "Broken-stdin coverage survives as conditional in critique and disposition 24 but is not explicit in the final test list. DEVNULL is the selected no-input contract; communicate remains a small-output alternative.",
+      "candidate_locations": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/criticism-dispositions.md",
+          "locator": "24"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-control/final.md",
+          "locator": "Proposed validation plan"
+        }
+      ],
+      "authority": "Brief does not require stdin feeding; pinned Process._feed_stdin and upstream broken-pipe tests establish the conditional mechanism.",
+      "consequence": "Minor final-integration limit for an optional stdin variant, not loss of a required selected capability."
+    }
+  ],
+  "not_defects": [
+    "No component deployment or runtime witness is required by this planning brief.",
+    "Unavailable actual validator/user configuration is not invented.",
+    "No arbitrary process-tree supervision or security sandbox is required."
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "block_id": "B04-P02",
+  "verified_at_utc": "2026-10-12T01:10:00.531251+00:00",
+  "grader_taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B04-P02-001",
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "originals": [
+    {
+      "arm_id": "B04-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/manifest.json",
+      "manifest_sha256": "299e3cd593e2d16f3df63c9261bfe5215a0aba21faf830cf59892c7198f448a8",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/assessment.json",
+      "assessment_sha256": "6ffc521c60e939fc14c2c690c04d7b6ca6d4d09fba09ca14487f5b63b19ff240",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 12,
+      "source_families_count": 9,
+      "source_family_coverage": [
+        {
+          "id": "SF-storage",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-directives",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-variants-age",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-revalidation",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-invalidation",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-offline-app-security",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-versions-history",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-concrete-library-code",
+          "family": null,
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": "SF-whole-HTTP-transport",
+          "family": null,
+          "coverage": "PARTIAL"
+        }
+      ],
+      "material_defects": 1,
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/manifest.json",
+      "manifest_sha256": "19505cba1da088b7ec467d9ab7533446ba44b0ea5011280835ae8c9f2410bb60",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.json",
+      "assessment_sha256": "e3ee4a2c08c4509c1e7a5e7256a8c05cafa079c822f74012801b98978de68b20",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 12,
+      "source_families_count": 9,
+      "source_family_coverage": [
+        {
+          "id": "SF-storage",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-directives",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-variants-age",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-revalidation",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-invalidation",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-offline-app-security",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-versions-history",
+          "family": null,
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": "SF-concrete-library-code",
+          "family": null,
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": "SF-whole-HTTP-transport",
+          "family": null,
+          "coverage": "PARTIAL"
+        }
+      ],
+      "material_defects": 1,
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/comparison.json",
+  "comparison_sha256": "5062a4d2f3a21fe86a11712e02ca2721621dbfc37284fd79e7e6c65f6a7a9e50",
+  "meaning": "Mechanical verification and faithful report of original evaluator judgments; no regrade or campaign selection"
+}

@@ -1,0 +1,112 @@
+                self.assertCompiledIn('mod1.py', names)
+        finally:
+            rmtree(TESTFN2)
+
+
+class ExtractTests(unittest.TestCase):
+
+    def make_test_file(self):
+        with zipfile.ZipFile(TESTFN2, "w", zipfile.ZIP_STORED) as zipfp:
+            for fpath, fdata in SMALL_TEST_DATA:
+                zipfp.writestr(fpath, fdata)
+
+    def test_extract(self):
+        with temp_cwd():
+            self.make_test_file()
+            with zipfile.ZipFile(TESTFN2, "r") as zipfp:
+                for fpath, fdata in SMALL_TEST_DATA:
+                    writtenfile = zipfp.extract(fpath)
+
+                    # make sure it was written to the right place
+                    correctfile = os.path.join(os.getcwd(), fpath)
+                    correctfile = os.path.normpath(correctfile)
+
+                    self.assertEqual(writtenfile, correctfile)
+
+                    # make sure correct data is in correct file
+                    with open(writtenfile, "rb") as f:
+                        self.assertEqual(fdata.encode(), f.read())
+
+                    unlink(writtenfile)
+
+    def _test_extract_with_target(self, target):
+        self.make_test_file()
+        with zipfile.ZipFile(TESTFN2, "r") as zipfp:
+            for fpath, fdata in SMALL_TEST_DATA:
+                writtenfile = zipfp.extract(fpath, target)
+
+                # make sure it was written to the right place
+                correctfile = os.path.join(target, fpath)
+                correctfile = os.path.normpath(correctfile)
+                self.assertTrue(os.path.samefile(writtenfile, correctfile), (writtenfile, target))
+
+                # make sure correct data is in correct file
+                with open(writtenfile, "rb") as f:
+                    self.assertEqual(fdata.encode(), f.read())
+
+                unlink(writtenfile)
+
+        unlink(TESTFN2)
+
+    def test_extract_with_target(self):
+        with temp_dir() as extdir:
+            self._test_extract_with_target(extdir)
+
+    def test_extract_with_target_pathlike(self):
+        with temp_dir() as extdir:
+            self._test_extract_with_target(FakePath(extdir))
+
+    def test_extract_all(self):
+        with temp_cwd():
+            self.make_test_file()
+            with zipfile.ZipFile(TESTFN2, "r") as zipfp:
+                zipfp.extractall()
+                for fpath, fdata in SMALL_TEST_DATA:
+                    outfile = os.path.join(os.getcwd(), fpath)
+
+                    with open(outfile, "rb") as f:
+                        self.assertEqual(fdata.encode(), f.read())
+
+                    unlink(outfile)
+
+    def _test_extract_all_with_target(self, target):
+        self.make_test_file()
+        with zipfile.ZipFile(TESTFN2, "r") as zipfp:
+            zipfp.extractall(target)
+            for fpath, fdata in SMALL_TEST_DATA:
+                outfile = os.path.join(target, fpath)
+
+                with open(outfile, "rb") as f:
+                    self.assertEqual(fdata.encode(), f.read())
+
+                unlink(outfile)
+
+        unlink(TESTFN2)
+
+    def test_extract_all_with_target(self):
+        with temp_dir() as extdir:
+            self._test_extract_all_with_target(extdir)
+
+    def test_extract_all_with_target_pathlike(self):
+        with temp_dir() as extdir:
+            self._test_extract_all_with_target(FakePath(extdir))
+
+    def check_file(self, filename, content):
+        self.assertTrue(os.path.isfile(filename))
+        with open(filename, 'rb') as f:
+            self.assertEqual(f.read(), content)
+
+    def test_sanitize_windows_name(self):
+        san = zipfile.ZipFile._sanitize_windows_name
+        # Passing pathsep in allows this test to work regardless of platform.
+        self.assertEqual(san(r',,?,C:,foo,bar/z', ','), r'_,C_,foo,bar/z')
+        self.assertEqual(san(r'a\b,c<d>e|f"g?h*i', ','), r'a\b,c_d_e_f_g_h_i')
+        self.assertEqual(san('../../foo../../ba..r', '/'), r'foo/ba..r')
+        self.assertEqual(san('  /  /foo  /  /ba  r', '/'), r'foo/ba  r')
+        self.assertEqual(san(' . /. /foo ./ . /. ./ba .r', '/'), r'foo/ba .r')
+
+    def test_extract_hackers_arcnames_common_cases(self):
+        common_hacknames = [
+            ('../foo/bar', 'foo/bar'),
+            ('foo/../bar', 'foo/bar'),
+            ('foo/../../bar', 'foo/bar'),

@@ -1,0 +1,381 @@
+{
+  "schema": "ER13.B01-P02.source-map.v1",
+  "case": "B01-P02",
+  "arm": "treatment",
+  "reviewed_utc": "2026-10-12",
+  "target_scope": {
+    "product": "Desktop project browser on Linux and Windows importing untrusted ZIP content into a new project.",
+    "runtime": "CPython 3.13.9",
+    "pinned_revision": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "revision_confirmation_url": "https://github.com/python/cpython/commit/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "notes": [
+      "Pinned source cache is from the commit named in source-index.json; the public CPython commit page identifies it as Python 3.13.9.",
+      "Claims are scoped to this version/revision. Other CPython versions and actual app behavior require revalidation.",
+      "The Microsoft naming guidance is a live page retrieved 2026-10-12 UTC; no content hash was captured.",
+      "Product constraints are mapped separately to admitted local governing inputs P1-P5; they are requirements, not external scientific claims.",
+      "The exact supported text/media allowlist and numeric resource defaults are not specified by the brief and remain product release decisions."
+    ]
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "CPython 3.13.9 zipfile library documentation",
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst",
+      "raw_source_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 (Python 3.13.9)",
+      "sha256_of_admitted_copy": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "role": "Primary documentation for zipfile support, methods, path handling, Path, encoding, and failure/resource pitfalls.",
+      "locators": [
+        {
+          "id": "S1-L14-L24",
+          "exact_locator": "lines 14-24; encrypted read is slow, create-encrypted unsupported, multi-disk unsupported, ZIP64 supported",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L14-L24"
+        },
+        {
+          "id": "S1-L96-L127",
+          "exact_locator": "ZIP_STORED, ZIP_DEFLATED, ZIP_BZIP2, ZIP_LZMA; codec requirements and compatibility note",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L96-L127"
+        },
+        {
+          "id": "S1-L193-L219",
+          "exact_locator": "ZipFile.metadata_encoding; archive-wide setting; UTF-8 flag precedence",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L193-L219"
+        },
+        {
+          "id": "S1-L339-L380",
+          "exact_locator": "ZipFile.extract and extractall name transformation notes and untrusted-source warning",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L339-L380"
+        },
+        {
+          "id": "S1-L536-L553",
+          "exact_locator": "zipfile.Path name sanitization responsibility belongs to caller",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L536-L553"
+        },
+        {
+          "id": "S1-L785-L790",
+          "exact_locator": "ZipInfo.is_dir uses the member name; directories end with slash",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L785-L790"
+        },
+        {
+          "id": "S1-L794-L910",
+          "exact_locator": "ZipInfo filename, creator, attributes, CRC, compressed size and uncompressed size fields",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L794-L910"
+        },
+        {
+          "id": "S1-L980-L1019",
+          "exact_locator": "decompression pitfalls: bad password/CRC/format/method, filesystem limits, resource exhaustion, interruption, overwrite behavior",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L980-L1019"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "CPython 3.13.9 zipfile implementation",
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py",
+      "raw_source_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 (Python 3.13.9)",
+      "sha256_of_admitted_copy": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "role": "Primary implementation evidence for decoding, central-directory allocation, duplicate-name lookup, streaming, CRC, encryption and extraction writes.",
+      "locators": [
+        {
+          "id": "S2-L355-L371",
+          "exact_locator": "_sanitize_filename truncates at NUL and normalizes separators on Windows",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L355-L371"
+        },
+        {
+          "id": "S2-L401-L408",
+          "exact_locator": "ZipInfo stores orig_filename before applying _sanitize_filename to filename",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L401-L408"
+        },
+        {
+          "id": "S2-L1025-L1034",
+          "exact_locator": "CRC comparison is performed when ZipExtFile reaches EOF",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1025-L1034"
+        },
+        {
+          "id": "S2-L1072-L1106",
+          "exact_locator": "DEFLATE uses max-length decompression; BZIP2/LZMA path calls decompressor without that limit",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1072-L1106"
+        },
+        {
+          "id": "S2-L1444-L1518",
+          "exact_locator": "_RealGetContents reads size_cd into memory and constructs/appends ZipInfo records; NameToInfo maps each decoded name to its latest entry",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1444-L1518"
+        },
+        {
+          "id": "S2-L1605-L1639",
+          "exact_locator": "ZipFile.open accepts ZipInfo directly; string lookup uses getinfo",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1605-L1639"
+        },
+        {
+          "id": "S2-L1666-L1711",
+          "exact_locator": "strong encryption unsupported; encrypted flag/password handling for read",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1666-L1711"
+        },
+        {
+          "id": "S2-L1791-L1852",
+          "exact_locator": "_sanitize_windows_name transformations; _extract_member path handling, directory creation and wb output",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1791-L1852"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "CPython 3.13.9 zipfile upstream test source",
+      "public_primary_url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py",
+      "raw_source_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0 (Python 3.13.9)",
+      "sha256_of_admitted_copy": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "role": "Primary test-source evidence for lexical path transformations and CRC failure handling; tests were inspected but not run.",
+      "locators": [
+        {
+          "id": "S3-L1628-L1683",
+          "exact_locator": "test_sanitize_windows_name and Windows/POSIX extraction-name examples",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L1628-L1683"
+        },
+        {
+          "id": "S3-L2522-L2550",
+          "exact_locator": "AbstractBadCrcTests full and small reads expect BadZipFile",
+          "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L2522-L2550"
+        }
+      ]
+    },
+    {
+      "id": "W1",
+      "title": "Microsoft Learn — Naming Files, Paths, and Namespaces",
+      "public_primary_url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "version_or_pin": "Live documentation retrieved 2026-10-12 UTC; page version not exposed",
+      "sha256_of_admitted_copy": null,
+      "role": "Primary Windows API naming/path guidance for case behavior, reserved characters and names, trailing dots/spaces, and per-filesystem path limits.",
+      "locators": [
+        {
+          "id": "W1-L44-L78",
+          "exact_locator": "Naming Conventions: case sensitivity caveat, reserved characters, NUL/control chars, device names and trailing dot/space",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions"
+        },
+        {
+          "id": "W1-L95-L105",
+          "exact_locator": "Paths: component/path limits, relative versus UNC/drive/absolute forms",
+          "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#paths"
+        }
+      ]
+    }
+  ],
+  "final_claim_map": [
+    {
+      "final_section": "Flow and boundaries",
+      "claims": [
+        "CPython 3.13.9 compression, encryption, ZIP64 and multi-disk capability distinctions.",
+        "Product method restriction to STORED/DEFLATED and encryption refusal are explicit policy choices."
+      ],
+      "evidence": [
+        "S1-L14-L24",
+        "S1-L96-L127",
+        "S2-L1072-L1106",
+        "S2-L1666-L1711"
+      ],
+      "governing_scope": "Pinned CPython behavior; product support intentionally narrower.",
+      "unresolved_uncertainty": [
+        "Codec behavior on any runtime other than the pin.",
+        "Exact product codec/default limit values."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    {
+      "final_section": "Extraction and validation",
+      "claims": [
+        "CPython extract/extractall sanitize names; zipfile.Path does not.",
+        "ZipInfo original versus normalized names, collisions and no-overwrite namespace design.",
+        "Windows portable-name constraints."
+      ],
+      "evidence": [
+        "S1-L339-L380",
+        "S1-L536-L553",
+        "S2-L355-L371",
+        "S2-L401-L408",
+        "S2-L1485-L1514",
+        "S2-L1605-L1639",
+        "S2-L1791-L1852",
+        "S3-L1628-L1683",
+        "W1-L44-L78"
+      ],
+      "governing_scope": "Library implementation is pinned; portable-name policy is a product rule, not a universal filesystem equivalence guarantee.",
+      "unresolved_uncertainty": [
+        "Unicode normalization/case folding equivalence on all target filesystems.",
+        "Non-default Windows case-sensitive directories and non-NTFS filesystems require implementation tests."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    {
+      "final_section": "Integrity and resources",
+      "claims": [
+        "CPython allocates central-directory data and ZipInfo objects before app member-count enforcement.",
+        "DEFLATE uses a per-call output cap while BZIP2/LZMA paths do not in the pinned source.",
+        "CRC check is associated with EOF; upstream tests expect bad CRC failures."
+      ],
+      "evidence": [
+        "S1-L980-L1019",
+        "S2-L1025-L1034",
+        "S2-L1072-L1106",
+        "S2-L1444-L1518",
+        "S3-L2522-L2550"
+      ],
+      "governing_scope": "Pinned CPython internals; the proposal's actual quotas and no-partial-publication behavior are not implemented or tested.",
+      "unresolved_uncertainty": [
+        "Memory amplification per central-directory entry.",
+        "Numeric archive/member/output/time/disk thresholds.",
+        "Whether downstream runtime changes preserve decoder bounds."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    {
+      "final_section": "Alternatives, history and validation",
+      "claims": [
+        "Standard extraction is a viable alternative but does not meet the proposed product controls.",
+        "Validated streaming around ZipFile.open(ZipInfo) preserves a smaller decompressor surface.",
+        "Research inspected source/tests but did not execute importer or upstream tests."
+      ],
+      "evidence": [
+        "S1-L339-L380",
+        "S1-L536-L553",
+        "S2-L1605-L1639",
+        "S2-L1831-L1852",
+        "S3-L1628-L1683",
+        "S3-L2522-L2550"
+      ],
+      "governing_scope": "Planning evaluation only.",
+      "unresolved_uncertainty": [
+        "Implementation complexity and behavior remain unmeasured."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    {
+      "final_section": "Preview and decoded-name policy",
+      "claims": [
+        "UTF-8 flag takes precedence; fallback uses metadata_encoding or CP437; override is archive-wide.",
+        "ZipInfo preserves orig_filename while normalized filename may be truncated/normalized.",
+        "Windows portable-name policy has tradeoffs and target-specific path limits."
+      ],
+      "evidence": [
+        "S1-L193-L219",
+        "S1-L785-L790",
+        "S2-L355-L408",
+        "S2-L1485-L1514",
+        "W1-L44-L78",
+        "W1-L95-L105"
+      ],
+      "governing_scope": "Pinned decoder and live Windows guidance; V1 portable-key rules are product-specific.",
+      "unresolved_uncertainty": [
+        "Mixed legacy encodings cannot be resolved by archive-wide override.",
+        "Exact behavior varies by filesystem and Windows directory case setting."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    {
+      "final_section": "Publication and recovery",
+      "claims": [
+        "CPython docs warn interrupted extraction can be incomplete and repeated extraction overwrites files.",
+        "No-replace publication and staging recovery are proposed product requirements."
+      ],
+      "evidence": [
+        "S1-L1007-L1019",
+        "S2-L1831-L1852"
+      ],
+      "governing_scope": "CPython sources support the hazard; publication protocol is design only.",
+      "unresolved_uncertainty": [
+        "Linux/Windows atomicity, race resistance, crash durability and supported filesystems are unverified."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    {
+      "final_section": "Limits, release checks, and evidence",
+      "claims": [
+        "Finite limits and a pre-parse archive cap are required; numeric values are not source-derived.",
+        "Acceptance matrix is proposed and no importer tests were run."
+      ],
+      "evidence": [
+        "S1-L980-L1019",
+        "S2-L1444-L1518"
+      ],
+      "governing_scope": "Product safety planning informed by pinned parser behavior.",
+      "unresolved_uncertainty": [
+        "All numerical limits and all implementation validation outcomes."
+      ],
+      "governing_inputs": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    }
+  ],
+  "governing_inputs": [
+    {
+      "id": "P1",
+      "title": "Product brief",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/brief.md",
+      "sha256": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+      "exact_locator": "Entire brief; requirement source for user workflow, threat assumptions, safety constraints, and output scope.",
+      "public_primary_url": null
+    },
+    {
+      "id": "P2",
+      "title": "Planning direction",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/plan.md",
+      "sha256": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+      "exact_locator": "Entire plan; draft direction and required comparisons/coverage.",
+      "public_primary_url": null
+    },
+    {
+      "id": "P3",
+      "title": "Investigator draft",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/draft.md",
+      "sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+      "exact_locator": "Entire draft; deterministic assembly source.",
+      "public_primary_url": null
+    },
+    {
+      "id": "P4",
+      "title": "Common critique",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/critique.md",
+      "sha256": "419506875326862c2239d76c7adf4ef23fb159cb1b3db6067bc6640f8a9c67f3",
+      "exact_locator": "C1-C4 and coverage note; every supplied criticism has a disposition.",
+      "public_primary_url": null
+    },
+    {
+      "id": "P5",
+      "title": "Admitted source index",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/source-index.json",
+      "sha256": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56",
+      "exact_locator": "Entire JSON source index; maps S1-S3 to pinned URLs, hashes and line ranges.",
+      "public_primary_url": null
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "case": "B01-P01",
+  "arm": "control",
+  "date": "2026-10-12",
+  "purpose": "Map final.md factual claims to public primary sources, exact locators, hashes/versions, governing scope, and uncertainty. Attachment and bundle protocols are explicitly proposals/inferences.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "CPython sqlite3 docs/source",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/sqlite3.rst",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/sqlite3.rst",
+      "version_pin": "commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0; SHA-256 d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "locator": "Connection.backup",
+          "lines": "1149-1185",
+          "supports": "concurrent access, pages per step, callback counters, sleep parameter"
+        },
+        {
+          "id": "S1-N2",
+          "locator": "Connection.iterdump",
+          "lines": "1118-1145",
+          "supports": "SQL-source iterator and line-by-line example"
+        },
+        {
+          "id": "S1-N3",
+          "locator": "Transaction control via Connection.autocommit",
+          "lines": "2654-2764",
+          "scope": "transaction-control context only"
+        },
+        {
+          "id": "S1-connect",
+          "url": "https://docs.python.org/3.13/library/sqlite3.html#sqlite3.connect",
+          "locator": "sqlite3.connect check_same_thread",
+          "observed_version": "Python docs 3.13.16, checked 2026-10-12",
+          "supports": "default connection thread ownership"
+        }
+      ],
+      "scope": "CPython sqlite3 API/source at pinned commit; not an application test.",
+      "uncertainty": "Exact commit-to-CPython-3.13.9 correspondence is unverified; live docs browsed were 3.13.16."
+    },
+    {
+      "id": "S2",
+      "title": "CPython backup implementation",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_sqlite/connection.c#L2045-L2123",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_sqlite/connection.c",
+      "version_pin": "same CPython commit; SHA-256 97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "locator": "pysqlite_connection_backup_impl",
+          "lines": "2045-2105",
+          "supports": "step loop, callback error cleanup, busy/locked sleep branch"
+        },
+        {
+          "id": "S2-N2",
+          "locator": "sleep if SQLITE_BUSY or SQLITE_LOCKED",
+          "lines": "2097-2118",
+          "supports": "no sleep after SQLITE_OK"
+        }
+      ],
+      "scope": "Implementation behavior at this exact commit.",
+      "uncertainty": "No execution on target CPython 3.13.9."
+    },
+    {
+      "id": "S3",
+      "title": "CPython sqlite3 backup tests",
+      "url": "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_sqlite3/test_backup.py#L66-L143",
+      "raw_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_sqlite3/test_backup.py",
+      "version_pin": "same CPython commit; SHA-256 cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "locator": "test_progress",
+          "lines": "66-78"
+        },
+        {
+          "id": "S3-N2",
+          "locator": "test_modifying_progress",
+          "lines": "112-133"
+        },
+        {
+          "id": "S3-N3",
+          "locator": "test_failing_progress",
+          "lines": "135-142"
+        }
+      ],
+      "scope": "Upstream test source, inspected but not executed.",
+      "uncertainty": "Does not validate target app, UI, cleanup, or durability."
+    },
+    {
+      "id": "S4",
+      "title": "SQLite Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_pin": "live official docs; cached SHA-256 306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04; page says last updated 2025-11-13; live checked 2026-10-12",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "locator": "Using the SQLite Online Backup API and historical file-copy discussion",
+          "lines": "143-186"
+        },
+        {
+          "id": "S4-N2",
+          "locator": "File and Database Connection Locking; backup_remaining/pagecount",
+          "lines": "448-505"
+        }
+      ],
+      "scope": "SQLite online backup semantics and progress counters.",
+      "uncertainty": "Live docs are not a pinned engine build; deployed SQLite must be recorded and tested."
+    },
+    {
+      "id": "S5",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_pin": "live official docs; cached SHA-256 f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e; live checked 2026-10-12",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "locator": "Overview/WAL-file discussion",
+          "lines": "152-238"
+        },
+        {
+          "id": "S5-N2",
+          "locator": "Checkpointing and concurrency",
+          "lines": "240-318"
+        }
+      ],
+      "scope": "WAL sidecar, commit, and concurrency behavior.",
+      "uncertainty": "No deployed WAL-mode runtime was exercised."
+    },
+    {
+      "id": "S6",
+      "title": "Python 3.13 os APIs",
+      "url": "https://docs.python.org/3.13/library/os.html#os.rename",
+      "version_pin": "official docs observed as 3.13.16 on 2026-10-12; no body hash",
+      "locators": [
+        {
+          "locator": "os.rename",
+          "supports": "platform-specific destination replacement behavior",
+          "lines": "1728-1737"
+        },
+        {
+          "locator": "os.mkdir",
+          "url": "https://docs.python.org/3.13/library/os.html#os.mkdir",
+          "supports": "exclusive creation of a new directory"
+        },
+        {
+          "locator": "os.mkdir",
+          "lines": "1595-1602",
+          "supports": "FileExistsError if directory already exists"
+        }
+      ],
+      "scope": "Path allocation and collisions.",
+      "uncertainty": "Supported OS/filesystems are unspecified; no power-loss durability is inferred."
+    },
+    {
+      "id": "S7",
+      "title": "SQLite PRAGMA statements",
+      "url": "https://www.sqlite.org/pragma.html#pragma_integrity_check",
+      "version_pin": "live official documentation checked 2026-10-12; no body hash",
+      "locators": [
+        {
+          "locator": "PRAGMA integrity_check",
+          "supports": "structural checks and ok result"
+        },
+        {
+          "locator": "PRAGMA foreign_key_check",
+          "url": "https://www.sqlite.org/pragma.html#pragma_foreign_key_check",
+          "supports": "foreign-key violations; integrity_check does not check foreign keys"
+        }
+      ],
+      "scope": "DB restore checks; application-level attachment checks remain separate.",
+      "uncertainty": "Does not prove application consistency or durability."
+    }
+  ],
+  "section_map": [
+    {
+      "section": "Decision",
+      "sources": [
+        "S1-N1",
+        "S4-N1"
+      ],
+      "inference": "Choosing the online API as default is a design judgment."
+    },
+    {
+      "section": "Database worker/progress/cancel",
+      "sources": [
+        "S1-N1",
+        "S1-connect",
+        "S2-N1",
+        "S2-N2",
+        "S3-N2",
+        "S3-N3",
+        "S4-N2"
+      ]
+    },
+    {
+      "section": "Attachment lifecycle",
+      "sources": [
+        "S4-N1",
+        "S4-N2"
+      ],
+      "inference": "Immutable generations, reclamation interlock, and durable leases are proposed design, not SQLite features."
+    },
+    {
+      "section": "Restore/privacy",
+      "sources": [
+        "S7"
+      ],
+      "inference": "Bundle format, privacy policy, and gating are proposal choices."
+    },
+    {
+      "section": "Publication",
+      "sources": [
+        "S6"
+      ],
+      "inference": "Cross-platform fsync/crash durability must be tested."
+    },
+    {
+      "section": "Alternatives/history",
+      "sources": [
+        "S1-N2",
+        "S4-N1",
+        "S5-N1",
+        "S5-N2"
+      ]
+    }
+  ],
+  "unresolved_uncertainty": [
+    "Exact CPython 3.13.9 build and linked SQLite version are not known; record sys.version and sqlite3.sqlite_version.",
+    "Attachment schema/store and cross-process garbage collector were not inspected; immutable generations are a prerequisite.",
+    "OS/filesystem matrix is unspecified; interprocess locking, directory durability and crash recovery require platform review.",
+    "Performance, memory, save/progress/cancel latency, restore and durability are untested.",
+    "The active runtime banner showed gpt-6-luna/max effort; native receipt omitted provider/service tier, so Luna Max Standard tier status is unknown."
+  ]
+}

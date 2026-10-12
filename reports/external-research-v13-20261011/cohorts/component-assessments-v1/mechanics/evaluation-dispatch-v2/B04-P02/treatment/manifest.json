@@ -1,0 +1,52 @@
+{
+  "schema": "er13.original_output_manifest.v2",
+  "arm_id": "B04-P02-treatment",
+  "phase": "ORIGINAL_FROZEN_BEFORE_COMPARISON",
+  "frozen_at_utc": "2026-10-12T01:05:17.565142+00:00",
+  "exclude_self": true,
+  "source_judgment": "FAIL",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 21683,
+      "sha256": "e3ee4a2c08c4509c1e7a5e7256a8c05cafa079c822f74012801b98978de68b20"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 6215,
+      "sha256": "1de01ab7f68ea55af2419c37417ad3dfc3b340fb3f618d50e5f9544c6ba3d39d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 10926,
+      "sha256": "2b5178034fbcb735f69ac443bed3a88a909445555e1dbdbcef6e4334aea2b508"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 6645,
+      "sha256": "ca19c9eaf388023557a5a82f53f3aa1a7dd3e9aaff173042341f92a22fe28f3c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 9686,
+      "sha256": "4a27f64c0e4059c399fe10eb805f8d7561c21a7dd3c8a4e64480558ee9169efa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/primary-verification.json",
+      "relative_path": "evidence/primary-verification.json",
+      "bytes": 9901,
+      "sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 19020,
+      "sha256": "8bb946e2fb6dff12ca3de02f494530922b4c5ccfbc4e6241468d38c133923eae"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "block_id": "B05-P01",
+  "verified_at_utc": "2026-10-12T01:10:00.527488+00:00",
+  "grader_taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B05-P01-001",
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "originals": [
+    {
+      "arm_id": "B05-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/manifest.json",
+      "manifest_sha256": "540e51b406c51fbbd3ea51ebc7ec34c19630b4545d102fb982ebced6f937159b",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.json",
+      "assessment_sha256": "2bcedd10be03f8587646ba5b22f1104369241c664c1cfa90baf0c4a2aca35bd8",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 14,
+      "source_families_count": 15,
+      "source_family_coverage": [
+        {
+          "id": null,
+          "family": "release/version",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "high-level Process/communicate/wait",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "StreamReader buffering/read/backpressure",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "waiting/cancellation/strong references",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "transport process exit vs pipe completion",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "CPython Linux/Windows callers",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Windows argv, executable resolution, batch exception",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "termination/escalation and races",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "upstream regression tests",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "consequential issue/fix history",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "low-level alternatives/optional Job Objects",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "storage/tail/outcomes/publication policies",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "actual desktop caller code",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "executed component tests/actual validators",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "private backend/billing/full read isolation",
+          "coverage": "PARTIAL"
+        }
+      ],
+      "material_defects": 0,
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIALLY_VERIFIABLE",
+      "native_provenance": "OBSERVED_RECEIPTS_WITH_UNKNOWN_LINKAGE",
+      "resource_coverage": "PARTIAL_OBSERVATION_UNKNOWN_BILLING",
+      "frozen_files_verified": 38,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/manifest.json",
+      "manifest_sha256": "a69a671f189ffd2de9b0c32acc2f68699be1b9d03b6039a72783f2f453c1b97a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.json",
+      "assessment_sha256": "781ca8b5d7655a18a2bd9f06933c96fd979cce5beb3357e62113af3d532ce6bd",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "obligations_count": 14,
+      "source_families_count": 15,
+      "source_family_coverage": [
+        {
+          "id": null,
+          "family": "release/version",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "high-level Process/communicate/wait",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "StreamReader buffering/read/backpressure",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "waiting/cancellation/strong references",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "transport process exit vs pipe completion",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "CPython Linux/Windows callers",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "Windows argv, executable resolution, batch exception",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "termination/escalation and races",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "upstream regression tests",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "consequential issue/fix history",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "low-level alternatives/optional Job Objects",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "storage/tail/outcomes/publication policies",
+          "coverage": "COMPLETE"
+        },
+        {
+          "id": null,
+          "family": "actual desktop caller code",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "executed component tests/actual validators",
+          "coverage": "UNASSESSED"
+        },
+        {
+          "id": null,
+          "family": "private backend/billing/full read isolation",
+          "coverage": "PARTIAL"
+        }
+      ],
+      "material_defects": 1,
+      "delivery": "DELIVERED_COMPLETE_PROPOSAL",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIALLY_VERIFIABLE",
+      "native_provenance": "OBSERVED_RECEIPTS_WITH_UNKNOWN_LINKAGE",
+      "resource_coverage": "PARTIAL_OBSERVATION_UNKNOWN_BILLING",
+      "frozen_files_verified": 38,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/comparison.json",
+  "comparison_sha256": "61066411ae5407fff53a250e12c3a800fab3269cb2b7083a8a17ab4f1bb2c079",
+  "meaning": "Mechanical verification and faithful report of original evaluator judgments; no regrade or campaign selection",
+  "full_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/manifest.json",
+  "full_manifest_sha256": "f0017f5c9f639a2a1161045328b05bec08a391cfa6303a6c88e343b0b8e858aa"
+}

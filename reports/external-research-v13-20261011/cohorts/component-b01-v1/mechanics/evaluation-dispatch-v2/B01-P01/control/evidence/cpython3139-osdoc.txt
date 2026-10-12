@@ -1,0 +1,255 @@
+URL: https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/os.rst
+Retrieved URL: https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/os.rst
+Full response SHA256: d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15
+Retrieved UTC: 2026-10-12T01:14:14.224768+00:00
+Scope: independent primary-source inspection; no application execution.
+
+LINES 2415-2508
+2415:       Other kinds of reparse points are resolved by the operating system as
+2416:       for :func:`~os.stat`.
+2417: 
+2418: 
+2419: .. function:: mkdir(path, mode=0o777, *, dir_fd=None)
+2420: 
+2421:    Create a directory named *path* with numeric mode *mode*.
+2422: 
+2423:    If the directory already exists, :exc:`FileExistsError` is raised. If a parent
+2424:    directory in the path does not exist, :exc:`FileNotFoundError` is raised.
+2425: 
+2426:    .. _mkdir_modebits:
+2427: 
+2428:    On some systems, *mode* is ignored.  Where it is used, the current umask
+2429:    value is first masked out.  If bits other than the last 9 (i.e. the last 3
+2430:    digits of the octal representation of the *mode*) are set, their meaning is
+2431:    platform-dependent.  On some platforms, they are ignored and you should call
+2432:    :func:`chmod` explicitly to set them.
+2433: 
+2434:    On Windows, a *mode* of ``0o700`` is specifically handled to apply access
+2435:    control to the new directory such that only the current user and
+2436:    administrators have access. Other values of *mode* are ignored.
+2437: 
+2438:    This function can also support :ref:`paths relative to directory descriptors
+2439:    <dir_fd>`.
+2440: 
+2441:    It is also possible to create temporary directories; see the
+2442:    :mod:`tempfile` module's :func:`tempfile.mkdtemp` function.
+2443: 
+2444:    .. audit-event:: os.mkdir path,mode,dir_fd os.mkdir
+2445: 
+2446:    .. versionchanged:: 3.3
+2447:       Added the *dir_fd* parameter.
+2448: 
+2449:    .. versionchanged:: 3.6
+2450:       Accepts a :term:`path-like object`.
+2451: 
+2452:    .. versionchanged:: 3.13
+2453:       Windows now handles a *mode* of ``0o700``.
+2454: 
+2455: 
+2456: .. function:: makedirs(name, mode=0o777, exist_ok=False)
+2457: 
+2458:    .. index::
+2459:       single: directory; creating
+2460:       single: UNC paths; and os.makedirs()
+2461: 
+2462:    Recursive directory creation function.  Like :func:`mkdir`, but makes all
+2463:    intermediate-level directories needed to contain the leaf directory.
+2464: 
+2465:    The *mode* parameter is passed to :func:`mkdir` for creating the leaf
+2466:    directory; see :ref:`the mkdir() description <mkdir_modebits>` for how it
+2467:    is interpreted.  To set the file permission bits of any newly created parent
+2468:    directories you can set the umask before invoking :func:`makedirs`.  The
+2469:    file permission bits of existing parent directories are not changed.
+2470: 
+2471:    If *exist_ok* is ``False`` (the default), a :exc:`FileExistsError` is
+2472:    raised if the target directory already exists.
+2473: 
+2474:    .. note::
+2475: 
+2476:       :func:`makedirs` will become confused if the path elements to create
+2477:       include :data:`pardir` (eg. ".." on UNIX systems).
+2478: 
+2479:    This function handles UNC paths correctly.
+2480: 
+2481:    .. audit-event:: os.mkdir path,mode,dir_fd os.makedirs
+2482: 
+2483:    .. versionchanged:: 3.2
+2484:       Added the *exist_ok* parameter.
+2485: 
+2486:    .. versionchanged:: 3.4.1
+2487: 
+2488:       Before Python 3.4.1, if *exist_ok* was ``True`` and the directory existed,
+2489:       :func:`makedirs` would still raise an error if *mode* did not match the
+2490:       mode of the existing directory. Since this behavior was impossible to
+2491:       implement safely, it was removed in Python 3.4.1. See :issue:`21082`.
+2492: 
+2493:    .. versionchanged:: 3.6
+2494:       Accepts a :term:`path-like object`.
+2495: 
+2496:    .. versionchanged:: 3.7
+2497:       The *mode* argument no longer affects the file permission bits of
+2498:       newly created intermediate-level directories.
+2499: 
+2500: 
+2501: .. function:: mkfifo(path, mode=0o666, *, dir_fd=None)
+2502: 
+2503:    Create a FIFO (a named pipe) named *path* with numeric mode *mode*.
+2504:    The current umask value is first masked out from the mode.
+2505: 
+2506:    This function can also support :ref:`paths relative to directory descriptors
+2507:    <dir_fd>`.
+2508: 
+
+LINES 2672-2775
+2672:    .. versionchanged:: 3.6
+2673:       Accepts a :term:`path-like object`.
+2674: 
+2675: 
+2676: .. function:: rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
+2677: 
+2678:    Rename the file or directory *src* to *dst*. If *dst* exists, the operation
+2679:    will fail with an :exc:`OSError` subclass in a number of cases:
+2680: 
+2681:    On Windows, if *dst* exists a :exc:`FileExistsError` is always raised.
+2682:    The operation may fail if *src* and *dst* are on different filesystems. Use
+2683:    :func:`shutil.move` to support moves to a different filesystem.
+2684: 
+2685:    On Unix, if *src* is a file and *dst* is a directory or vice-versa, an
+2686:    :exc:`IsADirectoryError` or a :exc:`NotADirectoryError` will be raised
+2687:    respectively.  If both are directories and *dst* is empty, *dst* will be
+2688:    silently replaced.  If *dst* is a non-empty directory, an :exc:`OSError`
+2689:    is raised. If both are files, *dst* will be replaced silently if the user
+2690:    has permission.  The operation may fail on some Unix flavors if *src* and
+2691:    *dst* are on different filesystems.  If successful, the renaming will be an
+2692:    atomic operation (this is a POSIX requirement).
+2693: 
+2694:    This function can support specifying *src_dir_fd* and/or *dst_dir_fd* to
+2695:    supply :ref:`paths relative to directory descriptors <dir_fd>`.
+2696: 
+2697:    If you want cross-platform overwriting of the destination, use :func:`replace`.
+2698: 
+2699:    .. audit-event:: os.rename src,dst,src_dir_fd,dst_dir_fd os.rename
+2700: 
+2701:    .. versionchanged:: 3.3
+2702:       Added the *src_dir_fd* and *dst_dir_fd* parameters.
+2703: 
+2704:    .. versionchanged:: 3.6
+2705:       Accepts a :term:`path-like object` for *src* and *dst*.
+2706: 
+2707: 
+2708: .. function:: renames(old, new)
+2709: 
+2710:    Recursive directory or file renaming function. Works like :func:`rename`, except
+2711:    creation of any intermediate directories needed to make the new pathname good is
+2712:    attempted first. After the rename, directories corresponding to rightmost path
+2713:    segments of the old name will be pruned away using :func:`removedirs`.
+2714: 
+2715:    .. note::
+2716: 
+2717:       This function can fail with the new directory structure made if you lack
+2718:       permissions needed to remove the leaf directory or file.
+2719: 
+2720:    .. audit-event:: os.rename src,dst,src_dir_fd,dst_dir_fd os.renames
+2721: 
+2722:    .. versionchanged:: 3.6
+2723:       Accepts a :term:`path-like object` for *old* and *new*.
+2724: 
+2725: 
+2726: .. function:: replace(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
+2727: 
+2728:    Rename the file or directory *src* to *dst*.  If *dst* is a non-empty directory,
+2729:    :exc:`OSError` will be raised.  If *dst* exists and is a file, it will
+2730:    be replaced silently if the user has permission.  The operation may fail
+2731:    if *src* and *dst* are on different filesystems.  If successful,
+2732:    the renaming will be an atomic operation (this is a POSIX requirement).
+2733: 
+2734:    This function can support specifying *src_dir_fd* and/or *dst_dir_fd* to
+2735:    supply :ref:`paths relative to directory descriptors <dir_fd>`.
+2736: 
+2737:    .. audit-event:: os.rename src,dst,src_dir_fd,dst_dir_fd os.replace
+2738: 
+2739:    .. versionadded:: 3.3
+2740: 
+2741:    .. versionchanged:: 3.6
+2742:       Accepts a :term:`path-like object` for *src* and *dst*.
+2743: 
+2744: 
+2745: .. function:: rmdir(path, *, dir_fd=None)
+2746: 
+2747:    Remove (delete) the directory *path*.  If the directory does not exist or is
+2748:    not empty, a :exc:`FileNotFoundError` or an :exc:`OSError` is raised
+2749:    respectively.  In order to remove whole directory trees,
+2750:    :func:`shutil.rmtree` can be used.
+2751: 
+2752:    This function can support :ref:`paths relative to directory descriptors
+2753:    <dir_fd>`.
+2754: 
+2755:    .. audit-event:: os.rmdir path,dir_fd os.rmdir
+2756: 
+2757:    .. versionchanged:: 3.3
+2758:       Added the *dir_fd* parameter.
+2759: 
+2760:    .. versionchanged:: 3.6
+2761:       Accepts a :term:`path-like object`.
+2762: 
+2763: 
+2764: .. function:: scandir(path='.')
+2765: 
+2766:    Return an iterator of :class:`os.DirEntry` objects corresponding to the
+2767:    entries in the directory given by *path*. The entries are yielded in
+2768:    arbitrary order, and the special entries ``'.'`` and ``'..'`` are not
+2769:    included.  If a file is removed from or added to the directory after
+2770:    creating the iterator, whether an entry for that file be included is
+2771:    unspecified.
+2772: 
+2773:    Using :func:`scandir` instead of :func:`listdir` can significantly
+2774:    increase the performance of code that also needs file type or file
+2775:    attribute information, because :class:`os.DirEntry` objects expose this
+
+LINES 1082-1125
+1082: 
+1083:    .. availability:: Unix.
+1084: 
+1085: 
+1086: .. function:: fsync(fd)
+1087: 
+1088:    Force write of file with filedescriptor *fd* to disk.  On Unix, this calls the
+1089:    native :c:func:`!fsync` function; on Windows, the MS :c:func:`!_commit` function.
+1090: 
+1091:    If you're starting with a buffered Python :term:`file object` *f*, first do
+1092:    ``f.flush()``, and then do ``os.fsync(f.fileno())``, to ensure that all internal
+1093:    buffers associated with *f* are written to disk.
+1094: 
+1095:    .. availability:: Unix, Windows.
+1096: 
+1097: 
+1098: .. function:: ftruncate(fd, length, /)
+1099: 
+1100:    Truncate the file corresponding to file descriptor *fd*, so that it is at
+1101:    most *length* bytes in size.  As of Python 3.3, this is equivalent to
+1102:    ``os.truncate(fd, length)``.
+1103: 
+1104:    .. audit-event:: os.truncate fd,length os.ftruncate
+1105: 
+1106:    .. availability:: Unix, Windows.
+1107: 
+1108:    .. versionchanged:: 3.5
+1109:       Added support for Windows
+1110: 
+1111: 
+1112: .. function:: get_blocking(fd, /)
+1113: 
+1114:    Get the blocking mode of the file descriptor: ``False`` if the
+1115:    :data:`O_NONBLOCK` flag is set, ``True`` if the flag is cleared.
+1116: 
+1117:    See also :func:`set_blocking` and :meth:`socket.socket.setblocking`.
+1118: 
+1119:    .. availability:: Unix, Windows.
+1120: 
+1121:       The function is limited on WASI, see :ref:`wasm-availability` for more
+1122:       information.
+1123: 
+1124:       On Windows, this function is limited to pipes.
+1125: 
+
+License: CPython LICENSE at https://github.com/python/cpython/blob/v3.13.9/LICENSE; source notices retained in context.

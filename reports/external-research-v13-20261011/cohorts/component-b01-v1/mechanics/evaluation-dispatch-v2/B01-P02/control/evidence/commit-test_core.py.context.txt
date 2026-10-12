@@ -1,0 +1,456 @@
+
+commit-test_core.py 1628-1730
+1628:     def test_sanitize_windows_name(self):
+1629:         san = zipfile.ZipFile._sanitize_windows_name
+1630:         # Passing pathsep in allows this test to work regardless of platform.
+1631:         self.assertEqual(san(r',,?,C:,foo,bar/z', ','), r'_,C_,foo,bar/z')
+1632:         self.assertEqual(san(r'a\b,c<d>e|f"g?h*i', ','), r'a\b,c_d_e_f_g_h_i')
+1633:         self.assertEqual(san('../../foo../../ba..r', '/'), r'foo/ba..r')
+1634:         self.assertEqual(san('  /  /foo  /  /ba  r', '/'), r'foo/ba  r')
+1635:         self.assertEqual(san(' . /. /foo ./ . /. ./ba .r', '/'), r'foo/ba .r')
+1636: 
+1637:     def test_extract_hackers_arcnames_common_cases(self):
+1638:         common_hacknames = [
+1639:             ('../foo/bar', 'foo/bar'),
+1640:             ('foo/../bar', 'foo/bar'),
+1641:             ('foo/../../bar', 'foo/bar'),
+1642:             ('foo/bar/..', 'foo/bar'),
+1643:             ('./../foo/bar', 'foo/bar'),
+1644:             ('/foo/bar', 'foo/bar'),
+1645:             ('/foo/../bar', 'foo/bar'),
+1646:             ('/foo/../../bar', 'foo/bar'),
+1647:         ]
+1648:         self._test_extract_hackers_arcnames(common_hacknames)
+1649: 
+1650:     @unittest.skipIf(os.path.sep != '\\', 'Requires \\ as path separator.')
+1651:     def test_extract_hackers_arcnames_windows_only(self):
+1652:         """Test combination of path fixing and windows name sanitization."""
+1653:         windows_hacknames = [
+1654:             (r'..\foo\bar', 'foo/bar'),
+1655:             (r'..\/foo\/bar', 'foo/bar'),
+1656:             (r'foo/\..\/bar', 'foo/bar'),
+1657:             (r'foo\/../\bar', 'foo/bar'),
+1658:             (r'C:foo/bar', 'foo/bar'),
+1659:             (r'C:/foo/bar', 'foo/bar'),
+1660:             (r'C://foo/bar', 'foo/bar'),
+1661:             (r'C:\foo\bar', 'foo/bar'),
+1662:             (r'//conky/mountpoint/foo/bar', 'foo/bar'),
+1663:             (r'\\conky\mountpoint\foo\bar', 'foo/bar'),
+1664:             (r'///conky/mountpoint/foo/bar', 'mountpoint/foo/bar'),
+1665:             (r'\\\conky\mountpoint\foo\bar', 'mountpoint/foo/bar'),
+1666:             (r'//conky//mountpoint/foo/bar', 'mountpoint/foo/bar'),
+1667:             (r'\\conky\\mountpoint\foo\bar', 'mountpoint/foo/bar'),
+1668:             (r'//?/C:/foo/bar', 'foo/bar'),
+1669:             (r'\\?\C:\foo\bar', 'foo/bar'),
+1670:             (r'C:/../C:/foo/bar', 'C_/foo/bar'),
+1671:             (r'a:b\c<d>e|f"g?h*i', 'b/c_d_e_f_g_h_i'),
+1672:             ('../../foo../../ba..r', 'foo/ba..r'),
+1673:         ]
+1674:         self._test_extract_hackers_arcnames(windows_hacknames)
+1675: 
+1676:     @unittest.skipIf(os.path.sep != '/', r'Requires / as path separator.')
+1677:     def test_extract_hackers_arcnames_posix_only(self):
+1678:         posix_hacknames = [
+1679:             ('//foo/bar', 'foo/bar'),
+1680:             ('../../foo../../ba..r', 'foo../ba..r'),
+1681:             (r'foo/..\bar', r'foo/..\bar'),
+1682:         ]
+1683:         self._test_extract_hackers_arcnames(posix_hacknames)
+1684: 
+1685:     def _test_extract_hackers_arcnames(self, hacknames):
+1686:         for arcname, fixedname in hacknames:
+1687:             content = b'foobar' + arcname.encode()
+1688:             with zipfile.ZipFile(TESTFN2, 'w', zipfile.ZIP_STORED) as zipfp:
+1689:                 zinfo = zipfile.ZipInfo()
+1690:                 # preserve backslashes
+1691:                 zinfo.filename = arcname
+1692:                 zinfo.external_attr = 0o600 << 16
+1693:                 zipfp.writestr(zinfo, content)
+1694: 
+1695:             arcname = arcname.replace(os.sep, "/")
+1696:             targetpath = os.path.join('target', 'subdir', 'subsub')
+1697:             correctfile = os.path.join(targetpath, *fixedname.split('/'))
+1698: 
+1699:             with zipfile.ZipFile(TESTFN2, 'r') as zipfp:
+1700:                 writtenfile = zipfp.extract(arcname, targetpath)
+1701:                 self.assertEqual(writtenfile, correctfile,
+1702:                                  msg='extract %r: %r != %r' %
+1703:                                  (arcname, writtenfile, correctfile))
+1704:             self.check_file(correctfile, content)
+1705:             rmtree('target')
+1706: 
+1707:             with zipfile.ZipFile(TESTFN2, 'r') as zipfp:
+1708:                 zipfp.extractall(targetpath)
+1709:             self.check_file(correctfile, content)
+1710:             rmtree('target')
+1711: 
+1712:             correctfile = os.path.join(os.getcwd(), *fixedname.split('/'))
+1713: 
+1714:             with zipfile.ZipFile(TESTFN2, 'r') as zipfp:
+1715:                 writtenfile = zipfp.extract(arcname)
+1716:                 self.assertEqual(writtenfile, correctfile,
+1717:                                  msg="extract %r" % arcname)
+1718:             self.check_file(correctfile, content)
+1719:             rmtree(fixedname.split('/')[0])
+1720: 
+1721:             with zipfile.ZipFile(TESTFN2, 'r') as zipfp:
+1722:                 zipfp.extractall()
+1723:             self.check_file(correctfile, content)
+1724:             rmtree(fixedname.split('/')[0])
+1725: 
+1726:             unlink(TESTFN2)
+1727: 
+1728: 
+1729: class OverwriteTests(archiver_tests.OverwriteTests, unittest.TestCase):
+1730:     testdir = TESTFN
+
+commit-test_core.py 1820-1875
+1820:     @requires_zlib()
+1821:     def test_read_unicode_filenames(self):
+1822:         # bug #10801
+1823:         fname = findfile('zip_cp437_header.zip', subdir='archivetestdata')
+1824:         with zipfile.ZipFile(fname) as zipfp:
+1825:             for name in zipfp.namelist():
+1826:                 zipfp.open(name).close()
+1827: 
+1828:     def test_write_unicode_filenames(self):
+1829:         with zipfile.ZipFile(TESTFN, "w") as zf:
+1830:             zf.writestr("foo.txt", "Test for unicode filename")
+1831:             zf.writestr("\xf6.txt", "Test for unicode filename")
+1832:             self.assertIsInstance(zf.infolist()[0].filename, str)
+1833: 
+1834:         with zipfile.ZipFile(TESTFN, "r") as zf:
+1835:             self.assertEqual(zf.filelist[0].filename, "foo.txt")
+1836:             self.assertEqual(zf.filelist[1].filename, "\xf6.txt")
+1837: 
+1838:     def create_zipfile_with_extra_data(self, filename, extra_data_name):
+1839:         with zipfile.ZipFile(TESTFN, mode='w') as zf:
+1840:             filename_encoded = filename.encode("utf-8")
+1841:             # create a ZipInfo object with Unicode path extra field
+1842:             zip_info = zipfile.ZipInfo(filename)
+1843: 
+1844:             tag_for_unicode_path = b'\x75\x70'
+1845:             version_of_unicode_path = b'\x01'
+1846: 
+1847:             import zlib
+1848:             filename_crc = struct.pack('<L', zlib.crc32(filename_encoded))
+1849: 
+1850:             extra_data = version_of_unicode_path + filename_crc + extra_data_name
+1851:             tsize = len(extra_data).to_bytes(2, 'little')
+1852: 
+1853:             zip_info.extra = tag_for_unicode_path + tsize + extra_data
+1854: 
+1855:             # add the file to the ZIP archive
+1856:             zf.writestr(zip_info, b'Hello World!')
+1857: 
+1858:     @requires_zlib()
+1859:     def test_read_zipfile_containing_unicode_path_extra_field(self):
+1860:         self.create_zipfile_with_extra_data("이름.txt", "이름.txt".encode("utf-8"))
+1861:         with zipfile.ZipFile(TESTFN, "r") as zf:
+1862:             self.assertEqual(zf.filelist[0].filename, "이름.txt")
+1863: 
+1864:     @requires_zlib()
+1865:     def test_read_zipfile_warning(self):
+1866:         self.create_zipfile_with_extra_data("이름.txt", b"")
+1867:         with self.assertWarns(UserWarning):
+1868:             zipfile.ZipFile(TESTFN, "r").close()
+1869: 
+1870:     @requires_zlib()
+1871:     def test_read_zipfile_error(self):
+1872:         self.create_zipfile_with_extra_data("이름.txt", b"\xff")
+1873:         with self.assertRaises(zipfile.BadZipfile):
+1874:             zipfile.ZipFile(TESTFN, "r").close()
+1875: 
+
+commit-test_core.py 2522-2557
+2522: class AbstractBadCrcTests:
+2523:     def test_testzip_with_bad_crc(self):
+2524:         """Tests that files with bad CRCs return their name from testzip."""
+2525:         zipdata = self.zip_with_bad_crc
+2526: 
+2527:         with zipfile.ZipFile(io.BytesIO(zipdata), mode="r") as zipf:
+2528:             # testzip returns the name of the first corrupt file, or None
+2529:             self.assertEqual('afile', zipf.testzip())
+2530: 
+2531:     def test_read_with_bad_crc(self):
+2532:         """Tests that files with bad CRCs raise a BadZipFile exception when read."""
+2533:         zipdata = self.zip_with_bad_crc
+2534: 
+2535:         # Using ZipFile.read()
+2536:         with zipfile.ZipFile(io.BytesIO(zipdata), mode="r") as zipf:
+2537:             self.assertRaises(zipfile.BadZipFile, zipf.read, 'afile')
+2538: 
+2539:         # Using ZipExtFile.read()
+2540:         with zipfile.ZipFile(io.BytesIO(zipdata), mode="r") as zipf:
+2541:             with zipf.open('afile', 'r') as corrupt_file:
+2542:                 self.assertRaises(zipfile.BadZipFile, corrupt_file.read)
+2543: 
+2544:         # Same with small reads (in order to exercise the buffering logic)
+2545:         with zipfile.ZipFile(io.BytesIO(zipdata), mode="r") as zipf:
+2546:             with zipf.open('afile', 'r') as corrupt_file:
+2547:                 corrupt_file.MIN_READ_SIZE = 2
+2548:                 with self.assertRaises(zipfile.BadZipFile):
+2549:                     while corrupt_file.read(2):
+2550:                         pass
+2551: 
+2552: 
+2553: class StoredBadCrcTests(AbstractBadCrcTests, unittest.TestCase):
+2554:     compression = zipfile.ZIP_STORED
+2555:     zip_with_bad_crc = (
+2556:         b'PK\003\004\024\0\0\0\0\0 \213\212;:r'
+2557:         b'\253\377\f\0\0\0\f\0\0\0\005\0\0\000af'
+
+commit-test_core.py 3040-3185
+3040:     def tearDown(self):
+3041:         unlink(TESTFN2)
+3042: 
+3043: 
+3044: class TestWithDirectory(unittest.TestCase):
+3045:     def setUp(self):
+3046:         os.mkdir(TESTFN2)
+3047: 
+3048:     def test_extract_dir(self):
+3049:         with zipfile.ZipFile(findfile("zipdir.zip", subdir="archivetestdata")) as zipf:
+3050:             zipf.extractall(TESTFN2)
+3051:         self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "a")))
+3052:         self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "a", "b")))
+3053:         self.assertTrue(os.path.exists(os.path.join(TESTFN2, "a", "b", "c")))
+3054: 
+3055:     def test_bug_6050(self):
+3056:         # Extraction should succeed if directories already exist
+3057:         os.mkdir(os.path.join(TESTFN2, "a"))
+3058:         self.test_extract_dir()
+3059: 
+3060:     def test_extract_dir_backslash(self):
+3061:         zfname = findfile("zipdir_backslash.zip", subdir="archivetestdata")
+3062:         with zipfile.ZipFile(zfname) as zipf:
+3063:             zipf.extractall(TESTFN2)
+3064:         if os.name == 'nt':
+3065:             self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "a")))
+3066:             self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "a", "b")))
+3067:             self.assertTrue(os.path.isfile(os.path.join(TESTFN2, "a", "b", "c")))
+3068:             self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "d")))
+3069:             self.assertTrue(os.path.isdir(os.path.join(TESTFN2, "d", "e")))
+3070:         else:
+3071:             self.assertTrue(os.path.isfile(os.path.join(TESTFN2, "a\\b\\c")))
+3072:             self.assertTrue(os.path.isfile(os.path.join(TESTFN2, "d\\e\\")))
+3073:             self.assertFalse(os.path.exists(os.path.join(TESTFN2, "a")))
+3074:             self.assertFalse(os.path.exists(os.path.join(TESTFN2, "d")))
+3075: 
+3076:     def test_write_dir(self):
+3077:         dirpath = os.path.join(TESTFN2, "x")
+3078:         os.mkdir(dirpath)
+3079:         mode = os.stat(dirpath).st_mode & 0xFFFF
+3080:         with zipfile.ZipFile(TESTFN, "w") as zipf:
+3081:             zipf.write(dirpath)
+3082:             zinfo = zipf.filelist[0]
+3083:             self.assertTrue(zinfo.filename.endswith("/x/"))
+3084:             self.assertEqual(zinfo.external_attr, (mode << 16) | 0x10)
+3085:             zipf.write(dirpath, "y")
+3086:             zinfo = zipf.filelist[1]
+3087:             self.assertTrue(zinfo.filename, "y/")
+3088:             self.assertEqual(zinfo.external_attr, (mode << 16) | 0x10)
+3089:         with zipfile.ZipFile(TESTFN, "r") as zipf:
+3090:             zinfo = zipf.filelist[0]
+3091:             self.assertTrue(zinfo.filename.endswith("/x/"))
+3092:             self.assertEqual(zinfo.external_attr, (mode << 16) | 0x10)
+3093:             zinfo = zipf.filelist[1]
+3094:             self.assertTrue(zinfo.filename, "y/")
+3095:             self.assertEqual(zinfo.external_attr, (mode << 16) | 0x10)
+3096:             target = os.path.join(TESTFN2, "target")
+3097:             os.mkdir(target)
+3098:             zipf.extractall(target)
+3099:             self.assertTrue(os.path.isdir(os.path.join(target, "y")))
+3100:             self.assertEqual(len(os.listdir(target)), 2)
+3101: 
+3102:     def test_writestr_dir(self):
+3103:         os.mkdir(os.path.join(TESTFN2, "x"))
+3104:         with zipfile.ZipFile(TESTFN, "w") as zipf:
+3105:             zipf.writestr("x/", b'')
+3106:             zinfo = zipf.filelist[0]
+3107:             self.assertEqual(zinfo.filename, "x/")
+3108:             self.assertEqual(zinfo.external_attr, (0o40775 << 16) | 0x10)
+3109:         with zipfile.ZipFile(TESTFN, "r") as zipf:
+3110:             zinfo = zipf.filelist[0]
+3111:             self.assertTrue(zinfo.filename.endswith("x/"))
+3112:             self.assertEqual(zinfo.external_attr, (0o40775 << 16) | 0x10)
+3113:             target = os.path.join(TESTFN2, "target")
+3114:             os.mkdir(target)
+3115:             zipf.extractall(target)
+3116:             self.assertTrue(os.path.isdir(os.path.join(target, "x")))
+3117:             self.assertEqual(os.listdir(target), ["x"])
+3118: 
+3119:     def test_mkdir(self):
+3120:         with zipfile.ZipFile(TESTFN, "w") as zf:
+3121:             zf.mkdir("directory")
+3122:             zinfo = zf.filelist[0]
+3123:             self.assertEqual(zinfo.filename, "directory/")
+3124:             self.assertEqual(zinfo.external_attr, (0o40777 << 16) | 0x10)
+3125: 
+3126:             zf.mkdir("directory2/")
+3127:             zinfo = zf.filelist[1]
+3128:             self.assertEqual(zinfo.filename, "directory2/")
+3129:             self.assertEqual(zinfo.external_attr, (0o40777 << 16) | 0x10)
+3130: 
+3131:             zf.mkdir("directory3", mode=0o777)
+3132:             zinfo = zf.filelist[2]
+3133:             self.assertEqual(zinfo.filename, "directory3/")
+3134:             self.assertEqual(zinfo.external_attr, (0o40777 << 16) | 0x10)
+3135: 
+3136:             old_zinfo = zipfile.ZipInfo("directory4/")
+3137:             old_zinfo.external_attr = (0o40777 << 16) | 0x10
+3138:             old_zinfo.CRC = 0
+3139:             old_zinfo.file_size = 0
+3140:             old_zinfo.compress_size = 0
+3141:             zf.mkdir(old_zinfo)
+3142:             new_zinfo = zf.filelist[3]
+3143:             self.assertEqual(old_zinfo.filename, "directory4/")
+3144:             self.assertEqual(old_zinfo.external_attr, new_zinfo.external_attr)
+3145: 
+3146:             target = os.path.join(TESTFN2, "target")
+3147:             os.mkdir(target)
+3148:             zf.extractall(target)
+3149:             self.assertEqual(set(os.listdir(target)), {"directory", "directory2", "directory3", "directory4"})
+3150: 
+3151:     def test_create_directory_with_write(self):
+3152:         with zipfile.ZipFile(TESTFN, "w") as zf:
+3153:             zf.writestr(zipfile.ZipInfo('directory/'), '')
+3154: 
+3155:             zinfo = zf.filelist[0]
+3156:             self.assertEqual(zinfo.filename, "directory/")
+3157: 
+3158:             directory = os.path.join(TESTFN2, "directory2")
+3159:             os.mkdir(directory)
+3160:             mode = os.stat(directory).st_mode & 0xFFFF
+3161:             zf.write(directory, arcname="directory2/")
+3162:             zinfo = zf.filelist[1]
+3163:             self.assertEqual(zinfo.filename, "directory2/")
+3164:             self.assertEqual(zinfo.external_attr, (mode << 16) | 0x10)
+3165: 
+3166:             target = os.path.join(TESTFN2, "target")
+3167:             os.mkdir(target)
+3168:             zf.extractall(target)
+3169: 
+3170:             self.assertEqual(set(os.listdir(target)), {"directory", "directory2"})
+3171: 
+3172:     def test_root_folder_in_zipfile(self):
+3173:         """
+3174:         gh-112795: Some tools or self constructed codes will add '/' folder to
+3175:         the zip file, this is a strange behavior, but we should support it.
+3176:         """
+3177:         in_memory_file = io.BytesIO()
+3178:         zf = zipfile.ZipFile(in_memory_file, "w")
+3179:         zf.mkdir('/')
+3180:         zf.writestr('./a.txt', 'aaa')
+3181:         zf.extractall(TESTFN2)
+3182: 
+3183:     def tearDown(self):
+3184:         rmtree(TESTFN2)
+3185:         if os.path.exists(TESTFN):
+
+commit-test_core.py 3350-3454
+3350:     def test_execute_zip64(self):
+3351:         output = subprocess.check_output([self.exe_zip64, sys.executable])
+3352:         self.assertIn(b'number in executable: 5', output)
+3353: 
+3354: 
+3355: class EncodedMetadataTests(unittest.TestCase):
+3356:     file_names = ['\u4e00', '\u4e8c', '\u4e09']  # Han 'one', 'two', 'three'
+3357:     file_content = [
+3358:         "This is pure ASCII.\n".encode('ascii'),
+3359:         # This is modern Japanese. (UTF-8)
+3360:         "\u3053\u308c\u306f\u73fe\u4ee3\u7684\u65e5\u672c\u8a9e\u3067\u3059\u3002\n".encode('utf-8'),
+3361:         # This is obsolete Japanese. (Shift JIS)
+3362:         "\u3053\u308c\u306f\u53e4\u3044\u65e5\u672c\u8a9e\u3067\u3059\u3002\n".encode('shift_jis'),
+3363:     ]
+3364: 
+3365:     def setUp(self):
+3366:         self.addCleanup(unlink, TESTFN)
+3367:         # Create .zip of 3 members with Han names encoded in Shift JIS.
+3368:         # Each name is 1 Han character encoding to 2 bytes in Shift JIS.
+3369:         # The ASCII names are arbitrary as long as they are length 2 and
+3370:         # not otherwise contained in the zip file.
+3371:         # Data elements are encoded bytes (ascii, utf-8, shift_jis).
+3372:         placeholders = ["n1", "n2"] + self.file_names[2:]
+3373:         with zipfile.ZipFile(TESTFN, mode="w") as tf:
+3374:             for temp, content in zip(placeholders, self.file_content):
+3375:                 tf.writestr(temp, content, zipfile.ZIP_STORED)
+3376:         # Hack in the Shift JIS names with flag bit 11 (UTF-8) unset.
+3377:         with open(TESTFN, "rb") as tf:
+3378:             data = tf.read()
+3379:         for name, temp in zip(self.file_names, placeholders[:2]):
+3380:             data = data.replace(temp.encode('ascii'),
+3381:                                 name.encode('shift_jis'))
+3382:         with open(TESTFN, "wb") as tf:
+3383:             tf.write(data)
+3384: 
+3385:     def _test_read(self, zipfp, expected_names, expected_content):
+3386:         # Check the namelist
+3387:         names = zipfp.namelist()
+3388:         self.assertEqual(sorted(names), sorted(expected_names))
+3389: 
+3390:         # Check infolist
+3391:         infos = zipfp.infolist()
+3392:         names = [zi.filename for zi in infos]
+3393:         self.assertEqual(sorted(names), sorted(expected_names))
+3394: 
+3395:         # check getinfo
+3396:         for name, content in zip(expected_names, expected_content):
+3397:             info = zipfp.getinfo(name)
+3398:             self.assertEqual(info.filename, name)
+3399:             self.assertEqual(info.file_size, len(content))
+3400:             self.assertEqual(zipfp.read(name), content)
+3401: 
+3402:     def test_read_with_metadata_encoding(self):
+3403:         # Read the ZIP archive with correct metadata_encoding
+3404:         with zipfile.ZipFile(TESTFN, "r", metadata_encoding='shift_jis') as zipfp:
+3405:             self._test_read(zipfp, self.file_names, self.file_content)
+3406: 
+3407:     def test_read_without_metadata_encoding(self):
+3408:         # Read the ZIP archive without metadata_encoding
+3409:         expected_names = [name.encode('shift_jis').decode('cp437')
+3410:                           for name in self.file_names[:2]] + self.file_names[2:]
+3411:         with zipfile.ZipFile(TESTFN, "r") as zipfp:
+3412:             self._test_read(zipfp, expected_names, self.file_content)
+3413: 
+3414:     def test_read_with_incorrect_metadata_encoding(self):
+3415:         # Read the ZIP archive with incorrect metadata_encoding
+3416:         expected_names = [name.encode('shift_jis').decode('koi8-u')
+3417:                           for name in self.file_names[:2]] + self.file_names[2:]
+3418:         with zipfile.ZipFile(TESTFN, "r", metadata_encoding='koi8-u') as zipfp:
+3419:             self._test_read(zipfp, expected_names, self.file_content)
+3420: 
+3421:     def test_read_with_unsuitable_metadata_encoding(self):
+3422:         # Read the ZIP archive with metadata_encoding unsuitable for
+3423:         # decoding metadata
+3424:         with self.assertRaises(UnicodeDecodeError):
+3425:             zipfile.ZipFile(TESTFN, "r", metadata_encoding='ascii')
+3426:         with self.assertRaises(UnicodeDecodeError):
+3427:             zipfile.ZipFile(TESTFN, "r", metadata_encoding='utf-8')
+3428: 
+3429:     def test_read_after_append(self):
+3430:         newname = '\u56db'  # Han 'four'
+3431:         expected_names = [name.encode('shift_jis').decode('cp437')
+3432:                           for name in self.file_names[:2]] + self.file_names[2:]
+3433:         expected_names.append(newname)
+3434:         expected_content = (*self.file_content, b"newcontent")
+3435: 
+3436:         with zipfile.ZipFile(TESTFN, "a") as zipfp:
+3437:             zipfp.writestr(newname, "newcontent")
+3438:             self.assertEqual(sorted(zipfp.namelist()), sorted(expected_names))
+3439: 
+3440:         with zipfile.ZipFile(TESTFN, "r") as zipfp:
+3441:             self._test_read(zipfp, expected_names, expected_content)
+3442: 
+3443:         with zipfile.ZipFile(TESTFN, "r", metadata_encoding='shift_jis') as zipfp:
+3444:             self.assertEqual(sorted(zipfp.namelist()), sorted(expected_names))
+3445:             for i, (name, content) in enumerate(zip(expected_names, expected_content)):
+3446:                 info = zipfp.getinfo(name)
+3447:                 self.assertEqual(info.filename, name)
+3448:                 self.assertEqual(info.file_size, len(content))
+3449:                 if i < 2:
+3450:                     with self.assertRaises(zipfile.BadZipFile):
+3451:                         zipfp.read(name)
+3452:                 else:
+3453:                     self.assertEqual(zipfp.read(name), content)
+3454: 

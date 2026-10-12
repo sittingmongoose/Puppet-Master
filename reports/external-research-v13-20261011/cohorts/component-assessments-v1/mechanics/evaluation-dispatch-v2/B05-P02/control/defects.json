@@ -1,0 +1,144 @@
+{
+  "schema": "er13.defects.v1",
+  "arm_id": "B05-P02-control",
+  "material_count": 1,
+  "nonmaterial_count": 2,
+  "defects": [
+    {
+      "id": "C-D01",
+      "material": true,
+      "axis_ids": [
+        2,
+        3
+      ],
+      "kind": "incorrect_version_applicability",
+      "location": "final.md §3, sentence referring to CPython 3.12+ QUOTE_NOTNULL reader mode",
+      "claim": "The null-preserving reader behavior is available in CPython 3.12+.",
+      "finding": "The flags existed in 3.12, but reader support did not. The public 3.12 docs explicitly state the bug is fixed in 3.13; v3.12.0 parse_save_field has no unquoted-empty-to-None branch. The target 3.13.9 does implement it.",
+      "consequence": "The stated compatibility condition can silently collapse null and empty text if this proposed exchange convention is reused on a 3.12 endpoint. Exact value-state preservation is central to the brief. This is not a failure of the actual 3.13.9 mechanism.",
+      "evidence_ids": [
+        "csv312-c",
+        "csv312-current",
+        "quote-issue",
+        "quote-fix-correct",
+        "csv-c"
+      ],
+      "evidence_locators": [
+        "v3.12.0 Modules/_csv.c:611-637 and 686-721",
+        "3.12 Doc/library/csv.rst:368-372",
+        "target Modules/_csv.c:648-683"
+      ],
+      "original_grade_effect": "Blocks source PASS; original text not repaired."
+    },
+    {
+      "id": "C-D02",
+      "material": false,
+      "axis_ids": [
+        2,
+        4,
+        6
+      ],
+      "kind": "systematic_incorrect_exact_locators",
+      "location": "source-map.json claim_mappings and criticism-dispositions.md; final.md §1 encoding citation",
+      "finding": "Multiple ranges identify unrelated code or miss the governing statement in the claimed hash-pinned file. Examples: C:606-640 is dialect machinery rather than float/null conversion; C:658-671 is conversion rather than field-limit checking; codecs:1540-1549 describes encoding-name normalization, not BOM decoding.",
+      "examples": [
+        {
+          "topic": "float/null conversion",
+          "given": "Modules/_csv.c:606-640",
+          "governing": "648-683"
+        },
+        {
+          "topic": "field-limit character count",
+          "given": "Modules/_csv.c:658-671",
+          "governing": "703-716"
+        },
+        {
+          "topic": "QUOTE_NOTNULL docs",
+          "given": "csv.rst:323-342",
+          "governing": "356-376"
+        },
+        {
+          "topic": "Sniffer header docs",
+          "given": "csv.rst:261-276",
+          "governing": "287-304"
+        },
+        {
+          "topic": "line counter",
+          "given": "csv.rst:458-461",
+          "governing": "503-506"
+        },
+        {
+          "topic": "strict option",
+          "given": "csv.rst:432-435",
+          "governing": "475-478"
+        },
+        {
+          "topic": "DictReader mapping/blank skip",
+          "given": "csv.py:160-179",
+          "governing": "174-194"
+        },
+        {
+          "topic": "numeric/null tests",
+          "given": "test_csv.py:392-418",
+          "governing": "426-460"
+        },
+        {
+          "topic": "field-limit test",
+          "given": "test_csv.py:445-462",
+          "governing": "484-501"
+        },
+        {
+          "topic": "quoted newline test",
+          "given": "test_csv.py:474-490",
+          "governing": "515-531"
+        },
+        {
+          "topic": "BOM handling",
+          "given": "codecs.rst:1540-1549",
+          "governing": "1023-1051"
+        }
+      ],
+      "consequence": "Traceability and the requested exact source map are unreliable. Independently verified full-file evidence supports the principal target-runtime conclusions; citation defects alone are not treated as semantic falsity.",
+      "evidence_ids": [
+        "csv-doc",
+        "csv-py",
+        "csv-c",
+        "csv-tests",
+        "codecs"
+      ],
+      "original_grade_effect": "Nonmaterial semantic limitation; exact-map method/delivery qualification is partial."
+    },
+    {
+      "id": "C-D03",
+      "material": false,
+      "axis_ids": [
+        2,
+        4
+      ],
+      "kind": "overbroad_quantifier",
+      "location": "critique.md C02; dispositions C02; final.md §2; source-map.json numeric-conversion claim",
+      "finding": "The wording every unquoted field becomes float omits the empty-field exception: QUOTE_NONNUMERIC leaves an unquoted empty field as empty text.",
+      "evidence_ids": [
+        "csv-c",
+        "csv-tests"
+      ],
+      "evidence_locators": [
+        "Modules/_csv.c:648-683",
+        "Lib/test/test_csv.py:426-446"
+      ],
+      "consequence": "Does not undermine the rejection of numeric coercion for SKUs or the text-first design.",
+      "original_grade_effect": "Nonmaterial."
+    }
+  ],
+  "limitations": [
+    "This is finite assessment of the assigned research proposal and supplied draft, not universal parser correctness or a deployed component.",
+    "Unknown vendor schemas, encodings, null conventions, storage transactions and numeric device budgets legitimately remain product decisions. Their future execution is UNASSESSED, not failed.",
+    "QUOTE_NOTNULL is conditional: a singleton None record cannot be emitted by its writer; delimiter=space plus skipinitialspace excludes unquoted empties. These adjacent exceptions were checked in C:1227-1267/1300-1401, docs:468-472 and tests:316-356. Neither final promises an unrestricted one-column round-trip; the import proposals retain explicit blank/ragged policy and alternative null encodings. This bounds the alternative rather than imposing an export feature.",
+    "Source integrity, byte-aware line limits and atomic publication are proposed application obligations. No candidate execution demonstrates these guarantees; both require meaningful future tests.",
+    "Preparation of the shared component package and cold full-pipeline discovery are outside this pair; no discovery recall/effectiveness or cold end-to-end success is inferred.",
+    "Filesystem access rules are not sandbox isolation. Without full native transcripts, exact operation ordering, exclusive original lookup, absence of unseen delegates and actual provider execution cannot be proven.",
+    "Private transport route fields are observed but not public source authority; service tier and independent native-session linkage remain unknown.",
+    "No billing, subscription cost, cache/output/reasoning breakdown, context occupancy or phase-specific provider activity can be derived from cumulative Goal counters."
+  ],
+  "feedback_or_repair_to_candidate": false
+}

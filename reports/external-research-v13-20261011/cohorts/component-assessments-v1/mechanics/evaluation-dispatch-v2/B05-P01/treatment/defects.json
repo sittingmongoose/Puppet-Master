@@ -1,0 +1,67 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B05-P01-treatment",
+  "material_defect_count": 1,
+  "nonmaterial_defect_count": 1,
+  "defects": [
+    {
+      "id": "T01",
+      "severity": "MATERIAL",
+      "kind": "required_governing_exception_omitted",
+      "axes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "The final accepts a configured Windows executable through create_subprocess_exec and discusses CRT command-line conversion/round-trip tests, but never states the .bat/.cmd implicit-shell exception or excludes such targets. Critique and dispositions D01/D02/D17 do not recover that condition. A fully qualified executable path and ordinary argv parser tests do not address this operating-system shell boundary.",
+      "candidate_locations": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/final.md",
+          "locator": "Decision; \u00a72 Launch and input handling; \u00a76 Windows and Linux behavior; Decision history"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/critique.md",
+          "locator": "finding 9"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/criticism-dispositions.md",
+          "locator": "D01, D02, D17"
+        }
+      ],
+      "primary_sources": [
+        "Doc/library/subprocess.rst original lines 752-773",
+        "Lib/asyncio/base_events.py subprocess_exec, 1775-1807",
+        "Lib/asyncio/windows_utils.py Popen, 125-173",
+        "Lib/subprocess.py Windows _execute_child, 1452-1577",
+        "https://github.com/python/cpython/issues/114539",
+        "https://github.com/python/cpython/pull/117996"
+      ],
+      "consequence": "Material incomplete Windows input/launch guidance for the supported configured-target contract. The sandbox exclusion does not remove the required launch exception. This is an omission, not a finding that a component was deployed or that an attack was executed.",
+      "certainty": "HIGH for governing source and absence in all frozen final/critique/disposition text; actual validator executable type and user trust policy UNKNOWN."
+    },
+    {
+      "id": "T02",
+      "severity": "NONMATERIAL",
+      "kind": "inaccurate_exact_source_locators",
+      "axes": [
+        2,
+        4
+      ],
+      "finding": "Source-map S6 labels 333-388 as Windows argument sequence-to-string conversion, but that specific conversion is at 429-431. Its 935-946 quoting-rule locator is returncode context; the pinned quoting rules are at 1612-1646. Some section labels are shifted, and map ranges D01-D21 / critique 1-15 omit the appended D22 / finding 16.",
+      "candidate_locations": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/source-map.json",
+          "locator": "primary_sources S6; sections critique/dispositions"
+        }
+      ],
+      "authority": "Independent full-body hash and retained original-line contexts.",
+      "consequence": "Citation navigation/map coverage imperfections are separate from material T01. Correct API facts were verified against full governing bodies."
+    }
+  ],
+  "not_defects": [
+    "No component deployment or runtime witness is required by this planning brief.",
+    "Unavailable actual validator/user configuration is not invented.",
+    "No arbitrary process-tree supervision or security sandbox is required."
+  ]
+}

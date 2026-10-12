@@ -1,0 +1,63 @@
+From ae08dd848af9063b53f3acb0191200cafc078eff Mon Sep 17 00:00:00 2001
+From: Steve Dower <steve.dower@python.org>
+Date: Wed, 17 Apr 2024 16:39:41 +0100
+Subject: [PATCH 1/2] gh-114539: Clarify implicit lauching of shells in
+ subprocess
+
+---
+ Doc/library/subprocess.rst | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/Doc/library/subprocess.rst b/Doc/library/subprocess.rst
+index 49194b82b4cea2c..8df0fcfeffd3793 100644
+--- a/Doc/library/subprocess.rst
++++ b/Doc/library/subprocess.rst
+@@ -754,8 +754,8 @@ Exceptions defined in this module all inherit from :exc:`SubprocessError`.
+ Security Considerations
+ -----------------------
+ 
+-Unlike some other popen functions, this implementation will never
+-implicitly call a system shell.  This means that all characters,
++Unlike some other popen functions, this library will not
++implicitly choose to call a system shell.  This means that all characters,
+ including shell metacharacters, can safely be passed to child processes.
+ If the shell is invoked explicitly, via ``shell=True``, it is the application's
+ responsibility to ensure that all whitespace and metacharacters are
+@@ -764,6 +764,13 @@ quoted appropriately to avoid
+ vulnerabilities. On :ref:`some platforms <shlex-quote-warning>`, it is possible
+ to use :func:`shlex.quote` for this escaping.
+ 
++On Windows, batch files (:file:`*.bat` or :file:`*.cmd`) may be launched by the
++operating system in a system shell regardless of the arguments passed to this
++library. This could result in arguments being parsed according to shell rules,
++but without any escaping added by Python. If you are intentionally launching a
++batch file with arguments from untrusted sources, consider passing
++``shell=True`` to allow Python to escape special characters.
++
+ 
+ Popen Objects
+ -------------
+
+From ab79e76861c160b4865e7ffbaf0ea34b6b381f6b Mon Sep 17 00:00:00 2001
+From: Steve Dower <steve.dower@python.org>
+Date: Wed, 17 Apr 2024 16:50:54 +0100
+Subject: [PATCH 2/2] Adds GH reference
+
+---
+ Doc/library/subprocess.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Doc/library/subprocess.rst b/Doc/library/subprocess.rst
+index 8df0fcfeffd3793..1cd233173e85e1d 100644
+--- a/Doc/library/subprocess.rst
++++ b/Doc/library/subprocess.rst
+@@ -769,7 +769,8 @@ operating system in a system shell regardless of the arguments passed to this
+ library. This could result in arguments being parsed according to shell rules,
+ but without any escaping added by Python. If you are intentionally launching a
+ batch file with arguments from untrusted sources, consider passing
+-``shell=True`` to allow Python to escape special characters.
++``shell=True`` to allow Python to escape special characters. See :gh:`114539`
++for additional discussion.
+ 
+ 
+ Popen Objects

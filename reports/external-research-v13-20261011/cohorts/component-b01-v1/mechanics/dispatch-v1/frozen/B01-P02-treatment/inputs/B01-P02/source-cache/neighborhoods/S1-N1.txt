@@ -1,0 +1,112 @@
+      ``../../foo../../ba..r`` becomes ``foo../ba..r``.  On Windows illegal
+      characters (``:``, ``<``, ``>``, ``|``, ``"``, ``?``, and ``*``)
+      replaced by underscore (``_``).
+
+   .. versionchanged:: 3.6
+      Calling :meth:`extract` on a closed ZipFile will raise a
+      :exc:`ValueError`.  Previously, a :exc:`RuntimeError` was raised.
+
+   .. versionchanged:: 3.6.2
+      The *path* parameter accepts a :term:`path-like object`.
+
+
+.. method:: ZipFile.extractall(path=None, members=None, pwd=None)
+
+   Extract all members from the archive to the current working directory.  *path*
+   specifies a different directory to extract to.  *members* is optional and must
+   be a subset of the list returned by :meth:`namelist`.  *pwd* is the password
+   used for encrypted files as a :class:`bytes` object.
+
+   .. warning::
+
+      Never extract archives from untrusted sources without prior inspection.
+      It is possible that files are created outside of *path*, e.g. members
+      that have absolute filenames starting with ``"/"`` or filenames with two
+      dots ``".."``.  This module attempts to prevent that.
+      See :meth:`extract` note.
+
+   .. versionchanged:: 3.6
+      Calling :meth:`extractall` on a closed ZipFile will raise a
+      :exc:`ValueError`.  Previously, a :exc:`RuntimeError` was raised.
+
+   .. versionchanged:: 3.6.2
+      The *path* parameter accepts a :term:`path-like object`.
+
+
+.. method:: ZipFile.printdir()
+
+   Print a table of contents for the archive to ``sys.stdout``.
+
+
+.. method:: ZipFile.setpassword(pwd)
+
+   Set *pwd* (a :class:`bytes` object) as default password to extract encrypted files.
+
+
+.. method:: ZipFile.read(name, pwd=None)
+
+   Return the bytes of the file *name* in the archive.  *name* is the name of the
+   file in the archive, or a :class:`ZipInfo` object.  The archive must be open for
+   read or append. *pwd* is the password used for encrypted files as a :class:`bytes`
+   object and, if specified, overrides the default password set with :meth:`setpassword`.
+   Calling :meth:`read` on a ZipFile that uses a compression method other than
+   :const:`ZIP_STORED`, :const:`ZIP_DEFLATED`, :const:`ZIP_BZIP2` or
+   :const:`ZIP_LZMA` will raise a :exc:`NotImplementedError`. An error will also
+   be raised if the corresponding compression module is not available.
+
+   .. versionchanged:: 3.6
+      Calling :meth:`read` on a closed ZipFile will raise a :exc:`ValueError`.
+      Previously, a :exc:`RuntimeError` was raised.
+
+
+.. method:: ZipFile.testzip()
+
+   Read all the files in the archive and check their CRC's and file headers.
+   Return the name of the first bad file, or else return ``None``.
+
+   .. versionchanged:: 3.6
+      Calling :meth:`testzip` on a closed ZipFile will raise a
+      :exc:`ValueError`.  Previously, a :exc:`RuntimeError` was raised.
+
+
+.. method:: ZipFile.write(filename, arcname=None, compress_type=None, \
+                          compresslevel=None)
+
+   Write the file named *filename* to the archive, giving it the archive name
+   *arcname* (by default, this will be the same as *filename*, but without a drive
+   letter and with leading path separators removed).  If given, *compress_type*
+   overrides the value given for the *compression* parameter to the constructor for
+   the new entry. Similarly, *compresslevel* will override the constructor if
+   given.
+   The archive must be open with mode ``'w'``, ``'x'`` or ``'a'``.
+
+   .. note::
+
+      The ZIP file standard historically did not specify a metadata encoding,
+      but strongly recommended CP437 (the original IBM PC encoding) for
+      interoperability.  Recent versions allow use of UTF-8 (only).  In this
+      module, UTF-8 will automatically be used to write the member names if
+      they contain any non-ASCII characters.  It is not possible to write
+      member names in any encoding other than ASCII or UTF-8.
+
+   .. note::
+
+      Archive names should be relative to the archive root, that is, they should not
+      start with a path separator.
+
+   .. note::
+
+      If ``arcname`` (or ``filename``, if ``arcname`` is  not given) contains a null
+      byte, the name of the file in the archive will be truncated at the null byte.
+
+   .. note::
+
+      A leading slash in the filename may lead to the archive being impossible to
+      open in some zip programs on Windows systems.
+
+   .. versionchanged:: 3.6
+      Calling :meth:`write` on a ZipFile created with mode ``'r'`` or
+      a closed ZipFile will raise a :exc:`ValueError`.  Previously,
+      a :exc:`RuntimeError` was raised.
+
+

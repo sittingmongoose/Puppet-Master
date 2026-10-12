@@ -1,0 +1,179 @@
+{
+  "version": "component-admit-v1",
+  "scope": "COMPONENT",
+  "case": "B01-P01",
+  "arm": "treatment",
+  "run_id": "B01-P01-treatment",
+  "prepared_at_utc": "2026-10-12T00:34:21.672065Z",
+  "t0_utc": "2026-10-12T00:34:21.619415Z",
+  "whole_deadline_utc": "2026-10-12T00:59:21.619415Z",
+  "stage_deadline_utc": "2026-10-12T00:59:21.619415Z",
+  "whole_budget_s": 1500,
+  "minimum_seconds": 0,
+  "available_seconds_at_prepare": 1499.94735,
+  "native_goal_objective": "ER13 COMPONENT B01-P01-treatment: complete only B01-P01 treatment under ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/assignment.md and the original T0+25-minute deadline; save COMPLETE final.md, criticism dispositions, source-map.json and actual witness code/results when used before completing this same native Goal.",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "observed_route": "UNKNOWN",
+  "selection_sha256": "66440afff57bf0b321bc0087527f1c0c4dcb3e23509d349a94bd0151b884af5b",
+  "fixture_ready": {
+    "case": "B01-P01",
+    "ready_utc": "2026-10-12T00:20:45.604112+00:00",
+    "manifest_sha256": "76e04935abce7e46e19747af2721298ae722a5ff9e1e9a35e390a9d59b133676",
+    "pair_raw_base_sha256": "8c4fae30e944a75e55f995dcd6a1dcb8e6eb43d5353d1ba4f06c04a6242c6326",
+    "max_minutes": 25,
+    "min_minutes": 0,
+    "component_not_full_discovery": true
+  },
+  "fixture_manifest_sha256": "76e04935abce7e46e19747af2721298ae722a5ff9e1e9a35e390a9d59b133676",
+  "common_raw_sha256": {
+    "brief.md": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+    "plan.md": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+    "draft.md": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+    "source-index.json": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843"
+  },
+  "frozen_inputs": {
+    "case": "B01-P01",
+    "arm": "treatment",
+    "inputs": [
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/brief.md",
+        "sha256": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/plan.md",
+        "sha256": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/draft.md",
+        "sha256": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-index.json",
+        "sha256": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/critique.md",
+        "sha256": "6f7163f310833b6ff24be5fe260c1fcdd9896e74e06e4f3006fba6adc88ce22f"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+        "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+        "sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+        "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+        "sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+        "sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+        "sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+        "sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+        "sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+        "sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+        "sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+        "sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+        "sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+        "sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+        "sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+        "sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/backup.html",
+        "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04"
+      },
+      {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/inputs/B01-P01/source-cache/sqlite/wal.html",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+      }
+    ],
+    "independent_lookup_allowed": true,
+    "cache_access": true,
+    "semantic_conclusions_shared": true,
+    "excluded": [
+      "rubric.json",
+      "findings.json",
+      "metadata.json",
+      "preparer scripts/source pool",
+      "other arms/evaluators"
+    ],
+    "reader": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P01-treatment/helpers/component-fixtures-v1/source_reader.py",
+      "sha256": "5eca537d68e3a464f7da7e65afe6f62ec1a0d93f1d0fbf2a20988c196db75a5b",
+      "usage": "python3 -B <reader> --case B01-P01 --arm treatment --source S1 --start 1 --end N; arbitrary adjacent/full-body expansion permitted"
+    }
+  },
+  "method_delta": "After the identical shared source-backed critique, author targeted evidence-backed amendments and use deterministic assembly of unchanged supported draft prose plus those amendments into a COMPLETE self-contained final.md. Save amendments and actual assembly code/results. Deterministic retention does not establish truth; verify governing context and new errors.",
+  "tools": [
+    "functions.exec",
+    "tools.exec_command",
+    "tools.create_goal",
+    "tools.update_goal",
+    "tools.get_goal",
+    "existing primary-source web/search tools when available"
+  ],
+  "output_selection": [
+    "final.md",
+    "criticism-dispositions.md",
+    "source-map.json",
+    "witnesses/ actual code/results when used",
+    "native-goal-create.json",
+    "native-goal-terminal.json",
+    "amendments.json",
+    "assemble.py",
+    "assembly-results.json"
+  ],
+  "request_sha256": "e503828ae20933b43ccbba1e0408280d1ecba46af12f42b83fff15d8ab6a1f4c",
+  "assignment_sha256": "4aa70952448ee83d89091a257d17f2201a67f156699eeee71477772e61f70c38",
+  "native_pins": {
+    "assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+    "activation-snippet-template.js": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5"
+  },
+  "discovery_effectiveness_claim": false,
+  "native_provenance_freshness": "UNKNOWN beyond exact binding checker",
+  "preparation_accounting": "arm-specific preparation/queue charged from root T0; common fixture cold acquisition/preparation separately charged by root, warm reuse disclosed"
+}

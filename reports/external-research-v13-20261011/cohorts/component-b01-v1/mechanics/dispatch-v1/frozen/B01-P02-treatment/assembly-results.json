@@ -1,0 +1,217 @@
+{
+  "status": "complete",
+  "interpretation": "Deterministic retention/replacement/append of the admitted draft; this verifies assembly provenance, not product truth or importer behavior.",
+  "limits": [
+    "No importer or application implementation was executed.",
+    "Retained draft prose remains supported only to the extent identified in the review and source map.",
+    "Proposed numeric resource defaults remain an explicit release blocker."
+  ],
+  "review_execution": {
+    "requested_route": "Luna Max Standard",
+    "returned_provider_model_tier": "unknown",
+    "reason": "The saved create_goal response and get_goal observation contained a Goal thread ID/status/objective but no provider, model, or tier fields.",
+    "native_goal_thread_id": "01a12d89-9723-7d13-a396-0562db3978ce",
+    "status_at_observation": "active"
+  },
+  "assembly": {
+    "command": "python3 -B ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/assemble.py",
+    "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "assembly_script_sha256": "e0437c7fc6b5f2d18da208ee8cc39b0f939b429fa56307336553ac56c78fb778",
+    "draft_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/inputs/B01-P02/draft.md",
+    "draft_sha256": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+    "amendments_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/amendments.json",
+    "amendments_sha256": "7322849bd482f8a8055fac987605b5b8b399a56234ca058a84ec830c5926b701",
+    "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B01-P02-treatment/final.md",
+    "final_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+    "final_characters": 23692,
+    "final_utf8_bytes": 23694,
+    "stdout": "assembled final.md sha256=d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248 chars=23692 replacements=7\n",
+    "stderr": "",
+    "returncode": 0
+  },
+  "retained_text_intervals": [
+    {
+      "source_char_interval": [
+        42,
+        67
+      ],
+      "sha256_utf8": "0add30a0230892e9d9d4da0dd48ade4304617f452ea23987d25628f38bffd856",
+      "text": "\n\n## Flow and boundaries\n"
+    },
+    {
+      "source_char_interval": [
+        573,
+        574
+      ],
+      "sha256_utf8": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "text": "\n"
+    },
+    {
+      "source_char_interval": [
+        1078,
+        1108
+      ],
+      "sha256_utf8": "58797b1859ff1c58144328d8afe98e88981664a44bd7220db79b554724955b63",
+      "text": "\n## Extraction and validation\n"
+    },
+    {
+      "source_char_interval": [
+        1840,
+        1841
+      ],
+      "sha256_utf8": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "text": "\n"
+    },
+    {
+      "source_char_interval": [
+        2293,
+        2321
+      ],
+      "sha256_utf8": "05e15138047d194d1fe3f04f7aa23e67647dcd0d193e6b93ff79f781ce63a124",
+      "text": "\n## Integrity and resources\n"
+    },
+    {
+      "source_char_interval": [
+        2873,
+        2914
+      ],
+      "sha256_utf8": "b1e49af2a28f49f1ef42eff5ab0bcc892082f12c7c7b5ad73b9f04bd02e807a5",
+      "text": "\n## Alternatives, history and validation\n"
+    }
+  ],
+  "replacements": [
+    {
+      "id": "A00-title",
+      "source_char_interval": [
+        0,
+        42
+      ],
+      "removed_text": "# ZIP import proposal — investigator draft",
+      "removed_sha256_utf8": "21acffd05509c8ae188d6463481a3a4f47cd676f6c7edbc57e0c3263ffd07124",
+      "replacement_text": "# ZIP import proposal — review-complete plan\n",
+      "replacement_sha256_utf8": "c5f7d85576508a71f45322ca7a12b2551645eb04be7c4efc30b69a601323c6ae",
+      "rationale": "Mark this as the complete proposal while preserving supported draft substance and history.",
+      "evidence": []
+    },
+    {
+      "id": "A01-flow",
+      "source_char_interval": [
+        67,
+        573
+      ],
+      "removed_text": "Read the central directory for preview, list nested folders and files, and let the user select supported content. Treat names and metadata as untrusted. The importer never launches extracted scripts. Use a new private staging directory, reject an occupied final project name, and publish only after the selected files pass validation. A failure or cancel deletes owned staging without changing existing projects. Preserve empty folders selected by the user and report skipped unsupported files explicitly.\n",
+      "removed_sha256_utf8": "6dea74b26f6eb74bc914333ab92911fa286a7690b6f79391cae11b44a19971df",
+      "replacement_text": "Read a private snapshot of the archive for preview, list nested folders and individual member entries, and let the user choose supported text/media files. Treat names and metadata as untrusted. Import copies bytes into a new private, per-attempt staging directory on the same volume as the final project. The final project name must be absent; never open existing project files for writing. Publish only after every selected entry completes all configured checks. On error or cancellation, stop and remove only this operation's owned staging tree; if cleanup fails, leave it marked for recovery and report that. Preserve explicitly selected empty directories and report skipped, unsupported, and deselected entries in the result. Never execute imported content, set executable permissions from the archive, or mark a script trusted.\n",
+      "replacement_sha256_utf8": "cac93e9c4e09f7b592dd76df563c6a2761b39d628363868fe6fea6d56d02c0af",
+      "rationale": "Retain preview, selection, staging, non-execution and existing-project invariants; make cleanup ownership and recovery behavior explicit.",
+      "evidence": [
+        "S1-N3",
+        "S2-N2"
+      ]
+    },
+    {
+      "id": "A02-runtime-support",
+      "source_char_interval": [
+        574,
+        1078
+      ],
+      "removed_text": "CPython supports several ZIP compression methods; availability depends on their codec modules, and unsupported/encrypted/corrupt input can fail [S1]. Show these failures as import diagnostics rather than silently omitting a member. The draft treats all encrypted input as unsupported by product policy; this is narrower than a claim that Python cannot read any encrypted ZIP. Keep passwords out of logs. Bound member count, per-file output bytes and total actual output, not just the input archive size.\n",
+      "removed_sha256_utf8": "56ead2aa24622aa8243de29ab6ec76b8b34766151d7f83fef7016f16e21404a5",
+      "replacement_text": "The target is CPython 3.13.9 at commit 8183fa5e3f78ca6ab862de7fb8b14f3d929421e0. Its ZIP support includes STORED and DEFLATED, plus BZIP2 and LZMA when their codec modules are present; other methods or missing codecs can fail. In this pinned implementation, DEFLATE passes an output limit to each decompressor call, while BZIP2/LZMA call the decoder without that per-call limit. V1 therefore accepts only STORED and DEFLATED until bounded BZIP2/LZMA handling is implemented and measured. CPython can decrypt traditional encrypted members, but its documentation says that decryption is extremely slow and it cannot create encrypted files; strong encryption is unsupported in the implementation. V1 rejects all selected encrypted members as a product policy and offers no password prompt. The UI identifies unsupported items and requires explicit deselection; it never silently imports or omits a selected entry. ZIP64 remains subject to product limits; multi-disk archives are unsupported. These are product limits, not claims that CPython cannot read all encrypted or compressed ZIPs. [CPython 3.13.9 ZIP docs](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L14-L24) [compression methods](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L96-L127) [pinned decompressor code](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1072-L1106) [encryption handling](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1666-L1711).\n",
+      "replacement_sha256_utf8": "d6df0b3f26a37db6c77ca35b88a6f7a63c3960f1eaf1cf756bcecedd8fa0740f",
+      "rationale": "Preserve capability distinctions and add the codec constraint needed for bounded streaming.",
+      "evidence": [
+        "S1 compression/encryption",
+        "S2 ZipExtFile._read1",
+        "S2 ZipFile.open"
+      ]
+    },
+    {
+      "id": "A03-extract-semantics",
+      "source_char_interval": [
+        1108,
+        1840
+      ],
+      "removed_text": "The standard `extractall` method passes ZIP member names directly through to filesystem paths without modification; therefore it offers no protection against `..` or absolute names. Reject it entirely as a library capability and implement every path conversion ourselves. Our preview may instead use `zipfile.Path`, which should inherit the same path sanitization as standard extraction. Resolve a candidate destination, require containment beneath the staging root, and reject absolute names, drive/UNC names, parent traversal, and symlink-like entries according to a documented import policy. Use a staging tree inaccessible to other writers; the name check is not a defense against concurrent filesystem substitution on its own.\n",
+      "removed_sha256_utf8": "7ef5c911e8c9286a08da762f95f98e4750bda1447ec37d02e7600e3e3f1570ef",
+      "replacement_text": "Do not use extract/extractall as the V1 write path for untrusted input, but correct the reason: pinned CPython does perform lexical path adjustments. Its docs say absolute, drive/UNC and leading slash prefixes are stripped; parent components are removed, and Windows illegal characters are replaced with underscores. The implementation uses splitdrive, drops empty, dot and parent components, normalizes the path, and applies Windows character/trailing-dot-space changes. The docs still warn to inspect untrusted archives. These transformations do not express our stricter naming, collision, actual-byte, cancellation or publication policy, and lossy normalization can make distinct archive entries target one path. Use ZipInfo records to construct our own validated destination tree. zipfile.Path does not sanitize member names and is not a security boundary; V1 builds the preview tree from ZipInfo records instead. [extract/extractall documentation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L339-L380) [path API warning](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L536-L553) [implementation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1791-L1852) [upstream path tests](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L1628-L1683).\n\nBefore writing, validate each decoded name and map it to a relative destination under the owned staging root. Reject rooted/absolute, drive or UNC forms; empty components (except one trailing slash on an explicit directory entry), dot or parent components; NUL; control characters; backslashes; Windows-reserved characters/device-name components; trailing spaces or periods; excessive depth/length; and entries marked as links or special files by recognized metadata. Inspect both orig_filename and filename because ZipInfo preserves the decoded original while its normalized filename can truncate NUL or normalize separators. V1 uses a conservative portable-name policy on both operating systems: only forward slashes delimit components, no lossy rewriting, and a Windows case-insensitive comparison key is checked even on Linux. This deliberately declines some names a POSIX filesystem could store, so a project remains usable on default Windows paths. Windows NTFS can opt into case-sensitive directories, but V1 does not depend on that setting. Check actual target filesystem path limits and exclusive-create results too. Use handle-relative/no-follow operations where supported, require the staging parent to be app-controlled, and verify lexical containment as defense in depth; the private tree reduces substitution risk but is not a claim of a tested cross-platform race guarantee. [ZipInfo normalization](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L355-L371) [ZipInfo fields](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L401-L430) [Windows naming rules](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions).\n",
+      "replacement_sha256_utf8": "938337495b373368f07a879ca7aebf4ef01033e5ac6fb6e74a28e7d47e708d1d",
+      "rationale": "Correct the inaccurate extraction claim while retaining the stricter product policy. The replacement also defines the validated destination and confinement policy.",
+      "evidence": [
+        "S1-N1",
+        "S1-N2",
+        "S2-N2",
+        "S2-N3",
+        "S3-N1",
+        "S3-N2",
+        "S2 ZipInfo._sanitize_filename",
+        "Windows Learn naming rules"
+      ]
+    },
+    {
+      "id": "A05-collisions",
+      "source_char_interval": [
+        1841,
+        2293
+      ],
+      "removed_text": "Use each `ZipInfo` object when opening content so duplicate archive names remain distinguishable. On collision after normalization, keep the first selected member and import the rest under the same path, relying on the final checksum to expose any difference. Case-insensitive Windows paths and character replacement can introduce collisions beyond exact duplicate names. The user sees canonical relative destination names before committing selection.\n",
+      "removed_sha256_utf8": "10f2eb85a3696bcb4c73dc2a117dad64ef035e6236526432cbba6b97d135b6f7",
+      "replacement_text": "Use a stable entry identity (central-directory order plus header offset) and retain each ZipInfo object; never identify a selected member by filename alone. CPython keeps every ZipInfo in its file list, but its name-to-info dictionary stores the last entry for a repeated name, and open(name) resolves through that dictionary. Its extractor opens output with wb, so a later member can replace earlier content. A CRC can detect data corruption; it cannot show which duplicate the user intended. Build the complete selected destination namespace before writing. Reject any selected pair that aliases after the portable path rules, any file-versus-directory prefix conflict, and any case/normalization collision. Duplicate rows remain visible and individually selectable; the user may select at most one for a destination, and the preview must show its stable identity, decoded name, sizes and compression. No keep-first, overwrite, or implicit rename. An explicit rename mapping may be considered later only if the full resulting namespace is previewed and collision-free. [directory/name map](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1485-L1514) [ZipFile.open identity](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1605-L1639) [extract writes](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1831-L1852).\n",
+      "replacement_sha256_utf8": "0b6a6a5614091d5cc1059325985e43c6029063da43bab764211501b7bf33e92e",
+      "rationale": "Replace keep-first/overwrite/checksum with a precomputed no-overwrite namespace.",
+      "evidence": [
+        "S2 _RealGetContents",
+        "S2 ZipFile.open",
+        "S2 ZipFile._extract_member"
+      ]
+    },
+    {
+      "id": "A06-integrity-budgets",
+      "source_char_interval": [
+        2321,
+        2873
+      ],
+      "removed_text": "Stream content with a small buffer, update per-member and total counters, check cancellation between reads, and stop at explicit output budgets. Header `file_size` is useful preview information but not a security proof. Reading through EOF is part of detecting CRC mismatch; a filename-based allowlist does not prove content type. Reject unexpected content after probing a bounded prefix, record import provenance without leaking local paths, and handle disk/permission errors. No archive may exhaust memory simply because its declared output is huge.\n",
+      "removed_sha256_utf8": "45c7dbdf293c94e1e17706a2b01477d253cefd980286e3a97500286e40f7fea9",
+      "replacement_text": "Before parsing, copy the chosen archive into an owned private snapshot under a finite compressed-archive byte cap; preview and import the same snapshot and record its digest, not the user's absolute path. CPython reads the central-directory byte region into memory and then creates a ZipInfo object for each entry before application code can enforce a member-count limit, so a post-open count alone is not a sufficient memory bound. The archive-byte cap bounds that parser input; benchmark worst-case many-entry archives to set it, and reject before ZipFile opens an over-limit snapshot. After parsing, enforce explicit caps on member count, selected count, nesting depth, component/path length, per-member declared size, total declared size, elapsed time, and actual output bytes. Declared file_size/compress_size values are preview and early-rejection hints only. During streaming, count every byte returned before writing and enforce per-file and aggregate limits; no compression-ratio check replaces the actual-byte counter. Values are finite, versioned product settings, but no numerical defaults are chosen by these sources or brief, so the defaults are a release-blocking product decision. [central-directory allocation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1444-L1518) [resource pitfalls](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L980-L1019).\n\nFor supported STORED/DEFLATED entries, stream one selected ZipInfo at a time with a fixed small read request through ZipFile.open(info), write with exclusive creation, check cancellation between reads, and stop before writing any chunk that would exceed a quota. CPython's DEFLATE path passes a maximum output length to decompression; the accepted methods therefore have a bounded per-read allocation under the chosen read size. The pinned BZIP2/LZMA paths lack that cap and are excluded from V1. Read each accepted member to ZipExtFile EOF so CPython reaches its CRC check, compare bytes returned with declared file_size, and verify compressed-stream termination and consumption with a version-pinned adapter. CPython can set EOF when the declared output count is reached, so EOF/CRC alone is not independent proof that the actual stream length matches metadata. If the adapter cannot prove stream end and size consistency, fail the member; use private internals only behind a pinned version and tests, or provide a bounded decoder adapter. On bad CRC, truncated data, header/name mismatch, decompression error, permission failure, quota breach, or cancellation, abort the whole new-project staging operation. A canceled or quota-stopped member has not passed an EOF/CRC check. Do not use testzip on every archive as a shortcut: it reads all members, including unselected entries, and can consume unbounded work unless equally constrained. A filename or extension allowlist classifies candidates only; a bounded signature sniff can flag mismatches but neither proves safety nor grants trust. [CRC at EOF](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1025-L1034) [read/decompress path](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1072-L1106) [CRC tests](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L2522-L2550).\n",
+      "replacement_sha256_utf8": "46b13f349d970216b1124e9d939c1e1cb01be592c159550f99054032f8d588d9",
+      "rationale": "Retain real-byte quotas and address parsing allocations that precede member-count checks. The replacement also specifies CRC, bounded streaming and stream-completion checks.",
+      "evidence": [
+        "S1-N3",
+        "S2 _RealGetContents",
+        "S2 ZipExtFile._update_crc",
+        "S2 ZipExtFile._read1",
+        "S3 AbstractBadCrcTests"
+      ]
+    },
+    {
+      "id": "A08-standard-extraction",
+      "source_char_interval": [
+        2914,
+        3762
+      ],
+      "removed_text": "An earlier one-click direct extraction into an existing project was rejected because cancellation and overwrites could leave mixed state. Standard extraction into a private staging directory remains interesting if combined with prior inspection and explicit collision/resource policy. A fully custom stream importer gives stronger product controls but adds maintenance obligations. A format-specific project package with a manifest is a future alternative; it cannot replace general ZIP import in this brief. Inspection of Python docs and extraction code/tests is actual work; adversarial import tests, Windows runs and publication durability checks are proposed, not executed. Test traversal, platform collisions, duplicate names, empty folders, corrupt CRC, unsupported codecs, cancellation, disk exhaustion and no mutation of existing projects.\n",
+      "removed_sha256_utf8": "4efd3b513fe6a17b373b6614ba6856eb569d8edd2141c152392d0c3c02ed07a0",
+      "replacement_text": "Earlier one-click direct extraction into an existing project was rejected because cancellation and overwrites could leave mixed state; that rejection remains.\n\nStandard extract/extractall into private staging is a real alternative: CPython does lexical sanitization and supports ZipInfo selection. It still lacks this product's bounded per-file/aggregate output accounting, between-chunk cancellation, duplicate collision policy, and explicit no-overwrite destination namespace; its wb writes can replace a prior member. Inspection plus staging lowers risk but does not establish the required controls. zipfile.Path can help browse an archive only after explicit validation; its documentation assigns name validation to the caller. For this untrusted, selectively imported product, these standard extraction methods are not the V1 writer. [extract behavior](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L339-L380) [Path responsibility](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L536-L553) [write mode](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1831-L1852).\n\nThe recommended V1 is a validated streaming writer around CPython's ZipFile.open(ZipInfo), not a new ZIP parser or a reimplementation of decompression. The app owns name decoding review, path validation, selection identity, collision detection, supported-method filtering, quotas, content diagnostics, cancellation, staging and publication. The standard library supplies the central-directory records, file header checks, supported decoding and CRC handling for the restricted methods. This keeps product control with a smaller maintenance surface than a fully custom ZIP reader while acknowledging that the central-directory parser allocates before app limits and that the supported library behavior is version-specific.\n\nA format-specific project package with a manifest remains a future alternative for projects created by this application. It can make intent and content declarations explicit, but cannot replace general ZIP import in this brief. V1 still accepts ordinary ZIP archives that satisfy its supported method, path, collision and resource policies; it does not ban ZIP input.\n\nEarlier one-click extraction into an existing project was rejected because cancellation, collisions and overwrites could leave mixed state; that rejection remains. The actual review inspected the pinned CPython 3.13.9 documentation, implementation and upstream test source, plus Microsoft Windows naming guidance. The upstream tests contain path-sanitization and bad-CRC cases, but they were read, not run. No importer, Windows build, penetration test, performance test or publication-durability test ran here. Proposed product acceptance checks and release blockers are recorded below; source inspection alone is not implementation validation.\n",
+      "replacement_sha256_utf8": "ec910c221743ea6e4568f8ac670d4324c78ef8e33f1c9652a53900125652c9c9",
+      "rationale": "Replace the original alternatives/history paragraph with a complete comparison while retaining the prior rejection and honesty about validation.",
+      "evidence": [
+        "S1-N1",
+        "S1-N2",
+        "S2-N2",
+        "S2 ZipFile.open",
+        "S2 _RealGetContents",
+        "S2 ZipExtFile",
+        "S1",
+        "S2",
+        "S3",
+        "W1"
+      ]
+    }
+  ],
+  "append": {
+    "source_char_offset": 13861,
+    "text": "\n\n## Preview and decoded-name policy\n\nUse ZipFile.infolist() to populate one row per central-directory entry. Keep a stable row identity for each ZipInfo, not just the displayed filename. Show the decoded member name, encoding mode used, method, declared compressed/uncompressed sizes, directory status, support status, and any path/collision warning before selection. A folder selection selects its supported descendants. Preserve explicit empty-directory entries when the user selects them; create necessary parent directories for selected files. ZipInfo.is_dir() is based on the member name ending in a slash, so it is metadata for the preview tree, not proof that a filesystem destination already exists. Never expose archive permissions as executable or trusted state.\n\nCPython decodes a member name as UTF-8 when its UTF-8 flag is set; otherwise it uses metadata_encoding when configured or CP437 by default. The UTF-8 flag takes precedence, and metadata_encoding is archive-wide rather than per member. Default preview uses that behavior. Offer an explicit archive-wide legacy-code-page override only as a user-controlled recovery path; changing it rebuilds every row and collision key before selection. Show the encoding assumption and uncertainty. If the user cannot choose an encoding that makes names intelligible, reject the import rather than guessing. A mismatching local-header name, invalid UTF-8, or NUL name is a diagnostic failure. In particular, ZipInfo stores orig_filename but truncates filename at the first NUL; inspect the original decoded field and reject the entry before writing. [encoding docs](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L193-L219) [decode implementation](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1485-L1514) [NUL handling](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L355-L408).\n\nThe portable-name rule is a product decision, not a guarantee that every supported filesystem has identical comparison behavior. Microsoft documents default Windows case-insensitivity, optional NTFS POSIX case sensitivity, reserved characters, NUL/control restrictions, reserved device names, trailing-dot/space limitations, and per-filesystem path lengths. V1 applies the conservative Windows portability key on Linux and Windows, as described above, then confirms writes on the actual target. Names that would be changed by CPython extraction or invalid on common Windows paths are rejected rather than rewritten. This preserves readable ordinary nested paths and avoids silently converting two archive names to one output name. [Microsoft naming and path rules](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions).\n\nThe picker uses a finite supported text/media extension/type list maintained by the app. Extensions are a selection convenience, not proof of content. A bounded signature check may warn about obvious mismatches; it does not certify safety. The importer writes bytes only. No embedded script, macro, installer or media content is launched during import. If later project UI opens imported media, that separate feature needs its own safe-preview policy and does not inherit trust from import.\n\nUnsupported or encrypted rows remain visible with a reason. A user can explicitly deselect them and import supported selected rows; the completion summary names all skipped unsupported entries. A selected unsupported entry blocks commit. Malformed archive structure or any selected-entry error fails the whole operation; it never quietly produces a partial project. Unselected members are not fully decompressed or CRC-checked, and the UI must not imply that the whole archive was validated.\n\n## Publication and recovery\n\nCreate a unique staging directory as a sibling of the requested new project so the final publication stays on one volume. Use private permissions/ACLs for the importing user, validate that the chosen project root is app-controlled, and do not follow archive-created or preexisting links/reparse points while writing. Create each file exclusively; do not copy timestamps, permission bits or links from archive metadata. Keep an ownership marker with operation ID and app/runtime version. The archive snapshot can be removed when import succeeds or is abandoned; the project manifest records only the snapshot digest and selected entry identities/names needed for provenance, never an absolute user path or password.\n\nPreflight the final project name as absent, then reserve it using a platform-specific no-replace operation/lease. Recheck at commit. Flush selected file data and staging metadata where the target platform supports it, then publish by same-volume atomic directory rename that cannot replace an existing project. If the target filesystem or platform cannot provide the required no-replace publication semantics, abort cleanly instead of falling back to copy-over. This is a design requirement pending Linux and Windows implementation tests, not a currently proven guarantee. A crash before publication leaves only owned staging; recovery lists and removes only a staging directory whose marker and ownership are verified. If cleanup cannot be proven safe, leave it quarantined for user review. A successful rename is the commit point; no earlier state mutates another project. [CPython interruption and overwrite pitfalls](https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst#L1007-L1019).\n\nMap error classes to actionable diagnostics without exposing passwords or local paths: malformed/truncated central directory, invalid local header/name, unsupported format/method/encryption, unsafe or colliding names, declared or actual resource limit, CRC mismatch, user cancellation, disk full, permission loss, target-name race, and publication failure. All pre-commit failures close readers, stop writes and discard only owned staging. If cleanup itself fails, report the exact owned staging item and offer recovery; do not claim no residue. Cancellation before EOF means CRC is unverified and the project is discarded. Existing projects are protected because they are never a write target and the final new-project commit is no-replace.\n\n## Limits, release checks, and evidence\n\nThe policy requires finite defaults for archive snapshot bytes, central-directory/parser envelope, entry count, selected count, path depth/length, per-member output, aggregate output, elapsed time and disk reserve. This review does not invent numeric values: the brief supplies no target workload or minimum host-memory/disk envelope, and CPython sources do not define product limits. Choosing and versioning those values is a release blocker. Measure worst-case memory amplification for many tiny central-directory entries under the pinned runtime, plus CPU/disk behavior for supported DEFLATE inputs; the cap must be applied before parsing and actual output must be counted during streaming. The cap should be enforced before ZipFile opens an over-limit snapshot. A free-space check is only an early warning; actual writes can still fail and must abort.\n\nAcceptance work, not performed in this review:\n\n1. Run the importer on CPython 3.13.9 on Linux and Windows. Confirm API behavior for the exact runtime shipped; re-review source changes before adding other Python versions.\n2. Exercise ordinary nested files, selected empty directories, deselected entries, duplicate ZipInfo names, case-only collisions, file/directory prefix conflicts, CP437 legacy names, UTF-8 names, archive-wide override, UTF-8-flag precedence, NUL names, backslashes, absolute/drive/UNC/parent paths, Windows-illegal characters, reserved device names, trailing dots/spaces, long components and path-depth limits.\n3. Exercise valid STORED/DEFLATED entries, missing/unknown methods, BZIP2/LZMA refusal, encrypted and strong-encryption entries, multi-disk refusal, malformed/truncated central directory, local-header mismatch, bad CRC, corrupt DEFLATE stream, understated/overstated sizes, high expansion, and oversized central directories with many small entries.\n4. Inject cancellation after each stream boundary, quota exhaustion, permission loss and disk-full conditions. Verify no final project appears, all preexisting project hashes remain unchanged, and only this operation's staging is cleaned or quarantined.\n5. Race another process creating the selected final name; verify commit refuses replacement. Exercise crash/restart before and after commit, stale-stage recovery, no-follow behavior, same-volume publication and supported target filesystems. Test default and case-sensitive NTFS directories; V1 should reject portable-key collisions in both. Verify no imported content is launched or marked trusted.\n6. Benchmark the selected thresholds against the declared low-end supported device and legitimate largest expected projects. Record method, runtime, OS/filesystem, peak memory, elapsed time, bytes read/written, and resulting limit values. Release only after numeric defaults and all required checks are reviewed.\n\nEvidence scope: the research sources are pinned CPython 3.13.9 documentation, code and upstream test text, plus the live Microsoft naming page. The tests were inspected but not executed. The source reader was used only to retrieve permitted excerpts. No importer behavior, Windows execution, exploit resistance, crash durability or performance claim is established. The native Goal receipt identifies the active Goal thread but exposes no provider/model/tier; the requested route was Luna Max Standard, and returned identity/options remain unknown. The exact receipt is saved as native-goal-create.json.",
+    "sha256_utf8": "a3e6be094d91a2b1f6df9d4932d6d73341b23beca58282a6865da663bd89b0ae"
+  }
+}

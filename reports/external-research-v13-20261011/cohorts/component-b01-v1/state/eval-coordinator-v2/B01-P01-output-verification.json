@@ -1,0 +1,330 @@
+{
+  "block_id": "B01-P01",
+  "originals": [
+    {
+      "arm_id": "B01-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/manifest.json",
+      "manifest_sha256": "10f58fa8d559e76bb301ebc728e7e18c5b7fa19cf56ce94292dcf6df496656b9",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "assessment_sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e",
+      "source_judgment": {
+        "status": "FAIL",
+        "scope": "Complete frozen final under declared PARTIAL coverage",
+        "reason": "C-F01: asserted executed assembly evidence and accessible results are not supplied in the exact frozen arm. Supported mechanism corrections do not rescue that material evidence omission.",
+        "partial_science_status": "SUPPORTED_CORE_WITH_MATERIAL_EXECUTION_RECORD_GAP",
+        "material_scientific_defect_ids": [
+          "C-F01"
+        ],
+        "source_pass": false,
+        "universal_correctness_claim": false
+      },
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "PARTIAL",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "finding": "Scope, negatives and all original product obligations preserved in a coherent proposal.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "finding": "Governing CPython3.13.9 source facts and SQLite conditions independently checked; deployed engine/platform are unknown.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "finding": "Required alternatives/history preserved; useful available opportunities and version history omissions are explicit nonmaterial/conditional limits.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "finding": "C1/C2/C3 accepted and amended; C4 retained conditionally; no material false rejection found.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "finding": "Supported worker/cancel/memory/restore/privacy/collision/history meaning retained; same-handle callback design change is source-supported.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "PARTIAL",
+          "finding": "Meaningful proposed validation is explicit; claimed actual assembly evidence missing, so execution record coverage is PARTIAL.",
+          "partial_science_coverage": null,
+          "complete_final_judgment": "ASSESSED"
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE_CORE_REQUIRED_OUTPUTS_PRESENT",
+        "final_present": true,
+        "complete_final": true,
+        "present_manifest_file_count": 33,
+        "base_required_outputs_present": true,
+        "missing_required_outputs": [],
+        "conditional_execution_record_gap": "Claimed assembly artifacts absent from authored freeze (C-F01).",
+        "exact_task_terminal_status": "completed",
+        "assigned_denominator_included": true,
+        "rescued_or_replaced": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_FROZEN_CORE_DELIVERY",
+        "maximum_elapsed_seconds": 1500,
+        "t0_utc": "2026-10-12T00:34:21.101095Z",
+        "deadline_utc": "2026-10-12T00:59:21.101095Z",
+        "dispatch_capture_utc": "2026-10-12T00:34:21.498Z",
+        "native_activation_utc": "2026-10-12T00:34:35+00:00",
+        "native_terminal_utc": "2026-10-12T00:52:03+00:00",
+        "t0_to_native_terminal_seconds": 1061.898905,
+        "native_reported_elapsed_seconds": 1047,
+        "authored_freeze_utc": "2026-10-12T00:55:00.383391+00:00",
+        "last_complete_scientific_artifact_time": "UNKNOWN; no file-write boundary witness",
+        "request_to_quiet_final_proxy_seconds": null,
+        "proxy_status": "Exact request-to-quiet timestamp absent; authored freeze is an upper-bound observation for core output presence only.",
+        "frozen_clock_unchanged": true,
+        "scientific_grade_independent_of_time": true
+      },
+      "method_compliance": {
+        "status": "PARTIAL_WITH_EXECUTION_RECORD_GAP",
+        "coverage": "PARTIAL",
+        "frozen_method": "complete fresh final rewrite",
+        "observable_result": "Substantial complete rewrite and full dispositions/map present; claimed assembly records absent.",
+        "semantic_preservation": "Independently inspected, distinct from preparation and byte-retention counts.",
+        "no_discovery_or_cold_pipeline_claim": true,
+        "actual_hidden_execution": "UNASSESSED; no full transcript inspected",
+        "evaluator_boundary_lapse": "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "exact_terminal_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-control/component-terminal-task.raw.json",
+          "sha256": "0a1565f27d3be3016779054b6c56d5f8f8571884e088c4bfa9176384fb196af0",
+          "task_identity_matches_notification": true,
+          "status": "completed",
+          "hasPendingChildRuns": false
+        },
+        "returned_model": "gpt-6-luna",
+        "requested_private_route": "REDACTED; operational provenance, not source authority",
+        "provider_account_identity": "NOT_PUBLISHED",
+        "native_activation_objective_matches_frozen": true,
+        "native_creation_receipt_sha256": "efb7276faea418c49d3a4121e24a1121f79990c08a44fb0ac89db94619fa4735",
+        "native_terminal_status": "complete",
+        "same_native_birth": true,
+        "native_terminal_receipt_sha256": "91ecb029c5bc05441ec4a5b1afb0498de15a8daac160079546ef206bb6be8d3a",
+        "native_to_delegated_thread_linkage": "UNKNOWN",
+        "actual_service_tier": "UNKNOWN",
+        "effort": "self-reported max in control terminal summary; not native-receipt verified",
+        "full_native_transcript": "Not accessed or published",
+        "recipe_native_qualification": "receipt-supported same native birth/objective completion; thread/backend linkage unknown"
+      },
+      "resource_coverage": {
+        "coverage": "UNASSESSED",
+        "candidate_product_cost": {
+          "billing": "UNKNOWN",
+          "per_request_usage": "UNKNOWN",
+          "active_provider_time": "UNKNOWN",
+          "context_occupancy": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "native_cumulative_counter": "present in control terminal receipt, numeric values withheld from public artifacts; not request billing"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "wall_time_total": "UNKNOWN; evaluator total start boundary not captured",
+          "earliest_saved_primary_lookup_utc": "2026-10-12T01:14:14.210195+00:00",
+          "original_assessment_written_utc": "2026-10-12T01:23:21.688068+00:00",
+          "billable_cost": "UNKNOWN",
+          "usage": "NOT_PUBLISHED/UNKNOWN request-level accounting",
+          "shared_primary_lookup_reused_for_matched_arms": true
+        },
+        "shared_package_preparation_cost": "UNKNOWN; separate from this component product and evaluation",
+        "v1_coordinator_idle_costs": "UNCHANGED; not reassigned or inferred",
+        "unknown_is_zero": false
+      },
+      "frozen_files_verified": 25,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B01-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/manifest.json",
+      "manifest_sha256": "3c6eac772395f6bff217a0b819f81102f54ff4b86101f1c5852db2cc7e2bdf14",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "assessment_sha256": "443bf74726593c9db9fdc459005255c4e2b04bae084b2dd1b59b4b3436723cab",
+      "source_judgment": {
+        "status": "UNASSESSED",
+        "scope": "Complete final unavailable; original partial science assessed separately",
+        "reason": "Incomplete capped original cannot receive a comparable complete-final source grade. Missing dispositions/map/native completion remain UNASSESSED.",
+        "partial_science_status": "PARTIAL_NO_MATERIAL_SEMANTIC_DEFECT_CONFIRMED_IN_ASSESSED_TEXT",
+        "material_scientific_defect_ids": [],
+        "source_pass": false,
+        "universal_correctness_claim": false
+      },
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "UNASSESSED",
+          "finding": "Available partial text preserves original scope/negatives and core obligations; complete delivery unavailable.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "UNASSESSED",
+          "finding": "Available pacing/progress/cancel and snapshot facts supported by independent exact-version research; locator errors and unresolved engine/platform constraints recorded.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "UNASSESSED",
+          "finding": "Available required comparisons/history retained; VACUUM INTO and WAL issue history omitted; complete final assessment unavailable.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "UNASSESSED",
+          "finding": "Available text and amendments address C1-C4, but full required dispositions document is absent and UNASSESSED.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "UNASSESSED",
+          "finding": "Available assembly reproduces whole partial text and all retained intervals; semantic retention separately inspected, not inferred from counts.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "UNASSESSED",
+          "finding": "Available matrix and no-app/upstream-run statements are useful; assembly record covers document generation only; complete delivery unavailable.",
+          "partial_science_coverage": "PARTIAL",
+          "complete_final_judgment": "UNASSESSED"
+        }
+      ],
+      "delivery": {
+        "status": "INCOMPLETE_ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+        "final_present": true,
+        "complete_final": false,
+        "present_manifest_file_count": 33,
+        "base_required_outputs_present": false,
+        "missing_required_outputs": [
+          "criticism-dispositions.md",
+          "source-map.json",
+          "native-goal-terminal.json"
+        ],
+        "conditional_execution_record_gap": null,
+        "exact_task_terminal_status": "interrupted",
+        "assigned_denominator_included": true,
+        "rescued_or_replaced": false
+      },
+      "time_eligibility": {
+        "status": "ORIGINAL_DEADLINE_FAILURE",
+        "maximum_elapsed_seconds": 1500,
+        "t0_utc": "2026-10-12T00:34:21.619415Z",
+        "deadline_utc": "2026-10-12T00:59:21.619415Z",
+        "dispatch_capture_utc": "2026-10-12T00:34:22.252Z",
+        "native_activation_utc": "2026-10-12T00:34:39+00:00",
+        "native_terminal_utc": null,
+        "t0_to_native_terminal_seconds": null,
+        "native_reported_elapsed_seconds": null,
+        "authored_freeze_utc": "2026-10-12T01:02:51.962265+00:00",
+        "last_complete_scientific_artifact_time": "UNKNOWN; no file-write boundary witness",
+        "request_to_quiet_final_proxy_seconds": null,
+        "proxy_status": "No successful-delivery proxy manufactured from a partial freeze. Capped original stays a deadline failure.",
+        "frozen_clock_unchanged": true,
+        "scientific_grade_independent_of_time": true
+      },
+      "method_compliance": {
+        "status": "INCOMPLETE_METHOD",
+        "coverage": "PARTIAL",
+        "frozen_method": "targeted amendments plus deterministic retention/assembly into complete final",
+        "observable_result": "Amendments, assembly code and results present; in-memory evaluator reconstruction matches final and retained intervals; missing required companions/native completion.",
+        "semantic_preservation": "Independently inspected, distinct from preparation and byte-retention counts.",
+        "no_discovery_or_cold_pipeline_claim": true,
+        "actual_hidden_execution": "UNASSESSED; no full transcript inspected",
+        "evaluator_boundary_lapse": "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "exact_terminal_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B01-P01-treatment/component-terminal-task.raw.json",
+          "sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d",
+          "task_identity_matches_notification": true,
+          "status": "interrupted",
+          "hasPendingChildRuns": false
+        },
+        "returned_model": "gpt-6-luna",
+        "requested_private_route": "REDACTED; operational provenance, not source authority",
+        "provider_account_identity": "NOT_PUBLISHED",
+        "native_activation_objective_matches_frozen": true,
+        "native_creation_receipt_sha256": "b7e61d60bbadd4fbb317b882612ac27b54097456c8f2249a7b17e4416b2ea4be",
+        "native_terminal_status": "UNASSESSED_MISSING_RECEIPT",
+        "same_native_birth": null,
+        "native_terminal_receipt_sha256": null,
+        "native_to_delegated_thread_linkage": "UNKNOWN",
+        "actual_service_tier": "UNKNOWN",
+        "effort": "UNKNOWN beyond requested dispatch metadata",
+        "full_native_transcript": "Not accessed or published",
+        "recipe_native_qualification": "NOT_QUALIFIED; missing completion receipt and interrupted original"
+      },
+      "resource_coverage": {
+        "coverage": "UNASSESSED",
+        "candidate_product_cost": {
+          "billing": "UNKNOWN",
+          "per_request_usage": "UNKNOWN",
+          "active_provider_time": "UNKNOWN",
+          "context_occupancy": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "native_cumulative_counter": "terminal cumulative counter unavailable"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "wall_time_total": "UNKNOWN; evaluator total start boundary not captured",
+          "earliest_saved_primary_lookup_utc": "2026-10-12T01:14:14.210195+00:00",
+          "original_assessment_written_utc": "2026-10-12T01:23:21.688068+00:00",
+          "billable_cost": "UNKNOWN",
+          "usage": "NOT_PUBLISHED/UNKNOWN request-level accounting",
+          "shared_primary_lookup_reused_for_matched_arms": true
+        },
+        "shared_package_preparation_cost": "UNKNOWN; separate from this component product and evaluation",
+        "v1_coordinator_idle_costs": "UNCHANGED; not reassigned or inferred",
+        "unknown_is_zero": false
+      },
+      "frozen_files_verified": 25,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/comparison.json",
+  "comparison_sha256": "06ec93c059942cda3e2e4da2552e1050e17483a9e43ab153d180ec4d8559493d",
+  "verified_at_utc": "2026-10-12T01:28:00.492496+00:00",
+  "mechanics_only_not_regrade": true,
+  "evaluator_method_limitation": "Early filename-only recursive locator search crossed campaign subdirectories; evaluator declares no admitted/heldout contents read and subsequent allowlist. Disclosed original unchanged."
+}

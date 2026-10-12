@@ -1,0 +1,112 @@
+         with open('dump.sql', 'w') as f:
+             for line in con.iterdump():
+                 f.write('%s\n' % line)
+         con.close()
+
+      .. seealso::
+
+         :ref:`sqlite3-howto-encoding`
+
+      .. versionchanged:: 3.13
+         Added the *filter* parameter.
+
+   .. method:: backup(target, *, pages=-1, progress=None, name="main", sleep=0.250)
+
+      Create a backup of an SQLite database.
+
+      Works even if the database is being accessed by other clients
+      or concurrently by the same connection.
+
+      :param ~sqlite3.Connection target:
+          The database connection to save the backup to.
+
+      :param int pages:
+          The number of pages to copy at a time.
+          If equal to or less than ``0``,
+          the entire database is copied in a single step.
+          Defaults to ``-1``.
+
+      :param progress:
+          If set to a :term:`callable`,
+          it is invoked with three integer arguments for every backup iteration:
+          the *status* of the last iteration,
+          the *remaining* number of pages still to be copied,
+          and the *total* number of pages.
+          Defaults to ``None``.
+      :type progress: :term:`callback` | None
+
+      :param str name:
+          The name of the database to back up.
+          Either ``"main"`` (the default) for the main database,
+          ``"temp"`` for the temporary database,
+          or the name of a custom database as attached using the
+          ``ATTACH DATABASE`` SQL statement.
+
+      :param float sleep:
+          The number of seconds to sleep between successive attempts
+          to back up remaining pages.
+
+      Example 1, copy an existing database into another:
+
+      .. testcode::
+
+         def progress(status, remaining, total):
+             print(f'Copied {total-remaining} of {total} pages...')
+
+         src = sqlite3.connect('example.db')
+         dst = sqlite3.connect('backup.db')
+         with dst:
+             src.backup(dst, pages=1, progress=progress)
+         dst.close()
+         src.close()
+
+      .. testoutput::
+         :hide:
+
+         Copied 0 of 0 pages...
+
+      Example 2, copy an existing database into a transient copy:
+
+      .. testcode::
+
+         src = sqlite3.connect('example.db')
+         dst = sqlite3.connect(':memory:')
+         src.backup(dst)
+         dst.close()
+         src.close()
+
+      .. versionadded:: 3.7
+
+      .. seealso::
+
+         :ref:`sqlite3-howto-encoding`
+
+   .. method:: getlimit(category, /)
+
+      Get a connection runtime limit.
+
+      :param int category:
+         The `SQLite limit category`_ to be queried.
+
+      :rtype: int
+
+      :raises ProgrammingError:
+         If *category* is not recognised by the underlying SQLite library.
+
+      Example, query the maximum length of an SQL statement
+      for :class:`Connection` ``con`` (the default is 1000000000):
+
+      .. testsetup:: sqlite3.limits
+
+         import sqlite3
+         con = sqlite3.connect(":memory:")
+         con.setlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH, 1_000_000_000)
+         con.setlimit(sqlite3.SQLITE_LIMIT_ATTACHED, 10)
+
+      .. doctest:: sqlite3.limits
+
+         >>> con.getlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH)
+         1000000000
+
+      .. versionadded:: 3.11
+

@@ -1,0 +1,52 @@
+{
+  "arm_id": "B08-P01-treatment",
+  "material_defects": [],
+  "nonmaterial_defects": [
+    {
+      "id": "B08-T-N1",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2,
+        4
+      ],
+      "kind": "citation_locator_inaccuracy",
+      "candidate_locations": [
+        "source-map.json S1 thread safety, S7 and S8 locators",
+        "criticism-dispositions.md C03/C08",
+        "final.md thread-safety and output links"
+      ],
+      "finding": "Thread safety is stated at queue-doc lines 13-15/43, not 201-216 (the worker example). os.replace is at 2726-2742, not 2884-2899 (DirEntry). NamedTemporaryFile is at 78-143, not 257-289 (mkstemp/mkdtemp); secure mkstemp creation is at 221-229, not 325-331 (directory search).",
+      "primary_evidence_ids": [
+        "QDOC",
+        "OS",
+        "TEMP"
+      ],
+      "materiality_reason": "The source files/pin are correct and independently support the actual claims elsewhere. Atomicity/overwrite/platform scope is properly qualified. Incorrect exact links reduce traceability without creating a material false filesystem guarantee."
+    },
+    {
+      "id": "B08-T-N2",
+      "severity": "NONMATERIAL",
+      "axes": [
+        6
+      ],
+      "kind": "executed_witness_description_imprecision",
+      "candidate_locations": [
+        "critique.md force-stop findings",
+        "final.md Validation status and next checks",
+        "witnesses/queue_and_capacity_witness.py bounded_admission and immediate_shutdown_counterexample",
+        "source-map.json executed_witness"
+      ],
+      "finding": "The witness retrieves four items sequentially and sets a retrieved item ledger state to cancelled directly; it creates no four worker tasks and calls no Task.cancel. Its outcome label is a simulated application disposition.",
+      "primary_evidence_ids": [
+        "QCODE",
+        "QTEST",
+        "TASK",
+        "WITNESS_REPLAY"
+      ],
+      "materiality_reason": "It still decisively demonstrates immediate drain/join with no processing and a retrieved item remaining unfinished until acknowledgment. Final says four retrieved jobs, labels target-version/application cleanup tests as future, and disclaims a converter run. It is not counted as evidence that worker cancellation/cleanup executed."
+    }
+  ],
+  "criticism_dispositions_examined": "C01-C16",
+  "all_original_findings_reported": true,
+  "not_author_feedback": true
+}

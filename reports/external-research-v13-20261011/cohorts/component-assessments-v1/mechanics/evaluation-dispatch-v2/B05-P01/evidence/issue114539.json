@@ -1,0 +1,10 @@
+{
+  "html_url": "https://github.com/python/cpython/issues/114539",
+  "number": 114539,
+  "title": "[doc] subprocess security considerations needs a Windows-specific exception",
+  "state": "closed",
+  "created_at": "2024-01-24T22:48:10Z",
+  "closed_at": "2024-04-17T18:47:45Z",
+  "updated_at": "2025-07-25T15:21:54Z",
+  "body": "The documentation at https://docs.python.org/3/library/subprocess.html#security-considerations says that \"this implementation will never implicitly call a system shell\".\r\n\r\nWhile this is technically true, on Windows the underlying CreateProcess API may create a system shell, which then exposes arguments to shell parsing. This happens when passed a `.bat` or `.cmd` file.\r\n\r\nPSRT review of the issue determined that we can't safely detect and handle this situation without causing new issues and making it more complex for users to work around when they want to intentionally launch a batch file without shell processing. For the two cases of untrusted input, an untrusted application/`argv[0]` is already vulnerable, and an untrusted argument/`argv[1:]` is safe provided `argv[0]` is controlled. However, we do need to inform developers of the inconsistency so they can check their own use.\r\n\r\nWe'll use this issue to ensure we get good wording. First proposal in the next comment.\r\n\r\nThanks to RyotaK for reporting responsibly to the Python Security Response Team.\n\n<!-- gh-linked-prs -->\n### Linked PRs\n* gh-117996\n* gh-118002\n* gh-118003\n* gh-118004\n* gh-118005\n* gh-118006\n<!-- /gh-linked-prs -->\n"
+}

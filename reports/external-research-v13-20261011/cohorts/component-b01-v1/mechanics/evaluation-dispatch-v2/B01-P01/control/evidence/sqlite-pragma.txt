@@ -1,0 +1,60 @@
+URL: https://www.sqlite.org/pragma.html
+Full response SHA256: af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034
+Retrieved UTC: 2026-10-12T01:16:14.716657+00:00
+Representation: numbered original code lines or normalized HTML content; full-body hashes apply to raw responses.
+
+PRAGMA foreign_key_check
+PRAGMA schema.foreign_key_check;
+PRAGMA schema.foreign_key_check(table-name);
+The foreign_key_check pragma checks the database, or the table
+called "table-name", for
+foreign key constraints that are violated.  The foreign_key_check
+pragma returns one row output for each foreign key violation.
+There are four columns in each result row.
+The first column is the name of the table that contains the REFERENCES
+clause.  The second column is the rowid of the row that
+contains the invalid REFERENCES clause, or NULL if the child table is a
+WITHOUT ROWID table.  The third column is the name
+of the table that is referred to. The fourth column is the index of
+the specific foreign key constraint that failed.  The fourth column
+in the output of the foreign_key_check pragma is the same integer as
+the first column in the output of the foreign_key_list pragma.
+When a "table-name" is specified, the only foreign key constraints
+checked are those created by REFERENCES clauses in the
+CREATE TABLE statement for table-name.
+
+PRAGMA integrity_check
+PRAGMA schema.integrity_check;
+PRAGMA schema.integrity_check(N)
+PRAGMA schema.integrity_check(TABLENAME)
+This pragma does a low-level formatting and consistency check
+of the database.  The integrity_check pragma look for:
+Table or index entries that are out of sequence
+Misformatted records
+Missing pages
+Missing or surplus index entries
+UNIQUE, CHECK, and NOT NULL constraint errors
+Integrity of the freelist
+Sections of the database that are used more than once, or not at all
+If the integrity_check pragma finds problems, strings are returned
+(as multiple rows with a single column per row) which describe
+the problems.  Pragma integrity_check will return at most N
+errors before the analysis quits, with N defaulting
+to 100.  If pragma integrity_check finds no errors, a
+single row with the value 'ok' is returned.
+The usual case is that the entire database file is checked.  However,
+if the argument is TABLENAME, then checking is only performed for the
+the table named and its associated indexes.
+This is called a "partial integrity check".  Because only a subset of the
+database is checked, errors such as unused sections of the file or duplication
+use of the same section of the file by two or more tables cannot be detected.
+The freelist is only verified on a
+partial integrity check if TABLENAME is sqlite_schema or one of its
+aliases.  Support for partial integrity checks was added with
+version 3.33.0 (2020-08-14).
+PRAGMA integrity_check does not find
+FOREIGN KEY errors.
+Use the PRAGMA foreign_key_check command to find errors in
+FOREIGN KEY constraints.
+See also the PRAGMA quick_check command which does most of the
+checking of PRAGMA integrity_check but runs much faster.

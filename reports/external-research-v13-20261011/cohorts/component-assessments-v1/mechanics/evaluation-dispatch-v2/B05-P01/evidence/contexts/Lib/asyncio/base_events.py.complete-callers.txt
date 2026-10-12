@@ -1,0 +1,75 @@
+Source: https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/base_events.py
+Full retrieved body SHA256: 47491496144e8248f4aebd62aba40b586b6e711f92435b4ca71092ead6eda5b9
+License: Python/PSF, retained LICENSE.
+
+--- ORIGINAL LINES 1739-1773 (entire definition) ---
+    async def subprocess_shell(self, protocol_factory, cmd, *,
+                               stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               universal_newlines=False,
+                               shell=True, bufsize=0,
+                               encoding=None, errors=None, text=None,
+                               **kwargs):
+        if not isinstance(cmd, (bytes, str)):
+            raise ValueError("cmd must be a string")
+        if universal_newlines:
+            raise ValueError("universal_newlines must be False")
+        if not shell:
+            raise ValueError("shell must be True")
+        if bufsize != 0:
+            raise ValueError("bufsize must be 0")
+        if text:
+            raise ValueError("text must be False")
+        if encoding is not None:
+            raise ValueError("encoding must be None")
+        if errors is not None:
+            raise ValueError("errors must be None")
+
+        protocol = protocol_factory()
+        debug_log = None
+        if self._debug:
+            # don't log parameters: they may contain sensitive information
+            # (password) and may be too long
+            debug_log = 'run shell command %r' % cmd
+            self._log_subprocess(debug_log, stdin, stdout, stderr)
+        transport = await self._make_subprocess_transport(
+            protocol, cmd, True, stdin, stdout, stderr, bufsize, **kwargs)
+        if self._debug and debug_log is not None:
+            logger.info('%s: %r', debug_log, transport)
+        return transport, protocol
+
+--- ORIGINAL LINES 1775-1807 (entire definition) ---
+    async def subprocess_exec(self, protocol_factory, program, *args,
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE, universal_newlines=False,
+                              shell=False, bufsize=0,
+                              encoding=None, errors=None, text=None,
+                              **kwargs):
+        if universal_newlines:
+            raise ValueError("universal_newlines must be False")
+        if shell:
+            raise ValueError("shell must be False")
+        if bufsize != 0:
+            raise ValueError("bufsize must be 0")
+        if text:
+            raise ValueError("text must be False")
+        if encoding is not None:
+            raise ValueError("encoding must be None")
+        if errors is not None:
+            raise ValueError("errors must be None")
+
+        popen_args = (program,) + args
+        protocol = protocol_factory()
+        debug_log = None
+        if self._debug:
+            # don't log parameters: they may contain sensitive information
+            # (password) and may be too long
+            debug_log = f'execute program {program!r}'
+            self._log_subprocess(debug_log, stdin, stdout, stderr)
+        transport = await self._make_subprocess_transport(
+            protocol, popen_args, False, stdin, stdout, stderr,
+            bufsize, **kwargs)
+        if self._debug and debug_log is not None:
+            logger.info('%s: %r', debug_log, transport)
+        return transport, protocol

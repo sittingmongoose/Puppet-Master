@@ -1,0 +1,290 @@
+{
+  "schema": "er13.coverage.original.v2",
+  "arm_id": "B01-P01-control",
+  "scope": "COMPONENT",
+  "overall": "PARTIAL",
+  "complete_final_coverage": "PARTIAL",
+  "available_science_coverage": "PARTIAL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "finding": "Scope, negatives and all original product obligations preserved in a coherent proposal.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "finding": "Governing CPython3.13.9 source facts and SQLite conditions independently checked; deployed engine/platform are unknown.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "finding": "Required alternatives/history preserved; useful available opportunities and version history omissions are explicit nonmaterial/conditional limits.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "finding": "C1/C2/C3 accepted and amended; C4 retained conditionally; no material false rejection found.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "finding": "Supported worker/cancel/memory/restore/privacy/collision/history meaning retained; same-handle callback design change is source-supported.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "PARTIAL",
+      "finding": "Meaningful proposed validation is explicit; claimed actual assembly evidence missing, so execution record coverage is PARTIAL.",
+      "partial_science_coverage": null,
+      "complete_final_judgment": "ASSESSED"
+    }
+  ],
+  "obligations": [
+    {
+      "id": "scope_and_target",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "One user; CPython3.13.9; SQLite local disk; remote sync/server excluded"
+    },
+    {
+      "id": "live_editing",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Worker ownership; commits/save boundary; edit availability and contention"
+    },
+    {
+      "id": "database_snapshot",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Incremental API and copied-DB reference enumeration"
+    },
+    {
+      "id": "attachment_lifecycle",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Immutable versions, retention before snapshot, GC/crash/deletion conditions"
+    },
+    {
+      "id": "large_payload_memory",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "File-backed DB, streaming payloads and bounded queues/working memory intent"
+    },
+    {
+      "id": "progress_and_cancel",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Provisional counters, cooperative callback cancel and attachment checks"
+    },
+    {
+      "id": "collision_and_publication",
+      "axis": 1,
+      "coverage": "PARTIAL",
+      "available_partial_science_coverage": null,
+      "scope": "No overwrite; exclusive allocation or conditional no-replace; staged publication"
+    },
+    {
+      "id": "failure_cleanup",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Distinct failure/cancel outcomes and stage-only cleanup"
+    },
+    {
+      "id": "restore",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "New workspace; digest/reference/schema/path checks; source preserved"
+    },
+    {
+      "id": "privacy",
+      "axis": 1,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Permissions/log redaction; optional key management; no whole-data logging"
+    },
+    {
+      "id": "required_alternatives",
+      "axis": 3,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "API, open/closed-app filesystem copy, logical dump; costs and history"
+    },
+    {
+      "id": "unfamiliar_opportunities",
+      "axis": 3,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "VACUUM INTO/privacy/space, same-handle writes, runtime controls"
+    },
+    {
+      "id": "C1",
+      "axis": 4,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "BUSY/LOCKED sleep correction"
+    },
+    {
+      "id": "C2",
+      "axis": 4,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Changing progress and source-backed callback exception semantics"
+    },
+    {
+      "id": "C3",
+      "axis": 4,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Independent external generation retention and restorable bundle"
+    },
+    {
+      "id": "C4",
+      "axis": 4,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Supported decisions, conditional alternatives, negatives/history retained"
+    },
+    {
+      "id": "semantic_preservation",
+      "axis": 5,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "All supported draft meaning checked; false claims replaced"
+    },
+    {
+      "id": "proposal_validation",
+      "axis": 6,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Representative GiB/races/restore/cancel/crash/failure/privacy test matrix"
+    },
+    {
+      "id": "upstream_test_truth",
+      "axis": 6,
+      "coverage": "COMPLETE",
+      "available_partial_science_coverage": null,
+      "scope": "Sources inspected; upstream tests not presented as application runs"
+    },
+    {
+      "id": "candidate_assembly_execution",
+      "axis": 6,
+      "coverage": "PARTIAL",
+      "available_partial_science_coverage": null,
+      "scope": "Exact code/results and actual execution claim linkage"
+    },
+    {
+      "id": "actual_application_execution",
+      "axis": 6,
+      "coverage": "UNASSESSED",
+      "available_partial_science_coverage": null,
+      "scope": "Not required or claimed; not performed"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "cpython3139_api_version",
+      "coverage": "COMPLETE",
+      "scope": "Pin/tag dereference and independently fetched bodies; thread/transaction/default/runtime-version definitions."
+    },
+    {
+      "family": "cpython3139_backup_wrapper",
+      "coverage": "COMPLETE",
+      "scope": "Whole cached connection.c read; complete consequential function, preconditions, error cleanup and retry loop independently fetched."
+    },
+    {
+      "family": "cpython_backup_tests_callers",
+      "coverage": "COMPLETE",
+      "scope": "Whole test_backup.py inspected, including setup, modifying callback, failing callback, transaction-target and source-name tests. No test executed."
+    },
+    {
+      "family": "sqlite_online_backup_c_api",
+      "coverage": "COMPLETE",
+      "scope": "Init/step/finish/counters and concurrent source/destination restrictions; sample C caller context read."
+    },
+    {
+      "family": "sqlite_wal_docs_release",
+      "coverage": "COMPLETE",
+      "scope": "Whole frozen WAL body read; sidecar, checkpoint, concurrency, bug trigger and release conditions independently checked."
+    },
+    {
+      "family": "sqlite_wal_fix_implementation_target",
+      "coverage": "UNASSESSED",
+      "scope": "No patch-code proof or installed target specified; actual trigger/build unknown; no deployment claim."
+    },
+    {
+      "family": "sql_dump_mechanism",
+      "coverage": "COMPLETE",
+      "scope": "Docs, C caller and whole Lib/sqlite3/dump.py; reconstruction/transaction/encoding costs; optional status."
+    },
+    {
+      "family": "vacuum_into_alternative",
+      "coverage": "COMPLETE",
+      "scope": "Full governing VACUUM docs read; useful omitted opportunity assessed without mandating new product scope."
+    },
+    {
+      "family": "restore_pragma_security",
+      "coverage": "COMPLETE",
+      "scope": "Integrity/FK differences and conditional hostile-schema defenses; no assumed custom SQL functions."
+    },
+    {
+      "family": "os_mkdir_rename_fsync",
+      "coverage": "PARTIAL",
+      "scope": "CPython3.13.9 docs independently inspected; Unix overwrite behavior and exclusive mkdir confirmed. Supported platform and exact no-replace/durability implementation remain unknown; bounded Linux lookup unavailable."
+    },
+    {
+      "family": "attachment_and_bundle_protocol",
+      "coverage": "COMPLETE",
+      "scope": "Assessed as engineering proposal/inference; no SQLite cross-system guarantee. Lease/interlock, copy references, validation and crash limitations inspected."
+    },
+    {
+      "family": "native_custody_execution",
+      "coverage": "PARTIAL",
+      "scope": "Exact terminal task receipts and native receipts inspected; native-thread linkage/provider/backend identity and execution witnesses limited."
+    },
+    {
+      "family": "resource_billing",
+      "coverage": "UNASSESSED",
+      "scope": "No billable request telemetry, subscription data, active-time or context-occupancy evidence supplied; not zero."
+    }
+  ],
+  "missing_material": [],
+  "remaining_unassessed": [
+    "Actual application execution and future deployment (outside requested proposal deliverable).",
+    "Actual OS/filesystem-specific durability, installed target engine, native-to-delegated identity linkage and billing.",
+    "Control unprovided assembly execution."
+  ],
+  "assessment_stopped_on_decisive_failure": false,
+  "limits": [
+    "Original evaluator; no repairs, extra graders, candidates, native Goal, Git, canon, held-out contents, provider changes or candidate-author feedback.",
+    "Technique-bearing paths, method cards and final structures reveal arm assignment. Blinding is imperfect.",
+    "An early recursive filename-only locator search crossed campaign subdirectories, including admitted filenames. It read no candidate or held-out contents. The search stopped; subsequent content reads were allowlisted. Evaluator method compliance has this explicit lapse.",
+    "All 66 present manifest files verified first. Identical common bodies inspected once and reused independently for the matched arms. Preparation integrity is distinct from semantic preservation.",
+    "Assessment is finite research-proposal quality. No deployment, software execution, current user schema, actual disk workload or future tests are required. No application or upstream tests were run by this evaluator.",
+    "Linked SQLite build, supported OS/filesystem set, user attachment ownership, custom SQL functions and trust model remain unknown. Known available mechanism research was performed; unknowns are not zero.",
+    "Complete billing, per-request activity, context occupancy and total evaluator wall time are unavailable in the assigned packet. Evaluation cost is independent_evaluation; candidate product, shared preparation and coordinator idle costs are separate and unchanged."
+  ]
+}

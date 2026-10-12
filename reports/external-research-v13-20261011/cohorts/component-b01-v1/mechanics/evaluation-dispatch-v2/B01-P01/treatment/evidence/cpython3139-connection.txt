@@ -1,0 +1,426 @@
+URL: https://raw.githubusercontent.com/python/cpython/v3.13.9/Modules/_sqlite/connection.c
+Full response SHA256: 97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078
+Retrieved UTC: 2026-10-12T01:16:13.965089+00:00
+Representation: numbered original code lines or normalized HTML content; full-body hashes apply to raw responses.
+
+LINES 1-22
+1: /* connection.c - the connection type
+2:  *
+3:  * Copyright (C) 2004-2010 Gerhard Häring <gh@ghaering.de>
+4:  *
+5:  * This file is part of pysqlite.
+6:  *
+7:  * This software is provided 'as-is', without any express or implied
+8:  * warranty.  In no event will the authors be held liable for any damages
+9:  * arising from the use of this software.
+10:  *
+11:  * Permission is granted to anyone to use this software for any purpose,
+12:  * including commercial applications, and to alter it and redistribute it
+13:  * freely, subject to the following restrictions:
+14:  *
+15:  * 1. The origin of this software must not be misrepresented; you must not
+16:  *    claim that you wrote the original software. If you use this software
+17:  *    in a product, an acknowledgment in the product documentation would be
+18:  *    appreciated but is not required.
+19:  * 2. Altered source versions must be plainly marked as such, and must not be
+20:  *    misrepresented as being the original software.
+21:  * 3. This notice may not be removed or altered from any source distribution.
+22:  */
+
+LINES 212-349
+212: /*[clinic input]
+213: _sqlite3.Connection.__init__ as pysqlite_connection_init
+214: 
+215:     database: object
+216:     * [from 3.15]
+217:     timeout: double = 5.0
+218:     detect_types: int = 0
+219:     isolation_level: IsolationLevel = ""
+220:     check_same_thread: bool = True
+221:     factory: object(c_default='(PyObject*)clinic_state()->ConnectionType') = ConnectionType
+222:     cached_statements as cache_size: int = 128
+223:     uri: bool = False
+224:     *
+225:     autocommit: Autocommit(c_default='LEGACY_TRANSACTION_CONTROL') = sqlite3.LEGACY_TRANSACTION_CONTROL
+226: [clinic start generated code]*/
+227: 
+228: static int
+229: pysqlite_connection_init_impl(pysqlite_Connection *self, PyObject *database,
+230:                               double timeout, int detect_types,
+231:                               const char *isolation_level,
+232:                               int check_same_thread, PyObject *factory,
+233:                               int cache_size, int uri,
+234:                               enum autocommit_mode autocommit)
+235: /*[clinic end generated code: output=cba057313ea7712f input=219c3dbecbae7d99]*/
+236: {
+237:     if (PySys_Audit("sqlite3.connect", "O", database) < 0) {
+238:         return -1;
+239:     }
+240: 
+241:     PyObject *bytes;
+242:     if (!PyUnicode_FSConverter(database, &bytes)) {
+243:         return -1;
+244:     }
+245: 
+246:     if (self->initialized) {
+247:         self->initialized = 0;
+248: 
+249:         PyTypeObject *tp = Py_TYPE(self);
+250:         tp->tp_clear((PyObject *)self);
+251:         if (connection_close(self) < 0) {
+252:             return -1;
+253:         }
+254:     }
+255: 
+256:     // Create and configure SQLite database object.
+257:     sqlite3 *db;
+258:     int rc;
+259:     Py_BEGIN_ALLOW_THREADS
+260:     rc = sqlite3_open_v2(PyBytes_AS_STRING(bytes), &db,
+261:                          SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE |
+262:                          (uri ? SQLITE_OPEN_URI : 0), NULL);
+263:     if (rc == SQLITE_OK) {
+264:         (void)sqlite3_busy_timeout(db, (int)(timeout*1000));
+265:     }
+266:     Py_END_ALLOW_THREADS
+267: 
+268:     Py_DECREF(bytes);
+269:     if (db == NULL && rc == SQLITE_NOMEM) {
+270:         PyErr_NoMemory();
+271:         return -1;
+272:     }
+273: 
+274:     pysqlite_state *state = pysqlite_get_state_by_type(Py_TYPE(self));
+275:     if (rc != SQLITE_OK) {
+276:         _pysqlite_seterror(state, db);
+277:         goto error;
+278:     }
+279: 
+280:     // Create LRU statement cache; returns a new reference.
+281:     PyObject *statement_cache = new_statement_cache(self, state, cache_size);
+282:     if (statement_cache == NULL) {
+283:         goto error;
+284:     }
+285: 
+286:     /* Create lists of weak references to cursors and blobs */
+287:     PyObject *cursors = PyList_New(0);
+288:     if (cursors == NULL) {
+289:         Py_DECREF(statement_cache);
+290:         goto error;
+291:     }
+292: 
+293:     PyObject *blobs = PyList_New(0);
+294:     if (blobs == NULL) {
+295:         Py_DECREF(statement_cache);
+296:         Py_DECREF(cursors);
+297:         goto error;
+298:     }
+299: 
+300:     // Init connection state members.
+301:     self->db = db;
+302:     self->state = state;
+303:     self->detect_types = detect_types;
+304:     self->isolation_level = isolation_level;
+305:     self->autocommit = autocommit;
+306:     self->check_same_thread = check_same_thread;
+307:     self->thread_ident = PyThread_get_thread_ident();
+308:     self->statement_cache = statement_cache;
+309:     self->cursors = cursors;
+310:     self->blobs = blobs;
+311:     self->created_cursors = 0;
+312:     self->row_factory = Py_NewRef(Py_None);
+313:     self->text_factory = Py_NewRef(&PyUnicode_Type);
+314:     self->trace_ctx = NULL;
+315:     self->progress_ctx = NULL;
+316:     self->authorizer_ctx = NULL;
+317: 
+318:     // Borrowed refs
+319:     self->Warning               = state->Warning;
+320:     self->Error                 = state->Error;
+321:     self->InterfaceError        = state->InterfaceError;
+322:     self->DatabaseError         = state->DatabaseError;
+323:     self->DataError             = state->DataError;
+324:     self->OperationalError      = state->OperationalError;
+325:     self->IntegrityError        = state->IntegrityError;
+326:     self->InternalError         = state->InternalError;
+327:     self->ProgrammingError      = state->ProgrammingError;
+328:     self->NotSupportedError     = state->NotSupportedError;
+329: 
+330:     if (PySys_Audit("sqlite3.connect/handle", "O", self) < 0) {
+331:         return -1;  // Don't goto error; at this point, dealloc will clean up.
+332:     }
+333: 
+334:     self->initialized = 1;
+335: 
+336:     if (autocommit == AUTOCOMMIT_DISABLED) {
+337:         if (connection_exec_stmt(self, "BEGIN") < 0) {
+338:             return -1;
+339:         }
+340:     }
+341:     return 0;
+342: 
+343: error:
+344:     // There are no statements or other SQLite objects attached to the
+345:     // database, so sqlite3_close() should always return SQLITE_OK.
+346:     rc = sqlite3_close(db);
+347:     assert(rc == SQLITE_OK);
+348:     return -1;
+349: }
+
+LINES 450-476
+450: connection_close(pysqlite_Connection *self)
+451: {
+452:     if (self->db == NULL) {
+453:         return 0;
+454:     }
+455: 
+456:     int rc = 0;
+457:     if (self->autocommit == AUTOCOMMIT_DISABLED &&
+458:         !sqlite3_get_autocommit(self->db))
+459:     {
+460:         if (connection_exec_stmt(self, "ROLLBACK") < 0) {
+461:             rc = -1;
+462:         }
+463:     }
+464: 
+465:     sqlite3 *db = self->db;
+466:     self->db = NULL;
+467: 
+468:     Py_BEGIN_ALLOW_THREADS
+469:     /* The v2 close call always returns SQLITE_OK if given a valid database
+470:      * pointer (which we do), so we can safely ignore the return value */
+471:     (void)sqlite3_close_v2(db);
+472:     Py_END_ALLOW_THREADS
+473: 
+474:     free_callback_contexts(self);
+475:     return rc;
+476: }
+
+LINES 702-768
+702: /*[clinic input]
+703: _sqlite3.Connection.commit as pysqlite_connection_commit
+704: 
+705: Commit any pending transaction to the database.
+706: 
+707: If there is no open transaction, this method is a no-op.
+708: [clinic start generated code]*/
+709: 
+710: static PyObject *
+711: pysqlite_connection_commit_impl(pysqlite_Connection *self)
+712: /*[clinic end generated code: output=3da45579e89407f2 input=c8793c97c3446065]*/
+713: {
+714:     if (!pysqlite_check_thread(self) || !pysqlite_check_connection(self)) {
+715:         return NULL;
+716:     }
+717: 
+718:     if (self->autocommit == AUTOCOMMIT_LEGACY) {
+719:         if (!sqlite3_get_autocommit(self->db)) {
+720:             if (connection_exec_stmt(self, "COMMIT") < 0) {
+721:                 return NULL;
+722:             }
+723:         }
+724:     }
+725:     else if (self->autocommit == AUTOCOMMIT_DISABLED) {
+726:         if (connection_exec_stmt(self, "COMMIT") < 0) {
+727:             return NULL;
+728:         }
+729:         if (connection_exec_stmt(self, "BEGIN") < 0) {
+730:             return NULL;
+731:         }
+732:     }
+733:     Py_RETURN_NONE;
+734: }
+735: 
+736: /*[clinic input]
+737: _sqlite3.Connection.rollback as pysqlite_connection_rollback
+738: 
+739: Roll back to the start of any pending transaction.
+740: 
+741: If there is no open transaction, this method is a no-op.
+742: [clinic start generated code]*/
+743: 
+744: static PyObject *
+745: pysqlite_connection_rollback_impl(pysqlite_Connection *self)
+746: /*[clinic end generated code: output=b66fa0d43e7ef305 input=7f60a2f1076f16b3]*/
+747: {
+748:     if (!pysqlite_check_thread(self) || !pysqlite_check_connection(self)) {
+749:         return NULL;
+750:     }
+751: 
+752:     if (self->autocommit == AUTOCOMMIT_LEGACY) {
+753:         if (!sqlite3_get_autocommit(self->db)) {
+754:             if (connection_exec_stmt(self, "ROLLBACK") < 0) {
+755:                 return NULL;
+756:             }
+757:         }
+758:     }
+759:     else if (self->autocommit == AUTOCOMMIT_DISABLED) {
+760:         if (connection_exec_stmt(self, "ROLLBACK") < 0) {
+761:             return NULL;
+762:         }
+763:         if (connection_exec_stmt(self, "BEGIN") < 0) {
+764:             return NULL;
+765:         }
+766:     }
+767:     Py_RETURN_NONE;
+768: }
+
+LINES 1711-1724
+1711: int pysqlite_check_thread(pysqlite_Connection* self)
+1712: {
+1713:     if (self->check_same_thread) {
+1714:         if (PyThread_get_thread_ident() != self->thread_ident) {
+1715:             PyErr_Format(self->ProgrammingError,
+1716:                         "SQLite objects created in a thread can only be used in that same thread. "
+1717:                         "The object was created in thread id %lu and this is thread id %lu.",
+1718:                         self->thread_ident, PyThread_get_thread_ident());
+1719:             return 0;
+1720:         }
+1721: 
+1722:     }
+1723:     return 1;
+1724: }
+
+LINES 1987-2128
+1987: /* Function author: Paul Kippes <kippesp@gmail.com>
+1988:  * Class method of Connection to call the Python function _iterdump
+1989:  * of the sqlite3 module.
+1990:  */
+1991: /*[clinic input]
+1992: _sqlite3.Connection.iterdump as pysqlite_connection_iterdump
+1993: 
+1994:     *
+1995:     filter: object = None
+1996:         An optional LIKE pattern for database objects to dump
+1997: 
+1998: Returns iterator to the dump of the database in an SQL text format.
+1999: [clinic start generated code]*/
+2000: 
+2001: static PyObject *
+2002: pysqlite_connection_iterdump_impl(pysqlite_Connection *self,
+2003:                                   PyObject *filter)
+2004: /*[clinic end generated code: output=fd81069c4bdeb6b0 input=4ae6d9a898f108df]*/
+2005: {
+2006:     if (!pysqlite_check_connection(self)) {
+2007:         return NULL;
+2008:     }
+2009: 
+2010:     PyObject *iterdump = _PyImport_GetModuleAttrString(MODULE_NAME ".dump", "_iterdump");
+2011:     if (!iterdump) {
+2012:         if (!PyErr_Occurred()) {
+2013:             PyErr_SetString(self->OperationalError,
+2014:                             "Failed to obtain _iterdump() reference");
+2015:         }
+2016:         return NULL;
+2017:     }
+2018:     PyObject *args[3] = {NULL, (PyObject *)self, filter};
+2019:     PyObject *kwnames = Py_BuildValue("(s)", "filter");
+2020:     if (!kwnames) {
+2021:         Py_DECREF(iterdump);
+2022:         return NULL;
+2023:     }
+2024:     Py_ssize_t nargsf = 1 | PY_VECTORCALL_ARGUMENTS_OFFSET;
+2025:     PyObject *retval = PyObject_Vectorcall(iterdump, args + 1, nargsf, kwnames);
+2026:     Py_DECREF(iterdump);
+2027:     Py_DECREF(kwnames);
+2028:     return retval;
+2029: }
+2030: 
+2031: /*[clinic input]
+2032: _sqlite3.Connection.backup as pysqlite_connection_backup
+2033: 
+2034:     target: object(type='pysqlite_Connection *', subclass_of='clinic_state()->ConnectionType')
+2035:     *
+2036:     pages: int = -1
+2037:     progress: object = None
+2038:     name: str = "main"
+2039:     sleep: double = 0.250
+2040: 
+2041: Makes a backup of the database.
+2042: [clinic start generated code]*/
+2043: 
+2044: static PyObject *
+2045: pysqlite_connection_backup_impl(pysqlite_Connection *self,
+2046:                                 pysqlite_Connection *target, int pages,
+2047:                                 PyObject *progress, const char *name,
+2048:                                 double sleep)
+2049: /*[clinic end generated code: output=306a3e6a38c36334 input=c6519d0f59d0fd7f]*/
+2050: {
+2051:     int rc;
+2052:     int sleep_ms = (int)(sleep * 1000.0);
+2053:     sqlite3 *bck_conn;
+2054:     sqlite3_backup *bck_handle;
+2055: 
+2056:     if (!pysqlite_check_thread(self) || !pysqlite_check_connection(self)) {
+2057:         return NULL;
+2058:     }
+2059: 
+2060:     if (!pysqlite_check_connection(target)) {
+2061:         return NULL;
+2062:     }
+2063: 
+2064:     if (target == self) {
+2065:         PyErr_SetString(PyExc_ValueError, "target cannot be the same connection instance");
+2066:         return NULL;
+2067:     }
+2068: 
+2069:     if (progress != Py_None && !PyCallable_Check(progress)) {
+2070:         PyErr_SetString(PyExc_TypeError, "progress argument must be a callable");
+2071:         return NULL;
+2072:     }
+2073: 
+2074:     if (pages == 0) {
+2075:         pages = -1;
+2076:     }
+2077: 
+2078:     bck_conn = target->db;
+2079: 
+2080:     Py_BEGIN_ALLOW_THREADS
+2081:     bck_handle = sqlite3_backup_init(bck_conn, "main", self->db, name);
+2082:     Py_END_ALLOW_THREADS
+2083: 
+2084:     if (bck_handle == NULL) {
+2085:         _pysqlite_seterror(self->state, bck_conn);
+2086:         return NULL;
+2087:     }
+2088: 
+2089:     do {
+2090:         Py_BEGIN_ALLOW_THREADS
+2091:         rc = sqlite3_backup_step(bck_handle, pages);
+2092:         Py_END_ALLOW_THREADS
+2093: 
+2094:         if (progress != Py_None) {
+2095:             int remaining = sqlite3_backup_remaining(bck_handle);
+2096:             int pagecount = sqlite3_backup_pagecount(bck_handle);
+2097:             PyObject *res = PyObject_CallFunction(progress, "iii", rc,
+2098:                                                   remaining, pagecount);
+2099:             if (res == NULL) {
+2100:                 /* Callback failed: abort backup and bail. */
+2101:                 Py_BEGIN_ALLOW_THREADS
+2102:                 sqlite3_backup_finish(bck_handle);
+2103:                 Py_END_ALLOW_THREADS
+2104:                 return NULL;
+2105:             }
+2106:             Py_DECREF(res);
+2107:         }
+2108: 
+2109:         /* Sleep for a while if there are still further pages to copy and
+2110:            the engine could not make any progress */
+2111:         if (rc == SQLITE_BUSY || rc == SQLITE_LOCKED) {
+2112:             Py_BEGIN_ALLOW_THREADS
+2113:             sqlite3_sleep(sleep_ms);
+2114:             Py_END_ALLOW_THREADS
+2115:         }
+2116:     } while (rc == SQLITE_OK || rc == SQLITE_BUSY || rc == SQLITE_LOCKED);
+2117: 
+2118:     Py_BEGIN_ALLOW_THREADS
+2119:     rc = sqlite3_backup_finish(bck_handle);
+2120:     Py_END_ALLOW_THREADS
+2121: 
+2122:     if (rc != SQLITE_OK) {
+2123:         _pysqlite_seterror(self->state, bck_conn);
+2124:         return NULL;
+2125:     }
+2126: 
+2127:     Py_RETURN_NONE;
+2128: }

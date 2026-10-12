@@ -1,0 +1,80 @@
+{
+  "schema": "er13.defects.original.v1",
+  "arm_id": "B08-P02-control",
+  "material_defects": [
+    {
+      "id": "C-PRESERVE-NFC-CF",
+      "material": true,
+      "kind": "preservation_loss",
+      "axes": [
+        3,
+        5
+      ],
+      "confidence": "HIGH for missing explicit alternative; MEDIUM for materiality classification",
+      "input_locator": "inputs/B08-P02/draft.md:14 Alternatives and product limits: NFC-plus-casefold alternative; assignment requires preserving useful alternatives",
+      "final_locators": [
+        "final.md:20 NFC-only canonical normalized mode",
+        "final.md:71 less aggressive NFC-based alternative",
+        "criticism-dispositions.md:75–80 D11"
+      ],
+      "finding": "The final replaces the draft’s explicit NFC-plus-casefold alternative with NFC-only, case-sensitive matching and generic NFC-based wording. It never specifies the NFC-then-casefold alternative, while claiming the alternative was retained.",
+      "consequence": "The supported choice of caseless matching that preserves more compatibility distinctions is absent from the complete final. NFC-only is a different behavior: A/a stays different, whereas NFC-then-casefold matches it; fullwidth A remains fullwidth after NFC-then-casefold but collapses to ASCII after the selected NFKC-then-casefold pipeline.",
+      "evidence": [
+        "CPY-UNICODEDATA-DOC normalization definition",
+        "CPY-STRTYPES-DOC casefold definition",
+        "UCD-NORMALIZATION-TEST U+FF21",
+        "UCD-FOLD U+0041 and U+FF21",
+        "evidence/independent-oracle.stdout.json"
+      ],
+      "governing_requirement": "Both arms must preserve supported meaning and useful alternatives from the full draft; naming a broader family does not state this distinct supported caseless policy.",
+      "boundary": "This does not invalidate the corrected selected pipeline or require implementation of the alternative. It is an omission in the requested planning proposal; no repair is supplied."
+    }
+  ],
+  "nonmaterial_limitations": [
+    "No target runtime or application behavior was executed; both arms state this honestly and propose meaningful future checks.",
+    "Candidate web sources often lack captured body hashes; independent evaluator retrieved governing sources and hashed them.",
+    "No universal mapping-table or arbitrary-string correctness inferred from finite evidence."
+  ],
+  "not_defects": [
+    "Bounded counterexamples on a separately disclosed runtime",
+    "Explicit conditional or visible partial-search overflow policy",
+    "No deployment or future software execution in a planning deliverable"
+  ],
+  "preservation_and_dispositions": {
+    "retained": [
+      "original note authority and no-drop/no-truncate",
+      "exact NFKC-then-casefold selected mode and symmetric query transform",
+      "literal mode",
+      "algorithm/runtime/UCD metadata and deliberate rebuild",
+      "locale/accent/confusable/security boundaries",
+      "less aggressive normalization family and future locale engine",
+      "ASCII/sharp-s examples and finite validation limits"
+    ],
+    "corrected": [
+      "false byte nonexpansion and original-length proxy",
+      "direct offset/nearest-character rule",
+      "overflow behavior with transient compatible scan or explicit partial result"
+    ],
+    "lost": [
+      "explicit NFC-plus-casefold alternative, replaced by NFC-only/generic NFC-based language"
+    ],
+    "critic_dispositions_examined": [
+      "D01",
+      "D02",
+      "D03",
+      "D04",
+      "D05",
+      "D06",
+      "D07",
+      "D08",
+      "D09",
+      "D10",
+      "D11",
+      "D12",
+      "D13",
+      "D14",
+      "D15"
+    ],
+    "disposition_result": "D01–D10 and D12–D15 supported as product choices or bounded findings; D11 retains only a weaker/underspecified version of the explicit draft alternative. No other material false rejection found."
+  }
+}

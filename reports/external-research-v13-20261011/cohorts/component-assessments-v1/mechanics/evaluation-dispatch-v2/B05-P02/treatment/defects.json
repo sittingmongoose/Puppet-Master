@@ -1,0 +1,38 @@
+{
+  "schema": "er13.defects.v1",
+  "arm_id": "B05-P02-treatment",
+  "material_count": 0,
+  "nonmaterial_count": 1,
+  "defects": [
+    {
+      "id": "T-D01",
+      "material": false,
+      "axis_ids": [
+        2,
+        4
+      ],
+      "kind": "incorrect_incidental_sample_count_condition",
+      "location": "critique.md finding 1; criticism-dispositions.md C03; source-map.json header uncertainty/inference",
+      "finding": "The count is at most 21 following parsed rows checked for width, not 21 regular-width rows. checked is incremented before irregular rows are skipped, so those rows consume the allowance too. The loop also pulls a next row before the >20 break when enough rows exist.",
+      "evidence_ids": [
+        "csv-py"
+      ],
+      "evidence_locators": [
+        "Lib/csv.py:452-513, especially 470-478"
+      ],
+      "consequence": "The final keeps has_header nonbinding and never discards a row from its guess, so the incidental counting error changes no proposed policy.",
+      "original_grade_effect": "Nonmaterial; does not block source PASS."
+    }
+  ],
+  "limitations": [
+    "This is finite assessment of the assigned research proposal and supplied draft, not universal parser correctness or a deployed component.",
+    "Unknown vendor schemas, encodings, null conventions, storage transactions and numeric device budgets legitimately remain product decisions. Their future execution is UNASSESSED, not failed.",
+    "QUOTE_NOTNULL is conditional: a singleton None record cannot be emitted by its writer; delimiter=space plus skipinitialspace excludes unquoted empties. These adjacent exceptions were checked in C:1227-1267/1300-1401, docs:468-472 and tests:316-356. Neither final promises an unrestricted one-column round-trip; the import proposals retain explicit blank/ragged policy and alternative null encodings. This bounds the alternative rather than imposing an export feature.",
+    "Source integrity, byte-aware line limits and atomic publication are proposed application obligations. No candidate execution demonstrates these guarantees; both require meaningful future tests.",
+    "Preparation of the shared component package and cold full-pipeline discovery are outside this pair; no discovery recall/effectiveness or cold end-to-end success is inferred.",
+    "Filesystem access rules are not sandbox isolation. Without full native transcripts, exact operation ordering, exclusive original lookup, absence of unseen delegates and actual provider execution cannot be proven.",
+    "Private transport route fields are observed but not public source authority; service tier and independent native-session linkage remain unknown.",
+    "No billing, subscription cost, cache/output/reasoning breakdown, context occupancy or phase-specific provider activity can be derived from cumulative Goal counters."
+  ],
+  "feedback_or_repair_to_candidate": false
+}

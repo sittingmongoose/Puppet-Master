@@ -1,0 +1,134 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "recorded_at_utc": "2026-10-12T01:08:02.700925+00:00",
+  "assignment": "B04-P01 paired COMPONENT original evaluation",
+  "arms": [
+    {
+      "arm_id": "B04-P01-control",
+      "scope": "COMPONENT",
+      "source_judgment": {
+        "verdict": "FAIL",
+        "reason": "Material required actual Windows copy2 mechanism/context omitted (D1).",
+        "material_defect_ids": [
+          "D1"
+        ],
+        "finite_not_universal": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE"
+          }
+        ],
+        "details": "coverage.json"
+      },
+      "defects": {
+        "file": "defects.json",
+        "material_count": 1,
+        "nonmaterial_count": 1
+      },
+      "delivery": {
+        "verdict": "COMPLETE",
+        "required_final_present": true,
+        "self_contained_proposal": true,
+        "criticism_dispositions_present": true,
+        "source_map_present": true,
+        "hashes_verified": true,
+        "executable_witness": "NONE_USED_OR_CLAIMED",
+        "limitation": "Delivery completeness does not imply semantic source PASS"
+      },
+      "time_eligibility": {
+        "verdict": "ELIGIBLE_ON_SUPPLIED_FROZEN_CUSTODY",
+        "coverage": "PARTIAL",
+        "maximum_elapsed_seconds": 1500,
+        "t0_utc": "2026-10-12T00:34:23.084488Z",
+        "deadline_utc": "2026-10-12T00:59:23.084488Z",
+        "native_created_utc": "2026-10-12T00:34:46+00:00",
+        "native_terminal_updated_utc": "2026-10-12T00:51:32+00:00",
+        "t0_to_native_terminal_seconds": 1028.915512,
+        "native_reported_goal_elapsed_seconds": 1005,
+        "authored_freeze_utc": "2026-10-12T00:55:01.226068+00:00",
+        "t0_to_authored_freeze_proxy_seconds": 1238.14158,
+        "proxy_definition": "T0-to-authored-freeze custody proxy, not actual last scientific write or provider active time",
+        "last_complete_scientific_write_utc": "UNKNOWN",
+        "queue_active_stage_boundaries": "UNKNOWN beyond admission, native receipt and frozen capture",
+        "frozen_clock_unchanged": true
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "observed": "Assigned finalizer output set and matching single create/complete Goal receipt fields present; exact terminal task reports completed and no pending child runs",
+        "critique_semantic_preservation": "All F1\u2013F4 findings, keeps, uncertainty and history represented; no demonstrated compact-rendering loss",
+        "source_semantics": "D1 shows unresolved shared documentation/code conflict; format preservation alone is not source quality",
+        "command_level_activation_verification": "UNASSESSED; verifier execution transcript and checker result not in manifest; full transcripts not requested/read",
+        "no_nested_or_forbidden_access": "UNKNOWN from terminal receipt alone; evaluator launched none and accessed no active/admitted files",
+        "shared_package": "Common cached scientific inputs and upstream critique are preparation; standalone cold preparation cost unavailable"
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "create_and_terminal_receipt_fields_match": true,
+        "exact_goal_objective_binding_match": true,
+        "terminal_task_receipt_path": "ER13_RUNTIME/state/dispatcher-v1/arms/B04-P01-control/component-terminal-task.raw.json",
+        "terminal_task_receipt_sha256": "899a3c579c98812552281291efa6e6856b528ae6358210b98daa430de98f5793",
+        "terminal_status": "completed",
+        "hasPendingChildRuns": false,
+        "operational_routing_metadata": "Present in exact terminal task; consistent with requested route metadata. Private values not reproduced. Requested routing is not scientific authority or proof of underlying execution identity.",
+        "effective_service_tier": "UNKNOWN",
+        "independent_session_linkage": "UNKNOWN beyond assigned exact capture/objective custody",
+        "freshness_and_no_reuse_beyond_custody": "UNKNOWN"
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "goal_elapsed_seconds_observed": 1005,
+          "cumulative_goal_counter_presence": "OBSERVED in private receipt; values omitted under publication privacy rule",
+          "counter_semantics": "Not billing, active-provider work, unique context occupancy or separable input/output/cache/reasoning measurements",
+          "input_output_cached_reasoning_breakdown": "UNKNOWN",
+          "active_provider_seconds": "UNKNOWN",
+          "open_context_lifetime_and_overlap": "UNKNOWN",
+          "billing_and_subscription_consumption": "UNKNOWN"
+        },
+        "preparation_support_root_cost": "UNKNOWN; shared warm component preparation disclosed, no fabricated cold full-pipeline total",
+        "independent_evaluation": {
+          "category": "independent_evaluation",
+          "first_observed_clock_utc": "2026-10-12T00:58:25Z",
+          "actual_start_utc": "UNKNOWN before first clock sample",
+          "billing": "UNKNOWN",
+          "cost_not_added_to_candidate_product": true
+        },
+        "v1_coordinator_idle_costs": "UNCHANGED; no retrospective corrections",
+        "unknown_is_not_zero": true
+      },
+      "limitations": [
+        "Technique-bearing paths and critique labels reveal assignment; blinding imperfect.",
+        "Six axes assessed, source/mechanism coverage PARTIAL and explicit UNASSESSED extensions remain.",
+        "Only two assigned frozen COMPONENT finals; no discovery effectiveness, deployment or cold full-pipeline result.",
+        "No account identifiers, counter values, native transcripts, or machine state reproduced.",
+        "Original judgments are immutable; any dispute requires a new separate adjudication."
+      ]
+    }
+  ],
+  "comparison_performed": false,
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+}

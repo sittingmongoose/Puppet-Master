@@ -1,0 +1,153 @@
+{
+  "schema": "er13.original_assessment.v2",
+  "case_id": "B05-P01",
+  "scope": "COMPONENT",
+  "is_original": true,
+  "immutable_after_manifest": true,
+  "comparison_performed_before_freeze": false,
+  "arms": [
+    {
+      "arm_id": "B05-P01-treatment",
+      "source_judgment": {
+        "status": "FAIL",
+        "rule": "Finite source-supported planning quality under the six-axis contract; not universal correctness or implementation certification.",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "T01"
+        ],
+        "summary": "Material Windows implicit-shell exception omitted from complete final and review/dispositions. Core draft errors are corrected, but no source PASS."
+      },
+      "coverage": {
+        "status": "COMPLETE",
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/coverage.json",
+        "sha256": "3669e6826102d970d86bb757fd4d455dabd281b29a514e14ef84a899a7bf4b1a",
+        "external_unassessed": [
+          "actual desktop caller",
+          "executed application/validator behavior"
+        ],
+        "operational_partial": [
+          "method/native linkage",
+          "resource/billing"
+        ]
+      },
+      "defects": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/defects.json",
+        "sha256": "1a76a8e0c9c1f4061ffa4b7ab8dda767d90940635c80476a8991b44a12575bd9",
+        "material_count": 1,
+        "nonmaterial_count": 1
+      },
+      "delivery": {
+        "status": "DELIVERED_COMPLETE_PROPOSAL",
+        "coverage": "COMPLETE",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/final.md",
+        "final_sha256": "3223a708953fb7ca59ad679754999e22b8c3a6809ec5291a452e3e6266d518aa",
+        "required_artifacts_present": true,
+        "self_contained": true,
+        "scientific_delivery_does_not_imply_source_pass": true,
+        "witness_used": false,
+        "witness_requirement": "Not applicable; none claimed; future execution not demanded."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE",
+        "coverage": "COMPLETE",
+        "maximum_seconds": 1500,
+        "t0_utc": "2026-10-12T00:34:24.308712Z",
+        "deadline_utc": "2026-10-12T00:59:24.308712Z",
+        "prepared_at_utc": "2026-10-12T00:34:24.357887Z",
+        "dispatch_request_capture_utc": "2026-10-12T00:34:24.954Z",
+        "native_creation_utc": "2026-10-12T00:34:51+00:00",
+        "native_terminal_updated_utc": "2026-10-12T00:49:21+00:00",
+        "native_reported_elapsed_seconds": 869,
+        "native_timestamp_span_seconds": 870,
+        "admission_to_native_terminal_seconds": 896.691288,
+        "authored_freeze_utc": "2026-10-12T00:50:17.674776+00:00",
+        "admission_to_authored_snapshot_upper_bound_seconds": 953.366064,
+        "final_present_before_deadline": true,
+        "last_complete_scientific_artifact_time": "UNKNOWN; snapshot bounds existence, not write completion time",
+        "named_proxy": "admission-to-immutable-authored-snapshot upper bound; includes post-author custody interval, not active provider activity",
+        "queue_start_finish_split": "UNKNOWN; native activation is an observation, not provider start proof",
+        "phase_topology": "One assigned critic+finalizer; intra-role research/revision splits UNKNOWN",
+        "clock_correction": "NONE; original frozen clocks retained",
+        "counter_caveat": "Native elapsed counter differs by one second from timestamp span; neither is billing or complete product latency."
+      },
+      "method_compliance": {
+        "status": "PARTIALLY_VERIFIABLE",
+        "coverage": "PARTIAL",
+        "observed": [
+          "Required complete final, critique, dispositions, source map and native receipts are present.",
+          "Frozen common inputs match assignment; supported semantic corrections and retained meaning assessed separately from preparation.",
+          "Control declares independent public lookup without cache; treatment declares cache/source-reader plus allowed expanded lookup.",
+          "No executable witness claimed; no witness artifact required."
+        ],
+        "source_map_requirement": "Present with nonmaterial exact-locator defects T02",
+        "cache_preparation": "Independent public byte matches and exact neighborhoods verified. Candidate actual read order/isolation remains UNKNOWN.",
+        "unavailable": [
+          "Full tool/read isolation audit, actual activation assertion invocation, proof of exactly one native Goal across every session, complete nested-activity audit and exact model/tier backend identity."
+        ],
+        "scope_boundary": "COMPONENT review/finalization of a shared prepared draft/source index; no discovery effectiveness or cold integrated recipe qualification."
+      },
+      "native_identity_provenance": {
+        "status": "OBSERVED_RECEIPTS_WITH_UNKNOWN_LINKAGE",
+        "coverage": "PARTIAL",
+        "creation_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/native-goal-create.json",
+          "sha256": "ba11ed5ed25ac7835ce202472d045776d0cb8bb39fedc26edb00f9e7b833a319"
+        },
+        "terminal_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P01-treatment/native-goal-terminal.json",
+          "sha256": "3e5e13160caf9626e4a8cc6bf2409cb41c8a7449ee2917d5e971cb8fb5030c37"
+        },
+        "terminal_task": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B05-P01-treatment/component-terminal-task.raw.json",
+          "sha256": "25d79f818936eb38bf7ec14b9d735176e9c8643e1ae53c49fd1428e464daad23",
+          "status": "completed",
+          "hasPendingChildRuns": false
+        },
+        "same_goal_identifier_objective_createdAt_in_create_and_terminal": true,
+        "objective_matches_frozen_assignment": true,
+        "native_status_transition": "active to complete",
+        "task_returned_model_matches_requested_model": true,
+        "service_tier_and_effort_actual_backend": "UNKNOWN; requested options and self-reported runtime metadata are not independent backend receipts",
+        "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "freshness_and_binding_execution": "UNKNOWN beyond supplied receipt/custody; pinned assertion code/runtime logs are not in the assigned authored manifest",
+        "route_privacy": "Operational route details remain in private input custody; they are not source truth and are not republished."
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVATION_UNKNOWN_BILLING",
+        "coverage": "PARTIAL",
+        "candidate_product": "Assigned single critic+finalizer arm. Native elapsed counter observable; provider activity, occupancy, input/cache/output/reasoning splits, subscription consumption and actual monetary billing UNKNOWN. Cumulative counter is present in the private receipt and not republished or treated as a nonoverlapping product cost.",
+        "preparation": "Common fixture/cache acquisition occurred before this arm; standalone cold preparation cost UNKNOWN in supplied records. Byte preservation does not establish preparation economy. Arm-specific setup/queue remains included in original T0 clock.",
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "shared_primary_research": true,
+          "first_observed_clock_utc": "2026-10-12T00:53:20Z",
+          "billing": "UNKNOWN",
+          "provider_active_duration": "UNKNOWN",
+          "full_evaluator_total_cost": "UNKNOWN; no reassignment to product"
+        },
+        "coordinator_v1_idle_costs": "UNCHANGED; not reconstructed or shifted",
+        "failure_inclusive_denominator": "This assigned arm retained regardless of source outcome. No affordability/equal-quality savings inferred.",
+        "unknown_is_zero": false
+      }
+    }
+  ],
+  "input_verification": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/input-verification.json",
+    "sha256": "75f03da917b21ce624c1624b05c946ae8636c6ea6753f36b9f41ede833fdc545"
+  },
+  "primary_source_index": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/primary-source-index.json",
+    "sha256": "11025dc110d58ad5a3f2d3b07337fbb6d71b5e50c1e15862290f5f73a5036f95"
+  },
+  "limitations": [
+    "Finite original planning assessment of this exact COMPONENT arm; no discovery-recall or cold full-pipeline conclusion.",
+    "Application caller code and implementation do not occur in the assigned frozen inputs. Their behavior, Linux/Windows product execution, memory/RSS, throughput, leak/crash behavior and arbitrary descendants remain UNASSESSED; none is required to have executed for a research proposal.",
+    "Source completeness refers to consequential claims and obligations of the given brief/plan, not every possible asyncio feature, historical issue or operating-system failure.",
+    "Numeric quotas, grace periods, actual validator parser, output-check predicates, sensitive-output policy and Windows version remain product facts/choices. They may stay unknown at this planning stage.",
+    "Technique-bearing control/treatment paths, cache and prose disclosed arm identities; blinding is imperfect. Own independent public-source research was reused across arms, with originals frozen separately before comparison.",
+    "Method observability is partial: frozen artifacts and exact receipts cannot establish all actual reads, absence of other activity, backend identity, freshness beyond recorded custody, independent native-session linkage or complete resource/billing coverage.",
+    "All candidate clocks remain unchanged. Preparation cold costs and coordinator-v1 idle/support costs are neither reassigned nor reconstructed here."
+  ],
+  "reviewed_at_utc": "2026-10-12T01:05:32.223118+00:00",
+  "no_candidate_feedback_repairs_or_extra_graders": true
+}

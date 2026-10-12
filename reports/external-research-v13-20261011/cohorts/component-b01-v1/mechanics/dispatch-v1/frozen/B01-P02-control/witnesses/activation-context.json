@@ -1,0 +1,22 @@
+{
+  "requested_route": "Luna Max Standard",
+  "native_create_goal_receipt_observed_fields": [
+    "threadId",
+    "objective",
+    "status",
+    "tokensUsed",
+    "timeUsedSeconds",
+    "createdAt",
+    "updatedAt",
+    "remainingTokens",
+    "completionBudgetReport"
+  ],
+  "native_response_route_or_tier": "unknown; not returned",
+  "harness_runtime_observed": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max"
+  },
+  "service_tier": "unknown",
+  "thread_id": "01a12d89-9c1e-7962-9e0a-5e5a1bf364ba",
+  "interpretation": "Records visible harness identity and receipt fields only; does not infer the requested Standard service tier was returned."
+}

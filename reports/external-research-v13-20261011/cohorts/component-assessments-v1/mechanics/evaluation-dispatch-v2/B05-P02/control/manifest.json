@@ -1,0 +1,57 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "arm_id": "B05-P02-control",
+  "original_frozen_at_utc": "2026-10-12T01:05:22.510851+00:00",
+  "comparison_started": false,
+  "excludes_self": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 11895,
+      "sha256": "a0552e29be7bf653c3d897d69df492b1973bcf72d5a53bce8d08895c672ee6dc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 4771,
+      "sha256": "3169d076d4abf641155bad775fc0f5ef228061c978988cb07a71059dcee1c7ac"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 11768,
+      "sha256": "18503c329d2e4b4e021d45dcacca2b57d68d868aa15ab76f9f51bf57f044c678"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 6596,
+      "sha256": "513d0883c8a55a5ea287280270fd28969d97280cd7b2ee7d40a803bb74135ec7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/CPYTHON-LICENSE.txt",
+      "relative_path": "evidence/CPYTHON-LICENSE.txt",
+      "bytes": 13809,
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/input-audit.json",
+      "relative_path": "evidence/input-audit.json",
+      "bytes": 6308,
+      "sha256": "9a6269bb4c4e1080b771e635b33c681dd11c9fb6a347c85abc416da0a14c6b4c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/primary-context.json",
+      "relative_path": "evidence/primary-context.json",
+      "bytes": 69109,
+      "sha256": "ad59a1c359f814f7eb5c874098da9904d9b86c624cd21fe5a0cfb64390d5012a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 16863,
+      "sha256": "f83bfefd7bb5dbe43a38f6fba1c4dc5489a469715c812568d13319a493bd4c5f"
+    }
+  ]
+}

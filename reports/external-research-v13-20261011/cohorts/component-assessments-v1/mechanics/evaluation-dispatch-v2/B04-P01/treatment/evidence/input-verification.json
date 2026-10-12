@@ -1,0 +1,243 @@
+{
+  "schema": "er13.independent-input-verification.v1",
+  "arm_id": "B04-P01-treatment",
+  "verified_at_utc": "2026-10-12T01:04:10.279354+00:00",
+  "packet_sha256": "f3131a22da06a32f8212383707b090b3805a92cb2bc91824c288d7c696ac9f44",
+  "input_manifest_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B04-P01-treatment/authored-manifest.json",
+  "input_manifest_sha256": "dae20acc1ef31be6854ebc07c4974443d0055bb7323f85e6b4ff09ee09b0b44d",
+  "files": [
+    {
+      "path": "final.md",
+      "bytes": 16402,
+      "sha256": "26372fc13c8135bd11dbb8d085025445dd400b717df172b67e883e5d217e720e",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "criticism-dispositions.md",
+      "bytes": 10209,
+      "sha256": "4b0a4bfb6b42177ef7d850d3cd6157f240f2c3b23c35eb40fb068e1bf73c93f5",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "source-map.json",
+      "bytes": 12281,
+      "sha256": "d2ae75fd4f8d615e27ed2ece96e86c8cc4a671348abda480dc9f4d8370d7471e",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "native-goal-create.json",
+      "bytes": 599,
+      "sha256": "dd1b17e2a3f4f29353beb5e6205b41af18260854b7b645fee16757be6245aa87",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "native-goal-terminal.json",
+      "bytes": 928,
+      "sha256": "6eb35779523b75d0f8289aeae4556d86f8aa4c43d7d586caf8c5d84614a76bc7",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "assignment.md",
+      "bytes": 8397,
+      "sha256": "61ccb556c414a54b8882615b300cf5edacc2a1c4b6f683969552b91158458d22",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "input-map.json",
+      "bytes": 6180,
+      "sha256": "2ae075a708a0aa7f6ed04e6fb8fb97f0819da81d2de11a4df1eba9ccb4d3393e",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "freeze.json",
+      "bytes": 9818,
+      "sha256": "657ef1f0ac242160d7f089a2efd9af5ea96531bdac77da312a481ad9ec385317",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "request.json",
+      "bytes": 9095,
+      "sha256": "5a5cf53035d13c60600b5e5ef3be68f0b16a9951193c6ab95775f2fd0216ab24",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 12335,
+      "sha256": "1b542bb66d5b55604f7b4763bb35c388453cb82991108c970addee9e1336d03d",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "selection.json",
+      "bytes": 3136,
+      "sha256": "770b7811283ac5275e3868cb8fff06ca598f037ce1848267f865da844cd9ee2c",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/brief.md",
+      "bytes": 720,
+      "sha256": "8c8b7a9ee9f5d4c409f6f33cb33db26a5fcd2cce6e8f68864d3d952d5cff71c5",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "inputs/B04-P01/plan.md",
+      "bytes": 644,
+      "sha256": "19d508bdaa4d1fec47c8986e939fefe1c1481afa151f59435b31773b7ff3958f",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "inputs/B04-P01/draft.md",
+      "bytes": 3387,
+      "sha256": "24c04fc3bdbf8276622b00860513ad64aef90fbd9a62f5c534e29dc06f2d70a4",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "inputs/B04-P01/source-index.json",
+      "bytes": 10435,
+      "sha256": "b2b35225fa3a0e7b74d352a9005fd0fad924a142acd5d6dccb2d29fdcd1177e6",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/critique-compact.md",
+      "bytes": 1954,
+      "sha256": "c78656b6f236d8fb4aed4ba2b9e01cef0f0c10fd234023acf60c56cf1e6fa247",
+      "verification": "MATCH",
+      "read_scope": "complete scientific prose"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Doc/library/os.rst",
+      "bytes": 202500,
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "verification": "MATCH",
+      "read_scope": "full byte verification and consequential context review"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Doc/library/shutil.rst",
+      "bytes": 35285,
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "verification": "MATCH",
+      "read_scope": "full byte verification and consequential context review"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Lib/shutil.py",
+      "bytes": 57463,
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "verification": "MATCH",
+      "read_scope": "full byte verification and consequential context review"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Lib/test/test_shutil.py",
+      "bytes": 143522,
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "verification": "MATCH",
+      "read_scope": "full byte verification and consequential context review"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N1.txt",
+      "bytes": 4499,
+      "sha256": "77594c0700d6bc222e371b1ffe52530078b6cec1414efd74e5a3d26b3eb8c340",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N2.txt",
+      "bytes": 5177,
+      "sha256": "bf38b682b8ec75b623dd9e621e7facf9dcda3a646517eabc6551289537eb4133",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N3.txt",
+      "bytes": 4349,
+      "sha256": "ba057ccaec4dbf119d346a76e4fdd9faf61c1af115a5fb65d6a89ba45a175515",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N4.txt",
+      "bytes": 3752,
+      "sha256": "535e8fb625902ad80037bc9dce949e91537ef34c32b6428cf8eff8773af4adca",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N1.txt",
+      "bytes": 3829,
+      "sha256": "17f4a1f0715ac1c3237069fd6378a646c4a5f1e629c2e6ec9c9b822d2358257e",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N2.txt",
+      "bytes": 4467,
+      "sha256": "c3c467adea0cc46120cbf2a4fe604ae8d465fc48c5f09e3631c6689ce5ea07fb",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N3.txt",
+      "bytes": 3839,
+      "sha256": "552341dc4bc9aeaaaa9da1106e0e21beb0d778abcf24ff3ab5b96e2b5f3192fe",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N1.txt",
+      "bytes": 4638,
+      "sha256": "599f1e8e30e97a2f8134fbcded6b6a07b226affb0465ff43d1406d037678bb84",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N2.txt",
+      "bytes": 4491,
+      "sha256": "d50408ff51d1bdf0428f770b3abf27c990c4c466a332de8d1333f0b9a1235b89",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N3.txt",
+      "bytes": 4709,
+      "sha256": "4ccd510a3c81917eec3be38dcb5dda63eb75fecb3a9a2ea9da8854098193e955",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S4-N1.txt",
+      "bytes": 4527,
+      "sha256": "86009607e7abf077b2bbe17b7ac9dcfbafb779984c1e245f61e15e18d7ea8a5c",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S4-N2.txt",
+      "bytes": 3049,
+      "sha256": "06afbc47b8c1a46f8c442739ba1de2fa8a9310df072d453be6a2f2126ea9d8f9",
+      "verification": "MATCH",
+      "read_scope": "complete structured record or neighborhood"
+    }
+  ],
+  "task_terminal_receipt_path": "ER13_RUNTIME/state/dispatcher-v1/arms/B04-P01-treatment/component-terminal-task.raw.json",
+  "task_terminal_receipt_sha256": "280720ce5c41baa9cab845fb44a68f472a25476271472ec22188c77ef4583838",
+  "status": "completed",
+  "hasPendingChildRuns": false,
+  "native_create_sha256": "dd1b17e2a3f4f29353beb5e6205b41af18260854b7b645fee16757be6245aa87",
+  "native_terminal_sha256": "6eb35779523b75d0f8289aeae4556d86f8aa4c43d7d586caf8c5d84614a76bc7",
+  "same_native_goal_fields_match": true,
+  "independent_session_linkage": "UNKNOWN beyond supplied exact objective and receipt custody",
+  "private_routing_and_counters": "Not reproduced"
+}

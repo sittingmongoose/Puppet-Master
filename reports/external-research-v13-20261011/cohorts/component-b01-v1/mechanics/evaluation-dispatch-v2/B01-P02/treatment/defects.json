@@ -1,0 +1,90 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B01-P02-treatment",
+  "original": true,
+  "defects": [
+    {
+      "id": "T-S01",
+      "dimension": "partial_source_assessment",
+      "severity": "MATERIAL",
+      "family": "extra_field_name_pipeline",
+      "axes": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "finding": "The partial proposal omits the effective-name Unicode extra-field override and does not substantiate its NUL rejection through the stated field checks.",
+      "candidate_locator": "final.md: Extraction and validation; Preview and decoded-name policy; criticism-dispositions.md C1/C4 and source-map.json name claims",
+      "reason": "The stated fields can both equal safe.txt even when the authoritative 0x7075 name is safe.txt\\u0000hidden: _decodeExtra sanitizes it after ZipInfo saved the header-derived original. The proposal directs inspection of orig_filename and filename, never the raw Unicode-extra name, and presents UTF-8/CP437/metadata_encoding as the effective-name policy. The missing governing branch defeats the stated original-name/NUL constraint.",
+      "sources": [
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L355-L408",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L523-L566",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1485-L1518",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py#L1605-L1714",
+        "https://github.com/python/cpython/blob/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py#L1838-L1874"
+      ],
+      "evidence": "evidence/name-pipeline-witness.stdout.json",
+      "decisive": true,
+      "limit": "Applies to available partial science only; complete-final judgment stays UNASSESSED. No application exploit or universal failure claimed.",
+      "evidence_sha256": "6d906edc483ab0a818a26122a8b522e18f9b431681bb6a6ef7a634846716e04b"
+    },
+    {
+      "id": "T-P01",
+      "dimension": "partial_source_assessment",
+      "severity": "MATERIAL_PRESERVATION",
+      "axes": [
+        1,
+        4,
+        5
+      ],
+      "finding": "Supported rejection of unexpected content becomes warning-only classification without a recorded reason.",
+      "candidate_locator": "draft.md: Integrity and resources; final.md: Integrity and resources and Preview and decoded-name policy; criticism-dispositions.md C4h",
+      "reason": "The draft requires rejecting unexpected content after a bounded probe; the plan requires content validation. The partial final says sniffing may warn/flag mismatch and copies bytes, without making an obvious content mismatch fail eligibility/import. Avoiding a safety certification is justified, but silently weakening reject to warn is not. C4h labels the control KEEP and gives no amend/reject disposition for this loss.",
+      "governing_evidence": [
+        "inputs/B01-P02/draft.md",
+        "inputs/B01-P02/plan.md",
+        "inputs/B01-P02/critique.md"
+      ],
+      "decisive": false,
+      "limit": "Numeric limits and the unknown type allowlist are not penalized; the loss concerns the stated mismatch response."
+    },
+    {
+      "id": "T-M01",
+      "dimension": "method_compliance",
+      "severity": "MATERIAL_METHOD_FAILURE",
+      "finding": "Frozen amendments and assembler are newer than the sole executed assembly record; the assigned final is not their assembled result.",
+      "candidate_locator": "amendments.json, assemble.py, assembly-results.json, final.md",
+      "reason": "The result final hash matches final.md and its recorded intervals reconstruct it, but the result amendment/script hashes do not match the frozen files. Static replay with the current append produces a different final; no refreshed result is frozen. All retained intervals are headings/whitespace; no substantive unchanged draft prose is retained, so the intended retention mechanism is not demonstrated by this all-paragraph replacement.",
+      "evidence": "evidence/artifact-audit.json",
+      "coverage": "COMPLETE for frozen hash/interval consistency; author execution/process unobserved",
+      "decisive": false,
+      "evidence_sha256": "d16769324550c5a65d59af7f2faa0e8e8f10d8ccc571d9c30d55fc317dff913a"
+    },
+    {
+      "id": "T-D01",
+      "dimension": "delivery_and_time",
+      "severity": "ORIGINAL_FAILURE",
+      "finding": "Interrupted capped original has no native terminal receipt; complete delivery/native/time qualification is unavailable.",
+      "candidate_locator": "exact interrupted task receipt and failure-qualified notification",
+      "reason": "A partial final, dispositions and map exist and were read in full. Their presence and any partial source merit do not establish completion. The interruption is terminal with hasPendingChildRuns=false. Original deadline failure remains unchanged.",
+      "coverage": "UNASSESSED for missing native completion and any final post-correction reassembly",
+      "decisive": false
+    },
+    {
+      "id": "T-T01",
+      "dimension": "source_assessment",
+      "severity": "NONMATERIAL_TRACEABILITY",
+      "finding": "Some final_claim_map evidence IDs are not declared locator IDs.",
+      "candidate_locator": "source-map.json: final_claim_map versus sources locators",
+      "reason": "S2-L1485-L1514, S2-L355-L408 and S2-L1831-L1852 are not declared source locator IDs. The exact links occur in the final and larger source ranges cover them, so the claims remain recoverable.",
+      "decisive": false
+    }
+  ],
+  "not_findings": [
+    "No blanket ZIP ban, future test nonexecution, unchosen numeric limits or unknown user workload is itself a defect.",
+    "No grade inferred from citation counts, byte retention counts or route labels."
+  ],
+  "dispute_rule": "A dispute requires a NEW separate adjudication preserving this original, the brief, findings, responses and unresolved objections; no repairs or repeated graders until PASS."
+}

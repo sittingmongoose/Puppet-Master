@@ -1,0 +1,22 @@
+# Criticism dispositions — B01-P01 control
+
+All material items in the shared source-backed critique are disposed below. Source IDs resolve through source-map.json. Upstream source files were inspected; no application or upstream test was run.
+
+## C1 — CHANGE: pacing contract
+**Decision: accept and amend.** The draft said a 50 ms sleep spaces every successful page batch. That is false for the pinned CPython implementation: it sleeps only after SQLITE_BUSY or SQLITE_LOCKED; SQLITE_OK loops immediately [S2-N1/S2-N2]. CPython documents pages as pages per step and sleep between attempts, but makes no fixed throughput or GUI scheduling promise [S1-N1]. The final rewrite removes the rate promise, proposes worker/callback progress, provisional values, and measured page-size tuning. The candidate 64-page size is explicitly unvalidated.
+
+## C2 — CHANGE: progress and cancellation
+**Decision: accept and amend.** Upstream CPython test_modifying_progress commits a source write in the callback and observes remaining values 1, 1, 0 [S3-N2]. SQLite documents that same-handle writes update the destination, while other-handle/process writes usually restart a step; sufficiently frequent restarts may prevent completion. Progress values reflect previous steps and may be stale [S4-N2]. The rewrite removes monotonicity and fixed-total claims, permits regressions, and labels counts provisional. It proposes routing in-app writes through the backup worker's source connection; this architecture and its pending-save latency must be validated. External writers remain a starvation risk.
+
+Callback-exception cancellation is retained conditionally. The pinned implementation calls sqlite3_backup_finish when the callback raises [S2-N1], and an upstream test asserts propagation [S3-N3]. This is not an end-to-end test of UI event timing, DB handle closure, file cleanup, or cancellation latency. The rewritten promise is cooperative cancellation at a callback boundary.
+
+## C3 — CHANGE: database and external attachments
+**Decision: accept and amend.** SQLite's online backup material concerns the database, not a transaction spanning files outside SQLite [S4-N1]. The draft's claim that the DB snapshot automatically freezes attachments is unsupported. Digests verify bytes against expected digests but do not prove that those files are the generations referenced by the copied DB.
+
+The rewrite requires immutable application-owned attachment generations, an interprocess reclamation interlock, durable per-generation pins acquired before releasing the broad interlock, streaming hashes, exact DB-reference/manifest comparison, and restore checks. These are design recommendations, not documented SQLite features. They cost temporary storage and need crash, low-space, cross-process, and garbage-collection tests. If the actual schema stores mutable paths or cannot safely pin generations, that work is a release prerequisite.
+
+## C4 — KEEP/CONDITION: sound choices, alternatives, and history
+**Decision: keep with conditions.** Retain online backup for live DB data [S1-N1, S4], bounded-memory file streaming, worker-owned connections, cancellation, no-overwrite behavior, staged cleanup, explicit failure messages, privacy limits, and restore into a new workspace. Keep rejection of copying only the open main DB file: committed WAL content may be in a separate file [S5], while SQLite's historical locked-copy method blocks writers and warns about crash corruption [S4-N1]. A stopped-app copy is conditionally valid only with closed connections and a tested complete file-set policy; it conflicts with uninterrupted editing. WAL mode itself is supported, not rejected. Keep logical SQL export as optional: it yields SQL-source iterator lines [S1-N2], but needs a stable read boundary, restore/encoding policy, and attachment handling. Preserve the original investigation history and explicitly state that upstream tests were inspected, not run.
+
+## Coverage
+C1 covers successful-step pacing. C2 covers progress changes, restart behavior, callback cancellation, and test status. C3 covers the cross-resource consistency boundary, lifecycle, restore, and uncertainty. C4 covers alternatives, WAL, memory, worker, collisions, privacy, failures, restore, and history.

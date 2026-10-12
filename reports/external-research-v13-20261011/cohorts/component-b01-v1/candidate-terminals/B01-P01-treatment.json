@@ -1,0 +1,18 @@
+{
+  "original_terminal_sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d",
+  "fields": {
+    "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-treatment-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-treatment-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-component-B01-P01-treatment-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer13-component-B01-P01-treatment-v1",
+    "status": "interrupted",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%253Adelegate-task%253Aer13-component-B01-P01-treatment-v1:ordinal:1",
+    "latestTerminalStatus": "interrupted",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "waitTimedOut": false
+  },
+  "scope": "Exact original capped/completed attempt, not rescued or replaced; no new execution."
+}

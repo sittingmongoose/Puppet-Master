@@ -1,0 +1,1046 @@
+{
+  "scope": "retained frozen independent-evaluator primary evidence and original authored indexes only",
+  "files": [
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/control/primary-source-index.json",
+      "original_private_sha256": "bb4e24fba444b044de747b52567cbb8f7add52bfa00357cbf0a3cf40c4fb6895",
+      "public_sha256": "a2ab160ea458db1ee2b348051b8f16a0d6d586fbef4f5a3423b3f90a647a83a9",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/LICENSE",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/LICENSE",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-eventloop.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-eventloop.rst.txt",
+      "original_private_sha256": "b233905d93e342bd0f1cde5e8418f4c3fe1ee6e063fa18bffaa507f02d5e2dc3",
+      "public_sha256": "b233905d93e342bd0f1cde5e8418f4c3fe1ee6e063fa18bffaa507f02d5e2dc3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-platforms.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-platforms.rst.txt",
+      "original_private_sha256": "fb090603b1a005250eec9ad1a2c9f10244c93bfc8f47e5340b578d6980954807",
+      "public_sha256": "fb090603b1a005250eec9ad1a2c9f10244c93bfc8f47e5340b578d6980954807",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-protocol.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-protocol.rst.txt",
+      "original_private_sha256": "95976dc86816113560e0a13d0f10a96e9c4e9f8c526830d0daedf03f1587496a",
+      "public_sha256": "95976dc86816113560e0a13d0f10a96e9c4e9f8c526830d0daedf03f1587496a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-subprocess.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-subprocess.rst.txt",
+      "original_private_sha256": "7da45efaff0b1223dd2a8b4b75859c232a80829b9821547078b5916b85dd4eb1",
+      "public_sha256": "7da45efaff0b1223dd2a8b4b75859c232a80829b9821547078b5916b85dd4eb1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-task.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/asyncio-task.rst.txt",
+      "original_private_sha256": "62b60d31d575041c2101ed87cf7c980a99515fbeb665614857b794884083ddb5",
+      "public_sha256": "62b60d31d575041c2101ed87cf7c980a99515fbeb665614857b794884083ddb5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/subprocess.rst.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Doc/library/subprocess.rst.txt",
+      "original_private_sha256": "29067b3c6799e991dfb8716206c9ba080d08538930228737f41168e0a8619d9e",
+      "public_sha256": "29067b3c6799e991dfb8716206c9ba080d08538930228737f41168e0a8619d9e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Include/patchlevel.h.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Include/patchlevel.h.txt",
+      "original_private_sha256": "98e21d97a3dc2e98cc17d312905ab6d882227122218e70cd40120ca5507d6dad",
+      "public_sha256": "98e21d97a3dc2e98cc17d312905ab6d882227122218e70cd40120ca5507d6dad",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_events.py.complete-callers.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_events.py.complete-callers.txt",
+      "original_private_sha256": "7cf766cd0072abcca318c3c14fdd4cf23f2ba38a5f1beaafef769b475fdc13da",
+      "public_sha256": "7cf766cd0072abcca318c3c14fdd4cf23f2ba38a5f1beaafef769b475fdc13da",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_subprocess.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/base_subprocess.py.txt",
+      "original_private_sha256": "cee75b2f860fd50d678db7c0602b52b5f99ef256e754055c23679795693b7d45",
+      "public_sha256": "cee75b2f860fd50d678db7c0602b52b5f99ef256e754055c23679795693b7d45",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/streams.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/streams.py.txt",
+      "original_private_sha256": "89880473e6293919a8bce112a5083a0553fa463c6530895ed7b03df19eaec2d2",
+      "public_sha256": "89880473e6293919a8bce112a5083a0553fa463c6530895ed7b03df19eaec2d2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/subprocess.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/subprocess.py.txt",
+      "original_private_sha256": "15b356061057ff942e06b19ad1cc2ec6d5d7a27b61f7b5ef02cc87f8d5bdcd17",
+      "public_sha256": "15b356061057ff942e06b19ad1cc2ec6d5d7a27b61f7b5ef02cc87f8d5bdcd17",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/tasks.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/tasks.py.txt",
+      "original_private_sha256": "f254f8d1e7ec7c15c7275bdf077bc8004019c3531c6c7b5120b87630c99d91c2",
+      "public_sha256": "f254f8d1e7ec7c15c7275bdf077bc8004019c3531c6c7b5120b87630c99d91c2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/timeouts.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/timeouts.py.txt",
+      "original_private_sha256": "bfc82e3421caa86dc08c466fedf81dbd48e8f40948a4c84b393f9aed3556e871",
+      "public_sha256": "bfc82e3421caa86dc08c466fedf81dbd48e8f40948a4c84b393f9aed3556e871",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/transports.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/transports.py.txt",
+      "original_private_sha256": "a24abcb1fd8c985214b0aad13780dbc16b78a7e08797e1e4bc84aafda901778c",
+      "public_sha256": "a24abcb1fd8c985214b0aad13780dbc16b78a7e08797e1e4bc84aafda901778c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/unix_events.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/unix_events.py.txt",
+      "original_private_sha256": "0e0073452856953d947c2db0b340b852bcfa23f42d7ad91e3a4606046e1fcc72",
+      "public_sha256": "0e0073452856953d947c2db0b340b852bcfa23f42d7ad91e3a4606046e1fcc72",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_events.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_events.py.txt",
+      "original_private_sha256": "094b939f224ea210b0847fec87e16ab8f9226cf2fa02407808dedf454c5fe20e",
+      "public_sha256": "094b939f224ea210b0847fec87e16ab8f9226cf2fa02407808dedf454c5fe20e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_utils.py.complete-callers.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/asyncio/windows_utils.py.complete-callers.txt",
+      "original_private_sha256": "c0969e223498f2da5c8f0a36a3cdf3758687a295f77123528170fbe9d04b297c",
+      "public_sha256": "c0969e223498f2da5c8f0a36a3cdf3758687a295f77123528170fbe9d04b297c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.complete-callers.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.complete-callers.txt",
+      "original_private_sha256": "042cecb4609851c95ba9b806864ae224b171cdbb2108693ab30deefb4252b601",
+      "public_sha256": "042cecb4609851c95ba9b806864ae224b171cdbb2108693ab30deefb4252b601",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/subprocess.py.txt",
+      "original_private_sha256": "96c4b8f644ebdee41d08ec3bb7dfc72a59191f437a3266a791c3c8fbb828b3b3",
+      "public_sha256": "96c4b8f644ebdee41d08ec3bb7dfc72a59191f437a3266a791c3c8fbb828b3b3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/test/test_asyncio/test_subprocess.py.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/contexts/Lib/test/test_asyncio/test_subprocess.py.txt",
+      "original_private_sha256": "a648b41a04742d5aaa3918b7e2b61cd7a0dc291761c31c31ac27f87873fb0018",
+      "public_sha256": "a648b41a04742d5aaa3918b7e2b61cd7a0dc291761c31c31ac27f87873fb0018",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix117996.patch",
+      "original_private_sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d",
+      "public_sha256": "f157c413e1432cc938742f069f7a161f5ecacc03cd17269333ccffbcf14f4f9d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-context.json",
+      "original_private_sha256": "0e0ed89a502cc2950e2e907da228f7c148269a5b5bb4c63486522d74afa0fe1e",
+      "public_sha256": "0e0ed89a502cc2950e2e907da228f7c148269a5b5bb4c63486522d74afa0fe1e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-record.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix32073-merged-record.json",
+      "original_private_sha256": "fddd3a434c9c097e1277c34efe4e5675c6ba849caa0546791d1b0090c280d4d2",
+      "public_sha256": "fddd3a434c9c097e1277c34efe4e5675c6ba849caa0546791d1b0090c280d4d2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix97951-merged-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/fix97951-merged-context.json",
+      "original_private_sha256": "5a8ac65ca75d33a11c7481561d75bcfa1d5536d82abc08b33b4491196df21805",
+      "public_sha256": "5a8ac65ca75d33a11c7481561d75bcfa1d5536d82abc08b33b4491196df21805",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/history-retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/history-retrieval-index.json",
+      "original_private_sha256": "650440dc7fe40e43deb3684969dde0f8291a0d73c76e457c24b9c7da27e62cf0",
+      "public_sha256": "ce880c3bff2528ea65751baf5cbbdc5840105e0e4e88509b61e3422ff6162fea",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue114539.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue114539.json",
+      "original_private_sha256": "f46dddea5976ea8ae937b88190042dd9cdd1dd9a52b43529b4a63625c6cf1f57",
+      "public_sha256": "f46dddea5976ea8ae937b88190042dd9cdd1dd9a52b43529b4a63625c6cf1f57",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue67329.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue67329.json",
+      "original_private_sha256": "de1530431565cdecce28021779bd82c715c758d0b8d69263c4d742dd69fe7198",
+      "public_sha256": "de1530431565cdecce28021779bd82c715c758d0b8d69263c4d742dd69fe7198",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue88050.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/issue88050.json",
+      "original_private_sha256": "b8a7f0d4c46a1c61b7fbb8a648e12117b6fdbf0849e96e77aacfd97eb7e92b8d",
+      "public_sha256": "b8a7f0d4c46a1c61b7fbb8a648e12117b6fdbf0849e96e77aacfd97eb7e92b8d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/manifest.json",
+      "original_private_sha256": "b71db0b378e43f499f39a799d0f05f43a5bb62829995c54381ebf7405e87d40b",
+      "public_sha256": "73a3d71a95b5dfd497d2b8b4d5f551ffbfb474eba0731c4ba3f9de2a7280362c",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/retrieval-index.json",
+      "original_private_sha256": "85f868372f45e8b6b7b84bffdcc5a646e172001636f1cf19bb9c9a9b9ff0b2a3",
+      "public_sha256": "259e69fc8635214fdc9a3dba762fa4f7f4127e80b6c09b2fb39cb7aa4c9762a8",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/web-observations.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/evidence/web-observations.json",
+      "original_private_sha256": "f5cd0f95285b266642a7d76e4192ffc9b5645ff1f51b3d1da05d643824d5bf0a",
+      "public_sha256": "f5cd0f95285b266642a7d76e4192ffc9b5645ff1f51b3d1da05d643824d5bf0a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "11025dc110d58ad5a3f2d3b07337fbb6d71b5e50c1e15862290f5f73a5036f95",
+      "public_sha256": "6506af19446d4c95b425cbcc14bdd3493582f39f95ea154ddae87cf48623a255",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/CPYTHON-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/CPYTHON-LICENSE.txt",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/input-audit.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/input-audit.json",
+      "original_private_sha256": "9a6269bb4c4e1080b771e635b33c681dd11c9fb6a347c85abc416da0a14c6b4c",
+      "public_sha256": "b00b880558abb3b517efbb75a8eb3aefa2d311139211611ce6b75676b4ebc20b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/control/evidence/primary-context.json",
+      "original_private_sha256": "ad59a1c359f814f7eb5c874098da9904d9b86c624cd21fe5a0cfb64390d5012a",
+      "public_sha256": "ad59a1c359f814f7eb5c874098da9904d9b86c624cd21fe5a0cfb64390d5012a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/control/primary-source-index.json",
+      "original_private_sha256": "f83bfefd7bb5dbe43a38f6fba1c4dc5489a469715c812568d13319a493bd4c5f",
+      "public_sha256": "f83bfefd7bb5dbe43a38f6fba1c4dc5489a469715c812568d13319a493bd4c5f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/CPYTHON-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/CPYTHON-LICENSE.txt",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/input-audit.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/input-audit.json",
+      "original_private_sha256": "3d29953c85c7ac8fd5ae27f7caedc2638ca44abe6e4702ccc17a3c0e0027ee43",
+      "public_sha256": "529f4e9b31550a00d49d1d054872e836713d4fa4a53d97739ede802c92c78bcc",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/treatment/evidence/primary-context.json",
+      "original_private_sha256": "ad59a1c359f814f7eb5c874098da9904d9b86c624cd21fe5a0cfb64390d5012a",
+      "public_sha256": "ad59a1c359f814f7eb5c874098da9904d9b86c624cd21fe5a0cfb64390d5012a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B05-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "cc0c73602ada7666bdf9d623dba829db2031fa872e86393a1d4be5d23ee0ced9",
+      "public_sha256": "cc0c73602ada7666bdf9d623dba829db2031fa872e86393a1d4be5d23ee0ced9",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L1-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L1-primary-context.json",
+      "original_private_sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "public_sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L2-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/L2-primary-context.json",
+      "original_private_sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "public_sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P1-Doc-library-shutil.rst.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P1-Doc-library-shutil.rst.json",
+      "original_private_sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "public_sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P10-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P10-primary-context.json",
+      "original_private_sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30",
+      "public_sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P2-Lib-shutil.py.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P2-Lib-shutil.py.json",
+      "original_private_sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686",
+      "public_sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P3-Lib-test-test_shutil.py.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P3-Lib-test-test_shutil.py.json",
+      "original_private_sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7",
+      "public_sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P4-Doc-library-os.rst.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P4-Doc-library-os.rst.json",
+      "original_private_sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2",
+      "public_sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P5-Modules-_winapi.c.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P5-Modules-_winapi.c.json",
+      "original_private_sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "public_sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P6-Modules-posixmodule.c.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P6-Modules-posixmodule.c.json",
+      "original_private_sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03",
+      "public_sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P7-LICENSE.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P7-LICENSE.json",
+      "original_private_sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305",
+      "public_sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P8-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P8-primary-context.json",
+      "original_private_sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e",
+      "public_sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P9-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/P9-primary-context.json",
+      "original_private_sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628",
+      "public_sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W1-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W1-retrieval.json",
+      "original_private_sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac",
+      "public_sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W2-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W2-retrieval.json",
+      "original_private_sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8",
+      "public_sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W3-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W3-retrieval.json",
+      "original_private_sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee",
+      "public_sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W4-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/W4-retrieval.json",
+      "original_private_sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3",
+      "public_sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/governing-instructions.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/governing-instructions.json",
+      "original_private_sha256": "513b676d33312bcd915c2fa949229914c826ff34c62fd49aa77b56ca086926f3",
+      "public_sha256": "5aaab1d967dec89fdf58c654e005e784487714e6d9a576b9fcb17bcf108da0a1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/evidence/input-verification.json",
+      "original_private_sha256": "3e1ab6cdc5c6fd16e7ceb067353d8a867696355c43fade8614a1dc451cf6c4bf",
+      "public_sha256": "8a0af5209182ae23ecde5abbd15f8391375c50facc3e6e974ac792837a687e9b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/control/primary-source-index.json",
+      "original_private_sha256": "f7da89de36b5e9296a1741f8b40f9af50f40682452beb372f8eb21053cd560fe",
+      "public_sha256": "f7da89de36b5e9296a1741f8b40f9af50f40682452beb372f8eb21053cd560fe",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L1-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L1-primary-context.json",
+      "original_private_sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "public_sha256": "1921f730a0e6ca499950399187045ee9a126f0c62c9739acd6fe0be1471a61ba",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L2-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/L2-primary-context.json",
+      "original_private_sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "public_sha256": "1183c6a073936039c64ce7ffff7a0c0b561d6fae803adaf309eb9959478d0a70",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P1-Doc-library-shutil.rst.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P1-Doc-library-shutil.rst.json",
+      "original_private_sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "public_sha256": "385185c01ad4fd87e29d34357cc8e8e46888121841b7f7a768f97c033a6533bd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P10-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P10-primary-context.json",
+      "original_private_sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30",
+      "public_sha256": "fbc6db2083b6c58bd295f025f797774e6b88b2bed90cf3b81dcf294f425d6c30",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P2-Lib-shutil.py.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P2-Lib-shutil.py.json",
+      "original_private_sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686",
+      "public_sha256": "bf73d71dd86ccd96161e92318d41eed18bcb2e3fdf1f106886a59004380e8686",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P3-Lib-test-test_shutil.py.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P3-Lib-test-test_shutil.py.json",
+      "original_private_sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7",
+      "public_sha256": "0ce1befb6b2adc21cc1145c55ab8d96f3dd94199e2c11b5d3c4b1f01e6504cf7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P4-Doc-library-os.rst.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P4-Doc-library-os.rst.json",
+      "original_private_sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2",
+      "public_sha256": "22bf68c8b911e373ce82c6640413115b9437cb3c1ecfcd4119c486e4be32d6d2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P5-Modules-_winapi.c.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P5-Modules-_winapi.c.json",
+      "original_private_sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "public_sha256": "3463804e261ae41d814d785d20e98a610ee08a652b9ac04d159b0be34a5707b1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P6-Modules-posixmodule.c.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P6-Modules-posixmodule.c.json",
+      "original_private_sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03",
+      "public_sha256": "0d635098e6645093dc14f0a1e31ed5c799725610b4a3b8865e660b0cec1dcf03",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P7-LICENSE.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P7-LICENSE.json",
+      "original_private_sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305",
+      "public_sha256": "21add99787b32b9157fda95ae4b4e26427e6a7a77276f8d543ef5d1f91d8f305",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P8-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P8-primary-context.json",
+      "original_private_sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e",
+      "public_sha256": "2ab8638981895c9e002f49ccd6c8f3776cae5cb9e8f965d46fe3a9a023f3e21e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P9-primary-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/P9-primary-context.json",
+      "original_private_sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628",
+      "public_sha256": "6ca32eece02ff7070d13bf977a655cd0d922a37233b7ee1385a92baa094ba628",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W1-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W1-retrieval.json",
+      "original_private_sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac",
+      "public_sha256": "19249383024eeb618b39f9760cb651fd010b23c137d032a8ea4ec3b1ddfce9ac",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W2-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W2-retrieval.json",
+      "original_private_sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8",
+      "public_sha256": "da9e40964ffc9d3e338a6cab7ce0001dbae95a90712bfc6747cd2c871b10dae8",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W3-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W3-retrieval.json",
+      "original_private_sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee",
+      "public_sha256": "b09b06423178f859b9b0ec5e8fbb98016b10497a306f51fc7dd6aa94d3e659ee",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W4-retrieval.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/W4-retrieval.json",
+      "original_private_sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3",
+      "public_sha256": "9da397c06c9ec85a39cdb9ed487d013dcfc4acb6260a53f0d9604fcdf25368d3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/governing-instructions.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/governing-instructions.json",
+      "original_private_sha256": "513b676d33312bcd915c2fa949229914c826ff34c62fd49aa77b56ca086926f3",
+      "public_sha256": "5aaab1d967dec89fdf58c654e005e784487714e6d9a576b9fcb17bcf108da0a1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/evidence/input-verification.json",
+      "original_private_sha256": "beddb8ca772e820e18405728faeb33229ab4b6d6739b2954b23d3cb69e1d2236",
+      "public_sha256": "926e804d705c1610226da2d098e0bc1fa58a9b44d9038adea82d3883412a0050",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "88414e916da6eb196c2c3565d341a57e220cc4a5c562614697bf3172dc358089",
+      "public_sha256": "88414e916da6eb196c2c3565d341a57e220cc4a5c562614697bf3172dc358089",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/input-verification.json",
+      "original_private_sha256": "4b588e1f904aad5e21f84635f2f45903ea52af155586f7a17616a98f2410c09d",
+      "public_sha256": "df1ebdc5212b11725f96f5cbc3c78727cf3870dca2efe77afabd66fcc4d7a9d0",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/primary-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/control/evidence/primary-verification.json",
+      "original_private_sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd",
+      "public_sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/control/primary-source-index.json",
+      "original_private_sha256": "06f7e0ce702bfd1847ad62153bdb1be008b745f5e7035f5d1d7f40d583c1153b",
+      "public_sha256": "87eeb644c4dc0cb0c8b2aba49dd9f44c6db88c7c0c25ac749eeadf720e4a8f0c",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/input-verification.json",
+      "original_private_sha256": "4a27f64c0e4059c399fe10eb805f8d7561c21a7dd3c8a4e64480558ee9169efa",
+      "public_sha256": "9c81fe92f32458e5f0e73cffe9e3124036ed69f8d450fa1ab19ed2c8c74bd582",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/primary-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/treatment/evidence/primary-verification.json",
+      "original_private_sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd",
+      "public_sha256": "521553174ac75d72812f9d93db91a481980b825a65eeb9fc00b14e7771bff7cd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B04-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "8bb946e2fb6dff12ca3de02f494530922b4c5ccfbc4e6241468d38c133923eae",
+      "public_sha256": "cdfee4eba8372e1d8e8ff8157d2faffdfcdf1796e49ef56b5f835bbb820f7534",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/control/primary-source-index.json",
+      "original_private_sha256": "239d09e14d5f79709a109dd52a1281665117fb12a95e79747946762d8f1fbce3",
+      "public_sha256": "7e4a9960ca71ca1bbddbd9d7b2019f1d38e3d28a9dc5558cb01391cb80f63e05",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-dev.rst",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-dev.rst",
+      "original_private_sha256": "2c7f23299fcf920382e9fabe4975c0e3a276465557d453856b47585a898baab0",
+      "public_sha256": "2c7f23299fcf920382e9fabe4975c0e3a276465557d453856b47585a898baab0",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-queue.rst",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-queue.rst",
+      "original_private_sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "public_sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-task.rst",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/asyncio-task.rst",
+      "original_private_sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "public_sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/os.rst",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/os.rst",
+      "original_private_sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "public_sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/tempfile.rst",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Doc/library/tempfile.rst",
+      "original_private_sha256": "487aeabf01be281fd1e2534b326c33cca4d9fab4db1c04d32e58439c9f6346bc",
+      "public_sha256": "487aeabf01be281fd1e2534b326c33cca4d9fab4db1c04d32e58439c9f6346bc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/LICENSE",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/LICENSE",
+      "original_private_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "public_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/locks.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/locks.py",
+      "original_private_sha256": "30d7fefb52f26494dd9e98fb2595205ae0a8aef0ef53e11b17b2c59f06c6b861",
+      "public_sha256": "30d7fefb52f26494dd9e98fb2595205ae0a8aef0ef53e11b17b2c59f06c6b861",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/mixins.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/mixins.py",
+      "original_private_sha256": "8f4a3e16eca845ebfba422550cbcee7340ec8166d2bff6b750a8ed0de6b9ae3c",
+      "public_sha256": "8f4a3e16eca845ebfba422550cbcee7340ec8166d2bff6b750a8ed0de6b9ae3c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/queues.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/asyncio/queues.py",
+      "original_private_sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "public_sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/tempfile.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/tempfile.py",
+      "original_private_sha256": "7149355dfc2ccbd82a9b3614c7710f2c92bc7ab06440e7f427766481638a1528",
+      "public_sha256": "7149355dfc2ccbd82a9b3614c7710f2c92bc7ab06440e7f427766481638a1528",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/test/test_asyncio/test_queues.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/Lib/test/test_asyncio/test_queues.py",
+      "original_private_sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "public_sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/input-verification.json",
+      "original_private_sha256": "5c90e51e9943a85c6815e8b56a6e616587cf736d736c67e4f149aea5b703d700",
+      "public_sha256": "953b2df9cae60f5ca082b4762c9a6889c81557c8892a073f5e2d7a2a8e439e3f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-117531.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-117531.json",
+      "original_private_sha256": "177c0d97eab26f7465c50585072f8664e2bce96610b2304ba4508db674611ede",
+      "public_sha256": "177c0d97eab26f7465c50585072f8664e2bce96610b2304ba4508db674611ede",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-152614.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-152614.json",
+      "original_private_sha256": "fc6ca0e9ca0735412bb63aee38f5faba0038496186d637a627488e31f9945e71",
+      "public_sha256": "fc6ca0e9ca0735412bb63aee38f5faba0038496186d637a627488e31f9945e71",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-96471.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/issue-96471.json",
+      "original_private_sha256": "df4fd3c30e48ab1f6cba8081b284bc5f2dcd0be62aefa6961372ae0b6cfb22a1",
+      "public_sha256": "df4fd3c30e48ab1f6cba8081b284bc5f2dcd0be62aefa6961372ae0b6cfb22a1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104228.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104228.json",
+      "original_private_sha256": "5319eab22131da5f7d07112c4a0efca0e5eb42b6e9bc29e9792b7422b1009bec",
+      "public_sha256": "5319eab22131da5f7d07112c4a0efca0e5eb42b6e9bc29e9792b7422b1009bec",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104750.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-104750.json",
+      "original_private_sha256": "9452e080635ad18f2b08e8b812585019a83f863c3f480a4fc570004356ccfe70",
+      "public_sha256": "9452e080635ad18f2b08e8b812585019a83f863c3f480a4fc570004356ccfe70",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-117532.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/pr-117532.json",
+      "original_private_sha256": "27d41c26872471d0035a7796d4db3ce40f48fb9bea242ef1724ee1f62ab20011",
+      "public_sha256": "27d41c26872471d0035a7796d4db3ce40f48fb9bea242ef1724ee1f62ab20011",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/retrieval-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/retrieval-index.json",
+      "original_private_sha256": "ab7b5fc37646c1c71c79baa34d42aba6cb3acfca1ed073ae8c2d3459757f6d83",
+      "public_sha256": "02aa30616ad87539f99ef3885381dcf05c8d27d8d572265aa5035de3787333c8",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-object.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-object.json",
+      "original_private_sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "public_sha256": "d3132936ee305886507ffbe6c1192e501423b95f353945a0ceda4413d0c1541e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-ref.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/tag-ref.json",
+      "original_private_sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1",
+      "public_sha256": "fbb120323a16c94a66064db4e6e4758adcb301d2651b60fca47b23736bd37be1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/evidence/witness-replay.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/evidence/witness-replay.json",
+      "original_private_sha256": "2d76a67a2fab97ae4721ab7a9b3dd222eed8234f8d3ef0e5041dbdc106ec5c7c",
+      "public_sha256": "5108ecf338c7c455244efb402e243f3b406abf1aac4b916c0b7ae459c9bed39d",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "08ed305aa2d6186cba1cea81a00da5650f33f14ae5bdae0d98c29ff9d77e1117",
+      "public_sha256": "63d38f60fbd9b2ca0ab258e918b38063c5a322fa4d6c319dfa38a8c3a7c982a1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/SOURCE-LICENSES.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/SOURCE-LICENSES.txt",
+      "original_private_sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67",
+      "public_sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/cpython-consequential-context.json",
+      "original_private_sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "public_sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/execution-record.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/execution-record.json",
+      "original_private_sha256": "8d2a01396f5be4c5781b4d32c2bdaf81c8effe58b9b9a65b83697723d718617b",
+      "public_sha256": "02339afe55c92c00e50c6d32fc15dd451204da9be6f4e37af7759f62c15a594a",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.py",
+      "original_private_sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570",
+      "public_sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stderr.txt",
+      "original_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/independent-oracle.stdout.json",
+      "original_private_sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f",
+      "public_sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/input-verification.json",
+      "original_private_sha256": "40fe32a93ca4b066380bb37ceb10d40a747e23e4114e232cd4e2c05786c633b7",
+      "public_sha256": "e21e43b2571eaf74c332e11299fbc24c7777839269af785b4e901c7b750c3427",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/oracle-input.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/oracle-input.json",
+      "original_private_sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15",
+      "public_sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/ucd-consequential-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/evidence/ucd-consequential-context.json",
+      "original_private_sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838",
+      "public_sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/control/primary-source-index.json",
+      "original_private_sha256": "703cb9ff3eb0ff46b8ef40764f58af6397480207b93f5334d1ae90277a6498e4",
+      "public_sha256": "488b7ce4cc43ae599a452a51c9f6199aca3145c328726737681be7465d4ca957",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/SOURCE-LICENSES.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/SOURCE-LICENSES.txt",
+      "original_private_sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67",
+      "public_sha256": "17954f1673da9cd8047b9152b53476ca02c6f897ac450bfd4c5974fa7df2fe67",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/cpython-consequential-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/cpython-consequential-context.json",
+      "original_private_sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "public_sha256": "3714e3345e0761050c58f554ec2674679652d04d30e9a0a04b7a72b654ef8cf5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/execution-record.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/execution-record.json",
+      "original_private_sha256": "28837e9723052aa1014bbf5a8545336c980cd059d4d242e4d6b0c90cc150d3fd",
+      "public_sha256": "8f65fd4e454e7728b95a38cafeb76db6162d61bf1320c4b4e216e3d5f5820372",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.py",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.py",
+      "original_private_sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570",
+      "public_sha256": "5c83f8a74ba9077ce54fe7124c3d284b7f1eb7793aae1f231757e8e67cfe7570",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stderr.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stderr.txt",
+      "original_private_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stdout.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/independent-oracle.stdout.json",
+      "original_private_sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f",
+      "public_sha256": "f497565534df785ac07ce933a388849f6ea019d05ecb203b573d8d27d975d61f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/input-verification.json",
+      "original_private_sha256": "8be5d8a20b4a0b632f3dc28fba1cd62963756bb9138d808b715330be13280a9f",
+      "public_sha256": "3beb1b1a04c9e311fd990606cedbfb4a6046c03900ca3f32995e435cf0030d14",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/oracle-input.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/oracle-input.json",
+      "original_private_sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15",
+      "public_sha256": "7be6e78f89189ab5b2c8b4ce64ca9d3cad68751f8fbad8a9df7681b83f8f9b15",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/ucd-consequential-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/evidence/ucd-consequential-context.json",
+      "original_private_sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838",
+      "public_sha256": "1c6f02d9fd5c72d28698d2373c17ffc752bcd063bc72f925f4e695e57bde3838",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B08-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "f12a0b03750a9dbef1ec700628c4e0a3e7987633b093c891f58814fe3f2ae282",
+      "public_sha256": "c557b8b833334a8111e1d1eb002c7651a7f06c602265da0eca645e4697ceabdf",
+      "sanitized": true,
+      "kind": "frozen_original"
+    }
+  ],
+  "not_retained": "Original body_retention/coverage limits remain authoritative; no new retrievals."
+}

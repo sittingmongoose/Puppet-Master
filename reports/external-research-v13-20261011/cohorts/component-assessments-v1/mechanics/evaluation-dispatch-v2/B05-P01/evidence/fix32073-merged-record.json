@@ -1,0 +1,10 @@
+{
+  "html_url": "https://github.com/python/cpython/pull/32073",
+  "title": "gh-88050: Fix asyncio subprocess kill process cleanly when process is blocked",
+  "state": "closed",
+  "merged": true,
+  "merged_at": "2022-10-05T17:15:32Z",
+  "merge_commit_sha": "7015e1379791cbf19908cd1a7c668a5d6e7165d5",
+  "body": "This PR fixes the issue by calling the waiters after all the callbacks are executed so that no callbacks are scheduled after the method returns. \n\n<!-- gh-issue-number: gh-88050 -->\n* Issue: gh-88050\n<!-- /gh-issue-number -->\n",
+  "api_response_sha256": "770774946ef8a3f6ffacd62f2867b50cd94881b2136d11ce568263cb40db15a7"
+}

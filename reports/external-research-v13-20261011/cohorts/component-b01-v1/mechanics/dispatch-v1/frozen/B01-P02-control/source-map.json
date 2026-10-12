@@ -1,0 +1,301 @@
+{
+  "case": "B01-P02",
+  "arm": "control",
+  "target": {
+    "component": "desktop project browser ZIP import",
+    "python_version": "CPython 3.13.9",
+    "version_source": "P4"
+  },
+  "hash_policy": "Public tag file hashes were not computed. Cached hashes refer only to the mapped cache snapshots, not the public v3.13.9 tag files.",
+  "sources": [
+    {
+      "id": "P1",
+      "kind": "primary documentation",
+      "public_url": "https://github.com/python/cpython/blob/v3.13.9/Doc/library/zipfile.rst",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Doc/library/zipfile.rst",
+      "version_or_pin": "CPython tag v3.13.9",
+      "sha256": null,
+      "sha256_status": "Not computed for public tag bytes; version-tagged URL is exact.",
+      "cached_evidence": {
+        "source_index_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst",
+        "source_index_commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+        "cached_file": "inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+        "cached_sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+        "hash_scope": "Mapped cache snapshot only, not the public v3.13.9 tag file."
+      },
+      "locators": [
+        {
+          "exact_locator": "ZIP_STORED, ZIP_DEFLATED, ZIP_BZIP2, ZIP_LZMA and codec requirements",
+          "section": "module constants",
+          "source_lines_1based": [
+            88,
+            118
+          ]
+        },
+        {
+          "exact_locator": "ZipFile constructor; metadata_encoding; UTF-8 flag precedence",
+          "section": "ZipFile Objects",
+          "source_lines_1based": [
+            136,
+            200
+          ]
+        },
+        {
+          "exact_locator": "ZipFile.open accepts ZipInfo and duplicate-name note",
+          "section": "ZipFile Objects",
+          "source_lines_1based": [
+            253,
+            305
+          ]
+        },
+        {
+          "exact_locator": "extract/extractall path transformations and untrusted archive warning",
+          "section": "ZipFile Objects",
+          "source_lines_1based": [
+            308,
+            350
+          ]
+        },
+        {
+          "exact_locator": "Path does not sanitize archive names",
+          "section": "Path Objects note",
+          "source_lines_1based": [
+            485,
+            499
+          ]
+        },
+        {
+          "exact_locator": "decompression, filesystem, resource, interruption and overwrite pitfalls",
+          "section": "Decompression pitfalls",
+          "source_lines_1based": [
+            897,
+            934
+          ]
+        }
+      ],
+      "governing_scope": "Documented CPython 3.13.9 zipfile API behavior and cautions; not a guarantee for application policy or OS publication semantics.",
+      "unresolved_uncertainty": "Confirm the exact CPython patch version shipped; re-review if it differs."
+    },
+    {
+      "id": "P2",
+      "kind": "primary implementation source",
+      "public_url": "https://github.com/python/cpython/blob/v3.13.9/Lib/zipfile/__init__.py",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/zipfile/__init__.py",
+      "version_or_pin": "CPython tag v3.13.9",
+      "sha256": null,
+      "sha256_status": "Not computed for public tag bytes; version-tagged URL is exact.",
+      "cached_evidence": {
+        "source_index_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py",
+        "source_index_commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+        "cached_file": "inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+        "cached_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+        "hash_scope": "Mapped cache snapshot only, not the public v3.13.9 tag file."
+      },
+      "locators": [
+        {
+          "exact_locator": "NUL truncation and separator normalization; original and sanitized names",
+          "symbols": [
+            "_sanitize_filename",
+            "ZipInfo.__init__"
+          ]
+        },
+        {
+          "exact_locator": "central-directory allocation, encoding, record list, and name map",
+          "symbol": "ZipFile._RealGetContents"
+        },
+        {
+          "exact_locator": "codec availability and unsupported compression",
+          "symbol": "_check_compression"
+        },
+        {
+          "exact_locator": "CRC comparison at logical EOF",
+          "symbol": "ZipExtFile._update_crc"
+        },
+        {
+          "exact_locator": "deflate output limit versus other decompressor calls",
+          "symbol": "ZipExtFile._read1"
+        },
+        {
+          "exact_locator": "ZipInfo identity and encryption flag handling",
+          "symbol": "ZipFile.open"
+        },
+        {
+          "exact_locator": "Windows sanitation, path transformation, and wb output",
+          "symbols": [
+            "ZipFile._sanitize_windows_name",
+            "ZipFile._extract_member"
+          ]
+        }
+      ],
+      "governing_scope": "CPython 3.13.9 implementation behavior; source inspection supports capability claims but is not a product security guarantee.",
+      "unresolved_uncertainty": "Design accepts CPython's logical member boundaries; it does not independently prove archive-producer intent for trailing compressed bytes or malformed size metadata."
+    },
+    {
+      "id": "P3",
+      "kind": "primary upstream tests",
+      "public_url": "https://github.com/python/cpython/blob/v3.13.9/Lib/test/test_zipfile/test_core.py",
+      "raw_public_url": "https://raw.githubusercontent.com/python/cpython/v3.13.9/Lib/test/test_zipfile/test_core.py",
+      "version_or_pin": "CPython tag v3.13.9",
+      "sha256": null,
+      "sha256_status": "Not computed for public tag bytes; version-tagged URL is exact.",
+      "cached_evidence": {
+        "source_index_url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py",
+        "source_index_commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+        "cached_file": "inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+        "cached_sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+        "hash_scope": "Mapped cache snapshot only, not the public v3.13.9 tag file."
+      },
+      "locators": [
+        {
+          "exact_locator": "common, Windows-only, and POSIX-only extraction traversal tests",
+          "symbols": [
+            "ExtractTests.test_extract_hackers_arcnames_common_cases",
+            "ExtractTests.test_extract_hackers_arcnames_windows_only",
+            "ExtractTests.test_extract_hackers_arcnames_posix_only"
+          ]
+        },
+        {
+          "exact_locator": "bad CRC test behavior",
+          "symbol": "AbstractBadCrcTests"
+        },
+        {
+          "exact_locator": "legacy metadata encoding cases",
+          "symbol": "test_read_with_metadata_encoding"
+        }
+      ],
+      "governing_scope": "Assertions in CPython's own tests; not tests of this proposal.",
+      "unresolved_uncertainty": "Tests were inspected but not run."
+    },
+    {
+      "id": "P4",
+      "kind": "primary release record",
+      "public_url": "https://www.python.org/downloads/release/python-3139/",
+      "version_or_pin": "Python 3.13.9",
+      "sha256": null,
+      "sha256_status": "Page hash not recorded.",
+      "locators": [
+        {
+          "exact_locator": "release date and maintenance release status",
+          "section": "Python 3.13.9 release page"
+        },
+        {
+          "exact_locator": "statement of no other changes compared with 3.13.8",
+          "section": "release summary"
+        }
+      ],
+      "governing_scope": "Identifies the requested release; does not validate the importer design.",
+      "unresolved_uncertainty": "Product's eventual Python build remains unknown."
+    }
+  ],
+  "claim_map": [
+    {
+      "final_sections": [
+        "Decision and scope",
+        "Evidence and scope"
+      ],
+      "claims": [
+        "Target is CPython 3.13.9.",
+        "Review is a proposal and importer validation was not performed."
+      ],
+      "sources": [
+        "P4"
+      ],
+      "governing_scope": "Release identity only.",
+      "unresolved_uncertainty": "Shipped build may differ."
+    },
+    {
+      "final_sections": [
+        "Import boundary",
+        "Staging, publication, and failure behavior"
+      ],
+      "claims": [
+        "No imported content is executed by this flow; only new project publication is allowed."
+      ],
+      "sources": [],
+      "governing_scope": "Product policy from brief.",
+      "unresolved_uncertainty": "ACL, atomic no-replace, and durability implementations remain untested."
+    },
+    {
+      "final_sections": [
+        "Preview and name decoding"
+      ],
+      "claims": [
+        "Name decoding, Path behavior, and NUL sanitation."
+      ],
+      "sources": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "governing_scope": "CPython 3.13.9 behavior.",
+      "unresolved_uncertainty": "Legacy encodings and shipped runtime."
+    },
+    {
+      "final_sections": [
+        "Path policy and collision decisions"
+      ],
+      "claims": [
+        "extract/extractall transform names; ZipInfo supports record identity; Windows sanitation is partial."
+      ],
+      "sources": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "governing_scope": "CPython API/source/test behavior.",
+      "unresolved_uncertainty": "Filesystem equivalence needs actual Windows and Linux runs."
+    },
+    {
+      "final_sections": [
+        "Compression, integrity, and resource limits"
+      ],
+      "claims": [
+        "Codec behavior, encryption capability, central directory allocation, bounded deflate output, CRC at EOF."
+      ],
+      "sources": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "governing_scope": "CPython 3.13.9 behavior; product policy is a separate recommendation.",
+      "unresolved_uncertainty": "Limits and worker isolation not selected or tested."
+    },
+    {
+      "final_sections": [
+        "Alternatives and history"
+      ],
+      "claims": [
+        "Standard extraction mechanics compared with controlled streaming."
+      ],
+      "sources": [
+        "P1",
+        "P2"
+      ],
+      "governing_scope": "Evidence-backed engineering recommendation.",
+      "unresolved_uncertainty": "Performance and implementation cost not measured."
+    },
+    {
+      "final_sections": [
+        "Acceptance criteria and unresolved decisions"
+      ],
+      "claims": [
+        "Future OS, race, integrity, resource, type, and publication checks."
+      ],
+      "sources": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "governing_scope": "Proposed validation plan, not passed results.",
+      "unresolved_uncertainty": "All listed product and platform behavior."
+    }
+  ],
+  "overall_uncertainty": [
+    "Numeric byte, entry, path, memory, disk, and wall-time limits.",
+    "Supported text and media type allowlist.",
+    "Whether later releases support BZIP2/LZMA under hard memory limits.",
+    "Cross-platform atomic no-replace move, ACL, directory flush, and crash recovery.",
+    "Filesystem path equivalence and concurrent local writers.",
+    "Whether the eventual product runtime is exactly CPython 3.13.9."
+  ]
+}

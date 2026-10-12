@@ -1,0 +1,215 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "block_id": "B05-P02",
+  "original": true,
+  "arms": [
+    {
+      "arm_id": "B05-P02-control",
+      "scope": "COMPONENT",
+      "source_judgment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "rationale": "Material false 3.12+ null-reader applicability; principal 3.13.9 design corrections otherwise supported.",
+        "finite_assessment": true,
+        "deployment_required": false
+      },
+      "coverage": {
+        "status": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "finding": "All material brief/plan obligations and negative constraints retained; application guarantees remain proposals.",
+            "defect_ids": []
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "finding": "All consequential target facts, conditions, source locators and release/fix context assessed; see defects. Independent lookup confirms the pin is v3.13.9.",
+            "defect_ids": [
+              "C-D01",
+              "C-D02",
+              "C-D03"
+            ]
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "finding": "Useful quote-based null option, marker/sidecar, DictReader, strictness and loading/inference alternatives examined; direct-write history retained.",
+            "defect_ids": [
+              "C-D01"
+            ]
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "finding": "C01-C14 and all 11 critique points examined; principal rejections justified, with version/locator/empty-field defects recorded.",
+            "defect_ids": [
+              "C-D02",
+              "C-D03"
+            ]
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "finding": "Full draft-to-final and critique/disposition-to-final preservation reviewed. No material supported mechanism, constraint, privacy rule, history or useful alternative lost.",
+            "defect_ids": []
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "finding": "Proposed tests have exact-value, row/line, resource boundary, cancellation, cleanup and unchanged-prior-state oracles. No product or upstream suite execution claimed.",
+            "defect_ids": [
+              "C-D02"
+            ]
+          }
+        ],
+        "details": "coverage.json"
+      },
+      "defects": {
+        "material_count": 1,
+        "nonmaterial_count": 2,
+        "ids": [
+          "C-D01",
+          "C-D02",
+          "C-D03"
+        ],
+        "details": "defects.json"
+      },
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P02-control/final.md",
+        "final_sha256": "9a1e6ef1e81dbcc1f285e4ed065c64e3d3aaee5817e50a3f9570d239d46c8be1",
+        "required_scientific_outputs_present": true,
+        "self_contained_final": true,
+        "exact_source_map_accuracy": "PARTIAL: systematic misplaced locators",
+        "importer_execution_delivered": false,
+        "importer_execution_required": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE",
+        "coverage": "COMPLETE for frozen clock and observed delivery upper bound",
+        "maximum_s": 1500,
+        "t0_utc": "2026-10-12T00:35:57.728234Z",
+        "deadline_utc": "2026-10-12T01:00:57.728234Z",
+        "prepared_at_utc": "2026-10-12T00:35:57.782487Z",
+        "dispatch_capture_utc": "2026-10-12T00:35:58.238Z",
+        "native_create_utc": "2026-10-12T00:36:09+00:00",
+        "native_terminal_utc": "2026-10-12T00:46:26+00:00",
+        "native_terminal_reported_time_used_s": 616,
+        "t0_to_native_terminal_s": 628.271766,
+        "authored_freeze_utc": "2026-10-12T00:47:17.098641+00:00",
+        "t0_to_authored_freeze_upper_bound_proxy_s": 679.370407,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "request_to_quiet_final_time": "UNKNOWN; terminal task receipt supplies status without completion timestamp",
+        "queue_and_phase_durations": "UNKNOWN; create offset is not a separated queue measurement",
+        "clock_reset": false,
+        "limit": "Goal counters do not measure all admission/setup/queue latency or billed activity; complete frozen outputs demonstrably precede original deadline."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "coverage": "PARTIAL",
+        "verified": [
+          "One supplied active/complete native receipt pair matches packet objective and identity.",
+          "Complete critic/finalizer artifacts saved under correct scientific scope.",
+          "Frozen task receipt is completed with no pending child runs.",
+          "No behavior execution falsely claimed."
+        ],
+        "cache_semantic_preservation": {
+          "coverage": "UNASSESSED",
+          "reason": "No treatment cache assigned to control; no claim that this candidate read one."
+        },
+        "unresolved": [
+          "Original pre-read verification and exact activation/completion tool ordering cannot be proven from selected receipts alone.",
+          "Filesystem exclusion, unseen calls and native freshness beyond supplied custody remain unknown.",
+          "Required exact-map fidelity is deficient; no source identity-check command/output artifact is saved, only the source-map report."
+        ],
+        "discovery_effectiveness_qualified": false,
+        "native_goal_recipe_qualification": "Receipts support supplied Goal completion; strict full operational qualification remains limited by unavailable linkage/process telemetry."
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "coverage": "PARTIAL",
+        "creation_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P02-control/native-goal-create.json",
+          "sha256": "53f7ada4be6d3fe6eccaf544eb48d45ae5f8841abebaf7076e741787f8ea655d"
+        },
+        "terminal_receipt": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P02-control/native-goal-terminal.json",
+          "sha256": "5858f44be627aef5842ffd9b28cfc4966bcae3a4b566902ddb87190cf212c0c5"
+        },
+        "task_terminal_receipt": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B05-P02-control/component-terminal-task.raw.json",
+          "sha256": "408c36f29e62880a6d912ac6dcdcf0c942b7ccabc2100608f27b5edf26c6bd10"
+        },
+        "matching_goal_identity_and_objective": true,
+        "native_terminal_status": "complete",
+        "task_status": "completed",
+        "hasPendingChildRuns": false,
+        "transport_route_fields_present": true,
+        "transport_route_fields_agree_with_frozen_request": true,
+        "actual_execution_identity": "UNKNOWN beyond returned operational labels",
+        "service_tier": "UNKNOWN",
+        "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "public_identity_values": "Omitted; operational private provenance is not source authority."
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL",
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "cumulative_goal_counters_present": true,
+          "numeric_token_counters": "Private; not republished and not treated as billing",
+          "native_elapsed_counter_present": true,
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "provider_active_time": "UNKNOWN",
+          "context_occupancy_and_overlap": "UNKNOWN",
+          "phase_durations": "UNKNOWN",
+          "common_package_preparation_cost": "UNKNOWN from assigned packet; separate campaign preparation",
+          "cost_per_passing_final": "UNASSESSED: billing unavailable"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "shared_primary_lookup": true,
+          "start_observed_utc": "2026-10-12T00:58:16+00:00",
+          "original_written_at_utc": "2026-10-12T01:05:22.509989+00:00",
+          "billing": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "numeric_token_counters": "Not public; unavailable as reconciled billing",
+          "not_charged_as_candidate_product": true
+        },
+        "v1_coordinator_idle_costs": "Unchanged; not reassigned, recomputed or silently zeroed"
+      },
+      "limitations": [
+        "This is finite assessment of the assigned research proposal and supplied draft, not universal parser correctness or a deployed component.",
+        "Unknown vendor schemas, encodings, null conventions, storage transactions and numeric device budgets legitimately remain product decisions. Their future execution is UNASSESSED, not failed.",
+        "QUOTE_NOTNULL is conditional: a singleton None record cannot be emitted by its writer; delimiter=space plus skipinitialspace excludes unquoted empties. These adjacent exceptions were checked in C:1227-1267/1300-1401, docs:468-472 and tests:316-356. Neither final promises an unrestricted one-column round-trip; the import proposals retain explicit blank/ragged policy and alternative null encodings. This bounds the alternative rather than imposing an export feature.",
+        "Source integrity, byte-aware line limits and atomic publication are proposed application obligations. No candidate execution demonstrates these guarantees; both require meaningful future tests.",
+        "Preparation of the shared component package and cold full-pipeline discovery are outside this pair; no discovery recall/effectiveness or cold end-to-end success is inferred.",
+        "Filesystem access rules are not sandbox isolation. Without full native transcripts, exact operation ordering, exclusive original lookup, absence of unseen delegates and actual provider execution cannot be proven.",
+        "Private transport route fields are observed but not public source authority; service tier and independent native-session linkage remain unknown.",
+        "No billing, subscription cost, cache/output/reasoning breakdown, context occupancy or phase-specific provider activity can be derived from cumulative Goal counters."
+      ],
+      "input_manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B05-P02-control/authored-manifest.json",
+      "input_manifest_sha256": "e23c9cced4e311923839cc6cbce84c336068a08c0c0f0533fc5334abb100f91f",
+      "input_verification": "evidence/input-audit.json",
+      "original_findings_immutable": true,
+      "comparison_performed_before_freeze": false,
+      "blinding": "Imperfect: control/treatment paths, cache-bearing files and method assignments reveal the technique. Independent judgments use the same evaluator lookup, not inherited candidate conclusions."
+    }
+  ]
+}

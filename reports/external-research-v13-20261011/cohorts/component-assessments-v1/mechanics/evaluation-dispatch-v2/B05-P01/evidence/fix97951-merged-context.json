@@ -1,0 +1,13 @@
+{
+  "pr_url": "https://github.com/python/cpython/pull/97951",
+  "merged_at": "2022-10-06T17:18:20Z",
+  "commit_sha": "e2e6b95c0342247ed1a761b6e149ac579a8722dd",
+  "pr_response_sha256": "96487285d23918d9d6db2025db6d0ee5fdb3b61b6587ab9ee4656ed6b13dc80d",
+  "commit_response_sha256": "d83db23149bcbc32d53108a8797aea34390efb43d46f88207c84da11238fa576",
+  "files": [
+    {
+      "filename": "Lib/asyncio/base_subprocess.py",
+      "patch": "@@ -216,7 +216,9 @@ def _process_exited(self, returncode):\n             self._proc.returncode = returncode\n         self._call(self._protocol.process_exited)\n         for p in self._pipes.values():\n-            p.pipe.close()\n+            if p is not None:\n+                p.pipe.close()\n+\n         self._try_finish()\n \n     async def _wait(self):"
+    }
+  ]
+}

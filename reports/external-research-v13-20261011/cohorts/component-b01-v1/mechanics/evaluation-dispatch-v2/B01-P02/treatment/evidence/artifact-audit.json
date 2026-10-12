@@ -1,0 +1,27 @@
+{
+  "schema": "er13.independent_static_artifact_audit.v1",
+  "arm_id": "B01-P02-treatment",
+  "domain": "Read-only evaluator reconstruction from frozen result intervals; candidate assembler not executed",
+  "original_result_reconstruction_matches_final": true,
+  "current_amendments_reconstruction_matches_final": false,
+  "expected_current_reconstruction_sha256": "97f983249e720fdb83db35bdeb3ad194e89f6a5eebdb3c270c8b01f180c34ff1",
+  "original_result_final_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+  "frozen_final_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+  "result_record_script_sha256": "e0437c7fc6b5f2d18da208ee8cc39b0f939b429fa56307336553ac56c78fb778",
+  "frozen_script_sha256": "95e73354fd8d64ba511e88ad067fd0cb9064e71f56753b740dba48d6451772c0",
+  "result_record_amendments_sha256": "7322849bd482f8a8055fac987605b5b8b399a56234ca058a84ec830c5926b701",
+  "frozen_amendments_sha256": "a3203a503ddffac593cddf5e700a598c966d142f89953a32d25ccda72fbae02c",
+  "retained_intervals_valid": true,
+  "retained_substantive_nonheading_prose_characters": 0,
+  "paragraph_replacements": 7,
+  "unexecuted_append_changes": [
+    "Adds release-blocking supported-type allowlist decision",
+    "Adds symlink/special-file metadata to proposed acceptance case list"
+  ],
+  "source_reader_stdout_ranges_verified": 14,
+  "limits": [
+    "Static result reconstruction proves document lineage only",
+    "No missing terminal record inferred",
+    "No candidate application or source-reader process was rerun"
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "schema": "er13.original_pair_delivery_receipt.v2",
+  "assignment": "B05-P01 paired COMPONENT",
+  "arm_count": 2,
+  "completed_at_utc": "2026-10-12T01:08:41.764933+00:00",
+  "arms": [
+    {
+      "arm_id": "B05-P01-control",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE for all six scientific axes",
+      "delivery": "COMPLETE",
+      "time": "ELIGIBLE",
+      "native_reported_elapsed_seconds": 863,
+      "assigned_terminal_task_pending_child_runs": false,
+      "native_session_linkage": "UNKNOWN beyond assigned objective/capture custody",
+      "billing_and_full_resource_cost": "UNKNOWN",
+      "manifest": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/manifest.json",
+        "bytes": 10633,
+        "sha256": "540e51b406c51fbbd3ea51ebc7ec34c19630b4545d102fb982ebced6f937159b"
+      },
+      "original_outputs": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.json",
+          "bytes": 10160,
+          "sha256": "2bcedd10be03f8587646ba5b22f1104369241c664c1cfa90baf0c4a2aca35bd8"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.md",
+          "bytes": 5243,
+          "sha256": "b0f8e51e3a194321cc4773999f36a377b25b04faa7050f6c5bc36b4a8d63d4da"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/coverage.json",
+          "bytes": 13492,
+          "sha256": "b2c7957fe4c14d23171554ecfbfaae8c586f33a79618f2195b57b2279f74554b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/defects.json",
+          "bytes": 2973,
+          "sha256": "3e9513d2005ee00289580a091e37137a86b1da582ddffb71ed309a6bb95bb356"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/input-verification.json",
+          "bytes": 7195,
+          "sha256": "9df071b6659a53e41d73f8604df3c09a382d6c337d1ce84c734cc3a2f05d1a59"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/primary-source-index.json",
+          "bytes": 23184,
+          "sha256": "bb4e24fba444b044de747b52567cbb8f7add52bfa00357cbf0a3cf40c4fb6895"
+        }
+      ]
+    },
+    {
+      "arm_id": "B05-P01-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE for all six scientific axes",
+      "delivery": "COMPLETE",
+      "time": "ELIGIBLE",
+      "native_reported_elapsed_seconds": 869,
+      "assigned_terminal_task_pending_child_runs": false,
+      "native_session_linkage": "UNKNOWN beyond assigned objective/capture custody",
+      "billing_and_full_resource_cost": "UNKNOWN",
+      "manifest": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/manifest.json",
+        "bytes": 10648,
+        "sha256": "a69a671f189ffd2de9b0c32acc2f68699be1b9d03b6039a72783f2f453c1b97a"
+      },
+      "original_outputs": [
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.json",
+          "bytes": 10252,
+          "sha256": "781ca8b5d7655a18a2bd9f06933c96fd979cce5beb3357e62113af3d532ce6bd"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.md",
+          "bytes": 5280,
+          "sha256": "c448e83ae6729a1716d6ce6a3d43adfa576a243c3668999aa44cbfba603017f5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/coverage.json",
+          "bytes": 14013,
+          "sha256": "3669e6826102d970d86bb757fd4d455dabd281b29a514e14ef84a899a7bf4b1a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/defects.json",
+          "bytes": 3611,
+          "sha256": "1a76a8e0c9c1f4061ffa4b7ab8dda767d90940635c80476a8991b44a12575bd9"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/input-verification.json",
+          "bytes": 14064,
+          "sha256": "75f03da917b21ce624c1624b05c946ae8636c6ea6753f36b9f41ede833fdc545"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/primary-source-index.json",
+          "bytes": 23186,
+          "sha256": "11025dc110d58ad5a3f2d3b07337fbb6d71b5e50c1e15862290f5f73a5036f95"
+        }
+      ]
+    }
+  ],
+  "additional_frozen_outputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/comparison.json",
+      "bytes": 6391,
+      "sha256": "61066411ae5407fff53a250e12c3a800fab3269cb2b7083a8a17ab4f1bb2c079"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/comparison.md",
+      "bytes": 2914,
+      "sha256": "63a4abfe643322b027b64d8cd993b4766dd9c9b3d783270406cf50aafae546ba"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/evidence/manifest.json",
+      "bytes": 8735,
+      "sha256": "b71db0b378e43f499f39a799d0f05f43a5bb62829995c54381ebf7405e87d40b"
+    }
+  ],
+  "source_evidence": "31 necessary public-source/context/index/license files, exact paths/sizes/hashes in frozen evidence/manifest.json and each original arm manifest.",
+  "coverage_limits": [
+    "Actual desktop caller code and executed application/validator/Windows behavior UNASSESSED; not required to execute for this proposal.",
+    "Read isolation/native activation execution/backend linkage and resource/billing PARTIAL or UNKNOWN.",
+    "Finite single-case COMPONENT review; imperfect blinding; no discovery effectiveness, cold integration, universal correctness or recipe-selection conclusion."
+  ],
+  "independent_evaluation": {
+    "cost_class": "independent_evaluation",
+    "first_observed_clock_utc": "2026-10-12T00:53:20Z",
+    "first_observed_clock_to_receipt_seconds": 921.765,
+    "interpretation": "Observed wall interval includes research, grading, artifact writing and freeze; exact evaluator start and provider-active/billed duration UNKNOWN. Separate from candidate product.",
+    "complete_resource_or_monetary_cost": "UNKNOWN"
+  },
+  "state": {
+    "assigned_terminal_receipts_completed": 2,
+    "assigned_terminal_receipts_with_pending_children": 0,
+    "extra_graders_or_candidates_launched": 0,
+    "required_evaluation_work_remaining": 0,
+    "original_manifests_verified_unchanged": true,
+    "comparison_written_after_both_original_freezes": true,
+    "candidate_feedback_sent": false,
+    "recipe_selection": null,
+    "coordinator_v1_idle_costs": "UNCHANGED"
+  },
+  "root_manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/manifest.json"
+}

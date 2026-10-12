@@ -1,0 +1,383 @@
+{
+  "schema": "er13.original-input-verification.v2",
+  "block_id": "B08-P01",
+  "verified_packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B08-P01.json",
+    "bytes": 5140,
+    "sha256": "310c41c4b5435d9a349bb881e1685e874a3708341cd889bbc10fba8584e7db3d"
+  },
+  "expected_packet_sha256": "310c41c4b5435d9a349bb881e1685e874a3708341cd889bbc10fba8584e7db3d",
+  "coordinator_receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B08-P01-input-verification.json",
+    "bytes": 1717,
+    "sha256": "0350c8a48219357a3790013d5903bb2b8732e2569d5c19900547a7e3ecbfa37a"
+  },
+  "governing_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "bytes": 3800,
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "bytes": 43132,
+    "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+    "read_sections": [
+      "10",
+      "12"
+    ],
+    "held_out_sections_read": false
+  },
+  "workspace_instructions": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "bytes": 20950,
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "all_input_bytes_read_and_hashes_verified": true,
+  "common_inputs_and_source_caches_identical_between_arms": true,
+  "all_neighborhoods_verified_as_exact_ranges_of_full_primary_bodies": true,
+  "arms": [
+    {
+      "arm_id": "B08-P01-control",
+      "manifest": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/authored-manifest.json",
+        "bytes": 5049,
+        "sha256": "27686a54e1c19a902f9c15c432295fd48073fccf89bf2cfe54712460692dec2c"
+      },
+      "file_count": 29,
+      "verified_files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/final.md",
+          "bytes": 15622,
+          "sha256": "5b06f398f1937ff79913e16f0e6079766df8c3238e878c338f46648aecc48064"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/criticism-dispositions.md",
+          "bytes": 8866,
+          "sha256": "14aec0ca245b8257f8b867c543fda305de37ae75c2264ab63cf15de33968d593"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/source-map.json",
+          "bytes": 12241,
+          "sha256": "6b6bb912a4a8586020e92d00a9314f956f295b280e9e910ca48b2d46855b1ea6"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/native-goal-create.json",
+          "bytes": 593,
+          "sha256": "0c20c77851e6b1ad2f8ddfd0fd313ef78f9c5ce21e16d5868ad7002f4d20ca2b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/native-goal-terminal.json",
+          "bytes": 923,
+          "sha256": "5f19d798446989731fedce3f0d386164851f8b3787bc59d0a9ea7dbcb8e06b1f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/critique.md",
+          "bytes": 5291,
+          "sha256": "c4ee936765ddb68a3282a2ebcb55d310229e65e5792631d0002ebf005fbcd377"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/assignment.md",
+          "bytes": 8165,
+          "sha256": "8572b9993ed89b90c61d8662e82dc3fe86996fcf8c146384d96a2d9ed9fcef3f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/input-map.json",
+          "bytes": 5123,
+          "sha256": "bed47b7219bb95371a72c43eaf9862eb3557f3854b8ee54a0639c10e2c38676c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/freeze.json",
+          "bytes": 8547,
+          "sha256": "2e7d4350ffdae45fb8b276ac1b031ccb9d8ee0c1004fbf555f1041d4b2fb107c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/request.json",
+          "bytes": 8861,
+          "sha256": "fad60e6133ec411edbead187394b160520dcf7b752d801f02154dd717a4ebecb"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/dispatch.json",
+          "bytes": 12077,
+          "sha256": "3a30b057c70606d50b74dee5c35b4b9c64b3c8508c791a141267ea3b6f88540c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/selection.json",
+          "bytes": 3134,
+          "sha256": "bcaf26a808d4e759e06e94184b6f82b73650c1285409a30d476bc60b98dccf9c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/brief.md",
+          "bytes": 716,
+          "sha256": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/plan.md",
+          "bytes": 694,
+          "sha256": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/draft.md",
+          "bytes": 3499,
+          "sha256": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-index.json",
+          "bytes": 8607,
+          "sha256": "94d988a59467f2583a56c89df29c7077e077c3d7c7e9c8a3ad9d5a2e7ff7f227"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+          "bytes": 7477,
+          "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+          "bytes": 10152,
+          "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+          "bytes": 21060,
+          "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+          "bytes": 3633,
+          "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+          "bytes": 3325,
+          "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+          "bytes": 3038,
+          "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+          "bytes": 4390,
+          "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+          "bytes": 3558,
+          "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+          "bytes": 2853,
+          "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+          "bytes": 2398,
+          "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+          "bytes": 3437,
+          "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+          "bytes": 3173,
+          "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-control/inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+          "bytes": 3378,
+          "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792"
+        }
+      ],
+      "terminal_task_receipt": {
+        "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B08-P01-control/component-terminal-task.raw.json",
+        "bytes": 11361,
+        "sha256": "20c269682c83440103152d8a85b732ae7c0c0ec946c9f256964ba4fc1c4fcbce"
+      }
+    },
+    {
+      "arm_id": "B08-P01-treatment",
+      "manifest": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/authored-manifest.json",
+        "bytes": 5751,
+        "sha256": "23b5a753e7fabdb49c3090ff2e0e0fc97c15672236876bfc238f5c5cb2eb1ba9"
+      },
+      "file_count": 33,
+      "verified_files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/final.md",
+          "bytes": 17175,
+          "sha256": "139831a76a656c6ce30c5003ea40047212e57a7016e4498045885e12ddd50e24"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/criticism-dispositions.md",
+          "bytes": 13581,
+          "sha256": "652532d83663d8ebb9e429509e4f3a9e250475435f7b395b5238667c2523309f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/source-map.json",
+          "bytes": 16266,
+          "sha256": "003572d4a7b94cfb81b21b2c216bef506fff110e30c58f34cedece2a024d0e48"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/native-goal-create.json",
+          "bytes": 599,
+          "sha256": "8ad0af081ec6f204a4f7e82f475ce1d3ff6cd113496b4851733524b0fb823a99"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/native-goal-terminal.json",
+          "bytes": 928,
+          "sha256": "f4142487a5bb452c1da5731ca1e80490e1c211850af4789bb57c8fee8f012567"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/critique.md",
+          "bytes": 4198,
+          "sha256": "7cdb0348348558dc295b28152e0bd6f9c34e82ad727de53897cda565e260aa58"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/assignment.md",
+          "bytes": 8515,
+          "sha256": "246ac7b638481994952dfa6c1ea2ad1c45915f57da319c21f08b6d333a811782"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/input-map.json",
+          "bytes": 5163,
+          "sha256": "eaee4f6d4af50fea0b833bd91dd7122e89ba5c5df51673eb9f587e38850daec5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/freeze.json",
+          "bytes": 8925,
+          "sha256": "a36cf87c4dd9a886a6128c929559bf0a9de32acfdecc1521118c026180b1502b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/request.json",
+          "bytes": 9215,
+          "sha256": "2d2c9ea1ad4609368e4bdaa4748245e92bb2f64c8c5415a38df09ee6fae01244"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/dispatch.json",
+          "bytes": 12455,
+          "sha256": "8e77782c01c28f9ca4da808494a3c6e3eadc4368f504ac1cf58d128a89d4820b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/selection.json",
+          "bytes": 3136,
+          "sha256": "60535384f1e3a425c2b3dbd49b98129752bca257097d9db4d55f8426fb4cb529"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/brief.md",
+          "bytes": 716,
+          "sha256": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/plan.md",
+          "bytes": 694,
+          "sha256": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/draft.md",
+          "bytes": 3499,
+          "sha256": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-index.json",
+          "bytes": 8607,
+          "sha256": "94d988a59467f2583a56c89df29c7077e077c3d7c7e9c8a3ad9d5a2e7ff7f227"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+          "bytes": 7477,
+          "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+          "bytes": 10152,
+          "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+          "bytes": 21060,
+          "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+          "bytes": 3633,
+          "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+          "bytes": 3325,
+          "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+          "bytes": 3038,
+          "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+          "bytes": 4390,
+          "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+          "bytes": 3558,
+          "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+          "bytes": 2853,
+          "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+          "bytes": 2398,
+          "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+          "bytes": 3437,
+          "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+          "bytes": 3173,
+          "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+          "bytes": 3378,
+          "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/witnesses/queue_and_capacity_witness.stdout.txt",
+          "bytes": 1891,
+          "sha256": "eea96066d95e2c9322e4f7ce356db5d29ba18506de8ec72c40894a45f9f47cc1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/witnesses/queue_and_capacity_witness.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/witnesses/queue_and_capacity_witness.py",
+          "bytes": 4776,
+          "sha256": "0928e692fe7be260eff7d22bf2d070510ccadb97d39cce433c114da3809eeeab"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B08-P01-treatment/witnesses/execution-record.json",
+          "bytes": 3462,
+          "sha256": "f445919cb197c58530b7e3140c3d1544c514518fe7ec2d2515ca4d331224e25a"
+        }
+      ],
+      "terminal_task_receipt": {
+        "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B08-P01-treatment/component-terminal-task.raw.json",
+        "bytes": 12375,
+        "sha256": "b6982a787463697214ae5cbf0c8e35318153abf60b831210da70753511e9143a"
+      }
+    }
+  ],
+  "boundary": "Only notified frozen paths and exact named custody receipts read. No admitted/active candidate paths, full tree/history, held-out inputs, Git/canon operations, extra candidates or delegated reviewers. Routing identities, native IDs and counters not republished."
+}

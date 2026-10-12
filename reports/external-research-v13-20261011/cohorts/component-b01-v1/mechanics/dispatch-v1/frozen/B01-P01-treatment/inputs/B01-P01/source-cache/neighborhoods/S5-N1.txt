@@ -1,0 +1,112 @@
+</div>
+<details class="fancy_toc">
+<summary>Table Of Contents</summary>
+<div id="toc_sub"><div class="fancy-toc1"><a href="#overview">1. Overview</a></div>
+<div class="fancy-toc1"><a href="#how_wal_works">2. How WAL Works</a></div>
+<div class="fancy-toc2"><a href="#checkpointing">2.1. Checkpointing</a></div>
+<div class="fancy-toc2"><a href="#concurrency">2.2. Concurrency</a></div>
+<div class="fancy-toc2"><a href="#performance_considerations">2.3. Performance Considerations</a></div>
+<div class="fancy-toc1"><a href="#activating_and_configuring_wal_mode">3. Activating And Configuring WAL Mode</a></div>
+<div class="fancy-toc2"><a href="#automatic_checkpoint">3.1. Automatic Checkpoint</a></div>
+<div class="fancy-toc2"><a href="#application_initiated_checkpoints">3.2. Application-Initiated Checkpoints</a></div>
+<div class="fancy-toc2"><a href="#persistence_of_wal_mode">3.3. Persistence of WAL mode</a></div>
+<div class="fancy-toc1"><a href="#the_wal_file">4. The WAL File</a></div>
+<div class="fancy-toc1"><a href="#read_only_databases">5. Read-Only Databases</a></div>
+<div class="fancy-toc1"><a href="#avoiding_excessively_large_wal_files">6. Avoiding Excessively Large WAL Files</a></div>
+<div class="fancy-toc1"><a href="#implementation_of_shared_memory_for_the_wal_index">7. Implementation Of Shared-Memory For The WAL-Index</a></div>
+<div class="fancy-toc1"><a href="#use_of_wal_without_shared_memory">8. Use of WAL Without Shared-Memory</a></div>
+<div class="fancy-toc1"><a href="#sometimes_queries_return_sqlite_busy_in_wal_mode">9. Sometimes Queries Return SQLITE_BUSY In WAL Mode</a></div>
+<div class="fancy-toc1"><a href="#backwards_compatibility">10. Backwards Compatibility</a></div>
+<div class="fancy-toc1"><a href="#the_wal_reset_bug">11. The WAL-Reset Bug</a></div>
+<div class="fancy-toc2"><a href="#bug_details">11.1. Bug Details</a></div>
+<div class="fancy-toc2"><a href="#low_probability_of_occurrence">11.2. Low Probability Of Occurrence</a></div>
+</div>
+</details>
+</div>
+
+
+
+
+
+<h1 id="overview"><span>1. </span>Overview</h1>
+
+<p>The default method by which SQLite implements
+<a href="atomiccommit.html">atomic commit and rollback</a> is a <a href="lockingv3.html#rollback">rollback journal</a>.
+Beginning with <a href="releaselog/3_7_0.html">version 3.7.0</a> (2010-07-21), a new "Write-Ahead Log" option
+(hereafter referred to as "WAL") is available.</p>
+
+<p>There are advantages and disadvantages to using WAL instead of
+a rollback journal.  Advantages include:</p>
+
+<a name="advantages"></a>
+
+<ol>
+<li>WAL is significantly faster in most scenarios.
+</li><li>WAL provides more concurrency as readers do not block writers and 
+    a writer does not block readers.  Reading and writing can proceed 
+    concurrently.
+</li><li>Disk I/O operations tends to be more sequential using WAL.
+</li><li>WAL uses many fewer fsync() operations and is thus less vulnerable to
+    problems on systems where the fsync() system call is broken.
+</li></ol>
+
+<p>But there are also disadvantages:</p>
+
+<ol>
+<li>All processes using a database must be on the same host computer;
+    WAL does not work over a network filesystem.  This is because WAL requires
+    all processes to share a small amount of memory and processes on
+    separate host machines obviously cannot share memory with each other.
+</li><li>Transactions that involve changes against multiple <a href="lang_attach.html">ATTACHed</a>
+    databases are atomic for each individual database, but are not
+    atomic across all databases as a set.
+</li><li>It is not possible to change the <a href="pragma.html#pragma_page_size">page_size</a> after entering WAL
+    mode, either on an empty database or by using <a href="lang_vacuum.html">VACUUM</a> or by restoring
+    from a backup using the <a href="backup.html">backup API</a>.  You must be in a rollback journal
+    mode to change the page size.
+</li><li><s>It is not possible to open <a href="wal.html#readonly">read-only WAL databases</a>.
+    The opening process must have write privileges for "<tt>-shm</tt>"
+    <a href="walformat.html#shm">wal-index</a> shared memory file associated with the database, if that
+    file exists, or else write access on the directory containing
+    the database file if the "<tt>-shm</tt>" file does not exist.</s>
+    Beginning with <a href="releaselog/3_22_0.html">version 3.22.0</a> (2018-01-22), a read-only 
+    WAL-mode database file can be opened if
+    the <tt>-shm</tt> and <tt>-wal</tt> files
+    already exist or those files can be created or the
+    <a href="uri.html#uriimmutable">database is immutable</a>.
+</li><li>WAL might be very slightly slower (perhaps 1% or 2% slower)
+    than the traditional rollback-journal approach
+    in applications that do mostly reads and seldom write.
+</li><li>There is an additional quasi-persistent "<tt>-wal</tt>" file and
+    "<tt>-shm</tt>" shared memory file associated with each
+    database, which can make SQLite less appealing for use as an 
+    <a href="appfileformat.html">application file-format</a>.
+</li><li>There is the extra operation of <a href="wal.html#ckpt">checkpointing</a> which, though automatic
+    by default, is still something that application developers need to
+    be mindful of.
+</li><li><s>WAL works best with smaller transactions.  WAL does
+    not work well for very large transactions.  For transactions larger than
+    about 100 megabytes, traditional rollback journal modes will likely
+    be faster.  For transactions in excess of a gigabyte, WAL mode may 
+    fail with an I/O or disk-full error.
+    It is recommended that one of the rollback journal modes be used for
+    transactions larger than a few dozen megabytes.</s>
+    Beginning with <a href="releaselog/3_11_0.html">version 3.11.0</a> (2016-02-15), 
+    WAL mode works as efficiently with
+    large transactions as does rollback mode.
+    
+</li></ol>
+
+<h1 id="how_wal_works"><span>2. </span>How WAL Works</h1>
+
+<p>The traditional rollback journal works by writing a copy of the
+original unchanged database content into a separate rollback journal file
+and then writing changes directly into the database file.  In the
+event of a crash or <a href="lang_transaction.html">ROLLBACK</a>, the original content contained in the
+rollback journal is played back into the database file to
+revert the database file to its original state.  The <a href="lang_transaction.html">COMMIT</a> occurs
+when the rollback journal is deleted.</p>
+
+<p>The WAL approach inverts this.  The original content is preserved
+in the database file and the changes are appended into a separate
+WAL file.  A <a href="lang_transaction.html">COMMIT</a> occurs when a special record indicating a commit

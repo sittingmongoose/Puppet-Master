@@ -1,0 +1,78 @@
+{
+  "retrieved_utc": "2026-10-12T01:17:45.097144+00:00",
+  "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+  "tag": "v3.13.9",
+  "independent_fetch": "urllib HTTPS public raw.githubusercontent.com, not candidate cache",
+  "all_three_tag_and_commit_body_hashes_match_frozen_cache": true,
+  "context_sources": [
+    {
+      "file": "commit-zipfile.rst",
+      "bytes": 35432,
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "reviewed_ranges": [
+        [
+          14,
+          24
+        ],
+        [
+          96,
+          127
+        ],
+        [
+          193,
+          219
+        ],
+        [
+          253,
+          306
+        ],
+        [
+          339,
+          380
+        ],
+        [
+          536,
+          553
+        ],
+        [
+          785,
+          790
+        ],
+        [
+          980,
+          1023
+        ]
+      ]
+    },
+    {
+      "file": "commit-test_core.py",
+      "bytes": 154639,
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "reviewed_ranges": [
+        [
+          1628,
+          1730
+        ],
+        [
+          1820,
+          1875
+        ],
+        [
+          2522,
+          2557
+        ],
+        [
+          3040,
+          3185
+        ],
+        [
+          3350,
+          3454
+        ]
+      ]
+    }
+  ],
+  "implementation_sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+  "implementation_bytes": 89132,
+  "full_core_retained_reason": "Required to reproduce the evaluator source-mechanism witness; duplicate tag copy removed"
+}

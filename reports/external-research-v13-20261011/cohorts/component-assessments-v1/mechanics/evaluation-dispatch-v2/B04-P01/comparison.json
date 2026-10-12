@@ -1,0 +1,182 @@
+{
+  "schema": "er13.frozen-paired-comparison.v1",
+  "block_id": "B04-P01",
+  "scope": "COMPONENT",
+  "comparison_started_at_utc": "2026-10-12T01:09:46.334447+00:00",
+  "originals_frozen_before_comparison": true,
+  "original_manifest_receipts": {
+    "control": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/manifest.json",
+      "bytes": 7572,
+      "sha256": "04b8cd88f5f994c072a0e05056546e48bf52f3b3ac0213a2eea31a9dcd89317a",
+      "frozen_at_utc": "2026-10-12T01:08:58.016436+00:00"
+    },
+    "treatment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/manifest.json",
+      "bytes": 7620,
+      "sha256": "7539808ddd1f301d68842959c203d87a20e6139a6e677f2611bdb520b6b4ea7f",
+      "frozen_at_utc": "2026-10-12T01:08:58.018048+00:00"
+    }
+  },
+  "arm_count": 2,
+  "denominator": {
+    "assigned": 2,
+    "finals_delivered": 2,
+    "source_passes": 0,
+    "source_fails": 2,
+    "missing_finals": 0,
+    "other_attempt_states": "Not supplied outside this exact pair; no campaign extrapolation"
+  },
+  "arm_summaries": [
+    {
+      "arm_id": "B04-P01-control",
+      "source_judgment": {
+        "verdict": "FAIL",
+        "reason": "Material required actual Windows copy2 mechanism/context omitted (D1).",
+        "material_defect_ids": [
+          "D1"
+        ],
+        "finite_not_universal": true
+      },
+      "delivery": "COMPLETE",
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE"
+          }
+        ],
+        "details": "coverage.json"
+      },
+      "material_defect_ids": [
+        "D1"
+      ]
+    },
+    {
+      "arm_id": "B04-P01-treatment",
+      "source_judgment": {
+        "verdict": "FAIL",
+        "reason": "Material required actual Windows copy2 mechanism/context omitted (D1). Original-source identical-path guard missing (D2).",
+        "material_defect_ids": [
+          "D1",
+          "D2"
+        ],
+        "finite_not_universal": true
+      },
+      "delivery": "COMPLETE",
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE"
+          }
+        ],
+        "details": "coverage.json"
+      },
+      "material_defect_ids": [
+        "D1",
+        "D2"
+      ]
+    }
+  ],
+  "semantic_method_comparison": {
+    "primary_lookup_reuse": "Same independent governing-source research reused across matched arms; no candidate assistance",
+    "conventional_vs_compact_critique": "Complete common F1\u2013F4 meanings, keeps, conditions, uncertainty, cross-volume support, useful metadata, progress/cancel, original preservation and history represented in both renderings. No demonstrated compression loss in the supplied compact critique. Shared criticism inherits unresolved documentation/code assumptions, which both candidates failed to settle.",
+    "common_preparation": "Both manifests contain byte-identical brief/plan/draft/source-index and four source cache bodies plus neighborhoods. Package creation is separately accounted preparation; no discovery-effectiveness conclusion follows.",
+    "source_quality_difference": "D1 is shared. Control explicitly excludes a source/final same-file selection; treatment has material D2. Treatment source-map digest/link errors and handle policy ambiguity are nonmaterial. Control write-through disposition wording is nonmaterial. Defect counts do not constitute a continuous quality score.",
+    "blinding": "Imperfect: technique-bearing paths, critique titles and outputs reveal treatment assignment.",
+    "coverage_comparability": "Both original scientific assessments assess all six axes; axes 2 and 3 are PARTIAL, with exhaustive platform/history/backend extensions UNASSESSED. Their FAIL labels are not comparable complete passing grades."
+  },
+  "timing": {
+    "frozen_maximum_seconds_each": 1500,
+    "native_goal_reported_seconds": {
+      "control": 1005,
+      "treatment": 968,
+      "treatment_minus_control": -37
+    },
+    "t0_to_native_terminal_seconds": {
+      "control": 1028.915512,
+      "treatment": 992.552563,
+      "treatment_minus_control": -36.362949
+    },
+    "t0_to_authored_freeze_proxy_seconds": {
+      "control": 1238.14158,
+      "treatment": 1238.361396,
+      "treatment_minus_control": 0.219816
+    },
+    "eligibility": "Both supplied native terminals and frozen captures fall inside original COMPONENT deadlines; no clock corrections. Exact scientific write time and active-provider time unknown.",
+    "interpretation": "Observed shorter native Goal interval is a raw finite component observation; FAIL/FAIL does not establish equal-quality savings. The authored-freeze proxy is essentially tied and cannot locate actual author delivery."
+  },
+  "resource_billing": {
+    "coverage": "PARTIAL",
+    "candidate_product_billing": "UNKNOWN",
+    "counter_breakdown_active_activity_context_occupancy": "UNKNOWN",
+    "private_cumulative_counter_values": "Not publicly reproduced and not treated as billing",
+    "shared_standalone_preparation_cost": "UNKNOWN",
+    "independent_evaluation": "Separate cost category; shared grader lookup is experiment efficiency, not free candidate product assistance",
+    "v1_coordinator_idle_costs": "UNCHANGED",
+    "consumption_per_passing_final": "UNDEFINED because source_passes=0; no claim about expected retry cost",
+    "unknown_is_not_zero": true
+  },
+  "provenance": {
+    "exact_input_packet_sha256": "f3131a22da06a32f8212383707b090b3805a92cb2bc91824c288d7c696ac9f44",
+    "all_64_manifest_files_verified": true,
+    "both_native_create_terminal_field_bindings_match": true,
+    "both_exact_terminal_tasks": "completed; hasPendingChildRuns=false",
+    "underlying_session_linkage": "UNKNOWN beyond frozen exact custody and matching assigned objectives",
+    "effective_service_tier_and_billing": "UNKNOWN",
+    "private_routing_metadata": "Omitted; operational metadata is not source authority"
+  },
+  "conclusion": {
+    "recipe_selected": false,
+    "selection_owner": "ROOT_ONLY",
+    "credible_equal_quality_optimizer_confirmed": false,
+    "quality_preference": "No passing method preference can be established. The known source-preservation distinction favors control on that obligation only, under this finite assessment.",
+    "integration_boundary": "Any COMPONENT lead would remain an integration hypothesis requiring prospective full-pipeline evidence; no cold full-pipeline or discovery success established.",
+    "originals_unchanged": true,
+    "new_adjudication_required_for_disputes": true,
+    "no_candidate_feedback_or_repairs": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "block_id": "B08-P01",
+  "originals": [
+    {
+      "arm_id": "B08-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/manifest.json",
+      "manifest_sha256": "79c52666d20580f2bc3c5886f55ec98fc424174b6efed312deca3fea356b08fd",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.json",
+      "assessment_sha256": "e063a469efbacceb77cc4cbd74ddf1a65b9ea9ffee086ad94eb800b2dc647ac6",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "material_defects": 0,
+      "nonmaterial_defects": 2,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY_BOUND",
+      "method_compliance": "METHOD_DELTA_SUPPORTED; FULL_PROCEDURAL_COMPLIANCE_UNKNOWN",
+      "native_provenance": "MATCHED_FROZEN_RECEIPTS; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+      "resource_coverage": "PARTIAL_OBSERVATIONS; BILLING_UNKNOWN",
+      "frozen_files_verified": 26,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B08-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/manifest.json",
+      "manifest_sha256": "fd17923bab1a3e0cac3615e3908fcfd0c714658fd568dc3a61d4243d3919e326",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/assessment.json",
+      "assessment_sha256": "90e72469714e5d3b035cb49a9de42ad49cf6f65dda7952070d1b14445cb4efe7",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "material_defects": 0,
+      "nonmaterial_defects": 2,
+      "delivery": "COMPLETE",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY_BOUND",
+      "method_compliance": "METHOD_DELTA_SUPPORTED; FULL_PROCEDURAL_COMPLIANCE_UNKNOWN",
+      "native_provenance": "MATCHED_FROZEN_RECEIPTS; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+      "resource_coverage": "PARTIAL_OBSERVATIONS; BILLING_UNKNOWN",
+      "frozen_files_verified": 27,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/comparison.json",
+  "comparison_sha256": "8c8ff9afb88d35331fdc8169b083ea1dd8aca6929825213379109643aa4b56c8",
+  "verified_at_utc": "2026-10-12T01:11:02.226654+00:00"
+}

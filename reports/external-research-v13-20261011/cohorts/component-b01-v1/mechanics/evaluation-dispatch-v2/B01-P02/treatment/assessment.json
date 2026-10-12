@@ -1,0 +1,171 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "block_id": "B01-P02",
+  "scope": "COMPONENT",
+  "original": true,
+  "arm_count_in_this_file": 1,
+  "arms": [
+    {
+      "arm_id": "B01-P02-treatment",
+      "source_judgment": {
+        "complete_final": "UNASSESSED",
+        "available_partial_science": "FAIL",
+        "material_defect_ids": [
+          "T-S01",
+          "T-P01"
+        ],
+        "assessment_coverage": "PARTIAL",
+        "source_PASS": false,
+        "finite_not_universal": true,
+        "no_complete_grade_fabricated": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "complete_final": "UNASSESSED",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED"
+          }
+        ],
+        "artifact": "coverage.json",
+        "unassessed_remainder": "Detailed native-codec/OS implementation guarantees, broader upstream test suite, absent witness/terminal records."
+      },
+      "defects": {
+        "path": "defects.json",
+        "count": 5
+      },
+      "delivery": {
+        "judgment": "INCOMPLETE_ORIGINAL_CAPPED_ATTEMPT",
+        "notification_status": "ORIGINAL_CAPPED_PARTIAL_ATTEMPT",
+        "final_sha256": "d0865545ecade4f5442f0e9c40404f124e33405b4217f41d98e9bdf3e0fb1248",
+        "partial_final_present": true,
+        "complete_final": "UNASSESSED",
+        "available_dispositions_and_map": "Read completely; do not establish complete delivery.",
+        "missing_required_outputs": [
+          "native-goal-terminal.json"
+        ],
+        "task_terminal_status": "interrupted",
+        "hasPendingChildRuns": false,
+        "rescued_or_restarted": false
+      },
+      "time_eligibility": {
+        "maximum_seconds": 1500,
+        "frozen_T0_utc": "2026-10-12T00:35:53.786428Z",
+        "frozen_deadline_utc": "2026-10-12T01:00:53.786428Z",
+        "dispatch_captured_at_utc": "2026-10-12T00:35:54.179Z",
+        "native_create_utc": "2026-10-12T00:36:08+00:00",
+        "last_complete_scientific_artifact_time_utc": null,
+        "last_artifact_reason": "Frozen input hashes establish content, not author-write time. Filesystem freeze timestamps are not substituted for candidate completion.",
+        "provider_first_activity_time_utc": null,
+        "stage_breakdown": "Single component finalizer after common prepared draft/critique; detailed active/idle/handoff phases unknown.",
+        "judgment": "ORIGINAL_DEADLINE_FAILURE",
+        "native_terminal_utc": null,
+        "T0_to_native_terminal_seconds": null,
+        "interruption_time_utc": null,
+        "reason": "Failure-qualified immutable assignment preserves the capped/interrupted original. No missing timestamp or completion is inferred, and the clock is not reset."
+      },
+      "method_compliance": {
+        "judgment": "FAIL_FROZEN_ASSEMBLY_CONSISTENCY",
+        "coverage": "PARTIAL",
+        "facts": [
+          "Recorded assembly intervals reconstruct the frozen partial final.",
+          "Frozen amendments/script hashes differ from the executed result, and current append yields a different final.",
+          "All draft substantive paragraphs were replaced; retained intervals contain only headings/whitespace. Semantic preservation and byte retention are distinct, but this does not demonstrate the intended supported-prose retention component.",
+          "No refreshed assembly or native terminal is fabricated."
+        ],
+        "shared_preparation": "Identical prepared package supplied; not full-pipeline discovery evidence.",
+        "semantic_preservation": "Partial text assessed independently; T-P01 records an actual supported-meaning loss.",
+        "boundary_isolation": "Instruction contract, not independently proven sandbox isolation."
+      },
+      "native_identity_provenance": {
+        "create_receipt_present": true,
+        "exact_frozen_objective_matches": true,
+        "terminal_task_status": "interrupted",
+        "hasPendingChildRuns": false,
+        "task_terminal_receipt_hash": "6629f9d35c99db6e9a8a6c60419195079d10962df43a49e415c979440137a7cd",
+        "requested_model_matches_task_metadata": true,
+        "provider_instance_metadata_present_but_private_identity_redacted": true,
+        "native_goal_to_task_linkage": "UNKNOWN beyond frozen packet/file custody and matching objective; native receipt does not attest the T3 delegated task identity.",
+        "service_tier": "UNKNOWN; requested options are not returned-tier proof.",
+        "effort": "UNKNOWN independently; request only.",
+        "native_transcripts": "Not accessed or published.",
+        "native_terminal_receipt_present": false,
+        "native_terminal_status": "UNASSESSED",
+        "same_birth_as_packet": true,
+        "native_status_coverage": "Create observed; completion UNASSESSED. Interrupted task terminal is not native Goal completion.",
+        "native_recipe_qualification": false
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "observable_native_cumulative_counter_present": false,
+          "counter_values": "Not published under artifact privacy rule; retained only in exact input receipts.",
+          "counter_semantics_and_billing_linkage": "UNKNOWN",
+          "provider_active_seconds": null,
+          "created_or_started_context_occupancy": null,
+          "overlap": null,
+          "input_cached_output_reasoning_subsets": null,
+          "subscription_consumption": null,
+          "billing_amount": null,
+          "currency": null,
+          "affordability": "UNKNOWN"
+        },
+        "preparation": {
+          "shared_package": "Campaign preparation separate from each finalizer; standalone cold preparation amount UNKNOWN here.",
+          "arm_specific_setup_and_queue": "Included in frozen T0 clock; active/idle breakdown UNKNOWN."
+        },
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "started_at_utc": null,
+          "activity": "One evaluator, shared independent lookup and one in-memory mechanism witness; no extra graders.",
+          "billing_amount": null,
+          "resource_activity_counters": null,
+          "first_confirmed_clock_observation_utc": "2026-10-12T01:12:51Z",
+          "time_note": "Exact harness start and provider-active duration are unavailable; no candidate clock is changed."
+        },
+        "other_campaign_costs": "v1 coordinator idle/support/publication totals not read or changed; UNKNOWN here.",
+        "unknown_is_zero": false,
+        "counter_addition": "No overlapping counters added and no billing inferred."
+      }
+    }
+  ],
+  "blinding": "Imperfect: technique-bearing paths, prompts and output expose method. Separate original judgment frozen before comparative analysis.",
+  "governing_packet_sha256": "72dc6ed10bdf823d24defb3e8ae49da1d8216b9c180d3bb4fd244c50732c0082",
+  "prohibited_access_and_actions": "No admitted/active files, full history/tree scan, held-out cases, Git, canon, WorkNodes, shared server/provider changes, candidate feedback or additional scientific candidates.",
+  "limitations": [
+    "Technique-bearing paths, prompts and outputs reveal arm methods; blinding is imperfect.",
+    "All available original prose, dispositions, maps and method records were examined; source bodies were hash-verified and consequential regions inspected. This is not exhaustive review of every test or every native codec/OS implementation.",
+    "Decisive name-pipeline defects preclude source PASS; remaining expensive platform/native-code guarantees are UNASSESSED.",
+    "A planning proposal is the deliverable. No deployment, importer execution, Windows run or future software execution is required for this evaluation.",
+    "Unknown workload, supported content list and numeric thresholds may remain owner decisions; available source-mechanism research is assessed separately.",
+    "Independent evaluation costs are separate from candidate product and shared package preparation; no billing or activity total is inferred.",
+    "No candidate assistance, author feedback, repair, extra graders, held-out access, Git/canon modification, provider change, or scientific-candidate launch occurred."
+  ]
+}

@@ -1,0 +1,97 @@
+URL: https://www.python.org/downloads/release/python-3139/
+Full response SHA256: 43b18f4039582cbacb185f2b65b569acf09d9df345afd6e10dfdfacbd3513b65
+Retrieved UTC: 2026-10-12T01:16:14.823905+00:00
+Representation: numbered original code lines or normalized HTML content; full-body hashes apply to raw responses.
+
+Python 3.13.9 | Python.org
+Notice: This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.
+Skip to content
+▼ Close
+Python
+PSF
+Docs
+PyPI
+Jobs
+Community
+▲ The Python Network
+Donate
+≡ Menu
+Search This Site
+GO
+A A
+Smaller
+Larger
+Reset
+Socialize
+LinkedIn
+Mastodon
+Chat on IRC
+Twitter
+About
+Applications
+Quotes
+Getting Started
+Help
+Downloads
+All releases
+Source code
+Windows
+macOS
+Android
+iOS
+Other Platforms
+License
+Alternative Implementations
+Documentation
+Docs
+Audio/Visual Talks
+Beginner's Guide
+FAQ
+Non-English Docs
+PEP Index
+Python Books
+Python Essays
+Community
+Diversity
+Mailing Lists
+IRC
+Forums
+PSF Annual Impact Report
+Python Conferences
+Special Interest Groups
+Python Logo
+Python Wiki
+Code of Conduct
+Community Awards
+Get Involved
+Shared Stories
+Success Stories
+Arts
+Business
+Education
+Engineering
+Government
+Scientific
+Software Development
+News
+Python News
+PSF Newsletter
+PSF News
+PyCon US News
+Python Insider
+News from the Community
+Events
+Python Events
+User Group Events
+Python Events Archive
+User Group Events Archive
+Submit an Event
+Python 3.13.9
+Note: Python 3.13.9 has been superseded by Python 3.13.16.
+Release date: Oct. 14, 2025
+This is the ninth maintenance release of Python 3.13
+Note: This is Python 3.13.9, a maintenance release for Python 3.13. Python 3.14 is now the latest feature release series of Python 3.  Get the latest release of 3.14.x here.
+3.13.9 is an expedited release containing a fix for one specific regression in Python 3.13.8:
+gh-139783: Fix inspect.getsourcelines for the case when a decorator is followed by a comment or an empty line.
+There are no other changes in this release, compared to 3.13.8.
+

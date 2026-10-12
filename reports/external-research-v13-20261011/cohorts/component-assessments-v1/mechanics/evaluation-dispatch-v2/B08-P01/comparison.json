@@ -1,0 +1,111 @@
+{
+  "schema": "er13.paired-original-comparison.v2",
+  "block_id": "B08-P01",
+  "scope": "COMPONENT",
+  "arm_count": 2,
+  "created_at_utc": "2026-10-12T01:08:50.551192+00:00",
+  "all_originals_frozen_before_comparison": true,
+  "original_block_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/manifest.json",
+    "bytes": 9119,
+    "sha256": "1ece2e78ccbdbbcb8e4117c198553a555f52bca5ec8b1c5a3b074df89f062530"
+  },
+  "original_arm_manifests": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/manifest.json",
+      "bytes": 7174,
+      "sha256": "79c52666d20580f2bc3c5886f55ec98fc424174b6efed312deca3fea356b08fd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/manifest.json",
+      "bytes": 7441,
+      "sha256": "fd17923bab1a3e0cac3615e3908fcfd0c714658fd568dc3a61d4243d3919e326"
+    }
+  ],
+  "original_assessments": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.json",
+      "bytes": 24152,
+      "sha256": "e063a469efbacceb77cc4cbd74ddf1a65b9ea9ffee086ad94eb800b2dc647ac6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/assessment.json",
+      "bytes": 24378,
+      "sha256": "90e72469714e5d3b035cb49a9de42ad49cf6f65dda7952070d1b14445cb4efe7"
+    }
+  ],
+  "original_grade_changes": false,
+  "source_quality": {
+    "control": "PASS",
+    "treatment": "PASS",
+    "coverage_each_arm": "COMPLETE for all six semantic axes and all consequential proposal obligation/source families",
+    "material_defects_each_arm": 0,
+    "nonmaterial_findings_each_arm": 2,
+    "assessment_extent_comparable": true,
+    "finite_signal": "Both preserve the core corrected queue proposal. Treatment adds explicit no-await transitions, pending-stop reporting and conditional output primitives; control generalizes the process execution alternative. These are finite specificity differences, not demonstrated application reliability.",
+    "blinding": "Imperfect: arm/method labels, technique-bearing paths and treatment witness were visible."
+  },
+  "findings": {
+    "control": [
+      "B08-C-N1: multiple collapsed-line/exact-anchor inaccuracies, including target cancellation and retrieved-item regression locations.",
+      "B08-C-N2: process-based CPU execution option explicit in disposition but generalized in final prose; nonmaterial specificity loss."
+    ],
+    "treatment": [
+      "B08-T-N1: thread-safety/os.replace/NamedTemporaryFile/mkstemp exact anchors point at other target-file sections.",
+      "B08-T-N2: cancellation ledger state and four retrieved items are simulated; no worker task cancellation or four-task pool ran. Counterexample still validates queue accounting."
+    ]
+  },
+  "paired_latency": {
+    "metric": "Original T0 to exact verified native-Goal terminal receipt timestamp; named proxy only.",
+    "control_seconds": 1084.239074,
+    "treatment_seconds": 701.923084,
+    "treatment_minus_control_seconds": -382.31599000000006,
+    "relative_proxy_reduction_percent": 35.26122597570211,
+    "native_goal_elapsed_seconds": {
+      "control": 1068,
+      "treatment": 677
+    },
+    "native_goal_lifecycle_interval_arithmetic": {
+      "sum_seconds": 1745,
+      "union_seconds": 1068,
+      "overlap_seconds": 677,
+      "interpretation": "Only overlapping native create-to-terminal receipt intervals. Not confirmed provider-context occupancy, active compute or billed duration."
+    },
+    "authored_freeze_upper_bound_seconds": {
+      "control": 1235.857286,
+      "treatment": 771.381749
+    },
+    "time_eligibility_each_arm": "Inside original 25-minute maximum by frozen custody evidence; no clock reset.",
+    "last_complete_scientific_write_time_each_arm": "UNKNOWN",
+    "request_to_quiet_delivery_each_arm": "UNKNOWN",
+    "scope_limit": "One matched pair; proxy advantage is not a repeatable causal saving or cold full-pipeline result. Freeze overhead is not candidate scientific completion latency."
+  },
+  "method_and_provenance": {
+    "method_delta_observed_each_arm": true,
+    "procedure_verification": "PARTIAL; exact script execution, independent session linkage and boundary enforcement UNKNOWN.",
+    "same_goal_creation_terminal_binding_each_arm": true,
+    "verified_terminal_status_each_arm": "completed",
+    "hasPendingChildRuns_each_arm": false,
+    "requested_route": "Operational private provenance only; identities/options not republished or used as source truth.",
+    "no_extra_candidates_graders_or_author_feedback": true
+  },
+  "resource_billing": {
+    "candidate_product_billing_disjoint_tokens_active_compute_context_occupancy": "UNKNOWN",
+    "observable_native_counter_fields": "Present privately; not republished, summed with other counters or interpreted as billed usage.",
+    "all_assigned_denominator": 2,
+    "observed_frozen_finals": 2,
+    "finite_source_passing_finals": 2,
+    "total_candidate_consumption_per_passing_final": "UNKNOWN numerator; no affordability inference.",
+    "shared_component_preparation": "Separate campaign preparation; cold standalone preparation cost UNKNOWN.",
+    "independent_evaluation": "Shared evaluator lookup/replay belongs to independent_evaluation, separate from candidate product. Total evaluator resource/billing UNKNOWN.",
+    "v1_coordinator_idle_costs": "UNCHANGED",
+    "no_overlapping_counter_addition": true
+  },
+  "limits": {
+    "future_application_os_filesystem_child_process_gui_crash_recovery_execution": "UNASSESSED and not needed to deliver the requested proposal.",
+    "unrelated_primary_apis_complete_history_or_discovery_recall": "UNASSESSED/outside declared semantic scope.",
+    "evaluation_replay": "Frozen treatment witness replay matched stdout; its installed CPython 3.14.4 and simulated labels remain bounded evidence.",
+    "metadata_count_clarification": "The original delivery.scientific_input_count values 29/33 count all manifest-listed frozen files including custody/witness artifacts, not unique sources, claims or scientific quality. Original bytes/grades unchanged."
+  },
+  "selection": "No campaign recipe selected. Root alone selects recipes. Both originals pass this finite component review; any apparent quality/latency preference remains uncertain and COMPONENT leads require prospective integration."
+}

@@ -1,0 +1,131 @@
+{
+  "schema": "er13.frozen_pair_comparison.v2",
+  "block_id": "B04-P02",
+  "scope": "COMPONENT",
+  "arm_count": 2,
+  "comparison_started_at_utc": "2026-10-12T01:06:22.554510+00:00",
+  "originals_frozen_before_comparison": [
+    {
+      "arm_id": "B04-P02-control",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/manifest.json",
+      "manifest_sha256": "299e3cd593e2d16f3df63c9261bfe5215a0aba21faf830cf59892c7198f448a8",
+      "frozen_at_utc": "2026-10-12T01:05:17.558654+00:00",
+      "files_verified": 7
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/manifest.json",
+      "manifest_sha256": "19505cba1da088b7ec467d9ab7533446ba44b0ea5011280835ae8c9f2410bb60",
+      "frozen_at_utc": "2026-10-12T01:05:17.565142+00:00",
+      "files_verified": 7
+    }
+  ],
+  "originals_mutated": false,
+  "original_judgments": [
+    {
+      "arm_id": "B04-P02-control",
+      "source_judgment": "FAIL",
+      "delivery": "DELIVERED",
+      "axis_coverage": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_identity_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_billing_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "material_defect_ids": [
+        "B04-P02-control-D1"
+      ]
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "source_judgment": "FAIL",
+      "delivery": "DELIVERED",
+      "axis_coverage": "COMPLETE",
+      "time_eligibility": "ELIGIBLE",
+      "method_compliance": "PARTIAL_VERIFICATION",
+      "native_identity_provenance": "BOUND_RECEIPTS_WITH_LINKAGE_LIMIT",
+      "resource_billing_coverage": "PARTIAL_WITH_UNAVAILABLE_BILLING",
+      "material_defect_ids": [
+        "B04-P02-treatment-D1"
+      ]
+    }
+  ],
+  "paired_source_findings": {
+    "shared_material_omission": "Both explicitly forward non-GET/unsafe requests but omit RFC 9111 section 4.4 target invalidation after a 2xx/3xx response. Only account-session invalidation appears in treatment; it is not the required protocol transition.",
+    "shared_supported_work": "Both substantially correct F1-F5, preserve private account isolation/bytes/storage/UI/library-custom-live/history, and report future tests honestly.",
+    "treatment_nonmaterial_limits": "Future-export provenance/account/privacy/no-relabeling context is compressed, and qualified-private shared-cache exception is not explained. Original nonmaterial grading remains unchanged.",
+    "common_critique_preservation": "Conventional and compact inputs preserve the core material F1-F5 corrections, supported keeps and uncertainties. Component preparation and final semantic preservation were assessed separately.",
+    "source_quality_preference": "NO_CONFIRMED_PASSING_LEAD",
+    "reason": "FAIL/FAIL is not equal-quality optimization evidence, even when failure identities match. Root alone selects recipes; no selection made here."
+  },
+  "latency_observations": {
+    "control": {
+      "judgment": "ELIGIBLE",
+      "coverage": "COMPLETE_FOR_FROZEN_MAXIMUM_BOUND",
+      "scope": "COMPONENT",
+      "maximum_elapsed_seconds": 1500,
+      "minimum_elapsed_seconds": 0,
+      "t0_utc": "2026-10-12T00:35:55.464810Z",
+      "absolute_deadline_utc": "2026-10-12T01:00:55.464810Z",
+      "prepared_at_utc": "2026-10-12T00:35:55.504084Z",
+      "dispatch_receipt_capture_utc": "2026-10-12T00:35:56.137Z",
+      "native_create_receipt_utc": "2026-10-12T00:36:12+00:00",
+      "native_terminal_receipt_utc": "2026-10-12T00:45:07+00:00",
+      "native_elapsed_seconds_observed": 535,
+      "t0_to_native_terminal_seconds": 551.53519,
+      "authored_freeze_utc": "2026-10-12T00:47:15.332726+00:00",
+      "t0_to_authored_freeze_seconds": 679.867916,
+      "complete_frozen_artifact_availability_before_deadline": true,
+      "last_complete_scientific_artifact_write_time_utc": null,
+      "request_to_quiet_final_proxy_seconds": null,
+      "limits": "Freeze time is a verified upper bound for frozen output availability, not a reconstructed actual final-write or user-visible quiet time. Native elapsed is Goal residency, not active/billed work. Original clocks unchanged."
+    },
+    "treatment": {
+      "judgment": "ELIGIBLE",
+      "coverage": "COMPLETE_FOR_FROZEN_MAXIMUM_BOUND",
+      "scope": "COMPONENT",
+      "maximum_elapsed_seconds": 1500,
+      "minimum_elapsed_seconds": 0,
+      "t0_utc": "2026-10-12T00:35:56.350554Z",
+      "absolute_deadline_utc": "2026-10-12T01:00:56.350554Z",
+      "prepared_at_utc": "2026-10-12T00:35:56.392597Z",
+      "dispatch_receipt_capture_utc": "2026-10-12T00:35:56.944Z",
+      "native_create_receipt_utc": "2026-10-12T00:36:08+00:00",
+      "native_terminal_receipt_utc": "2026-10-12T00:50:13+00:00",
+      "native_elapsed_seconds_observed": 845,
+      "t0_to_native_terminal_seconds": 856.649446,
+      "authored_freeze_utc": "2026-10-12T00:55:02.563240+00:00",
+      "t0_to_authored_freeze_seconds": 1146.212686,
+      "complete_frozen_artifact_availability_before_deadline": true,
+      "last_complete_scientific_artifact_write_time_utc": null,
+      "request_to_quiet_final_proxy_seconds": null,
+      "limits": "Freeze time is a verified upper bound for frozen output availability, not a reconstructed actual final-write or user-visible quiet time. Native elapsed is Goal residency, not active/billed work. Original clocks unchanged."
+    },
+    "treatment_minus_control_native_goal_residency_seconds": 310,
+    "treatment_minus_control_t0_to_authored_freeze_seconds": 466.34477,
+    "request_to_quiet_final_difference_seconds": null,
+    "interpretation": "Native Goal residency and authored-freeze availability bounds are distinct observations. They do not reconstruct actual last-write, queue/active provider phases or billed latency. No equal-quality savings claim is made."
+  },
+  "resource_comparison": {
+    "observed_passing_finals": 0,
+    "assigned_finals": 2,
+    "candidate_consumption_per_passing_final": null,
+    "quotient_status": "UNDEFINED_ZERO_SOURCE_PASSES",
+    "cost_category": "independent_evaluation is separate from candidate product",
+    "billing_comparison": null,
+    "provider_activity_comparison": null,
+    "context_occupancy_comparison": null,
+    "cold_pipeline_total": null,
+    "coordinator_v1_idle_costs": "unchanged",
+    "privacy": "Private operational route/account data, tokens, native full transcripts and machine state are omitted."
+  },
+  "limits": [
+    "One matched component pair is a finite signal, not replication or non-inferiority proof.",
+    "No discovery effectiveness or cold full-pipeline qualification.",
+    "Future library/client/OS integration and behavioral validation UNASSESSED; broader HTTP transport source review PARTIAL.",
+    "All six proposal axes and consequential assigned cache obligations were assessed COMPLETE; the source FAILs do not mask an early-stop unassessed remainder.",
+    "Independent native-session linkage and actual tier/billing remain unknown despite matching native receipts and completed/no-pending task receipts.",
+    "Technique visible in paths/prompts/output, making blinding imperfect."
+  ],
+  "adjudication_policy": "Disputes require a NEW separate adjudication retaining original brief, findings, responses and unresolved objections. No original grades changed or repeat-until-pass grader dispatched.",
+  "root_handoff": "Two frozen originals and paired comparison complete; exact assigned task terminal receipts report zero pending child runs. Parent may verify output hashes and settle; no findings sent to candidate authors."
+}

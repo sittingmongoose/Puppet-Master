@@ -1,0 +1,70 @@
+{
+  "literal_normalization": [
+    "Private runtime root => ER13_RUNTIME",
+    "Private worktree root => ER13_WORKTREE",
+    "Private provider route => AUTHORIZED_PROVIDER_INSTANCE",
+    "Private account => privacy placeholder"
+  ],
+  "structured_extractions": [
+    {
+      "path": "evaluators/B01-P01/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "571cb6e1992b4ae8c07dc274939508ad5799784fe8da01726afc4cdc5cb24612",
+      "terminal_original_sha256": "a4c5c88ef4c12af87f3df901b2c06f412fd2373b1369800fe1f42958a31533ca"
+    },
+    {
+      "path": "evaluators/B01-P02/dispatch-terminal.json",
+      "operation": "scoped field extraction",
+      "reason": "exclude transport duplicates, terminal summaries/transfer IDs; preserve task/config/terminal binding, no full transcripts",
+      "dispatch_original_sha256": "cdc45bb10c0b377cf753c2449e78ff51f4bdf8bbb2f9c0e79a845d2dca1c3e40",
+      "terminal_original_sha256": "0e79e3418cd16940ab55ad72cfa18d016c1f64ea2d9f0a09e222e9dece7aa21e"
+    },
+    {
+      "path": "candidate-terminals/B01-P01-control.json",
+      "original_sha256": "0a1565f27d3be3016779054b6c56d5f8f8571884e088c4bfa9176384fb196af0",
+      "operation": "terminal bound-field capsule excluding narrative/transfer envelope"
+    },
+    {
+      "path": "candidate-terminals/B01-P01-treatment.json",
+      "original_sha256": "1eeeb064433f53e3911353c4ef32ca507d7137a2b03f184b442f8dc0e03c3e0d",
+      "operation": "terminal bound-field capsule excluding narrative/transfer envelope"
+    },
+    {
+      "path": "candidate-terminals/B01-P02-control.json",
+      "original_sha256": "9101b098b08435f7210075d45af3acf49db96f01d73c6f2f7dd9f02453641925",
+      "operation": "terminal bound-field capsule excluding narrative/transfer envelope"
+    },
+    {
+      "path": "candidate-terminals/B01-P02-treatment.json",
+      "original_sha256": "6629f9d35c99db6e9a8a6c60419195079d10962df43a49e415c979440137a7cd",
+      "operation": "terminal bound-field capsule excluding narrative/transfer envelope"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-control/dispatch.json",
+      "operation": "omit memory_available_gib_before_launch only",
+      "reason": "private host memory state",
+      "original_sha256": "0efdb9bb0711eede11e190494bd91d02787596555d63db79257bed0c91b9f92a"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P01-treatment/dispatch.json",
+      "operation": "omit memory_available_gib_before_launch only",
+      "reason": "private host memory state",
+      "original_sha256": "5eb9bea7e7a68f5efd4a1448fa584b18432db9d01b66c24cb809dbd77e6f9619"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P02-control/dispatch.json",
+      "operation": "omit memory_available_gib_before_launch only",
+      "reason": "private host memory state",
+      "original_sha256": "5028fa7903f86dc63928043cfd386635eebc1551a374d2c4cf720a9111b723a4"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B01-P02-treatment/dispatch.json",
+      "operation": "omit memory_available_gib_before_launch only",
+      "reason": "private host memory state",
+      "original_sha256": "5b710607eec069c21bf32c19ccb31e2bf5e79a742475010e7d9afb0fbc54c71e"
+    }
+  ],
+  "judgment_changes": 0,
+  "papers": "Only original authored capsules and locators; no additional paper bodies admitted."
+}

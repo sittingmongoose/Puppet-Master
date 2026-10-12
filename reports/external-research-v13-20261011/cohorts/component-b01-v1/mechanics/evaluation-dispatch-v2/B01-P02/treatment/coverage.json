@@ -1,0 +1,233 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "B01-P02-treatment",
+  "overall": "PARTIAL",
+  "complete_final": "UNASSESSED",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "PARTIAL",
+      "finding": "Complete brief, plan, draft and available final text reviewed. Core no-execution/no-trust/new-project constraints, selection, visible diagnostics, staging and cancellation are present; the original-name rejection mechanism has a material defect. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "finding": "Pinned docs, code/callers, selected upstream tests, release and Unicode history verified independently. The consequential extra-field exception is missing; native codecs and full OS guarantees are unassessed. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "finding": "ZipInfo identity, parser allocation before entry-count checks, method support restrictions and alternatives/history are useful. Available Unicode override is missed. Detailed OS hard-limit/ACL/alias mechanisms remain unassessed. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "PARTIAL",
+      "finding": "Every supplied C1-C4 decision and every available additional disposition inspected. C1/C2 factual corrections and C3 overwrite rejection are justified. Original-name treatment is defective; no critic agreement is treated as proof. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "PARTIAL",
+      "finding": "All draft meanings and critique conditions compared with the partial final: alternatives/history and negative controls survive, but reject-unexpected-content becomes warning-only. Mechanical retention is headings/whitespace. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "PARTIAL",
+      "finding": "The proposed test matrix is meaningful and is correctly separated from source inspection/document assembly. Importer/Windows/adversarial/durability/performance execution is not claimed. The missing Unicode-extra branch also leaves a relevant test gap. This assesses the available partial text only; complete-final coverage is UNASSESSED.",
+      "complete_final_coverage": "UNASSESSED"
+    }
+  ],
+  "obligations": [
+    {
+      "id": "user_flow",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Preview individual records; supported selection into a new project; unsupported diagnostics and no general ZIP ban."
+    },
+    {
+      "id": "no_execution_or_auto_trust",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Both intent and explicit invariant retained; no application execution verified or required."
+    },
+    {
+      "id": "unsafe_names_and_decoding",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Assessed governing header/Unicode-extra pipeline; material missing branch demonstrated."
+    },
+    {
+      "id": "destination_collisions_and_identity",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Exact/case/platform aliases and file/ancestor conflicts planned before writes; selected ZipInfo identity retained."
+    },
+    {
+      "id": "nested_and_empty_directories",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Preservation is stated; directory test context reviewed. Directory slash handling remains an implementation detail; control empty-component wording is not proof of an implemented rejection."
+    },
+    {
+      "id": "compression_and_encryption",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Stored/deflate choice is narrower product policy; other codecs and supported encryption capability remain acknowledged."
+    },
+    {
+      "id": "corruption_crc_and_size_boundaries",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "CRC/EOF and local-header/size mechanics reviewed. No exhaustive malformed-input oracle or native decompressor review."
+    },
+    {
+      "id": "resource_limits",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Pre-parse bounded archive, count and real output controls reviewed; exact OS worker resource enforcement/native allocation remainder UNASSESSED."
+    },
+    {
+      "id": "cancellation",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Before-commit rollback and chunk checkpoints stated; actual implementation responsiveness not tested or demanded."
+    },
+    {
+      "id": "confinement_staging_publication_recovery",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Private owned stage, no-replace commit and recovery requirements assessed; complete ACL/race/crash guarantees UNASSESSED."
+    },
+    {
+      "id": "existing_projects_untouched",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "No existing-project write/merge and no-replace publication required; prospective verification is explicit."
+    },
+    {
+      "id": "content_validation",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Eligibility/signature limitations assessed; draft rejection is weakened to warnings without disposition."
+    },
+    {
+      "id": "alternatives_and_rejected_history",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Standard staged extraction, controlled streaming and future manifest format retained; prior existing-project one-click approach remains rejected."
+    },
+    {
+      "id": "all_criticism_dispositions",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "C1-C4 and all available additional/subdispositions examined; no missing criticism record fabricated."
+    },
+    {
+      "id": "preservation",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "All substantive original draft paragraphs compared with available final; no token-count proof."
+    },
+    {
+      "id": "validation_truthfulness",
+      "coverage": "PARTIAL",
+      "available_text_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Research, assembly, proposed platform/product tests distinguished; source witness domain separate."
+    },
+    {
+      "id": "absent_witness_code_or_terminal",
+      "coverage": "UNASSESSED",
+      "available_text_coverage": "UNASSESSED",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment": "Control assembly source/detail not frozen; treatment terminal/refreshed result not present. Missing material is not inferred from active paths."
+    }
+  ],
+  "source_families": [
+    {
+      "id": "CP-doc",
+      "coverage": "COMPLETE",
+      "scope": "The listed API facts, not the entire library."
+    },
+    {
+      "id": "CP-code",
+      "coverage": "PARTIAL",
+      "scope": "The caller constructs ZipInfo, then _decodeExtra may replace filename from CRC-matching version-1 0x7075 data. orig_filename stays the header-derived value; open compares the local header against that original."
+    },
+    {
+      "id": "CP-tests",
+      "coverage": "PARTIAL",
+      "scope": "Path transformations, supported Unicode-extra handling including malformed/empty extras, selected CRC checks, directory and legacy encoding cases were inspected. Upstream tests were not executed."
+    },
+    {
+      "id": "CP-release",
+      "coverage": "COMPLETE",
+      "scope": "The requested release is retained; later current releases are not substituted. Independent commit API identifies the frozen pin as Python 3.13.9, and all three tag bodies match commit/cache hashes."
+    },
+    {
+      "id": "CP-Unicode-history",
+      "coverage": "COMPLETE",
+      "scope": "Unicode Path support is a real implemented capability. Historical issue title describes the earlier deficiency, not the frozen release behavior."
+    },
+    {
+      "id": "ZIP-spec",
+      "coverage": "PARTIAL",
+      "scope": "4.6.9 defines the UTF-8 path override, version and CRC of header-name bytes; UTF-8-flag decoding is not the only possible effective name mechanism."
+    },
+    {
+      "id": "Windows-naming",
+      "coverage": "PARTIAL",
+      "scope": "Default case behavior, reserved characters/devices (including extensions and superscript COM/LPT digits), trailing dot/space, 8.3 aliases and namespace/path limits. Neither generic Unicode casefold nor source inspection proves every filesystem equivalence."
+    },
+    {
+      "id": "Windows-publication",
+      "coverage": "PARTIAL",
+      "scope": "Directory moves are constrained to one drive. Copy/delete and replace flags have distinct behavior; this documentation does not establish the proposal's full crash, ACL or atomic-publication protocol."
+    },
+    {
+      "id": "Linux-publication",
+      "coverage": "PARTIAL",
+      "scope": "RENAME_NOREPLACE documents failure for an existing target and unsupported flag handling; filesystem-specific correctness and power-loss durability remain outside this assessment. The man7 fetch failed; kernel primary documentation was consulted instead."
+    },
+    {
+      "id": "OS-hardening-and-native-codec",
+      "coverage": "UNASSESSED",
+      "scope": "Expensive exhaustive mechanism review stopped after decisive source defect; no correctness grade inferred for this remainder."
+    }
+  ],
+  "stop_rule": "Full available authored prose was reviewed. Decisive source defect found; expensive remaining native-codec/OS implementation and wider test-suite assessment not completed. That remainder is UNASSESSED, not PASS.",
+  "limits": [
+    "Technique-bearing paths, prompts and outputs reveal arm methods; blinding is imperfect.",
+    "All available original prose, dispositions, maps and method records were examined; source bodies were hash-verified and consequential regions inspected. This is not exhaustive review of every test or every native codec/OS implementation.",
+    "Decisive name-pipeline defects preclude source PASS; remaining expensive platform/native-code guarantees are UNASSESSED.",
+    "A planning proposal is the deliverable. No deployment, importer execution, Windows run or future software execution is required for this evaluation.",
+    "Unknown workload, supported content list and numeric thresholds may remain owner decisions; available source-mechanism research is assessed separately.",
+    "Independent evaluation costs are separate from candidate product and shared package preparation; no billing or activity total is inferred.",
+    "No candidate assistance, author feedback, repair, extra graders, held-out access, Git/canon modification, provider change, or scientific-candidate launch occurred."
+  ]
+}
