@@ -79,20 +79,32 @@ the theme menu's Light/Dark/Auto is one radiogroup with one checked radio and no
 1em box-less square with a shared-vocabulary key; the Claude roster row reads "3 of 4 accounts"; meter tracks have
 square ends.
 
-## Finding (HOLD item)
+## Setup limitation (retained; recorded as a failure, not waived)
 
 The gate could not start its walk at 1920x1080 normal motion: its first look change did not paint ("look did not
 apply: basic-light got basic-dark"). Reproduced in the gate's exact flow on main's own `PMConcept7.html`
 (`5f87466e...`) 2 of 2 and on this branch's page 2 of 2; fresh incognito contexts apply correctly on both (6 of 6).
 Existing main behaviour in a fresh agent-browser default profile, not introduced by this branch; no source or tool
-was changed in response. Details: `gate-1920-normal-diagnosis.md` in the evidence folder.
+was changed in response. Details: `gate-1920-normal-diagnosis.md` in the evidence folder. The companion's bounded setup
+checks (below) also failed at the same first look on main's page in an owned isolated context. The root cause remains
+unestablished; root ruled it pre-existing and nonblocking for this approved branch, with no fix, waiver or green
+default claimed. The failed logs above stay failures alongside the passes.
 
-## Not run on the final base
+## Completed on the current base by the root-approved test companion
 
-- The gate's full `--dialogs` walk. Earlier, on Nas1 before the hover base: all ten looks with every one-click dialog
-  (2505 views) found only the dropdown search, fixed by `7407af13de`; after the fix the two affected looks (Friendly
-  Light, Glass Dark, 496 views) were re-walked clean.
-- The landing check in the shared checkout (landing only). Worktree dry run at `639d3dc712` (base `239956e854`): exit 1,
-  nothing stops; governance staleness for the two edited Plans documents and readiness growth 23 to 25 (reseal request);
-  16 `json_syntax` rows from the worktree lacking the ignored `tests/agent_packet_restrictions` link (present in the
-  shared checkout).
+`codex-pm7-dialog-gate` (root-approved, fast-forwarded into this branch: `95fea0976802ad4a0d240a3ff067ba1664518a39`
+code, `ec1dac0c67fa5275a6df2447cc738650f6f1e815` report) added `--fresh-context` to `tools/pill_check.mjs` (an owned
+isolated CDP context; collector, predicates, thresholds, exemptions, look setting and confirmation, catalog and
+traversal unchanged; tested driver `2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041`) and ran the full
+gate with every one-click Settings dialog on the P1000 at 1920x1080 on the frozen `b612df00...` page: normal 2513 views
+and Reduced Motion 2631 views, all ten looks, 29 Settings pages per look, four scopes, each 0 findings, 0 failed views,
+0 page errors. Report `reports/pm7-settings-dialog-gate-20261012/NOTES.md`; evidence
+`/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-settings-dialog-gate-20261012/` (`SHA256SUMS`
+`4f593a78cfc35cb1a1dc51a6ecb12af8813ed77ad5a8d4f39257d8c995eef6db`). The 334-entry bundle above stays immutable. The
+functional driver `f0f9293c...` and the LeftRail page `57904010...` were not re-walked; their results above stand.
+
+## Landing check
+
+Run at landing in the shared checkout (`python3 scripts/pm-landing-check.py --base origin/main`); its verdict is in the
+landing receipt. Earlier worktree dry run at `639d3dc712` (base `239956e854`): exit 1, nothing stops; governance
+staleness for the two edited Plans documents and readiness growth 23 to 25 (reseal request).
