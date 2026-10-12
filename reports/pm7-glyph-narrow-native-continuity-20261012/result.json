@@ -1,0 +1,585 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-12T16:51:18.848348+00:00",
+  "task": "P3 ONLY narrow native-motion supplement; same original Code730 worker",
+  "worker": "codex-pm7-glyph-compose",
+  "status": "RECORDED_FOR_SCOPED_REVIEW / HOLD",
+  "frozen_start_and_actual_tested_head": "a55331bdf7aefa83f5b02ebf1932bdbe2dfee83e",
+  "expected_report_commit_sole_parent": "a55331bdf7aefa83f5b02ebf1932bdbe2dfee83e",
+  "unlanded_branch": "fix/pm7-glyphs-compose-20261012",
+  "main_both_remotes": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+  "source_head": "81617137658b89ace8af7eeac2baf8c5918364f8",
+  "publication": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+  "approval_binding": {
+    "P3_GO": "2026-10-12 home-redesign-planner same-channel explicit P3-only execution amendment",
+    "latest_prior_root_mail": "1012153013-9489",
+    "prior_P4_root_review": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-rm-existing-movie-root-review/root-review.json",
+      "sha256": "f32270a98de244c3825cda1300345ed3295eab9a071c9fcfae6e1982d6d77286"
+    },
+    "PhaseA_minimum_plan_P3": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-evidence-gap-diagnosis/result.json",
+      "sha256": "b80514133b1c338124f3464b6199a5d4b01bb6945cf189b77f3f064935ed1211",
+      "justification": "19 of20 original critical intervals had intentional paired-contrast hides, including the15 NORMAL narrow rows; original packets and holds remain unchanged."
+    },
+    "GPU_resource_coordination": "1012164221-23e9 received; profiler actual reply1012164521-414e and root correction1012164521-77fb; no P3 decode planned. Future authorized GPU work requires prior profiler/root coordination."
+  },
+  "frozen_blob_lineage": [
+    {
+      "path": "Concepts/PMConcept7.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "git_blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/HomeTestPMConcept7.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "git_blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "git_blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/LeftRailPMConcept7.html",
+      "bytes": 19500575,
+      "sha256": "454cc7ef4ce3f28a337585a1654f39dfc5e227399f03acb25cb65740a3ca30e9",
+      "git_blob": "48ef4fb3b69d9ce2364d57c701ed011a64379c5f"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/src/css/25-glyphs.css",
+      "bytes": 4752,
+      "sha256": "37a7c6b2e3552141647ca0b2a57995064e79debdcf42426629b9c0c9d7c03b87",
+      "git_blob": "2cf9de94cc2da10ae97e46ca2ce25262a82bde1d"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/tools/pill_check.mjs",
+      "bytes": 35036,
+      "sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+      "git_blob": "3dfdd9fbdab822591bb4a2358bb2cf7574331e1f"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/tools/settings_nopills_accept.mjs",
+      "bytes": 16737,
+      "sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
+      "git_blob": "c19ae242ebdf2ff6dff5b902d34aab3abb9951c3"
+    }
+  ],
+  "new_outside_repo_helper": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/acquire-native-only.mjs",
+    "sha256": "b5c18f18e768d840b56679724568b2959ccc17230ae4246e93a988cb82954ab6",
+    "bytes": 22813,
+    "verbatim_components": 5,
+    "immutable_original_helper_sha256": "2694f969617718f1146372d4601fd4aa4ec14ed860738b22e95c52f442bf9c93",
+    "original_helpers_or_drivers_edited_or_executed": false,
+    "critical_screenshot_contrast_hide_style_layout_mutations": 0
+  },
+  "scope": {
+    "normal_intervals_once": 15,
+    "hover": 10,
+    "focus_visible": 5,
+    "reduced_motion": false,
+    "case_order": [
+      "N3-NARROW-basic-dark-native-hover",
+      "N3-NARROW-basic-light-native-hover",
+      "N3-NARROW-friendly-dark-native-hover",
+      "N3-NARROW-friendly-light-native-hover",
+      "N3-NARROW-glass-dark-native-hover",
+      "NEW-NARROW-glass-light-hover-native-act",
+      "NEW-NARROW-glass-light-focus-visible-native-act",
+      "NEW-NARROW-retro-dark-hover-native-act",
+      "NEW-NARROW-retro-dark-focus-visible-native-act",
+      "NEW-NARROW-retro-light-hover-native-act",
+      "NEW-NARROW-retro-light-focus-visible-native-act",
+      "NEW-NARROW-nier-dark-hover-native-act",
+      "NEW-NARROW-nier-dark-focus-visible-native-act",
+      "NEW-NARROW-nier-light-hover-native-act",
+      "NEW-NARROW-nier-light-focus-visible-native-act"
+    ],
+    "requested_critical_seconds": {
+      "baseline_rest": 1,
+      "native_held_pose": 2,
+      "after_leave_rest": 1
+    },
+    "actual_boundaries_retained": true,
+    "no_critical_screenshots_hide_contrast_style_layout_changes": true,
+    "focus_setup": "PROGRAMMATIC focus of the first published demo-menu row outside the critical interval; trusted ShiftTab to own tab with menu OPEN, trusted Tab leave, Escape only afterward"
+  },
+  "target": {
+    "selector": ".o55-demopill > svg.nx",
+    "glyph": "sparkles",
+    "role": "concept",
+    "rendered_glyph_px": 14,
+    "published_host_css_px": [
+      20,
+      44
+    ],
+    "CSS_viewport": [
+      700,
+      900
+    ],
+    "DPR": 1,
+    "header_and_window_rectangles": "evidence/acquisition-result.json and per-case-evidence-bindings.json"
+  },
+  "normal_P1000_session": {
+    "browser_id": "a4b4b528633b",
+    "record_id": "9f690a63dc82",
+    "native_window_id": "0x2c00003",
+    "native_window_rectangle": [
+      5,
+      56,
+      1920,
+      1080
+    ],
+    "device": "NVIDIA Quadro P1000",
+    "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+    "CSS_viewport": [
+      700,
+      900
+    ],
+    "DPR": 1,
+    "ordinary_admission_and_stops_complete": true,
+    "global_before": {
+      "active_helper_browsers": 0,
+      "actual_Chrome_roots": 0,
+      "active_helper_recordings": 0,
+      "total_NVENC_sessions": 0,
+      "Moonlight_or_other_NVENC_sessions": 0,
+      "GPU_memory_MiB": 211,
+      "GPU_total_MiB": 4096,
+      "renderer_device": "Quadro P1000",
+      "driver": "580.178.04"
+    },
+    "caps": {
+      "recordings": 5,
+      "recordings_with_one_Moonlight_NVENC_stream": 3,
+      "browsers_while_recording": 8
+    },
+    "global_registry_or_service_or_other_owner_modified": false
+  },
+  "new_movie": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/narrow-native-only.mp4",
+    "bytes": 7317251,
+    "sha256": "33f60160b77b3c06e6ba7e8c37338590827f3ff4bb85e2994fd410f9c7fcff91",
+    "duration_seconds": 112.633,
+    "codec": "h264",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "source_time_base": "1/16000",
+    "r_frame_rate": "60/1",
+    "encoder": "h264_nvenc",
+    "capture_session_id": "9f690a63dc82",
+    "browser_session_id": "a4b4b528633b",
+    "ordinary_stop_complete": true,
+    "avg_frame_rate": "6758000/112633",
+    "sample_format": "yuv420p",
+    "total_metadata_frames": 6758,
+    "actual_movie_frame_observations": 0,
+    "hardware_decode_jobs": 0,
+    "exported_video_fullframes_or_crops": 0
+  },
+  "sampled_readonly_probe_facts": {
+    "native_samples": 3715,
+    "invisible_probe_samples": 0,
+    "native_input_events_untrusted": 0,
+    "all15_native_before_after_properties_and_act_flick_animations_equal": true,
+    "sourcepage_and_console_errors": 0,
+    "no_probe_only_visual_pass": true
+  },
+  "rows": [
+    {
+      "case_id": "N3-NARROW-basic-dark-native-hover",
+      "look": "basic-dark",
+      "pose": "hover",
+      "native_samples": 243,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/N3-NARROW-basic-dark-native-hover.trace.json",
+        "sha256": "821064de5e2d110f1ee51b6ffc99213c7cc8269e08c7fab8e5d0feb6e6449d26"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "N3-NARROW-basic-light-native-hover",
+      "look": "basic-light",
+      "pose": "hover",
+      "native_samples": 249,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/N3-NARROW-basic-light-native-hover.trace.json",
+        "sha256": "7629bbd014fd5b1a2b1ae303c53d07a66eb3598bc46f2137bbee4fc13926ac58"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "N3-NARROW-friendly-dark-native-hover",
+      "look": "friendly-dark",
+      "pose": "hover",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/N3-NARROW-friendly-dark-native-hover.trace.json",
+        "sha256": "e9bd4371d83db722c965fd7b86205ff72ecb540db74ac8c775d731dd53ed2830"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "N3-NARROW-friendly-light-native-hover",
+      "look": "friendly-light",
+      "pose": "hover",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/N3-NARROW-friendly-light-native-hover.trace.json",
+        "sha256": "84e3c4ab5b8f941ca4c5bad5f1181b32420a3593312ee9272af6c5de6e9d42b5"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "N3-NARROW-glass-dark-native-hover",
+      "look": "glass-dark",
+      "pose": "hover",
+      "native_samples": 244,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/N3-NARROW-glass-dark-native-hover.trace.json",
+        "sha256": "f3cc2b3bf8b787ae1b4f9e27734f72870911db6c5c45f355c47b8e09dce853ae"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-glass-light-hover-native-act",
+      "look": "glass-light",
+      "pose": "hover",
+      "native_samples": 246,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-glass-light-hover-native-act.trace.json",
+        "sha256": "714aaa7e4658b799d00b1f5b059ef409e1cfaa0a9491c1fed11114bd57d2f25b"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-glass-light-focus-visible-native-act",
+      "look": "glass-light",
+      "pose": "focus-visible",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-glass-light-focus-visible-native-act.trace.json",
+        "sha256": "c60df99cc4717081472b34b561746c5c0cad89440aaeb2ef84603ca2ce1c411a"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": "PROGRAMMATIC"
+    },
+    {
+      "case_id": "NEW-NARROW-retro-dark-hover-native-act",
+      "look": "retro-dark",
+      "pose": "hover",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-retro-dark-hover-native-act.trace.json",
+        "sha256": "7d1e31d39dc24768b6c257a326eda94b6fc3c646963f33690cdac4159472707d"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-retro-dark-focus-visible-native-act",
+      "look": "retro-dark",
+      "pose": "focus-visible",
+      "native_samples": 250,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-retro-dark-focus-visible-native-act.trace.json",
+        "sha256": "ada3f185f730155abf8792b2e3bba351747f20a9b2b89bda08f164639edac2be"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": "PROGRAMMATIC"
+    },
+    {
+      "case_id": "NEW-NARROW-retro-light-hover-native-act",
+      "look": "retro-light",
+      "pose": "hover",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-retro-light-hover-native-act.trace.json",
+        "sha256": "1c3c914108a35557cfd649a0b144d5a0c3cc581bda6187afb4f79165c6cf1e6c"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-retro-light-focus-visible-native-act",
+      "look": "retro-light",
+      "pose": "focus-visible",
+      "native_samples": 249,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-retro-light-focus-visible-native-act.trace.json",
+        "sha256": "9722ab15a697f2ed7bde4d6982c903e9d820ffe1d30c54113ada86fb45d6822f"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": "PROGRAMMATIC"
+    },
+    {
+      "case_id": "NEW-NARROW-nier-dark-hover-native-act",
+      "look": "nier-dark",
+      "pose": "hover",
+      "native_samples": 246,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-nier-dark-hover-native-act.trace.json",
+        "sha256": "e916a0656469846c462e43af8e9f408b3fd674b41e68b414ec26d290f3aa7f09"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-nier-dark-focus-visible-native-act",
+      "look": "nier-dark",
+      "pose": "focus-visible",
+      "native_samples": 251,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-nier-dark-focus-visible-native-act.trace.json",
+        "sha256": "299c49dee7bb86c55fd0de771e28114b8e93bd39b9c76d5e79c89d06deaf95f7"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": "PROGRAMMATIC"
+    },
+    {
+      "case_id": "NEW-NARROW-nier-light-hover-native-act",
+      "look": "nier-light",
+      "pose": "hover",
+      "native_samples": 248,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-nier-light-hover-native-act.trace.json",
+        "sha256": "a6cf7e44572b8a31d3e5d996d416f6038140db046e5ec0002681cfa8d550db8b"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": null
+    },
+    {
+      "case_id": "NEW-NARROW-nier-light-focus-visible-native-act",
+      "look": "nier-light",
+      "pose": "focus-visible",
+      "native_samples": 249,
+      "invisible_probe_samples": 0,
+      "untrusted_input_count": 0,
+      "before_after_readonly_native_properties_equal": true,
+      "before_after_act_flick_animation_equal": true,
+      "trace": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/evidence/NEW-NARROW-nier-light-focus-visible-native-act.trace.json",
+        "sha256": "fdd323701c3a27b30fc89f536aaa9b972a177c242a1a4fd24f838c327c882682"
+      },
+      "visual_motion_once_no_flicker_no_clip_return": "UNVERIFIED/HOLD",
+      "movie_PTS_critical_window": null,
+      "focus_setup": "PROGRAMMATIC"
+    }
+  ],
+  "mapping": {
+    "verdict": "UNVERIFIED/HOLD",
+    "native_event_UTC_and_monotonic_clocks": {
+      "record_start_request": {
+        "utc_ms": 1791820960221,
+        "monotonic_ns": "74296813072704"
+      },
+      "record_ready": {
+        "utc_ms": 1791820963063,
+        "monotonic_ns": "74299654957013"
+      },
+      "record_stop_request": {
+        "utc_ms": 1791821074434,
+        "monotonic_ns": "74411026616945"
+      },
+      "record_stop_return": {
+        "utc_ms": 1791821075352,
+        "monotonic_ns": "74411943830590"
+      }
+    },
+    "browser_clock": {
+      "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+      "CSS_viewport": [
+        700,
+        900
+      ],
+      "DPR": 1,
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "performance_timeOrigin": 1791820951840.4,
+      "performance_now": 8139,
+      "utc_ms": 1791820959979
+    },
+    "critical_boundary_file": "critical-boundaries-and-mapping-HOLD.json",
+    "live_first_packet_metadata_exit": 1,
+    "live_first_packet_metadata_stderr": "[matroska,webm @ 0x61465654ccc0] EBML header parsing failed\n/home/sittingmongoose/PM-Experiments/pm7-glyph-narrow-native-continuity-20261012/evidence/narrow-native-only.mp4.9f690a63dc82.partial.mkv: Invalid data found when processing input\n",
+    "final_completed_H264_metadata_valid": true,
+    "first_exposure_UTC": null,
+    "source_or_recorder_or_surface_cause": "UNKNOWN",
+    "not_firstframe_estimate_plus_minus500ms": true,
+    "not_stop_minus_duration_inference": true,
+    "missing_fact": "A trustworthy event/frame alignment anchor or a separately approved publishedUI-cue mapping method for this EXACT33f60160newfilm; no extra capture, source change, or timing waiver authorized by this result.",
+    "conditional_next_scope_not_authorized_or_executed": "Root may review the whole retained film with exact15case/event order, or authorize bounded hardwarecue alignment of this samefilm and15actualstates. No newrecording/extra case/oldmovie/marker injection/platformfix/self-grant."
+  },
+  "visual_scope": {
+    "initial_scene_png_only": "before recording: actual published BasicDark 700x900 scene/20x44 tab/sparkles14",
+    "recorded_full_scene_match": "UNVERIFIED",
+    "video_frame_observations": 0,
+    "continuous_criterion": "UNVERIFIED/HOLD for all15 new intervals; no probe-only or generic-text visual PASS",
+    "source_look_approval": false,
+    "sampling_limitations": [
+      "RAF/class/style/animation samples establish read-only facts, not visible glyph act, clipping, or uninterrupted no-flicker continuity.",
+      "The 14px glyph is recorded in H264 yuv420p at a nominal 60fps; no exclusive performance/FPS certification.",
+      "Only the initial 700x900 scene screenshot was viewed, before recording. Actual recorded full-scene/target matching and critical-frame review remain UNVERIFIED.",
+      "No old capture/head/status is relabeled and no new report commit is represented as the tested head."
+    ]
+  },
+  "unchanged_holds": {
+    "old20_continuity": {
+      "total": 20,
+      "stopped_chip_rows": 4,
+      "narrow_rows": 16,
+      "P3_normal_narrow_rows": 15,
+      "old_GlassLight_RM_row": 1,
+      "unchanged": true
+    },
+    "independent": [
+      "N1 NOELIGIBLE / HOLD; P3 native behavior cannot discharge it.",
+      "Original resume-spark descriptor HOLD; actual corrected history binding stays separate.",
+      "BasicLight history REST 2.49 HOST pairing/Jared choice; 83 chip poses/both labels/RM STOP.",
+      "N2 strict geometry: 53 exact, 6 missing-after, 9 nonzero rendered W/H; 15 UNVERIFIED; existing <0.1 gate and >=3 contrast/min3.14 retained.",
+      "N4 four real inputs: no count/status producer; UNVERIFIED/HOLD.",
+      "R1 held GlassDark RM menu timeout: cause UNDETERMINED; no replay.",
+      "2272 frozen CRLF whitespace findings/15 paths FAILED exit2; no normalization, exemptions, or hook bypass.",
+      "Mandatory Windows rail/GLY4/full source/root/landing review HOLD.",
+      "Other five unrun narrow-focus cases and conditional <=5s RM recording NOT authorized."
+    ]
+  },
+  "raw_evidence": {
+    "root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012",
+    "manifest": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/SHA256SUMS",
+    "manifest_sha256": "ca08ed5f428f30e84cb5e19d7059f0f31a8ababfbb2ac09106ccb533bd4c289e",
+    "manifest_entries": 47,
+    "acquisition_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-narrow-native-continuity-20261012/P3-acquisition-summary.json",
+      "sha256": "463010b19706c7cbde5cd00ab3391916f9949d34ccd5ecc02fbd34b9f610b1b6"
+    },
+    "case_clock_identity_state_source_paths": "per-case-evidence-bindings.json",
+    "probe_facts": "native-probe-facts.json",
+    "movie_native_clock_gap": "critical-boundaries-and-mapping-HOLD.json",
+    "normal_helper_log_diagnosis": "timing-gap-diagnosis.json",
+    "P1000_cleanup": "owned-P1000-runtime-cleanup.json"
+  },
+  "custody": {
+    "prior_tracked_blob_mode_rows": 16108,
+    "allowed_new_repo_paths": [
+      "reports/pm7-glyph-narrow-native-continuity-20261012/NOTES.md",
+      "reports/pm7-glyph-narrow-native-continuity-20261012/result.json"
+    ],
+    "production_source_pages_settings_build47PATCHES_legacy_original_reports_and_helpers": "unchanged; exact parent/tree proof bound in completion receipt after commit",
+    "no_fetch_rebase_merge_import_or_main_lock": true,
+    "no_old_evidence_relabel_or_normalization": true,
+    "ordinary_hooks_required": true,
+    "dual_remote_exact_head_and_main_verification": "completion receipt outside repository"
+  },
+  "resources": {
+    "owned_P1000_after_normal_stop_and_cleanup": {
+      "jobs": 0,
+      "browsers": 0,
+      "recorders": 0,
+      "servers": 0,
+      "forwarders": 0,
+      "commands": 0,
+      "children": 0,
+      "profiles": 0,
+      "decode_jobs": 0
+    },
+    "own_local_waiter": "one during report closure; final completion receipt binds disarmed/consumed and0",
+    "no_final_waiter_required": true,
+    "no_GPU_decode_planned": true,
+    "temporary_local_movie_page_helper_runtime_removed": true
+  },
+  "minimum_missing_fact_and_conditional_scope": {
+    "missing_fact": "A trustworthy event/frame alignment anchor or a separately approved publishedUI-cue mapping method for this EXACT33f60160newfilm; no extra capture, source change, or timing waiver authorized by this result.",
+    "conditional_only": "Root may review the whole retained film with exact15case/event order, or authorize bounded hardwarecue alignment of this samefilm and15actualstates. No newrecording/extra case/oldmovie/marker injection/platformfix/self-grant.",
+    "not_GO": [
+      "new RM recording",
+      "four stopped chip recordings/83 chip acceptance",
+      "five unrun focus cases",
+      "other movie or matrix",
+      "platform/source/driver/criterion change",
+      "any GPU work without profiler/root coordination"
+    ]
+  },
+  "source_design_canon_look_or_landing_GO": false
+}
