@@ -1,0 +1,48 @@
+{
+  "schema": "er13.public_performed_cleanup.v1",
+  "captured_utc": "2026-10-12T06:34:20.484020+00:00",
+  "performed": true,
+  "archive_snapshot_logical_files": 29950,
+  "archive_snapshot_logical_bytes": 386196352,
+  "archive_current_unique_objects": 14107,
+  "archive_current_unique_uncompressed_bytes": 225201911,
+  "archive_current_duplicate_bytes": 160994441,
+  "compressed_content_payload_bytes": 34543707,
+  "retained_runtime_result_bytes_as_of_capture": 246389872,
+  "reclaimed_owned_duplicate_bytes": 139760866,
+  "reclaimed_owned_bytecode_bytes": 12467,
+  "reclaimed_temporary_archive_build_bytes": 51833522,
+  "reclaimed_total_bytes": 191606855,
+  "all_archive_objects_and_deletion_targets_verified_before_removal": true,
+  "archives": [
+    {
+      "name": "scientific-core-content.tar.gz",
+      "sha256": "aa48f0306430149793a8329267c095b045a0ab72206f6d81e4e17f58269ae17e",
+      "bytes": 22196088,
+      "manifest": "scientific-core-manifest.json",
+      "manifest_sha256": "89afa7a9b15db285a2460b8785c6b3767a9a7add0921b716e7419790766cb7f1"
+    },
+    {
+      "name": "runtime-final-content.tar.gz",
+      "sha256": "b263d7677a0f3e9929fd4727b625bad14c5126d3742b617ac4768740b3f33fe4",
+      "bytes": 12347619,
+      "manifest": "runtime-final-snapshot-manifest.json",
+      "manifest_sha256": "626628c3dd434908ee98d89d504d8ec493123f37f424b1e36fd1088fdb00caf2"
+    }
+  ],
+  "known_nonroot_contexts": 264,
+  "all_known_nonroot_closed_settled_no_pending": true,
+  "own_waiters_browsers_servers": 0,
+  "root_original_Goal_status_before_terminal": "PAUSED, original birth/objective checked; actual terminal stored separately",
+  "root_active_T3_worktree_retained": true,
+  "unknown_owner_sandbox_file": {
+    "relative_path": ".zcode/acp/sandbox.json",
+    "bytes": 74,
+    "sha256": "e94fd72fbeb942ed6c1a84d306b0cda508c85560cc3baa220ada47ad70d4ce1b",
+    "removed": false
+  },
+  "shared_servers_caches_old_campaigns_siblings_main_untouched": true,
+  "private_original_attachment_retained": true,
+  "native_failed_statuses_and_capture_gaps_preserved_not_reconstructed": true,
+  "later_root_terminal_closure_delta_retained_separately": true
+}
