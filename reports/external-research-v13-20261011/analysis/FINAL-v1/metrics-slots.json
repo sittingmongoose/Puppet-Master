@@ -1,0 +1,79 @@
+{
+  "schema": "er13.final_scientific_metrics_hydration_slots.v1",
+  "status": "PENDING_EXACT_ROOT_METRICS_MANIFEST",
+  "manifest": {
+    "path": null,
+    "sha256": null,
+    "missing_is_not_zero": true
+  },
+  "known_finite_denominators": {
+    "original_arms": 80,
+    "FULL": 64,
+    "COMPONENT": 16,
+    "observed_finite_source_PASS": 33,
+    "root_verified_actual_candidate_stage_contexts": 199,
+    "charged_route_probes_separate": 2
+  },
+  "slots": [
+    {
+      "id": "actual_stage_lifetimes",
+      "required": "Per actual known T3 task/context created/started/terminal windows; source of each endpoint, censoring and unavailable boundaries",
+      "value": "PENDING"
+    },
+    {
+      "id": "arm_sums_unions_overlap",
+      "required": "Per-arm lifetime sums, interval unions and overlaps from those exact task windows; investigator/reviewer/reviser lineage and role topology",
+      "value": "PENDING"
+    },
+    {
+      "id": "whole_request_delivery_and_quiet",
+      "required": "T0, whole/stage deadlines, native-terminal proxy, final scientific-write/task finish and request-to-quiet bounds separately; unknowns stay unknown",
+      "value": "PENDING"
+    },
+    {
+      "id": "B03_resident_wait",
+      "required": "Retained author open-context waiting and occupancy are charged as residence; not active inference or zero work",
+      "value": "PENDING"
+    },
+    {
+      "id": "B12_nested_fork_overlap",
+      "required": "Actual v2 fork/overlap lineage retained; never sum independent medians or double count shared births",
+      "value": "PENDING"
+    },
+    {
+      "id": "failure_inclusive_source_PASS_consumption",
+      "required": "All assigned failed/missing attempts in measured numerator; quotient per observed finite source PASS separately by comparable scope/topology/epoch; zero-pass undefined, missing numerator unknown",
+      "value": "PENDING"
+    },
+    {
+      "id": "strict_delivered_usable_method_qualified",
+      "required": "Delivery/method/time/native qualification independent of source PASS; unknown conjunction remains unknown; no source labels overwritten",
+      "value": "PENDING"
+    },
+    {
+      "id": "native_birth_counters",
+      "required": "Deduplicate retained cumulative native API usage once per exact birth; counter semantics/linkage limits remain; never billing",
+      "value": "PENDING"
+    },
+    {
+      "id": "route_epochs_and_infrastructure",
+      "required": "Old/new prospective epochs, D2 dispatch-before-amendment and transient delay, D6-only reviser fork, two charged route probes and unlaunched stages separate",
+      "value": "PENDING"
+    },
+    {
+      "id": "cost_classes_and_billing",
+      "required": "Candidate product, preparation/helpers, method development, support/root, independent evaluation, publication/consolidation separate. Activity, billing, subscription/cache/reasoning/output decomposition unavailable unless exact telemetry supplies it",
+      "value": "PENDING"
+    }
+  ],
+  "unsupported_inferences": [
+    "Exact task linkage from native counters",
+    "Universal source-quality non-inferiority",
+    "Equal-quality saving from FAIL/PASS or faster failure",
+    "Expected retry cost from finite passing-output quotient",
+    "Subscription/premium affordability from residence"
+  ],
+  "hydration_changes_original_grades": false,
+  "root_owns_one_authorized_collection": true,
+  "new_collection_or_waiter_by_this_worker": false
+}

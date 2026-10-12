@@ -1,0 +1,29 @@
+{
+  "schema": "er13.all80_source_consolidation_public_provenance.v1",
+  "status": "ALL80_SOURCE_READY_METRICS_PENDING_ROOT_REVIEW",
+  "root_authorized_allowlist": {
+    "path": "ER13_RUNTIME/state/scientific-consolidation-allowlist-v3.json",
+    "sha256": "8f0bf6c7f420399ea2a3aa999106330b4f646e3c54e78f9638878ef354356c04"
+  },
+  "root_all80_closure_authorization": {
+    "path": "ER13_RUNTIME/state/final80-root-closure-authorization-v1.json",
+    "sha256": "7748d8f7d56fba070b99d79391a37991a589dd229bd58fc77b5638e244e030c4"
+  },
+  "AB_synthesis_manifest_sha256": "ae7bf7d29f70518aefe6daa5dd42bcde9d44dd8012e310a1a46d6979370addf7",
+  "C_synthesis_manifest_sha256": "2fb3324ea357ec12d77682ee607cde0b49380b6fb5bf09802a79044be4af75b4",
+  "D_assessment_public_manifest_sha256": "95ac8343766a4adc1b82dbc95bfa40ee0533920dacbf87043fef62c5cfb625c8",
+  "D_assessment_original_public_mapping_sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7",
+  "D_installed_public_verified": true,
+  "preliminary76_manifest_sha256": "69da3a440988bddb9fb8a61e2e9038513b3ffc84f976c6abe4d749709793af79",
+  "original_labels_axes_and_findings_unchanged": true,
+  "root_shorthand_erratum_not_regrade": true,
+  "all80_source_gate": true,
+  "metrics_hydrated": false,
+  "final_READY_or_overall_Goal_complete": false,
+  "root_supplied_historical_reference_commit": "f78ac167de2f45e00272cb88a2cd8a9876b0892e",
+  "current_Git_readback_by_this_worker": false,
+  "publication_stage": "New public normalized analysis/FINAL-v1 source-only draft",
+  "private_identity_or_alias_export_allowed": false,
+  "billing_or_subscription_inference": false,
+  "full_original_source_records_not_80_comparable_complete_grades": true
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "er13.final_scientific_source_public_draft.v1",
+  "status": "ALL80_SOURCE_READY_METRICS_PENDING_ROOT_REVIEW",
+  "frozen_source_utc": "2026-10-12T05:46:51.601704+00:00",
+  "original_arms": 80,
+  "source_counts_originals": {
+    "FAIL": 38,
+    "PASS": 33,
+    "UNASSESSED": 9
+  },
+  "FULL": 64,
+  "COMPONENT": 16,
+  "original_labels_unchanged": true,
+  "all80_source_gate": true,
+  "all80_comparable_complete_grades": false,
+  "metrics_hydrated": false,
+  "final_campaign_READY_or_Goal_completion": false,
+  "root_owns_selection_Git_publication_metrics_archive_quiet_cleanup": true,
+  "files": [
+    {
+      "path": "FINAL_REPORT.md",
+      "bytes": 16518,
+      "sha256": "9d7314db936f1a82e03f41c89c94f7ff97e59f9c8710665442ba57afc33997a2"
+    },
+    {
+      "path": "INDEX.md",
+      "bytes": 2173,
+      "sha256": "7450ac3c7e9151b44359771782fbd0458a8aa02ad99e1f3176982d14b4347ada"
+    },
+    {
+      "path": "counts.json",
+      "bytes": 1774,
+      "sha256": "e3cb641c153420d8ee31d30cb129d48724de84e25e8bfdba863259721bf3244b"
+    },
+    {
+      "path": "method-cross-case-outcomes.json",
+      "bytes": 22685,
+      "sha256": "198c4287990c4a01186c1fbb6593ded2239bf8659a7ce658b5dd852d2f9eacaf"
+    },
+    {
+      "path": "metrics-slots.json",
+      "bytes": 3431,
+      "sha256": "860844f8aa0674337f0bb90acd097f25da92f52003daaaa0478be58036c90361"
+    },
+    {
+      "path": "provenance.json",
+      "bytes": 1707,
+      "sha256": "6aff14bb836679721e02955208c3d32e5795b397e023ffb71a3a7b1da853e3ff"
+    },
+    {
+      "path": "published-link-index.json",
+      "bytes": 272902,
+      "sha256": "a31cd8ed0473d760fda48d4a72df408a3b51423770d45f0e583fb58a31d676fb"
+    },
+    {
+      "path": "source-planning-digest.json",
+      "bytes": 1515866,
+      "sha256": "9e8263c5071dd0e8de97a4d1d87daf04d3a628936cc66c45c53d6bd50ee794d3"
+    },
+    {
+      "path": "source-selectors.json",
+      "bytes": 84645,
+      "sha256": "1cfdbe12019afa327746c75b342e4a63fa1125138f56c7d2d970fbec6b2e946e"
+    },
+    {
+      "path": "thin-arm-records.json",
+      "bytes": 1088246,
+      "sha256": "07b0d5f7b3f25add64351da5ae22f8d8038ec92bfd2a6df6fd78673a8536dceb"
+    },
+    {
+      "path": "SHA256SUMS",
+      "bytes": 862,
+      "sha256": "53137ddd232e35a250bf1973480b5410c8ef9bfc3102e2d73a32c96f97e00af7"
+    }
+  ],
+  "private_identity_or_machine_paths_exported": false,
+  "self_hash_recorded_in_root_handoff": true
+}

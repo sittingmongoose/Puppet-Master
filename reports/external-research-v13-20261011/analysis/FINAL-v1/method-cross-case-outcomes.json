@@ -1,0 +1,1043 @@
+{
+  "method_versions": {
+    "cases": [
+      {
+        "method": "B01",
+        "case": "P01",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "UNASSESSED",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B01",
+        "case": "P02",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "UNASSESSED",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B02",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B02",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B03",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B03",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B04",
+        "case": "P01",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B04",
+        "case": "P02",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B05",
+        "case": "P01",
+        "scope": "COMPONENT",
+        "control_source": "PASS",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B05",
+        "case": "P02",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B06",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B06",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B07",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B07",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B08",
+        "case": "P01",
+        "scope": "COMPONENT",
+        "control_source": "PASS",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B08",
+        "case": "P02",
+        "scope": "COMPONENT",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B09",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B09",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B10",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B10",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "UNASSESSED",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B11",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B11",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "PASS",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B12",
+        "case": "P01",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "PASS",
+        "originals_unmodified": true
+      },
+      {
+        "method": "B12",
+        "case": "P02",
+        "scope": "FULL",
+        "control_source": "FAIL",
+        "treatment_source": "FAIL",
+        "originals_unmodified": true
+      }
+    ],
+    "B12_denominator": "Exactly two cases/four assigned arms. Actual B12-v2 nested overlap is distinct from withdrawn v1/M05-like proposal. Retention labels do not add a thirteenth B method.",
+    "C_versions": [
+      {
+        "version": "C-S1-v2",
+        "composition": "B02+B10 critic-finalizer",
+        "contexts": 2,
+        "stage_maximums_minutes": [
+          30,
+          30
+        ],
+        "cases": [
+          "C-R1-P01",
+          "C-R1-P02"
+        ],
+        "treatment_source_labels": [
+          "FAIL",
+          "PASS"
+        ]
+      },
+      {
+        "version": "C-S2-v2",
+        "composition": "B06+B10 truth critic",
+        "contexts": 4,
+        "stage_maximums_minutes": [
+          30,
+          6,
+          6,
+          18
+        ],
+        "cases": [
+          "C-R2-P01",
+          "C-R2-P02"
+        ],
+        "treatment_source_labels": [
+          "FAIL",
+          "PASS"
+        ]
+      }
+    ],
+    "D_design": "Eight prelocked diagnostic pairs: four per unchanged scientific recipe, common prospective completion mechanics. All16 original source records now explicitly closed/notified. Source/pipeline joint conditions UNKNOWN.",
+    "candidate_selection_or_optimizer_promotion": false
+  },
+  "blocks": [
+    {
+      "block_id": "A-F01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "A-F01-A1",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "A-F01-A1_A8",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "A-F01-A8",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "A-F01-R0",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "A-F02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "A-F02-A1",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "A-F02-A1_A8",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "A-F02-A8",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        },
+        {
+          "arm_id": "A-F02-R0",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B01-P01",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B01-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 5,
+            "PARTIAL": 1
+          }
+        },
+        {
+          "arm_id": "B01-P01-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B01-P02",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B01-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "B01-P02-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B02-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B02-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B02-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B02-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B02-P02-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B02-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B03-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B03-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 5,
+            "PARTIAL": 1
+          }
+        },
+        {
+          "arm_id": "B03-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 5,
+            "PARTIAL": 1
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B03-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B03-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B03-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B04-P01",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B04-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "B04-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B04-P02",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B04-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B04-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B05-P01",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B05-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B05-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B05-P02",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B05-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B05-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B06-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B06-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B06-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B06-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B06-P02-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B06-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B07-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B07-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B07-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B07-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B07-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "B07-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B08-P01",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B08-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B08-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B08-P02",
+      "scope": "COMPONENT",
+      "arms": [
+        {
+          "arm_id": "B08-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B08-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B09-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B09-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "B09-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B09-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B09-P02-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B09-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B10-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B10-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B10-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B10-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B10-P02-control",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        },
+        {
+          "arm_id": "B10-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B11-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B11-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B11-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B11-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B11-P02-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "B11-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B12-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B12-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "B12-P01-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "B12-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "B12-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 5,
+            "PARTIAL": 1
+          }
+        },
+        {
+          "arm_id": "B12-P02-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 5,
+            "PARTIAL": 1
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "C-R1-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "C-R1-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "C-R1-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "C-R1-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "C-R1-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "C-R1-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "C-R2-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "C-R2-P01-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "C-R2-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "C-R2-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "C-R2-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "C-R2-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R1-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R1-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R1-P01-treatment",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R1-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R1-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R1-P02-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R1-P03",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R1-P03-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R1-P03-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R1-P04",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R1-P04-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R1-P04-treatment",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R2-P01",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R2-P01-control",
+          "source": "PASS",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R2-P01-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R2-P02",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R2-P02-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 4,
+            "PARTIAL": 2
+          }
+        },
+        {
+          "arm_id": "D-R2-P02-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R2-P03",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R2-P03-control",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        },
+        {
+          "arm_id": "D-R2-P03-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    },
+    {
+      "block_id": "D-R2-P04",
+      "scope": "FULL",
+      "arms": [
+        {
+          "arm_id": "D-R2-P04-control",
+          "source": "FAIL",
+          "formal_final_axes": {
+            "COMPLETE": 6
+          }
+        },
+        {
+          "arm_id": "D-R2-P04-treatment",
+          "source": "UNASSESSED",
+          "formal_final_axes": {
+            "UNASSESSED": 6
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1634 @@
+{
+  "A-F01-R0": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+      "sha256": "006254869eac5606b9ba0e71f430262305c2ebd19bd117bc024e373ab1c1e70b"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+      "sha256": "bdaf6620744c0bfdb544c981c5d482fa33e5a68af1c8ade4b42d5e589b90f79e",
+      "original_source_sha256": "006254869eac5606b9ba0e71f430262305c2ebd19bd117bc024e373ab1c1e70b",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F01-A1": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json",
+      "sha256": "ae33d567a6a12ea1e4188d1b49aed14a2221a566542bf4cad69f47218ebf7331"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json",
+      "sha256": "1ca62ecc795a437737cfbf4cb503efd0af78712dc0435265a5c8c5e0e7836a53",
+      "original_source_sha256": "ae33d567a6a12ea1e4188d1b49aed14a2221a566542bf4cad69f47218ebf7331",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F01-A8": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json",
+      "sha256": "8e258bf04c23e16d6b632b154d06b6c7909e1650da017453d439bc518d574d4c"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json",
+      "sha256": "36df0bb05a5f23863e425cd13308bf0bc9e1b72b8c5b67aafa3d8620ab80a6ee",
+      "original_source_sha256": "8e258bf04c23e16d6b632b154d06b6c7909e1650da017453d439bc518d574d4c",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F01-A1_A8": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json",
+      "sha256": "7cd39d0dc25e6c3e40ce916d3736484194d6fb65e6af9d4fa60477cbb7952754"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json",
+      "sha256": "83e39d87e327c0e9caeaf1e893bd63163f6938dae460d49062a479910896003f",
+      "original_source_sha256": "7cd39d0dc25e6c3e40ce916d3736484194d6fb65e6af9d4fa60477cbb7952754",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F02-R0": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.json",
+      "sha256": "5694db32397d61f847492bcf884f4efeed7c46eec6695d64842ce767a51f4e58"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.json",
+      "sha256": "f973a5b2ea3ee853e1418db9f8e8e8f7840d0cc416187a18fae6274d177ef6db",
+      "original_source_sha256": "5694db32397d61f847492bcf884f4efeed7c46eec6695d64842ce767a51f4e58",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F02-A1": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "sha256": "97596289b761fb8caa48c26a1e7648e65fcbc912332e8c1813e4e70a3acfc83f",
+      "original_source_sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F02-A8": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.json",
+      "sha256": "a1abe89c541fbe8bf2259a143212e1fddf8198ba6ad1922e5b871429ab4673b1"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.json",
+      "sha256": "3c261a81b5f2bd542c59767f0ac9e9abf51b9fd0f57ac321286f0499b35c3233",
+      "original_source_sha256": "a1abe89c541fbe8bf2259a143212e1fddf8198ba6ad1922e5b871429ab4673b1",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "A-F02-A1_A8": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.json",
+      "sha256": "628fce32c2046931c2ca50c1086490a45209c2bd57033003c6b4d4071c6304d6"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.json",
+      "sha256": "aa346aca63a713bf9fdf5f219fe7351c902d4e80d2919f903e535302f6889d17",
+      "original_source_sha256": "628fce32c2046931c2ca50c1086490a45209c2bd57033003c6b4d4071c6304d6",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B01-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e"
+    },
+    "container_schema": "er13.original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/control/assessment.json",
+      "sha256": "621692fec76e8dd3eda7c6d69abd8216e6e54785045568e2204c659deda4ea7b",
+      "original_source_sha256": "57220fe577a6476426f77931c17c8bb36aeba21002e0109a870e35240f645f9e",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/original-public-hashes.json",
+        "sha256": "e575a7456856251358ea08e1a42702c33295c47ce725c2cf95870b20fdfa263e"
+      }
+    }
+  },
+  "B01-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "sha256": "443bf74726593c9db9fdc459005255c4e2b04bae084b2dd1b59b4b3436723cab"
+    },
+    "container_schema": "er13.original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P01/treatment/assessment.json",
+      "sha256": "af849406ed554dcd969a1d5a5bef355f5f49a9f3c17c01bfc709b2be8400a589",
+      "original_source_sha256": "443bf74726593c9db9fdc459005255c4e2b04bae084b2dd1b59b4b3436723cab",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/original-public-hashes.json",
+        "sha256": "e575a7456856251358ea08e1a42702c33295c47ce725c2cf95870b20fdfa263e"
+      }
+    }
+  },
+  "B01-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.complete_final",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/control/assessment.json",
+      "sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09",
+      "original_source_sha256": "34a1c879af14c37d0872173a7c8da792997bb2d1ad18bda439eda899c2f5da09",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/original-public-hashes.json",
+        "sha256": "e575a7456856251358ea08e1a42702c33295c47ce725c2cf95870b20fdfa263e"
+      }
+    }
+  },
+  "B01-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.complete_final",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/mechanics/evaluation-dispatch-v2/B01-P02/treatment/assessment.json",
+      "sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147",
+      "original_source_sha256": "568eec1ba9c7cf07830c29e62f7f8b669de355af65324d1708c1ecbd28d5d147",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-b01-v1/original-public-hashes.json",
+        "sha256": "e575a7456856251358ea08e1a42702c33295c47ce725c2cf95870b20fdfa263e"
+      }
+    }
+  },
+  "B02-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.json",
+      "sha256": "839266825aa6f94adc747d1fcd5869559251f95251de51a8b6664df798d71e4f"
+    },
+    "container_schema": "er13.arm-assessment-container.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.json",
+      "sha256": "906e849003825acc29b831ec46d5a56fb361d6afb774ec7f778bef224fc30cb3",
+      "original_source_sha256": "839266825aa6f94adc747d1fcd5869559251f95251de51a8b6664df798d71e4f",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B02-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287"
+    },
+    "container_schema": "er13.arm-assessment-container.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.value",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "sha256": "aa69e45729113eb5ef01636fb2a19fc74ad61c5cdca47f52b5ad6140a31c491a",
+      "original_source_sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B02-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "323077de2ae1ad53f82163fdf85156179e50e356ec865099131ba554594d5de2",
+      "original_source_sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B02-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "7d984eb36907ad2ffdf75f561d9e9409fb870583bb1d1f32c2b1d47e1dc52c10",
+      "original_source_sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B03-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.value",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "sha256": "ef503a0f362f240bb73509b98d90c109020a16ada9536843aaba4df25922f409",
+      "original_source_sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B03-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.value",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "70322d7ba1f3d86b685bc6d3a2295933145b8a787d94a6194664892e6032ed5b",
+      "original_source_sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B03-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.grade",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "sha256": "6df9a4a4e3b4598bffcdcd477e39c15c35e55ac7bc5e77e85d2fddac0977135a",
+      "original_source_sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B03-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.grade",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "sha256": "817142507859661f1740b206ad043750ac34ab8dad0bd0a824f6028ca51b4617",
+      "original_source_sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B04-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/control/assessment.json",
+      "sha256": "8ab9f36a09b7cb8db10f5798e82d84dc78e8f5171e6172f107591f8d4e1e1119"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/control/assessment.json",
+      "sha256": "c243e200761c6b0a2c996a98141c775cb536743ae9b759ba66ef2f3bd0be4b8c",
+      "original_source_sha256": "8ab9f36a09b7cb8db10f5798e82d84dc78e8f5171e6172f107591f8d4e1e1119",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B04-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P01/treatment/assessment.json",
+      "sha256": "f47d445a2d227d3c20ded7b22c8a2113f6867c59d2fd05330b7bb7e322a69b88"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P01/treatment/assessment.json",
+      "sha256": "ef1f24d0cc01b753d26d9693be6a5f9d039628f614a2d8259d44a88ca94ca4b3",
+      "original_source_sha256": "f47d445a2d227d3c20ded7b22c8a2113f6867c59d2fd05330b7bb7e322a69b88",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B04-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/control/assessment.json",
+      "sha256": "6ffc521c60e939fc14c2c690c04d7b6ca6d4d09fba09ca14487f5b63b19ff240"
+    },
+    "container_schema": "er13.immutable_original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/control/assessment.json",
+      "sha256": "e3f8db532f8031e12755cdf168a5350285c2a91a6edb0864cf23ac703abcb297",
+      "original_source_sha256": "6ffc521c60e939fc14c2c690c04d7b6ca6d4d09fba09ca14487f5b63b19ff240",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B04-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.json",
+      "sha256": "e3ee4a2c08c4509c1e7a5e7256a8c05cafa079c822f74012801b98978de68b20"
+    },
+    "container_schema": "er13.immutable_original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B04-P02/treatment/assessment.json",
+      "sha256": "24d274fade48b93a5804c03f9885c0b31723b2bf1eed71af3edc427df23e7985",
+      "original_source_sha256": "e3ee4a2c08c4509c1e7a5e7256a8c05cafa079c822f74012801b98978de68b20",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B05-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.json",
+      "sha256": "2bcedd10be03f8587646ba5b22f1104369241c664c1cfa90baf0c4a2aca35bd8"
+    },
+    "container_schema": "er13.original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/control/assessment.json",
+      "sha256": "65763a1927d0c66b2cd3c350f313f2ea71ecc85aa100548f3887c57646e185f3",
+      "original_source_sha256": "2bcedd10be03f8587646ba5b22f1104369241c664c1cfa90baf0c4a2aca35bd8",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B05-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.json",
+      "sha256": "781ca8b5d7655a18a2bd9f06933c96fd979cce5beb3357e62113af3d532ce6bd"
+    },
+    "container_schema": "er13.original_assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P01/treatment/assessment.json",
+      "sha256": "efb5492dd51752a7b03532a49ac881723e9189dc30c244909b7f2e44cfd2550e",
+      "original_source_sha256": "781ca8b5d7655a18a2bd9f06933c96fd979cce5beb3357e62113af3d532ce6bd",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B05-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.json",
+      "sha256": "a0552e29be7bf653c3d897d69df492b1973bcf72d5a53bce8d08895c672ee6dc"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/control/assessment.json",
+      "sha256": "399c82401a8525b119eeb3e88d2c90598d8937687e33c1fe1a1b43ba219c09ba",
+      "original_source_sha256": "a0552e29be7bf653c3d897d69df492b1973bcf72d5a53bce8d08895c672ee6dc",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B05-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.json",
+      "sha256": "92674df2fee04625c88297257b59709a9f0a41c15cd11fc279b92a984f06ba12"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B05-P02/treatment/assessment.json",
+      "sha256": "2ca1353522388c4976e0213c92c21769e4b2cda0e3ef3b06e113d32c48d8690d",
+      "original_source_sha256": "92674df2fee04625c88297257b59709a9f0a41c15cd11fc279b92a984f06ba12",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B06-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.json",
+      "sha256": "17faa0e8d5549b0e1afb55a1c70905075329de70ed7bdf5f0a33611ddf4ad1a3"
+    },
+    "container_schema": "er13.original_assessment.local-v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.json",
+      "sha256": "530601d41562c0f51f399624ecd7a1479f2468db11889caf570ad365882cb428",
+      "original_source_sha256": "17faa0e8d5549b0e1afb55a1c70905075329de70ed7bdf5f0a33611ddf4ad1a3",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B06-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d"
+    },
+    "container_schema": "er13.original_assessment.local-v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "sha256": "bc1b8efa6649e9e82f0ba56f3b8a9e5c2a555d9b8455e944b6eb937e818ec373",
+      "original_source_sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B06-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "sha256": "e9286f74c60cbfc82a1600782da2b11a3ea717d1c0b4cd713aa86b4943a83877",
+      "original_source_sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B06-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "50d21918860e16ff47bc0150fc724f10bc26aa74e75410e7d9bdda32b7667027",
+      "original_source_sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B07-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "sha256": "03deb9f3c70c253f01c615e2590b4440edbc699583db8931e02448e1dbccc8d1",
+      "original_source_sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B07-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "9ea43f4e5449cec3a1cf93d9ee5b194b88398482ed3bcf8e296bf55da40b55dd",
+      "original_source_sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B07-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329"
+    },
+    "container_schema": null,
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "sha256": "0dd939127db149dff4a73986b79d71e7cad72d94eaeb77449e6aac3942f2d09e",
+      "original_source_sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B07-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d"
+    },
+    "container_schema": null,
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "1f9690ef37c08900021baff9d58922e09fb6af585c5b3abd8ea28b448fb36b80",
+      "original_source_sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B08-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.json",
+      "sha256": "e063a469efbacceb77cc4cbd74ddf1a65b9ea9ffee086ad94eb800b2dc647ac6"
+    },
+    "container_schema": "er13.original-assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/control/assessment.json",
+      "sha256": "f0283f0079805a5aeb6518ae6eff2585a77d777f21692f3ef4647651ffe8a9fc",
+      "original_source_sha256": "e063a469efbacceb77cc4cbd74ddf1a65b9ea9ffee086ad94eb800b2dc647ac6",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B08-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P01/treatment/assessment.json",
+      "sha256": "90e72469714e5d3b035cb49a9de42ad49cf6f65dda7952070d1b14445cb4efe7"
+    },
+    "container_schema": "er13.original-assessment.v2",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P01/treatment/assessment.json",
+      "sha256": "de5643cf31cbf2f88901d3a5b9c48b3e6c7c2824fd05cc2c18fd05ec86660043",
+      "original_source_sha256": "90e72469714e5d3b035cb49a9de42ad49cf6f65dda7952070d1b14445cb4efe7",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B08-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.json",
+      "sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798"
+    },
+    "container_schema": "er13.assessment.original.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/control/assessment.json",
+      "sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798",
+      "original_source_sha256": "5705ff3ca16fd427c3891c094b410d9be960164a5ea8cc07e37364a8a6129798",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B08-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.json",
+      "sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8"
+    },
+    "container_schema": "er13.assessment.original.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/mechanics/evaluation-dispatch-v2/B08-P02/treatment/assessment.json",
+      "sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8",
+      "original_source_sha256": "b3fe353e4d7ae3c1521f0e879057d2e93e89093c2b889cc65a358a5d33cbdeb8",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/component-assessments-v1/original-public-hashes.json",
+        "sha256": "b6ebab2b927927a7b0726f44e3b890652abd595d93466406f710faa80e28632e"
+      }
+    }
+  },
+  "B09-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.json",
+      "sha256": "47dc889dd098963d566656dbdb3a6eb6434035761af6a99464dd19e70a10d507"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.json",
+      "sha256": "a3c893feaefc21e11060f7192c8a9f28d4ef013e03fb95dbf18b94b7567669c1",
+      "original_source_sha256": "47dc889dd098963d566656dbdb3a6eb6434035761af6a99464dd19e70a10d507",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B09-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "bdb2a092a3ce6dc6be80a65d1fe27361b2ee7d03085fb78628a9a20b8ceced45",
+      "original_source_sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B09-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.json",
+      "sha256": "15790a6466234d011d743e704f9a329913cdec6cec454e95eea194519c20cbb9"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.json",
+      "sha256": "4643ed274917199a9c75f2e449c572cbb59163458af415f374e6da357dc05239",
+      "original_source_sha256": "15790a6466234d011d743e704f9a329913cdec6cec454e95eea194519c20cbb9",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B09-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "sha256": "407428a24a1cfa90c347bf3218eae33f5e54166cc61e187be4a0bb862beb00cf"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "sha256": "541635543acacd9217114e3c3954f849be16da7336160c872b01505a63b1b640",
+      "original_source_sha256": "407428a24a1cfa90c347bf3218eae33f5e54166cc61e187be4a0bb862beb00cf",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B10-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.json",
+      "sha256": "9ae16995a7b56b9b4cd16314b697ea98ebf40a2416b79a84b79aefffdce8b70e"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.json",
+      "sha256": "cbcbddbf321f9bb746f53fbf84932b3fab9bae35a0469a912ab02cff26ad4b2b",
+      "original_source_sha256": "9ae16995a7b56b9b4cd16314b697ea98ebf40a2416b79a84b79aefffdce8b70e",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B10-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.verdict",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "sha256": "ecb8e1c303f4006435d06e898b47f1f0f9870b70b49ccdc562f9131e3e53e17c",
+      "original_source_sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v1/original-public-hashes.json",
+        "sha256": "d753724744603fdb729df568265e0887a298e472c2d36e484798ea0d3bb3daee"
+      }
+    }
+  },
+  "B10-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arm_records[0]",
+    "source_label_selector": "$.arm_records[0].source_judgment.judgment",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d",
+      "original_source_sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B10-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arm_records[0]",
+    "source_label_selector": "$.arm_records[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9",
+      "original_source_sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B11-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977",
+      "original_source_sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B11-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84",
+      "original_source_sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B11-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "sha256": "344e131306a541de3a74d378d0707043970affd882540fb1c610be25a5eb1e33",
+      "original_source_sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B11-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    "container_schema": "er13.original-independent-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "dfae92739f2d9354ff57676da1558fcae7e14dd448fd97640c9e341ac773f9ab",
+      "original_source_sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B12-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.json",
+      "sha256": "9cf1a07cb5165975c3a6133bf475c5fb150098e637525f98f2b3e26c934ec66e"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.json",
+      "sha256": "b92a0649682af92a92f7dc8246dd2004ac1cfa448e1dc9608f629aaf39329525",
+      "original_source_sha256": "9cf1a07cb5165975c3a6133bf475c5fb150098e637525f98f2b3e26c934ec66e",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B12-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "sha256": "2666bec3340446b2bce618e5ec4631142e6a2e3bc9c7b72c093e598434274d59",
+      "original_source_sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B12-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.json",
+      "sha256": "52019f866ce3082fbf5a8abdd0684a3383786ce54b8c6159a7101a30d439fc6a"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.grade",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.json",
+      "sha256": "b447d91151a5350c3b373405e0a9002420b5e27deecc1b335a82888ac131ac3c",
+      "original_source_sha256": "52019f866ce3082fbf5a8abdd0684a3383786ce54b8c6159a7101a30d439fc6a",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "B12-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.grade",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "996d1aadabb21248c29467792e09c5f42c3b54c5e61d89cc1773bceed7ca8fb3",
+      "original_source_sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/full-assessments-v2/original-public-hashes.json",
+        "sha256": "6d75a51edb6fdadc6011b4a7c46a3685ee50dab4ed82d3225d5436860283fac4"
+      }
+    }
+  },
+  "C-R1-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/control/assessment.json",
+      "sha256": "5690cb939ce50e26cc97c553a731d410e15abc7ecf8aab0bd2398b782ade15db"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R1-P01/control/assessment.json",
+      "sha256": "2e5da3b7569dd9cb626810242c5df641b12467dfae691811893f5013ae2200e8",
+      "original_source_sha256": "5690cb939ce50e26cc97c553a731d410e15abc7ecf8aab0bd2398b782ade15db",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R1-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P01/treatment/assessment.json",
+      "sha256": "d95f163d39bb0a9728bd586ce7184f417e57e149ede8f31a2d8815697f98d6a4"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R1-P01/treatment/assessment.json",
+      "sha256": "bbc098c59aea2ad82805c146336123e7ebba63741a6273705818d1475fd306fa",
+      "original_source_sha256": "d95f163d39bb0a9728bd586ce7184f417e57e149ede8f31a2d8815697f98d6a4",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R1-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/control/assessment.json",
+      "sha256": "07cfe707bcce87b7d762aeaf2bbfa3b5cfcd098bef677104305c10ca6e6b7e4b"
+    },
+    "container_schema": null,
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R1-P02/control/assessment.json",
+      "sha256": "07cfe707bcce87b7d762aeaf2bbfa3b5cfcd098bef677104305c10ca6e6b7e4b",
+      "original_source_sha256": "07cfe707bcce87b7d762aeaf2bbfa3b5cfcd098bef677104305c10ca6e6b7e4b",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R1-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R1-P02/treatment/assessment.json",
+      "sha256": "f1973c36422872f35c7b26743ebbf8b9daa8a898faeceec6464cf657e6cc14dd"
+    },
+    "container_schema": null,
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R1-P02/treatment/assessment.json",
+      "sha256": "f1973c36422872f35c7b26743ebbf8b9daa8a898faeceec6464cf657e6cc14dd",
+      "original_source_sha256": "f1973c36422872f35c7b26743ebbf8b9daa8a898faeceec6464cf657e6cc14dd",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R2-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.json",
+      "sha256": "e844e4d38c55344bbd863b11b357cac1ad7b34bb9e82ac196656b5bb8eeae674"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R2-P01/control/assessment.json",
+      "sha256": "e2edd731ba830119b20c8dc90088863d4fcfb4d2eb6b312d0e39da36dfe072da",
+      "original_source_sha256": "e844e4d38c55344bbd863b11b357cac1ad7b34bb9e82ac196656b5bb8eeae674",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R2-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/assessment.json",
+      "sha256": "25edb29bf9348e10f576d3028738b3985ba954f4c108bfe91c78110066af16bf"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R2-P01/treatment/assessment.json",
+      "sha256": "8037d446aedce98d2fb73efd9aa0f702fe43f3faaf84061482be5ab1e174a1d4",
+      "original_source_sha256": "25edb29bf9348e10f576d3028738b3985ba954f4c108bfe91c78110066af16bf",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R2-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/control/assessment.json",
+      "sha256": "fe08ee770c46e31fc2bb9b9ba8d0e9edee21ddccc930438839da7ce8df1f160d"
+    },
+    "container_schema": "er13.immutable-original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R2-P02/control/assessment.json",
+      "sha256": "8ffea8c931ea8277b177c6439352951d59fcb860d1a009332dd47e1bed6ad93b",
+      "original_source_sha256": "fe08ee770c46e31fc2bb9b9ba8d0e9edee21ddccc930438839da7ce8df1f160d",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "C-R2-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/assessment.json",
+      "sha256": "43deae7acf7da577026befe6205fba0d38bfbe101b37bcea0da1cbf21f870752"
+    },
+    "container_schema": "er13.immutable-original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/mechanics/evaluation-dispatch-v2/C-R2-P02/treatment/assessment.json",
+      "sha256": "0ba0cb78d837351015223d521d4ab0534bbe73f40304b10edf0650cd9698a943",
+      "original_source_sha256": "43deae7acf7da577026befe6205fba0d38bfbe101b37bcea0da1cbf21f870752",
+      "mapping_metadata": {
+        "path": "ER13_PUBLIC_REPORT/cohorts/C-assessments-v1/original-public-hashes.json",
+        "sha256": "16c01518aa1b4c5cbb7d1b9db10c3789ae075277e27645858da939d8c73c1986"
+      }
+    }
+  },
+  "D-R2-P03-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.json",
+      "sha256": "4e518d2e3532b8c483df07a4468ec5f05a7b54be58d9b56a64fa961abacdaa9b"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.json",
+      "sha256": "8697fa1ed7ce92ee99b540332cf6e35ebc0efab8b48448a2fc7039bb8da93999",
+      "original_source_sha256": "4e518d2e3532b8c483df07a4468ec5f05a7b54be58d9b56a64fa961abacdaa9b",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P03-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.json",
+      "sha256": "ce950af608ddd0870a934c582ccc8651c00c633c7d3c5c98e1a3cab61d29c18c"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.json",
+      "sha256": "da64f38398fc0039e014c21f86ac2a8f11c72ae2634f88635308b795c9d8662f",
+      "original_source_sha256": "ce950af608ddd0870a934c582ccc8651c00c633c7d3c5c98e1a3cab61d29c18c",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "sha256": "375bc7c77d4564df17c768a4741302f4600a51d0e4150849eabce6699a477bde",
+      "original_source_sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "sha256": "d869a811eaf1d61fd269a408a3e40be81055f5a3314c7c8b86f9f4255ed35966"
+    },
+    "container_schema": "er13.original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "sha256": "34c6b77b9d72cb0c26327bca7d7a845767c07e1c665fe653901ee4ce1a99eee0",
+      "original_source_sha256": "d869a811eaf1d61fd269a408a3e40be81055f5a3314c7c8b86f9f4255ed35966",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P03-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "sha256": "4b9baf301dc644f07a63bdd5a55a6f2dfaeedc60abab3c68280c28a599e30a49",
+      "original_source_sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P03-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "sha256": "6b78e1dcc354837957a31511fbaa731a46c3610b24bd2730f5d02e54dc901455"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "sha256": "b59365445b1000039f08425432d659424a9db5eb64461c1a5b90d74d039922f2",
+      "original_source_sha256": "6b78e1dcc354837957a31511fbaa731a46c3610b24bd2730f5d02e54dc901455",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.json",
+      "sha256": "456278178c5492b87870926a27a64f0f1ce762b315945d0c4f85e206169ae33d"
+    },
+    "container_schema": "er13.original_independent_assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.json",
+      "sha256": "d99ae7dc7fdf551fd321b0a8d860a0b83fb6c6089ec61f570182ce878f766013",
+      "original_source_sha256": "456278178c5492b87870926a27a64f0f1ce762b315945d0c4f85e206169ae33d",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.json",
+      "sha256": "93189b08a859351ff62da8cc6ab875e26ec6a99e1d9f743262f8fb08e97cce5c"
+    },
+    "container_schema": "er13.original_independent_assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.json",
+      "sha256": "5489d433a79d126d0fe23bb8b006095e24692d38b40dcbccccd366349ee9c8fc",
+      "original_source_sha256": "93189b08a859351ff62da8cc6ab875e26ec6a99e1d9f743262f8fb08e97cce5c",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P04-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "sha256": "09e1aa8faca169bb8bb280483d837d91b7a9aa806f02d433c61a35ab0d96e18c"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.complete_final",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "sha256": "ca410063db78151ae97c2d2f07ab06f54825004d39cb01993d2d60fcafdb903f",
+      "original_source_sha256": "09e1aa8faca169bb8bb280483d837d91b7a9aa806f02d433c61a35ab0d96e18c",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P04-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.complete_final",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "sha256": "ac63d963185f0961c420a52ae57f81f83818fd83a17342260c9c45083f3fb9d8",
+      "original_source_sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P04-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.json",
+      "sha256": "656b158d863806a8093d585b0340613e53dfb90ae00605fc3d2cfbb227f0f889"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.grade",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.json",
+      "sha256": "514a9f6b474e1a597780358c1c630f73e6be261ec32fbb444443b4e0310bbc09",
+      "original_source_sha256": "656b158d863806a8093d585b0340613e53dfb90ae00605fc3d2cfbb227f0f889",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P04-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "sha256": "e5ee1365b42f43f4984ef09f9cbb24cf88949991063f2446b9f954f5083daffc"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.grade",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "sha256": "604fa0a81de287c227ecd6ceb088e5f40dbe4e4992b397c74558ba529d383027",
+      "original_source_sha256": "e5ee1365b42f43f4984ef09f9cbb24cf88949991063f2446b9f954f5083daffc",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P01-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.json",
+      "sha256": "1b98c9abcd9569ecfaf4ecabbfbc5920c79fdeaeeb788ea56c9b955c70d70930"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "PASS",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.json",
+      "sha256": "1240ab7e1908d7663ca4ea86732e08c50458f9ae975047cf54d726d382aae0ce",
+      "original_source_sha256": "1b98c9abcd9569ecfaf4ecabbfbc5920c79fdeaeeb788ea56c9b955c70d70930",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R1-P01-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "sha256": "531fad41b7150e51235f9341b4f048bc58131815e318ba6a259fcf3df2c95f78"
+    },
+    "container_schema": "er13.original-assessment.v1",
+    "arm_selector": "$",
+    "source_label_selector": "$.source_judgment.judgment",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "sha256": "dfbb0db70a59b194be101e940e25bb379099f6c6445e7e9f4e5a16a63e5787e9",
+      "original_source_sha256": "531fad41b7150e51235f9341b4f048bc58131815e318ba6a259fcf3df2c95f78",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P02-control": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.json",
+      "sha256": "70cb9274317d9d969edae9ddc07b6d027ac346c32a7b07e7953f0d474f8714f4"
+    },
+    "container_schema": "er13.immutable_original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "FAIL",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.json",
+      "sha256": "d384c1072848ebbc7d0f0040a13041264b6b78f7389c4b179835f5032675f2bc",
+      "original_source_sha256": "70cb9274317d9d969edae9ddc07b6d027ac346c32a7b07e7953f0d474f8714f4",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  },
+  "D-R2-P02-treatment": {
+    "assessment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/assessment.json",
+      "sha256": "cf637f68e41ed2bc735be495253b60304933c0d3b6838f5c6b54b28703321cb2"
+    },
+    "container_schema": "er13.immutable_original_assessment.v1",
+    "arm_selector": "$.arms[0]",
+    "source_label_selector": "$.arms[0].source_judgment.status",
+    "label": "UNASSESSED",
+    "no_partial_grade_substitution": true,
+    "published_assessment": {
+      "path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/assessment.json",
+      "verified_body_path": "ER13_PUBLIC_REPORT/cohorts/D-assessments-v1/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/assessment.json",
+      "sha256": "70fb83a10055e8dd8c601032c71ed42e31b53326c92b6069e4b4c517ce1a1a6e",
+      "original_source_sha256": "cf637f68e41ed2bc735be495253b60304933c0d3b6838f5c6b54b28703321cb2",
+      "installation_status": "INSTALLED_HASH_MATCH",
+      "mapping_metadata": {
+        "path": "ER13_RUNTIME/publication/D-assessments-cohort-v1/public/original-public-hashes.json",
+        "sha256": "c3aadaf41873dab5b5b7451f6c741c494d17265afc6b44d325ef2070e004a6f7"
+      }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "eligible_originals": 80,
+  "assigned_campaign_originals": 80,
+  "eligible_scope_counts": {
+    "FULL": 64,
+    "COMPONENT": 16
+  },
+  "source_counts_by_track": {
+    "A": {
+      "FAIL": 2,
+      "PASS": 5,
+      "UNASSESSED": 1
+    },
+    "B": {
+      "FAIL": 26,
+      "UNASSESSED": 3,
+      "PASS": 19
+    },
+    "C": {
+      "PASS": 3,
+      "FAIL": 5
+    },
+    "D": {
+      "PASS": 6,
+      "FAIL": 5,
+      "UNASSESSED": 5
+    }
+  },
+  "complete_final_source_counts": {
+    "FAIL": 38,
+    "PASS": 33,
+    "UNASSESSED": 9
+  },
+  "all_six_axes_counts": {
+    "COMPLETE": 56,
+    "UNASSESSED": 10,
+    "MIXED": 14
+  },
+  "all80_original_source_gate": true,
+  "final_all80_gate": false,
+  "final_metrics_gate": false,
+  "remaining_source_assessments": 0,
+  "remaining_pairs_unread": [],
+  "denominator_design": {
+    "A_factorial_blocks": 2,
+    "B_C_D_pairs": 36,
+    "FULL": 64,
+    "COMPONENT": 16,
+    "shared_A_R0_once": true,
+    "not_40_independent_pairs": true
+  },
+  "separate_B10_completion_excluded": true,
+  "AB_verbatim_overall_source_coverage": {
+    "COMPLETE": 36,
+    "PARTIAL": 18,
+    "COMPLETE for required proposal-level assessment": 2
+  },
+  "overall_coverage_is_distinct_from_formal_final_axes": true,
+  "root_verified_actual_candidate_stage_contexts": 199,
+  "charged_route_probe_starts_separate": 2,
+  "reserve_ceiling": 16,
+  "root_closure_not_independent_native_identity_proof": true,
+  "source_counts_by_scope": {
+    "FULL": {
+      "FAIL": 28,
+      "PASS": 29,
+      "UNASSESSED": 7
+    },
+    "COMPONENT": {
+      "FAIL": 10,
+      "UNASSESSED": 2,
+      "PASS": 4
+    }
+  },
+  "source_counts_not_80_comparable_complete_grades": true,
+  "actual_T3_lifetime_arithmetic_hydrated": false,
+  "source_ready_not_campaign_complete": true
+}
