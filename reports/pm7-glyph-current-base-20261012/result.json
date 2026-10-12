@@ -109,7 +109,7 @@
       "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
     }
   },
-  "updated_utc": "2026-10-12T10:33:31.839276+00:00",
+  "updated_utc": "2026-10-12T10:43:22.906716+00:00",
   "R1": {
     "label": "native-control-hover-under-PMH-rests",
     "status": "PARTIAL/UNVERIFIED",
@@ -617,5 +617,26 @@
   "N4_static_diagnosis": {
     "manifest_sha256": "7b86a8bb765cff3ea93334ee821a9a814b6d9cf1ffd80bb916c6d24366082679",
     "disposition": "UNVERIFIED/HOLD; required producers absent; only missingUnstage authorized, no extra transition attempts"
+  },
+  "fresh_floaters_not_done": {
+    "new_rows": 18,
+    "previous_basic_dark_rows": 2,
+    "all10looks_original_floaters_and_supplementary_pass": true,
+    "manifest_sha256": "8a69bea607272ef65c4a99ce1d3cfea050b928a2b0f2cad43e48e59e03b0094d",
+    "actual_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
+    "run_status": "HOLD at done-label fixture mount race after allnotdone collector rows passed",
+    "scope_proofs": 20,
+    "done_remaining": true
+  },
+  "N4_missing_unstage": {
+    "actual_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
+    "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "manifest_sha256": "5ddff3819cac35b7800592f2776b5a765fac07e9f596ecb8a2f8e4879c696b2d",
+    "actual_trusted_input": true,
+    "eligible_numeric_changes": 0,
+    "rolls": 0,
+    "mark_swaps": 0,
+    "console_errors": 0,
+    "status": "UNVERIFIED/HOLD; no further stub attempts authorized"
   }
 }

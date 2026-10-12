@@ -598,10 +598,15 @@ async function committedResumeFixture(page) {
   // This is one bounded fixture setup for the other published label, not a rerun of the onboarding matrix.
   // The published draft API supplies a valid local draft; a real Review/Create click produces the fixture receipt.
   await setLook(page, 'basic-dark');
-  await page.evaluate(() => { window.PM_O55_ONBOARDING.open({ fresh: true, screen: 'welcome' });
-    window.O55.S.set({ project_name: 'Current glyph label fixture' }); window.O55.ui.go('review'); });
+  await page.evaluate(() => window.PM_O55_ONBOARDING.open({ fresh: true, screen: 'welcome' }));
+  // open() schedules its real mount two animation frames later. Wait for that source lifecycle before editing
+  // the newly mounted draft; editing the previous closed session would be discarded by the fresh mount.
+  await page.waitForFunction(() => window.O55.S.open && window.O55.S.sess.screen === 'welcome' &&
+    document.querySelector('#pm-o55-onboarding')?.getAttribute('data-open') === 'true', null, { timeout: 15000 });
+  await page.evaluate(() => { window.O55.S.set({ project_name: 'Current glyph label fixture' }); window.O55.ui.go('review'); });
   const primary = '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary';
-  await page.waitForFunction((sel) => { const b = document.querySelector(sel); return b && !b.disabled && b.getAttribute('data-o55-do') === 'commit'; }, primary, { timeout: 30000 });
+  await page.waitForFunction((sel) => { const b = document.querySelector(sel); return b && !b.disabled &&
+    b.getAttribute('aria-disabled') !== 'true' && b.getAttribute('data-o55-do') === 'commit'; }, primary, { timeout: 30000 });
   await page.locator(primary).click();
   await page.waitForFunction(() => ['done', 'failed'].includes(window.O55.S.sess.commit.state), null, { timeout: 30000 });
   const receipt = await page.evaluate(() => ({ commit: window.O55.S.sess.commit, draft: window.O55.draft.exportPlan(window.O55.S.sess.drafts.main) }));
@@ -659,6 +664,7 @@ async function n3PillsNew(page) {
   result.previous_passed_pill_case_ids = [...completed];
   result.scope = 'Only missing affected original floaters and exact two-site supplementary collector; no contrast/hover acceptance after Basic Light HOLD';
   for (const label of ['not-done', 'done']) {
+    if (arg('--only-new-pill-label') && arg('--only-new-pill-label') !== label) continue;
     if (label === 'done') await committedResumeFixture(page);
     for (const look of TEN_LOOKS) {
       const state = await setLook(page, look);
