@@ -81,4 +81,3 @@ the median of the pixels rendered behind it with every glyph hidden (so Glass's 
   the inbox opens, each dismiss is hovered (the control ignites) and pressed. Frame review: marks and dismisses read in
   every look; Reduced Motion still and lit. Seen in passing, not ours: Friendly drew the toast cards as capsules (told
   pm7-no-pills, who squared them on their branch).
-

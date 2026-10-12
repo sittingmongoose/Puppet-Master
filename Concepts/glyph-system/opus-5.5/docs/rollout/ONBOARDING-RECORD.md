@@ -65,4 +65,3 @@ P1000, main's own harness (3ad5e84b71: owner fixtures, agent-browser adapter); e
 - With a scratch harness that waits for `O55.S.sess.screen && O55.S.open` (150 ms polls, 9 s): the glyph branch 67/69,
   main's page 46/69 in the same session; the branch's two failures (s10 'no field name on begin', n11 'no control pick
   existing on where') fail identically on main, more fixed-sleep timing. The glyph branch adds no failure.
-

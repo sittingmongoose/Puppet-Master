@@ -34,4 +34,3 @@ info) pushed through `toast.important`.
   in the base. The base spells the warning severity `warn`.
 - The gate measures marks on the toasts' own severity-tinted cards; the inks are fitted to those fields too
   (`src/data/ink-fields.json`). Record: TOASTS-RECORD.md.
-
